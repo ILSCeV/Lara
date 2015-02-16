@@ -1,8 +1,5 @@
 ## Studentenclub-Verwaltung
-
 Softwareprojekt WS14/15 an der TU Ilmenau (Codename: Lara-VedSt)
-
-Auftraggeber: [bc-Studentenclub](http://www.bc-club.de) (Sektion des Ilmenauer Studentenclub e.V.)
 
 ## Was ist das? 
 Ziel des Projektes war es, die im Umfeld eines Studentclubs die bereits eingesetze Software und eine Reihe technologisch breit aufgestellter Softwarekomponenten nach Möglichkeit in einem einzigen Projekt zusammen zu fassen. Es sollte somit ermöglicht werden, die Daten einzelner Komponenten zentral abzulegen, um sie insbesondere zu statistischen Auswertungen heran ziehen zu können. Gleichzeitig sollte die Benutzerfreundlichkeit der Komponenten deutlich erhöht werden und 
@@ -52,3 +49,13 @@ umgesetzt werden.
  
 ## Benutzerhandbuch
 - Siehe **Benutzerhandbuch-SWP-WS1415-Studentenclub-Verwaltung.pdf**
+
+## Lizenzen
+
+Diese Anwendung ist im Wintersemester 2014/2015 als Softwareprojekt an der [TU Ilmenau](http://tu-ilmenau.de) entstanden.
+
+Auftraggeber: [bc-Studentenclub](http://www.bc-club.de) (Sektion des Ilmenauer Studentenclub e.V.)
+
+Code veröffentlicht unter [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE).
+
+Basiert auf [Laravel](http://laravel.com), [Bootstrap](http://getbootstrap.com) + [Bootswatch](http://bootswatch.com), [JQuery](http://jquery.com) und Icons von [Font Awesome](http://fortawesome.github.io/Font-Awesome) (alle veröffentlicht unter [MIT Lizenz](http://opensource.org/licenses/mit-license.html)).
