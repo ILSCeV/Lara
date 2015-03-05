@@ -1,0 +1,24 @@
+.hidden-print, .navigation, .footer, a {
+	display: none !important;
+}
+
+.container {
+    margin: 0px;
+    padding: 0px;
+}
+
+/*.day-container {
+    white-space: normal;
+}*/
+
+/*.inline-block {
+    white-space: nowrap;
+}*/
+
+.panel {
+    white-space: normal;
+}
+
+.page-break {
+	page-break-after: always;
+}

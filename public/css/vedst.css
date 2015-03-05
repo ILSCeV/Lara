@@ -1,0 +1,40 @@
+/**
+ * More / Less Button
+*/
+
+.more {
+  overflow:hidden;
+  height:200px;
+}
+
+.moreshow {
+  overflow:visible;
+  height:auto;
+}
+
+/**
+ * Wochenansicht
+*/
+
+.panel-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.panel-title {
+  word-wrap: break-word;
+}
+
+.comment {
+  word-break: break-all;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
