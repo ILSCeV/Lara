@@ -1,61 +1,52 @@
-## Studentenclub-Verwaltung
-Softwareprojekt WS14/15 an der TU Ilmenau (Codename: Lara-VedSt)
+This is a **development version** - NOT FOR PRODUCTION USE.
 
-## Was ist das? 
-Ziel des Projektes war es, die im Umfeld eines Studentclubs die bereits eingesetze Software und eine Reihe technologisch breit aufgestellter Softwarekomponenten nach Möglichkeit in einem einzigen Projekt zusammen zu fassen. Es sollte somit ermöglicht werden, die Daten einzelner Komponenten zentral abzulegen, um sie insbesondere zu statistischen Auswertungen heran ziehen zu können. Gleichzeitig sollte die Benutzerfreundlichkeit der Komponenten deutlich erhöht werden und 
-sicher gestellt werden, dass die resultierende Umsetzung in einem höheren Maße zu einer Aktzeptanz durch Betreiber und Anwender führen sollte. 
+## About
+**Lara** ("**Ve**rwaltung **d**es **St**udentenclubs") is a planning tool that combines a calender with personnel scheduling, finances and internal statistics. It is developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all Ilmenauer Studentenclub e.V. sections. 
+Lara started as a softwareproject at [TU Ilmenau](http://tu-ilmenau.de) in WS2014/2015.
 
-Der angestrebte Funktionsumfang sollte dabei insbesondere die folgenden **Komponenten** umfassen:
-- **Veranstaltungskalender**, inkl. detaillierter Informationen zur Veranstaltung
-- **Dienstplan**, inkl. Unterscheidung zwischen Mitgliedern und externen Helfern
-- **Dienstestatistik** und **Veranstaltungesstatistik**
-- **Finanzen** und **Controlling**
+## Components: 
+- **Calender events** tied to **event schedules** (for personnel planning)
+- Separated **internal tasks** (for schedules without corresponding events)
+- **Personnel statistics** and **event statistics**
+- **Finances** und **controlling**
+- **Authentification**, separating public calender events+schedules from internal data
 
-Dazu war es nötig zwischen authentifizierten Nutzern und "Gästen" unterscheiden zu können und in einem entsprechenden Authentifizeirungsprozess umzusetzen. Dies sollte den Zugriff auf weitere Funktionen, wie z.B. das Erfassen, Bearbeiten und Löschen von Veranstaltungen und Aufgaben sowie deren zugehörigen Dienstplänen nur bestimmten Nutzergruppen möglich machen. 
-Hierzu war ein bereits existierendes, auf LDAP basierendes Rollenmodell zu nutzen.
+## Roadmap
+- **Phase 1** (finished): softwareproject at TU Ilmenau, components *calender*, *schedules* and *authentification* via bc-Club LDAP-Server implemented.
+- **Phase 2** (in progress): personal project, components *statistics*, *finances* and *controlling* are in development.
 
-In der uns zur Verfügung stehenden Zeit konnten wir die uns gegebene Situation analysieren und den Soll-Zustand planen. 
-Da das Projekt von Anfang an als sehr umfangreich eingeschätz wurde, wurde bereits zu Begin eine Umsetzung in 2 Phasen vergesehen: 
-- **Phase 1** beinhaltete Erstellung von Komponenten Kalender, Dienstpläne (bestehend aus Veranstaltungsdienstplänen und internen Aufgaben), Dienstestatistik sowie der Verbindung zur Mitgliederdatenbank via LDAP.
-- **Phase 2** beinhaltet die Bereiche Finanzen, Veranstaltungsstatistik und Controlling.
-	
-**Inhalt dieses Softwareprojektes war die Umsetzung der Phase 1.**
+## Current project status
+(as of 01.03.2015)
 
-## Aktueller Stand:
-Das Softwareprojekt bei der Uni und somit die erste Phase sind offiziell abgeschlossen.
-**Status der Komponenten:**
-- Kalender: **OK**
-- Dienstpläne:
-  - Veranstaltungsdienstplan: **OK**
-  - Aufgabendienstplan: **OK**
-- Dienstestatistik: *in Arbeit*
-- Veranstaltungsstatistik: tba
-- Finanzen: tba
+- Calender: **OK**
+- Schedules:
+  - Event schedules: **OK**
+  - Task schedules: **OK**
+- Personnel statistics: *in Arbeit*
+- Event statistics: tba
+- Finances: tba
 - Controlling: tba
 
-In Zukunft sollen die verbleibenden offenen Anforderungen, z.B. aus den Bereichen Finanzen und Controlling, sowie Änderungswünsche, welche seitens der Nutzer geäußert werden, analysiert und gegebenen Falls
-umgesetzt werden.
+For detailed list open requirements and change-requests see: [Issues](https://github.com/4D44H/lara-vedst/issues).
 
-## Ausblick in die Phase 2
-- Dienstestatistik implementieren
-- Change-Requests vom Betatest implementieren
-- parallel einen zweiten Betatest durchführen
-- Finanzen und Controlling hinzufügen und testen
-- Change-Requests vom Betatest 2 implementieren
-- Kompatibilität für andere Clubs gewährleisten
-
-## Installationsanleitung
-- Siehe **Installationsanleitung-SWP-WS1415-Studentenclub-Verwaltung.pdf**
+## Requirements
+- MySQL Database
+- Apache Server
+- PHP 5.6
+ - MCrypt PHP extension
+ - JSON PHP extension
+ - LDAP PHP extension
+ - MySQL PHP extension
  
-## Benutzerhandbuch
-- Siehe **Benutzerhandbuch-SWP-WS1415-Studentenclub-Verwaltung.pdf**
+## Installation
+tba
 
-## Lizenzen
+## Licence 
+Code published under [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE).
 
-Diese Anwendung ist im Wintersemester 2014/2015 als Softwareprojekt an der [TU Ilmenau](http://tu-ilmenau.de) entstanden.
-
-Auftraggeber: [bc-Studentenclub](http://www.bc-club.de) (Sektion des Ilmenauer Studentenclub e.V.)
-
-Code veröffentlicht unter [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE).
-
-Basiert auf [Laravel](http://laravel.com), [Bootstrap](http://getbootstrap.com) + [Bootswatch](http://bootswatch.com), [JQuery](http://jquery.com) und Icons von [Font Awesome](http://fortawesome.github.io/Font-Awesome) (alle veröffentlicht unter [MIT Lizenz](http://opensource.org/licenses/mit-license.html)).
+Lara is based on: 
+- [Laravel 4.2](http://laravel.com)
+- [Bootstrap 3.3.1](http://getbootstrap.com) + [Bootswatch 3.3.1+2](http://bootswatch.com)
+- [JQuery 2.1.1](http://jquery.com)
+- [Font Awesome 4.2.0](http://fortawesome.github.io/Font-Awesome) 
+(all licenced under [MIT Licence](http://opensource.org/licenses/mit-license.html)).
