@@ -45,7 +45,7 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 | shown, which includes a detailed stack trace during debug.
 |
 */
-
+/*
 App::error(function($exception)
 {
 	Log::error($exception->getCode() . ': ' . $exception->getMessage());

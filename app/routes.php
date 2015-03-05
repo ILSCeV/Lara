@@ -71,6 +71,8 @@ Route::get('/calendar/{year}/KW{week}', 		'WeekController@showWeek');
 
 Route::get('/calendar/{year}/week/{week}', 		'WeekController@showWeek');
 
+Route::post('/calendar/{year}/KW{week}',		array('as' => 'bulkUpdate', 'before' => 'csrf', 'uses' => 'ScheduleController@bulkUpdateSchedule'));
+
 
 // DAY
 Route::get('/calendar/{year}/{month}/{day}',	'CalendarController@showDate');

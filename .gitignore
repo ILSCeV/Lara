@@ -1,7 +1,7 @@
 /bootstrap/compiled.php
 .env.*.php
 .env.php
-app/storage/views/e30f58c5b6a10589ad23f26d83de94e4
-app/storage/logs/laravel.log
+app/storage/*
+app/config/bcLDAP.php
+app/config/bcLDAP.php
 app/storage/meta/services.json
-app/storage/cache/63/31/6331bdb390b43bf56e65e0f9678690a5

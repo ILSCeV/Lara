@@ -57,17 +57,20 @@
 	@endif
 
 
-	<table class="table table-striped">
+	<table class="table table-condensed table-hover">
 		<thead>
 		<tr>
 			<th class="col-md-2">
 				Dienst
 			</th>
-			<th class="col-md-8">
+			<th class="col-md-2">
 				Name
 			</th>
 			<th class="col-md-2">
 				Verein
+			</th>
+			<th class="col-md-6">
+				Kommentar
 			</th>
 		</tr>
 		</thead>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Lara Vedst: @yield('title', 'VedSt Default Title')</title>
-		<meta charset="utf-8">
+		<title>Lara VedSt | @yield('title', 'VedSt Default Title')</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
    	 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		{{ HTML::style('css/bootstrap-paper.css') }}
@@ -12,28 +12,44 @@
 		{{ HTML::style('css/vedst.css') }}
 		{{ HTML::style('css/print.css', array('media' => 'print')) }}
 
-	</head>
-    <body>
-		<div class="navigation">
-			@include('partials.navigation')
-		</div>
-
-    	{{-- Automativally close messages after 4 seconds (4000 milliseconds). M. --}}
-    	
-	    <script type="text/javascript">
+		<link rel="shortcut icon" href="/favicon-96x96.png" type="image/png" />
+		<link rel="icon" href="/favicon-96x96.png" type="image/png" />
+		
+		{{-- Automatically close messages after 4 seconds (4000 milliseconds). M. --}}
+		<script type="text/javascript">			
 			window.setTimeout(function() {
 			    $(".message").fadeTo(1000, 0).slideUp(500, function(){
 			        $(this).alert('close'); 
 			    });
 			}, 4000);
+		</script>
+
+		{{-- Show/hide more button for infos --}}
+		<script type="text/javascript">
 			$(function(){
 				$('.moreless').click(function(e) {
 					$(this).parent().children('.more').toggleClass('moreshow');
 					window.location.hash="navbar";
 				});
 			});
+		</script>
 
+		{{-- Show/hide comments --}}
+		<script type="text/javascript">
+			$(function(){
+				$('.showhide').click(function(e) {
+					$(this).parent().parent().next().children().children('.hide').toggleClass('show');
+					window.location.hash="";
+				});
+			});
     	</script>
+
+	</head>
+    <body>
+		<div class="navigation">
+			@include('partials.navigation')
+		</div>
+
 		<div class="message" id="centerpoint">
 			@include('partials.message')
 		</div>

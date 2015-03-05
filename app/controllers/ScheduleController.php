@@ -112,6 +112,8 @@ class ScheduleController extends BaseController {
 		return View::make('scheduleViewById', compact('entries', 'schedule', 'clubs', 'persons'));
 	}
 
+
+
 	/**
 	 * Updates schedule entries of a specific schedule.
 	 *
@@ -132,6 +134,7 @@ class ScheduleController extends BaseController {
     	// Check if that schedule needs a password
 		if ($schedule->schdl_password !== '')
 		{
+			//get password for specific id here, similar to enty->id
 			if(!Hash::check(Input::get('password'), $schedule->schdl_password ))
 			{
 				Session::put('message', Config::get('messages_de.schedule-pw-needed')); 
@@ -197,9 +200,47 @@ class ScheduleController extends BaseController {
 
 		return Redirect::back();	
 	}
-	
 
-	// --------------- static functions ---------------------------------------
+
+	/**
+	 * Updates multiple schedules.
+	 */
+	public function bulkUpdateSchedule($year, $week)
+	{
+		$weekStart = date('Y-m-d', strtotime($year."W".$week.'1'));  		// Create week start date
+        $weekEnd = date('Y-m-d', strtotime($year."W".$week.'7'));       	// Create week end date
+		$updateIds = array();												// Create (empty) index of all schedules we need to update
+
+		// Collect IDs of event schedules shown in chosen week view
+		$events = ClubEvent::where('evnt_date_start','>=',$weekStart)
+                           ->where('evnt_date_start','<=',$weekEnd)
+                           ->orderBy('evnt_date_start')
+                           ->orderBy('evnt_time_start')
+                           ->get();
+		
+		// Add them to the index
+		foreach ($events as $event) {
+			array_push($updateIds, $event->getSchedule->id);
+		}
+
+		// Collect IDs of tasks shown in week view
+		$tasks = Schedule::where('schdl_show_in_week_view', '=', '1')
+					     ->where('schdl_due_date', '>=', $weekStart) 				
+					     ->where('schdl_due_date', '<=', $weekEnd) 
+					     ->get();
+
+		// Add them to the index
+		foreach ($tasks as $task) {
+			array_push($updateIds, $task->id);
+		}
+
+		// update each of the elements in the index
+		foreach ($updateIds as $scheduleId) {
+			$this->updateSchedule($scheduleId);
+		}
+
+		return Redirect::back();
+	}
 
 
 	/**

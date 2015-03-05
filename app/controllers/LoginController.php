@@ -83,7 +83,7 @@ class LoginController extends BaseController {
  * WORKAROUND for LDAP-Server down time 
  */
 
-/*  DELETE THIS LINE TO ACTIVATE WORKAROUND AND COMMENT OUT WORKING CONTROLLER BELOW 
+/*  DELETE THIS LINE TO ACTIVATE WORKAROUND AND COMMENT OUT WORKING CONTROLLER BELOW */
 
     public function doLogin()
     {
@@ -133,7 +133,7 @@ class LoginController extends BaseController {
  * WORKING CONTROLLER BELOW THIS LINE,
  * will only function with a bcLDAP-Config present.
  */
-
+/*
     public function doLogin()
     {
         // Connection to LDAP-dev
@@ -368,4 +368,3 @@ class LoginController extends BaseController {
 
 */            
 
-}

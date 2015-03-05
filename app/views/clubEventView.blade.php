@@ -99,19 +99,21 @@
 				</div>
 			@endif
 
-			{{ Form::hidden('scheduleId', $clubEvent->getSchedule->id) }}
-				<table class="table table-striped">
+			<table class="table table-hover table-condensed">
 				<thead>
 					<tr>
 						<th class="col-md-2">
 							Dienst
 						</th>
-						<th class="col-md-4">
+						<th class="col-md-2">
 							Name
 						</th>
-						<th class="col-md-6">
+						<th class="col-md-2">
 							Verein
-						</th> 
+						</th>
+						<th class="col-md-6">
+							Kommentar
+						</th>
 					</tr>
 				</thead>
 				<tbody>

@@ -3,9 +3,12 @@
 	@foreach($entries as $entry)
 		
 			<tr>
-				<td rowspan="2">
-					{{ $entry->getJobType->jbtyp_title }}
-					
+				@if( is_null($entry->getPerson) )
+				<td class="col-md-3 red">
+				@else
+				<td class="col-md-3 green">
+				@endif
+					<span class="word-break"><small>{{ $entry->getJobType->jbtyp_title }}</small></span>
 				</td>
 
 				<td>
@@ -201,30 +204,28 @@
 						@endif
 					@endif					
 				</td>
-				</tr>
-				<tr>
-				<td colspan="2">
-				<small class="col-md-2">Kommentar:</small>
+				
+				<td>
 					@if( is_null($entry->getPerson) )
 					   	{{ Form::text('comment' . $entry->id, Input::old('comment' . $entry->id),  
 					   				   array('placeholder'=>'-', 
-					   				   'class'=>'col-md-10')) }}
+					   				   'class'=>'col-md-12')) }}
 					@else
 						{{-- if entry is used by a guest (no LDAP id set) - let anyone edit it --}}
 						@if( !isset($entry->getPerson->prsn_ldap_id) )
 							{{ Form::text('comment' . $entry->id, 
 								   		   $entry->entry_user_comment, 
-								   		   array('class'=>'col-md-10')) }}
+								   		   array('class'=>'col-md-12')) }}
 						@else
 							{{-- if entry is used by a member (LDAP id set) - let only other members edit it --}}
 							@if( Session::get('userId') ) 
 								{{ Form::text('comment' . $entry->id, 
 								   			   $entry->entry_user_comment,
-								   			   array('class'=>'col-md-10')) }}
+								   			   array('class'=>'col-md-12')) }}
 							@else
 								{{ Form::text('comment' . $entry->id, 
 								   	$entry->entry_user_comment, 
-								   	array('class'=>'col-md-10', 'readonly')) }}
+								   	array('class'=>'col-md-12', 'readonly')) }}
 							@endif
 						@endif
 					@endif
