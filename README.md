@@ -28,7 +28,7 @@ Contributors welcome - contact [Maxim](https://github.com/4D44H) if you want to 
 - Schedules:
   - Event schedules: **OK**
   - Task schedules: **OK**
-- Personnel statistics: *in Arbeit*
+- Personnel statistics: *in progress*
 - Event statistics: tba
 - Finances: tba
 - Controlling: tba
