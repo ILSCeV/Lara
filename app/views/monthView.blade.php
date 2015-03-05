@@ -2,7 +2,7 @@
 
 @extends('layouts.master')
 @section('title')
-        {{ "Monat: ".$date['monthName'] }} {{-- Get the month name for the page title --}}
+        {{ $date['monthName'] }} {{-- Get the month name for the page title --}}
 @stop
 @section('content')
 

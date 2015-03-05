@@ -3,7 +3,7 @@
 @extends('layouts.master')
 
 @section('title')
-	Dienstplan (Liste)
+	Dienstplane
 @stop
 
 @section('content')

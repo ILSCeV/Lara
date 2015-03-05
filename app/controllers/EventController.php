@@ -97,7 +97,7 @@ class EventController extends BaseController {
 		$templates = Schedule::where('schdl_is_template', '=', '1')
 							 ->orderBy('schdl_title', 'ASC')->get();
 
-		$template = Schedule::where('id', '=', $id)->first();
+		$template = Schedule::where('id', '=', $schedule->id)->first();
 		
 		// put template data into entries
 		$entries = $schedule->getEntries()->getResults();

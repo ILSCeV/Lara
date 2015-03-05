@@ -9,7 +9,7 @@
 	
 	@if (!is_null($task->getEntries))
 		<div class="panel-body">
-			<table class="table" width="100%">
+			<table class="table-condensed" width="100%">
 				<tbody>
 					@include('partials.weekJobsByScheduleId', array('entries' => $task->getEntries))
 				</tbody>

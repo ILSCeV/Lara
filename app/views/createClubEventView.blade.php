@@ -38,6 +38,7 @@
 					        <span class="caret"></span>
 					    </a>
 					    <ul class="dropdown-menu">
+					    
 					    @foreach($templates as $template)
 					        <li> 
 					        	<a href="javascript:void(0);" 

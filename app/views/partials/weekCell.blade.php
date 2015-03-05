@@ -10,7 +10,7 @@
 		{{{ $clubEvent->evnt_title }}}</h4>
 		
 		
-					{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start)) }} 
+					{{ utf8_encode(strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start))) }} 
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					Wann: {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
 					-
@@ -19,8 +19,13 @@
 					Wo: {{{ $clubEvent->getPlace->plc_title }}}
 	</div>
 	<div class="panel-body">
+		@if( $clubEvent->getSchedule->schdl_password != '')
+			<div class="well">
+				Passwort:&nbsp;&nbsp; {{ Form::password('password', array('required')) }}
+			</div>
+		@endif
 		@if (!is_null($clubEvent->getSchedule))	
-			<table class="table" width="100%">
+			<table class="table-condensed" width="100%">
 				<tbody>
 					
 					@include('partials.weekJobsByScheduleId', array('entries' => $clubEvent->getSchedule->getEntries))

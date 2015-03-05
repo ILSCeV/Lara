@@ -12,9 +12,24 @@
   height:auto;
 }
 
+
 /**
  * Wochenansicht
 */
+
+.hide {
+  overflow:hidden;
+  height:0px;
+}
+
+.show {
+  overflow:visible;
+  height:auto;
+}
+
+.word-break {
+  word-break: break-all;
+}
 
 .panel-title {
   overflow: hidden;
@@ -24,10 +39,6 @@
 
 .panel-title {
   word-wrap: break-word;
-}
-
-.comment {
-  word-break: break-all;
 }
 
 .red {

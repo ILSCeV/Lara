@@ -3,7 +3,7 @@
 @extends('layouts.master')
 
 @section('title')
-	Aufgaben (Liste)
+	Aufgaben
 @stop
 
 @section('content')
