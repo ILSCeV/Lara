@@ -1,6 +1,8 @@
 ## Studentenclub-Verwaltung
 Softwareprojekt WS14/15 an der TU Ilmenau (Codename: Lara-VedSt)
 
+For english version see branch **master**.
+
 ## Was ist das? 
 Ziel des Projektes war es, die im Umfeld eines Studentclubs die bereits eingesetze Software und eine Reihe technologisch breit aufgestellter Softwarekomponenten nach Möglichkeit in einem einzigen Projekt zusammen zu fassen. Es sollte somit ermöglicht werden, die Daten einzelner Komponenten zentral abzulegen, um sie insbesondere zu statistischen Auswertungen heran ziehen zu können. Gleichzeitig sollte die Benutzerfreundlichkeit der Komponenten deutlich erhöht werden und 
 sicher gestellt werden, dass die resultierende Umsetzung in einem höheren Maße zu einer Aktzeptanz durch Betreiber und Anwender führen sollte. 
