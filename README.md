@@ -47,7 +47,12 @@ For detailed list open requirements and change-requests see: [Issues](https://gi
 - Laravel 4.2 
  
 ## Installation
-tba
+In short: 
+- install all of the above
+- configure Apache & Co with parameters from [Installation manual (DE)](https://github.com/4D44H/lara-vedst/blob/master/Installationsanleitung-SWP-WS1415-Studentenclub-Verwaltung.pdf)
+- overwrite folders "app" and "public" with this project files
+
+Detailed version and english translation: tba
 
 ## Licence 
 Code published under [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE).
