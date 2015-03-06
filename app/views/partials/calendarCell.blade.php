@@ -1,6 +1,21 @@
 {{-- Needs variables: i, date, id --}}
 
-{{ date("j.", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}
+@if(Session::has('userGroup')
+    AND (Session::get('userGroup') == 'marketing'
+    OR Session::get('userGroup') == 'clubleitung'))
+    <a href="{{ Request::getBasePath() }}/
+			calendar/
+			create/
+			{{ $date['year']}}/
+			{{ $date['month'] }}/
+			{{ strftime("%d", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}">
+	{{ date("j.", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}
+	</a>
+@else
+	{{ date("j.", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}
+@endif
+
+
 
 @foreach($events as $clubEvent)
 				

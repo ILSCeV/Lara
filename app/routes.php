@@ -42,10 +42,9 @@ Route::pattern('month', '[0][1-9]|[1][0-2]');
 Route::pattern('week', '[0-5][0-9]');
 Route::pattern('day', '[0-3][0-9]');
 
+
 // DEFAULT
 Route::get('/calendar/',						'CalendarController@currentMonth');
-
-Route::get('/calendar/today',					'CalendarController@currentDay');
 
 
 // YEAR
@@ -75,6 +74,8 @@ Route::post('/calendar/{year}/KW{week}',		array('as' => 'bulkUpdate', 'before' =
 
 
 // DAY
+Route::get('/calendar/today',					'CalendarController@currentDay');
+
 Route::get('/calendar/{year}/{month}/{day}',	'CalendarController@showDate');
 
 
@@ -86,6 +87,7 @@ Route::get('/calendar/id/{id}/edit',			'EventController@showEditEvent');
 Route::post('/calendar/id/{id}/edit', 			array('as' => 'editClubEvent', 'before' => 'csrf', 'uses' => 'EventController@editEvent'));
 
 Route::get('/calendar/id/{id}/delete',			'EventController@deleteEvent');
+
 
 // SCHEDULE
 Route::get('/schedule/',						'ScheduleController@showScheduleList');
@@ -122,7 +124,9 @@ Route::get('/task/create',						'TaskController@showCreateTask');
 
 Route::post('/task/create', 					array('as' => 'newTask', 'before' => 'csrf', 'uses' => 'TaskController@createTask'));
 
-Route::get('/calendar/create',					'EventController@showCreateEvent');
+Route::get('/calendar/create',					'EventController@showCreateEventToday');
+
+Route::get('/calendar/create/{year}/{month}/{day}',	'EventController@showCreateEvent');
 
 Route::post('/calendar/create', 				array('as' => 'newClubEvent', 'before' => 'csrf', 'uses' => 'EventController@createEvent'));
 

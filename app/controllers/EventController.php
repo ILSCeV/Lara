@@ -25,13 +25,38 @@ use Illuminate\Database\Eloquent\Collection as Collection;
 
 class EventController extends BaseController {
 
+    /**
+     * Fills missing parameters: if no day specified use current date.
+     *
+     * @return int $day
+     * @return int $month
+     * @return int $year
+	 * @return RedirectResponse
+     */
+	public function showCreateEventToday()
+	{
+		return Redirect::action('EventController@showCreateEvent', array('year' => date("Y"), 
+                                                                     	 'month' => date("m"), 
+                                                                     	 'day' => date("d")));
+	}
+
 	/**
-	* Generate the view for creating a new event.
+	* Generate the view for creating a new event with a date specified
+	*
+	* @param  int $year
+    * @param  int $month
+    * @param  int $day
 	*
 	* @return view createClubEventView
+	* @return Place[] places
+	* @return Schedule[] templates
+	* @return Jobtype[] jobtypes
+	* @return string $date
 	*/
-	public function showCreateEvent()
+	public function showCreateEvent($year, $month, $day)
 	{		
+        $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
+
 		$places = Place::orderBy('plc_title', 'ASC')
 					   ->lists('plc_title', 'id');
 		
@@ -43,7 +68,7 @@ class EventController extends BaseController {
 							   ->orderBy('jbtyp_title', 'ASC')
 							   ->lists('jbtyp_title', 'id');
 				
-		return View::make('createClubEventView', compact('places', 'templates', 'jobtypes'));
+		return View::make('createClubEventView', compact('places', 'templates', 'jobtypes', 'date'));
 	}
 
 	

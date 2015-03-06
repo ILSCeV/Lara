@@ -1,4 +1,4 @@
-{{-- Needs variables: templates, places, jobtypes --}}
+{{-- Needs variables: templates, places, jobtypes, date --}}
 
 @extends('layouts.master')
 
@@ -123,14 +123,14 @@
 				    <div class="form-group">	
 						<label for="beginDate" class="col-md-2 control-label">Beginn:</label>
 						<div class="col-md-10">
-							{{ Form::input('date', 'beginDate', date("Y-m-d")) }} um {{ Form::input('time', 'beginTime', '21:00') }}
+							{{ Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) }} um {{ Form::input('time', 'beginTime', '21:00') }}
 						</div>
 				    </div>
 
 				    <div class="form-group">
 						<label for="endDate" class="col-md-2 control-label">Ende:</label>
 						<div class="col-md-10">
-							{{ Form::input('date', 'endDate', date("Y-m-d")) }} um {{ Form::input('time', 'endTime', '01:00') }}
+							{{ Form::input('date', 'endDate', date("Y-m-d", strtotime("+1 day", strtotime($date)))) }} um {{ Form::input('time', 'endTime', '01:00') }}
 						</div>
 				    </div>
 
