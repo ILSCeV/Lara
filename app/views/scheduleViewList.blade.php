@@ -8,13 +8,28 @@
 
 @section('content')
 
-<center>{{ $schedules->links() }}</center>
+<div class="row">
+{{-- create button --}}
+    <div class="col-md-4">
+		@if(Session::has('userGroup')
+		    AND (Session::get('userGroup') == 'marketing'
+		    OR Session::get('userGroup') == 'clubleitung'))
+		    <a href="{{ Request::getBasePath() }}/calendar/create" class="btn btn-primary">Neue Veranstaltung erstellen</a>
+		@endif
+    </div>
 
-@if(Session::has('userGroup')
-    AND (Session::get('userGroup') == 'marketing'
-    OR Session::get('userGroup') == 'clubleitung'))
-    <a href="{{ Request::getBasePath() }}/calendar/create" class="btn btn-primary">Neue Veranstaltung erstellen</a>
-@endif
+{{-- prev/next month --}}
+    <div class="col-md-4">
+		<center>{{ $schedules->links() }}</center>
+    </div>
+
+{{-- club filtering --}}
+    <div class="col-md-4">
+        @include('partials.filter')
+    </div>
+</div>
+
+
 <div class="panel">
 	<table class="table table-striped table-hover shadow">
 		<thead>
@@ -34,7 +49,7 @@
 
 		@foreach($schedules as $schedule)
 		
-			<tr>
+			<tr class="{{ $schedule->getClubEvent->getPlace->plc_title }}">
 				<td> {{ $schedule->evnt_id; }} </td>	
 
 				<td style="padding-top: 15px; padding-right: 5px;"> 

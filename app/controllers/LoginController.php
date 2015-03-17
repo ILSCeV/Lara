@@ -31,9 +31,7 @@ class LoginController extends BaseController {
      */
     public function doLogout()
     {
-        Session::forget('userId');
-        Session::forget('userName');
-        Session::forget('userGroup');
+        Session::flush();
         return Redirect::to('calendar/');
     }
 
@@ -104,27 +102,17 @@ class LoginController extends BaseController {
         $userClubId = array_rand($inputClub, 1);
         $userClub = $inputClub[$userClubId];
 
-        $userClubStatus = "aktiv";
+        $userStatus = "aktiv";
 
-        // Compare password in LDAP with hashed input and inform about error or success,
-        // Retrieve information about the user based on uidNumber if passwords match.
-        // Also closing the connection here.
-        
-            
-            Session::put('message', Config::get('messages_de.login-success'));
-            Session::put('msgType', 'success');
+        Session::put('userId',      $userId);
+        Session::put('userName',    $userName);
+        Session::put('userGroup',   $userGroup);            
+        Session::put('userClub',    $userClub);
+        Session::put('userStatus',  $userStatus);
 
-            Session::put('userId', $userId);
-            Session::put('userName', $userName);
-            Session::put('userGroup', $userGroup);
-            
-            Session::put('userClub', $userClub);
-            // ToDo: write club status fkt
-            Session::put('userStatus', $userClubStatus);
-
-            Log::info('Auth success: User ' . $userName . ' (' . $userId .', group: ' . $userGroup . ') just logged in.');
-          
-            return Redirect::back();
+        Log::info('Auth success: User ' . $userName . ' (' . $userId .', group: ' . $userGroup . ') just logged in.');
+      
+        return Redirect::back();
   
         }
     }

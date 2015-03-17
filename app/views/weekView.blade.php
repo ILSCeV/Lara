@@ -1,4 +1,4 @@
-{{-- Needs variables: clubEvents, date, entries --}}
+{{-- Needs variables: 'events', 'schedules',  'date', 'tasks', 'entries', 'weekStart', 'weekEnd', 'persons', 'clubs' --}}
 
 
 
@@ -9,22 +9,40 @@
 @stop
 
 @section('content')
+<div class="row">
+{{-- create button --}}
+    <div class="col-md-3">
+        @if(Session::has('userGroup')
+            AND (Session::get('userGroup') == 'marketing'
+            OR Session::get('userGroup') == 'clubleitung'))
+            <a href="{{ Request::getBasePath() }}/calendar/create" class="btn btn-primary pull-left">Neue Veranstaltung erstellen</a>
+        @endif
+    </div>
 
-<ul class="pager" >
-	<li><a href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}" class="hidden-print">&lt;&lt;</a></li>
-	<li><h5 style="display: inline;">&nbsp;&nbsp;&nbsp;&nbsp;KW{{ $date['week']}}: 
-	{{ utf8_encode(strftime("%d. %B", strtotime($weekStart))) }} - {{ utf8_encode(strftime("%d. %B", strtotime($weekEnd))) }}&nbsp;&nbsp;&nbsp;&nbsp;</h5></li>
-	<li><a href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}" class="hidden-print">&gt;&gt;</a></li>
-</ul>
+{{-- prev/next week --}}
+    <div class="col-md-6">
+		<ul class="pager" >
+			<li><a href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}" class="hidden-print">&lt;&lt;</a></li>
+			<li><h5 style="display: inline;">&nbsp;&nbsp;&nbsp;&nbsp;KW{{ $date['week']}}: 
+			{{ utf8_encode(strftime("%d. %B", strtotime($weekStart))) }} - {{ utf8_encode(strftime("%d. %B", strtotime($weekEnd))) }}&nbsp;&nbsp;&nbsp;&nbsp;</h5></li>
+			<li><a href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}" class="hidden-print">&gt;&gt;</a></li>
+		</ul>
+    </div>
 
-{{ Form::open(array('action' => array('bulkUpdate', $date['year'], $date['week']))) }}		
+{{-- club filtering --}}
+    <div class="col-md-3">
+        @include('partials.filter')
+    </div>
+</div>
 
-{{ Form::submit('Änderungen speichern', array('class'=>'btn btn-primary')) }}
+{{ Form::open(array('action' => array('bulkUpdate', $date['year'], $date['week']))) }}	
 
-@if(Session::has('userGroup')
-        AND (Session::get('userGroup') == 'marketing'
-        OR Session::get('userGroup') == 'clubleitung'))
-        <a href="{{ Request::getBasePath() }}/calendar/create" class="btn btn-primary hidden-print" >Neue Veranstaltung erstellen</a>
+@if (count($events)>0)
+	{{ Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) }}
+@else
+	<div class="panel">
+		Keine Veranstaltungen geplant
+	</div>
 @endif
 
 <div  class="day-container">
@@ -37,12 +55,12 @@
 			@endif
 			@if($clubEvent->evnt_is_private)
 				@if(Session::has('userId'))
-					<div class="inline-block {{ $page_break }}">
+					<div class="inline-block {{ $page_break }} {{ $clubEvent->getPlace->plc_title }}">
 						@include('partials.weekCell', $clubEvent)
 					</div>
 				@endif
 			@else
-				<div class="inline-block {{ $page_break }}">
+				<div class="inline-block {{ $page_break }} {{ $clubEvent->getPlace->plc_title }}">
 					@include('partials.weekCell', $clubEvent)
 				</div>
 			@endif

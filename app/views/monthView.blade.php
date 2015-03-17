@@ -1,4 +1,4 @@
-{{-- Needs variables: events, date, viewType --}}
+{{-- Needs variables: events, date --}}
 
 @extends('layouts.master')
 @section('title')
@@ -6,16 +6,32 @@
 @stop
 @section('content')
 
-<ul class="pager">
-    <li><a href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",strtotime("previous month", $date['startStamp'])) }}">&lt;&lt;</a></li>
-    <li><h5 style="display: inline;">{{ "&nbsp;&nbsp;&nbsp;&nbsp;" . $date['monthName'] . " " . $date['year'] . "&nbsp;&nbsp;&nbsp;&nbsp;" }}</h5></li>
-    <li><a href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",strtotime("next month", $date['startStamp'])) }}">&gt;&gt;</a></li>  
-</ul>
-@if(Session::has('userGroup')
-    AND (Session::get('userGroup') == 'marketing'
-    OR Session::get('userGroup') == 'clubleitung'))
-    <a href="{{ Request::getBasePath() }}/calendar/create" class="btn btn-primary">Neue Veranstaltung erstellen</a>
-@endif
+<div class="row">
+{{-- create button --}}
+    <div class="col-md-4">
+        @if(Session::has('userGroup')
+            AND (Session::get('userGroup') == 'marketing'
+            OR Session::get('userGroup') == 'clubleitung'))
+            <a href="{{ Request::getBasePath() }}/calendar/create" class="btn btn-primary pull-left">Neue Veranstaltung erstellen</a>
+        @endif
+    </div>
+
+{{-- prev/next month --}}
+    <div class="col-md-4">
+        <ul class="pager">
+            <li><a href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",strtotime("previous month", $date['startStamp'])) }}">&lt;&lt;</a></li>
+            <li><h5 style="display: inline;">{{ "&nbsp;&nbsp;&nbsp;&nbsp;" . $date['monthName'] . " " . $date['year'] . "&nbsp;&nbsp;&nbsp;&nbsp;" }}</h5></li>
+            <li><a href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",strtotime("next month", $date['startStamp'])) }}">&gt;&gt;</a></li>  
+        </ul>
+    </div>
+
+{{-- club filtering --}}
+    <div class="col-md-4">
+        @include('partials.filter')
+    </div>
+</div>
+
+{{-- month table --}}
 <div class="panel">
     <table class="table table-bordered ">
           

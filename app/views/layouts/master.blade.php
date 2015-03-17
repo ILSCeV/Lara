@@ -44,6 +44,30 @@
 			});
     	</script>
 
+    	{{-- Filter events from club/cafe --}}
+		<script type="text/javascript">
+		    $(document).ready(function() {			    
+			    $('#bc-Club').change(function() {
+			        if($(this).prop("checked")) {
+			            $('.bc-Club').show();
+			        } else {
+			            $('.bc-Club').hide();  
+			        }         
+			    });
+			});
+
+			$(document).ready(function() {			    
+			    $('#bc-Café').change(function() {
+			        if($(this).prop("checked")) {
+			            $('.bc-Café').show();
+			        } else {
+			            $('.bc-Café').hide();  
+			        }			              
+			    });
+			});
+
+		</script>
+
 	</head>
     <body>
 		<div class="navigation">

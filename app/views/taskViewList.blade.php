@@ -9,10 +9,23 @@
 @section('content')
 
 @if(Session::has('userId'))
+<div class="row">
+{{-- create button --}}
+    <div class="col-md-4">
+		<a href="{{ Request::getBasePath() }}/task/create" class="btn btn-primary">Neue Aufgabe hinzufügen</a>	
+    </div>
 
-<center>{{ $schedules->links() }}</center>
+{{-- prev/next month --}}
+    <div class="col-md-4">
+		<center>{{ $schedules->links() }}</center>
+    </div>
 
-<a href="{{ Request::getBasePath() }}/task/create" class="btn btn-primary">Neue Aufgabe hinzufügen</a>
+{{-- club filtering --}}
+    <div class="col-md-4">
+       <!-- filtering tba -->
+    </div>
+</div>
+
 
 <div class="panel">
 	<table class="table table-striped table-hover shadow">
