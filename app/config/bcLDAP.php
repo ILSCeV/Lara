@@ -29,4 +29,7 @@ return array(
 
     // Base dn on the server (without a comma at the front)
     'basedn' => 'o=ilsc',
+
+    // Master password for LDAP downtime, hashed
+    'ldapOverride' => 'store-this-in-hashed-form-only!',
 );

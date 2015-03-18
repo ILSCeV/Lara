@@ -3,9 +3,6 @@
 /* 
 --------------------------------------------------------------------------
     Copyright (C) 2015  Maxim Drachinskiy
-                        Silvi Kaltwasser
-                        Nadine Sobisch
-                        Robert Utnehmer
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -38,9 +35,16 @@ class StatisticsController extends BaseController {
 	 */
 	public function showStatistics()
 	{	
-		//get list of all people. 
-		$persons = Person::all();
-		$from = '2015-01-01'; 
+		$persons = Cache::remember('personsForStats', 10 , function()
+		{
+			$timeSpan = new DateTime("now");
+			$timeSpan = $timeSpan->sub(DateInterval::createFromDateString('3 months'));
+			return Person::whereRaw("prsn_ldap_id IS NOT NULL AND (prsn_status IN ('aktiv', 'kandidat') OR updated_at>='"	.$timeSpan->format('Y-m-d H:i:s')."')")
+							->orderBy('prsn_name')
+							->get();
+		});
+
+		$from = date("Y") . "-" . date("m") . "-01"; 
 		$till = '2015-01-31';
 
 		foreach($persons as $person){

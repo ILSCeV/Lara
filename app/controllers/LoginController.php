@@ -81,7 +81,7 @@ class LoginController extends BaseController {
  * WORKAROUND for LDAP-Server down time 
  */
 
-/*  DELETE THIS LINE TO ACTIVATE WORKAROUND AND COMMENT OUT WORKING CONTROLLER BELOW */
+/*  DELETE THIS LINE TO ACTIVATE WORKAROUND AND COMMENT OUT WORKING CONTROLLER BELOW 
 
     public function doLogin()
     {
@@ -112,6 +112,7 @@ class LoginController extends BaseController {
         }
         
 
+
         Session::put('userId',      $userId);
         Session::put('userName',    $userName);
         Session::put('userGroup',   $userGroup);            
@@ -130,9 +131,36 @@ class LoginController extends BaseController {
  * WORKING CONTROLLER BELOW THIS LINE,
  * will only function with a bcLDAP-Config present.
  */
-/*
+
     public function doLogin()
     {
+        // Masterpassword for LDAP-Server downtime, stored in hashed form in config/bcLDAP.php
+        if (Input::get('username') === "LDAP-OVERRIDE" ) {
+
+            if (Config::get('bcLDAP.ldapOverride') === base64_encode(mhash(MHASH_MD5, Input::get('password')))) {
+
+                Session::put('userId',      '9999');
+                Session::put('userName',    'LDAP-OVERRIDE');
+                Session::put('userGroup',   'clubleitung');
+                Session::put('userClub',    'bc-Club');
+                Session::put('userStatus',  'aktiv');
+                Session::put('clubFilter',  'bc-Club');
+
+                Log::info('LDAP OVERRIDE USED.');
+              
+                return Redirect::back();
+
+            } else {
+
+                Session::put('message', Config::get('messages_de.ldap-override-fail'));
+                Session::put('msgType', 'danger');
+
+                Log::warning('LDAP OVERRIDE FAIL: wrong password!');
+                
+                return Redirect::back();                
+            }   
+        }
+
         // Connection to LDAP-dev
         $ldapConn = ldap_connect( Config::get('bcLDAP.server') );
 
@@ -183,7 +211,7 @@ class LoginController extends BaseController {
         $info = ldap_get_entries($ldapConn, $search);
 
         // Set default user group to "mitglied"
-        $userGroup = "Mitglied"; //ToDO: set to "marketing" for development, change back to "bc-Club"
+        $userGroup = "Mitglied"; 
 
 
         // If no such user found in the Club - check Café next.
@@ -294,7 +322,7 @@ class LoginController extends BaseController {
         }
     }
 
-
+}
 /*      This is what the returned bcLDAP object looks like (only useful fields are shown here).  
 
         Array ( 

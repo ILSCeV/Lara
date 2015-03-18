@@ -32,4 +32,5 @@ return array(
 	'task-doesnt-exist'		=> 'Fehler: Die Aufgabe, die du löschen wolltest, existiert nicht.',
 	'task-delete-ok'		=> 'Alles top, das Ding wurde gelöscht.',	
 	'password-mismatch' 	=> 'Eingegebene Passwörter stimmen nicht überein!',
+	'ldap-override-fail'	=> 'Falsches Master-Passwort eingegeben!'
 );
