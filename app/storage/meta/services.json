@@ -25,8 +25,7 @@
         "Illuminate\\Translation\\TranslationServiceProvider",
         "Illuminate\\Validation\\ValidationServiceProvider",
         "Illuminate\\View\\ViewServiceProvider",
-        "Illuminate\\Workbench\\WorkbenchServiceProvider",
-        "Makzumi\\Calendar\\CalendarServiceProvider"
+        "Illuminate\\Workbench\\WorkbenchServiceProvider"
     ],
     "eager": [
         "Illuminate\\Cookie\\CookieServiceProvider",
@@ -35,8 +34,7 @@
         "Illuminate\\Filesystem\\FilesystemServiceProvider",
         "Illuminate\\Session\\SessionServiceProvider",
         "Illuminate\\View\\ViewServiceProvider",
-        "Illuminate\\Workbench\\WorkbenchServiceProvider",
-        "Makzumi\\Calendar\\CalendarServiceProvider"
+        "Illuminate\\Workbench\\WorkbenchServiceProvider"
     ],
     "deferred": {
         "artisan": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",
@@ -78,6 +76,7 @@
         "html": "Illuminate\\Html\\HtmlServiceProvider",
         "form": "Illuminate\\Html\\HtmlServiceProvider",
         "log": "Illuminate\\Log\\LogServiceProvider",
+        "Psr\\Log\\LoggerInterface": "Illuminate\\Log\\LogServiceProvider",
         "mailer": "Illuminate\\Mail\\MailServiceProvider",
         "swift.mailer": "Illuminate\\Mail\\MailServiceProvider",
         "swift.transport": "Illuminate\\Mail\\MailServiceProvider",

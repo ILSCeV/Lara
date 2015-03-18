@@ -104,11 +104,20 @@ class LoginController extends BaseController {
 
         $userStatus = "aktiv";
 
+        // setting default filter to user club
+        if ($userClub == "bc-Club") {
+            $clubFilter = "bc-Club";
+        } else {
+            $clubFilter = "bc-Café";
+        }
+        
+
         Session::put('userId',      $userId);
         Session::put('userName',    $userName);
         Session::put('userGroup',   $userGroup);            
         Session::put('userClub',    $userClub);
         Session::put('userStatus',  $userStatus);
+        Session::put('clubFilter',  $clubFilter);
 
         Log::info('Auth success: User ' . $userName . ' (' . $userId .', group: ' . $userGroup . ') just logged in.');
       
@@ -241,11 +250,18 @@ class LoginController extends BaseController {
             $info[0]['mozillanickname'][0] :
             $info[0]['givenname'][0];
 
-        // get user club
+        // Get user club
         $userClub = substr($info[0]['dn'], 22, -7);
 
         // Get user active status
-        $userClubStatus = $info[0]['ilscstate'][0];
+        $userStatus = $info[0]['ilscstate'][0];
+
+        // Setting default filter to user club
+        if ($userClub == "bc-Club") {
+            $clubFilter = "bc-Club";
+        } else {
+            $clubFilter = "bc-Café";
+        }
 
         // Compare password in LDAP with hashed input and inform about error or success,
         // Retrieve information about the user based on uidNumber if passwords match.
@@ -253,15 +269,13 @@ class LoginController extends BaseController {
         if($info[0]['userpassword'][0] === $password)
         {
             ldap_unbind($ldapConn);
-            
-            Session::put('message', Config::get('messages_de.login-success'));
-            Session::put('msgType', 'success');
 
             Session::put('userId', $info[0]['uidnumber'][0]);
             Session::put('userName', $userName);
             Session::put('userGroup', $userGroup);
             Session::put('userClub', $userClub);
-            Session::put('userStatus', $userClubStatus);
+            Session::put('userStatus', $userStatus);
+            Session::put('clubFilter',  $clubFilter);
 
             Log::info('Auth success: User ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] .', group: ' . $userGroup . ') just logged in.');
           
