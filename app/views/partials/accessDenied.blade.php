@@ -1,2 +1,2 @@
-<div class="panel"><b>Zugriff verweigert</b>
+<div class="panel">{{ Config::get('messages_de.access-denied') }}
 </div>

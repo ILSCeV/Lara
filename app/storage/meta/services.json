@@ -25,7 +25,8 @@
         "Illuminate\\Translation\\TranslationServiceProvider",
         "Illuminate\\Validation\\ValidationServiceProvider",
         "Illuminate\\View\\ViewServiceProvider",
-        "Illuminate\\Workbench\\WorkbenchServiceProvider"
+        "Illuminate\\Workbench\\WorkbenchServiceProvider",
+        "Khill\\Lavacharts\\Laravel\\LavachartsServiceProvider"
     ],
     "eager": [
         "Illuminate\\Cookie\\CookieServiceProvider",
@@ -34,7 +35,8 @@
         "Illuminate\\Filesystem\\FilesystemServiceProvider",
         "Illuminate\\Session\\SessionServiceProvider",
         "Illuminate\\View\\ViewServiceProvider",
-        "Illuminate\\Workbench\\WorkbenchServiceProvider"
+        "Illuminate\\Workbench\\WorkbenchServiceProvider",
+        "Khill\\Lavacharts\\Laravel\\LavachartsServiceProvider"
     ],
     "deferred": {
         "artisan": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",

@@ -9,6 +9,8 @@
 @stop
 
 @section('content')
+
+@if(Session::has('userId'))
 <div class="row">
 {{-- create button --}}
     <div class="col-md-3">
@@ -23,7 +25,7 @@
     <div class="col-md-6">
 		<ul class="pager" >
 			<li><a href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}" class="hidden-print">&lt;&lt;</a></li>
-			<li><h5 style="display: inline;">&nbsp;&nbsp;&nbsp;&nbsp;KW{{ $date['week']}}: 
+			<li><h5 style="display: inline;">&nbsp;&nbsp;&nbsp;&nbsp;{{ Config::get('messages_de.week-name') . $date['week']}}: 
 			{{ utf8_encode(strftime("%d. %B", strtotime($weekStart))) }} - {{ utf8_encode(strftime("%d. %B", strtotime($weekEnd))) }}&nbsp;&nbsp;&nbsp;&nbsp;</h5></li>
 			<li><a href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}" class="hidden-print">&gt;&gt;</a></li>
 		</ul>
@@ -99,6 +101,10 @@
 </div>
 <br>
 {{ Form::close() }}
+@else
+	{{-- Access for club members only --}}
+	@include('partials.accessDenied')
+@endif
 @stop
 
 
