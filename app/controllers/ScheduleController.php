@@ -471,16 +471,24 @@ class ScheduleController extends BaseController {
 			$person = Person::where('prsn_ldap_id', '=', Input::get('ldapId' . $entry->id) )->first();	
 
 			// If not found - create new person with data provided
-			if (is_null($person)) {
+			if (is_null($person)) 
+			{
 				// LDAP ID - already in the DB for existing person, adding a new one for a new person
 				$person = Person::create(array('prsn_ldap_id' => Input::get('ldapId' . $entry->id)));
 
 				// NAME - already in the DB for existing person, adding a new one for a new person
 				$person->prsn_name = Input::get('userName' . $entry->id);
+
+				// PERSON STATUS 
+				$person->prsn_status = Session::get('userStatus');
 			}
 
-			// PERSON STATUS - updating every time to catch if it was changed in LDAP
-			$person->prsn_status = Session::get('userStatus');
+			// If a person adds him/herself - update status from session to catch if it was changed in LDAP
+			if ($person->prsn_ldap_id == Session::get('userId')) 
+			{
+				$person->prsn_status = Session::get('userStatus');
+			}
+			
 		}
 		
 		// CLUB
