@@ -148,33 +148,30 @@ class ScheduleController extends BaseController {
 			// Entry was empty
 			if( !isset($entry->prsn_id) )
 			{
-				// Entry is still empty
-				if ( Input::get('userName' . $entry->id) == '' 
-			 	  OR Input::get('userName' . $entry->id) == Config::get('messages_de.no-entry'))
+				// Entry is not empty now
+				if ( !Input::get('userName' . $entry->id) == '' 
+			 	  OR !Input::get('userName' . $entry->id) == Config::get('messages_de.no-entry'))
 				{
-					//do nothing
-				}
-				// Some input provided
-				else
-				{
-					// Update entry data
-					$this->onUpdate($entry);
-				}
+					// Add new entry data
+					$this->onAdd($entry);
+				} 
+				// Otherwise no change found - do nothing
 			}
 			// Entry was not empty
 			else
 			{
 				// Same person there?
 				if( $entry->prsn_id == Input::get('userName' . $entry->id) 
-				AND $entry->prsn_ldap_id == Input::get('ldapId'. $entry->id) )
+				AND Person::where('id', '=', $entry->prsn_id)->first()->prsn_ldap_id == Input::get('ldapId'. $entry->id) )
 				{
 					// Was comment updated?
 					if ( $entry->entry_user_comment != Input::get('comment' . $entry->id) )
 					{
 						$entry->entry_user_comment = Input::get('comment' . $entry->id);
-					}
+					} 
+					// Otherwise no change found - do nothing
 				}
-				// New data found
+				// New data entered
 				else
 				{
 					// Was entry deleted?
@@ -183,13 +180,13 @@ class ScheduleController extends BaseController {
 					{
 						$this->onDelete($entry);
 					}
-					// So some new entry was provided
+					// So some new person was provided
 					else
 					{
 						// delete old data
 						$this->onDelete($entry);
 						// add new data
-						$this->onUpdate($entry);
+						$this->onAdd($entry);
 					}
 				}
 			}	
@@ -432,50 +429,62 @@ class ScheduleController extends BaseController {
 	private function onDelete($entry)
 	{
 		// Delete the dataset in table Person if it's a guest (LDAP id = NULL), but don't touch club members.
-		if ( !isset($entry->getPerson->prsn_ldap_id ) 
-		 AND ScheduleEntry::where('prsn_id', '=', $entry->prsn_id)->count() == 1 )
+		if ( !isset($entry->getPerson->prsn_ldap_id ) )
 		{
 			Person::destroy($entry->prsn_id);
-			
-			Log::info('Update schedule: Person ' . $entry->getPerson->prsn_name . 
-					  ' with id ' . $entry->getPerson->id . 
-					  ' deleted from the database.');
 		}
 		
 		// Clear the entry
 		$entry->prsn_id = null;
 		$entry->entry_user_comment = null;
 
-		Log::info('Update schedule: deleted scheduleEntry' . $entry->id . 
-				  ' from schedule ' . $entry->getSchedule->id . '.');
-
 		$entry->save();
 	}
 
 
-	/**
-	 * Updates the schedule entries.
+/**
+	 * Adds new person to the schedule entry.
 	 *
 	 * @param $entry
 	 * @return void
 	 */
-	private function onUpdate($entry)
+	private function onAdd($entry)
 	{
-		// If no LDAP id provided - create new guest person
-		if ( Input::get('ldapId' . $entry->id) == '' )
-		{
+
+		if ( Input::get('ldapId' . $entry->id) == '' ) 
+		{	
+			// If no LDAP id provided - create new GUEST person
 			$person = new Person;
-			$person->prsn_name = Input::get('userName' . $entry->id);
+			
+			// LDAP ID 
 			$person->prsn_ldap_id = null;
-		} 	
-		// else find existing member person in DB or create new one with data provided
-		else 
-		{
-			$person = Person::firstOrCreate( array('prsn_ldap_id' => Input::get('ldapId' . $entry->id)) );	
+
+			// NAME
 			$person->prsn_name = Input::get('userName' . $entry->id);
-			// HERE: change ilscstate every time.	
+			
+			// PERSON STATUS = empty for guests
+
+		} 
+		else 
+		{	
+			// Find existing MEMBER person in DB
+			$person = Person::where('prsn_ldap_id', '=', Input::get('ldapId' . $entry->id) )->first();	
+
+			// If not found - create new person with data provided
+			if (is_null($person)) {
+				// LDAP ID - already in the DB for existing person, adding a new one for a new person
+				$person = Person::create(array('prsn_ldap_id' => Input::get('ldapId' . $entry->id)));
+
+				// NAME - already in the DB for existing person, adding a new one for a new person
+				$person->prsn_name = Input::get('userName' . $entry->id);
+			}
+
+			// PERSON STATUS - updating every time to catch if it was changed in LDAP
+			$person->prsn_status = Session::get('userStatus');
 		}
 		
+		// CLUB
+
 		// If club input is empty setting clubId to '-' (clubId 1). 
 		// Else - look for a match in the Clubs DB and set person->clubId = matched club's id.
 		// No match found - creating a new club with title from input.
@@ -490,20 +499,18 @@ class ScheduleController extends BaseController {
 			$person->clb_id = $match->id;
 		}
 			
+		// COMMENT
+
 		// Change current comment to new comment
 		$entry->entry_user_comment = Input::get('comment' . $entry->id);
-
-		$person->updated_at = Carbon\Carbon::now();
 		
-		// Save changes to person
+		
+		// Save changes to person and schedule entry
+		$person->updated_at = Carbon\Carbon::now();
 		$person->save();
-		Log::info('Update schedule: Person with id' . $person->id . ' is saved.');
 
 		$entry->prsn_id = $person->id;
-
-	    // Save changes to schedule entry
 	    $entry->save();
-		Log::info('Update schedule: ScheduleEntry with id' . $entry->id . ' is saved.');
 	}
 	
 }
