@@ -53,6 +53,7 @@ class ScheduleController extends BaseController {
 		}
 	}
 
+
     /**
 	 * Generates the view for list of tasks - schedules with no related event.
 	 *
@@ -113,12 +114,8 @@ class ScheduleController extends BaseController {
 	}
 
 
-
 	/**
-	 * Updates schedule entries of a specific schedule.
-	 *
-	 * If a password is needed, check it's correct and throw an error to the session if it's not,
-	 * update all entries in bulk otherwise.
+	 * Updates a single schedule.
 	 *
 	 * We also use this method for tasks (schedules without a related event).
 	 *
@@ -128,69 +125,7 @@ class ScheduleController extends BaseController {
 	 */
     public function updateSchedule($id)
     {
-		$schedule = Schedule::findOrFail($id);
-		$entries = ScheduleEntry::where('schdl_id','=',$id)->get();
-    	
-    	// Check if that schedule needs a password
-		if ($schedule->schdl_password !== '')
-		{
-			//get password for specific id here, similar to enty->id
-			if(!Hash::check(Input::get('password'), $schedule->schdl_password ))
-			{
-				Session::put('message', Config::get('messages_de.schedule-pw-needed')); 
-				Session::put('msgType', 'danger');
-				return Redirect::back();
-			} 	
-		} 
-
-		foreach($entries as $entry)
-		{
-			// Entry was empty
-			if( !isset($entry->prsn_id) )
-			{
-				// Entry is not empty now
-				if ( !Input::get('userName' . $entry->id) == '' 
-			 	  OR !Input::get('userName' . $entry->id) == Config::get('messages_de.no-entry'))
-				{
-					// Add new entry data
-					$this->onAdd($entry);
-				} 
-				// Otherwise no change found - do nothing
-			}
-			// Entry was not empty
-			else
-			{
-				// Same person there?
-				if( $entry->prsn_id == Input::get('userName' . $entry->id) 
-				AND Person::where('id', '=', $entry->prsn_id)->first()->prsn_ldap_id == Input::get('ldapId'. $entry->id) )
-				{
-					// Was comment updated?
-					if ( $entry->entry_user_comment != Input::get('comment' . $entry->id) )
-					{
-						$entry->entry_user_comment = Input::get('comment' . $entry->id);
-					} 
-					// Otherwise no change found - do nothing
-				}
-				// New data entered
-				else
-				{
-					// Was entry deleted?
-					if ( Input::get('userName' . $entry->id) == '' 
-				 	  OR Input::get('userName' . $entry->id) == Config::get('messages_de.no-entry'))
-					{
-						$this->onDelete($entry);
-					}
-					// So some new person was provided
-					else
-					{
-						// delete old data
-						$this->onDelete($entry);
-						// add new data
-						$this->onAdd($entry);
-					}
-				}
-			}	
-		}
+		$this->onUpdate($id);
 
 		Session::put('message', Config::get('messages_de.schedule-update-ok')); 
 		Session::put('msgType', 'success');
@@ -211,8 +146,6 @@ class ScheduleController extends BaseController {
 		// Collect IDs of event schedules shown in chosen week view
 		$events = ClubEvent::where('evnt_date_start','>=',$weekStart)
                            ->where('evnt_date_start','<=',$weekEnd)
-                           ->orderBy('evnt_date_start')
-                           ->orderBy('evnt_time_start')
                            ->get();
 		
 		// Add them to the index
@@ -231,9 +164,9 @@ class ScheduleController extends BaseController {
 			array_push($updateIds, $task->id);
 		}
 
-		// update each of the elements in the index
-		foreach ($updateIds as $scheduleId) {
-			$this->updateSchedule($scheduleId);
+		// Update each of the schedules in the index
+		foreach ($updateIds as $schedule) {
+			$this->onUpdate($schedule);
 		}
 
 		return Redirect::back();
@@ -418,7 +351,89 @@ class ScheduleController extends BaseController {
 	}
 
 	
+
+
 	// ---------------private functions ---------------------------------------	
+
+
+
+	/**
+	 * Updates schedule entries of a specific schedule.
+	 *
+	 * If a password is needed, check it's correct and throw an error to the session if it's not,
+	 * update all entries in bulk otherwise.
+	 *
+	 * @param int $id
+     *
+	 * @return RedirectResponse
+	 */
+    private function onUpdate($id)
+    {
+    	$schedule = Schedule::findOrFail($id);
+		$entries = ScheduleEntry::where('schdl_id','=',$id)->get();
+
+		// Check if that schedule needs a password
+		if ($schedule->schdl_password !== '')
+		{
+			//get password for specific id here, similar to enty->id
+			if(!Hash::check(Input::get('password'), $schedule->schdl_password ))
+			{
+				Session::put('message', Config::get('messages_de.schedule-pw-needed')); 
+				Session::put('msgType', 'danger');
+				return Redirect::back();
+			} 	
+		} 
+
+		foreach($entries as $entry)
+		{
+			// Entry was empty
+			if( !isset($entry->prsn_id) )
+			{
+				// Entry is not empty now
+				if ( !Input::get('userName' . $entry->id) == '' 
+			 	  OR !Input::get('userName' . $entry->id) == Config::get('messages_de.no-entry'))
+				{
+					// Add new entry data
+					$this->onAdd($entry);
+				} 
+				// Otherwise no change found - do nothing
+			}
+			// Entry was not empty
+			else
+			{
+				// Same person there?
+				if( $entry->prsn_id == Input::get('userName' . $entry->id) 
+				AND Person::where('id', '=', $entry->prsn_id)->first()->prsn_ldap_id == Input::get('ldapId'. $entry->id) )
+				{
+					// Was comment updated?
+					if ( $entry->entry_user_comment != Input::get('comment' . $entry->id) )
+					{
+						$entry->entry_user_comment = Input::get('comment' . $entry->id);
+					} 
+					// Otherwise no change found - do nothing
+				}
+				// New data entered
+				else
+				{
+					// Was entry deleted?
+					if ( Input::get('userName' . $entry->id) == '' 
+				 	  OR Input::get('userName' . $entry->id) == Config::get('messages_de.no-entry'))
+					{
+						$this->onDelete($entry);
+					}
+					// So some new person was provided
+					else
+					{
+						// delete old data
+						$this->onDelete($entry);
+						// add new data
+						$this->onAdd($entry);
+					}
+				}
+			}	
+		}	
+	}
+
 
 	/**
 	 * Deletes schedule entries.
