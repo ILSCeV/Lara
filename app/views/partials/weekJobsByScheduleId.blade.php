@@ -58,7 +58,7 @@
 								   array('id'=>'userName' . $entry->id, 
 					   				     'class'=>'col-md-8') ) }}
 
-					{{ Form::hidden('ldapId' . $entry->id, '', array('id'=>'ldapId' . $entry->id) ) }}
+					{{ Form::hidden('ldapId' . $entry->id, $entry->getPerson->prsn_ldap_id, array('id'=>'ldapId' . $entry->id) ) }}
 
 				   	<a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 					        <span class="caret"></span>
