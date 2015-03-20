@@ -86,12 +86,14 @@
 
 	<br>
 	
+	{{ Form::model($entries, array('action' => array('ScheduleController@updateSchedule', $clubEvent->getSchedule->id))) }}
+	{{ Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) }}
 	<div class="panel">
 		<div class="panel-heading">
 			<h4 class="panel-title">Dienstplan</h4>
 		</div>
 		<div class="card-body">
-			{{ Form::model($entries, array('action' => array('ScheduleController@updateSchedule', $clubEvent->getSchedule->id))) }}
+			
 			@if( $clubEvent->getSchedule->schdl_password != '')
 				<br>
 				<div class="well">
@@ -120,7 +122,6 @@
 				@include('partials.jobsByScheduleId', $entries)
 				</tbody>
 			</table>
-			{{ Form::submit('Änderungen speichern', array('class'=>'btn btn-primary')) }}
 			{{ Form::close() }}
 		</div>
 	</div>

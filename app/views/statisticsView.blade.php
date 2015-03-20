@@ -1,4 +1,4 @@
-{{-- Needs variables: TBA --}}
+{{-- Needs variables: persons, from, till --}}
 
 @extends('layouts.master')
 
@@ -12,17 +12,19 @@
 
 	<div class="panel">
 		<div class="panel-heading">
-			<h4 class="panel-title">Anzahl gemachter Dienste im Januar 2015</h4>
+				{{ Form::open(['method' => 'POST', 'route' => ['statisticsChangeDate']]) }}
+				<h4 class="panel-title">Anzahl Dienste von {{ Form::input('date', 'from', $from) }} 
+													   bis {{ Form::input('date', 'till', $till) }} </h4>
+				{{ Form::submit('Periode ändern', array('class'=>'btn btn-primary')) }}
+				{{ Form::close() }}
+			
 		</div>
 		<br>
 		<div class="panel-body">	
-					@foreach($persons as $person)
-						{{{ $person->prsn_name }}} ({{{ $person->getClub->clb_title }}})&nbsp; 
-							<div style="position:absolute; background-color: #82CFFD; 
-							width: {{ 5 + 40 * $person->total }}px; 
-							height: 23px;">&nbsp;&nbsp;&nbsp;{{ $person->total }}</div>
-						<br><br><br>
-					@endforeach
+
+			{{-- lavacharts --}}
+			<div id="perf_div"></div>
+			@columnchart('Dienste', 'perf_div')
 
 		</div>
 	</div>

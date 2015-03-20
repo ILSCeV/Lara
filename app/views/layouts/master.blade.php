@@ -77,7 +77,7 @@
 			        }			              
 			    });
 			});
-
+			
 			$(document).ready(function() {
 				if(typeof(Storage) !== "undefined") {
 					if (localStorage.filterClub == "hide") {
@@ -111,7 +111,6 @@
 			    	}
 			    }
 			});
-			    
 		</script>
 
 	</head>

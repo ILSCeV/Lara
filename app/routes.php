@@ -134,4 +134,7 @@ Route::get('/calendar/create/template/{id}', 	array('uses' => 'EventController@s
 
 
 //STATISTICS
-// Route::get('/statistics',					'StatisticsController@showStatistics');
+Route::get('/statistics',						'StatisticsController@showStatistics');
+
+Route::post('/statistics', 						array('as' => 'statisticsChangeDate', 'before' => 'csrf', 
+													  'uses' => 'StatisticsController@showStatistics'));

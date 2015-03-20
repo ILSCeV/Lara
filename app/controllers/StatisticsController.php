@@ -19,41 +19,66 @@
 */
 
 /** 
- * WILL BE IMPLEMENTED LATER. CURRENT STATE IS JUST AN ARCHIVE OF POSSIBLE FUNCTIONS. 
+ * Shows personnel statistics for current month
  *
+ * @return view statisticsView
  */
 
 use Illuminate\Database\Eloquent\Collection as Collection;
+use Khill\Lavacharts\Lavacharts;
 
 class StatisticsController extends BaseController {
 
 
 	/**
-	 * Generates the view with all existing persons and their calculated statistics.
+	 * Generates the view with statistics for a chosen timeframe.
+	 * Includes all persons with LDAP-id set AND status "aktiv" and "kandidat" 
+	 * OR persons with LDAP-id and other status if they used a schedule in the last 3 month.
 	 *
-	 * @return Person[] persons
+	 * @return int $from
+	 * @return int $till
+	 * @return RedirectResponse
 	 */
-	public function showStatistics()
-	{	
-		$persons = Cache::remember('personsForStats', 10 , function()
-		{
-			$timeSpan = new DateTime("now");
-			$timeSpan = $timeSpan->sub(DateInterval::createFromDateString('3 months'));
-			return Person::whereRaw("prsn_ldap_id IS NOT NULL AND (prsn_status IN ('aktiv', 'kandidat') OR updated_at>='"	.$timeSpan->format('Y-m-d H:i:s')."')")
-							->orderBy('prsn_name')
-							->get();
-		});
+	public function showStatistics(){
 
-		$from = date("Y") . "-" . date("m") . "-01"; 
-		$till = '2015-01-31';
+		// Setting timeframe
+		$from = (is_null(Input::get('from'))) ? date('Y-m-01') : Input::get('from');
+		$till = (is_null(Input::get('till'))) ? date('Y-m-t') : Input::get('till');	
+
+		// Selecting persons to evaluate
+		$timeSpan = new DateTime("now");
+		$timeSpan = $timeSpan->sub(DateInterval::createFromDateString('3 months'));
+		$persons = Person::whereRaw( "prsn_ldap_id IS NOT NULL 
+									  AND (prsn_status IN ('aktiv', 'kandidat') 
+									  OR updated_at>='" . $timeSpan->format('Y-m-d H:i:s') . "')")
+						 ->orderBy('prsn_name')
+						 ->get();
+		
 
 		foreach($persons as $person){
-			//define new attribute 'total' for each person object, fill it with the sum received.
+			// Define new attribute 'total' for each person object, fill it with the sum received
 			$person->total = $this->countStatisticsById($person->id, $from, $till);
 		}
 
-		return View::make('statisticsView', compact('persons'));
+
+		// Generating charts with lavacharts
+
+		$graphData = Lava::DataTable();
+
+		$graphData->addStringColumn('Name')
+		          ->addNumberColumn('Dienste');
+
+		foreach ($persons as $person) {
+			$graphData->addRow(array($person->prsn_name . "(" . substr($person->prsn_status, 0, 1) . ")" . "(" . $person->getClub->clb_title . ")", $person->total));
+		}
+
+
+		$columnchart = Lava::ColumnChart('Dienste')
+		                    ->setOptions(array('datatable' => $graphData));
+
+		return View::make('statisticsView', compact('persons', 'from', 'till'));
 	}
+
 
 	/**
 	 * Calculates the sum of all shifts in a given period for a given person id.
@@ -66,23 +91,24 @@ class StatisticsController extends BaseController {
 		$events = ClubEvent::where('evnt_date_start','>', $from)
 						  ->where('evnt_date_start','<', $till)
 						  ->get();
-
+		
 		$subject = Person::find($id);
-
+		
 		$subjectTotal = 0;
 
 		foreach($events as $event){
 			// for each event - get its schedule
 			$schedule = Schedule::findOrFail($event->getSchedule->id);
-
+			
 			// for each schedule - get its entries that have this person's id
 			$entries = ScheduleEntry::where('schdl_id', '=',$schedule->id)->where('prsn_id','=',$subject->id)->get();
-
+			
 			// for each entry - get its job type weight
 			foreach($entries as $entry){
-				$weight = $entry->getJobType->jbtyp_statistical_weight;
+				//$weight = $entry->getJobType->jbtyp_statistical_weight;
 				//and add it to subject's total
-				$subjectTotal += $weight;
+				//$subjectTotal += $weight;
+				$subjectTotal += 1;
 			}
 			
 		}
@@ -90,7 +116,7 @@ class StatisticsController extends BaseController {
 		return $subjectTotal;
 	}
 
+
+
 }
-
-
 

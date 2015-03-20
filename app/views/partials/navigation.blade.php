@@ -18,8 +18,8 @@
                 @endif
                 <li><a href="{{ Request::getBasePath() }}/schedule">Dienstpläne</a></li>
                 @if(Session::has('userId'))
-                <li><a href="{{ Request::getBasePath() }}/task">Aufgaben</a></li>
-                    {{-- <li><a href="{{ Request::getBasePath() }}/statistics">Dienstestatistik</a></li> --}}
+                <li><a href="{{ Request::getBasePath() }}/task">Aufgaben</a></li>    
+                <li><a href="{{ Request::getBasePath() }}/statistics">Dienstestatistik</a></li>
                 @endif
             </ul> 
 
