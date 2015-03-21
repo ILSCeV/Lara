@@ -138,3 +138,9 @@ Route::get('/statistics',						'StatisticsController@showStatistics');
 
 Route::post('/statistics', 						array('as' => 'statisticsChangeDate', 'before' => 'csrf', 
 													  'uses' => 'StatisticsController@showStatistics'));
+
+// MANAGEMENT
+Route::get('/management/jobtypes',				'ManagementController@showJobTypes');
+
+Route::post('/management/jobtypes', 			array('as' => 'updateJobTypes', 'before' => 'csrf', 
+													  'uses' => 'ManagementController@updateJobTypes'));
