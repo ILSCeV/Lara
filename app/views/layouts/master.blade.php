@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Lara VedSt | @yield('title', 'VedSt Default Title')</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
    	 	<meta name="viewport" content="width=device-width, initial-scale=1">
 		{{ HTML::script('js/jquery-2.1.1.js') }}
 		{{ HTML::script('js/bootstrap.js') }}

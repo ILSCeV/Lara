@@ -8,10 +8,32 @@ window.setTimeout(function() {
 
 // Show/hide more button for infos
 $(function(){
-	$('.moreless').click(function(e) {
+	$('.moreless-more').click(function(e) {
 		$(this).parent().children('.more').toggleClass('moreshow');
-		window.location.hash="navbar";
+        $(this).parent().children('.more').css('height','auto'); 
+        $(this).parent().children('.moreless-less').show();
+        $(this).parent().children('.moreless-more').hide();
 	});
+});
+
+$(function(){
+    $('.moreless-less').click(function(e) {
+        $(this).parent().children('.more').toggleClass('moreshow');
+        $(this).parent().children('.more').css('height','125'); 
+        $(this).parent().children('.more').height(125);  
+        $(this).parent().children('.moreless-less').hide();
+        $(this).parent().children('.moreless-more').show();  
+    });
+});
+
+$(function(){
+    $('.moreless-more').hide();
+    $('.moreless-less').hide();
+    if ($('.more').height() > 125) {   
+        $('.more').height(125);        
+        $('.moreless-more').show();
+    };
+
 });
 
 

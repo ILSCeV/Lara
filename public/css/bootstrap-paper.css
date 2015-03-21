@@ -1,9 +1,5 @@
 @import url("//fonts.googleapis.com/css?family=Roboto:300,400,500");
 
-
-
-
-
 /** 
  * Maxim's Erweiterungen
  */
@@ -29,7 +25,6 @@
   -ms-user-select: none;
   user-select: none;
 }
-
 
 .day-container {
     white-space: nowrap;
@@ -60,19 +55,11 @@
 
 .alert-centered{
     position: relative;
-
     width: 100%;
     margin-left: -50%;
     z-index:999999;
 }
 
-.thisMonth{
-    
-}
-
-.otherMonth{
-    
-}
 
  /*!
  * bootswatch v3.3.1+2

@@ -65,7 +65,8 @@
 					<h5 class="panel-title">Zusatzinfos:</h5> 
 					{{ nl2br(e($clubEvent->evnt_public_info)) }}
 				</div>
-				<button type="button" class="moreless btn btn-primary" data-dismiss="alert">mehr/weniger anzeigen</button>
+				<button type="button" class="moreless-more btn btn-primary" data-dismiss="alert">mehr anzeigen</button>
+				<button type="button" class="moreless-less btn btn-primary" data-dismiss="alert">weniger anzeigen</button>
 			</div>
 			@endif
 
@@ -76,7 +77,8 @@
 						<h5 class="panel-title">Weitere Details:</h5> 
 						{{ nl2br(e($clubEvent->evnt_private_details)) }}
 					</div>
-					<button type="button" class="moreless btn btn-primary" data-dismiss="alert">mehr/weniger anzeigen</button>
+					<button type="button" class="moreless-more btn btn-primary" data-dismiss="alert">mehr anzeigen</button>
+					<button type="button" class="moreless-less btn btn-primary" data-dismiss="alert">weniger anzeigen</button>
 				</div>
 				@endif
 			@endif

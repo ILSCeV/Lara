@@ -4,12 +4,11 @@
 
 .more {
   overflow:hidden;
-  height:181px;
+  height:auto;
 }
 
 .moreshow {
   overflow:visible;
-  height:auto;
 }
 
 
