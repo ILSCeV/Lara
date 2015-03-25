@@ -33,28 +33,6 @@
 					<br>
 					<i>Ort:</i> {{{ $clubEvent->getPlace->plc_title }}}
 				</div>
-				{{-- CRUD --}}
-				@if(Session::has('userGroup')
-						AND (Session::get('userGroup') == 'marketing'
-						OR Session::get('userGroup') == 'clubleitung'))
-						<br>
-						<div>						
-							<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/edit" 
-							   class="btn btn-primary">Veranstaltung ändern</a>
-							<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/delete" 
-							   onclick="confirmation();return false;" 
-							   class="btn btn-default">Veranstaltung löschen</a>
-							<script type="text/javascript">
-								
-								function confirmation() {
-									if (confirm("Willst du diese Veranstaltung wirklich löschen?")){
-										window.location = "{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/delete";
-									}
-								}
-								
-							</script>
-						</div>
-				@endif
 			</div>
 		</div>
 
@@ -87,6 +65,28 @@
 	</div>
 
 	<br>
+	{{-- CRUD --}}
+	@if(Session::has('userGroup')
+			AND (Session::get('userGroup') == 'marketing'
+			OR Session::get('userGroup') == 'clubleitung'))
+			<br>
+			<div class="pull-right">						
+				<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/edit" 
+				   class="btn btn-primary">Veranstaltung ändern</a>
+				<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/delete" 
+				   onclick="confirmation();return false;" 
+				   class="btn btn-default">Veranstaltung löschen</a>
+				<script type="text/javascript">
+					
+					function confirmation() {
+						if (confirm("Willst du diese Veranstaltung wirklich löschen?")){
+							window.location = "{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/delete";
+						}
+					}
+					
+				</script>
+			</div>
+	@endif
 	
 	{{ Form::model($entries, array('action' => array('ScheduleController@updateSchedule', $clubEvent->getSchedule->id))) }}
 	{{ Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) }}

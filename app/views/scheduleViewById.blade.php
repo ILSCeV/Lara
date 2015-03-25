@@ -8,25 +8,29 @@
 
 @section('content')
 
+{{-- CRUD --}}
 @if(Session::has('userGroup'))
-		<br />
-		<div>						
-			<a href="{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/edit" 
-			   class="btn btn-primary">Aufgabe ändern</a>
-			<a href="{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/delete" 
-			   onclick="confirmation();return false;" 
-			   class="btn btn-default">Aufgabe löschen</a>
-			<script type="text/javascript">
-				
-				function confirmation() {
-					if (confirm("Willst du diese Aufgabe wirklich löschen?")){
-						window.location = "{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/delete";
-					}
+	<br>
+	<div class="pull-right">						
+		<a href="{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/edit" 
+		   class="btn btn-primary">Aufgabe ändern</a>
+		<a href="{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/delete" 
+		   onclick="confirmation();return false;" 
+		   class="btn btn-default">Aufgabe löschen</a>
+		<script type="text/javascript">
+			
+			function confirmation() {
+				if (confirm("Willst du diese Aufgabe wirklich löschen?")){
+					window.location = "{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/delete";
 				}
-				
-			</script>
-		</div>
+			}
+			
+		</script>
+	</div>
 @endif
+
+{{ Form::model($entries, array('action' => array('ScheduleController@updateSchedule', $schedule->id))) }}
+{{ Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) }}
 <div class="panel">
 	<div class="panel-heading">
 		<h4 class="panel-title">
@@ -37,6 +41,7 @@
 		@endif
 		</h4>
 	</div>
+
 	<div class="panel-body">
 		@if($schedule->evnt_id != NULL)
 			<i>DV-Zeit:</i> {{ date("H:i", strtotime($schedule->schdl_time_preparation_start)) }}
@@ -46,8 +51,6 @@
 			<i>Fällig am:</i> {{ strftime("%a, %d. %b", strtotime($schedule->schdl_due_date)) }}
 		@endif
 	</div>
-
-	{{ Form::model($entries, array('action' => array('ScheduleController@updateSchedule', $schedule->id))) }}
 
 	@if( $schedule->schdl_password != '')	
 		<br />
@@ -80,7 +83,6 @@
 		</tbody>
 	</table>
 
-	{{ Form::submit('Änderungen speichern', array('class'=>'btn btn-primary')) }}
 	{{ Form::close() }}
 </div>
 @stop

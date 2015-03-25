@@ -4,9 +4,9 @@
 		
 			<tr>
 				@if( is_null($entry->getPerson) )
-				<td class="col-md-3 red">
+				<td class="col-md-3 col-xs-10 red">
 				@else
-				<td class="col-md-3 green">
+				<td class="col-md-3 col-xs-10 green">
 				@endif
 					<span class="word-break"><small><strong>{{ $entry->getJobType->jbtyp_title }}</strong></small></span>
 				</td>
@@ -23,7 +23,7 @@
 
 				   	{{ Form::hidden('ldapId' . $entry->id, '', array('id'=>'ldapId' . $entry->id) ) }}
 
-				   		<a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+				   		<a class="btn-small btn-default dropdown-toggle hidden-print" data-toggle="dropdown" href="javascript:void(0);">
 					        <span class="caret"></span>
 					    </a>
 					    <ul class="dropdown-menu">
@@ -60,7 +60,7 @@
 
 					{{ Form::hidden('ldapId' . $entry->id, $entry->getPerson->prsn_ldap_id, array('id'=>'ldapId' . $entry->id) ) }}
 
-				   	<a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+				   	<a class="btn-small btn-default dropdown-toggle hidden-print" data-toggle="dropdown" href="javascript:void(0);">
 					        <span class="caret"></span>
 					    </a>
 					    <ul class="dropdown-menu">
@@ -93,12 +93,12 @@
 				
 				<td class="col-md-4">
 					@if( is_null($entry->getPerson) )
-						<div class="btn-group">
+						<div class="btn-group  hidden-print">
 						   	{{ Form::text('club' . $entry->id, Input::old('club' . $entry->id),  
 										   array( 'placeholder'=>'-', 
 										  'id'=>'club' . $entry->id, 
 					   				      'class'=>'col-md-8') ) }}
-						 	<a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+						 	<a class="btn-small btn-default dropdown-toggle hidden-print" data-toggle="dropdown" href="javascript:void(0);">
 						        <span class="caret"></span>
 						    </a>
 						    <ul class="dropdown-menu">
@@ -122,7 +122,7 @@
 											   array('id'=>'club' . $entry->id, 
 					   				   		  'class'=>'col-md-8')) }}
 							@endif
-						   <a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+						   <a class="btn-small btn-default dropdown-toggle hidden-print" data-toggle="dropdown" href="javascript:void(0);">
 						        <span class="caret"></span>
 						    </a>
 						    <ul class="dropdown-menu">
@@ -140,23 +140,23 @@
 
 				<td class="col-md-1">
 					@if( is_null($entry->getPerson) )
-								<button type="button" class="showhide btn-small btn-default" data-dismiss="alert">
+								<button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
 									<i class="fa fa-comment-o"></i>
 								</button>
 					@else			
 						@if( $entry->entry_user_comment == "" )
-								<button type="button" class="showhide btn-small btn-default" data-dismiss="alert">
+								<button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
 									<i class="fa fa-comment-o"></i>
 								</button>
 						@else
-								<button type="button" class="showhide btn-small btn-default" data-dismiss="alert">
+								<button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
 									<i class="fa fa-comment"></i>
 								</button>
 						@endif
 					@endif
 				</td>
 			</tr>
-			<tr>
+			<tr class="hidden-print">
 				<td colspan="4">
 					@if( is_null($entry->getPerson) )
 						<div class="hide">				

@@ -1,24 +1,48 @@
-.hidden-print, .navigation, .footer, a {
-	display: none !important;
+@media all {
+	.page-break	{ display: none; }
 }
 
-.container {
-    margin: 0px;
-    padding: 0px;
+@media print {
+
+	body {
+	font: 11pt;
+	line-height: 1.0;
+	}
+
+    * { 
+    	background: transparent 	!important; 
+    	color: black 				!important; 
+    	text-shadow: none 			!important; 
+    	filter:none 				!important; 
+    	-ms-filter: none 			!important; 
+    	margin: 0 					!important; 
+
+    }
+
+	.day-row div:nth-child(5n)
+	{ 
+		display: block;
+		page-break-inside: avoid;
+	   	white-space: pre;
+	}
+
+	.hidden-print, 
+	.navigation, 
+	.footer {
+		display: none !important;
+	}
+
+	a[href]:after {
+	  	content: none !important;
+	}
+
+	.panel-body {
+	    white-space: nowrap;
+	}
+
+  	@page {
+	margin: 1cm;
+}
 }
 
-/*.day-container {
-    white-space: normal;
-}*/
 
-/*.inline-block {
-    white-space: nowrap;
-}*/
-
-.panel {
-    white-space: normal;
-}
-
-.page-break {
-	page-break-after: always;
-}
