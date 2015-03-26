@@ -45,30 +45,85 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 | shown, which includes a detailed stack trace during debug.
 |
 */
-/*
-App::error(function($exception)
+
+App::before(function($request, $response)
 {
-	Log::error($exception->getCode() . ': ' . $exception->getMessage());
-	Log::error($exception);
-	
-	$text = "Es ist ein Fehler aufgetreten.";	
-	return View::make('errors', compact('text'));
+    /**
+     * Laravel $code is always 500
+     * message format:
+     * SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+     * SQLSTATE[HY000] [1049] Unknown database 'blah'
+     */
+    App::error(function(\PDOException $e, $code)
+    {
+        Log::error( 'FATAL DATABASE ERROR: ' . $code . ' = ' . $e->getMessage() );
+
+        if ( App::Environment('dev') )
+        {
+            $message = explode(' ', $e->getMessage());
+            $dbCode = rtrim($message[1], ']');
+            $dbCode = trim($dbCode, '[');
+
+            // codes specific to MySQL
+            switch ($dbCode) {
+                case 1049:
+                    $userMessage = 'Unknown database - probably config error:';
+                    break;
+                case 2002:
+                    $userMessage = 'DATABASE IS DOWN:';
+                    break;
+                default:
+                    $userMessage = 'Untrapped Error:';
+                    break;
+            }
+
+            $userMessage = $userMessage . '<br>' . $e->getMessage();
+
+        } else {
+
+            $userMessage = 'We are experiencing a bad bad problem. Sorry for that. <br>
+            				Admins are notified and battle monkeys are being deployed as you read this.';
+        }
+
+        return View::make('errors', array('text' => $userMessage));
+
+    }); // end of App::error
+
 });
 
-App::missing(function($exception)
+if (App::environment() != "dev") 
 {
-	Log::error($exception->getCode() . ': ' . $exception->getMessage());
-    Log::error($exception);
-	$text = "404 - Seite nicht gefunden.";
-	return View::make('errors', compact('text'));
-});
-App::fatal(function($exception)
-{
-	Log::error($exception->getCode() . ': ' . $exception->getMessage());
-	Log::error($exception);
-	$text = "Es ist ein fataler Fehler aufgetreten.";
-	return View::make('errors', compact('text'));
-});
+
+	App::error(function($exception)
+	{
+		Log::error($exception->getCode() . ': ' . $exception->getMessage());
+		Log::error($exception);
+		
+		$text = "Es ist ein Fehler aufgetreten.";	
+		return View::make('errors', compact('text'));
+	});
+
+	App::missing(function($exception)
+	{
+		Log::error($exception->getCode() . ': ' . $exception->getMessage());
+	    Log::error($exception);
+		$text = "404 - Seite nicht gefunden.";
+		return View::make('errors', compact('text'));
+	});
+
+	App::fatal(function($exception)
+	{
+		Log::error($exception->getCode() . ': ' . $exception->getMessage());
+		Log::error($exception);
+		$text = "Es ist ein fataler Fehler aufgetreten.";
+		return View::make('errors', compact('text'));
+	});
+
+
+}
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Maintenance Mode Handler

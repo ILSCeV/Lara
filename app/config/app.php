@@ -78,6 +78,7 @@ return array(
 	|
 	*/
 
+	// bcproduction key
 	'key' => 'aVGxJNLxMgBiVIYwJKv4jK45w3kVYEZd',
 
 	'cipher' => MCRYPT_RIJNDAEL_128,

@@ -18,12 +18,6 @@
 --------------------------------------------------------------------------
 */
 
-/** 
- * Shows personnel statistics for current month
- *
- * @return view statisticsView
- */
-
 use Illuminate\Database\Eloquent\Collection as Collection;
 use Khill\Lavacharts\Lavacharts;
 
@@ -105,10 +99,9 @@ class StatisticsController extends BaseController {
 			
 			// for each entry - get its job type weight
 			foreach($entries as $entry){
-				//$weight = $entry->getJobType->jbtyp_statistical_weight;
+				$weight = $entry->getJobType->jbtyp_statistical_weight;
 				//and add it to subject's total
-				//$subjectTotal += $weight;
-				$subjectTotal += 1;
+				$subjectTotal += $weight;
 			}
 			
 		}

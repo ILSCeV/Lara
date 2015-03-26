@@ -6,14 +6,17 @@
 return array(
 
     // LOGIN CONTROLLER
+    'set-to-german'			=> 'Deutsch ist eine schöne Sprache!',
+
     'user-id-input-empty'   => 'Ohne Clubnummer wird hier nix.',
     'user-id-not-numeric'   => 'Eine Clubnummer besteht aus Ziffern...',
     'uid-not-found'         => 'Hmm... ich kenne dich nicht! Wie war deine Nummer nochmal?',
-    'login-success'         => 'Willkommen zurück!',
+    'login-success'         => 'Lang lebe =FREI=!',
     'login-fail'            => 'Hey, so kommst du nicht rein - dieses Passwort war falsch!',
+	'password-mismatch' 	=> 'Eingegebene Passwörter stimmen nicht überein!',
+	'ldap-override-fail'	=> 'Falsches Master-Passwort eingegeben!',
 	'access-denied'			=> 'Zugriff verweigert!',
-	'event-doesnt-exist'	=> 'Fehler: Die Veranstaltung, die du löschen wolltest, existiert nicht.',
-	'event-delete-ok'		=> 'Alles top, das Ding wurde gelöscht.',
+
 	'month-name-jan'		=> 'Januar',  
 	'month-name-feb'		=> 'Februar',
 	'month-name-mar'		=> 'M&auml;rz',
@@ -26,11 +29,24 @@ return array(
 	'month-name-oct'		=> 'Oktober',
 	'month-name-nov'		=> 'November',
 	'month-name-dec'		=> 'Dezember',
+
+	'week-name'				=> 'KW',
+
+	'day-name-mon'			=> 'Mo',
+	'day-name-tue'			=> 'Di',
+	'day-name-wed'			=> 'Mi',
+	'day-name-thu'			=> 'Do',
+	'day-name-fri'			=> 'Fr',
+	'day-name-sat'			=> 'Sa',
+	'day-name-sun'			=> 'So',
+
 	'schedule-pw-needed'	=> 'Hey, ohne korrektes Passwort klappt das nicht!',
-	'no-entry'				=> '=FREI=',
+	'schedule-no-entry'				=> '=FREI=',
 	'schedule-update-ok'	=> 'Änderungen erfolgreich gespeichert!',
+
+	'event-doesnt-exist'	=> 'Fehler: Die Veranstaltung, die du löschen wolltest, existiert nicht.',
+	'event-delete-ok'		=> 'Alles top, das Ding wurde gelöscht.',
+
 	'task-doesnt-exist'		=> 'Fehler: Die Aufgabe, die du löschen wolltest, existiert nicht.',
 	'task-delete-ok'		=> 'Alles top, das Ding wurde gelöscht.',	
-	'password-mismatch' 	=> 'Eingegebene Passwörter stimmen nicht überein!',
-	'ldap-override-fail'	=> 'Falsches Master-Passwort eingegeben!'
 );

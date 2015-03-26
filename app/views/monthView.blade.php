@@ -37,13 +37,13 @@
           
         <thead>
             <tr>
-                <th>Mo</th>
-                <th>Di</th>
-                <th>Mi</th>
-                <th>Do</th>
-                <th>Fr</th>
-                <th>Sa</th>
-                <th>So</th>
+                <th>{{ Config::get('messages_de.day-name-mon') }}</th>
+                <th>{{ Config::get('messages_de.day-name-tue') }}</th>
+                <th>{{ Config::get('messages_de.day-name-wed') }}</th>
+                <th>{{ Config::get('messages_de.day-name-thu') }}</th>
+                <th>{{ Config::get('messages_de.day-name-fri') }}</th>
+                <th>{{ Config::get('messages_de.day-name-sat') }}</th>
+                <th>{{ Config::get('messages_de.day-name-sun') }}</th>
             </tr>
         </thead>
   
