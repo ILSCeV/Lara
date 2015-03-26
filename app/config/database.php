@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => 'prod-mysql',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -52,7 +52,18 @@ return array(
 			'prefix'   => '',
 		),
 
-		'mysql' => array(
+		'prod-mysql' => array(
+			'driver'    => 'mysql',
+			'host'      => 'example-ip-adress',
+			'database'  => 'example-database',
+			'username'  => 'example-admin-username',
+			'password'  => 'example-admin-password',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),
+
+		'dev-mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 			'database'  => 'vedst',

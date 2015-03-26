@@ -10,3 +10,6 @@ app/storage/meta/services.json
 app/storage/meta/services.json
 app/config/bcLDAP.php
 app/config/bcLDAP.php
+CONFIG MANUAL OVERRIDE/app/config/bcLDAP.php
+CONFIG MANUAL OVERRIDE/app/config/database.php
+CONFIG MANUAL OVERRIDE/app/controllers/LoginController.php
