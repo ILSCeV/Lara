@@ -75,65 +75,15 @@ class LoginController extends BaseController {
 	 *
 	 * @return RedirectResponse
      */
-    
-
-/** 
- * WORKAROUND for LDAP-Server down time 
- */
-
-/*  DELETE THIS LINE TO ACTIVATE WORKAROUND AND COMMENT OUT WORKING CONTROLLER BELOW 
 
     public function doLogin()
     {
-        // Placeholder for development, groups will be implemented later
-        $userGroup = 'marketing';
 
-        $input = array("1001" => "Neo", "1002" => "Morpheus", "1003" => "Trinity", "1004" => "Cypher", 
-                       "1004" => "Tank", "1005" => "Hawkeye", "1006" => "Blackwidow", "1007" => "Deadpool", 
-                       "1008" => "Taskmaster", "1009" => "nicht-FREI", "1010" => "Venom", "1011" => "Superman", 
-                       "1012" => "Bart", "1013" => "Fry", "1014" => "Bender");
-        
-        $userId = array_rand($input, 1);
-        $userName = $input[$userId];
-        
-        // get user club
-        $inputClub = array("bc-Club", "bc-Café");
+        // getting the clients ip for logging
+        $request = Request::instance();
+        $request->setTrustedProxies(array('127.0.0.1')); // only trust proxy headers coming from the IP addresses on the array (change this to suit your needs)
+        $ip = $request->getClientIp();
 
-        $userClubId = array_rand($inputClub, 1);
-        $userClub = $inputClub[$userClubId];
-
-        $userStatus = "aktiv";
-
-        // setting default filter to user club
-        if ($userClub == "bc-Club") {
-            $clubFilter = "bc-Club";
-        } else {
-            $clubFilter = "bc-Café";
-        }
-        
-
-
-        Session::put('userId',      $userId);
-        Session::put('userName',    $userName);
-        Session::put('userGroup',   $userGroup);            
-        Session::put('userClub',    $userClub);
-        Session::put('userStatus',  $userStatus);
-        Session::put('clubFilter',  $clubFilter);
-
-        Log::info('Auth success: User ' . $userName . ' (' . $userId .', group: ' . $userGroup . ') just logged in.');
-      
-        return Redirect::back();
-  
-        }
-    }
-
-/**
- * WORKING CONTROLLER BELOW THIS LINE,
- * will only function with a bcLDAP-Config present.
- */
-
-    public function doLogin()
-    {
         // Masterpassword for LDAP-Server downtime, stored in hashed form in config/bcLDAP.php
         if (Input::get('username') === "LDAP-OVERRIDE" ) {
 
@@ -146,7 +96,7 @@ class LoginController extends BaseController {
                 Session::put('userStatus',  'aktiv');
                 Session::put('clubFilter',  'bc-Club');
 
-                Log::info('LDAP OVERRIDE USED.');
+                Log::info('LDAP OVERRIDE USED from ' . $ip . '.');
               
                 return Redirect::back();
 
@@ -155,7 +105,7 @@ class LoginController extends BaseController {
                 Session::put('message', Config::get('messages_de.ldap-override-fail'));
                 Session::put('msgType', 'danger');
 
-                Log::warning('LDAP OVERRIDE FAIL: wrong password!');
+                Log::warning('LDAP OVERRIDE FAIL: wrong password entered from ' . $ip . '.');
                 
                 return Redirect::back();                
             }   
@@ -238,7 +188,7 @@ class LoginController extends BaseController {
             ldap_unbind($ldapConn);
             Session::put('message', Config::get('messages_de.uid-not-found'));
             Session::put('msgType', 'danger');
-            Log::info('Auth fail: wrong userID given (username: ' . Input::get('username') . ', password: ' . Input::get('password') . ').');
+            Log::info('Auth fail: wrong userID given (username: ' . Input::get('username') . ').');
             return Redirect::back();
         }
 
