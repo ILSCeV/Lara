@@ -112,6 +112,8 @@ Route::get('/task/id/{id}/delete',				'TaskController@deleteTask');
 
 
 // AUTHENTIFICATION
+Route::get('login',								'CalendarController@currentMonth');
+
 Route::post('login', 							array('before' => 'csrf', 'uses' => 'LoginController@doLogin'));
 
 Route::get('logout', 							array('uses' => 'LoginController@doLogout'));
@@ -128,9 +130,11 @@ Route::get('/calendar/create',					'EventController@showCreateEventToday');
 
 Route::get('/calendar/create/{year}/{month}/{day}',	'EventController@showCreateEvent');
 
+Route::get('/calendar/create/{year}/{month}/{day}/template/{id}', 	array('uses' => 'EventController@showCreateEventWithTemplate'));
+
 Route::post('/calendar/create', 				array('as' => 'newClubEvent', 'before' => 'csrf', 'uses' => 'EventController@createEvent'));
 
-Route::get('/calendar/create/template/{id}', 	array('uses' => 'EventController@showCreateEventWithTemplate'));
+Route::get('/calendar/create/template/{id}', 	array('uses' => 'EventController@showCreateEventTodayWithTemplateToday'));
 
 
 //STATISTICS

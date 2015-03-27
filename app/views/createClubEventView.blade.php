@@ -43,7 +43,7 @@
 					        <li> 
 					        	<a href="javascript:void(0);" 
 					        	   onClick="document.getElementById('templateName').value='{{$template->schdl_title}}',
-					        	   document.getElementById('confirmTemplate').href='{{ Request::getBasePath() }}/calendar/create/template/{{$template->id}}';">
+					        	   document.getElementById('confirmTemplate').href='{{URL::current()}}/template/{{$template->id}}';">
 					        	   {{$template->schdl_title}}</a>
 					        </li>
 						@endforeach

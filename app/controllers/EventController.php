@@ -40,19 +40,19 @@ class EventController extends BaseController {
                                                                      	 'day' => date("d")));
 	}
 
-	/**
-	* Generate the view for creating a new event with a date specified
-	*
-	* @param  int $year
-    * @param  int $month
-    * @param  int $day
-	*
-	* @return view createClubEventView
-	* @return Place[] places
-	* @return Schedule[] templates
-	* @return Jobtype[] jobtypes
-	* @return string $date
-	*/
+    /**
+	 * Generate the view for creating a new event with a date specified
+	 *
+	 * @param  int $year
+     * @param  int $month
+     * @param  int $day
+	 *
+	 * @return view createClubEventView
+	 * @return Place[] places
+	 * @return Schedule[] templates
+	 * @return Jobtype[] jobtypes
+	 * @return string $date
+	 */
 	public function showCreateEvent($year, $month, $day)
 	{		
         $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
@@ -71,14 +71,43 @@ class EventController extends BaseController {
 		return View::make('createClubEventView', compact('places', 'templates', 'jobtypes', 'date'));
 	}
 
+
+    /**
+     * Fills missing parameters: if no day specified use current date.
+     *
+     * @param  int $templateId
+     *
+     * @return int $day
+     * @return int $month
+     * @return int $year
+	 * @return RedirectResponse
+     */
+	public function showCreateEventTodayWithTemplateToday($templateId)
+	{
+		return Redirect::action('EventController@showCreateEventWithTemplate', array('year' => date("Y"), 
+                                                                     	 'month' => date("m"), 
+                                                                     	 'day' => date("d"),
+                                                                     	 'templateId'));
+	}
 	
-	/**
-	* Generate the view for creating a new event with am template.
-	*
-	* @return view createClubEventView
-	*/
-	public function showCreateEventWithTemplate($templateId)
+    /**
+	 * Generate the view for creating a new event with a template and a date specified.
+	 *
+	 * @param  int $year
+     * @param  int $month
+     * @param  int $day
+     * @param  int $templateId
+	 *
+	 * @return view createClubEventView
+	 * @return Place[] places
+	 * @return Schedule[] templates
+	 * @return Jobtype[] jobtypes
+	 * @return string $date
+	 */
+	public function showCreateEventWithTemplate($year, $month, $day, $templateId)
 	{		
+		$date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
+
 		$places = Place::orderBy('plc_title', 'ASC')
 					   ->lists('plc_title', 'id');
 		
@@ -97,7 +126,7 @@ class EventController extends BaseController {
 							   ->orderBy('jbtyp_title', 'ASC')
 							   ->lists('jbtyp_title', 'id');
 				
-		return View::make('createClubEventView', compact('places', 'templates', 'jobtypes', 'entries', 'activeTemplate'));
+		return View::make('createClubEventView', compact('places', 'templates', 'jobtypes', 'entries', 'activeTemplate', 'date'));
 	}
 
 	/**
@@ -169,7 +198,7 @@ class EventController extends BaseController {
 		}
 
 		// log the action
-		Log::info('Create event: User ' . Session::get('userId') . ' with rigths ' . Session::get('userGroup') . ' creates event ' . $newEvent->evnt_title . ' with id ' . $newEvent->id . '.');
+		Log::info('Create event: User ' . Session::get('userId') . ' (' . Session::get('userGroup') . ') created ' . $newEvent->evnt_title . ' (ID: ' . $newEvent->id . ').');
 			
 		// show new event
 		return Redirect::action('CalendarController@showId', array('id' => $newEvent->id));
