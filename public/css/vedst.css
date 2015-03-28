@@ -2,7 +2,12 @@
  * More / Less Button
  */
 
-.more {
+.more-info {
+  overflow:hidden;
+  height:auto;
+}
+
+.more-details {
   overflow:hidden;
   height:auto;
 }
@@ -97,7 +102,8 @@
  */
 
 #centerpoint {
-
+    left: 50%;
+    position: absolute;
 }
 
 .alert-centered{
@@ -105,6 +111,5 @@
     width: 100%;
     margin-left: -50%;
     z-index:999999;
-        left: 50%;
-    position: absolute;
+        
 }

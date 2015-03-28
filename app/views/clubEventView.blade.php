@@ -39,24 +39,24 @@
 		<div class="container col-md-6">
 			@if( $clubEvent->evnt_public_info != '')
 			<div class="panel">
-				<div class="panel-body more">				
+				<div class="panel-body more-info">				
 					<h5 class="panel-title">Zusatzinfos:</h5> 
 					{{ nl2br(e($clubEvent->evnt_public_info)) }}
 				</div>
-				<button type="button" class="moreless-more btn btn-primary" data-dismiss="alert">mehr anzeigen</button>
-				<button type="button" class="moreless-less btn btn-primary" data-dismiss="alert">weniger anzeigen</button>
+				<button type="button" class="moreless-more-info btn btn-primary" data-dismiss="alert">mehr anzeigen</button>
+				<button type="button" class="moreless-less-info btn btn-primary" data-dismiss="alert">weniger anzeigen</button>
 			</div>
 			@endif
 
 			@if(Session::has('userId'))
 				@if($clubEvent->evnt_private_details != '') 
 				<div class="panel">
-					<div class="panel-body more">
+					<div class="panel-body more-details">
 						<h5 class="panel-title">Weitere Details:</h5> 
 						{{ nl2br(e($clubEvent->evnt_private_details)) }}
 					</div>
-					<button type="button" class="moreless-more btn btn-primary" data-dismiss="alert">mehr anzeigen</button>
-					<button type="button" class="moreless-less btn btn-primary" data-dismiss="alert">weniger anzeigen</button>
+					<button type="button" class="moreless-more-details btn btn-primary" data-dismiss="alert">mehr anzeigen</button>
+					<button type="button" class="moreless-less-details btn btn-primary" data-dismiss="alert">weniger anzeigen</button>
 				</div>
 				@endif
 			@endif
