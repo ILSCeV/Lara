@@ -61,14 +61,18 @@ class EventController extends BaseController {
 					   ->lists('plc_title', 'id');
 		
 		$templates = Schedule::where('schdl_is_template', '=', '1')
-							 ->orderBy('schdl_title', 'ASC')->get();
+							 ->orderBy('schdl_title', 'ASC')
+							 ->get();
 
 
 		$jobtypes = Jobtype::where('jbtyp_is_archived', '=', '0')
-							   ->orderBy('jbtyp_title', 'ASC')
-							   ->lists('jbtyp_title', 'id');
+						   ->orderBy('jbtyp_title', 'ASC')
+						   ->get();
 				
-		return View::make('createClubEventView', compact('places', 'templates', 'jobtypes', 'date'));
+		return View::make('createClubEventView', compact('places', 
+														 'templates', 
+														 'jobtypes', 
+														 'date'));
 	}
 
 
@@ -85,9 +89,9 @@ class EventController extends BaseController {
 	public function showCreateEventTodayWithTemplateToday($templateId)
 	{
 		return Redirect::action('EventController@showCreateEventWithTemplate', array('year' => date("Y"), 
-                                                                     	 'month' => date("m"), 
-                                                                     	 'day' => date("d"),
-                                                                     	 'templateId'));
+                                                                     	 			 'month' => date("m"), 
+                                                                     	 			 'day' => date("d"),
+                                                                     	 			 'templateId'));
 	}
 	
     /**
@@ -112,21 +116,29 @@ class EventController extends BaseController {
 					   ->lists('plc_title', 'id');
 		
 		$templates = Schedule::where('schdl_is_template', '=', '1')
-							 ->orderBy('schdl_title', 'ASC')->get();
+							 ->orderBy('schdl_title', 'ASC')
+							 ->get();
 
-		$template = Schedule::where('id', '=', $templateId)->first();
+		$template = Schedule::where('id', '=', $templateId)
+							->first();
 		
 		// put template data into entries
-		$entries = $template->getEntries()->getResults();
+		$entries = $template->getEntries()
+							->getResults();
 
 		// put name of the active template for further use
 		$activeTemplate = $template->schdl_title;
 
 		$jobtypes = Jobtype::where('jbtyp_is_archived', '=', '0')
-							   ->orderBy('jbtyp_title', 'ASC')
-							   ->lists('jbtyp_title', 'id');
+						   ->orderBy('jbtyp_title', 'ASC')
+						   ->get();
 				
-		return View::make('createClubEventView', compact('places', 'templates', 'jobtypes', 'entries', 'activeTemplate', 'date'));
+		return View::make('createClubEventView', compact('places', 
+														 'templates', 
+														 'jobtypes', 
+														 'entries', 
+														 'activeTemplate', 
+														 'date'));
 	}
 
 	/**
@@ -139,29 +151,38 @@ class EventController extends BaseController {
 	{ 
 		$event = ClubEvent::findOrFail($id);
 
-		$schedule = $event->getSchedule()->getResults();
+		$schedule = $event->getSchedule()
+						  ->getResults();
 		
 		$jobtypes = Jobtype::where('jbtyp_is_archived', '=', '0')
-							   ->orderBy('jbtyp_title', 'ASC')
-							   ->lists('jbtyp_title', 'id');
+						   ->orderBy('jbtyp_title', 'ASC')
+						   ->get();
 
 		$places = Place::orderBy('plc_title', 'ASC')
 					   ->lists('plc_title', 'id');
 
 		$templates = Schedule::where('schdl_is_template', '=', '1')
-							 ->orderBy('schdl_title', 'ASC')->get();
+							 ->orderBy('schdl_title', 'ASC')
+							 ->get();
 
-		$template = Schedule::where('id', '=', $schedule->id)->first();
+		$template = Schedule::where('id', '=', $schedule->id)
+							->first();
 		
 		// put template data into entries
-		$entries = $schedule->getEntries()->getResults();
+		$entries = $schedule->getEntries()
+							->getResults();
 
 		// put name of the active template for further use
 		$activeTemplate = $template->schdl_title;
 
-		return View::make('editClubEventView', compact('event', 'schedule', 'places', 
-													   'jobtypes', 'templates', 'template', 
-													   'entries', 'activeTemplate'));
+		return View::make('editClubEventView', compact('event', 
+													   'schedule', 
+													   'places', 
+													   'jobtypes', 
+													   'templates', 
+													   'template', 
+													   'entries', 
+													   'activeTemplate'));
 	}
 	
 

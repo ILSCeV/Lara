@@ -140,3 +140,79 @@ $(document).ready(function() {
     	}
     }
 });
+
+
+// Shows dynamic form fields for new job types 
+
+$(document).ready(function() {
+    // initialise counter
+    var iCnt = parseInt($('#counter').val());
+
+    if (iCnt < 2) {
+        $(".btnRemove").hide();
+    }; 
+
+    // Add one more job with every click on "+"
+    $('.btnAdd').click(function() {            
+        
+        var temp = $(this).closest('.box');
+        var tempId = parseInt(temp.attr('id').substring(3,7));
+
+        // clone entry
+        temp.clone(true).insertAfter(temp);
+
+        // update fields for following entries
+        temp.nextUntil("br").each(function() {
+            $(this).attr('id', "box" + ++tempId);
+            $(this).find("[name^=jobType]").attr('id', "jobType" + tempId).attr('name', "jobType" + tempId);
+            $(this).find("[name^=timeStart]").attr('id', "timeStart" + tempId).attr('name', "timeStart" + tempId);
+            $(this).find("[name^=timeEnd]").attr('id', "timeEnd" + tempId).attr('name', "timeEnd" + tempId);
+            $(this).find("[name^=jbtyp_statistical_weight]").attr('id', "jbtyp_statistical_weight" + tempId).attr('name', "jbtyp_statistical_weight" + tempId);
+        }); 
+
+        // update counter
+        iCnt = iCnt + 1;
+        $('#counter').val(iCnt);      
+
+        if (iCnt >> 1) {
+            $(".btnRemove").show();
+        };  
+    });
+
+    // Remove selected job
+    $('.btnRemove').click(function(e) {            
+            var temp = $(this).closest('.box');
+            var tempId = parseInt(temp.attr('id').substring(3,7)) - 1;
+
+            // update fields for following entries
+            temp.nextUntil("br").each(function() {
+                $(this).attr('id', "box" + ++tempId);
+                $(this).find("[name^=jobType]").attr('id', "jobType" + tempId).attr('name', "jobType" + tempId);
+                $(this).find("[name^=timeStart]").attr('id', "timeStart" + tempId).attr('name', "timeStart" + tempId);
+                $(this).find("[name^=timeEnd]").attr('id', "timeEnd" + tempId).attr('name', "timeEnd" + tempId);
+                $(this).find("[name^=jbtyp_statistical_weight]").attr('id', "jbtyp_statistical_weight" + tempId).attr('name', "jbtyp_statistical_weight" + tempId);
+            }); 
+
+            // delete entry
+            $(this).closest(".box").remove();
+            e.preventDefault();
+            
+            // update counter
+            iCnt = iCnt - 1; 
+            $('#counter').val(iCnt);
+
+            if (iCnt < 2) {
+                $(".btnRemove").hide();
+            }; 
+    });
+
+    // populate from dropdown select
+    $.fn.dropdownSelect = function(jobtype, timeStart, timeEnd, weight) {
+        
+        $(this).closest('.box').find("[name^=jobType]").val(jobtype);
+        $(this).closest('.box').find("[name^=timeStart]").val(timeStart);
+        $(this).closest('.box').find("[name^=timeEnd]").val(timeEnd);   
+        $(this).closest('.box').find("[name^=jbtyp_statistical_weight]").val(weight);
+    };
+});
+      
