@@ -13,3 +13,4 @@ app/config/bcLDAP.php
 CONFIG MANUAL OVERRIDE/app/config/bcLDAP.php
 CONFIG MANUAL OVERRIDE/app/config/database.php
 CONFIG MANUAL OVERRIDE/app/controllers/LoginController.php
+CONFIG MANUAL OVERRIDE/public/.htaccess

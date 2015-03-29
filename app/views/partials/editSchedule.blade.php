@@ -9,8 +9,7 @@
 
 <!-- jobtype fields -->
     <span hidden>{{$counter = 0}}</span>
-    <br><br>
-
+    <br>
     <div id="container" class="container">
 	    {{-- If there are entries passed - fill them with data and increment counter --}} 
 	    @if(isset($entries))
@@ -50,27 +49,23 @@
 					<input type="time" class="input" 
 						   name={{ "timeStart" . $counter }}
 						   id={{ "timeStart" . $counter }}
-						   value={{ $entry->getJobType->jbtyp_time_start }} />
-	            	
-	            	&nbsp;&nbsp;&nbsp;&nbsp;
+						   value={{ $entry->getJobType->jbtyp_time_start }} hidden />
 
 	            	<input type="time" 
 	            		   class="input" 
 	            		   name={{ "timeEnd" . $counter }} 
 	            		   id={{ "timeEnd" . $counter }}
-	            		   value={{ $entry->getJobType->jbtyp_time_end }} />
-
-	            	&nbsp;&nbsp;&nbsp;&nbsp;
+	            		   value={{ $entry->getJobType->jbtyp_time_end }} hidden />
 
 	            	<input type="number" 
 	            		   class="input" 
 	            		   name={{ "jbtyp_statistical_weight" . $counter }} 
 	            		   id={{ "jbtyp_statistical_weight" . $counter }}
-	            		   value={{ $entry->getJobType->jbtyp_statistical_weight }} />
+	            		   value={{ $entry->getJobType->jbtyp_statistical_weight }} hidden />
 
-	            	<input type="button" value="+" class="btn btn-success btnAdd" />
+	            	<input type="button" value="+" class="btn btn-small btn-success btnAdd" />
     				
-    				<input type="button" value="-" class="btn btn-danger btnRemove" />
+    				<input type="button" value="-" class="btn btn-small btn-danger btnRemove" />
 
 				</div>
 	        @endforeach 
@@ -107,37 +102,34 @@
 					</ul>
 				</span>
 			</div>
+
 			&nbsp;&nbsp;&nbsp;&nbsp;
 
 			<input type="time" class="input" 
 				   name={{ "timeStart" . $counter }}
 				   id={{ "timeStart" . $counter }}
-				   value="21:00" />
+				   value="21:00" hidden />
         	
-        	&nbsp;&nbsp;&nbsp;&nbsp;
 
         	<input type="time" 
         		   class="input" 
         		   name={{ "timeEnd" . $counter }} 
         		   id={{ "timeEnd" . $counter }}
-        		   value="01:00" />
-
-        	&nbsp;&nbsp;&nbsp;&nbsp;
+        		   value="01:00" hidden />
 
         	<input type="number" 
         		   class="input" 
         		   name={{ "jbtyp_statistical_weight" . $counter }} 
         		   id={{ "jbtyp_statistical_weight" . $counter }}
         		   value="1"
-        		   placeholder="Statistische Wertung" />
+        		   placeholder="Statistische Wertung" hidden />
 
-        	<input type="button" value="+" class="btn btn-success btnAdd" />
+        	<input type="button" value="+" class="btn btn-small btn-success btnAdd" />
 			
-			<input type="button" value="-" class="btn btn-danger btnRemove" />
-
+			<input type="button" value="-" class="btn btn-small btn-danger btnRemove" />
     </div>
 <br>
-<input type="hidden" name="counter" id="counter" value="{{$counter}}" /><br>
+<input type="hidden" name="counter" id="counter" value="{{$counter}}" />
 	
 </div>
-	
+</div>

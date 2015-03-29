@@ -32,7 +32,7 @@ class TaskController extends BaseController {
 	{		
 		$jobtypes = Jobtype::where('jbtyp_is_archived', '=', '0')
 							   ->orderBy('jbtyp_title', 'ASC')
-							   ->lists('jbtyp_title', 'id');
+							   ->get();
 		
 		return View::make('createTaskView', compact('jobtypes'));
 	}
@@ -52,7 +52,7 @@ class TaskController extends BaseController {
 		
 		$jobtypes = Jobtype::where('jbtyp_is_archived', '=', '0')
 							   ->orderBy('jbtyp_title', 'ASC')
-							   ->lists('jbtyp_title', 'id');
+							   ->get();
 
 		return View::make('editTaskView', compact('schedule', 'jobtypes', 'entries'));
 	}

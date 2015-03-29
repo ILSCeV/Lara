@@ -244,8 +244,8 @@ class ScheduleController extends BaseController {
 			if (!empty(Input::get("jobType" . $i))) { 		// skip empty fields
 		        
 			$jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jobType" . $i)));	
-			$jobtype->jbtyp_time_start = Input::get('timeStart' . $i);
-			$jobtype->jbtyp_time_end = Input::get('timeEnd' . $i);
+			//$jobtype->jbtyp_time_start = Input::get('timeStart' . $i);
+			//$jobtype->jbtyp_time_end = Input::get('timeEnd' . $i);
 			
 			$scheduleEntry = new ScheduleEntry;
 			$scheduleEntry->jbtyp_id = $jobtype->id;

@@ -22,12 +22,8 @@
 					<h4 class="panel-title">Veranstaltung ändern:</h4>
 				</div>
 
-				<div class="col-md-12">
-					<strong>Vorlage: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>{{ $activeTemplate }}
-			   	</div>
-
-				<br><br>
-
+				<br>
+				
 				<div class="panel-body">
 					<div class="form-group">
 				      	<label for="title" class="col-md-2 control-label">Titel:</label>
