@@ -11,13 +11,13 @@
 |
 */
 
-/* Route::get('/', function()
+Route::get('/', function()
 	{
-		return View::make('index');
+		return View::make('betatest-index');
 	});
-*/
 
-Route::get('/', 'CalendarController@currentMonth');
+
+/* Route::get('/', 'CalendarController@currentMonth'); */
 
 /** Global Patterns
  *

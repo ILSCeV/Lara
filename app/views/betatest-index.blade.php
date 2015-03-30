@@ -11,10 +11,7 @@
 	<div class="panel-body">
 		<p>
 			Ich bin Lara, der neue Kalender mit integriertem Dienstplan.<br>
-			Wenn du das siehst, nimmst du am Betatest teil. 
-			<span class="text-muted"> Oder gehörst zu den Entwicklern - hallo Team! ;) </span><br>
-			Wir nähern uns dem Ende von dem Softwareprojekt und wollen dich bitten, 
-			Lara zu testen. <br>
+			Und das ist der zweite Betatest.<br>
 			Bitte vergiss aber nicht - das ist teils noch "work in progress" 
 			und einige Sachen funktionieren nicht ganz, nicht immer, oder können sich noch ändern.
 		</p>
@@ -35,27 +32,23 @@
 		<p>
 			<strong>Deine Aufgaben:</strong>
 			<ol type="1">
-				<li>Dein Mitbewohner will am nächsten Mittwoch ein Dienst machen - trage ihn als Externen ein.</li>
-				<li>Später erfährst du, dass er 15 Minuten später kommt - füge einen Kommentar hinzu</li>
-				<li>Logge dich ein, trage sich selbst als Dienst an paar Stellen ein.<br>
-					<strong>Während des Betatests musst du keine Clubnummer oder Passwörter eingeben.<br>
-					Dir wird statt ClubID ein zufällig gewähles Superheld zugewiesen</strong>, in dessen Namen du agieren kannst.<br>
-					Sie machen alle sehr gerne Dienste! Falls dir der Name nicht gefällt logge dich aus und nochmal ein.</li>
-				<li>Jetzt entferne einen von diesen Einträgen, ersetze dich mit einem anderen Clubei.</li>
-				<li>Du willst mit den Clubmenschen zusammen eine Seifenkiste bauen - erzeuge einen Aufgabendienstplan dafür.</li>
-				<li>Wenn du Marketing oder CL bist - bitte erzeuge zwei neue Veranstaltungen, füge diesen Dienstpläne hinzu.</li>
-				<li>Jetzt ändere bei einer davon die Startzeit auf 12 Uhr und lösche die zweite.</li>
-				<li>Spiele noch ein bisschen rum - mir sind keine weitere Aufgaben eingefallen, aber vielleicht dir? ;)</li>
+				<li>Erstelle Veranstaltungen für kommende Woche(n), inkl. Werbetext und interne Details, <br>
+				und trage da Dienste ein (aus dem "alten" DP kopieren)</li>
+				<li>Erstelle Veranstaltungen der vergangenen Wochen, inkl. Werbetext (von der Webseite/FB) und interne Details (aus "altem" Kalender) <br>
+				und trage da Dienste ein (aus dem alten DP kopieren) - brauche ich für Statistik</li>
+				<li>Probiere mal eine Testveranstaltung zu erstellen und danach zu löschen usw.</li>
+				<li>Spiele noch ein bisschen rum - mir sind keine weitere Aufgaben eingefallen, aber vielleicht dir? <br>
+				Also wenn du einen Knopf siehst, und nicht weisst, was er tut - drücke ihn! Vielleciht ist dahinter was tolles versteckt :)</li>
+				<li>Schreibe mir eine Nachricht mit deinem Feedback - was hat nicht funktioniert, was sollte man ändern usw.</li>
 			</ol> 
 		</p>
 		<p>
-			Rückmeldung bitte <strong>bis Samstag den 25.01.2015 um 11:00</strong> an <strong>maxim.drachinskiy@bc-studentenclub.de</strong> senden.
+			Rückmeldung bitte <strong>bis Sonntag den 05.04.2015 um 20:00</strong> an <strong>maxim.drachinskiy@bc-studentenclub.de</strong> senden.
 		</p>
 		<p>
 			Danke für deine Hilfe! 
 		</p>
 	</div>
-	<div class="panel-header"><h5 align="right">xx Lara</h5></div>
 </div>
 
 
