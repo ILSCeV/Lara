@@ -27,13 +27,13 @@
 						<th class="col-md-2">
 							Dienst
 						</th>
-						<th class="col-md-4">
+						<th class="col-md-3">
 							Dauer
 						</th>
 						<th class="col-md-1">
 							Wertung
 						</th>
-						<th class="col-md-5">
+						<th class="col-md-6">
 							Verwaltung
 						</th>
 					</tr>

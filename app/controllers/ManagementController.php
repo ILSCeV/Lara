@@ -24,7 +24,7 @@ class ManagementController extends BaseController {
 
 
 	/**
-	 * Generates the view with all existing job types.
+	 * Generates the view with all existing job types and allows editing
 	 *
 	 * @return view jobManagementView
 	 */
@@ -60,11 +60,62 @@ class ManagementController extends BaseController {
 				//ToDo: need to find all schedules that use it and clean them here first.
 				$jobtype->delete(); 
 			} */
+
 			$jobtype->save();
 		}
 
 		return View::make('jobManagementView', compact('jobtypes'));
 	}
+
+
+	/**
+	 * Generates the view with all existing places and allows editing
+	 *
+	 * @return view placeManagementView
+	 */
+	public function showPlaces(){
+
+		$places = Place::orderBy('plc_title', 'ASC')->get();
+
+		return View::make('placeManagementView', compact('places'));
+	}
+
+
+	/**
+	 * Updates all existing places with changes provided.
+	 *
+	 * @return view placeManagementView
+	 */
+	public function updatePlaces(){
+
+		$places = Place::orderBy('plc_title', 'ASC')->get();
+
+		foreach ($places as $place) 
+		{
+			if (Input::get('destroy' . $place->id)) {
+
+				// find all schedules that use this place and replace it with a placeholder
+				$filter = ClubEvent::where('plc_id','=',$place->id)->get();
+
+				foreach ($filter as $event) {		
+					$event->plc_id = 0; // placeholder with plc_title "-"
+					$event->save();
+				}
+
+				Place::destroy($place->id);
+
+			} else {
+
+				// update title
+				$place->plc_title =	Input::get('plc_title' . $place->id); 
+				$place->save();
+
+			}
+			
+		}
+
+		return View::make('placeManagementView', compact('places'));
+	}	
 
 }
 

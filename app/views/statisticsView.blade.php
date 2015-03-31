@@ -29,15 +29,7 @@
 			@columnchart('Dienste', 'perf_div')
 
 			<br>
-			<br>
-			{{-- edit jobtypes button --}}
-			    <div class="col-md-3">
-			        @if(Session::has('userGroup')
-			            AND (Session::get('userGroup') == 'marketing'
-			            OR Session::get('userGroup') == 'clubleitung'))
-			            <a href="{{ Request::getBasePath() }}/management/jobtypes" class="btn btn-default">Diensttypen verwalten</a>
-			        @endif
-				</div>
+
 		</div>
 
 @else

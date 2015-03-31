@@ -21,6 +21,17 @@
                 <li><a href="{{ Request::getBasePath() }}/task">Aufgaben</a></li>    
                 <li><a href="{{ Request::getBasePath() }}/statistics">Dienstestatistik</a></li>
                 @endif
+                @if(Session::has('userGroup')
+                AND (Session::get('userGroup') == 'marketing'
+                OR Session::get('userGroup') == 'clubleitung'))
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-cog"></i>&nbsp;&nbsp;<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ Request::getBasePath() }}/management/places">Orte verwalten</a></li>
+                    <li><a href="{{ Request::getBasePath() }}/management/jobtypes">Diensttypen verwalten</a></li>
+                  </ul>
+                </li>
+                @endif
             </ul> 
 
             <ul class="nav navbar-nav navbar-right">    
