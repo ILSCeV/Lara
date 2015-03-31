@@ -48,8 +48,12 @@
 									   array('id'=>'plc_title' . $place->id))}}
 					</td>
 					<td>
-						{{ Form::label('destroy' . $place->id, 'Löschen?', array('class' => 'col-md-2 control-label')) }}
-						{{ Form::checkbox('destroy' . $place->id, true)}}
+						@if($place->id >> 2)
+							{{ Form::label('destroy' . $place->id, 'Löschen?', array('class' => 'col-md-2 control-label')) }}
+							{{ Form::checkbox('destroy' . $place->id, true)}}
+						@else
+							<small>Dieser Ort kann nicht gelöscht werden</small>
+						@endif
 					</td>
 				</tr>
 			@endforeach

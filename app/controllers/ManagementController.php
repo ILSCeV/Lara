@@ -114,6 +114,9 @@ class ManagementController extends BaseController {
 			
 		}
 
+		// need to update our index after the changes
+		$places = Place::orderBy('plc_title', 'ASC')->get();
+
 		return View::make('placeManagementView', compact('places'));
 	}	
 
