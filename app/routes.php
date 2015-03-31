@@ -16,7 +16,6 @@ Route::get('/', function()
 		return View::make('betatest-index');
 	});
 
-
 /* Route::get('/', 'CalendarController@currentMonth'); */
 
 /** Global Patterns
@@ -148,3 +147,8 @@ Route::get('/management/jobtypes',				'ManagementController@showJobTypes');
 
 Route::post('/management/jobtypes', 			array('as' => 'updateJobTypes', 'before' => 'csrf', 
 													  'uses' => 'ManagementController@updateJobTypes'));
+
+Route::get('/management/places',				'ManagementController@showPlaces');
+
+Route::post('/management/places', 				array('as' => 'updatePlaces', 'before' => 'csrf', 
+													  'uses' => 'ManagementController@updatePlaces'));
