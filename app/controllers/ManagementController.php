@@ -126,6 +126,7 @@ class ManagementController extends BaseController {
 	/**
 	 * Generates the view with all existing templates and allows editing
 	 *
+	 * @return view templateManagementView
 	 */
 	public function showTemplates(){
 
@@ -138,7 +139,9 @@ class ManagementController extends BaseController {
 
 
 	/**
+	 * Updates all existing templates with changes provided.
 	 *
+	 * @return view templateManagementView
 	 */
 	public function updateTemplates(){
 
