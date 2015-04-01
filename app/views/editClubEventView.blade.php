@@ -23,6 +23,28 @@
 				</div>
 
 				<br>
+
+				<div class="form-group">
+					<label for="templateName" class="col-md-3 control-label">Vorlagenname: &nbsp;</label>
+					<div class="col-md-9">
+					@if ($event->getSchedule->schdl_is_template == 1)
+						{{ Form::text('templateName', $event->getSchedule->schdl_title, array('id'=>'templateName', 'class'=>'col-md-12') ) }}
+					@else
+						{{ Form::text('templateName', '', array('id'=>'templateName', 'class'=>'col-md-12') ) }}
+					@endif
+				    </div>
+			   	</div>
+
+			   	<br>
+
+			   	<div class="form-group">
+					<label for="saveAsTemplate" class="col-md-10 control-label">Veranstaltungsdienstplan als neue Vorlage speichern?</label>
+			     	<div class="col-md-2">
+						{{ Form::checkbox('saveAsTemplate', '1', false) }}
+					</div>
+			   	</div>
+
+			   	<br>
 				
 				<div class="panel-body">
 					<div class="form-group">

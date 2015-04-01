@@ -120,5 +120,56 @@ class ManagementController extends BaseController {
 		return View::make('placeManagementView', compact('places'));
 	}	
 
-}
 
+
+
+	/**
+	 * Generates the view with all existing templates and allows editing
+	 *
+	 */
+	public function showTemplates(){
+
+		$templates = Schedule::where('schdl_is_template','=','1')
+						  	 ->orderBy('schdl_title', 'ASC')
+						  	 ->get();
+
+		return View::make('templateManagementView', compact('templates'));
+	}
+
+
+	/**
+	 *
+	 */
+	public function updateTemplates(){
+
+		$templates = Schedule::where('schdl_is_template','=','1')
+						  	 ->orderBy('schdl_title', 'ASC')
+						  	 ->get();
+
+		foreach ($templates as $template) 
+		{
+			if (Input::get('destroy' . $template->id)) {
+
+				// remove from the list of templates, but don't touch corrsponding event/schedule
+				$template->schdl_is_template = 0;
+				$template->save();
+
+			} else {
+
+				// update title
+				$template->schdl_title =	Input::get('schdl_title' . $template->id); 
+				$template->save();
+
+			}
+			
+		}
+
+		// need to update our index after the changes
+		$templates = Schedule::where('schdl_is_template','=','1')
+						  	 ->orderBy('schdl_title', 'ASC')
+						  	 ->get();
+
+		return View::make('templateManagementView', compact('templates'));
+	}	
+
+}

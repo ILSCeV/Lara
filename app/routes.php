@@ -152,3 +152,8 @@ Route::get('/management/places',				'ManagementController@showPlaces');
 
 Route::post('/management/places', 				array('as' => 'updatePlaces', 'before' => 'csrf', 
 													  'uses' => 'ManagementController@updatePlaces'));
+
+Route::get('/management/templates',				'ManagementController@showTemplates');
+
+Route::post('/management/templates', 			array('as' => 'updateTemplates', 'before' => 'csrf', 
+													  'uses' => 'ManagementController@updateTemplates'));

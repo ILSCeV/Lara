@@ -29,6 +29,7 @@
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ Request::getBasePath() }}/management/places">Orte verwalten</a></li>
                     <li><a href="{{ Request::getBasePath() }}/management/jobtypes">Diensttypen verwalten</a></li>
+                    <li><a href="{{ Request::getBasePath() }}/management/templates">Vorlagen verwalten</a></li>
                   </ul>
                 </li>
                 @endif
