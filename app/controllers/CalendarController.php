@@ -127,7 +127,6 @@ class CalendarController extends BaseController {
         return View::make('calendarView', compact('events', 'date'));
     }
 
-
     /**
      * Generates the view for a specific event, including the schedule.
      *
@@ -136,7 +135,7 @@ class CalendarController extends BaseController {
      * @return ClubEvent $clubEvent
      * @return ScheduleEntry[] $entries
 	 * @return RedirectResponse
-     */      
+     */
     public function showId($id)
     {  
 		$clubEvent = ClubEvent::findOrFail($id);
@@ -167,5 +166,39 @@ class CalendarController extends BaseController {
 
         return View::make('clubEventView', compact('clubEvent', 'entries', 'clubs', 'persons'));
     }
+
+
+/* TESTING AJAX HERE */
+
+    public function showAjax()
+    {
+        return View::make('ajax');
+    }
+
+
+    /**
+     * Check if username exists
+     * @return Response
+     */
+    public function posted()
+    {
+        try {
+            // find our entry - 105 is the first comment on /calendar/id/18
+            $find = ScheduleEntry::where('id', '=', '105')->first();
+
+            // change value to input value
+            $find->entry_user_comment = Input::get('input-test');
+            $find->save();
+
+            // send a response
+            return Response::json(array("match"));
+
+        } catch (Exception $e) {
+            return Response::json(array("exception"));
+        }
+    }
+
+/* END OF TESTING */
+
 
 }

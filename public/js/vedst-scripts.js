@@ -216,3 +216,32 @@ $(document).ready(function() {
     };
 });
       
+
+// TESTING AJAX
+
+          $('#input-test').focusout(function() {
+
+            // start a spinner in the username field
+            // until I get a reponse from the server
+            $('#username-addon').html('<i class="fa fa-spinner fa-spin"></i>');
+
+            var username = $('#input-test').val();
+
+            $.post("/vedst-dev/ajax/posted", { 'input-test': username }, function(data) {
+              
+              if(data == "match")
+              {
+                $('#username-addon').html('<i class="fa fa-check"></i>');
+                $('#username-group').removeClass('has-error');
+                $('#username-group').addClass('has-success');
+
+              } else {
+
+                $('#username-addon').html('<i class="fa fa-ban"></i>');
+                $('#username-group').addClass('has-error');
+                $('#username-group').removeClass('has-');
+              }
+
+            });
+
+          });

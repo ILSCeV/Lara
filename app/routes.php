@@ -157,3 +157,12 @@ Route::get('/management/templates',				'ManagementController@showTemplates');
 
 Route::post('/management/templates', 			array('as' => 'updateTemplates', 'before' => 'csrf', 
 													  'uses' => 'ManagementController@updateTemplates'));
+
+
+// TESTING AJAX
+
+   Route::get('/ajax', 'CalendarController@showAjax');
+// Route::get('/', 'UsersController@create');
+
+   Route::post('/ajax/posted', 'CalendarController@posted');
+// Route::post('/a/username/', 'UsersController@username');
