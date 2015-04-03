@@ -94,33 +94,48 @@ App::before(function($request, $response)
 if (App::environment() != "dev") 
 {
 
-	App::error(function($exception)
-	{
-		Log::error($exception->getCode() . ': ' . $exception->getMessage());
-		Log::error($exception);
-		
-		$text = "Es ist ein Fehler aufgetreten.";	
-		return View::make('errors', compact('text'));
-	});
+    App::error(function($exception)
+    {
+        // getting the clients ip for logging
+            $request = Request::instance();
+            $request->setTrustedProxies(array('127.0.0.1')); // only trust proxy headers coming from the IP addresses on the array (change this to suit your needs)
+            $ip = $request->getClientIp();
 
-	App::missing(function($exception)
-	{
-		Log::error($exception->getCode() . ': ' . $exception->getMessage());
-	    Log::error($exception);
-		$text = "404 - Seite nicht gefunden.";
-		return View::make('errors', compact('text'));
-	});
+        Log::error('User from IP ' . $ip . ' tried to open ' . URL::current()  . ' and receved an error - code ' . $exception->getCode() . ' with message: "' . $exception->getMessage() . '".');
+        Log::error($exception);
+        
+        $text = "Es ist ein Fehler aufgetreten.";   
+        return View::make('errors', compact('text'));
+    });
 
-	App::fatal(function($exception)
-	{
-		Log::error($exception->getCode() . ': ' . $exception->getMessage());
-		Log::error($exception);
-		$text = "Es ist ein fataler Fehler aufgetreten.";
-		return View::make('errors', compact('text'));
-	});
+    App::missing(function($exception)
+    {
+        // getting the clients ip for logging
+            $request = Request::instance();
+            $request->setTrustedProxies(array('127.0.0.1')); // only trust proxy headers coming from the IP addresses on the array (change this to suit your needs)
+            $ip = $request->getClientIp();
+
+        Log::error('User from IP ' . $ip . ' tried to open ' . URL::current()  . ' and receved a 404 error.');
+        $text = "404 - Seite nicht gefunden.";
+        return View::make('errors', compact('text'));
+    });
+
+    App::fatal(function($exception)
+    {
+        // getting the clients ip for logging
+            $request = Request::instance();
+            $request->setTrustedProxies(array('127.0.0.1')); // only trust proxy headers coming from the IP addresses on the array (change this to suit your needs)
+            $ip = $request->getClientIp();
+
+        Log::error('User from IP ' . $ip . ' tried to open ' . URL::current()  . ' and receved an error - code ' . $exception->getCode() . ' with message: "' . $exception->getMessage() . '".');
+        Log::error($exception);
+        $text = "Es ist ein fataler Fehler aufgetreten.";
+        return View::make('errors', compact('text'));
+    });
 
 
 }
+
 
 
 
