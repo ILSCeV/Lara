@@ -69,6 +69,9 @@ class WeekController extends BaseController {
            
         $events = ClubEvent::where('evnt_date_start','>=',$weekStart)
                            ->where('evnt_date_start','<=',$weekEnd)
+                           ->with('getPlace',
+                           		  'getSchedule.getEntries.getJobType',
+                           		  'getSchedule.getEntries.getPerson.getClub')
                            ->orderBy('evnt_date_start')
                            ->orderBy('evnt_time_start')
                            ->get();
@@ -77,6 +80,8 @@ class WeekController extends BaseController {
 		$tasks = Schedule::where('schdl_show_in_week_view', '=', '1')
 					     ->where('schdl_due_date', '>=', $weekStart) 				
 					     ->where('schdl_due_date', '<=', $weekEnd) 
+					     ->with('getEntries.getPerson.getClub',
+					     		'getEntries.getJobType')
 					     ->get();
 
 		// TODO: don't use raw query, rewrite with eloquent.

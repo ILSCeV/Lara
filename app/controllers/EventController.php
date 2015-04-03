@@ -124,6 +124,7 @@ class EventController extends BaseController {
 		
 		// put template data into entries
 		$entries = $template->getEntries()
+							->with('getJobType')
 							->getResults();
 
 		// put name of the active template for further use
@@ -170,6 +171,7 @@ class EventController extends BaseController {
 		
 		// put template data into entries
 		$entries = $schedule->getEntries()
+							->with('getJobType')
 							->getResults();
 
 		// put name of the active template for further use

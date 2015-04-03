@@ -16,9 +16,14 @@
         @if(count($events)==0)
                 <h3>Für {{ $date }} sind keine Veranstaltungen geplant</h3>
         @else
-                <h3>{{ $date }}</h3>
+                <h3>Alle Veranstaltungen im Jahr {{ $date }}</h3>
+                
+                <center>{{ $events->links() }}</center>
+
                 @foreach($events as $clubEvent)
                         @include('partials.clubEventById', $clubEvent)
                 @endforeach
+
+                <center>{{ $events->links() }}</center>
         @endif
 @stop

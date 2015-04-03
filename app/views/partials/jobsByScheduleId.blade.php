@@ -18,7 +18,7 @@
 					   	{{ Form::text('userName' . $entry->id, Input::old('userName' . $entry->id), array('placeholder'=>'=FREI=', 'id'=>'userName' . $entry->id))}}
 					   	{{ Form::hidden('ldapId' . $entry->id, '', array('id'=>'ldapId' . $entry->id) ) }}
 					   	@if( Session::get('userId') ) 
-					   	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+					   	<a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 						        <span class="caret"></span>
 						    </a>
 						    <ul class="dropdown-menu">
@@ -54,7 +54,7 @@
 							{{ Form::text('userName' . $entry->id, $entry->getPerson->prsn_name, array('id'=>'userName' . $entry->id) ) }}
 							{{ Form::hidden('ldapId' . $entry->id, '', array('id'=>'ldapId' . $entry->id) ) }}
 						   	@if( Session::get('userId') ) 
-						   	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+						   	<a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 							        <span class="caret"></span>
 							    </a>
 							    <ul class="dropdown-menu">
@@ -90,7 +90,7 @@
 								{{ Form::text('userName' . $entry->id, $entry->getPerson->prsn_name, array('id'=>'userName' . $entry->id) ) }}
 								{{ Form::hidden('ldapId' . $entry->id, $entry->getPerson->prsn_ldap_id, array('id'=>'ldapId' . $entry->id) ) }}
 								@if( Session::get('userId') ) 
-								<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+								<a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 								        <span class="caret"></span>
 								    </a>
 								    <ul class="dropdown-menu">
@@ -133,7 +133,7 @@
 						   	{{ Form::text('club' . $entry->id, Input::old('club' . $entry->id),  
 										   array( 'placeholder'=>'-', 
 										  'id'=>'club' . $entry->id) ) }}
-						 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+						 	<a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 						        <span class="caret"></span>
 						    </a>
 						    <ul class="dropdown-menu">
@@ -157,7 +157,7 @@
 									{{ Form::text('club' . $entry->id, 
 												   array('id'=>'club' . $entry->id)) }}
 								@endif
-							   <a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+							   <a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 							        <span class="caret"></span>
 							    </a>
 							    <ul class="dropdown-menu">
@@ -182,7 +182,7 @@
 										{{ Form::text('club' . $entry->id, 
 													   array('id'=>'club' . $entry->id) ) }}
 									@endif								
-								    <a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+								    <a class="btn-small btn-defaultdropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 								      	<span class="caret"></span>
 								    </a>
 								    <ul class="dropdown-menu">

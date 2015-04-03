@@ -131,6 +131,7 @@ class ManagementController extends BaseController {
 	public function showTemplates(){
 
 		$templates = Schedule::where('schdl_is_template','=','1')
+							 ->with('getClubEvent')
 						  	 ->orderBy('schdl_title', 'ASC')
 						  	 ->get();
 
@@ -169,6 +170,7 @@ class ManagementController extends BaseController {
 
 		// need to update our index after the changes
 		$templates = Schedule::where('schdl_is_template','=','1')
+							 ->with('getClubEvent')
 						  	 ->orderBy('schdl_title', 'ASC')
 						  	 ->get();
 

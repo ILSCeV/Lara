@@ -97,13 +97,20 @@ class CalendarController extends BaseController {
 
         $events = ClubEvent::where('evnt_date_start','>=',$yearStart)
                            ->where('evnt_date_start','<=',$yearEnd)
+                           ->with('getPlace')
                            ->orderBy('evnt_date_start')
                            ->orderBy('evnt_time_start')
-                           ->get();
+                           ->paginate(15);
 
         return View::make('calendarView', compact('events','date'));
     }
      
+
+    /* For showMonth see MonthController@showMonth */
+
+
+    /* For showWeek see WeekController@showWeek */
+
 
     /**
      * Generates the view for the list of all events on a specific date.
@@ -122,7 +129,9 @@ class CalendarController extends BaseController {
 
         $date = strftime("%a, %d. %b %Y", strtotime($dateInput));
 
-        $events = ClubEvent::where('evnt_date_start','=',$dateInput)->get();
+        $events = ClubEvent::where('evnt_date_start','=',$dateInput)
+                           ->with('getPlace')
+                           ->paginate(15);
 
         return View::make('calendarView', compact('events', 'date'));
     }
@@ -138,9 +147,11 @@ class CalendarController extends BaseController {
      */
     public function showId($id)
     {  
-		$clubEvent = ClubEvent::findOrFail($id);
+		$clubEvent = ClubEvent::with('getPlace')
+                              ->findOrFail($id);
 		
-		if(!Session::has('userId') AND $clubEvent->evnt_is_private==1)
+		if(!Session::has('userId') 
+        AND $clubEvent->evnt_is_private==1)
 			
 		{
 			Session::put('message', Config::get('messages_de.access-denied'));
@@ -151,7 +162,11 @@ class CalendarController extends BaseController {
 	
         $schedule = Schedule::findOrFail($clubEvent->getSchedule->id);
 
-        $entries = ScheduleEntry::where('schdl_id', '=', $schedule->id)->get();
+        $entries = ScheduleEntry::where('schdl_id', '=', $schedule->id)
+                                ->with('getJobType',
+                                       'getPerson', 
+                                       'getPerson.getClub')
+                                ->get();
 
         $clubs = Club::lists('clb_title', 'id');
 		
@@ -172,7 +187,16 @@ class CalendarController extends BaseController {
 
     public function showAjax()
     {
-        return View::make('ajax');
+        $persons = Cache::remember('personsForDropDown', 10 , function()
+        {
+            $timeSpan = new DateTime("now");
+            $timeSpan = $timeSpan->sub(DateInterval::createFromDateString('3 months'));
+            return Person::whereRaw("prsn_ldap_id IS NOT NULL AND (prsn_status IN ('aktiv', 'kandidat') OR updated_at>='".$timeSpan->format('Y-m-d H:i:s')."')")
+                            ->orderBy('prsn_name')
+                            ->get();
+        });
+
+        return View::make('ajax', compact('persons'));
     }
 
 
