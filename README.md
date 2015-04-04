@@ -1,3 +1,5 @@
+## Club management software built on top of Laravel 5.0
+
 This is a **development version** - NOT FOR PRODUCTION USE.
 
 ## About
@@ -8,21 +10,8 @@ Lara started as a softwareproject at [TU Ilmenau](http://tu-ilmenau.de) in WS201
 Some features are missing. 
 Some bugs are still alive.
 
-Contributors welcome - contact [Maxim](https://github.com/4D44H) if you want to help.
-
-## Components: 
-- **Calender events** tied to **event schedules** (for personnel planning)
-- Separated **internal tasks** (for schedules without corresponding events)
-- **Personnel statistics** and **event statistics**
-- **Finances** und **controlling**
-- **Authentification**, separating public calender events+schedules from internal data
-
-## Roadmap
-- **Phase 1** (finished): softwareproject at TU Ilmenau, components *calender*, *schedules* and *authentification* via bc-Club LDAP-Server implemented.
-- **Phase 2** (in progress): personal project, components *statistics*, *finances* and *controlling* are in development.
-
 ## Current project status
-(as of 01.03.2015)
+(as of 01.04.2015)
 
 - Calender: **OK**
 - Schedules:
@@ -34,6 +23,17 @@ Contributors welcome - contact [Maxim](https://github.com/4D44H) if you want to 
 - Controlling: tba
 
 For detailed list open requirements and change-requests see: [Issues](https://github.com/4D44H/lara-vedst/issues).
+
+## Components: 
+- **Calender events** tied to **event schedules** (for personnel planning)
+- Separated **internal tasks** (for schedules without corresponding events)
+- **Personnel statistics** and **event statistics**
+- **Finances** und **controlling**
+- **Authentification**, separating public calender events+schedules from internal data
+
+## Roadmap
+- **Phase 1** (finished): softwareproject at TU Ilmenau, components *calender*, *schedules* and *authentification* via bc-Club LDAP-Server implemented.
+- **Phase 2** (in progress): personal project, bugfixes and components *statistics*, *finances* and *controlling* are in development.
 
 ## Requirements
 - MySQL Database
@@ -54,7 +54,11 @@ In short:
 
 Detailed version and english translation: tba
 
-## Licence 
+## Contributing
+
+Visit [Issues](https://github.com/4D44H/lara-vedst/issues) and/or contact [Maxim](https://github.com/4D44H) if you want to help.
+
+### License
 Code published under [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE).
 
 Lara is based on: 
@@ -63,4 +67,4 @@ Lara is based on:
 - [JQuery 2.1.1](http://jquery.com)
 - [Font Awesome 4.2.0](http://fortawesome.github.io/Font-Awesome) 
 
-(all licenced under [MIT Licence](http://opensource.org/licenses/mit-license.html)).
+(all licensed under [MIT License](http://opensource.org/licenses/MIT).
