@@ -1,7 +1,2 @@
-/bootstrap/compiled.php
-.env.*.php
-.env.php
-app/storage/*
-app/config/bcLDAP.php
-app/storage/meta/services.json
-CONFIG MANUAL OVERRIDE/*
+/vendor
+/node_modules

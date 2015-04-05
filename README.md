@@ -38,21 +38,18 @@ For detailed list open requirements and change-requests see: [Issues](https://gi
 ## Requirements
 - MySQL Database
 - Apache Server
-- PHP 5.6
- - MCrypt PHP extension
- - JSON PHP extension
- - LDAP PHP extension
- - MySQL PHP extension
+- PHP >= 5.4
+ - Mcrypt PHP Extension
+ - OpenSSL PHP Extension
+ - Mbstring PHP Extension
+ - Tokenizer PHP Extension
 - Composer
-- Laravel 4.2 
+
+- Laravel 5.0 is already included in this repository.
  
 ## Installation
-In short: 
-- install all of the above
-- configure Apache & Co with parameters from [Installation manual (DE)](https://github.com/4D44H/lara-vedst/blob/master/Installationsanleitung-SWP-WS1415-Studentenclub-Verwaltung.pdf)
-- overwrite folders "app" and "public" with this project files
 
-Detailed version and english translation: tba
+tba
 
 ## Contributing
 
@@ -62,9 +59,9 @@ Visit [Issues](https://github.com/4D44H/lara-vedst/issues) and/or contact [Maxim
 Code published under [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE).
 
 Lara is based on: 
-- [Laravel 4.2](http://laravel.com)
+- [Laravel 5.0](http://laravel.com)
 - [Bootstrap 3.3.1](http://getbootstrap.com) + [Bootswatch 3.3.1+2](http://bootswatch.com)
 - [JQuery 2.1.1](http://jquery.com)
-- [Font Awesome 4.2.0](http://fortawesome.github.io/Font-Awesome) 
+- [Font Awesome 4.3.0](http://fortawesome.github.io/Font-Awesome) 
 
-(all licensed under [MIT License](http://opensource.org/licenses/MIT).
+(All licensed under [MIT License](http://opensource.org/licenses/MIT).
