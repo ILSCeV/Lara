@@ -18,12 +18,12 @@
         @else
                 <h3>Alle Veranstaltungen im Jahr {{ $date }}</h3>
                 
-                <center>{{ $events->render() }}</center>
+                <center>{!! $events->render() !!}</center>
 
                 @foreach($events as $clubEvent)
                         @include('partials.clubEventById', $clubEvent)
                 @endforeach
 
-                <center>{{ $events->render() }}</center>
+                <center>{!! $events->render() !!}</center>
         @endif
 @stop

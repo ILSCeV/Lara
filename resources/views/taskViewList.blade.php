@@ -17,7 +17,7 @@
 
 <!-- prev/next month -->
     <div class="col-md-4">
-		<center>{{ $schedules->render() }}</center>
+		<center>{!! $schedules->render() !!}</center>
     </div>
 
 <!-- club filtering -->
@@ -63,6 +63,8 @@
 		</tbody>	
 	</table>
 </div>
+<br>
+<center>{!! $schedules->render() !!}</center>
 @else
 	<!-- Access for club members only -->
 	@include('partials.accessDenied')
