@@ -1,4 +1,67 @@
 /**
+ *  Bootstrap overrides
+ */
+
+body {
+  background-color: #f6f5f3;
+}
+
+table {
+  background-color: #ffffff;
+}
+
+.table-striped > tbody > tr:nth-child(odd) {
+  background-color: #fbfbfb;
+}
+
+.navbar-brand {
+  float: left;
+  padding: 8px 15px;
+  font-size: 17px;
+  line-height: 23px;
+  height: 44px;
+}
+
+@media (min-width: 768px) {
+  .navbar-right {
+    margin-right: -10px;
+  }
+}
+
+.panel {
+  margin-bottom: 23px;
+}
+
+.panel-group {
+  margin-bottom: 8px;
+}
+
+.panel-heading {
+  padding: 15px 15px 8px 15px;
+}
+
+.panel-title {
+  line-height: 1.5;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+textarea,
+textarea.form-control,
+input.form-control,
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=number],
+[type=text].form-control,
+[type=password].form-control,
+[type=email].form-control,
+[type=tel].form-control {
+  font-size: 12px;
+}
+
+
+/**
  * More / Less Button
  */
 
@@ -10,6 +73,10 @@
 .more-details {
   overflow:hidden;
   height:auto;
+}
+
+.btn-margin {
+  margin: 15px;
 }
 
 .moreshow {

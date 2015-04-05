@@ -14,21 +14,20 @@
 
 	<div class="panel">
 		<div class="panel-heading">
-				
 				<h4 class="panel-title">Verwaltung: Vorlagen</h4>
-
 		</div>
-		<br>
-		<div class="panel-body">	
 			{!! Form::open(['method' => 'POST', 'route' => ['updateTemplates']]) !!}
 			<table class="table table-hover table-condensed">
 				<thead>
 					<tr>
+						<th>
+							&nbsp;
+						</th>
 						<th class="col-md-1">
-							ID
+							#
 						</th>
 						<th class="col-md-3">
-							Vorlagenname
+							Vorlage
 						</th>
 						<th class="col-md-3">
 							Gehört zur Veranstaltung
@@ -36,12 +35,18 @@
 						<th class="col-md-5">
 							Verwaltung
 						</th>
+						<th>
+							&nbsp;
+						</th>
 					</tr>
 				</thead>
 				<tbody>
 
 			@foreach($templates as $template)
 				<tr>
+					<td>
+						&nbsp;
+					</td>
 					<td>
 						{{ $template->id }}
 					</td>
@@ -61,19 +66,19 @@
 							{!! Form::label('destroy' . $template->id, 'Vorlage aus der Liste entfernen?', array('class' => 'col-md-6 control-label')) !!}
 							{!! Form::checkbox('destroy' . $template->id, true) !!}			
 					</td>
+					<td>
+						&nbsp;
+					</td>
 				</tr>
 			@endforeach
 				
 				</tbody>
 			</table>
 
-			<br>
-			{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-primary')) !!}
-			{!! Form::close() !!}
-			
-		</div>
-	</div>
+			</div>
 
+	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) !!}
+	{!! Form::close() !!}
 
 @else
 	@include('partials.accessDenied')

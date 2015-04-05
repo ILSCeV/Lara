@@ -4,10 +4,7 @@
 		<title>Lara VedSt | @yield('title', 'VedSt Default Title')</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
    	 	<meta name="viewport" content="width=device-width, initial-scale=1">
-		{!! HTML::script('js/jquery-2.1.1.js') !!}
-		{!! HTML::script('js/bootstrap.js') !!}
-
-		{!! HTML::style('css/bootstrap-paper.css') !!}
+		{!! HTML::style('css/bootstrap-bootswatch-paper.min.css') !!}
 		{!! HTML::style('css/font-awesome.min.css') !!}
 		{!! HTML::style('css/vedst.css') !!}
 		{!! HTML::style('css/print.css', array('media' => 'print')) !!}
@@ -71,6 +68,8 @@
 			@include('partials.footer')
 		</div>
 		
+    {!! HTML::script('js/jquery-2.1.3.min.js') !!}
+    {!! HTML::script('js/bootstrap.js') !!}
 		{!! HTML::script('js/vedst-scripts.js') !!}
     </body>
 </html>

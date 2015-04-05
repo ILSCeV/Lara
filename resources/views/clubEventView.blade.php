@@ -41,10 +41,10 @@
 			<div class="panel">
 				<div class="panel-body more-info">				
 					<h5 class="panel-title">Zusatzinfos:</h5> 
-					{{ nl2br(e($clubEvent->evnt_public_info)) }}
+					{!! nl2br(e($clubEvent->evnt_public_info)) !!}
 				</div>
-				<button type="button" class="moreless-more-info btn btn-primary" data-dismiss="alert">mehr anzeigen</button>
-				<button type="button" class="moreless-less-info btn btn-primary" data-dismiss="alert">weniger anzeigen</button>
+				<button type="button" class="moreless-more-info btn btn-primary btn-margin" data-dismiss="alert">mehr anzeigen</button>
+				<button type="button" class="moreless-less-info btn btn-primary btn-margin" data-dismiss="alert">weniger anzeigen</button>
 			</div>
 			@endif
 
@@ -53,18 +53,16 @@
 				<div class="panel">
 					<div class="panel-body more-details">
 						<h5 class="panel-title">Weitere Details:</h5> 
-						{{ nl2br(e($clubEvent->evnt_private_details)) }}
+						{!! nl2br(e($clubEvent->evnt_private_details)) !!}
 					</div>
-					<button type="button" class="moreless-more-details btn btn-primary" data-dismiss="alert">mehr anzeigen</button>
-					<button type="button" class="moreless-less-details btn btn-primary" data-dismiss="alert">weniger anzeigen</button>
+					<button type="button" class="moreless-more-details btn btn-primary btn-margin" data-dismiss="alert">mehr anzeigen</button>
+					<button type="button" class="moreless-less-details btn btn-primary btn-margin" data-dismiss="alert">weniger anzeigen</button>
 				</div>
 				@endif
 			@endif
 		</div>
-
 	</div>
-
-	<br>
+	
 	<!-- CRUD -->
 	@if(Session::has('userGroup')
 			AND (Session::get('userGroup') == 'marketing'
@@ -91,9 +89,6 @@
 	{!! Form::model($entries, array('action' => array('ScheduleController@updateSchedule', $clubEvent->getSchedule->id))) !!}
 	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) !!}
 	<div class="panel">
-		<div class="panel-heading">
-			<h4 class="panel-title">Dienstplan</h4>
-		</div>
 		<div class="card-body">
 			
 			@if( $clubEvent->getSchedule->schdl_password != '')
@@ -106,6 +101,9 @@
 			<table class="table table-hover table-condensed">
 				<thead>
 					<tr>
+						<th>
+							&nbsp;
+						</th>
 						<th class="col-md-2">
 							Dienst
 						</th>
@@ -118,10 +116,13 @@
 						<th class="col-md-6">
 							Kommentar
 						</th>
+						<th>
+							&nbsp;
+						</th>
 					</tr>
 				</thead>
 				<tbody>
-				@include('partials.jobsByScheduleId', $entries)
+					@include('partials.jobsByScheduleId', $entries)
 				</tbody>
 			</table>
 			{!! Form::close() !!}

@@ -32,7 +32,7 @@
 				     	</div>
 				    </div>
 					
-					<br>
+					<br><br>
 					
 				    <div class="form-group">	
 						<label for="dueDate" class="col-md-3 control-label">Fälligkeitsdatum:</label>
@@ -41,7 +41,7 @@
 						</div>
 				    </div>
 
-				    <br>
+				    <br><br>
 
 				    <div class="form-group">	
 				     	<label for="showInWeekView" class="col-md-6 control-label">In der Wochenansicht anzeigen?</label>
@@ -56,12 +56,9 @@
 		</div>
 	</div>
 
-
 	@include('partials.editSchedule', array('schedule', 'templates', 'jobtypes', 'entries'))
 	
-	<br>
-	
-	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-primary')) !!}
+	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) !!}
 	&nbsp;&nbsp;
 	<a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
 	

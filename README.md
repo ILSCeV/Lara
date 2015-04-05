@@ -134,10 +134,10 @@ Visit [Issues](https://github.com/4D44H/lara-vedst/issues) and/or contact [Maxim
 ### License
 Code published under [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE).
 
-Lara is based on: 
+Lara VedSt is based on: 
 - [Laravel 5.0](http://laravel.com)
-- [Bootstrap 3.3.1](http://getbootstrap.com) + [Bootswatch 3.3.1+2](http://bootswatch.com)
-- [JQuery 2.1.1](http://jquery.com)
+- [Bootswatch 3.3.4+1](http://bootswatch.com)
+- [JQuery 2.1.3](http://jquery.com)
 - [Font Awesome 4.3.0](http://fortawesome.github.io/Font-Awesome) 
 
 (All licensed under [MIT License](http://opensource.org/licenses/MIT)).

@@ -3,10 +3,13 @@
 	@foreach($entries as $entry)
 		
 			<tr>
+				<td>
+					&nbsp;
+				</td>
 				@if( is_null($entry->getPerson) )
-				<td class="col-md-3 red">
+				<td class="red">
 				@else
-				<td class="col-md-3 green">
+				<td class="green">
 				@endif
 					<span class="word-break"><small>{{ $entry->getJobType->jbtyp_title }}</small></span>
 				</td>
@@ -229,6 +232,9 @@
 							@endif
 						@endif
 					@endif
+				</td>
+				<td>
+					&nbsp;
 				</td> 
 			</tr>
 

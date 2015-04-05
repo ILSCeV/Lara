@@ -14,24 +14,27 @@
 
 	<div class="panel">
 		<div class="panel-heading">
-				
 				<h4 class="panel-title">Verwaltung: Orte</h4>
-
 		</div>
-		<br>
-		<div class="panel-body">	
+
 			{!! Form::open(['method' => 'POST', 'route' => ['updatePlaces']]) !!}
 			<table class="table table-hover table-condensed">
 				<thead>
 					<tr>
+						<th>
+							&nbsp;
+						</th>
 						<th class="col-md-1">
-							Id
+							#
 						</th>
 						<th class="col-md-4">
-							Place
+							Ort
 						</th>
 						<th class="col-md-7">
 							Verwaltung
+						</th>
+						<th>
+							&nbsp;
 						</th>
 					</tr>
 				</thead>
@@ -39,6 +42,9 @@
 
 			@foreach($places as $place)
 				<tr>
+					<td>
+						&nbsp;
+					</td>
 					<td>
 						{{ $place->id }}
 					</td>
@@ -55,19 +61,18 @@
 							<small>Dieser Ort kann nicht gelöscht werden</small>
 						@endif
 					</td>
+					<td>
+						&nbsp;
+					</td>
 				</tr>
 			@endforeach
 				
 				</tbody>
 			</table>
+			</div>
 
-			<br>
-			{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-primary')) !!}
-			{!! Form::close() !!}
-			
-		</div>
-	</div>
-
+	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) !!}
+	{!! Form::close() !!}
 
 @else
 	@include('partials.accessDenied')

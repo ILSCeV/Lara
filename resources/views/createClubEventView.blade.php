@@ -164,7 +164,7 @@
 				    <div class="form-group">	
 						<div class="col-md-12">
 							{!! Form::textarea('publicInfo', '', array('class'=>'form-control', 
-																	  'rows'=>'5',
+																	  'rows'=>'8',
 																	  'placeholder'=>'z.B. Karten nur im Vorverkauf') ) !!}
 						</div>
 					</div>	
@@ -189,8 +189,8 @@
 	</div>
 	
 	@include('partials.editSchedule')
-	<br>
-	{!! Form::submit('Veranstaltung mit Dienstplan speichern', array('class'=>'btn btn-primary')) !!}
+	
+	{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'btn btn-primary')) !!}
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
 

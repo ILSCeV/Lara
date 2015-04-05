@@ -66,8 +66,6 @@
 			</div>
 		</div>
 
-		<br>
-
 		<div class="day-row">
 			<div class="day-container">
 				@foreach($tasks as $task)
@@ -91,8 +89,6 @@
 			Keine Veranstaltungen geplant
 		</div>
 	@endif
-
-	<br>
 
 	{!! Form::close() !!}
 @else

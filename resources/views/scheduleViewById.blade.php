@@ -63,6 +63,9 @@
 	<table class="table table-condensed table-hover">
 		<thead>
 		<tr>
+			<th>
+				&nbsp;
+			</th>
 			<th class="col-md-2">
 				Dienst
 			</th>
@@ -74,6 +77,9 @@
 			</th>
 			<th class="col-md-6">
 				Kommentar
+			</th>
+			<th>
+				&nbsp;
 			</th>
 		</tr>
 		</thead>

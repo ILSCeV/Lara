@@ -14,16 +14,16 @@
 
 	<div class="panel">
 		<div class="panel-heading">
-				
-				<h4 class="panel-title">Verwaltung: Dienstetypen</h4>
-
+				<h4 class="panel-title">Verwaltung: Diensttypen</h4>
 		</div>
-		<br>
-		<div class="panel-body">	
+		
 			{!! Form::open(['method' => 'POST', 'route' => ['updateJobTypes']]) !!}
 			<table class="table table-hover table-condensed">
 				<thead>
 					<tr>
+						<th>
+							&nbsp;
+						</th>
 						<th class="col-md-2">
 							Dienst
 						</th>
@@ -36,12 +36,18 @@
 						<th class="col-md-6">
 							Verwaltung
 						</th>
+						<th>
+							&nbsp;
+						</th>
 					</tr>
 				</thead>
 				<tbody>
 
 			@foreach($jobtypes as $jobtype)
 				<tr>
+					<td>
+						&nbsp;
+					</td>
 					<td>
 				      	{!! Form::text('jbtyp_title' . $jobtype->id, 
 									   $jobtype->jbtyp_title, 
@@ -67,19 +73,19 @@
 									   	   true, 
 									  	   $jobtype->jbtyp_is_archived) !!}
 					</td>
+					<td>
+						&nbsp;
+					</td>
 				</tr>
 			@endforeach
 				
 				</tbody>
 			</table>
 
-			<br>
-			{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-primary')) !!}
-			{!! Form::close() !!}
-			
-		</div>
-	</div>
-
+			</div>
+		
+	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) !!}
+	{!! Form::close() !!}
 
 @else
 	@include('partials.accessDenied')
