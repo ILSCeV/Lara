@@ -140,4 +140,4 @@ Lara is based on:
 - [JQuery 2.1.1](http://jquery.com)
 - [Font Awesome 4.3.0](http://fortawesome.github.io/Font-Awesome) 
 
-(All licensed under [MIT License](http://opensource.org/licenses/MIT).
+(All licensed under [MIT License](http://opensource.org/licenses/MIT)).
