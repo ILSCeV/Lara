@@ -106,7 +106,7 @@ For detailed list open requirements and change-requests see: [Issues](https://gi
 7. To hide "/lara-vedst/public" path:
   - open the Apache Server config (*actual filename may vary*): ```$> vi /etc/httpd/conf.d/laravel.conf```
   - type ```i``` to enter editing mode
-  - change ```DocumentRoot to ```DocumentRoot "var/www/lara-vedst/public"```: ```$> cd /var/www```
+  - change ```DocumentRoot``` to ```DocumentRoot "var/www/lara-vedst/public"```: ```$> cd /var/www```
   - hit ```<ESC>``` to exit editing mode
   - type ```:x``` and hit ```<Return>``` to exit *vi*
 
