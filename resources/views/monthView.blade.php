@@ -2,7 +2,7 @@
 
 @extends('layouts.master')
 @section('title')
-        {{ $date['monthName'] }}
+        {{ $date['monthName'] . " " . $date['year'] }}
 @stop
 @section('content')
 

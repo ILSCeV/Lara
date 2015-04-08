@@ -86,7 +86,9 @@
 
 	@else
 		<div class="panel">
-			Keine Veranstaltungen geplant
+			<div class="panel-heading">
+				<h5>Keine Veranstaltungen diese Woche</h5>
+			</div>
 		</div>
 	@endif
 

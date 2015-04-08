@@ -14,9 +14,13 @@
         
         
         @if(count($events)==0)
-                <h3>Für {{ $date }} sind keine Veranstaltungen geplant</h3>
+                <div class="panel">
+                        <div class="panel-heading">
+                                <h5>Keine Veranstaltungen am {{ $date }}</h5>
+                        </div>
+                </div>
         @else
-                <h3>Alle Veranstaltungen im Jahr {{ $date }}</h3>
+                <h3> Veranstaltungen für {{ $date }}</h3>
                 
                 <center>{!! $events->render() !!}</center>
 
