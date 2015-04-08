@@ -143,8 +143,9 @@ Route::get('/calendar/create',					'EventController@showCreateEventToday');
 Route::get('/calendar/create/{year}/{month}/{day}',	
 												'EventController@showCreateEvent');
 
-Route::get('/calendar/create/{year}/{month}/{day}/template/{id}', 	
-												'EventController@showCreateEventWithTemplate');
+Route::get('/calendar/create/{year}/{month}/{day}/template/{id}', 
+												array('as' => 'templateSelect',
+												 	  'uses' => 'EventController@showCreateEventWithTemplate'));
 
 Route::post('/calendar/create', 				array('as' => 'newClubEvent',
 													  'uses' => 'EventController@createEvent'));

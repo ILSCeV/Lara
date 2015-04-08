@@ -43,7 +43,11 @@
 					        <li> 
 					        	<a href="javascript:void(0);" 
 					        	   onClick="document.getElementById('templateName').value='{{$template->schdl_title}}',
-					        	   document.getElementById('confirmTemplate').href='{{URL::current()}}/template/{{$template->id}}';">
+					        	   document.getElementById('confirmTemplate').href='{{URL::route('templateSelect', 
+					        	   																 array( date("Y", strtotime($date)), 
+					        	   																 		date("m", strtotime($date)), 
+					        	   																 		date("d", strtotime($date)), 
+					        	   																 		$template->id) ) }}';">
 					        	   {{ $template->schdl_title }}</a>
 					        </li>
 						@endforeach
