@@ -92,9 +92,8 @@
 		<div class="card-body">
 			
 			@if( $clubEvent->getSchedule->schdl_password != '')
-				<br>
 				<div class="well">
-					Eintragen nur mit gültigem Passwort:&nbsp;&nbsp; {!! Form::password('password', array('required')) !!}
+					<strong>Eintragen nur mit gültigem Passwort:&nbsp;&nbsp; {!! Form::password('password', array('required')) !!}</strong>
 				</div>
 			@endif
 

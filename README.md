@@ -72,7 +72,7 @@ For detailed list open requirements and change-requests see: [Issues](https://gi
 
 7. Start both the server and the database, e.g. from XAMPP Control Panel
 
-8. Create a new MySQL database named "lara-vedst" in XAMPP (e.g. by using http://127.0.0.1/phpmyadmin ) and update database schema - ```$> php artisan migrate```
+8. Create a new MySQL database named "lara-vedst" in XAMPP (e.g. by using http://127.0.0.1/phpmyadmin ) and update database schema - ```$> php artisan migrate --seed```
 
 *At this point you should be able to run Lara VedSt without error here: http://127.0.0.1/ or http://localhost*
 *For development purposes a workaround is built into the LoginController which assigns a random dummy-user at each login event, ignoring login/password input from user.*
@@ -115,7 +115,7 @@ For detailed list open requirements and change-requests see: [Issues](https://gi
 8. Create a MySQL database named "lara-vedst":
   - switch to MySQL: ```$> mysql –u root –p```
   - create new database named "lara-vedst": ```$> create database lara-vedst```
-  - update database schema from /lara-vedst folder: ```$> php artisan migrate```
+  - update database schema from /lara-vedst folder: ```$> php artisan migrate --seed```
 
 9. Edit environment variables in the file ```.env``` located in ```/var/www/lara-vedst/```:
   - set "APP_ENV=production"
