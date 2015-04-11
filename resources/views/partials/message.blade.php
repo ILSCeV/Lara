@@ -13,3 +13,5 @@
         {{ Session::forget('msgType') }}
     </div>
 @endif
+
+
