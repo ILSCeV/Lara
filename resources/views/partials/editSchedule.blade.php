@@ -128,7 +128,7 @@
 				<input type="button" value="&#8211;" class="btn btn-small btn-danger btnRemove" />
 
 	    	</div>
-
+	    	<br>
 			<input type="hidden" name="counter" id="counter" value="{{$counter}}" />
 		</div>
 	</div>

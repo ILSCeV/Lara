@@ -56,18 +56,10 @@
 					@endif
 				@endforeach 
 
-				<!-- whitespace on the far right -->
-				
-				&nbsp;&nbsp;&nbsp;&nbsp;<span class="hidden-print hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</span>
+				<!-- whitespace between -->
+				&nbsp;&nbsp;&nbsp;&nbsp;
 				<!-- end of whitespace -->
-			</div>
-		</div>
 
-		<div class="day-row">
-			<div class="day-container">
 				@foreach($tasks as $task)
 						<div class="inline-block">
 							@include('partials.taskWeekCell', $task)
