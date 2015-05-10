@@ -11,17 +11,17 @@
 @if(Session::has('userId'))
 <div class="row">
 <!-- create button -->
-    <div class="col-md-4">
+    <div class="col-xs-12 col-md-4">
 		<a href="{{ Request::getBasePath() }}/task/create" class="btn btn-primary">Neue Aufgabe hinzufügen</a>	
     </div>
 
 <!-- prev/next month -->
-    <div class="col-md-4">
+    <div class="col-xs-12 col-md-4">
 		<center>{!! $schedules->render() !!}</center>
     </div>
 
 <!-- club filtering -->
-    <div class="col-md-4">
+    <div class="col-xs-12 col-md-4">
        <!-- filtering tba -->
     </div>
 </div>

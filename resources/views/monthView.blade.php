@@ -8,7 +8,7 @@
 
 <div class="row">
 <!-- create button -->
-    <div class="col-md-4">
+    <div class="col-xs-12 col-md-4">
         @if(Session::has('userGroup')
             AND (Session::get('userGroup') == 'marketing'
             OR Session::get('userGroup') == 'clubleitung'))
@@ -17,7 +17,7 @@
     </div>
 
 <!-- prev/next month -->
-    <div class="col-md-4">
+    <div class="col-xs-12 col-md-4">
         <ul class="pager">
             <li><a href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",strtotime("previous month", $date['startStamp'])) }}">&lt;&lt;</a></li>
             <li><h5 style="display: inline;">{{ "&nbsp;&nbsp;&nbsp;&nbsp;" . $date['monthName'] . " " . $date['year'] . "&nbsp;&nbsp;&nbsp;&nbsp;" }}</h5></li>
@@ -26,7 +26,7 @@
     </div>
 
 <!-- club filtering -->
-    <div class="col-md-4">
+    <div class="col-xs-12 col-md-4">
         @include('partials.filter')
     </div>
 </div>

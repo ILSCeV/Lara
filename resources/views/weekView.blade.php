@@ -11,7 +11,7 @@
 @if(Session::has('userId'))
 	<div class="row">
 	<!-- create button -->
-	    <div class="col-md-3">
+	    <div class="col-xs-12 col-md-3">
 	        @if(Session::has('userGroup')
 	            AND (Session::get('userGroup') == 'marketing'
 	            OR Session::get('userGroup') == 'clubleitung'))
@@ -20,17 +20,17 @@
 	    </div>
 
 	<!-- prev/next week -->
-	    <div class="col-md-6">
+	    <div class="col-xs-12 col-md-6">
 			<ul class="pager" >
-				<li><a href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}" class="hidden-print">&lt;&lt;</a></li>
-				<li><h5 style="display: inline;">&nbsp;&nbsp;&nbsp;&nbsp;{{ Config::get('messages_de.week-name') . $date['week']}}: 
+				<li class="col-xs-12 col-md-1"><a href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}" class="hidden-print">&lt;&lt;</a></li>
+				<li class="col-xs-12 col-md-10"><h5 style="display: inline;">&nbsp;&nbsp;&nbsp;&nbsp;{{ Config::get('messages_de.week-name') . $date['week']}}: 
 				{{ utf8_encode(strftime("%d. %B", strtotime($weekStart))) }} - {{ utf8_encode(strftime("%d. %B", strtotime($weekEnd))) }}&nbsp;&nbsp;&nbsp;&nbsp;</h5></li>
-				<li><a href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}" class="hidden-print">&gt;&gt;</a></li>
+				<li class="col-xs-12 col-md-1"><a href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}" class="hidden-print">&gt;&gt;</a></li>
 			</ul>
 	    </div>
 
 	<!-- club filtering -->
-	    <div class="col-md-3 hidden-print">
+	    <div class="col-xs-12 col-md-3 hidden-print">
 	        @include('partials.filter')
 	    </div>
 	</div>
@@ -57,8 +57,8 @@
 				@endforeach 
 
 				<!-- whitespace on the far right -->
-				<span class="hidden-print">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;<span class="hidden-print hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</span>

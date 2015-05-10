@@ -2,16 +2,16 @@
 
 	@foreach($entries as $entry)
 		
-			<tr>
+			<tr class="row">
 				@if( is_null($entry->getPerson) )
-				<td class="col-md-3 col-xs-10 red">
+				<td class="col-xs-3 col-md-3 red">
 				@else
-				<td class="col-md-3 col-xs-10 green">
+				<td class="col-xs-3 col-md-3 green">
 				@endif
 					<span class="word-break"><small><strong>{{ $entry->getJobType->jbtyp_title }}</strong></small></span>
 				</td>
 
-				<td class="col-md-5">
+				<td class="col-xs-5 col-md-5">
 				@if( is_null($entry->getPerson) )
 					<div class="btn-group">
 					
@@ -19,7 +19,7 @@
 				   	   			   Input::old('userName' . $entry->id), 
 				   	   			   array('placeholder'=>'=FREI=', 
 				   	   			   		 'id'=>'userName' . $entry->id, 
-					   				     'class'=>'col-md-8')) !!}
+					   				     'class'=>'col-xs-8 col-md-8')) !!}
 
 				   	{!! Form::hidden('ldapId' . $entry->id, '', array('id'=>'ldapId' . $entry->id) ) !!}
 
@@ -56,7 +56,7 @@
 					{!! Form::text('userName' . $entry->id, 
 								   $entry->getPerson->prsn_name, 
 								   array('id'=>'userName' . $entry->id, 
-					   				     'class'=>'col-md-8') ) !!}
+					   				     'class'=>'col-xs-8 col-md-8') ) !!}
 
 					{!! Form::hidden('ldapId' . $entry->id, $entry->getPerson->prsn_ldap_id, array('id'=>'ldapId' . $entry->id) ) !!}
 
@@ -91,13 +91,13 @@
 				@endif
 				</td>				   	
 				
-				<td class="col-md-4">
+				<td class="col-xs-3 col-md-3">
 					@if( is_null($entry->getPerson) )
 						<div class="btn-group  hidden-print">
 						   	{!! Form::text('club' . $entry->id, Input::old('club' . $entry->id),  
 										   array( 'placeholder'=>'-', 
 										  'id'=>'club' . $entry->id, 
-					   				      'class'=>'col-md-8') ) !!}
+					   				      'class'=>'col-xs-8 col-md-8') ) !!}
 						 	<a class="btn-small btn-default dropdown-toggle hidden-print" data-toggle="dropdown" href="javascript:void(0);">
 						        <span class="caret"></span>
 						    </a>
@@ -116,11 +116,11 @@
 								{!! Form::text('club' . $entry->id, 
 											   $entry->getPerson->getClub->clb_title, 
 											   array('id'=>'club' . $entry->id, 
-					   				   		  'class'=>'col-md-8')) !!}
+					   				   		  'class'=>'col-xs-8 col-md-8')) !!}
 							@else
 								{!! Form::text('club' . $entry->id, 
 											   array('id'=>'club' . $entry->id, 
-					   				   		  'class'=>'col-md-8')) !!}
+					   				   		  'class'=>'col-xs-8 col-md-8')) !!}
 							@endif
 						   <a class="btn-small btn-default dropdown-toggle hidden-print" data-toggle="dropdown" href="javascript:void(0);">
 						        <span class="caret"></span>
@@ -138,7 +138,7 @@
 					@endif					
 				</td>
 
-				<td class="col-md-1">
+				<td class="col-xs-1 col-md-1">
 					@if( is_null($entry->getPerson) )
 								<button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
 									<i class="fa fa-comment-o"></i>
@@ -163,17 +163,21 @@
 							{!! Form::text('comment' . $entry->id, 
 						   				   Input::old('comment' . $entry->id),  
 						   				   array('placeholder'=>'Kommentar hier hinzufügen', 
-						   				   		 'class'=>'col-md-12')) !!}
+						   				   		 'class'=>'col-xs-12 col-md-12')) !!}
 						</div>
 					@else
 						<div class="hide">				
 							{!! Form::text('comment' . $entry->id, 
 										   $entry->entry_user_comment, 
 										   array('placeholder'=>'Kommentar hier hinzufügen',
-										   		 'class'=>'col-md-12')) !!}
+										   		 'class'=>'col-xs-12 col-md-12')) !!}
 						</div>
 					@endif
 				</td>
+			</tr>
+
+			<tr class="visible-xs hidden-md">
+				<td colspan="4">&nbsp;</td>
 			</tr>
 
 	@endforeach

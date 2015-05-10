@@ -7,18 +7,21 @@
 					&nbsp;
 				</td>
 				@if( is_null($entry->getPerson) )
-				<td class="red">
+				<td class="col-xs-2 col-md-2 red">
 				@else
-				<td class="green">
+				<td class="col-xs-2 col-md-2 green">
 				@endif
 					<span class="word-break"><small>{{ $entry->getJobType->jbtyp_title }}</small></span>
 				</td>
 
-				<td>
+				<td class="col-xs-4 col-md-2">
 					<!-- if entry is free - let anyone edit it -->	
 					@if( is_null($entry->getPerson) )
 					   	<div class="input-append btn-group">
-					   	{!! Form::text('userName' . $entry->id, Input::old('userName' . $entry->id), array('placeholder'=>'=FREI=', 'id'=>'userName' . $entry->id)) !!}
+					   	{!! Form::text('userName' . $entry->id, Input::old('userName' . $entry->id), 
+					   					array('placeholder'=>'=FREI=', 
+					   						  'id'=>'userName' . $entry->id, 
+					   				     	  'class'=>'col-xs-8 col-md-8')) !!}
 					   	{!! Form::hidden('ldapId' . $entry->id, '', array('id'=>'ldapId' . $entry->id) ) !!}
 					   	@if( Session::get('userId') ) 
 					   	<a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
@@ -54,7 +57,10 @@
 						<!-- if entry is used by a guest (no LDAP id set) - let anyone edit it -->
 						@if( !isset($entry->getPerson->prsn_ldap_id) )
 							<div class="input-append btn-group">
-							{!! Form::text('userName' . $entry->id, $entry->getPerson->prsn_name, array('id'=>'userName' . $entry->id) ) !!}
+							{!! Form::text('userName' . $entry->id, 
+											$entry->getPerson->prsn_name, 
+											array('id'=>'userName' . $entry->id, 
+					   				     		  'class'=>'col-xs-8 col-md-8') ) !!}
 							{!! Form::hidden('ldapId' . $entry->id, '', array('id'=>'ldapId' . $entry->id) ) !!}
 						   	@if( Session::get('userId') ) 
 						   	<a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
@@ -90,7 +96,10 @@
 							<!-- if entry is used by a member (LDAP id set) - let only other members edit it -->
 							@if( Session::get('userId') ) 
 								<div class="input-append btn-group">								
-								{!! Form::text('userName' . $entry->id, $entry->getPerson->prsn_name, array('id'=>'userName' . $entry->id) ) !!}
+								{!! Form::text('userName' . $entry->id, 
+												$entry->getPerson->prsn_name, 
+												array('id'=>'userName' . $entry->id, 
+					   				     			  'class'=>'col-xs-8 col-md-8') ) !!}
 								{!! Form::hidden('ldapId' . $entry->id, $entry->getPerson->prsn_ldap_id, array('id'=>'ldapId' . $entry->id) ) !!}
 								@if( Session::get('userId') ) 
 								<a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
@@ -123,19 +132,22 @@
 								@endif
 								</div>
 							@else
-								{!! Form::text('userName' . $entry->id, $entry->getPerson->prsn_name, array('readonly')) !!}
+								{!! Form::text('userName' . $entry->id, $entry->getPerson->prsn_name, 
+												array('readonly', 
+					   				     	  		  'class'=>'col-xs-8 col-md-8')) !!}
 								{!! Form::hidden('ldapId' . $entry->id, $entry->getPerson->prsn_ldap_id ) !!}
 							@endif
 						@endif
 					@endif
 				</td>
 
-				<td>
+				<td class="col-xs-4 col-md-2">
 					@if( is_null($entry->getPerson) )
 						<div class="input-append btn-group">
 						   	{!! Form::text('club' . $entry->id, Input::old('club' . $entry->id),  
 										   array( 'placeholder'=>'-', 
-										  'id'=>'club' . $entry->id) ) !!}
+										  		  'id'=>'club' . $entry->id, 
+					   				     		  'class'=>'col-xs-8 col-md-8') ) !!}
 						 	<a class="btn-small btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 						        <span class="caret"></span>
 						    </a>
@@ -155,7 +167,8 @@
 								@if(!is_null($entry->getPerson->getClub))
 									{!! Form::text('club' . $entry->id, 
 												   $entry->getPerson->getClub->clb_title, 
-												   array('id'=>'club' . $entry->id)) !!}
+												   array('id'=>'club' . $entry->id, 
+					   				     	  			 'class'=>'col-xs-8 col-md-8')) !!}
 								@else
 									{!! Form::text('club' . $entry->id, 
 												   array('id'=>'club' . $entry->id)) !!}
@@ -180,7 +193,8 @@
 									@if(!is_null($entry->getPerson->getClub))
 										{!! Form::text('club' . $entry->id, 
 													   $entry->getPerson->getClub->clb_title, 
-													   array('id'=>'club' . $entry->id) ) !!}
+													   array('id'=>'club' . $entry->id, 
+					   				     	  				 'class'=>'col-xs-8 col-md-8') ) !!}
 									@else
 										{!! Form::text('club' . $entry->id, 
 													   array('id'=>'club' . $entry->id) ) !!}
@@ -202,33 +216,34 @@
 								{!! Form::text('club' . $entry->id, 
 								    		    (!is_null($entry->getPerson->getClub)) ? 
 								    		    $entry->getPerson->getClub->clb_title : 
-								    		    array('placeholder'=>'-'), array('readonly')) !!}
+								    		    array('placeholder'=>'-'), array('readonly', 
+					   				     	  		  'class'=>'col-xs-8 col-md-8')) !!}
 							@endif
 						@endif
 					@endif					
 				</td>
 				
-				<td>
+				<td class="col-xs-3 col-md-6">
 					@if( is_null($entry->getPerson) )
 					   	{!! Form::text('comment' . $entry->id, Input::old('comment' . $entry->id),  
 					   				   array('placeholder'=>'-', 
-					   				   'class'=>'col-md-12')) !!}
+					   				   'class'=>'col-xs-12 col-md-12')) !!}
 					@else
 						<!-- if entry is used by a guest (no LDAP id set) - let anyone edit it -->
 						@if( !isset($entry->getPerson->prsn_ldap_id) )
 							{!! Form::text('comment' . $entry->id, 
 								   		   $entry->entry_user_comment, 
-								   		   array('class'=>'col-md-12')) !!}
+								   		   array('class'=>'col-xs-12 col-md-12')) !!}
 						@else
 							<!-- if entry is used by a member (LDAP id set) - let only other members edit it -->
 							@if( Session::get('userId') ) 
 								{!! Form::text('comment' . $entry->id, 
 								   			   $entry->entry_user_comment,
-								   			   array('class'=>'col-md-12')) !!}
+								   			   array('class'=>'col-xs-12 col-md-12')) !!}
 							@else
 								{!! Form::text('comment' . $entry->id, 
 								   	$entry->entry_user_comment, 
-								   	array('class'=>'col-md-12', 'readonly')) !!}
+								   	array('class'=>'col-xs-12 col-md-12', 'readonly')) !!}
 							@endif
 						@endif
 					@endif

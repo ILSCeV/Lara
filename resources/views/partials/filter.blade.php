@@ -5,4 +5,6 @@
         <div class="checkbox">
           <label><input type="checkbox" id="bc-Café" checked>bc-Café anzeigen</label>
         </div>
+        <span class="visible-xs hidden-md">&nbsp</span>
+		
 </div>

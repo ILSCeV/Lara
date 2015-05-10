@@ -11,9 +11,12 @@
 <!-- CRUD -->
 @if(Session::has('userGroup'))
 	<br>
-	<div class="pull-right">						
+	<div class=" pull-right">						
 		<a href="{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/edit" 
 		   class="btn btn-primary">Aufgabe ändern</a>
+		
+		<span class="visible-xs hidden-md">&nbsp;</span>
+
 		<a href="{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/delete" 
 		   onclick="confirmation();return false;" 
 		   class="btn btn-default">Aufgabe löschen</a>
@@ -26,6 +29,8 @@
 			}
 			
 		</script>
+
+		<span class="visible-xs hidden-md">&nbsp;</span>
 	</div>
 @endif
 

@@ -60,6 +60,7 @@
 	
 	{!! Form::submit('Aufgabe erstellen', array('class'=>'btn btn-primary')) !!}
 	&nbsp;&nbsp;&nbsp;&nbsp;
+	<span class="visible-xs"><br></span>
 	<a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
 	
 	{!! Form::close() !!}

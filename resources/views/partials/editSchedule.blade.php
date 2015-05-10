@@ -62,8 +62,9 @@
 		            		   value={{ $entry->getJobType->jbtyp_statistical_weight }} hidden />
 
 		            	<input type="button" value="+" class="btn btn-small btn-success btnAdd" />
-	    				
-	    				<input type="button" value="-" class="btn btn-small btn-danger btnRemove" />
+		            	&nbsp;&nbsp;
+	    				<input type="button" value="&#8211;" class="btn btn-small btn-danger btnRemove" />
+
 
 					</div>
 		        @endforeach 
@@ -122,13 +123,13 @@
 	        		   value="1"
 	        		   placeholder="Statistische Wertung" hidden />
 
-	        	<input type="button" value="+" class="btn btn-small btn-success btnAdd" />
-				
-				<input type="button" value="-" class="btn btn-small btn-danger btnRemove" />
+	        	<input type="button" value="+" class="btn btn-small btn-success btnAdd" /> 
+	        	&nbsp;&nbsp;
+				<input type="button" value="&#8211;" class="btn btn-small btn-danger btnRemove" />
+
 	    	</div>
-	    	<br>
+
 			<input type="hidden" name="counter" id="counter" value="{{$counter}}" />
-		
 		</div>
 	</div>
 </div>

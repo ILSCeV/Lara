@@ -19,7 +19,7 @@
                 <li><a href="{{ Request::getBasePath() }}/schedule">Dienstpläne</a></li>
                 @if(Session::has('userId'))
                 <li><a href="{{ Request::getBasePath() }}/task">Aufgaben</a></li>    
-                <li><a href="{{ Request::getBasePath() }}/statistics">Dienstestatistik</a></li>
+                <!-- <li><a href="{{ Request::getBasePath() }}/statistics">Dienstestatistik</a></li> -->
                 @endif
                 @if(Session::has('userGroup')
                 AND (Session::get('userGroup') == 'marketing'
@@ -49,11 +49,13 @@
                                         'method' => 'POST', 
                                         'class'=>'form-horizontal', 
                                         'role'=>'form')) !!}
+                        <center class="hidden-md">
                         <div class="navbar-form">
                             Eingeloggt als <strong>{{ Session::get('userName') }} ({{ Session::get('userGroup') }})</strong>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             {!! Form::submit('Abmelden', array('class'=>'btn btn-default btn-sm')) !!}
                         </div>
+                        </center>
                     {!! Form::close() !!}
 
                 @else
@@ -62,7 +64,7 @@
                                         'method' => 'POST', 
                                         'class'=>'form-horizontal navbar-right', 
                                         'role'=>'form')) !!}
-
+                        
                         <div class="navbar-form form-horizontal">
                             {!! Form::text('username', Input::old('username'),  array('placeholder'=>'Clubnummer', 
                                                                                      'class'=>'form-control',
@@ -75,7 +77,9 @@
                                                                 'style'=>'cursor: auto')) !!}
 
                             {!! Form::submit('Anmelden', array('class'=>' btn btn-primary btn-sm')) !!}
+                        
                         </div>
+                        
 
                     {!! Form::close() !!}
 

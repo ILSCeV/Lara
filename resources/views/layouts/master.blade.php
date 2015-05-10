@@ -3,7 +3,7 @@
 	<head>
 		<title>Lara VedSt | @yield('title', 'VedSt Default Title')</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-   	 	<meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		{!! HTML::style('css/bootstrap-bootswatch-paper.min.css') !!}
 		{!! HTML::style('css/font-awesome.min.css') !!}
 		{!! HTML::style('css/vedst.css') !!}

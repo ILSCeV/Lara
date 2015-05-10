@@ -17,7 +17,7 @@
 	@else
 
 	<div class="row">
-		<div class="container col-md-6">
+		<div class="container col-xs-12 col-md-6">
 			<div class="panel">
 				<div class="panel-heading">
 				<h4 class="panel-title">{{{ $clubEvent->evnt_title }}}</h4>
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 
-		<div class="container col-md-6">
+		<div class="container col-xs-12 col-md-6">
 			@if( $clubEvent->evnt_public_info != '')
 			<div class="panel">
 				<div class="panel-body more-info">				
@@ -71,6 +71,9 @@
 			<div class="pull-right">						
 				<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/edit" 
 				   class="btn btn-primary">Veranstaltung ändern</a>
+
+				<span class="visible-xs hidden-md">&nbsp;</span>
+
 				<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/delete" 
 				   onclick="confirmation();return false;" 
 				   class="btn btn-default">Veranstaltung löschen</a>
@@ -81,8 +84,10 @@
 							window.location = "{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/delete";
 						}
 					}
-					
 				</script>
+				
+				<span class="visible-xs hidden-md">&nbsp;</span>
+			
 			</div>
 	@endif
 	
@@ -99,23 +104,23 @@
 
 			<table class="table table-hover table-condensed">
 				<thead>
-					<tr>
-						<th>
+					<tr class="row">
+						<th class="hidden-xs hidden-sm visible-md">
 							&nbsp;
 						</th>
-						<th class="col-md-2">
+						<th class="col-xs-1 col-md-1">
 							Dienst
 						</th>
-						<th class="col-md-2">
+						<th class="col-xs-2 col-md-2">
 							Name
 						</th>
-						<th class="col-md-2">
+						<th class="col-xs-2 col-md-2">
 							Verein
 						</th>
-						<th class="col-md-6">
+						<th class="col-xs-12 col-md-6">
 							Kommentar
 						</th>
-						<th>
+						<th class="hidden-xs visible-md">
 							&nbsp;
 						</th>
 					</tr>

@@ -20,7 +20,7 @@
 			</div>
 		@endif
 		@if (!is_null($clubEvent->getSchedule))	
-			<table class="table-condensed" width="100%">
+			<table class="table table-borderless table-condensed" width="100%">
 				<tbody>
 					@include('partials.weekJobsByScheduleId', array('entries' => $clubEvent->getSchedule->getEntries))
 				</tbody>
