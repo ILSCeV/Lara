@@ -25,10 +25,26 @@
 		@if($clubEvent->evnt_is_private)
 			@if(Session::has('userId'))	
 				<!-- show private events only if user is logged in -->
-				- <a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}"> {{{ $clubEvent->evnt_title }}}</a>
+				@if ($clubEvent->getPlace->plc_title == "bc-Club")
+					<div class="cal-event calendar-internal-event-bc-club">
+				@else
+					<div class="cal-event calendar-internal-event-bc-cafe">
+				@endif
+					<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}"> 
+						{{{ $clubEvent->evnt_title }}}
+					</a>
+				</div>
 			@endif
 		@else 
-			- <a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}"> {{{ $clubEvent->evnt_title }}}</a>
+			@if ($clubEvent->getPlace->plc_title == "bc-Club")
+				<div class="cal-event calendar-public-event-bc-club">
+			@else
+				<div class="cal-event calendar-public-event-bc-cafe">
+			@endif
+			 	<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}"> 
+					{{{ $clubEvent->evnt_title }}}
+				</a>
+			</div>
 		@endif
 		</div>
 	@endif

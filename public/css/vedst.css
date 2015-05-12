@@ -91,6 +91,41 @@ input[type=number],
 
 
 /**
+ * Monatsansicht
+ */
+
+.cal-event {
+  width: 100%;
+  margin: 3px;
+  padding: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+}
+
+.cal-event a{
+  color: #ffffff;
+}
+
+.calendar-public-event-bc-club {
+  background-color: #e54545;
+}
+
+.calendar-public-event-bc-cafe {
+  background-color: #268ac3;
+}
+
+.calendar-internal-event-bc-club {
+  background-color: #e98383;
+}
+
+.calendar-internal-event-bc-cafe {
+  background-color: #52aadc;
+}
+
+
+/**
  * Wochenansicht
  */
 
