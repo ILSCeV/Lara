@@ -32,6 +32,7 @@ class LoginController extends Controller {
     public function doLogout()
     {
         Session::flush();
+	
         return Redirect::to('calendar/');
     }
 
@@ -75,63 +76,7 @@ class LoginController extends Controller {
 	 *
 	 * @return RedirectResponse
      */
-    
 
-/** 
- * WORKAROUND for LDAP-Server down time 
- */
-
-/*  DELETE THIS LINE TO ACTIVATE WORKAROUND AND COMMENT OUT WORKING CONTROLLER BELOW */
-
-    public function doLogin()
-    {
-        // Placeholder for development, groups will be implemented later
-        $userGroup = 'marketing';
-
-        $input = array("1001" => "Neo", "1002" => "Morpheus", "1003" => "Trinity", "1004" => "Cypher", 
-                       "1004" => "Tank", "1005" => "Hawkeye", "1006" => "Blackwidow", "1007" => "Deadpool", 
-                       "1008" => "Taskmaster", "1009" => "nicht-FREI", "1010" => "Venom", "1011" => "Superman", 
-                       "1012" => "Bart", "1013" => "Fry", "1014" => "Bender");
-        
-        $userId = array_rand($input, 1);
-        $userName = $input[$userId];
-        
-        // get user club
-        $inputClub = array("bc-Club", "bc-Café");
-
-        $userClubId = array_rand($inputClub, 1);
-        $userClub = $inputClub[$userClubId];
-
-        $userStatus = "aktiv";
-
-        // setting default filter to user club
-        if ($userClub == "bc-Club") {
-            $clubFilter = "bc-Club";
-        } else {
-            $clubFilter = "bc-Café";
-        }
-        
-
-
-        Session::put('userId',      $userId);
-        Session::put('userName',    $userName);
-        Session::put('userGroup',   $userGroup);            
-        Session::put('userClub',    $userClub);
-        Session::put('userStatus',  $userStatus);
-        Session::put('clubFilter',  $clubFilter);
-
-        Log::info('Auth success: User ' . $userName . ' (' . $userId .', group: ' . $userGroup . ') just logged in.');
-      
-        return Redirect::back();
-  
-        }
-    }
-
-/**
- * WORKING CONTROLLER BELOW THIS LINE,
- * will only function with a bcLDAP-Config present.
- */
-/*
     public function doLogin()
     {
         // Masterpassword for LDAP-Server downtime, stored in hashed form in config/bcLDAP.php
@@ -161,7 +106,7 @@ class LoginController extends Controller {
             }   
         }
 
-        // Connection to LDAP-dev
+        // Connection to bcLDAP
         $ldapConn = ldap_connect( Config::get('bcLDAP.server') );
 
         // Set some ldap options for talking to AD
@@ -213,7 +158,6 @@ class LoginController extends Controller {
         // Set default user group to "mitglied"
         $userGroup = "Mitglied"; 
 
-
         // If no such user found in the Club - check Café next.
         if($info['count'] === 0){
 
@@ -238,7 +182,7 @@ class LoginController extends Controller {
             ldap_unbind($ldapConn);
             Session::put('message', Config::get('messages_de.uid-not-found'));
             Session::put('msgType', 'danger');
-            Log::info('Auth fail: wrong userID given (username: ' . Input::get('username') . ', password: ' . Input::get('password') . ').');
+            Log::info('Auth fail: wrong userID given (username: ' . Input::get('username') . ').');
             return Redirect::back();
         }
 
@@ -291,6 +235,14 @@ class LoginController extends Controller {
             $clubFilter = "bc-Café";
         }
 
+
+	// Substitute "Veteran" for those who are better than the rest
+        if($userStatus === 'veteran' 
+		AND $userGroup != 'marketing' 
+		AND $userGroup != 'clubleitung'){
+		$userGroup = "bc-Veteran";	
+	}
+
         // Compare password in LDAP with hashed input and inform about error or success,
         // Retrieve information about the user based on uidNumber if passwords match.
         // Also closing the connection here.
@@ -305,7 +257,7 @@ class LoginController extends Controller {
             Session::put('userStatus', $userStatus);
             Session::put('clubFilter',  $clubFilter);
 
-            Log::info('Auth success: User ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] .', group: ' . $userGroup . ') just logged in.');
+            Log::info('Auth success: User ' . $info[0]['cn'][0] . '(DN: ' . $info[0]['dn'] . ') ' . ' (' . $info[0]['uidnumber'][0] .', group: ' . $userGroup . ') just logged in.');
           
             return Redirect::back();
   
@@ -316,7 +268,7 @@ class LoginController extends Controller {
             Session::put('message', Config::get('messages_de.login-fail'));
             Session::put('msgType', 'danger');
            
-            Log::info('Auth fail: User ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] .', group: ' . $userGroup . ') used wrong password.');
+            Log::info('Auth fail: User ' . $info[0]['cn'][0] . '(DN: ' . $info[0]['dn'] . ') ' . ' (' . $info[0]['uidnumber'][0] .', group: ' . $userGroup . ') used wrong password.');
            
             return Redirect::back();
         }
