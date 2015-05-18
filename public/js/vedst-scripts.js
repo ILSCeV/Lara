@@ -215,7 +215,11 @@ $(document).ready(function() {
         $(this).closest('.box').find("[name^=jbtyp_statistical_weight]").val(weight);
     };
 });
-      
+ 
+
+// Enable Tooltips
+$(function () { $("[data-toggle='tooltip']").tooltip(); });     
+
 
 // TESTING AJAX
 

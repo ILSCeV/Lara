@@ -104,11 +104,11 @@
 
 			<table class="table table-hover table-condensed">
 				<thead>
-					<tr class="row">
-						<th class="hidden-xs hidden-sm visible-md">
+					
+						<th class="hidden-xs">
 							&nbsp;
 						</th>
-						<th class="col-xs-1 col-md-1">
+						<th class="col-xs-3 col-md-1">
 							Dienst
 						</th>
 						<th class="col-xs-2 col-md-2">
@@ -117,13 +117,13 @@
 						<th class="col-xs-2 col-md-2">
 							Verein
 						</th>
-						<th class="col-xs-12 col-md-6">
+						<th class="col-xs-6 col-md-6">
 							Kommentar
 						</th>
-						<th class="hidden-xs visible-md">
+						<th class="hidden-xs">
 							&nbsp;
 						</th>
-					</tr>
+					
 				</thead>
 				<tbody>
 					@include('partials.jobsByScheduleId', $entries)

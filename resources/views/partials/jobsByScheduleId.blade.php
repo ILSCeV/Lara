@@ -3,7 +3,7 @@
 	@foreach($entries as $entry)
 		
 			<tr>
-				<td>
+				<td class="hidden-xs">
 					&nbsp;
 				</td>
 				@if( is_null($entry->getPerson) )
@@ -11,7 +11,11 @@
 				@else
 				<td class="col-xs-2 col-md-2 green">
 				@endif
-					<span class="word-break"><small>{{ $entry->getJobType->jbtyp_title }}</small></span>
+
+					<span class="word-break" 
+						  data-toggle="tooltip" data-placement="top" title="{{ date("H:i", strtotime($entry->getJobType->jbtyp_time_start)) . "-" . date("H:i", strtotime($entry->getJobType->jbtyp_time_end)) }}" >
+						  <small>{{ $entry->getJobType->jbtyp_title }}</small>
+					</span>
 				</td>
 
 				<td class="col-xs-4 col-md-2">
@@ -248,7 +252,7 @@
 						@endif
 					@endif
 				</td>
-				<td>
+				<td class="hidden-xs">
 					&nbsp;
 				</td> 
 			</tr>

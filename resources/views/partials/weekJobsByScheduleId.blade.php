@@ -8,7 +8,14 @@
 				@else
 				<td class="col-xs-3 col-md-3 green">
 				@endif
-					<span class="word-break"><small><strong>{{ $entry->getJobType->jbtyp_title }}</strong></small></span>
+					<span class="word-break" 
+						  data-toggle="tooltip" 
+						  data-placement="top" 
+						  title="{{ date("H:i", strtotime($entry->getJobType->jbtyp_time_start)) . 
+						  "-" . 
+						  date("H:i", strtotime($entry->getJobType->jbtyp_time_end)) }}">
+						  	<small><strong>{{ $entry->getJobType->jbtyp_title }}</strong></small>
+					</span>
 				</td>
 
 				<td class="col-xs-5 col-md-5">
