@@ -57,7 +57,14 @@
        
                 <!-- Show table  -->
                 @if($i - $date['startDay'] >= 0 AND $i-$date['startDay'] < $date['daysOfMonth'])
-                        <td class="thisMonth" width=14%>
+                        
+                        @if( $date['month'] === date("m") 
+                             AND strftime("%d", strtotime($i - $date['startDay']." day", $date['startStamp'])) === date("j") )
+                            <td class="thisMonth today-marker" width=14%>
+                        @else
+                            <td class="thisMonth" width=14%>
+                        @endif
+                        
                                 @include('partials.calendarCell', $date)
                         </td>
                 @else 

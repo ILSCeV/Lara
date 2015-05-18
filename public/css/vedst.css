@@ -105,6 +105,10 @@ input[type=number],
   word-break: break-word;
 }
 
+.today-marker {
+  background-color: #dddddd;
+}
+
 .cal-event a{
   color: #ffffff;
 }
