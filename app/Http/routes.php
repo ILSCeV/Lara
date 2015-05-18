@@ -24,13 +24,12 @@ Route::controllers([
 
 */
 
-/* Route::get('/', function()
+Route::get('/', function()
 	{
 		return View::make('betatest-index');
 	});
-*/
 
-Route::get('/', 'CalendarController@currentMonth');
+/* Route::get('/', 'CalendarController@currentMonth'); */
 
 /** Global Patterns
  *
@@ -155,11 +154,10 @@ Route::get('/calendar/create/template/{id}', 	'EventController@showCreateEventTo
 
 
 //STATISTICS
-/* Route::get('/statistics',						'StatisticsController@showStatistics');
+Route::get('/statistics',						'StatisticsController@showStatistics');
 
 Route::post('/statistics', 						array('as' => 'statisticsChangeDate',
 													  'uses' => 'StatisticsController@showStatistics'));
-*/
 
 // MANAGEMENT
 Route::get('/management/jobtypes',				'ManagementController@showJobTypes');
