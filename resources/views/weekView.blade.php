@@ -41,27 +41,28 @@
 		{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success hidden-print')) !!}
 
 		<div class="day-row">
-			<div class="day-container">
 				@foreach($events as $clubEvent)
 					@if($clubEvent->evnt_is_private)
 						@if(Session::has('userId'))
-							<div class="inline-block {{ $clubEvent->getPlace->plc_title }}">
+							<div class="day-container inline-block {{ $clubEvent->getPlace->plc_title }}">
 								@include('partials.weekCell', $clubEvent)
 							</div>
 						@endif
 					@else
-						<div class="inline-block {{ $clubEvent->getPlace->plc_title }}">
+						<div class="day-container inline-block {{ $clubEvent->getPlace->plc_title }}">
 							@include('partials.weekCell', $clubEvent)
 						</div>
 					@endif
 				@endforeach 
 
 				<!-- whitespace between -->
+				<span class="hidden-print">
 				&nbsp;&nbsp;&nbsp;&nbsp;
+				</span>
 				<!-- end of whitespace -->
 
 				@foreach($tasks as $task)
-						<div class="inline-block">
+						<div class="day-container inline-block">
 							@include('partials.taskWeekCell', $task)
 						</div>
 				@endforeach 
@@ -73,7 +74,7 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</span>
 				<!-- end of whitespace -->
-			</div>
+			
 		</div>
 
 	@else

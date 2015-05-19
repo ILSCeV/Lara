@@ -4,9 +4,9 @@
 		
 			<tr class="row">
 				@if( is_null($entry->getPerson) )
-				<td class="col-xs-3 col-md-3 red">
+				<td class="col-xs-4 col-md-4 red">
 				@else
-				<td class="col-xs-3 col-md-3 green">
+				<td class="col-xs-4 col-md-4 green">
 				@endif
 					<span class="word-break" 
 						  data-toggle="tooltip" 
@@ -18,7 +18,7 @@
 					</span>
 				</td>
 
-				<td class="col-xs-5 col-md-5">
+				<td class="col-xs-4 col-md-4">
 				@if( is_null($entry->getPerson) )
 					<div class="btn-group">
 					
@@ -183,7 +183,7 @@
 				</td>
 			</tr>
 
-			<tr class="visible-xs hidden-md">
+			<tr class="hidden-md hidden-sm hidden-lg hidden-print">
 				<td colspan="4">&nbsp;</td>
 			</tr>
 

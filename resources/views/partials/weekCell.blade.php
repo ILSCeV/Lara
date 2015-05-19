@@ -2,8 +2,10 @@
 <div class="panel">
 	<div class="panel-heading">
 		<h4 class="panel-title">
-		<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}"> 
-		{{{ $clubEvent->evnt_title }}}</a></h4>
+			<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}"> 
+				{{{ $clubEvent->evnt_title }}}
+			</a>
+		</h4>
 		
 		{{ utf8_encode(strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start))) }} 
 		&nbsp;&nbsp;&nbsp;&nbsp;

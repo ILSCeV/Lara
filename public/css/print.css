@@ -5,8 +5,8 @@
 @media print {
 
 	body {
-	font: 11pt;
-	line-height: 1.0;
+		font: 11pt;
+		line-height: 1.0;
 	}
 
     * { 
@@ -15,15 +15,52 @@
     	text-shadow: none 			!important; 
     	filter:none 				!important; 
     	-ms-filter: none 			!important; 
-    	margin: 0 					!important; 
-
+    	margin: 0; 
+    	padding: 0;
     }
 
-	.day-row div:nth-child(5n)
+	.day-row 
 	{ 
 		display: block;
 		page-break-inside: avoid;
 	   	white-space: pre;
+	}
+
+
+	.day-container 
+	{
+		page-break-inside: avoid;
+		display: block;
+	  	font-size:.8em;
+	  	line-height:1.2em;
+		width: 45%;
+		margin: 1%;
+		overflow: visible;
+		float: left;
+	}
+
+	.panel-heading
+	{
+		padding: 0;	
+	}
+	
+
+	.panel-body
+	{
+		padding: 0;
+		padding-top: 5px;
+		white-space: nowrap;
+
+	}
+
+	.panel
+	{
+		margin-bottom: 0;
+	}
+
+	table 
+	{
+		margin-bottom:0 !important;
 	}
 
 	.hidden-print, 
@@ -36,8 +73,9 @@
 	  	content: none !important;
 	}
 
-	.panel-body {
-	    white-space: nowrap;
+	input
+	{
+		text-overflow: ellipsis;
 	}
 
   	@page {

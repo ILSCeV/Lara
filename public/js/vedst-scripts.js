@@ -141,7 +141,6 @@ $(document).ready(function() {
     }
 });
 
-
 // Shows dynamic form fields for new job types 
 
 $(document).ready(function() {
