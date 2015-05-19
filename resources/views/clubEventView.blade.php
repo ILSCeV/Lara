@@ -31,6 +31,8 @@
 					<i>Ende:</i>   {{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_end)) }} um 
 								   {{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 					<br>
+					<i>DV-Zeit:</i> {{ date("H:i", strtotime($clubEvent->getSchedule->schdl_time_preparation_start)) }}
+					<br>
 					<i>Ort:</i> {{{ $clubEvent->getPlace->plc_title }}}
 				</div>
 			</div>

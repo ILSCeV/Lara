@@ -8,12 +8,14 @@
 		</h4>
 		
 		{{ utf8_encode(strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start))) }} 
-		&nbsp;&nbsp;&nbsp;&nbsp;
-		Wann: {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
+		&nbsp;
+		DV: {{ date("H:i", strtotime($clubEvent->getSchedule->schdl_time_preparation_start)) }}
+		&nbsp;
+		<i class="fa fa-clock-o"></i> {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
 		-
 		{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
-		&nbsp;&nbsp;&nbsp;&nbsp;
-		Wo: {{{ $clubEvent->getPlace->plc_title }}}
+		&nbsp;
+		<i class="fa fa-map-marker"></i> {{{ $clubEvent->getPlace->plc_title }}}
 	</div>
 	<div class="panel-body">
 		@if( $clubEvent->getSchedule->schdl_password != '')

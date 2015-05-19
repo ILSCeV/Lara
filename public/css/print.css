@@ -17,6 +17,7 @@
     	-ms-filter: none 			!important; 
     	margin: 0; 
     	padding: 0;
+    	text-overflow: ellipsis;
     }
 
 	.day-row 
@@ -71,11 +72,6 @@
 
 	a[href]:after {
 	  	content: none !important;
-	}
-
-	input
-	{
-		text-overflow: ellipsis;
 	}
 
   	@page {

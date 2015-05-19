@@ -143,7 +143,19 @@
 						</div>
 				    </div>
 
-				    <br><br><br><br><span class="visible-xs">&nbsp;</span>
+					<br>
+					<br>
+					<span class="visible-xs">&nbsp;</span>
+				    
+				    <div class="form-group">	
+						<label for="preparationTime" class="col-xs-2 col-md-2 control-label">DV-Zeit:</label>
+						<div class="col-xs-10 col-md-10">
+							 {!! Form::input('time', 'preparationTime', '21:00') !!}
+						</div>
+				    </div>
+					
+
+				    <br><br class="hidden-xs"><br class="hidden-xs"><span class="visible-xs">&nbsp;</span>
 
 				    <div class="form-group col-xs-12 col-md-12">
 				    	<label for="password" class="col-xs-12 col-md-5">Passwort zum Eintragen:</label>
