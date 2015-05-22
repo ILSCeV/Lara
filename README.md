@@ -4,7 +4,7 @@ This is a **development version** - NOT FOR PRODUCTION USE.
 
 
 ## About
-**Lara** ("**Ve**rwaltung **d**es **St**udentenclubs") is a planning tool that combines a calender with personnel scheduling, finances and internal statistics. It is developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all Ilmenauer Studentenclub e.V. sections. 
+**Lara** ("**Ve**rwaltung **d**es **St**udentenclubs") is a planning tool that combines a calender with personnel scheduling, with plans of adding finances and internal statistics in future versions. It is developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all Ilmenauer Studentenclub e.V. sections. 
 Lara started as a softwareproject at [TU Ilmenau](http://tu-ilmenau.de) in WS2014/2015.
 
 **This is work in progress!**
@@ -13,18 +13,18 @@ Some bugs are still alive.
 
 
 ## Current project status
-(as of 01.04.2015)
+(as of 20.05.2015)
 
 - Calender: **OK**
 - Schedules:
   - Event schedules: **OK**
   - Task schedules: **OK**
-- Personnel statistics: *in progress*
-- Event statistics: tba
-- Finances: tba
-- Controlling: tba
+- Personnel statistics: *in progress*, est. 14.06.15
+- Event statistics: tba, est. 01.09.15
+- Finances: tba, est. 01.09.15
+- Controlling: tba, est. 01.09.15
 
-For detailed list open requirements and change-requests see: [Issues](https://github.com/4D44H/lara-vedst/issues).
+For detailed list of open requirements and change-requests see: [Issues](https://github.com/4D44H/lara-vedst/issues).
 
 
 ## Components: 
@@ -139,5 +139,6 @@ Lara VedSt is based on:
 - [Bootswatch 3.3.4+1](http://bootswatch.com)
 - [JQuery 2.1.3](http://jquery.com)
 - [Font Awesome 4.3.0](http://fortawesome.github.io/Font-Awesome) 
+- [Isotope 2.2.0](http://isotope.metafizzy.co/)
 
-(All licensed under [MIT License](http://opensource.org/licenses/MIT)).
+(All licensed under [MIT License](http://opensource.org/licenses/MIT) or [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE)).
