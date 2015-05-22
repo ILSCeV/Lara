@@ -6,30 +6,39 @@
 @stop
 @section('content')
 
-<div class="row">
-<!-- create button -->
-    <div class="col-xs-12 col-md-4">
-        @if(Session::has('userGroup')
-            AND (Session::get('userGroup') == 'marketing'
-            OR Session::get('userGroup') == 'clubleitung'))
-            <a href="{{ Request::getBasePath() }}/calendar/create" class="btn btn-primary pull-left">Neue Veranstaltung erstellen</a>
-        @endif
-    </div>
+    <div class="container">
+        <!-- prev/next month -->
+        <div class="col-xs-12 col-md-5 btn-group">
 
-<!-- prev/next month -->
-    <div class="col-xs-12 col-md-4">
-        <ul class="pager">
-            <li><a href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",strtotime("previous month", $date['startStamp'])) }}">&lt;&lt;</a></li>
-            <li><h5 style="display: inline;">{{ "&nbsp;&nbsp;&nbsp;&nbsp;" . $date['monthName'] . " " . $date['year'] . "&nbsp;&nbsp;&nbsp;&nbsp;" }}</h5></li>
-            <li><a href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",strtotime("next month", $date['startStamp'])) }}">&gt;&gt;</a></li>  
-        </ul>
-    </div>
+            <a class="btn btn-default hidden-print" 
+               href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m", 
+                        strtotime("previous month", $date['startStamp'])) }}">
+                &lt;&lt;
+            </a>
 
-<!-- club filtering -->
-    <div class="col-xs-12 col-md-4">
-        @include('partials.filter')
+                <span class="btn btn-lg disabled" style="text-align: center !important;">   
+                    {{ $date['monthName'] . " " . $date['year'] }} 
+                </span>
+
+            <a class="btn btn-default hidden-print" 
+               href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m", 
+                        strtotime("next month", $date['startStamp'])) }}">
+                &gt;&gt;
+            </a>
+
+        </div>
+
+        <!-- create button -->
+        <div class="col-xs-12 col-md-3">
+            @include('partials.create-btn')
+        </div>
+
+        <!-- filter -->
+        <div class="col-xs-12 col-md-4 pull-right">
+            @include('partials.filter')
+        </div>
     </div>
-</div>
+        <br class="hidden-xs">
 
 <!-- month table -->
 <div class="panel">
@@ -83,4 +92,7 @@
            
     </table>
 </div>
+<!-- filter hack -->
+<span id="own-filter-marker" hidden>&nbsp;</span>
+<!-- end filter hack -->
 @stop

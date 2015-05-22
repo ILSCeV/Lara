@@ -1,10 +1,10 @@
-<div class="pull-right" id="filter">
-        <div class="checkbox">
-          <label><input type="checkbox" id="bc-Club" checked>bc-Club anzeigen</label>
-        </div>
-        <div class="checkbox">
-          <label><input type="checkbox" id="bc-Café" checked>bc-Café anzeigen</label>
-        </div>
-        <span class="visible-xs hidden-md">&nbsp</span>
-		
+<!-- Filtering -->
+<div id="filters" class="btn-group">  
+	<br class="visible-xs">
+	  <button class="btn btn-xs btn-primary"  type="button" id="show-all-filter" data-filter="*">Alle Sektionen</button>
+	  <button class="btn btn-xs" type="button" id="bc-Cafe-filter" data-filter=".bc-Café, .bc-Café.task">nur bc-Café</button>
+	  <button class="btn btn-xs" type="button" id="bc-Club-filter" data-filter=".bc-Club, .bc-Club.task">nur bc-Club</button>
+	<br class="visible-xs">
+	<br class="visible-xs">
+	<br class="visible-xs">
 </div>

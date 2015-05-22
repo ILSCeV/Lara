@@ -34,10 +34,6 @@ table {
   }
 }
 
-.panel {
-  margin-bottom: 23px;
-}
-
 .panel-group {
   margin-bottom: 8px;
 }
@@ -65,7 +61,6 @@ input[type=number],
 [type=tel].form-control {
   font-size: 12px;
 }
-
 
 /**
  * More / Less Button
@@ -148,6 +143,10 @@ input[type=number],
   word-break: break-all;
 }
 
+.panel {
+  margin-bottom: 0px !important;
+}
+
 .panel-title {
   word-wrap: break-word;
   overflow: hidden;
@@ -185,19 +184,6 @@ input[type=number],
   user-select: none;
 }
 
-.day-row {
-    white-space: nowrap;
-}
-
-
-.inline-block {
-  white-space: normal;
-  display: inline-block;
-  vertical-align: top;
-  white-space: normal;
-  width: 350px;
-}
-
 .panel-small {
   margin-bottom: 0px;
   padding: 5px;
@@ -226,3 +212,46 @@ input[type=number],
     z-index:999999;
         
 }
+
+
+/** 
+ * ISOTOPE 
+ */
+
+.isotope > * {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/* clear fix */
+.isotope:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.isotope:before {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .element-item ---- */
+
+.element-item {
+  position: relative;
+  float: left;
+  width: 350px;
+  margin: 10px;
+  padding: 0px;
+  white-space: normal;
+  display: inline-block;
+}
+
+@media screen and (max-width : 480px) {
+    .element-item {
+      padding: 0px;
+      margin: 3px;
+      width: 98%;
+    }

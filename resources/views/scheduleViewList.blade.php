@@ -79,5 +79,9 @@
 	</div>
 <br>
 <center>{!! $schedules->render() !!}</center>
+
+<!-- filter hack -->
+<span id="own-filter-marker" hidden>&nbsp;</span>
+<!-- end filter hack -->
 @stop
 					

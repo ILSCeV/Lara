@@ -6,6 +6,9 @@ window.setTimeout(function() {
 }, 4000);
 
 
+
+
+
 // Show/hide more button for infos
 $(function(){
 	$('.moreless-more-info').click(function(e) {
@@ -65,6 +68,9 @@ $(function(){
 });
 
 
+
+
+
 // Show/hide comments
 $(function(){
 	$('.showhide').click(function(e) {
@@ -74,72 +80,8 @@ $(function(){
 });
 
 
-// Filter events from club/cafe, using browser local storage if enabled to save state
-$(document).ready(function() {			    
-    $('#bc-Club').change(function() {
-        if($(this).prop("checked")) {
-            $('.bc-Club').show();
-            if(typeof(Storage) !== "undefined") {
-            	localStorage.filterClub = "show";
-            } 
-        } else {
-            $('.bc-Club').hide(); 
-           	if(typeof(Storage) !== "undefined") {
-            	localStorage.filterClub = "hide";
-            } 
-        }         
-    });
-});
 
-$(document).ready(function() {			    
-    $('#bc-Café').change(function() {
-        if($(this).prop("checked")) {
-            $('.bc-Café').show();
-            if(typeof(Storage) !== "undefined") {
-            	localStorage.filterCafe = "show";
-            }			        
-        } else {
-            $('.bc-Café').hide();  
-           	if(typeof(Storage) !== "undefined") {
-            	localStorage.filterCafe = "hide";
-            } 
-        }			              
-    });
-});
 
-$(document).ready(function() {
-	if(typeof(Storage) !== "undefined") {
-		if (localStorage.filterClub == "hide") {
-        	$("#bc-Club").prop('checked', false);
-        	$('.bc-Club').hide();		        	
-        } else {
-        	$("#bc-Club").prop('checked');
-        	$('.bc-Club').show();			        	
-        }
-
-		if (localStorage.filterCafe == "hide") {
-        	$("#bc-Café").prop('checked', false);
-        	$('.bc-Café').hide();
-        } else {
-        	$("#bc-Café").prop('checked');
-        	$('.bc-Café').show();			        	
-        }
-
-    } else {
-    	if ( "{{ Session::get('clubFilter') }}" === "bc-Café" ) {
-        	$("#bc-Club").prop('checked', false);
-        	$('.bc-Club').hide();
-    	} else if ( "{{ Session::get('clubFilter') }}" === "bc-Club" ) {
-        	$("#bc-Café").prop('checked', false);
-        	$('.bc-Café').hide();
-    	} else {
-        	$("#bc-Café").prop('checked');
-        	$('.bc-Café').show();
-        	$("#bc-Club").prop('checked');
-        	$('.bc-Club').show();			    		
-    	}
-    }
-});
 
 // Shows dynamic form fields for new job types 
 
@@ -216,8 +158,14 @@ $(document).ready(function() {
 });
  
 
+
+
+
 // Enable Tooltips
 $(function () { $("[data-toggle='tooltip']").tooltip(); });     
+
+
+
 
 
 // TESTING AJAX
@@ -248,3 +196,133 @@ $(function () { $("[data-toggle='tooltip']").tooltip(); });
             });
 
           });
+
+
+
+
+
+// ISOTOPE masonry plugin
+$( document ).ready( function() {
+  // init Isotope
+  var $container = $('.isotope').isotope({
+    itemSelector: '.element-item',
+    layoutMode: 'masonry',
+    getSortData: {
+      name: '.name',
+      symbol: '.symbol',
+      number: '.number parseInt',
+      category: '[data-category]',
+      weight: function( itemElem ) {
+        var weight = $( itemElem ).find('.weight').text();
+        return parseFloat( weight.replace( /[\(\)]/g, '') );
+      }
+    }
+  });
+
+  // filter functions
+  var filterFns = {
+    // show if name matches class
+    name: function() {
+      var name = $(this).find('.name').text();
+    }
+  };
+
+  // bind filter button click
+  $('#filters').on( 'click', 'button', function() {
+    var filterValue = $( this ).attr('data-filter');
+    // use filterFn if matches value
+    filterValue = filterFns[ filterValue ] || filterValue;
+    $container.isotope({ filter: filterValue });
+  });
+  
+  // change is-checked (btn-primary) class on buttons and update local storage
+  $('.btn-group').each( function( i, buttonGroup ) {
+    var $buttonGroup = $( buttonGroup );
+    $buttonGroup.on( 'click', 'button', function() {
+        // highlight selection
+        $buttonGroup.find('.btn-primary').removeClass('btn-primary');
+        $( this ).addClass('btn-primary');
+
+        // save selection in local storage
+        if(typeof(Storage) !== "undefined") 
+        {
+            localStorage.filter = $(this).text();
+        }
+    });
+  });
+  
+});
+
+
+// Saving filtering for isotope, using browser local storage if enabled to save/resume state
+$(document).ready(function() {
+    if(typeof(Storage) !== "undefined") 
+    {
+        if (localStorage.filter == "nur bc-Club") 
+        {
+            $("#bc-Club-filter").trigger("click"); 
+        } 
+        else if (localStorage.filter == "nur bc-Café") 
+        {
+            $("#bc-Cafe-filter").trigger("click");                   
+        }
+        else if (localStorage.filter == "Alle Sektionen")
+        {
+            $("#show-all-filter").trigger("click");                    
+        }
+    }
+});
+
+
+
+
+
+// Filtering month view without Isotope
+// onLoad inits
+$(document).ready(function() {  
+    // checking if we are in the month view
+    if ($('#own-filter-marker').length) {
+        // check if local storage in use
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.filter == "nur bc-Club") 
+            {
+                $('.bc-Club').show(); 
+                $('.bc-Café').hide(); 
+            }
+            else if (localStorage.filter == "nur bc-Café")
+            {
+                $('.bc-Club').hide(); 
+                $('.bc-Café').show(); 
+            }
+            else if (localStorage.filter == "Alle Sektionen") 
+            {
+                $('.bc-Club').show(); 
+                $('.bc-Café').show(); 
+            }
+        }
+
+        // click checks
+        // bind filter button click
+        $('#filters').on( 'click', 'button', function() {
+            var filterValue = $( this ).attr('data-filter');
+            if (filterValue.match("bc-Club")) 
+            {
+                $('.bc-Club').show(); 
+                $('.bc-Café').hide(); 
+            }
+            else if (filterValue.match("bc-Café"))
+            {
+                $('.bc-Club').hide(); 
+                $('.bc-Café').show(); 
+            }
+            else if (filterValue.match("\\*")) 
+            {
+                $('.bc-Club').show(); 
+                $('.bc-Café').show(); 
+            }
+            
+        });
+
+    }
+});

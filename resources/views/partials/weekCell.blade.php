@@ -3,7 +3,7 @@
 	<div class="panel-heading">
 		<h4 class="panel-title">
 			<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}"> 
-				{{{ $clubEvent->evnt_title }}}
+				<span class="name">{{{ $clubEvent->evnt_title }}}</span>
 			</a>
 		</h4>
 		
@@ -15,7 +15,7 @@
 		-
 		{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 		&nbsp;
-		<i class="fa fa-map-marker"></i> {{{ $clubEvent->getPlace->plc_title }}}
+		<i class="fa fa-map-marker">&nbsp;</i>{{{ $clubEvent->getPlace->plc_title }}}
 	</div>
 	<div class="panel-body">
 		@if( $clubEvent->getSchedule->schdl_password != '')

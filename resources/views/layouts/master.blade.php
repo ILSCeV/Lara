@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Lara VedSt | @yield('title', 'VedSt Default Title')</title>
+		<title>Lara | @yield('title', 'VedSt Default Title')</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		{!! HTML::style('css/bootstrap-bootswatch-paper.min.css') !!}
@@ -49,7 +49,6 @@
 </style>
 
 <!-- END -->
-
 	</head>
     <body>
 		<div class="navigation">
@@ -60,16 +59,18 @@
 			@include('partials.message')
 		</div>
 
-        <div class="container">
-            @yield('content')
-        </div>
+    <div class="container">
+        @yield('content')
+    </div>
 
 	 	<div class="footer">
 			@include('partials.footer')
 		</div>
 		
     {!! HTML::script('js/jquery-2.1.3.min.js') !!}
-    {!! HTML::script('js/bootstrap.js') !!}
+    {!! HTML::script('js/bootstrap.min.js') !!}
+    {!! HTML::script('js/isotope.pkgd.min.js') !!}
 		{!! HTML::script('js/vedst-scripts.js') !!}
+
     </body>
 </html>
