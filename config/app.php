@@ -147,7 +147,6 @@ return [
 		/*
 		 * Service providers used for Lara-VedSt 
 		 */
-		"Khill\Lavacharts\Laravel\LavachartsServiceProvider",
 		'Collective\Html\HtmlServiceProvider',
 
 	],
@@ -200,7 +199,6 @@ return [
 		// Aliases needed for Lara-VedSt
 		'Form' => 'Collective\Html\FormFacade',
       	'HTML' => 'Collective\Html\HtmlFacade',
-
 	],
 
 ];

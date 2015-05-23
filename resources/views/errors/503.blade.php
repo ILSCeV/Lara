@@ -34,7 +34,7 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">Be right back.</div>
+				<div class="title">Psst, Lara schläft gerade. <br>Probiere nochmal <br>in einer Viertelstunde... <br> M.</div>
 			</div>
 		</div>
 	</body>

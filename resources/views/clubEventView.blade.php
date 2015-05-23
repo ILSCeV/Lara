@@ -128,7 +128,9 @@
 					
 				</thead>
 				<tbody>
+				
 					@include('partials.jobsByScheduleId', $entries)
+				
 				</tbody>
 			</table>
 			{!! Form::close() !!}
