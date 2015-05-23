@@ -138,6 +138,36 @@ input[type=number],
   color: darkgrey;
 }
 
+/* event type 0 - default */
+.marker-0 {
+  color: #ffffff;
+}
+
+/* event type 1 - info only */
+.marker-1 {
+  color: #ffffff;
+}
+
+/* event type 2 - highlight / special */
+.marker-2 {
+  color: #ffffff;
+}
+
+/* event type 3 - live band/DJ/reading */
+.marker-3 {
+  color: #ffffff;
+}
+
+/* event type 4 - internal */
+.marker-4 {
+  color: #ffffff;
+}
+
+/* event type 5 - private party / Nutzung */
+.marker-5 {
+  color: #ffffff;
+}
+
 .centered {
   text-align: center;
 }
