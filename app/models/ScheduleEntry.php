@@ -20,7 +20,8 @@ class ScheduleEntry extends Eloquent {
 								'prsn_id',
 								'entry_user_comment',
 								'entry_time_start',
-								'entry_time_end');
+								'entry_time_end',
+								'entry_statistical_weight');
 	
 	/**
 	 * Get the corresponding job type.

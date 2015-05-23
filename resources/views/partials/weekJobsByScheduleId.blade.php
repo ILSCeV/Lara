@@ -105,7 +105,7 @@
 									   data-toggle="tooltip" 
 						  			   data-placement="top" 
 						  			   title="Veteran"></i>
-		        	   			@elseif ( $entry->getPerson->prsn_status === 'aktiv')
+		        	   			@elseif ( $entry->getPerson->prsn_status === 'member')
 		        	   				<i class="fa fa-circle" 
 		        	   				   style="color:forestgreen;"
 									   data-toggle="tooltip" 

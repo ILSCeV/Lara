@@ -233,7 +233,7 @@ class ScheduleController extends Controller {
 
 
 	/**
-	* Create all new scheduleEntries with its entered information.
+	* Create all new scheduleEntries with entered information.
 	*
 	* @return Collection scheduleEntries
 	*/
@@ -246,14 +246,40 @@ class ScheduleController extends Controller {
 
 			if (!empty(Input::get("jobType" . $i))) { 		// skip empty fields
 
-			$jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jobType" . $i)));
-			//$jobtype->jbtyp_time_start = Input::get('timeStart' . $i);
-			//$jobtype->jbtyp_time_end = Input::get('timeEnd' . $i);
+			// check if job type exists
+			$jobType = Jobtype::where('jbtyp_title', '=', Input::get("jobType" . $i))
+							  ->where('jbtyp_time_start', '=', Input::get("timeStart" . $i))
+							  ->where('jbtyp_time_end', '=', Input::get("timeEnd" . $i))
+							  ->first();
+			
+			// If not found - create new jpb type with data provided
+			if (is_null($jobType))
+			{
+				// TITLE
+				$jobType = Jobtype::create(array('jbtyp_title' => Input::get("jobType" . $i)));
+
+				// TIME START
+				$jobType->jbtyp_time_start = Input::get('timeStart' . $i);
+
+				// TIME END
+				$jobType->jbtyp_time_end = Input::get('timeEnd' . $i);
+
+				// STATISTICAL WEIGHT
+				$jobType->jbtyp_statistical_weight = Input::get('jbtyp_statistical_weight' . $i);
+
+				// NEEDS PREPARATION
+				$jobType->jbtyp_needs_preparation = 'true';
+
+				// ARCHIVED set to "false"
+				$jobType->jbtyp_is_archived = 'false';
+
+				$jobType->save();
+			}
 
 			$scheduleEntry = new ScheduleEntry;
-			$scheduleEntry->jbtyp_id = $jobtype->id;
+			$scheduleEntry->jbtyp_id = $jobType->id;
 
-			$scheduleEntries->add(ScheduleController::updateScheduleEntry($scheduleEntry, $jobtype->id, $i));
+			$scheduleEntries->add(ScheduleController::updateScheduleEntry($scheduleEntry, $jobType->id, $i));
 			}
 		}
 
@@ -338,17 +364,11 @@ class ScheduleController extends Controller {
 	*/
 	private static function updateScheduleEntry($scheduleEntry, $jobtypeId, $counterValue)
 	{
-		if (!empty(Input::get('timeStart' . $jobtypeId))){
-			$scheduleEntry->entry_time_start = Input::get('timeStart' . $counterValue);
-		} else {
-			$scheduleEntry->entry_time_start = "21:00";
-		}
+		$scheduleEntry->entry_time_start = Input::get('timeStart' . $counterValue);
 
-		if (!empty(Input::get('timeEnd' . $jobtypeId))){
-			$scheduleEntry->entry_time_end = Input::get('timeEnd' . $counterValue);
-		} else {
-			$scheduleEntry->entry_time_end = "01:00";
-		}
+		$scheduleEntry->entry_time_end = Input::get('timeEnd' . $counterValue);
+
+		$scheduleEntry->entry_statistical_weight = Input::get('jbtyp_statistical_weight' . $counterValue);
 
 		return $scheduleEntry;
 	}

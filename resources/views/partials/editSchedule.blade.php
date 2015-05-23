@@ -35,7 +35,11 @@
 											   								   &#39;{{ $jobtype->jbtyp_time_end }}&#39;,
 											   								   &#39;{{ $jobtype->jbtyp_statistical_weight }}&#39;);">
 
-											   {{ $jobtype->jbtyp_title }}
+											   	{{  $jobtype->jbtyp_title }} 
+											   	(<i class='fa fa-clock-o'></i>
+												{{  date("H:i", strtotime($jobtype->jbtyp_time_start))
+													. "-" .
+												    date("H:i", strtotime($jobtype->jbtyp_time_end)) . ")" }}
 											</a>
 										</li>
 									@endforeach
@@ -47,26 +51,31 @@
 						<input type="time" class="input" 
 							   name={{ "timeStart" . $counter }}
 							   id={{ "timeStart" . $counter }}
-							   value={{ $entry->getJobType->jbtyp_time_start }} hidden />
+							   value="{{ $entry->entry_time_start }}" 
+							   required />
 
 		            	<input type="time" 
 		            		   class="input" 
 		            		   name={{ "timeEnd" . $counter }} 
 		            		   id={{ "timeEnd" . $counter }}
-		            		   value={{ $entry->getJobType->jbtyp_time_end }} hidden />
+		            		   value="{{ $entry->entry_time_end }}" 
+		            		   required />
 
+
+		            	&nbsp;<br class="visible-xs">Gewicht:&nbsp;
 		            	<input type="number" 
 		            		   class="input" 
 		            		   name={{ "jbtyp_statistical_weight" . $counter }} 
 		            		   id={{ "jbtyp_statistical_weight" . $counter }}
-		            		   value={{ $entry->getJobType->jbtyp_statistical_weight }} hidden />
+		            		   value="{{ $entry->entry_statistical_weight }}" 
+		            		   required />
 
+		            	
 		            	<input type="button" value="+" class="btn btn-small btn-success btnAdd" />
 		            	&nbsp;&nbsp;
 	    				<input type="button" value="&#8211;" class="btn btn-small btn-danger btnRemove" />
-
-
 					</div>
+					
 		        @endforeach 
 		    @endif
 
@@ -94,7 +103,11 @@
 									   								   &#39;{{ $jobtype->jbtyp_time_end }}&#39;,
 									   								   &#39;{{ $jobtype->jbtyp_statistical_weight }}&#39;);">
 
-									   {{ $jobtype->jbtyp_title }}
+									   	{{  $jobtype->jbtyp_title }} 
+									   	(<i class='fa fa-clock-o'></i>
+										{{  date("H:i", strtotime($jobtype->jbtyp_time_start))
+											. "-" .
+										    date("H:i", strtotime($jobtype->jbtyp_time_end)) . ")" }}
 									</a>
 								</li>
 							@endforeach
@@ -107,21 +120,22 @@
 				<input type="time" class="input" 
 					   name={{ "timeStart" . $counter }}
 					   id={{ "timeStart" . $counter }}
-					   value="21:00" hidden />
+					   value="21:00" required />
 	        	
 
 	        	<input type="time" 
 	        		   class="input" 
 	        		   name={{ "timeEnd" . $counter }} 
 	        		   id={{ "timeEnd" . $counter }}
-	        		   value="01:00" hidden />
+	        		   value="01:00" required />
 
+				&nbsp;<br class="visible-xs">Gewicht:&nbsp;
 	        	<input type="number" 
 	        		   class="input" 
 	        		   name={{ "jbtyp_statistical_weight" . $counter }} 
 	        		   id={{ "jbtyp_statistical_weight" . $counter }}
 	        		   value="1"
-	        		   placeholder="Statistische Wertung" hidden />
+	        		   placeholder="Statistische Wertung" required />
 
 	        	<input type="button" value="+" class="btn btn-small btn-success btnAdd" /> 
 	        	&nbsp;&nbsp;

@@ -11,13 +11,12 @@
 				@else
 					<td class="col-xs-2 col-md-2 green">
 				@endif
-
 					<span class="word-break" 
 						  data-toggle="tooltip" 
 						  data-placement="top" 
-						  title="{{ date("H:i", strtotime($entry->getJobType->jbtyp_time_start)) . 
+						  title="{{ date("H:i", strtotime($entry->entry_time_start)) . 
 						  			"-" . 
-						  			date("H:i", strtotime($entry->getJobType->jbtyp_time_end)) }}" >
+						  			date("H:i", strtotime($entry->entry_time_end)) }}" >
 						  <small>{{ $entry->getJobType->jbtyp_title }}</small>
 					</span>
 				</td>
@@ -182,7 +181,7 @@
 										   data-toggle="tooltip" 
 							  			   data-placement="top" 
 							  			   title="Veteran"></i>
-			        	   			@elseif ( $entry->getPerson->prsn_status === 'aktiv')
+			        	   			@elseif ( $entry->getPerson->prsn_status === 'member')
 			        	   				<i class="fa fa-circle" 
 			        	   				   style="color:forestgreen;"
 										   data-toggle="tooltip" 
@@ -260,7 +259,7 @@
 										   data-toggle="tooltip" 
 							  			   data-placement="top" 
 							  			   title="Veteran"></i>
-			        	   			@elseif ( $entry->getPerson->prsn_status === 'aktiv')
+			        	   			@elseif ( $entry->getPerson->prsn_status === 'member')
 			        	   				<i class="fa fa-circle" 
 			        	   				   style="color:forestgreen;"
 										   data-toggle="tooltip" 
