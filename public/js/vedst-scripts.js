@@ -348,8 +348,3 @@ $(document).ready(function() {
     }
 });
 
-
-
-
-
-

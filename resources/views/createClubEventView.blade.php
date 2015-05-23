@@ -84,7 +84,7 @@
 				    </div>
 					
 					<br>
-					<span class="hidden-xs"><br></span>
+					<br class="visible-xs">
 				    
 				    <div class="form-group">	
 						<label for="subtitle" class="col-xs-3 col-md-2 control-label">Untertitel:</label>
@@ -94,20 +94,76 @@
 				      										  'style'=>'cursor: auto') ) !!}
 						</div>
 				    </div>
-					
-					<br><br>
+				    
+				    <br>
+				    <br class="visible-xs">
 				    
 				    <div class="form-group">	
-				     	<label for="isPrivate" class="col-xs-8 col-md-4 control-label">Interne Veranstaltung?</label>
-				     	<div class="col-xs-4 col-md-8">
-							{!! Form::checkbox('isPrivate', '1', false) !!}&nbsp;
+				     	<label for="evnt_type" class="col-xs-2 col-md-2 control-label">Typ:</label>
+				     	<div class="col-xs-10 col-md-10">
+				     		<div class="radio">
+					     		<label>
+						            {!! Form::radio('evnt_type', "0", array("checked")) !!}
+						            normales Programm
+						        </label>
+							</div>
+							<div class="radio">
+					     		<label>
+						            {!! Form::radio('evnt_type', "1") !!}
+						            Information
+						        </label>
+							</div>
+							<div class="radio">
+					     		<label>
+						            {!! Form::radio('evnt_type', "2") !!}
+						            Spezial
+						        </label>
+							</div>
+							<div class="radio">
+					     		<label>
+						            {!! Form::radio('evnt_type', "3") !!}
+						            Live Band / Live DJ / Lesung 
+						        </label>
+							</div>
+							<div class="radio">
+					     		<label>
+						            {!! Form::radio('evnt_type', "4") !!}
+						            interne Veranstaltung
+						        </label>
+							</div>
+							<div class="radio">
+					     		<label>
+						            {!! Form::radio('evnt_type', "5") !!}
+						            Nutzung
+						        </label>
+							</div>
+						</div>
+				    </div>					
+
+					<br><br>
+				   
+				    <div class="form-group">
+				    	<div class="col-xs-2 col-md-2">
+				    		&nbsp;
+				    	</div>
+				     	<div class="col-xs-10 col-md-10">
+				     		<label>
+								{!! Form::checkbox('isPrivate', '1', true) !!}
+								Öffentliche Veranstaltung?
+							</label>
 						</div>
 				    </div>		    
 					
 					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
 
 					<div class="form-group">
-						<label for="place" class="col-xs-2 col-md-2 control-label">Ort: &nbsp;</label>
+						<label for="place" class="col-xs-2 col-md-2 control-label">Sektion: &nbsp;</label>
 						<div class="col-xs-10 col-md-10">
 						   	{!! Form::text('place', 'bc-Club', array('id'=>'place') ) !!}
 						 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
@@ -125,7 +181,7 @@
 				   	</div>
 					
 					<br>
-					<br>
+					<br class="visible-xs">
 				    
 				    <div class="form-group">	
 						<label for="beginDate" class="col-xs-2 col-md-2 control-label">Beginn:</label>
@@ -176,7 +232,7 @@
 		</div>
 
 		<div class="container col-xs-12 col-md-6">
-
+			<br class="visible-xs">
 			<div class="panel">
 				<div class="panel-heading">
 					<h4 class="panel-title">Weitere Infos:</h4>(öffentlich)
@@ -191,7 +247,7 @@
 					</div>	
 				</div>
 			</div>
-
+			<br>
 			<div class="panel">
 				<div class="panel-heading">
 					<h4 class="panel-title">Details:</h4>(nur intern sichtbar)
@@ -208,12 +264,12 @@
 			</div>
 		</div>
 	</div>
-	
+	<br>
 	@include('partials.editSchedule')
-	
+	<br>
 	{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'btn btn-primary')) !!}
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<span class="visible-xs"><br></span>
+	<br class="visible-xs">
 	<a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
 
 	{!! Form::close() !!}

@@ -44,20 +44,76 @@
 						</div>
 				    </div>
 					
-					<br><br>
-					<span class="visible-xs"><br></span>
+					<br>
+					<br class="visible-xs">
+					<br class="visible-xs">
 
 				    <div class="form-group">	
-				     	<label for="isPrivate" class="col-xs-8 col-md-4 control-label">Interne Veranstaltung?</label>
-				     	<div class="col-xs-4 col-md-8">
-							{!! Form::checkbox('isPrivate', '1', $event->evnt_is_private) !!}&nbsp;
+				     	<label for="evnt_type" class="col-xs-2 col-md-2 control-label">Typ:</label>
+				     	<div class="col-xs-10 col-md-10">
+				     		<div class="radio">
+					     		<label>
+						            {!! Form::radio('evnt_type', "0", $event->evnt_type == 0 ? array("checked") : "" ) !!}
+						            normales Programm
+						        </label>
+							</div>
+							<div class="radio">
+					     		<label>
+						            {!! Form::radio('evnt_type', "1", $event->evnt_type == 1 ? array("checked") : "") !!}
+						            Information
+						        </label>
+							</div>
+							<div class="radio">
+					     		<label>
+						            {!! Form::radio('evnt_type', "2", $event->evnt_type == 2 ? array("checked") : "") !!}
+						            Spezial
+						        </label>
+							</div>
+							<div class="radio">
+					     		<label>
+						            {!! Form::radio('evnt_type', "3", $event->evnt_type == 3 ? array("checked") : "") !!}
+						            Live Band / Live DJ / Lesung 
+						        </label>
+							</div>
+							<div class="radio">
+					     		<label>
+						            {!! Form::radio('evnt_type', "4", $event->evnt_type == 4 ? array("checked") : "") !!}
+						            interne Veranstaltung
+						        </label>
+							</div>
+							<div class="radio">
+					     		<label>
+						            {!! Form::radio('evnt_type', "5", $event->evnt_type == 5 ? array("checked") : "") !!}
+						            Nutzung
+						        </label>
+							</div>
+						</div>
+				    </div>					
+
+					<br><br>
+				   
+				    <div class="form-group">
+				    	<div class="col-xs-2 col-md-2">
+				    		&nbsp;
+				    	</div>
+				     	<div class="col-xs-10 col-md-10">
+				     		<label>
+								{!! Form::checkbox('isPrivate', '1', ($event->evnt_is_private + 1)%2) !!}
+								Öffentliche Veranstaltung?
+							</label>
 						</div>
 				    </div>		    
 					
-					<br><span class="visible-xs"><br></span>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
 
 					<div class="form-group">
-						<label for="place" class="col-xs-2 col-md-2 control-label">Ort: &nbsp;</label>
+						<label for="place" class="col-xs-2 col-md-2 control-label">Sektion: &nbsp;</label>
 						<div class="col-xs-10 col-md-10">
 						   	{!! Form::text('place', $places[$event->plc_id], array('id'=>'place') ) !!}
 						 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
@@ -123,9 +179,10 @@
 				</div>
 			</div>
 		</div>
-				
-		<div class="container col-xs-12 col-md-6">
 
+			
+		<div class="container col-xs-12 col-md-6">
+			<br class="visible-xs">	
 			<div class="panel">
 				<div class="panel-heading">
 					<h4 class="panel-title">Weitere Infos:</h4>(öffentlich)
@@ -140,7 +197,7 @@
 					</div>	
 				</div>
 			</div>
-
+			<br>
 			<div class="panel">
 				<div class="panel-heading">
 					<h4 class="panel-title">Details:</h4>(nur intern sichtbar)
@@ -157,12 +214,12 @@
 			</div>
 		</div>
 	</div>				
-	
+	<br>
 	@include('partials.editSchedule', array('schedule', 'templates', 'jobtypes', 'entries'))
-	
+	<br>
 	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) !!}
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<span class="visible-xs"><br></span>
+	<br class="visible-xs"><br class="visible-xs">
 	<a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
 	
 	{!! Form::close() !!}

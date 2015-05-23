@@ -12,14 +12,14 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ Request::getBasePath() }}/calendar/month">Monatsansicht</a></li>
+                <li><a href="{{ Request::getBasePath() }}/calendar/month">Monat</a></li>
                 @if(Session::has('userId'))
-                <li><a href="{{ Request::getBasePath() }}/calendar/week">Wochenansicht</a></li>
+                <li><a href="{{ Request::getBasePath() }}/calendar/week">Woche</a></li>
                 @endif
-                <li><a href="{{ Request::getBasePath() }}/schedule">Dienstpläne</a></li>
+                <li><a href="{{ Request::getBasePath() }}/schedule">Liste</a></li>
                 @if(Session::has('userId'))
                 <li><a href="{{ Request::getBasePath() }}/task">Aufgaben</a></li>    
-                <!-- <li><a href="{{ Request::getBasePath() }}/statistics">Dienstestatistik</a></li> -->
+                <!-- <li><a href="{{ Request::getBasePath() }}/statistics">Statistik</a></li> -->
                 @endif
                 @if(Session::has('userGroup')
                 AND (Session::get('userGroup') == 'marketing'
@@ -41,7 +41,9 @@
                 <!-- <li><a href="#"><img src="{{ Request::getBasePath() }}/en.png" alt="EN"></a></li> -->
                 <!-- <li><a href="#"><img src="{{ Request::getBasePath() }}/de.png" alt="DE"></a></li> -->
             
-            
+                <li style="padding-top:17px">
+                    @include('partials.create-btn')
+                </li>          
                 <!-- LOGIN FORM -->
                 @if(Session::has('userId'))
                 <li style="padding-top: 5px;">

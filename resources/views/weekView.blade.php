@@ -12,7 +12,7 @@
 
 	<div class="container">
 		<!-- prev/next week -->
-		<div class="btn-group col-xs-12 col-md-5">
+		<div class="btn-group col-xs-12 col-md-6">
 			<a class="btn btn-default hidden-print" 
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}">
 			   	&lt;&lt;</a>
@@ -29,19 +29,13 @@
 			   	&gt;&gt;</a>
 		</div>
 
-		<!-- create button -->
-		<div class="col-xs-12 col-md-3">
-			@include('partials.create-btn')
-		</div>
-
 		<!-- filter -->
-		<div class="col-xs-12 col-md-4 pull-right">
+		<div class="col-xs-12 col-md-6 pull-right hidden-print">
 			@include('partials.filter')
+			<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten einblenden</button>
 		</div>
 	</div>
-
-<span class="col-md-1 pull-right hidden-xs">&nbsp;</span>
-	&nbsp;&nbsp;<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten einblenden</button>
+	
 
 	<!-- Submit button -->
 	<div class="col-xs-12 col-md-3">			

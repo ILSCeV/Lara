@@ -19,7 +19,13 @@ class ClubEvent extends Eloquent {
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('evnt_title', 
+	protected $fillable = array('evnt_type',			    // 0 -> default 
+															// 1 -> info only 
+															// 2 -> highlight -> special
+															// 3 -> live band/DJ/reading
+															// 4 -> internal
+															// 5 -> private party -> Nutzung
+								'evnt_title', 
 								'evnt_subtitle',
 								'plc_id',
 								'evnt_date_start',

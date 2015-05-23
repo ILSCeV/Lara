@@ -330,6 +330,7 @@ class EventController extends Controller {
 		$event->evnt_subtitle = Input::get('subtitle');
 		$event->evnt_public_info = Input::get('publicInfo');
 		$event->evnt_private_details = Input::get('privateDetails');	
+		$event->evnt_type = Input::get('evnt_type');
 
 		// new function for input with dropdown
 		if (!Place::where('plc_title', '=', Input::get('place'))->first())		// new place
@@ -369,7 +370,8 @@ class EventController extends Controller {
 		else $event->evnt_time_end = mktime(0, 0, 0);
 		
 		// format: tinyInt; validate on filled value
-		$event->evnt_is_private = (Input::get('isPrivate') == '1') ? 1 : 0;
+		// reversed this: input=1 means "event is public", input=0 means "event is private"
+		$event->evnt_is_private = (Input::get('isPrivate') == '1') ? 0 : 1;
 		
 		return $event;
 	}

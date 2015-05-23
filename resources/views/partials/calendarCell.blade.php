@@ -21,6 +21,7 @@
 				
 	<!-- sucht die Events zu den passenden Tagen -->
 	@if($clubEvent->evnt_date_start === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
+
 		<div class="{{ $clubEvent->getPlace->plc_title }} word-break">
 		@if($clubEvent->evnt_is_private)
 			@if(Session::has('userId'))	
@@ -30,6 +31,7 @@
 				@else
 					<div class="cal-event calendar-internal-event-bc-cafe">
 				@endif
+					@include("partials.event-marker", $clubEvent)
 					<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}"> 
 						{{{ $clubEvent->evnt_title }}}
 					</a>
@@ -41,6 +43,7 @@
 			@else
 				<div class="cal-event calendar-public-event-bc-cafe">
 			@endif
+				@include("partials.event-marker", $clubEvent)
 			 	<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}"> 
 					{{{ $clubEvent->evnt_title }}}
 				</a>

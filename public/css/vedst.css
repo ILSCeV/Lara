@@ -138,8 +138,8 @@ input[type=number],
   color: darkgrey;
 }
 
-.vertical-center {
-  vertical-align: middle;
+.centered {
+  text-align: center;
 }
 
 /**

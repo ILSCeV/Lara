@@ -30,7 +30,7 @@
 
         <!-- create button -->
         <div class="col-xs-12 col-md-3">
-            @include('partials.create-btn')
+            &nbsp;
         </div>
 
         <!-- filter -->
@@ -102,6 +102,26 @@
         </tbody>        
            
     </table>
+</div>
+<br>
+<div class="text-dark-grey centered">
+    <span class="marker-0"><i class="fa fa-calendar-o text-dark-grey"></i></span>
+     - normales Programm
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="marker-1"><small>&nbsp;</small><i class="fa fa-info text-dark-grey"></i><small>&nbsp;</small></span>
+     - Information
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="marker-2"><i class="fa fa-star text-dark-grey"></i></span>
+     - Spezial
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="marker-3"><i class="fa fa-music text-dark-grey"></i></span>
+     - Live Band / Live DJ / Lesung
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="marker-4"><i class="fa fa-eye-slash text-dark-grey"></i></span>
+     - interne Veranstaltung
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="marker-5"><small>&nbsp;</small><i class="fa fa-eur text-dark-grey"></i><small>&nbsp;</small></span>
+     - Nutzung
 </div>
 <!-- filter hack -->
 <span id="own-filter-marker" hidden>&nbsp;</span>

@@ -9,26 +9,18 @@
 @section('content')
 
 <div class="row">
-<!-- create button -->
-    <div class="col-md-4">
-		@if(Session::has('userGroup')
-		    AND (Session::get('userGroup') == 'marketing'
-		    OR Session::get('userGroup') == 'clubleitung'))
-		    <a href="{{ Request::getBasePath() }}/calendar/create" class="btn btn-primary">Neue Veranstaltung erstellen</a>
-		@endif
-    </div>
-
 <!-- prev/next month -->
-    <div class="col-md-4">
+    <div class="col-xs-12 col-md-6">
 		<center>{!! $schedules->render() !!}</center>
     </div>
 
 <!-- club filtering -->
-    <div class="col-md-4">
+    <div class="col-xs-12 col-md-6">
         @include('partials.filter')
     </div>
 </div>
 
+<br>
 
 <div class="panel">
 	<table class="table table-striped table-hover shadow">
@@ -58,7 +50,7 @@
 				@endif </td>			
 				<td>
 					<a href="{{ Request::getBasePath() }}/calendar/id/{{ $schedule->id }}">
-						<b>{{{ $schedule->getClubEvent->evnt_title }}}</b>
+						{{{ $schedule->getClubEvent->evnt_title }}}
 					</a>
 				</td>
 
