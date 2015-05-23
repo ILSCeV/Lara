@@ -9,8 +9,8 @@
 		{!! HTML::style('css/vedst.css') !!}
 		{!! HTML::style('css/print.css', array('media' => 'print')) !!}
 
-		<link rel="shortcut icon" href="/favicon-96x96.png" type="image/png" />
-		<link rel="icon" href="/favicon-96x96.png" type="image/png" />
+		<link rel="shortcut icon" href="/favicon-48x48.png" type="image/png" />
+		<link rel="icon" href="/favicon-48x48.png" type="image/png" />
 
 
 <!-- TESTING AJAX -->
