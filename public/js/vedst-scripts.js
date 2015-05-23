@@ -251,6 +251,27 @@ $( document ).ready( function() {
     });
   });
   
+
+// Show/hide time of entries
+$(function(){
+    $('#show-hide-time').click(function(e) {
+        if ($('.entry-time').hasClass("hide")) 
+        {
+            $('.entry-time').removeClass('hide'); 
+            $(this).text("Zeiten ausblenden");
+            $container.isotope('layout');
+        }
+        else
+        {
+            $('.entry-time').addClass('hide');
+            $(this).text("Zeiten einblenden");
+            $('.isotope').isotope('layout')
+        };
+        
+
+    });
+});
+
 });
 
 
@@ -326,3 +347,9 @@ $(document).ready(function() {
 
     }
 });
+
+
+
+
+
+

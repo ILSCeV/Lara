@@ -40,6 +40,9 @@
 		</div>
 	</div>
 
+<span class="col-md-1 pull-right hidden-xs">&nbsp;</span>
+	&nbsp;&nbsp;<button class="btn btn-xs pull-right"  type="button" id="show-hide-time">Zeiten einblenden</button>
+
 	<!-- Submit button -->
 	<div class="col-xs-12 col-md-3">			
 		{!! Form::open([ 'route' => ['bulkUpdate', $date['year'], $date['week'] ] ]) !!}
@@ -49,6 +52,7 @@
 	</div>
 	
 	<br>
+	<br class="visible-xs">
 	<br class="visible-xs">
 			
 	<!-- weekdays -->

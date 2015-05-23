@@ -17,7 +17,16 @@
 						  title="{{ date("H:i", strtotime($entry->entry_time_start)) . 
 						  			"-" . 
 						  			date("H:i", strtotime($entry->entry_time_end)) }}" >
-						  <small>{{ $entry->getJobType->jbtyp_title }}</small>
+						  <small>
+						  		{{ $entry->getJobType->jbtyp_title }}
+						  		<span class="entry-time hide">
+						  			<br class="visible-xs">
+									{!! "(" . date("H:i", strtotime($entry->entry_time_start))
+									. "-" . "<br class='visible-xs'>" .
+								    date("H:i", strtotime($entry->entry_time_end)) . ")" !!}
+						  		</span>
+
+						  </small>
 					</span>
 				</td>
 

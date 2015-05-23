@@ -64,37 +64,10 @@
 			@endif
 		</div>
 	</div>
-	
-	<!-- CRUD -->
-	@if(Session::has('userGroup')
-			AND (Session::get('userGroup') == 'marketing'
-			OR Session::get('userGroup') == 'clubleitung'))
-			<br>
-			<div class="pull-right">						
-				<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/edit" 
-				   class="btn btn-primary">Veranstaltung ändern</a>
-
-				<span class="visible-xs hidden-md">&nbsp;</span>
-
-				<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/delete" 
-				   onclick="confirmation();return false;" 
-				   class="btn btn-default">Veranstaltung löschen</a>
-				<script type="text/javascript">
-					
-					function confirmation() {
-						if (confirm("Willst du diese Veranstaltung wirklich löschen?")){
-							window.location = "{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/delete";
-						}
-					}
-				</script>
-				
-				<span class="visible-xs hidden-md">&nbsp;</span>
-			
-			</div>
-	@endif
-	
+	<br>
 	{!! Form::model($entries, array('action' => array('ScheduleController@updateSchedule', $clubEvent->getSchedule->id))) !!}
 	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) !!}
+	&nbsp;&nbsp;<button class="btn btn-xs pull-right"  type="button" id="show-hide-time">Zeiten einblenden</button>
 	<div class="panel">
 		<div class="card-body">
 			
@@ -133,6 +106,33 @@
 				
 				</tbody>
 			</table>
+			<!-- CRUD -->
+			@if(Session::has('userGroup')
+					AND (Session::get('userGroup') == 'marketing'
+					OR Session::get('userGroup') == 'clubleitung'))
+					<br>
+					<div class="pull-right">						
+						<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/edit" 
+						   class="btn btn-primary">Veranstaltung ändern</a>
+
+						<span class="visible-xs hidden-md">&nbsp;</span>
+
+						<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/delete" 
+						   onclick="confirmation();return false;" 
+						   class="btn btn-default">Veranstaltung löschen</a>
+						<script type="text/javascript">
+							
+							function confirmation() {
+								if (confirm("Willst du diese Veranstaltung wirklich löschen?")){
+									window.location = "{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/delete";
+								}
+							}
+						</script>
+						
+						<span class="visible-xs hidden-md">&nbsp;</span>
+					
+					</div>
+			@endif
 			{!! Form::close() !!}
 		</div>
 	</div>
