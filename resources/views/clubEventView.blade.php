@@ -52,7 +52,7 @@
 
 			@if(Session::has('userId'))
 				@if($clubEvent->evnt_private_details != '') 
-				<div class="panel">
+				<div class="panel hidden-print">
 					<div class="panel-body more-details">
 						<h5 class="panel-title">Weitere Details:</h5> 
 						{!! nl2br(e($clubEvent->evnt_private_details)) !!}
@@ -66,8 +66,8 @@
 	</div>
 	<br>
 	{!! Form::model($entries, array('action' => array('ScheduleController@updateSchedule', $clubEvent->getSchedule->id))) !!}
-	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) !!}
-	&nbsp;&nbsp;<button class="btn btn-xs pull-right"  type="button" id="show-hide-time">Zeiten einblenden</button>
+	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success hidden-print')) !!}
+	&nbsp;&nbsp;<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten einblenden</button>
 	<div class="panel">
 		<div class="card-body">
 			
@@ -110,8 +110,7 @@
 			@if(Session::has('userGroup')
 					AND (Session::get('userGroup') == 'marketing'
 					OR Session::get('userGroup') == 'clubleitung'))
-					<br>
-					<div class="pull-right">						
+					<div class="pull-right hidden-print">						
 						<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/edit" 
 						   class="btn btn-primary">Veranstaltung ändern</a>
 

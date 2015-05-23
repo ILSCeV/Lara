@@ -19,7 +19,7 @@
 
 				<span class="btn btn-lg disabled" style="text-align: center !important;">	
 					{{ Config::get('messages_de.week-name') . $date['week']}}: 
-					<br class="visible-xs">
+					<br class="visible-xs hidden-print">
 					{{ strftime("%d. %B", strtotime($weekStart)) }} - 
 					{{ utf8_encode(strftime("%d. %B", strtotime($weekEnd))) }}
 				</span>
@@ -41,7 +41,7 @@
 	</div>
 
 <span class="col-md-1 pull-right hidden-xs">&nbsp;</span>
-	&nbsp;&nbsp;<button class="btn btn-xs pull-right"  type="button" id="show-hide-time">Zeiten einblenden</button>
+	&nbsp;&nbsp;<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten einblenden</button>
 
 	<!-- Submit button -->
 	<div class="col-xs-12 col-md-3">			
@@ -51,9 +51,9 @@
 		@endif
 	</div>
 	
-	<br>
-	<br class="visible-xs">
-	<br class="visible-xs">
+	<br class="hidden-print">
+	<br class="visible-xs hidden-print">
+	<br class="visible-xs hidden-print">
 			
 	<!-- weekdays -->
 	@if (count($events)>0)

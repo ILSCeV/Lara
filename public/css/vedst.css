@@ -8,6 +8,7 @@ body {
 
 table {
   background-color: #ffffff;
+  margin-bottom: 0 !important;
 }
 
 .table-striped > tbody > tr:nth-child(odd) {
@@ -106,7 +107,7 @@ input[type=number],
 }
 
 .today-marker {
-  background-color: #dddddd;
+  background-color: #cccccc;
 }
 
 .cal-event a{
@@ -129,6 +130,17 @@ input[type=number],
   background-color: #52aadc;
 }
 
+.light-grey {
+  background-color: #efefef;
+}
+
+.text-dark-grey {
+  color: darkgrey;
+}
+
+.vertical-center {
+  vertical-align: middle;
+}
 
 /**
  * Wochenansicht

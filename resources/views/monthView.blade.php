@@ -46,6 +46,7 @@
           
         <thead>
             <tr>
+                <th>KW</th>
                 <th>{{ Config::get('messages_de.day-name-mon') }}</th>
                 <th>{{ Config::get('messages_de.day-name-tue') }}</th>
                 <th>{{ Config::get('messages_de.day-name-wed') }}</th>
@@ -61,7 +62,17 @@
                
                 <!-- if monday then start new line -->
                 @if(date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)
-                        <tr>
+                        @if ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )   
+                            <tr class="light-grey">
+                        @else
+                            <tr>
+                        @endif
+                            <td>
+                                <a href="{!! Request::getBasePath() !!}/calendar/{!! $date['year'] !!}/KW{{ date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) }}">
+                                    {{ date("W", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) }}.
+                                </a>
+                            </td>
+                            
                 @endif
        
                 <!-- Show table  -->
