@@ -82,7 +82,7 @@
 								        	   			document.getElementById('club{{ ''. $entry->id }}').value='{{$person->getClub->clb_title}}';
 								        	   			document.getElementById('ldapId{{ ''. $entry->id }}').value='{{$person->prsn_ldap_id}}'">
 						        	   			{{ $person->prsn_name }}
-						        	   			@if ( $person->prsn_status === 'kandidat' ) 
+						        	   			@if ( $person->prsn_status === 'candidate' ) 
 						        	   				(K)
 						        	   			@elseif ( $person->prsn_status === 'veteran' ) 
 						        	   				(V)
@@ -102,7 +102,7 @@
 
 <!-- STATUS -->
 							<div class="col-xs-2 col-md-2 no-padding" id="clubStatus{{ $entry->id }}">
-								@if 	( $entry->getPerson->prsn_status === 'kandidat' ) 
+								@if 	( $entry->getPerson->prsn_status === 'candidate' ) 
 		        	   				<i class="fa fa-adjust" 
 		        	   				   style="color:yellowgreen;"
 									   data-toggle="tooltip" 
@@ -164,7 +164,7 @@
 							        	   				document.getElementById('club{{ ''. $entry->id }}').value='{{$person->getClub->clb_title}}';
 							        	   				document.getElementById('ldapId{{ ''. $entry->id }}').value='{{$person->prsn_ldap_id}}'">
 					        	   				{{ $person->prsn_name }}
-						        	   			@if ( $person->prsn_status === 'kandidat' ) 
+						        	   			@if ( $person->prsn_status === 'candidate' ) 
 						        	   				(K)
 						        	   			@elseif ( $person->prsn_status === 'veteran' ) 
 						        	   				(V)

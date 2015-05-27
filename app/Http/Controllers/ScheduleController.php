@@ -525,6 +525,7 @@ class ScheduleController extends Controller {
 			if ($person->prsn_ldap_id == Session::get('userId'))
 			{
 				$person->prsn_status = Session::get('userStatus');
+				$person->prsn_name = Session::get('userName');
 			}
 
 		}
