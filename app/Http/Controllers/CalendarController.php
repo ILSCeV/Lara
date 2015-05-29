@@ -180,7 +180,47 @@ class CalendarController extends Controller {
 							->get();
 		});
 
-        return View::make('clubEventView', compact('clubEvent', 'entries', 'clubs', 'persons'));
+
+        // Get ID of an event whose autoincremented ID is less than the current user, 
+        // but because some entries might have been deleted we need to get the max available ID 
+        // of all entries whose ID is less than current user's
+        $previousEventQuery = ClubEvent::with('getPlace')
+                                  ->where('plc_id', '=', $clubEvent->plc_id)
+                                  ->where('id', '<', $id)
+                                  ->max('id');
+
+        if (!is_null($previousEventQuery))
+        {
+            $previousEventId = $previousEventQuery;
+            $previousEventTitle = ClubEvent::find($previousEventId)->evnt_title;
+        } 
+        else 
+        {
+            $previousEventId = NULL;
+            $previousEventTitle = NULL;
+        }
+
+
+        // Same for the next user's id as previous event's but in the other direction
+        $nextEventQuery = ClubEvent::with('getPlace')
+                                  ->where('plc_id', '=', $clubEvent->plc_id)
+                                  ->where('id', '>', $id)
+                                  ->min('id');
+
+        if (!is_null($nextEventQuery))
+        {
+            $nextEventId = $nextEventQuery;
+            $nextEventTitle = ClubEvent::find($nextEventId)->evnt_title;
+        } 
+        else 
+        {
+            $nextEventId = NULL;
+            $nextEventTitle = NULL;
+        }
+
+        return View::make('clubEventView', compact('clubEvent', 'entries', 'clubs', 'persons',
+                                                   'previousEventId', 'previousEventTitle', 
+                                                   'nextEventId', 'nextEventTitle'));
     }
 
 
