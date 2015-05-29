@@ -75,7 +75,6 @@ $(function(){
 $(function(){
 	$('.showhide').click(function(e) {
 		$(this).parent().parent().next().children().children('.hide').toggleClass('show');
-		window.location.hash="";
 	});
 });
 
