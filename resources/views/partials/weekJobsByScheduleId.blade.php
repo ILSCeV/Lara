@@ -86,6 +86,8 @@
 						        	   				(K)
 						        	   			@elseif ( $person->prsn_status === 'veteran' ) 
 						        	   				(V)
+						        	   			@elseif ( $person->prsn_status === 'retired' ) 
+							        	   			(ex)
 						        	   			@endif
 						        	   			{{ '(' . $person->getClub->clb_title . ')' }}
 								        	</a>
@@ -120,6 +122,12 @@
 									   data-toggle="tooltip" 
 						  			   data-placement="top" 
 						  			   title="Aktiv"></i>
+						  		@elseif ( $entry->getPerson->prsn_status === 'retired' ) 
+							    	<i class="fa fa-star-o" 
+		        	   				   style="color:gold;"
+									   data-toggle="tooltip" 
+						  			   data-placement="top" 
+						  			   title="ex-Mitglied"></i>
 						  		@elseif ( empty($entry->getPerson->prsn_status) )
 						  			<i class="fa fa-circle" 
 									   style="color:lightgrey;"
@@ -168,6 +176,8 @@
 						        	   				(K)
 						        	   			@elseif ( $person->prsn_status === 'veteran' ) 
 						        	   				(V)
+						        	   			@elseif ( $person->prsn_status === 'retired' )
+						        	   				(ex)
 						        	   			@endif
 						        	   			{{ '(' . $person->getClub->clb_title . ')' }}
 							        	   	</a>
