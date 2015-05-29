@@ -111,12 +111,11 @@ class LoginController extends Controller {
         }
     }
 
-
 /**
  * WORKING CONTROLLER BELOW THIS LINE,
  * will only function with a bcLDAP-Config present.
  */
-
+/*
     public function doLogin()
     {
     
@@ -256,6 +255,9 @@ class LoginController extends Controller {
 // SETTING ACCESS GROUP
 
 
+        // get full user DN
+        $userDn = $info[0]['dn'];
+
         if ($userGroup === "bc-Club") 
         {
             // Check if user has MARKETING rights in bc-CLub
@@ -326,8 +328,8 @@ class LoginController extends Controller {
         if     ( substr($info[0]['dn'], 22, -7) === "cafe") {
             $userClub = "bc-Café";
         }
-        elseif ( substr($info[0]['dn'], 22, -7) === "bc-Club") {
-            $userClub = "bc-Club"   
+        elseif ( substr($info[0]['dn'], 22, -7) === "bc-club") {
+            $userClub = "bc-Club";   
         } 
 
         // Get user active status
@@ -371,6 +373,7 @@ class LoginController extends Controller {
     }
 
 }
+
 /*      This is what the returned bcLDAP object looks like (only useful fields are shown here).  
 
         Array ( 

@@ -183,4 +183,3 @@ Route::post('/management/templates', 			array('as' => 'updateTemplates',
    Route::get('/ajax', 'CalendarController@showAjax');
 
    Route::post('/ajax/posted', 'CalendarController@posted');
-

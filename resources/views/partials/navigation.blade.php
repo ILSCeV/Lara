@@ -79,6 +79,7 @@
                                    data-placement="top" 
                                    title="Aktiv"></i>
                             @endif
+                            &nbsp;
                             <strong>
                                 {{ Session::get('userName') }} 
                                 ( {{ Session::get('userClub') }} 
