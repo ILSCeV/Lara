@@ -92,11 +92,12 @@ class WeekController extends Controller {
 				return Person::whereRaw("prsn_ldap_id IS NOT NULL 
 										 AND (prsn_status IN ('aktiv', 'kandidat') 
 										 OR updated_at>='".$timeSpan->format('Y-m-d H:i:s')."')")
+								->orderBy('clb_id')
 								->orderBy('prsn_name')
 								->get();
 			});
 
-		$clubs = Club::lists('clb_title', 'id');
+		$clubs = Club::orderBy('clb_title')->lists('clb_title', 'id');
 
 		// IDs of schedules shown, needed for bulk-update
 		$updateIds = array();

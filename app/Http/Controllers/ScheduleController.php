@@ -109,6 +109,7 @@ class ScheduleController extends Controller {
 			return Person::whereRaw("prsn_ldap_id IS NOT NULL
 									 AND (prsn_status IN ('aktiv', 'kandidat')
 									 OR updated_at>='".$timeSpan->format('Y-m-d H:i:s')."')")
+							->orderBy('clb_id')
 							->orderBy('prsn_name')
 							->get();
 		});
