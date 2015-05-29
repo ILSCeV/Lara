@@ -252,56 +252,56 @@ $( document ).ready( function() {
   });
   
 
-// Show/hide time of entries
+    // Show/hide time of entries
 
-$(document).ready(function() {
-    if(typeof(Storage) !== "undefined") 
-    {
-        if (localStorage.showTime == "Zeiten einblenden") 
+    $(document).ready(function() {
+        if(typeof(Storage) !== "undefined") 
         {
-            $('.entry-time').removeClass('hide'); 
-            $('#show-hide-time').text("Zeiten ausblenden");
-            $container.isotope('layout');
-        } 
-        else if (localStorage.showTime == "Zeiten ausblenden") 
-        {
-            $('.entry-time').addClass('hide');
-            $('#show-hide-time').text("Zeiten einblenden");
-            $('.isotope').isotope('layout')                  
-        }
-    }
-});
-
-$(function(){
-    $('#show-hide-time').click(function(e) {
-        if ($('.entry-time').hasClass("hide")) 
-        {
-            // save selection in local storage
-            if(typeof(Storage) !== "undefined") 
+            if (localStorage.showTime == "Zeiten einblenden") 
             {
-                localStorage.showTime = $(this).text();
-            }
-
-            // change state, change button
-            $('.entry-time').removeClass('hide'); 
-            $(this).text("Zeiten ausblenden");
-            $container.isotope('layout');
-        }
-        else
-        {
-            // save selection in local storage
-            if(typeof(Storage) !== "undefined") 
+                $('.entry-time').removeClass('hide'); 
+                $('#show-hide-time').text("Zeiten ausblenden");
+                $container.isotope('layout');
+            } 
+            else if (localStorage.showTime == "Zeiten ausblenden") 
             {
-                localStorage.showTime = $(this).text();
+                $('.entry-time').addClass('hide');
+                $('#show-hide-time').text("Zeiten einblenden");
+                $('.isotope').isotope('layout')                  
             }
-
-            // change state, change button
-            $('.entry-time').addClass('hide');
-            $(this).text("Zeiten einblenden");
-            $('.isotope').isotope('layout')
-        };        
+        }
     });
-});
+
+    $(function(){
+        $('#show-hide-time').click(function(e) {
+            if ($('.entry-time').hasClass("hide")) 
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") 
+                {
+                    localStorage.showTime = $(this).text();
+                }
+
+                // change state, change button
+                $('.entry-time').removeClass('hide'); 
+                $(this).text("Zeiten ausblenden");
+                $container.isotope('layout');
+            }
+            else
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") 
+                {
+                    localStorage.showTime = $(this).text();
+                }
+
+                // change state, change button
+                $('.entry-time').addClass('hide');
+                $(this).text("Zeiten einblenden");
+                $('.isotope').isotope('layout')
+            };        
+        });
+    });
 
 });
 
@@ -379,3 +379,11 @@ $(document).ready(function() {
     }
 });
 
+// button to remove events from week view - mostly for printing
+$(function(){
+    $('.hide-event').click(function(e) {
+        // change state, change button
+        $(this).parent().parent().parent().parent().parent().addClass('hide');
+        $('.isotope').isotope('layout')       
+    });
+});

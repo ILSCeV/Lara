@@ -30,6 +30,13 @@
 				</tbody>
 			</table>	
 		@endif
+        @if(Session::has('userGroup')
+        AND (Session::get('userGroup') == 'marketing'
+        OR Session::get('userGroup') == 'clubleitung'))
+			<div class="pull-right hidden-print">
+				<small><a href="#" class="hide-event">Ausblenden</a></small>
+			</div>
+		@endif
 	</div>
 </div>
 	  
