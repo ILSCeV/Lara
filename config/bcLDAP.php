@@ -9,27 +9,43 @@ return [
     'server' => 'localhost:60389',
 
     // This is the LDAP admin account for queries
-    'adminUsername' => 'exampleusername',
-    'adminPassword' => 'examplepassword',
+    'admin-username' => 'exampleusername',
+    'admin-password' => 'examplepassword',
+
+
 
     // Organisation unit needed for club members (with a comma at the end)
-    'bcou' => 'ou=People,ou=bc-club,',
-
-    // Organisation unit needed for club members (with a comma at the end)
-    'cafeou' => 'ou=People,ou=cafe,',
+    'bc-club-ou' => 'ou=People,ou=bc-club,',
 
     // Group for bc-Clubleitung (with braces on both sides)
-    'clgroup' => '(cn=bc-clubcl)',
+    'bc-club-management-group' => '(cn=bc-clubcl)',
 
     // Group for bc-Marketing (with braces on both sides)
-    'marketinggroup' => '(cn=bcMarketing)',
+    'bc-club-marketing-group' => '(cn=bcMarketing)',
 
     // Organisation unit for group search (with a comma at the end)
-    'groupou' => 'ou=Groups,ou=bc-club,', 
+    'bc-club-group-ou' => 'ou=Groups,ou=bc-club,', 
+
+
+
+    // Organisation unit needed for club members (with a comma at the end)
+    'bc-cafe-ou' => 'ou=People,ou=cafe,',
+
+    // Group for Café-Marketing (with braces on both sides)
+    'bc-cafe-management-group' => '(cn=cafecl)',
+
+    // Group for Café-Clubleitung (with braces on both sides)
+    'bc-cafe-marketing-group' => '(cn=cafeKultur)',
+
+    // Organisation unit for CAFE group search (with a comma at the end)
+    'bc-cafe-group-ou' => 'ou=Groups,ou=cafe,', 
+
+
+
 
     // Base dn on the server (without a comma at the front)
-    'basedn' => 'o=ilsc',
+    'base-dn' => 'o=ilsc',
 
     // Master password for LDAP downtime, hashed
-    'ldapOverride' => 'store-this-in-hashed-form-only!',
+    'ldap-override' => 'store-this-in-hashed-form-only!',
 ];

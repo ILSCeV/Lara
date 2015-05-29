@@ -53,7 +53,42 @@
                                         'role'=>'form')) !!}
                         <center class="hidden-md">
                         <div class="navbar-form">
-                            Eingeloggt als <strong>{{ Session::get('userName') }} ({{ Session::get('userGroup') }})</strong>
+                            &nbsp;&nbsp;
+                            @if     ( Session::get('userStatus') === 'candidate' ) 
+                                <i class="fa fa-adjust" 
+                                   style="color:yellowgreen;"
+                                   data-toggle="tooltip" 
+                                   data-placement="top" 
+                                   title="Kandidat"></i>
+                            @elseif ( Session::get('userStatus') === 'veteran' ) 
+                                <i class="fa fa-star" 
+                                   style="color:gold;"
+                                   data-toggle="tooltip" 
+                                   data-placement="top" 
+                                   title="Veteran"></i>
+                            @elseif ( Session::get('userStatus') === 'retired' ) 
+                                <i class="fa fa-star-o" 
+                                   style="color:gold;"
+                                   data-toggle="tooltip" 
+                                   data-placement="top" 
+                                   title="ex-Mitglied"></i>
+                            @elseif ( Session::get('userStatus') === 'member')
+                                <i class="fa fa-circle" 
+                                   style="color:forestgreen;"
+                                   data-toggle="tooltip" 
+                                   data-placement="top" 
+                                   title="Aktiv"></i>
+                            @endif
+                            <strong>
+                                {{ Session::get('userName') }} 
+                                ( {{ Session::get('userClub') }} 
+                                        @if(Session::has('userGroup')
+                                        AND (Session::get('userGroup') == 'marketing'
+                                        OR Session::get('userGroup') == 'clubleitung'))
+                                            {{ Session::get('userGroup') }}
+                                        @endif
+                                        )
+                            </strong>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             {!! Form::submit('Abmelden', array('class'=>'btn btn-default btn-sm')) !!}
                         </div>
