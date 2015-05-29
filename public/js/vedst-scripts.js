@@ -253,22 +253,53 @@ $( document ).ready( function() {
   
 
 // Show/hide time of entries
+
+$(document).ready(function() {
+    if(typeof(Storage) !== "undefined") 
+    {
+        if (localStorage.showTime == "Zeiten einblenden") 
+        {
+            $('.entry-time').removeClass('hide'); 
+            $('#show-hide-time').text("Zeiten ausblenden");
+            $container.isotope('layout');
+        } 
+        else if (localStorage.showTime == "Zeiten ausblenden") 
+        {
+            $('.entry-time').addClass('hide');
+            $('#show-hide-time').text("Zeiten einblenden");
+            $('.isotope').isotope('layout')                  
+        }
+    }
+});
+
 $(function(){
     $('#show-hide-time').click(function(e) {
         if ($('.entry-time').hasClass("hide")) 
         {
+            // save selection in local storage
+            if(typeof(Storage) !== "undefined") 
+            {
+                localStorage.showTime = $(this).text();
+            }
+
+            // change state, change button
             $('.entry-time').removeClass('hide'); 
             $(this).text("Zeiten ausblenden");
             $container.isotope('layout');
         }
         else
         {
+            // save selection in local storage
+            if(typeof(Storage) !== "undefined") 
+            {
+                localStorage.showTime = $(this).text();
+            }
+
+            // change state, change button
             $('.entry-time').addClass('hide');
             $(this).text("Zeiten einblenden");
             $('.isotope').isotope('layout')
-        };
-        
-
+        };        
     });
 });
 

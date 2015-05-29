@@ -67,7 +67,7 @@
 	<br>
 	{!! Form::model($entries, array('action' => array('ScheduleController@updateSchedule', $clubEvent->getSchedule->id))) !!}
 	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success hidden-print')) !!}
-	&nbsp;&nbsp;<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten einblenden</button>
+	&nbsp;&nbsp;<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten ausblenden</button>
 	<div class="panel">
 		<div class="card-body">
 			

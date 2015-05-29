@@ -19,7 +19,7 @@
 						  			date("H:i", strtotime($entry->entry_time_end)) }}" >
 						  <small>
 						  		{{ $entry->getJobType->jbtyp_title }}
-						  		<span class="entry-time hide text-dark-grey">
+						  		<span class="entry-time text-dark-grey">
 						  			<br class="visible-xs hidden-print">
 									{!! "(" . date("H:i", strtotime($entry->entry_time_start))
 									. "-" . "<br class='visible-xs hidden-print'>" .
