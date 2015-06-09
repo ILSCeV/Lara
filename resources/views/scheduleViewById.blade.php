@@ -3,36 +3,14 @@
 @extends('layouts.master')
 
 @section('title')
-	Dienstplan ID: {{ $schedule->id }}
+	@if($schedule->evnt_id != NULL)
+		{{{ $schedule->getClubEvent->evnt_title }}}
+	@else
+		{{{ $schedule->schdl_title }}}
+	@endif
 @stop
 
 @section('content')
-
-<!-- CRUD -->
-@if(Session::has('userGroup'))
-	<br>
-	<div class=" pull-right">						
-		<a href="{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/edit" 
-		   class="btn btn-primary">Aufgabe ändern</a>
-		
-		<span class="visible-xs hidden-md">&nbsp;</span>
-
-		<a href="{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/delete" 
-		   onclick="confirmation();return false;" 
-		   class="btn btn-default">Aufgabe löschen</a>
-		<script type="text/javascript">
-			
-			function confirmation() {
-				if (confirm("Willst du diese Aufgabe wirklich löschen?")){
-					window.location = "{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/delete";
-				}
-			}
-			
-		</script>
-
-		<span class="visible-xs hidden-md">&nbsp;</span>
-	</div>
-@endif
 
 {!! Form::model($entries, array('action' => array('ScheduleController@updateSchedule', $schedule->id))) !!}
 {!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) !!}
@@ -65,35 +43,59 @@
 	@endif
 
 
-	<table class="table table-condensed table-hover">
-		<thead>
-		<tr>
-			<th>
-				&nbsp;
-			</th>
-			<th class="col-md-2">
-				Dienst
-			</th>
-			<th class="col-md-2">
-				Name
-			</th>
-			<th class="col-md-2">
-				Verein
-			</th>
-			<th class="col-md-6">
-				Kommentar
-			</th>
-			<th>
-				&nbsp;
-			</th>
-		</tr>
-		</thead>
-
-		<tbody>
+			<table class="table table-hover table-condensed">
+				<thead>
+					
+						<th class="hidden-xs">
+							&nbsp;
+						</th>
+						<th class="col-xs-3 col-md-1">
+							Dienst
+						</th>
+						<th class="col-xs-2 col-md-2">
+							Name
+						</th>
+						<th class="col-xs-2 col-md-2">
+							Verein
+						</th>
+						<th class="col-xs-6 col-md-6">
+							Kommentar
+						</th>
+						<th class="hidden-xs">
+							&nbsp;
+						</th>
+					
+				</thead>
+				<tbody>
 			@include('partials.jobsByScheduleId', $entries)
 		</tbody>
 	</table>
 
 	{!! Form::close() !!}
 </div>
+
+<!-- CRUD -->
+@if(Session::has('userGroup'))
+	<br>
+	<div class="pull-right">						
+		<a href="{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/edit" 
+		   class="btn btn-primary">Aufgabe ändern</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/delete" 
+		   onclick="confirmation();return false;" 
+		   class="btn btn-default">Aufgabe löschen</a>
+		<script type="text/javascript">
+			
+			function confirmation() {
+				if (confirm("Willst du diese Aufgabe wirklich löschen?")){
+					window.location = "{{ Request::getBasePath() }}/task/id/{{ $schedule->id }}/delete";
+				}
+			}
+			
+		</script>
+
+		<span class="visible-xs hidden-md">&nbsp;</span>
+	</div>
+@endif
+
 @stop

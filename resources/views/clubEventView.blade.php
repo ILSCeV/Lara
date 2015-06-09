@@ -106,19 +106,27 @@
 				
 				</tbody>
 			</table>
+
+			{!! Form::close() !!}
+		</div>
+	</div>
+
 			<!-- CRUD -->
 			@if(Session::has('userGroup')
 					AND (Session::get('userGroup') == 'marketing'
 					OR Session::get('userGroup') == 'clubleitung'))
+					<br>
 					<div class="pull-right hidden-print">						
 						<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/edit" 
 						   class="btn btn-primary">Veranstaltung ändern</a>
 
-						<span class="visible-xs hidden-md">&nbsp;</span>
+						<span class="visible-xs">&nbsp;</span>
+						<span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
 						<a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}/delete" 
 						   onclick="confirmation();return false;" 
 						   class="btn btn-default">Veranstaltung löschen</a>
+						   
 						<script type="text/javascript">
 							
 							function confirmation() {
@@ -127,14 +135,10 @@
 								}
 							}
 						</script>
-						
-						<span class="visible-xs hidden-md">&nbsp;</span>
 					
 					</div>
 			@endif
-			{!! Form::close() !!}
-		</div>
-	</div>
+
 	@endif
 
 @stop
