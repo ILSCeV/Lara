@@ -137,21 +137,6 @@
 	</div>
 	@endif
 
-	<br>
-	@if ( !is_null($previousEventId) )
-	    <a class="btn btn-default hidden-print" 
-	       href="{{ Request::getBasePath() }}/calendar/id/{{ $previousEventId }}">
-	        &lt;&lt; ({{ $previousEventTitle }})
-	    </a>
-    @endif
-
-    @if ( !is_null($nextEventId) ) 
-	    <a class="btn btn-default hidden-print" 
-	       href="{{ Request::getBasePath() }}/calendar/id/{{ $nextEventId }}">
-	        &gt;&gt; ({{ $nextEventTitle }})
-	    </a>
-	@endif
-
 @stop
 
 
