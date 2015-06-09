@@ -114,6 +114,10 @@ input[type=number],
   color: #ffffff;
 }
 
+.calendar-task {
+  background-color: #519839;
+}
+
 .calendar-public-event-bc-club {
   background-color: #e54545;
 }

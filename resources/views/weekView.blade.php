@@ -48,9 +48,9 @@
 	<br class="hidden-print">
 	<br class="visible-xs hidden-print">
 	<br class="visible-xs hidden-print">
-			
+		
 	<!-- weekdays -->
-	@if (count($events)>0)
+	@if (count($events)>0 OR count($tasks)>0)
 		<div class="isotope">
 			@foreach($events as $clubEvent)
 				@if($clubEvent->evnt_is_private)
