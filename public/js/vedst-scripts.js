@@ -206,6 +206,9 @@ $( document ).ready( function() {
   var $container = $('.isotope').isotope({
     itemSelector: '.element-item',
     layoutMode: 'masonry',
+    masonry: {
+          columnWidth: '.grid-sizer'
+      },
     getSortData: {
       name: '.name',
       symbol: '.symbol',

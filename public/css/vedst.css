@@ -290,7 +290,8 @@ input[type=number],
 
 /* ---- .element-item ---- */
 
-.element-item {
+.element-item,
+.grid-sizer {
   position: relative;
   float: left;
   width: 350px;
@@ -301,7 +302,8 @@ input[type=number],
 }
 
 @media screen and (max-width : 480px) {
-    .element-item {
+    .element-item,
+    .grid-sizer {
       padding: 0px;
       margin: 3px;
       width: 98%;

@@ -67,7 +67,7 @@
 			<!-- hack: empty day at the beginning, 
 				 prevents isotope collapsing to a single column if the very first element is hidden
 				 by creating an invisible block and putting it out of the way via negative margin -->
-			<div class="element-item" style="margin-bottom: -34px;">&nbsp;</div>
+			<div class="grid-sizer" style="margin-bottom: -34px;"></div>
 			<!-- end of hack -->
 			@foreach($events as $clubEvent)
 				@if($clubEvent->evnt_is_private)
