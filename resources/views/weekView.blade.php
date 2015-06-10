@@ -17,22 +17,34 @@
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}">
 			   	&lt;&lt;</a>
 
-				<span class="btn btn-lg disabled" style="text-align: center !important;">	
-					{{ Config::get('messages_de.week-name') . $date['week']}}: 
-					<br class="visible-xs hidden-print">
-					{{ strftime("%d. %B", strtotime($weekStart)) }} - 
-					{{ utf8_encode(strftime("%d. %B", strtotime($weekEnd))) }}
-				</span>
+			<span class="btn btn-lg disabled week-mo-so" style="text-align: center !important;">	
+				{{ Config::get('messages_de.week-name') . $date['week']}}: 
+				<br class="visible-xs hidden-print">
+				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart))) }} - 
+				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd . '- 2 days'))) }}
+			</span>
+
+			<span class="btn btn-lg disabled week-mi-di hide" style="text-align: center !important;">	
+				{{ Config::get('messages_de.week-name') . $date['week']}}: 
+				<br class="visible-xs hidden-print">
+				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart . '+  2 days'))) }} - 
+				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd))) }}
+			</span>
 
 			<a class="btn btn-default hidden-print" 
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}">
 			   	&gt;&gt;</a>
 		</div>
 
+
 		<!-- filter -->
 		<div class="col-xs-12 col-md-6 pull-right hidden-print">
+			<br class="visible-xs hidden-print">
 			@include('partials.filter')
 			<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten einblenden</button>
+			<br class="hidden-xs hidden-print"><br class="visible-xs hidden-print"><br class="visible-xs hidden-print">
+			<button class="btn btn-xs pull-right hidden-print"  type="button" id="change-week-view">Woche: Montag - Sonntag</button>
+			<br class="visible-xs hidden-print"><br class="visible-xs hidden-print">
 		</div>
 	</div>
 	
@@ -52,24 +64,57 @@
 	<!-- weekdays -->
 	@if (count($events)>0 OR count($tasks)>0)
 		<div class="isotope">
+			<!-- hack: empty day at the beginning, 
+				 prevents isotope collapsing to a single column if the very first element is hidden
+				 by creating an invisible block and putting it out of the way via negative margin -->
+			<div class="element-item" style="margin-bottom: -34px;">&nbsp;</div>
+			<!-- end of hack -->
 			@foreach($events as $clubEvent)
 				@if($clubEvent->evnt_is_private)
+
 					@if(Session::has('userId'))
-						<div class="element-item private {{ $clubEvent->getPlace->plc_title }}">
+						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week'] 
+							AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mo-so">
+						@elseif ( (int)date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']+1 
+							AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
+						@else
+							<div class="element-item private {{ $clubEvent->getPlace->plc_title }}">
+						@endif						
 							@include('partials.weekCell', $clubEvent)
 						</div>
 					@endif
+
 				@else
-					<div class="element-item {{ $clubEvent->getPlace->plc_title }}">
+					
+					@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week'] 
+						AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+						<div class="element-item {{ $clubEvent->getPlace->plc_title }} week-mo-so">
+					@elseif ( (int)date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']+1 
+						AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+						<div class="element-item {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
+					@else
+						<div class="element-item {{ $clubEvent->getPlace->plc_title }}">
+					@endif
 						@include('partials.weekCell', $clubEvent)
 					</div>
+
 				@endif
 			@endforeach 
 
 			@foreach($tasks as $task)
+				@if ( date('W', strtotime($task->schdl_due_date)) === $date['week'] 
+					AND date('N', strtotime($task->schdl_due_date)) < 3 )
+					<div class="element-item private task bc-Club bc-Café week-mo-so">
+				@elseif ( (int)date('W', strtotime($task->schdl_due_date)) === $date['week']+1 
+					AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+					<div class="element-item private task bc-Club bc-Café week-mi-di hide">
+				@else
 					<div class="element-item private task bc-Club bc-Café">
-						@include('partials.taskWeekCell', $task)
-					</div>
+				@endif
+					@include('partials.taskWeekCell', $task)
+				</div>
 			@endforeach 
 			
 		</div>

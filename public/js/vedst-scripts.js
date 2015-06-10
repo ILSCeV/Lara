@@ -302,6 +302,66 @@ $( document ).ready( function() {
         });
     });
 
+
+   // Week view changer
+
+    $(document).ready(function() {
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.weekViewType == "Woche: Montag - Sonntag") 
+            {
+                $('.week-mo-so').removeClass('hide');
+                $('.week-mi-di').addClass('hide');
+                $('#change-week-view').text("Woche: Mittwoch - Dienstag");
+                $container.isotope('layout');
+            } 
+            else if (localStorage.weekViewType == "Woche: Mittwoch - Dienstag") 
+            {
+                $('.week-mo-so').addClass('hide');
+                $('.week-mi-di').removeClass('hide');
+                $('#change-week-view').text("Woche: Montag - Sonntag");
+                $('.isotope').isotope('layout')                  
+            }
+        }
+    });
+
+    $(function(){
+        $('#change-week-view').click(function(e) {
+            if ($('.week-mo-so').hasClass('hide')) 
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") 
+                {
+                    localStorage.weekViewType = $(this).text();
+                }
+
+                // change state, change button
+                $('.week-mo-so').removeClass('hide');
+                $('.week-mi-di').addClass('hide');
+                $(this).text("Woche: Mittwoch - Dienstag");
+                $container.isotope('layout');
+            }
+            else
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") 
+                {
+                    localStorage.weekViewType = $(this).text();
+                }
+
+                // change state, change button
+                $('.week-mo-so').addClass('hide');
+                $('.week-mi-di').removeClass('hide');
+                $(this).text("Woche: Montag - Sonntag");
+                $('.isotope').isotope('layout')
+            };        
+        });
+    });
+
+
+
+
+
 });
 
 

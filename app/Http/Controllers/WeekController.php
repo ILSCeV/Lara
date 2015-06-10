@@ -50,9 +50,9 @@ class WeekController extends Controller {
     {
 
         $weekStart = date('Y-m-d', strtotime($year."W".$week.'1'));  		//Create week start date
-        $weekEnd = date('Y-m-d', strtotime($year."W".$week.'7'));       	//Create week end date
+        $weekEnd = date('Y-m-d', strtotime($year."W".($week+1).'2'));       	//Create week end date
 		$weekStamp=date(strtotime($year."W".$week)); 						//Create week timestamp with year and weeknumber information (easier 	calculation)
-
+		
         $nextWeek = date("W",strtotime("next Week".$weekStart)); 			// create number of next week
  	    $nextWeek = ($week==52 ? $year+1 : $year)."/KW".$nextWeek; 			// If week = years last week : set next to show year +1 otherwise use actual year
 	    $previousWeek = date("W",strtotime("previous Week".$weekStart)); 	// create number of previous week
