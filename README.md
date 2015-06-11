@@ -19,10 +19,10 @@ Some bugs are still alive.
 - Schedules:
   - Event schedules: **OK**
   - Task schedules: **OK**
-- Personnel statistics: *in progress*, est. 14.06.15
-- Event statistics: tba, est. 01.09.15
-- Finances: tba, est. 01.09.15
-- Controlling: tba, est. 01.09.15
+- Personnel statistics: *in progress*, est. 31.06.15
+- Event statistics: tba, est. 01.10.15
+- Finances: tba, est. 01.10.15
+- Controlling: tba, est. 01.10.15
 
 For detailed list of open requirements and change-requests see: [Issues](https://github.com/4D44H/lara-vedst/issues).
 
