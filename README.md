@@ -13,16 +13,14 @@ Some bugs are still alive.
 
 
 ## Current project status
-(as of 20.05.2015)
+(as of 01.07.2015)
 
 - Calender: **OK**
-- Schedules:
-  - Event schedules: **OK**
-  - Task schedules: **OK**
-- Personnel statistics: *in progress*, est. 31.06.15
-- Event statistics: tba, est. 01.10.15
-- Finances: tba, est. 01.10.15
-- Controlling: tba, est. 01.10.15
+- Schedules: **rewriting backend**, est. 01.09.15
+- Personnel statistics: *on hold* till 01.10.15
+- Event statistics: *on hold* till 01.11.15
+- Finances: *on hold* till 01.12.15
+- Controlling: *on hold* till 01.12.15
 
 For detailed list of open requirements and change-requests see: [Issues](https://github.com/4D44H/lara-vedst/issues).
 
