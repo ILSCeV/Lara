@@ -207,17 +207,21 @@ class EventController extends Controller {
 
 		$newSchedule = $this->editSchedule(null);
 		$newSchedule->evnt_id = $newEvent->id;
-		
-		$newSchedule->entry_revisions = json_encode(array("0"=>[
-								"entry" => null,
+
+		// log revision
+		$newSchedule->entry_revisions = json_encode(array("0"=>
+							   ["entry id" => null,
+								"job type" => null,
 								"action" => "schedule created",
-								"old" => null,
-								"new" => null,
-								"user" => Session::get('userId') != NULL ? Session::get('userId') : "Gast",
-								"ip" => Request::getClientIp(),
+								"old id" => null,
+								"old value" => null,
+								"new id" => null,
+								"new value" => null,
+								"user id" => Session::get('userId') != NULL ? Session::get('userId') : "",
+								"user name" => Session::get('userId') != NULL ? Session::get('userName') . '(' . Session::get('userClub') . ')' : "Gast",
+								"from ip" => Request::getClientIp(),
 								"timestamp" => (new DateTime)->format('Y-m-d H:i:s')
-																]
-													));
+							    ]));
 
 		$newSchedule->save();
 
@@ -227,14 +231,12 @@ class EventController extends Controller {
 			$newEntry->schdl_id = $newSchedule->id;
 			$newEntry->save();
 
-			// log revision (schedule, entry id, action, old value, new value)
-			ScheduleController::logRevision(
-								$newSchedule,
-								$newEntry->id,
-								"entry created",
-								null,
-								null
-							  );
+			// log revision
+			ScheduleController::logRevision($newEntry->getSchedule, 	// schedule object
+											$newEntry,					// entry object
+											"entry created",			// action description
+											null,						// old value
+											null);						// new value
 		}
 
 		// log the action
@@ -343,27 +345,27 @@ class EventController extends Controller {
 	{
 		$event = new ClubEvent;
 		if(!is_null($id)) {
-			$event = ClubEvent::findOrFail($id);
-			
+			$event = ClubEvent::findOrFail($id);		
 		}
 		
 		// format: strings; no validation needed
-		$event->evnt_title = Input::get('title');
-		$event->evnt_subtitle = Input::get('subtitle');
-		$event->evnt_public_info = Input::get('publicInfo');
+		$event->evnt_title 			 = Input::get('title');
+		$event->evnt_subtitle 		 = Input::get('subtitle');
+		$event->evnt_public_info 	 = Input::get('publicInfo');
 		$event->evnt_private_details = Input::get('privateDetails');	
-		$event->evnt_type = Input::get('evnt_type');
+		$event->evnt_type 			 = Input::get('evnt_type');
 
-		// new function for input with dropdown
-		if (!Place::where('plc_title', '=', Input::get('place'))->first())		// new place
+		// create new place
+		if (!Place::where('plc_title', '=', Input::get('place'))->first())		
 		{
 			$place = new Place;
 			$place->plc_title = Input::get('place');
 			$place->save();
-			
+
 			$event->plc_id = $place->id;
 		}
-		else 										// place from db
+		// use existing place
+		else 	
 		{
 			$event->plc_id = Place::where('plc_title', '=', Input::get('place'))->first()->id;
 		}
@@ -375,7 +377,9 @@ class EventController extends Controller {
 			$event->evnt_date_start = $newBeginDate->format('Y-m-d');
 		}
 		else
+		{
 			$event->evnt_date_start = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));;
+		}
 			
 		if(!empty(Input::get('endDate')))
 		{
@@ -383,7 +387,9 @@ class EventController extends Controller {
 			$event->evnt_date_end = $newEndDate->format('Y-m-d');
 		}
 		else
+		{
 			$event->evnt_date_end = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));;
+		}
 		
 		// format: time; validate on filled value  
 		if(!empty(Input::get('beginTime'))) $event->evnt_time_start = Input::get('beginTime');

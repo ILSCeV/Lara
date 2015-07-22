@@ -188,13 +188,20 @@ class ScheduleController extends Controller {
 	{
 		$schedule = new Schedule;
 
-		if (!is_null($scheduleId)){
+		if (!is_null($scheduleId))
+		{
 			$schedule = Schedule::findOrFail($scheduleId);
 		}
 
 		// format: time; validate on filled value
-		if(!empty(Input::get('preparationTime'))) $schedule->schdl_time_preparation_start = Input::get('preparationTime');
-		else $schedule->schdl_time_preparation_start = mktime(0, 0, 0);
+		if(!empty(Input::get('preparationTime'))) 
+		{
+			$schedule->schdl_time_preparation_start = Input::get('preparationTime');
+		}
+		else
+		{ 
+			$schedule->schdl_time_preparation_start = mktime(0, 0, 0);
+		}
 
 		// format: date; validate on filled value
 		// by tasks - stay this way, by schedules will be set to null by event creation.
@@ -205,17 +212,22 @@ class ScheduleController extends Controller {
 					   new DateTimeZone(Config::get('app.timezone')));
 			$schedule->schdl_due_date = $dueDate->format('Y-m-d');
 		}
-		else $schedule->schdl_due_date = date('Y-m-d', time());
+		else 
+		{
+			$schedule->schdl_due_date = date('Y-m-d', time());
+		}
 
 		// format: password; validate on filled value
-		if (Input::get('password') == "delete"
-			AND Input::get('passwordDouble') == "delete") {
-			//delete password or leave empty
+		if (Input::get('password') == "delete" 
+		AND Input::get('passwordDouble') == "delete") 
+		{
 			$schedule->schdl_password = '';
-		} elseif (!empty(Input::get('password'))
+		} 
+		elseif (!empty(Input::get('password'))
 			AND !empty(Input::get('passwordDouble'))
-			AND Input::get('password') == Input::get('passwordDouble')) {
-				$schedule->schdl_password = Hash::make(Input::get('password'));
+			AND Input::get('password') == Input::get('passwordDouble')) 
+		{
+			$schedule->schdl_password = Hash::make(Input::get('password'));
 		}
 
 		// format: tinyInt; validate on filled value
@@ -223,9 +235,9 @@ class ScheduleController extends Controller {
 		{
 			$schedule->schdl_is_template = true;
 			$schedule->schdl_title = Input::get('templateName');
-
 		}
-		else {
+		else 
+		{
 			$schedule->schdl_is_template = false;
 		}
 
@@ -245,43 +257,45 @@ class ScheduleController extends Controller {
 		// parsing jobtype entries
 		for ($i=1; $i <= Input::get("counter"); $i++) {
 
-			if (!empty(Input::get("jobType" . $i))) { 		// skip empty fields
+			// skip empty fields
+			if (!empty(Input::get("jobType" . $i))) 
+			{ 		
 
-			// check if job type exists
-			$jobType = Jobtype::where('jbtyp_title', '=', Input::get("jobType" . $i))
-							  ->where('jbtyp_time_start', '=', Input::get("timeStart" . $i))
-							  ->where('jbtyp_time_end', '=', Input::get("timeEnd" . $i))
-							  ->first();
-			
-			// If not found - create new jpb type with data provided
-			if (is_null($jobType))
-			{
-				// TITLE
-				$jobType = Jobtype::create(array('jbtyp_title' => Input::get("jobType" . $i)));
+				// check if job type exists
+				$jobType = Jobtype::where('jbtyp_title', '=', Input::get("jobType" . $i))
+								  ->where('jbtyp_time_start', '=', Input::get("timeStart" . $i))
+								  ->where('jbtyp_time_end', '=', Input::get("timeEnd" . $i))
+								  ->first();
+				
+				// If not found - create new jpb type with data provided
+				if (is_null($jobType))
+				{
+					// TITLE
+					$jobType = Jobtype::create(array('jbtyp_title' => Input::get("jobType" . $i)));
 
-				// TIME START
-				$jobType->jbtyp_time_start = Input::get('timeStart' . $i);
+					// TIME START
+					$jobType->jbtyp_time_start = Input::get('timeStart' . $i);
 
-				// TIME END
-				$jobType->jbtyp_time_end = Input::get('timeEnd' . $i);
+					// TIME END
+					$jobType->jbtyp_time_end = Input::get('timeEnd' . $i);
 
-				// STATISTICAL WEIGHT
-				$jobType->jbtyp_statistical_weight = Input::get('jbtyp_statistical_weight' . $i);
+					// STATISTICAL WEIGHT
+					$jobType->jbtyp_statistical_weight = Input::get('jbtyp_statistical_weight' . $i);
 
-				// NEEDS PREPARATION
-				$jobType->jbtyp_needs_preparation = 'true';
+					// NEEDS PREPARATION
+					$jobType->jbtyp_needs_preparation = 'true';
 
-				// ARCHIVED set to "false"
-				$jobType->jbtyp_is_archived = 'false';
+					// ARCHIVED set to "false"
+					$jobType->jbtyp_is_archived = 'false';
 
-				$jobType->save();
-			}
+					$jobType->save();
+				}
 
-			$scheduleEntry = new ScheduleEntry;
-			$scheduleEntry->jbtyp_id = $jobType->id;
+				$scheduleEntry = new ScheduleEntry;
+				$scheduleEntry->jbtyp_id = $jobType->id;
 
-			// save changes
-			$scheduleEntries->add(ScheduleController::updateScheduleEntry($scheduleEntry, $jobType->id, $i));
+				// save changes
+				$scheduleEntries->add(ScheduleController::updateScheduleEntry($scheduleEntry, $jobType->id, $i));
 			}
 		}
 
@@ -310,42 +324,44 @@ class ScheduleController extends Controller {
 		$counterHelper = '1';
 
 		// check for changes in each entry
-		foreach ( $scheduleEntries as $entry ) {
+		foreach ( $scheduleEntries as $entry ) 
+		{
 
-			if ( $entry->getJobType == Input::get('jobType' + $counterHelper) ) {
-				// same job type as before - do nothing
-
+			// same job type as before - do nothing
+			if ( $entry->getJobType == Input::get('jobType' + $counterHelper) ) 
+			{
 				// add to new collection
 				$newEntries->add(ScheduleController::updateScheduleEntry($entry, $jobtype->id, $counterHelper));
 
-			} elseif ( Input::get("jobType" . $counterHelper) == '' ) {
-				// job type empty - delete entry
+			} 
+			// job type empty - delete entry
+			elseif ( Input::get("jobType" . $counterHelper) == '' ) 
+			{
+				// log revision
+				ScheduleController::logRevision($entry->getSchedule, 	// schedule object
+												$entry,					// entry object
+												"entry deleted",		// action description
+												$entry->getPerson,		// old value
+												null);					// new value
 
-				// log revision (schedule, entry id, action, old value, new value)
-				ScheduleController::logRevision(
-												$entry->getSchedule,
-												$entry->id,
-												"entry deleted",
-												$entry->prsn_id,
-												null
-											  );
-
+				// proceed with deletion
 				$entry->delete();
 
-			} else {
-				// some new job type - change entry
+			} 
+			// some new job type added - change entry
+			else 
+			{		
 				$jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jobType" . $counterHelper)));
 				$entry->jbtyp_id = $jobtype->id;
 
-				// log revision (schedule, entry id, action, old value, new value)
-				ScheduleController::logRevision(
-												$entry->getSchedule,
-												$entry->id,
-												"entry updated",
-												$entry->prsn_id,
-												$entry->prsn_id
-											  );
-
+				// log revision
+				/*
+				ScheduleController::logRevision($entry->getSchedule, 	// schedule object
+												$entry,					// entry object
+												"entry updated",		// action description
+												$entry->getPerson,		// old value
+												$entry->getPerson);		// new value
+				*/
 				// add to new collection
 				$newEntries->add(ScheduleController::updateScheduleEntry($entry, $jobtype->id, $counterHelper));
 			}
@@ -354,29 +370,30 @@ class ScheduleController extends Controller {
 			$counterHelper++;
 		}
 
-		// changed all old entries - have any new ones been added?
+		// At this point we changed all existing entries - have any new ones been added?
+
 		if ($numberOfSubmittedEntries > $counterHelper - 1) {
+			
 			// create some new fields
-
-			for ($i= $counterHelper; $i <= $numberOfSubmittedEntries; $i++) {
-
-				// skip empty fields, create new fields if not input empty
-				if (!empty(Input::get("jobType" . $i))) {
+			for ($i= $counterHelper; $i <= $numberOfSubmittedEntries; $i++) 
+			{
+				// skip empty fields, create new fields only if input not empty
+				if (!empty(Input::get("jobType" . $i))) 
+				{
 					$jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jobType" . $i)));
 
 					$newEntry = new ScheduleEntry;
 					$newEntry->jbtyp_id = $jobtype->id;
 					$newEntry->schdl_id = $scheduleId;
 
-					// log revision (schedule, entry id, action, old value, new value)
-					ScheduleController::logRevision(
-										$scheduleId->getSchedule,
-										$newEntry->id,
-										"entry created",
-										null,
-										null
-									  );					
+					// log revision
+					ScheduleController::logRevision($newEntry->getSchedule, // schedule object
+													$newEntry,				// entry object
+													"entry created",		// action description
+													null,					// old value
+													null);					// new value					
 
+					// add to new collection
 					$newEntries->add(ScheduleController::updateScheduleEntry($newEntry, $jobtype->id, $i));
 				}
 			}
@@ -409,28 +426,101 @@ class ScheduleController extends Controller {
 	 * Updates entry revision
 	 *
 	 * @param Schedule $schedule	 
-	 * @param int $entry
+	 * @param ScheduleEntry $entry
 	 * @param string $action
 	 * @param string $old
 	 * @param string $new
 	 * @return void
 	 */
-	public static function logRevision($schedule, $entryId, $action, $old, $new)
+	public static function logRevision($schedule, $entry, $action, $old, $new)
 	{
+		// workaround for older events where revision history is not present
+		if($schedule->entry_revisions == "")
+		{
+			$schedule->entry_revisions = json_encode(["0" => ["entry id" => "",
+													  "job type" => "",
+													  "action" => "Event created before revisioning, filling array with empty values",
+													  "old id" => "",
+													  "old value" => "",
+													  "new id" => "",
+													  "new value" => "",
+													  "user id" => "",
+													  "user name" => "",
+													  "from ip" => "",
+													  "timestamp" => (new DateTime)->format('d.m.Y H:i:s')]]);
+		}
+	
 		// decode revision history
 		$revisions = json_decode($schedule->entry_revisions, true);
 
+		// decode old values
+		if(!is_null($old)){
+			$oldId = $old->id;
+
+			switch ($old->prsn_status) {
+			    case "candidate":
+			        $oldStatus = "(K)";
+			        break;
+			    case "member":
+			        $oldStatus = "(A)";
+			        break;
+		        case "veteran":
+			        $oldStatus = "(V)";
+			        break;
+			    default: 
+			    	$oldStatus = "";
+			}
+
+			$oldName = $old->prsn_name
+					 . $oldStatus 
+					 . "(" . $old->getClub->clb_title . ")";
+		}
+		else
+		{
+			$oldId = "";
+			$oldName = "";
+		}
+
+		// decode new values
+		if(!is_null($new)){
+			$newId = $new->id;
+			
+			switch ($new->prsn_status) {
+			    case "candidate":
+			        $newStatus = "(K)";
+			        break;
+			    case "member":
+			        $newStatus = "(A)";
+			        break;
+		        case "veteran":
+			        $newStatus = "(V)";
+			        break;
+			    default: 
+			    	$newStatus = "";
+			}
+
+			$newName = $new->prsn_name 
+					 . $newStatus
+					 . "(" . $new->getClub->clb_title . ")";
+		}
+		else
+		{
+			$newId = "";
+			$newName = "";
+		}
+		
 		// append current change
-		array_push($revisions, 
-							[
-								"entry" => $entryId,
+		array_push($revisions, ["entry id" => $entry->id,
+								"job type" => $entry->getJobType->jbtyp_title,
 								"action" => $action,
-								"old" => $old,
-								"new" => $new,
-								"user" => Session::get('userId') != NULL ? Session::get('userId') : "Gast",
-								"ip" => Request::getClientIp(),
-								"timestamp" => (new DateTime)->format('Y-m-d H:i:s')
-							]
+								"old id" => $oldId,
+								"old value" => $oldName,
+								"new id" => $newId,
+								"new value" => $newName,
+								"user id" => Session::get('userId') != NULL ? Session::get('userId') : "",
+								"user name" => Session::get('userId') != NULL ? Session::get('userName') . '(' . Session::get('userClub') . ')' : "Gast",
+								"from ip" => Request::getClientIp(),
+								"timestamp" => (new DateTime)->format('d.m.Y H:i:s')]
 					);		
 
 		// encode and save
@@ -473,35 +563,34 @@ class ScheduleController extends Controller {
 		foreach($entries as $entry)
 		{
 			// Remember old value for logging
-			$oldPerson = $entry->prsn_id;
+			$oldPerson = $entry->getPerson;
 
 			// Entry was empty
 			if( !isset($entry->prsn_id) )
 			{
 				// Entry is not empty now
-				if ( !Input::get('userName' . $entry->id) == ''
-			 	  OR !Input::get('userName' . $entry->id) == Config::get('messages_de.no-entry'))
+				if ( !Input::get('userName' . $entry->id) == '' )
 				{
 					// Add new entry data
 					$this->onAdd($entry);
 
-					// log revision (schedule, entry id, action, old value, new value)
-					ScheduleController::logRevision(
-													$entry->getSchedule,
-													$entry->id,
-													"person added",
-													$oldPerson,
-													$entry->prsn_id
-												  );
+					// log revision
+					ScheduleController::logRevision($entry->getSchedule, 	// schedule object
+													$entry,					// entry object
+													"person added",			// action description
+													$oldPerson,				// old value
+													$entry->getPerson()->first());		// new value
 					
 				}
+
 				// Otherwise no change found - do nothing
+
 			}
 			// Entry was not empty
 			else
 			{
 				// Same person there?
-				if( $entry->prsn_id == Input::get('userName' . $entry->id)
+				if( $entry->getPerson->prsn_name == Input::get('userName' . $entry->id)
 				AND Person::where('id', '=', $entry->prsn_id)->first()->prsn_ldap_id == Input::get('ldapId'. $entry->id) )
 				{
 					// Was comment updated?
@@ -515,19 +604,16 @@ class ScheduleController extends Controller {
 				else
 				{
 					// Was entry deleted?
-					if ( Input::get('userName' . $entry->id) == ''
-				 	  OR Input::get('userName' . $entry->id) == Config::get('messages_de.no-entry'))
+					if ( Input::get('userName' . $entry->id) == '' )
 					{
 						$this->onDelete($entry);
 
-					// log revision (schedule, entry id, action, old value, new value)
-					ScheduleController::logRevision(
-													$entry->getSchedule,
-													$entry->id,
-													"person removed",
-													$oldPerson,
-													$entry->prsn_id
-												  );
+						// log revision
+						ScheduleController::logRevision($entry->getSchedule, 	// schedule object
+														$entry,					// entry object
+														"person removed",		// action description
+														$oldPerson,				// old value
+														$entry->getPerson()->first());		// new value
 						
 					}
 					// So some new person was provided
@@ -535,18 +621,16 @@ class ScheduleController extends Controller {
 					{
 						// delete old data
 						$this->onDelete($entry);
+
 						// add new data
 						$this->onAdd($entry);
 
-					// log revision (schedule, entry id, action, old value, new value)
-					ScheduleController::logRevision(
-													$entry->getSchedule,
-													$entry->id,
-													"person changed",
-													$oldPerson,
-													$entry->prsn_id
-												  );
-						
+						// log revision
+						ScheduleController::logRevision($entry->getSchedule, 	// schedule object
+														$entry,					// entry object
+														"person changed",		// action description
+														$oldPerson,				// old value
+														$entry->getPerson()->first());		// new value
 					}
 				}
 			}

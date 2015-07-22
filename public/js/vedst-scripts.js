@@ -80,6 +80,27 @@ $(function(){
 
 
 
+// Show/hide change history
+$(function(){
+    $('#show-hide-history').click(function(e) {
+        e.preventDefault();
+        if ($('#change-history').hasClass("hide")) 
+        {
+            // change state, change button
+            $('#change-history').removeClass('hide'); 
+            $('#arrow-icon').removeClass('fa-caret-right');
+            $('#arrow-icon').addClass('fa-sort-desc');
+        }
+        else
+        {
+            // change state, change button
+            $('#change-history').addClass('hide');
+            $('#arrow-icon').addClass('fa-caret-right');
+            $('#arrow-icon').removeClass('fa-sort-desc');
+        };        
+    });
+});
+
 
 
 // Shows dynamic form fields for new job types 

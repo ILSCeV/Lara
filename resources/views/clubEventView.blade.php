@@ -141,6 +141,69 @@
 
 	@endif
 
+	@if(Session::has('userId'))
+
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="show-hide-history" class="text-muted" href="#">Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i></a>
+		<br>
+		<br>
+		<div class="panel hide" id="change-history">
+			<div class="card-body">
+				<table class="table table-hover table-condensed">
+					<thead>
+						<th class="hidden-xs">
+							&nbsp;
+						</th>
+						<th class="col-xs-2 col-md-2">
+							Job type
+						</th>
+						<th class="col-xs-2 col-md-2">
+							Action
+						</th>
+						<th class="col-xs-2 col-md-2">
+							Old Value
+						</th>
+						<th class="col-xs-2 col-md-2">
+							New value
+						</th>
+						<th class="col-xs-2 col-md-2">
+							User name
+						</th>
+						<th class="col-xs-2 col-md-2">
+							Timestamp
+						</th>
+					</thead>
+					<tbody>
+
+					@for ($i = 0; $i < count($revisions); $i++)
+					    <tr>
+					    	<td>
+					    		&nbsp;
+					    	</td>
+					    	<td>
+					    		{{ $revisions[$i]["job type"] }}
+					    	</td>
+					    	<td>
+					    		{{ $revisions[$i]["action"] }}
+					    	</td>
+					    	<td>
+					    		{{ $revisions[$i]["old value"] }}
+					    	</td>
+					    	<td>
+					    		{{ $revisions[$i]["new value"] }}
+					    	</td>
+					    	<td>
+					    		{{ $revisions[$i]["user name"] }}
+					    	</td>
+					    	<td>
+					    		{{ $revisions[$i]["timestamp"] }}
+					    	</td>
+					    </tr>
+					@endfor
+					</tbody>
+				</table>
+			</div>	
+		</div>
+	@endif
 @stop
 
 
