@@ -179,7 +179,7 @@ class ScheduleController extends Controller {
 
 	/**
 	* Edit or create a schedule with its entered information.
-	* If $scheduleId is null create a new schedule, otherwise the schedule specified by $scheduleId will be edit.
+	* If $scheduleId is null create a new schedule, otherwise the schedule specified by $scheduleId will be edited.
 	*
 	* @param int $scheduleId
 	* @return Schedule newSchedule
@@ -280,6 +280,7 @@ class ScheduleController extends Controller {
 			$scheduleEntry = new ScheduleEntry;
 			$scheduleEntry->jbtyp_id = $jobType->id;
 
+			// save changes
 			$scheduleEntries->add(ScheduleController::updateScheduleEntry($scheduleEntry, $jobType->id, $i));
 			}
 		}
@@ -313,17 +314,37 @@ class ScheduleController extends Controller {
 
 			if ( $entry->getJobType == Input::get('jobType' + $counterHelper) ) {
 				// same job type as before - do nothing
+
 				// add to new collection
 				$newEntries->add(ScheduleController::updateScheduleEntry($entry, $jobtype->id, $counterHelper));
 
 			} elseif ( Input::get("jobType" . $counterHelper) == '' ) {
 				// job type empty - delete entry
+
+				// log revision (schedule, entry id, action, old value, new value)
+				ScheduleController::logRevision(
+												$entry->getSchedule,
+												$entry->id,
+												"entry deleted",
+												$entry->prsn_id,
+												null
+											  );
+
 				$entry->delete();
 
 			} else {
 				// some new job type - change entry
 				$jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jobType" . $counterHelper)));
 				$entry->jbtyp_id = $jobtype->id;
+
+				// log revision (schedule, entry id, action, old value, new value)
+				ScheduleController::logRevision(
+												$entry->getSchedule,
+												$entry->id,
+												"entry updated",
+												$entry->prsn_id,
+												$entry->prsn_id
+											  );
 
 				// add to new collection
 				$newEntries->add(ScheduleController::updateScheduleEntry($entry, $jobtype->id, $counterHelper));
@@ -346,6 +367,15 @@ class ScheduleController extends Controller {
 					$newEntry = new ScheduleEntry;
 					$newEntry->jbtyp_id = $jobtype->id;
 					$newEntry->schdl_id = $scheduleId;
+
+					// log revision (schedule, entry id, action, old value, new value)
+					ScheduleController::logRevision(
+										$scheduleId->getSchedule,
+										$newEntry->id,
+										"entry created",
+										null,
+										null
+									  );					
 
 					$newEntries->add(ScheduleController::updateScheduleEntry($newEntry, $jobtype->id, $i));
 				}
@@ -375,7 +405,39 @@ class ScheduleController extends Controller {
 	}
 
 
+	/**
+	 * Updates entry revision
+	 *
+	 * @param Schedule $schedule	 
+	 * @param int $entry
+	 * @param string $action
+	 * @param string $old
+	 * @param string $new
+	 * @return void
+	 */
+	public static function logRevision($schedule, $entryId, $action, $old, $new)
+	{
+		// decode revision history
+		$revisions = json_decode($schedule->entry_revisions, true);
 
+		// append current change
+		array_push($revisions, 
+							[
+								"entry" => $entryId,
+								"action" => $action,
+								"old" => $old,
+								"new" => $new,
+								"user" => Session::get('userId') != NULL ? Session::get('userId') : "Gast",
+								"ip" => Request::getClientIp(),
+								"timestamp" => (new DateTime)->format('Y-m-d H:i:s')
+							]
+					);		
+
+		// encode and save
+		$schedule->entry_revisions = json_encode($revisions);
+						
+		$schedule->save();
+	}
 
 	// ---------------private functions ---------------------------------------
 
@@ -410,6 +472,9 @@ class ScheduleController extends Controller {
 
 		foreach($entries as $entry)
 		{
+			// Remember old value for logging
+			$oldPerson = $entry->prsn_id;
+
 			// Entry was empty
 			if( !isset($entry->prsn_id) )
 			{
@@ -419,6 +484,16 @@ class ScheduleController extends Controller {
 				{
 					// Add new entry data
 					$this->onAdd($entry);
+
+					// log revision (schedule, entry id, action, old value, new value)
+					ScheduleController::logRevision(
+													$entry->getSchedule,
+													$entry->id,
+													"person added",
+													$oldPerson,
+													$entry->prsn_id
+												  );
+					
 				}
 				// Otherwise no change found - do nothing
 			}
@@ -444,6 +519,16 @@ class ScheduleController extends Controller {
 				 	  OR Input::get('userName' . $entry->id) == Config::get('messages_de.no-entry'))
 					{
 						$this->onDelete($entry);
+
+					// log revision (schedule, entry id, action, old value, new value)
+					ScheduleController::logRevision(
+													$entry->getSchedule,
+													$entry->id,
+													"person removed",
+													$oldPerson,
+													$entry->prsn_id
+												  );
+						
 					}
 					// So some new person was provided
 					else
@@ -452,6 +537,16 @@ class ScheduleController extends Controller {
 						$this->onDelete($entry);
 						// add new data
 						$this->onAdd($entry);
+
+					// log revision (schedule, entry id, action, old value, new value)
+					ScheduleController::logRevision(
+													$entry->getSchedule,
+													$entry->id,
+													"person changed",
+													$oldPerson,
+													$entry->prsn_id
+												  );
+						
 					}
 				}
 			}

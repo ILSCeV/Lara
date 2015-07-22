@@ -202,26 +202,44 @@ class EventController extends Controller {
 			return Redirect::back()->withInput(); 
 			}
 
-		// first we fill objects with data
-		// if there is an error, we have not saved yet, so we need no rollback
 		$newEvent = $this->editClubEvent(null);
-		$newSchedule = $this->editSchedule(null);
-		$newEntries = ScheduleController::createScheduleEntries();
-		
-		// at last save all data in the database
 		$newEvent->save();	
-		
+
+		$newSchedule = $this->editSchedule(null);
 		$newSchedule->evnt_id = $newEvent->id;
-		$newSchedule->save();
 		
+		$newSchedule->entry_revisions = json_encode(array("0"=>[
+								"entry" => null,
+								"action" => "schedule created",
+								"old" => null,
+								"new" => null,
+								"user" => Session::get('userId') != NULL ? Session::get('userId') : "Gast",
+								"ip" => Request::getClientIp(),
+								"timestamp" => (new DateTime)->format('Y-m-d H:i:s')
+																]
+													));
+
+		$newSchedule->save();
+
+		$newEntries = ScheduleController::createScheduleEntries($newSchedule->id);
 		foreach($newEntries as $newEntry)
 		{
 			$newEntry->schdl_id = $newSchedule->id;
 			$newEntry->save();
+
+			// log revision (schedule, entry id, action, old value, new value)
+			ScheduleController::logRevision(
+								$newSchedule,
+								$newEntry->id,
+								"entry created",
+								null,
+								null
+							  );
 		}
 
 		// log the action
-		Log::info('Create event: User ' . Session::get('userId') . ' (' . Session::get('userGroup') . ') created ' . $newEvent->evnt_title . ' (ID: ' . $newEvent->id . ').');
+		Log::info('Create event: User ' . Session::get('userName') . '(' . Session::get('userId') . ', ' 
+				 . Session::get('userGroup') . ') created event ' . $newEvent->evnt_title . ' (ID: ' . $newEvent->id . ').');
 			
 		// show new event
 		return Redirect::action('CalendarController@showId', array('id' => $newEvent->id));
@@ -251,9 +269,10 @@ class EventController extends Controller {
 		$entries = ScheduleController::editScheduleEntries($schedule->id);
 
 		// log the action
-		Log::info('Edit event: User ' . Session::get('userId') . ' with rigths ' . Session::get('userGroup') . ' edits event ' . $event->evnt_title . ' with id ' . $event->id . '.');
+		Log::info('Edit event: User ' . Session::get('userName') . '(' . Session::get('userId') . ', ' 
+				 . Session::get('userGroup') . ') edited ' . $event->evnt_title . ' (ID:' . $event->id . ').');
 		
-		// at least save all data in the database
+		// save all data in the database
 		$event->save();	
 		$schedule->save();
 		foreach($entries as $entry)
@@ -292,7 +311,8 @@ class EventController extends Controller {
 		}
 		
 		// log the action
-		Log::info('Delete event: User ' . Session::get('userId') . ' with rigths ' . Session::get('userGroup') . ' deletes event ' . $event->evnt_title . ' with id ' . $event->id . '.');
+		Log::info('Delete event: User ' . Session::get('userName') . '(' . Session::get('userId') . ', ' 
+				 . Session::get('userGroup') . ') deleted event ' . $event->evnt_title . ' (ID:' . $event->id . ').');
 
 		$schedule = $event->getSchedule();
 		
@@ -322,8 +342,10 @@ class EventController extends Controller {
 	private function editClubEvent($id)
 	{
 		$event = new ClubEvent;
-		if(!is_null($id))
+		if(!is_null($id)) {
 			$event = ClubEvent::findOrFail($id);
+			
+		}
 		
 		// format: strings; no validation needed
 		$event->evnt_title = Input::get('title');

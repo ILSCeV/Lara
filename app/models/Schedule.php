@@ -23,6 +23,7 @@ class Schedule extends Eloquent {
 								'schdl_due_date',
 								'schdl_password',
 								'evnt_id',		/* if NULL then it's a "task", else it's a "schedule" for that ClubEvent */
+								'entry_revisons',
 								'schdl_is_template',
 								'schdl_show_in_week_view');
 	
