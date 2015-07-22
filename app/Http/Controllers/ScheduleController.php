@@ -340,7 +340,7 @@ class ScheduleController extends Controller {
 				// log revision
 				ScheduleController::logRevision($entry->getSchedule, 	// schedule object
 												$entry,					// entry object
-												"entry deleted",		// action description
+												"Dienst gelöscht",		// action description
 												$entry->getPerson,		// old value
 												null);					// new value
 
@@ -358,7 +358,7 @@ class ScheduleController extends Controller {
 				/*
 				ScheduleController::logRevision($entry->getSchedule, 	// schedule object
 												$entry,					// entry object
-												"entry updated",		// action description
+												"Dienst aktualisiert",		// action description
 												$entry->getPerson,		// old value
 												$entry->getPerson);		// new value
 				*/
@@ -389,7 +389,7 @@ class ScheduleController extends Controller {
 					// log revision
 					ScheduleController::logRevision($newEntry->getSchedule, // schedule object
 													$newEntry,				// entry object
-													"entry created",		// action description
+													"Dienst erstellt",		// action description
 													null,					// old value
 													null);					// new value					
 
@@ -439,7 +439,7 @@ class ScheduleController extends Controller {
 		{
 			$schedule->entry_revisions = json_encode(["0" => ["entry id" => "",
 													  "job type" => "",
-													  "action" => "Event created before revisioning, filling array with empty values",
+													  "action" => "Keine frühere Änderungen vorhanden.",
 													  "old id" => "",
 													  "old value" => "",
 													  "new id" => "",
@@ -577,7 +577,7 @@ class ScheduleController extends Controller {
 					// log revision
 					ScheduleController::logRevision($entry->getSchedule, 	// schedule object
 													$entry,					// entry object
-													"person added",			// action description
+													"Dienst eingetragen",	// action description
 													$oldPerson,				// old value
 													$entry->getPerson()->first());		// new value
 					
@@ -611,7 +611,7 @@ class ScheduleController extends Controller {
 						// log revision
 						ScheduleController::logRevision($entry->getSchedule, 	// schedule object
 														$entry,					// entry object
-														"person removed",		// action description
+														"Dienst ausgetragen",	// action description
 														$oldPerson,				// old value
 														$entry->getPerson()->first());		// new value
 						
@@ -628,7 +628,7 @@ class ScheduleController extends Controller {
 						// log revision
 						ScheduleController::logRevision($entry->getSchedule, 	// schedule object
 														$entry,					// entry object
-														"person changed",		// action description
+														"Dienst geändert",		// action description
 														$oldPerson,				// old value
 														$entry->getPerson()->first());		// new value
 					}

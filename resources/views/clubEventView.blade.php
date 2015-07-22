@@ -154,22 +154,22 @@
 							&nbsp;
 						</th>
 						<th class="col-xs-2 col-md-2">
-							Job type
+							Dienst
 						</th>
 						<th class="col-xs-2 col-md-2">
-							Action
+							Was wurde geändert?
 						</th>
 						<th class="col-xs-2 col-md-2">
-							Old Value
+							Alter Eintrag
 						</th>
 						<th class="col-xs-2 col-md-2">
-							New value
+							Neuer Eintrag
 						</th>
 						<th class="col-xs-2 col-md-2">
-							User name
+							Wer ist schuld?
 						</th>
 						<th class="col-xs-2 col-md-2">
-							Timestamp
+							Wann war das?
 						</th>
 					</thead>
 					<tbody>

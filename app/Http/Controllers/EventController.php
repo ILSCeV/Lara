@@ -212,7 +212,7 @@ class EventController extends Controller {
 		$newSchedule->entry_revisions = json_encode(array("0"=>
 							   ["entry id" => null,
 								"job type" => null,
-								"action" => "schedule created",
+								"action" => "Dienstplan erstellt",
 								"old id" => null,
 								"old value" => null,
 								"new id" => null,
@@ -234,7 +234,7 @@ class EventController extends Controller {
 			// log revision
 			ScheduleController::logRevision($newEntry->getSchedule, 	// schedule object
 											$newEntry,					// entry object
-											"entry created",			// action description
+											"Dienst erstellt",			// action description
 											null,						// old value
 											null);						// new value
 		}

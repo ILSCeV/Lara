@@ -181,11 +181,13 @@ class CalendarController extends Controller {
 		});
 
         $revisions = json_decode($clubEvent->getSchedule->entry_revisions, true);
-        
-        // deleting ip adresses from output for privacy reasons
-        foreach ($revisions as $entry) {
-            unset($entry["from ip"]);
+        if (!is_null($revisions)) {
+            // deleting ip adresses from output for privacy reasons
+            foreach ($revisions as $entry) {
+                unset($entry["from ip"]);
+            }
         }
+        
 
         return View::make('clubEventView', compact('clubEvent', 'entries', 'clubs', 'persons', 'revisions'));
     }

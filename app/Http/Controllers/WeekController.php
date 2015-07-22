@@ -101,6 +101,7 @@ class WeekController extends Controller {
 
 		// IDs of schedules shown, needed for bulk-update
 		$updateIds = array();
+
 		foreach ($events as $event) {
 			array_push($updateIds, $event->getSchedule->id);
 		}
