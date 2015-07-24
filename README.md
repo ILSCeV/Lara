@@ -1,14 +1,15 @@
 ## Club management software built on top of Laravel 5.0
 
 ## About
-**Lara** ("**Ve**rwaltung **d**es **St**udentenclubs") is a planning tool that combines a calender with personnel scheduling (with plans of adding finances and internal statistics in future versions), developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all Ilmenauer Studentenclub e.V. sections.
-It started as a softwareproject at [TU Ilmenau](http://tu-ilmenau.de) in WS2014/2015 and is currently being developed further as a personal project. 
+**Lara** ("**Ve**rwaltung **d**es **St**udentenclubs") is a planning tool that combines a calender with personnel scheduling, developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all Ilmenauer Studentenclub e.V. sections.
+It started as a softwareproject at [TU Ilmenau](http://tu-ilmenau.de) in WS2014/2015 and is currently being developed further as a personal project, with plans of adding finance management, and internal statistics and data analysis in future versions.
 
 
-## This is a development version - NOT FOR PRODUCTION USE.
-**This is work in progress!**
+## This is a development version
+**Lara is a work in progress - and a beautiful mess sometimes.**
 Some features are missing. 
 Some bugs are still alive.
+Use at your own risk.
 
 
 ## Current project status
