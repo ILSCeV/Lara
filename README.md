@@ -1,41 +1,28 @@
 ## Club management software built on top of Laravel 5.0
 
-This is a **development version** - NOT FOR PRODUCTION USE.
-
-
 ## About
-**Lara** ("**Ve**rwaltung **d**es **St**udentenclubs") is a planning tool that combines a calender with personnel scheduling, with plans of adding finances and internal statistics in future versions. It is developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all Ilmenauer Studentenclub e.V. sections. 
-Lara started as a softwareproject at [TU Ilmenau](http://tu-ilmenau.de) in WS2014/2015.
+**Lara** ("**Ve**rwaltung **d**es **St**udentenclubs") is a planning tool that combines a calender with personnel scheduling (with plans of adding finances and internal statistics in future versions), developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all Ilmenauer Studentenclub e.V. sections.
+It started as a softwareproject at [TU Ilmenau](http://tu-ilmenau.de) in WS2014/2015 and is currently being developed further as a personal project. 
 
+
+## This is a development version - NOT FOR PRODUCTION USE.
 **This is work in progress!**
 Some features are missing. 
 Some bugs are still alive.
 
 
 ## Current project status
-(as of 01.07.2015)
-
-- Calender: **OK**
-- Schedules: **rewriting backend**, est. 01.09.15
-- Personnel statistics: *on hold* till 01.10.15
-- Event statistics: *on hold* till 01.11.15
-- Finances: *on hold* till 01.12.15
-- Controlling: *on hold* till 01.12.15
-
-For detailed list of open requirements and change-requests see: [Issues](https://github.com/4D44H/lara-vedst/issues).
+24.07.2015 - Calender & Schedules: **rewriting backend**, est. completion date: 01.09.2015
 
 
-## Components: 
-- **Calender events** tied to **event schedules** (for personnel planning)
-- Separated **internal tasks** (for schedules without corresponding events)
-- **Personnel statistics** and **event statistics**
-- **Finances** und **controlling**
-- **Authentification**, separating public calender events+schedules from internal data
+## Future additions planned
+- Personnel statistics: *on hold* till 01.10.2015
+- Event statistics: *on hold* till 01.11.2015
+- Finances & controlling: *on hold* till 01.12.2015
 
 
-## Roadmap
-- **Phase 1** (finished): softwareproject at TU Ilmenau, components *calender*, *schedules* and *authentification* via bc-Club LDAP-Server implemented.
-- **Phase 2** (in progress): personal project, bugfixes and components *statistics*, *finances* and *controlling* are in development.
+## Contributing
+For a detailed list of open requirements and change-requests visit [Issues](https://github.com/4D44H/lara-vedst/issues) and/or contact [Maxim](https://github.com/4D44H) if you want to help.
 
 
 ## Requirements
@@ -72,7 +59,8 @@ For detailed list of open requirements and change-requests see: [Issues](https:/
 
 8. Create a new MySQL database named "lara-vedst" in XAMPP (e.g. by using http://127.0.0.1/phpmyadmin ) and update database schema - ```$> php artisan migrate --seed```
 
-*At this point you should be able to run Lara VedSt without error here: http://127.0.0.1/ or http://localhost*
+*At this point you should be able to run Lara VedSt without error here: http://127.0.0.1/ or http://localhost/*
+
 *For development purposes a workaround is built into the LoginController which assigns a random dummy-user at each login event, ignoring login/password input from user.*
 
 
@@ -124,11 +112,6 @@ For detailed list of open requirements and change-requests see: [Issues](https:/
 10. For development purposes a workaround is built into the LoginController which assigns a random dummy-user at each login event, ignoring login/password input from user. Change it to the your actual authentification routine.
 
 
-## Contributing
-
-Visit [Issues](https://github.com/4D44H/lara-vedst/issues) and/or contact [Maxim](https://github.com/4D44H) if you want to help.
-
-
 ### License
 Code published under [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE).
 
@@ -139,4 +122,4 @@ Lara VedSt is based on:
 - [Font Awesome 4.3.0](http://fortawesome.github.io/Font-Awesome) 
 - [Isotope 2.2.0](http://isotope.metafizzy.co/)
 
-(All licensed under [MIT License](http://opensource.org/licenses/MIT) or [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE)).
+(All licensed under [MIT License](http://opensource.org/licenses/MIT) or [GNU GPL v.3](http://opensource.org/licenses/GPL-3.0)).
