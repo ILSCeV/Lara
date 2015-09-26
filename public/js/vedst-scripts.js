@@ -470,3 +470,4 @@ $(function(){
         $('.isotope').isotope('layout')       
     });
 });
+

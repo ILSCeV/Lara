@@ -9,6 +9,10 @@
 		{!! HTML::style('css/vedst.css') !!}
 		{!! HTML::style('css/print.css', array('media' => 'print')) !!}
 
+    <!--[if lt IE 9]>
+      {!! HTML::script('js/html5shiv.js') !!}
+    <![endif]-->
+
 		<link rel="shortcut icon" href="/favicon-48x48.png" type="image/png" />
 		<link rel="icon" href="/favicon-48x48.png" type="image/png" />
 

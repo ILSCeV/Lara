@@ -2,14 +2,16 @@
 /**
  * Das sind die für den DP benötigten Dienste.
  */
- 
+
 class ScheduleEntry extends Eloquent {
+
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
 	protected $table = 'schedule_entries';
+
 	/**
 	 * The database columns used by the model.
 	 *

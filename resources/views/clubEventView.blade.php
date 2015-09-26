@@ -102,7 +102,7 @@
 				</thead>
 				<tbody>
 				
-					@include('partials.jobsByScheduleId', $entries)
+				@include('partials.jobsByScheduleId', $entries)
 				
 				</tbody>
 			</table>
@@ -142,7 +142,7 @@
 	@endif
 
 	@if(Session::has('userId'))
-
+	<!-- CHANGE HISTORY -->
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="show-hide-history" class="text-muted" href="#">Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i></a>
 		<br>
 		<br>

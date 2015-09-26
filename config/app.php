@@ -148,7 +148,6 @@ return [
 		 * Service providers used for Lara-VedSt 
 		 */
 		'Collective\Html\HtmlServiceProvider',
-
 	],
 
 	/*
