@@ -92,7 +92,7 @@ input[type=number],
 
 
 /**
- * Monatsansicht
+ * Month view
  */
 
 .cal-event {
@@ -177,7 +177,7 @@ input[type=number],
 }
 
 /**
- * Wochenansicht
+ * Week view
  */
 
 .hide {
@@ -248,7 +248,7 @@ input[type=number],
 
 
 /**
- * system messages
+ * System messages
  */
 
 #centerpoint {
@@ -266,7 +266,7 @@ input[type=number],
 
 
 /** 
- * ISOTOPE 
+ * ISOTOPE - animates the week view
  */
 
 .isotope > * {
@@ -288,8 +288,6 @@ input[type=number],
   clear: both;
 }
 
-/* ---- .element-item ---- */
-
 .element-item,
 .grid-sizer {
   position: relative;
@@ -308,3 +306,4 @@ input[type=number],
       margin: 3px;
       width: 98%;
     }
+}

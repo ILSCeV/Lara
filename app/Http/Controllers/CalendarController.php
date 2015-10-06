@@ -188,52 +188,7 @@ class CalendarController extends Controller {
             }
         }
         
-
         return View::make('clubEventView', compact('clubEvent', 'entries', 'clubs', 'persons', 'revisions'));
     }
-
-
-/* TESTING AJAX HERE */
-
-    public function showAjax()
-    {
-        $persons = Cache::remember('personsForDropDown', 10 , function()
-        {
-            $timeSpan = new DateTime("now");
-            $timeSpan = $timeSpan->sub(DateInterval::createFromDateString('3 months'));
-            return Person::whereRaw("prsn_ldap_id IS NOT NULL AND (prsn_status IN ('aktiv', 'kandidat') OR updated_at>='".$timeSpan->format('Y-m-d H:i:s')."')")
-                            ->orderBy('clb_id')
-                            ->orderBy('prsn_name')
-                            ->get();
-        });
-
-        return View::make('ajax', compact('persons'));
-    }
-
-
-    /**
-     * Check if username exists
-     * @return Response
-     */
-    public function posted()
-    {
-        try {
-            // find our entry - 105 is the first comment on /calendar/id/18
-            $find = ScheduleEntry::where('id', '=', '105')->first();
-
-            // change value to input value
-            $find->entry_user_comment = Input::get('input-test');
-            $find->save();
-
-            // send a response
-            return Response::json(array("match"));
-
-        } catch (Exception $e) {
-            return Response::json(array("exception"));
-        }
-    }
-
-/* END OF TESTING */
-
 
 }
