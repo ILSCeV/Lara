@@ -6,9 +6,10 @@ Some features are missing.
 Some bugs are still alive.
 Use at your own risk.
 
-## Current changes in progress
+## Current changes done
 * Switched from Laravel 5.0 to Laravel 5.1
-* Updated seeders
+* Changed namespace from "App" to "Lara"
+* Updated models, migrations and seeders to Laravel 5.1 style
 
 
 ## Contributing
