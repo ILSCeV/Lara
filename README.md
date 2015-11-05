@@ -13,7 +13,9 @@ Use at your own risk.
 
 
 ## Current project status
-04.09.2015 - Calender & Schedules: **rewriting backend**, est. completion date: 01.11.2015
+04.09.2015 - Calender & Schedules: **rewriting backend**, est. completion date: 15.11.2015
+
+See branch [lara-2.0-beta](https://github.com/4D44H/lara-vedst/tree/lara-2.0-beta).
 
 
 ## Future additions planned
