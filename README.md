@@ -8,6 +8,7 @@ Use at your own risk.
 
 ## Current changes in progress
 * Switched from Laravel 5.0 to Laravel 5.1
+* Updated seeders
 
 
 ## Contributing
