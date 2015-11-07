@@ -10,6 +10,8 @@ Use at your own risk.
 * Switched from Laravel 5.0 to Laravel 5.1
 * Changed namespace from "App" to "Lara"
 * Updated models, migrations and seeders to Laravel 5.1 style
+* Added relationships to all models, edited namespaces accordingly
+* Created a RESTful Controller for ScheduleEntries, implemented only SHOW for now
 
 
 ## Contributing
