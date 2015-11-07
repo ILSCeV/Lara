@@ -41,4 +41,24 @@ class ClubEvent extends Model
 								'evnt_public_info',		
 								'evnt_private_details',
 								'evnt_is_private');
+
+	/**
+	 * Get the corresponding place.
+	 * Looks up in table places for that entry, which has the same id like plc_id of ClubEvent instance.
+	 *
+	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Place
+	 */
+	public function getPlace() {
+		return $this->belongsTo('Lara\Place', 'plc_id', 'id');
+	}
+	
+	/**
+	 * Get the corresponding schedule.
+	 * Looks up in table schedules for that entry, which has the same evnt_id like id of ClubEvent instance.
+	 *
+	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOne of type Schedule
+	 */
+	public function getSchedule() {
+		return $this->hasOne('Lara\Schedule', 'evnt_id', 'id');
+	}
 }
