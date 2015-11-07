@@ -20,4 +20,14 @@ class Place extends Model
 	 * @var array
 	 */
 	protected $fillable = array('plc_title');
+
+	/**
+	 * Get the corresponding club events.
+	 * Looks up in table club_events for entries, which have the same plc_id like id of Place instance.
+	 *
+	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasMany of type ClubEvent
+	 */
+	public function getClubEvent() {
+		return $this->hasMany('Lara\ClubEvent', 'plc_id', 'id');
+	}
 }
