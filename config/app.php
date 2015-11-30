@@ -144,6 +144,10 @@ return [
         Lara\Providers\AuthServiceProvider::class,
         Lara\Providers\EventServiceProvider::class,
         Lara\Providers\RouteServiceProvider::class,
+        /*
+         * Providers for Lara-VedSt
+         */
+        Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -193,6 +197,11 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        /*
+         * Aliases needed for Lara-VedSt
+         */
+        'Form'      => Collective\Html\FormFacade::class,
+        'Html'      => Collective\Html\HtmlFacade::class,
 
     ],
 
