@@ -21,12 +21,12 @@ class PersonsTableSeeder extends Seeder
 		 */
         \Lara\Person::create(array('prsn_name' => 'Max',
 								   'prsn_ldap_id' => '1111',
-								   'prsn_status' => 'kandidat',	
+								   'prsn_status' => 'candidate',	
 								   'clb_id' => '1'));
 
         \Lara\Person::create(array('prsn_name' => 'Otto',	
 								   'prsn_ldap_id' => '1222',
-								   'prsn_status' => 'aktiv',
+								   'prsn_status' => 'member',
 								   'clb_id' => '1'));							
 							
         \Lara\Person::create(array('prsn_name' => 'Lena',	
