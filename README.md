@@ -11,7 +11,9 @@ Use at your own risk.
 * Changed namespace from "App" to "Lara"
 * Updated models, migrations and seeders to Laravel 5.1 style
 * Added relationships to all models, edited namespaces accordingly
-* Created a RESTful Controller for ScheduleEntries, implemented only SHOW for now
+* Created a RESTful Controller for every model, implementation following later
+* Added some internal resources (master layout, logos, etc.)
+* Updated Font Awesome to 4.5.0
 
 
 ## Contributing
@@ -25,7 +27,7 @@ Lara VedSt is based on:
 - [Laravel 5.1](http://laravel.com)
 - [Bootswatch 3.3.4+1](http://bootswatch.com)
 - [JQuery 2.1.3](http://jquery.com)
-- [Font Awesome 4.3.0](http://fortawesome.github.io/Font-Awesome) 
+- [Font Awesome 4.5.0](http://fortawesome.github.io/Font-Awesome) 
 - [Isotope 2.2.0](http://isotope.metafizzy.co/)
 
 (All licensed under [MIT License](http://opensource.org/licenses/MIT) or [GNU GPL v.3](http://opensource.org/licenses/GPL-3.0)).
