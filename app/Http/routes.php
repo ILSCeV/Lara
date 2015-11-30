@@ -13,12 +13,39 @@
 
 // Basic welcome Route
 Route::get('/', function () {
-    return view('test');
+    
+
+
+	$entry = \Lara\ScheduleEntry::where('schdl_id', '=', 1)
+								->with('getJobType',
+									   'getPerson.getClub')
+								->get();
+
+	$clubs = \Lara\Club::lists('clb_title', 'id');
+
+	$persons =  \Lara\Person::whereNotNull("prsn_ldap_id")
+							->with('getClub')
+							->orderBy('clb_id')
+							->orderBy('prsn_name')
+							->get();
+
+	
+
+	return View::make('test', compact('entry', 'clubs', 'persons'));
+
+    //return view('test');
 });
 
 
 // testing
-Route::resource('entry', 'ScheduleEntryController', ['except' => ['index', 'create']]);
+Route::resource('entry', 'ScheduleEntryController');
+
+// AUTHENTIFICATION
+Route::get('login',								'CalendarController@currentMonth');
+Route::get('logout', 							'LoginController@doLogout');
+
+Route::post('login', 							'LoginController@doLogin');
+Route::post('logout', 							'LoginController@doLogout');
 
 
 ///////////////////////////////////////////////////////

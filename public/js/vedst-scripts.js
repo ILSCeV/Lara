@@ -69,12 +69,10 @@ $(function(){
 
 
 
-
-
 // Show/hide comments
 $(function(){
 	$('.showhide').click(function(e) {
-		$(this).parent().parent().next().children().children('.hide').toggleClass('show');
+		$(this).parent().next().children('.hide').toggleClass('show');
 	});
 });
 
@@ -183,39 +181,6 @@ $(document).ready(function() {
 
 // Enable Tooltips
 $(function () { $("[data-toggle='tooltip']").tooltip(); });     
-
-
-
-
-
-// TESTING AJAX
-
-          $('#input-test').focusout(function() {
-
-            // start a spinner in the username field
-            // until I get a reponse from the server
-            $('#username-addon').html('<i class="fa fa-spinner fa-spin"></i>');
-
-            var username = $('#input-test').val();
-
-            $.post("/vedst-dev/ajax/posted", { 'input-test': username }, function(data) {
-              
-              if(data == "match")
-              {
-                $('#username-addon').html('<i class="fa fa-check"></i>');
-                $('#username-group').removeClass('has-error');
-                $('#username-group').addClass('has-success');
-
-              } else {
-
-                $('#username-addon').html('<i class="fa fa-ban"></i>');
-                $('#username-group').addClass('has-error');
-                $('#username-group').removeClass('has-');
-              }
-
-            });
-
-          });
 
 
 
@@ -471,3 +436,89 @@ $(function(){
     });
 });
 
+
+
+
+//////////
+// AJAX //
+//////////
+
+
+
+jQuery( document ).ready( function( $ ) {
+ 
+    $( '.scheduleEntry' ).on( 'submit', function() {
+ 
+        $.ajax({  
+            type: $( this ).prop( 'method' ),  
+
+            url: $( this ).prop( 'action' ),  
+
+            data: {
+                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                    "_token":   $( this ).find( 'input[name=_token]' ).val(),
+
+                    // Actual data being sent below
+                    "entryId":  $(this).closest("form").attr("id"), 
+                    "userName": $(this).find("[name^=userName]").val(),
+                    "ldapId":   $(this).find("[name^=ldapId]").val(),
+                    "userClub":     $(this).find("[name^=club]").val(),
+                    "userComment":  $(this).find("[name^=comment]").val(),
+
+                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+                    "_method": "put"
+
+                },  
+
+            dataType: 'json',
+            
+            beforeSend: function() {
+                //... your initialization code here (so show loader) ...
+
+                // start a spinner in the username field
+                // until I get a reponse from the server
+                // $("[class^=clubStatus]").nearest('.fa').toggleClass('fa fa-spinner fa-spin');
+            },
+            
+            complete: function() {
+                //... your finalization code here (hide loader) ...
+                // $("[class^=clubStatus]").nearest('.fa').toggleClass('fa fa-circle-o');
+            },
+
+            success: function(data) {  
+               // update the fields according to server response
+               $("input[id=userName" + data["entryId"] + "]").val(data["userName"]);
+               $("input[id=ldapId" + data["entryId"] + "]").val(data["ldapId"]);
+               $("input[id=club" + data["entryId"] + "]").val(data["userClub"]);
+               $("input[id=comment" + data["entryId"] + "]").val(data["userComment"]);
+
+               // COMMENT:
+               // we update to server response instead of just saving user input
+               // for the case when an entry has been updated recently by other user, 
+               // but current user hasn't received a push-update from the server yet.
+               //
+               // This should later be substituted for "update highlighting", e.g.:
+               // green  = "your data was saved successfully", 
+               // red    = "server error, entry not saved (try again)", 
+               // yellow = "other user updated before you, here's the new data"
+
+
+               // UPDATE STATUS ICON HERE
+               
+
+               // debugging info
+               console.log(data);
+            },
+
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(JSON.stringify(xhr.responseJSON));
+              }
+
+        });
+
+        // Prevent the form from actually submitting in browser
+        return false; 
+
+    });
+ 
+});

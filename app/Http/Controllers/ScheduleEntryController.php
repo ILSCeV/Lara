@@ -2,7 +2,9 @@
 
 namespace Lara\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
+use Session;
+use Input;
 
 use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
@@ -10,6 +12,7 @@ use Lara\Http\Controllers\Controller;
 use Lara\ScheduleEntry;
 use Lara\Jobtype;
 use Lara\Person;
+
 
 class ScheduleEntryController extends Controller
 {
@@ -63,7 +66,7 @@ class ScheduleEntryController extends Controller
                               ->with('getJobType',
                                      'getPerson.getClub')
                               ->firstOrFail();
-
+                              
         // Person NULL means "=FREI=" - check for it every time you query a relationship
         $response = ['id'                => $entry->id, 
                      'jbtyp_title'       => $entry->getJobType->jbtyp_title,
@@ -75,8 +78,15 @@ class ScheduleEntryController extends Controller
                      'entry_time_start'  => $entry->entry_time_start,
                      'entry_time_end'    => $entry->entry_time_end,
                      'updated_at'        => $entry->updated_at];
+                     
 
-        return response()->json($response);
+        if (Request::ajax()) {
+            return response()->json($response);
+        } else {     
+            return response()->json($response);
+            //return View::make('items.index');
+        }
+    
     }
 
     /**
@@ -96,6 +106,7 @@ class ScheduleEntryController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * Changes contents of the entry specified by ID to contents in the REQUEST
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -103,12 +114,49 @@ class ScheduleEntryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Changes contents of the entry specified by ID to contents in the REQUEST
-        // IMPLEMENT LATER
+        // Check if it's our form
+        if ( Session::token() !== Input::get( '_token' ) ) {
+            return response()->json('Error 401: Unauthorized attempt. Try reloading the page.', 401);
+        }
+
+        // Extract request data
+        $entryId     = Input::get( 'entryId' );
+        $userName    = Input::get( 'userName' );
+        $ldapId      = Input::get( 'ldapId' );
+        $userClub    = Input::get( 'userClub' );
+        $userComment = Input::get( 'userComment' );
+
+
         // VALIDATE PROPER REQUEST FORM
-        $content = "";
-        $status = 501;  // "Not implemented"
-        return response($content, $status);
+        if ( !empty($ldapId) AND !is_numeric($ldapId) ) {
+            return response()->json("Error: I don't know how, but you gave me a wrong LDAP ID. I will not tolerate such reckless behaviour.", 400);
+        }
+
+        if ( !empty($ldapId) AND is_null(Session::get('userId')) ) {
+            return response()->json("Error: you tried to change an entry of a club member, but you are not logged in. Please log in or ask a club member to make changes for you.", 400);
+        }
+
+        /*
+        if ( Person::where('id', '=', $ldapId)->first() !== Input::get('userName') ) {
+            return response()->json("Error: you tried to save a person with a wrong LDAP ID. That I can't allow. Try reloading the page.", 400);
+        }
+        */
+        
+        //.....
+        //validate data
+        //and then store it in DB
+        //.....
+  
+
+        // Formulate the responce
+        
+        $content = ["entryId"     => $entryId, 
+                    "userName"    => $userName,
+                    "ldapId"      => $ldapId, 
+                    "userClub"    => $userClub,
+                    "userComment" => $userComment];
+        $status = 200;  
+        return response()->json($content, $status);
     }
 
     /**

@@ -1,47 +1,30 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
+@extends('layouts.master')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@section('title')
+    Beta
+@stop
 
-        <link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-48x48.png') }}">
+@section('content')
 
-        <style>
-            html, body {
-                height: 100%;
-            }
+    <div class="col-md-4">
+        @include("partials.JobsByScheduleIdSmall", [$entry, $persons, $clubs])
+    </div>
+    <div class="col-md-4">&nbsp;</div>
+    <div class="col-md-4">
+        @include("partials.JobsByScheduleIdSmall", [$entry, $persons, $clubs])
+    </div>
 
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
+    <div class="col-md-12">
+        @include("partials.JobsByScheduleIdLarge", [$entry, $persons, $clubs])
+    </div>
 
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Lara <small><sup>&beta;</sup></small></div>
-            </div>
-        </div>
-    </body>
-</html>
+@stop
