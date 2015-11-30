@@ -35,6 +35,7 @@
 		<div class="container">
 			<div class="content">
 				<div class="title">404 - Not found</div>
+				<iframe width="640" height="360" src="https://www.youtube-nocookie.com/embed/t3otBjVZzT0?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
 			</div>
 		</div>
 	</body>
