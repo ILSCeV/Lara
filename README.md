@@ -11,7 +11,8 @@ Use at your own risk.
 * Changed namespace from "App" to "Lara"
 * Updated models, migrations and seeders to Laravel 5.1 style
 * Added relationships to all models, edited namespaces accordingly
-* Created a RESTful Controller for ScheduleEntries, implemented only SHOW for now
+* Created a RESTful Controller for every model, implementation following later
+* Added some internal resources (master layout, logos, etc.)
 
 
 ## Contributing
