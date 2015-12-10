@@ -12,14 +12,15 @@ Some bugs are still alive.
 Use at your own risk.
 
 
-## Current project status
-04.09.2015 - Calender & Schedules: **rewriting backend**, est. completion date: 15.10.2015
+## Current project status as of 30.11.2015 
+* Calender & Schedules: rewriting backend (see branch [lara-2.0-beta](https://github.com/4D44H/lara-vedst/tree/lara-2.0-beta)), est. completion date: 10.01.2016
+* Personnel statistics: new concept developed, est. completion date: 10.01.2016
+
 
 
 ## Future additions planned
-- Personnel statistics: *on hold* till 01.11.2015
-- Event statistics: *on hold* till 01.12.2015
-- Finances & controlling: *on hold* till 15.01.2016
+- Event statistics: *on hold* till 01.02.2016
+- Finances & controlling: *on hold* till 01.02.2016
 
 
 ## Contributing
