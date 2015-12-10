@@ -143,9 +143,17 @@ class ScheduleController extends Controller {
 	 */
 	public function bulkUpdateSchedule($year, $week)
 	{
-		$weekStart = date('Y-m-d', strtotime($year."W".$week.'1'));  		// Create week start date
-        $weekEnd = date('Y-m-d', strtotime($year."W".$week.'7'));       	// Create week end date
-		$updateIds = array();												// Create (empty) index of all schedules we need to update
+		// Create week start date
+		$weekStart = date('Y-m-d', strtotime($year."W".$week.'1'));  		
+
+        // Create the number of the next week and the week end date 
+        // We go till tuesday (day 2) because café needs alternative week view (Mi-Di)
+		$nextWeek = date("W",strtotime("next Week".$weekStart));
+		$nextYear = date("Y",strtotime("next Week".$weekStart)); 
+        $weekEnd = date('Y-m-d', strtotime($nextYear."W".$nextWeek.'2'));
+
+        // Create (empty) index of all schedules we need to update
+		$updateIds = array();												
 
 		// Collect IDs of event schedules shown in chosen week view
 		$events = ClubEvent::where('evnt_date_start','>=',$weekStart)
