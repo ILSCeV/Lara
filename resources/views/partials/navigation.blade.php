@@ -12,7 +12,7 @@
             <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="{{ asset('/') }}">
-          <img src="{{ asset('/bc-logo.png') }}" alt="bc-Club">
+          <img src="{{ asset('/logo.png') }}" alt="Lara">
         </a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
