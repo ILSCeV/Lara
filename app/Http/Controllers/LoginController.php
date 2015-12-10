@@ -153,7 +153,7 @@ class LoginController extends Controller {
 // CONNECTING TO LDAP SERVER
 
 
-        $ldapConn = ldap_connect( Config::get('bcLDAP.server') );
+        $ldapConn = ldap_connect( Config::get('bcLDAP.server'), Config::get('bcLDAP.port') );
 
         // Set some ldap options for talking to AD
         // LDAP_OPT_PROTOCOL_VERSION: LDAP protocol version

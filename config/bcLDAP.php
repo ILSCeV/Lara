@@ -6,7 +6,8 @@
  */
 return [
 	// bc-Club LDAP server, should be accessed via "localhost:60389" in production
-    'server' => 'localhost:60389',
+    'server' => 'localhost',
+    'port' => '60389',
 
     // This is the LDAP admin account for queries
     'admin-username' => 'exampleusername',
