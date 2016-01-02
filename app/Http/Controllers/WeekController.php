@@ -32,8 +32,15 @@ class WeekController extends Controller {
 	*/
 	public function currentWeek()
     {
-        return Redirect::action('WeekController@showWeek', array('year' => date("Y"), 
-                                                                 'week' => date('W')));                                                               
+    	// A hack to correct wrong date in january starting in week 53 last year
+    	if (date("m") == "01"
+    	AND date("W") == "53") {
+    		return Redirect::action('WeekController@showWeek', array('year' => date("Y",strtotime("-1 year")), 
+                                                                 	 'week' => date('W'))); 
+    	} else {
+	        return Redirect::action('WeekController@showWeek', array('year' => date("Y"), 
+    	                                                             'week' => date('W')));                                                               
+    	}
     }
 	/**
 	* Generate the view of the week for given month and given year
