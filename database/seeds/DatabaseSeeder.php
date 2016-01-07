@@ -43,8 +43,8 @@ class ClubEventsTableSeeder extends Seeder {
         ClubEvent::create(array('evnt_title' => 'Example Event', 
 							'evnt_subtitle' => 'Event Subtitle',
 							'plc_id' => '1',
-							'evnt_date_start' => '2015-04-01',
-							'evnt_date_end' => '2015-04-02',
+							'evnt_date_start' => '2016-01-01',
+							'evnt_date_end' => '2016-01-02',
 							'evnt_time_start' => '21:00',
 							'evnt_time_end' => '01:00',
 							'evnt_public_info' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
@@ -54,7 +54,7 @@ class ClubEventsTableSeeder extends Seeder {
 		/**
 		 * reporting result to console
 		 */
-		$this->command->info('Example event created on 01.04.2015.');
+		$this->command->info('Example event created on 2016-01-01.');
     }
 
 }
@@ -84,13 +84,13 @@ class SchedulesTableSeeder extends Seeder {
 		 */
 
         Schedule::create(array( 'schdl_title' => 'Example task', 
-								'schdl_due_date' => '2015-04-01',
+								'schdl_due_date' => '2016-01-01',
 								'schdl_is_template' => '0'));
 							
 		/**
 		 * Reporting result to console
 		 */
-		$this->command->info('One event schedule for event ID 1 and one example task created on 01.04.2015.');
+		$this->command->info('One event schedule for event ID 1 and one example task created on 2016-01-01.');
     }
 
 }
@@ -287,6 +287,6 @@ class ScheduleEntriesTableSeeder extends Seeder {
 		/**
 		 * reporting result to console
 		 */
-		$this->command->info('Added schedule entries to example event and task on 01.04.2015.');
+		$this->command->info('Added schedule entries to example event and task on 2016-01-01.');
     }
 }
