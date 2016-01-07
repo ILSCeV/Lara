@@ -1,4 +1,23 @@
-/vendor
-/node_modules
+vendor/
+node_modules/
+
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+
+# Laravel 5 & Lumen specific
+bootstrap/cache/
+storage/
+.env.*.php
+.env.php
 .env
+.env.example
+
+composer.phar
+composer.lock
+
+.idea/
+_ide_helper.php
+.DS_Store
+
 logo.psd
