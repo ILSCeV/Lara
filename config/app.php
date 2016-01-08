@@ -148,6 +148,7 @@ return [
 		 * Service providers used for Lara-VedSt 
 		 */
 		'Collective\Html\HtmlServiceProvider',
+		'Orangehill\Iseed\IseedServiceProvider',
 	],
 
 	/*
