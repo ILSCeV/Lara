@@ -9,7 +9,8 @@
     @foreach($clubs as $club)
         <li> 
             <a href="javascript:void(0);" 
-               onClick="document.getElementById('club{{ ''. $entry->id }}').value='{{$club}}'">
+               onClick="document.getElementById('club{{ ''. $entry->id }}').value='{{$club}}';
+                        document.getElementById('btn-submit-changes{{ ''. $entry->id }}').click();">
                 {{$club}}
             </a>
         </li>
