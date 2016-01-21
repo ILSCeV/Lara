@@ -15,6 +15,8 @@ Use at your own risk.
 * Added some internal resources (master layout, logos, etc.)
 * Updated Font Awesome to 4.5.0
 * Wrote user-side AJAX requests-responses, database updates on the server-side following, as well as some validation and changes highlighting via CSS
+* Wrote database updates for AJAX requests in ScheduleEntry changes
+* Restructured ScheduleEntryById views, separated into multiple partials and removed table formatting -> divs instead
 
 
 ## Contributing
