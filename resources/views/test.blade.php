@@ -6,25 +6,22 @@
 
 @section('content')
 
-    <div class="col-md-4">
-        @include("partials.JobsByScheduleIdSmall", [$entry, $persons, $clubs])
+    <div class="isotope">
+        <div class="grid-sizer" style="margin-bottom: -34px;"></div>
+        <div class="element-item {{ $clubEvent->getPlace->plc_title }}">
+            <div class="panel">
+                <div class="panel-body">     
+                    @include("partials.JobsByScheduleIdSmall", [$entry, $persons, $clubs])           
+                </div>
+            </div>  
+        </div>
     </div>
-    <div class="col-md-4">&nbsp;</div>
-    <div class="col-md-4">
-        @include("partials.JobsByScheduleIdSmall", [$entry, $persons, $clubs])
-    </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    
     <br>
 
     <div class="col-md-12">
         @include("partials.JobsByScheduleIdLarge", [$entry, $persons, $clubs])
     </div>
+
 
 @stop

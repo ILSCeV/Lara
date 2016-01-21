@@ -13,7 +13,6 @@
 
 // Basic welcome Route
 Route::get('/', function () {
-    
 
 
 	$entry = \Lara\ScheduleEntry::where('schdl_id', '=', 1)
@@ -29,16 +28,16 @@ Route::get('/', function () {
 							->orderBy('prsn_name')
 							->get();
 
+	$clubEvent = \Lara\ClubEvent::where('id', '=', '1')->first();
 	
 
-	return View::make('test', compact('entry', 'clubs', 'persons'));
-
-    //return view('test');
+	return View::make('test', compact('entry', 'clubs', 'persons', 'clubEvent'));
 });
 
 
-// testing
+// RESTful RESOURCES
 Route::resource('entry', 'ScheduleEntryController');
+
 
 // AUTHENTIFICATION
 Route::get('login',								'CalendarController@currentMonth');

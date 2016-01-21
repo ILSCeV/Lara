@@ -72,7 +72,7 @@ $(function(){
 // Show/hide comments
 $(function(){
 	$('.showhide').click(function(e) {
-		$(this).parent().next().children('.hide').toggleClass('show');
+		$(this).parent().next('.hide').toggleClass('show');
 	});
 });
 
@@ -437,18 +437,14 @@ $(function(){
 });
 
 
-
-
 //////////
 // AJAX //
 //////////
 
 
-
-jQuery( document ).ready( function( $ ) {
- 
+jQuery( document ).ready( function( $ ) { 
     $( '.scheduleEntry' ).on( 'submit', function() {
- 
+
         $.ajax({  
             type: $( this ).prop( 'method' ),  
 
@@ -456,69 +452,83 @@ jQuery( document ).ready( function( $ ) {
 
             data: {
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-                    "_token":   $( this ).find( 'input[name=_token]' ).val(),
+                    "_token":       $( this ).find( 'input[name=_token]' ).val(),
 
                     // Actual data being sent below
-                    "entryId":  $(this).closest("form").attr("id"), 
-                    "userName": $(this).find("[name^=userName]").val(),
-                    "ldapId":   $(this).find("[name^=ldapId]").val(),
+                    "entryId":      $(this).closest("form").attr("id"), 
+                    "userName":     $(this).find("[name^=userName]").val(),
+                    "ldapId":       $(this).find("[name^=ldapId]").val(),
+                    "timestamp":    $(this).find("[name^=timestamp]").val(),
                     "userClub":     $(this).find("[name^=club]").val(),
                     "userComment":  $(this).find("[name^=comment]").val(),
 
                     // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
                     "_method": "put"
-
                 },  
 
             dataType: 'json',
             
-            beforeSend: function() {
-                //... your initialization code here (so show loader) ...
-
-                // start a spinner in the username field
-                // until I get a reponse from the server
-                // $("[class^=clubStatus]").nearest('.fa').toggleClass('fa fa-spinner fa-spin');
+            beforeSend: function(data) {
+                // Show a spinner in the username status while we are waiting for a server response                
+                $(event.target).children().children("[id^=clubStatus]").children("i").removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner");
             },
             
             complete: function() {
-                //... your finalization code here (hide loader) ...
-                // $("[class^=clubStatus]").nearest('.fa').toggleClass('fa fa-circle-o');
+                // Hide spinner after response received, show change was made
+                $("#spinner").removeClass().addClass("fa fa-check");
             },
 
             success: function(data) {  
-               // update the fields according to server response
-               $("input[id=userName" + data["entryId"] + "]").val(data["userName"]);
-               $("input[id=ldapId" + data["entryId"] + "]").val(data["ldapId"]);
-               $("input[id=club" + data["entryId"] + "]").val(data["userClub"]);
-               $("input[id=comment" + data["entryId"] + "]").val(data["userComment"]);
+                // COMMENT:
+                // we update to server response instead of just saving user input
+                // for the case when an entry has been updated recently by other user, 
+                // but current user hasn't received a push-update from the server yet.
+                //
+                // This should later be substituted for "update highlighting", e.g.:
+                // green  = "your data was saved successfully", 
+                // red    = "server error, entry not saved (try again)", 
+                // yellow = "other user updated before you, here's the new data"
 
-               // COMMENT:
-               // we update to server response instead of just saving user input
-               // for the case when an entry has been updated recently by other user, 
-               // but current user hasn't received a push-update from the server yet.
-               //
-               // This should later be substituted for "update highlighting", e.g.:
-               // green  = "your data was saved successfully", 
-               // red    = "server error, entry not saved (try again)", 
-               // yellow = "other user updated before you, here's the new data"
+                // Update the fields according to server response
+                $("input[id=userName" + data["entryId"] + "]").attr('value', data["userName"]).attr("placeholder", "=FREI=");
+                $("input[id=ldapId"   + data["entryId"] + "]").attr('value', data["ldapId"]);
+                $("input[id=timestamp"+ data["entryId"] + "]").attr('value', data["timestamp"]);
+                $("input[id=club"     + data["entryId"] + "]").attr('value', data["userClub"]).attr("placeholder", "-");
+                $("input[id=comment"  + data["entryId"] + "]").attr('value', data["userComment"]).attr("placeholder", "Kommentar hier hinzufügen");
 
+                // Switch comment icon
+                if ( $("input[id=comment"  + data["entryId"] + "]").val() == "" ) {
+                    $("input[id=comment"  + data["entryId"] + "]").parent().children().children("button").children("i").removeClass().addClass("fa fa-comment-o");
+                } else {
+                    $("input[id=comment"  + data["entryId"] + "]").parent().children().children("button").children("i").removeClass().addClass("fa fa-comment");
+                };
 
-               // UPDATE STATUS ICON HERE
-               
+                // UPDATE STATUS ICON HERE
+                // wait 2 sec, then switch to normal user status icon and clear "spinner"-markup
+                // we receive this parameters: e.g. ["status"=>"fa fa-adjust", "style"=>"color:yellowgreen;", "title"=>"Kandidat"] 
+                $("#spinner").attr("style", data["userStatus"]["style"]);
+                $("#spinner").attr("data-original-title", data["userStatus"]["title "]);
+                $("#spinner").removeClass().addClass(data["userStatus"]["status"]).removeAttr("id");               
 
-               // debugging info
-               console.log(data);
+                // debugging info
+                console.log(data);
             },
 
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(JSON.stringify(xhr.responseJSON));
               }
 
+
         });
 
         // Prevent the form from actually submitting in browser
         return false; 
 
+    });
+
+    // Detect entry name change and remove LDAP id from the previous entry
+    $('.scheduleEntry').find("[name^=userName]").on('input propertychange paste', function() {
+        $(this).parent().find("[name^=ldapId]").val("");
     });
  
 });

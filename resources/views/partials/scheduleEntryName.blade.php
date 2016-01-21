@@ -1,5 +1,5 @@
 <!-- Needs variables: entry, persons -->
-<div class="col-xs-2 col-md-2 no-padding" id="clubStatus{{ $entry->id }}">
+<div class="col-xs-3 col-md-3 no-padding" id="clubStatus{{ $entry->id }}">
     @include("partials.ScheduleEntryStatus", [$entry, $persons])
 </div>
 
@@ -22,10 +22,14 @@
   
 @endif
 
-<div class="col-xs-2 col-md-2 input-append btn-group no-padding">
+<div class="col-xs-1 col-md-1 input-append btn-group no-padding">
     @include("partials.dropdownUsernames", $persons)
 </div>
 
 <div>
     @include("partials.scheduleEntryLdapId")
+</div>
+
+<div>
+    @include("partials.scheduleEntryTimestamp")
 </div>

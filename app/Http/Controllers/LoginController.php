@@ -436,7 +436,7 @@ class LoginController extends Controller {
                
                 [ilscstate] => Array ( 
                     [count] => 1 
-                    [0] => veteran )                            // Club status (active/candidate/veteran)
+                    [0] => veteran )                            // Club status (active/candidate/veteran/resigned)
 
                 [dn] => uid=1000,ou=People,ou=bc-club,o=ilsc )  // Full DN
             ) 

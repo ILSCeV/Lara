@@ -1,7 +1,16 @@
 <!-- Needs variables: entries, persons, clubs -->
 
-@foreach($entry as $entry)
+@if( $clubEvent->getSchedule->schdl_password != '')
+<div class="well">
+    {!! Form::password('password', array('required', 
+                                         'class'=>'col-md-12 col-xs-12',
+                                         'placeholder'=>'Passwort hier eingeben')) !!}
+    <br>
+</div>
     
+@endif
+
+@foreach($entry as $entry)
     <div class="row">
         {!! Form::open(  array( 'id' => $entry->id, 
                                         'route' => 'entry.update', 
@@ -18,14 +27,15 @@
             
         <div class="col-xs-3 col-md-3">
             @include("partials.scheduleEntryClub", [$entry, $clubs])                 
-        </div>
+        </div>   
 
         <!-- SMALL COMMENT ICON --> 
         <!-- col-md/xs-1 for the icon -->
         <!-- col-md/xs-12 for the comment input -->
-            @include("partials.scheduleEntryCommentHidden", $entry)
+        @include("partials.scheduleEntryCommentHidden", $entry)
 
-        {!! Form::submit( 'save', array('id' => 'btn-add-setting', 'hidden') ) !!}
+            
+        {!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $entry->id, 'hidden') ) !!}
         {!! Form::close() !!}
     </div>
 @endforeach

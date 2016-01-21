@@ -28,7 +28,7 @@
            data-toggle="tooltip" 
            data-placement="top" 
            title="Aktiv"></i>
-    @elseif ( $entry->getPerson->prsn_status === 'retired' ) 
+    @elseif ( $entry->getPerson->prsn_status === 'resigned' ) 
         <i class="fa fa-star-o" 
            style="color:gold;"
            data-toggle="tooltip" 
