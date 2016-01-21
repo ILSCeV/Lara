@@ -14,6 +14,7 @@ Use at your own risk.
 * Created a RESTful Controller for every model, implementation following later
 * Added some internal resources (master layout, logos, etc.)
 * Updated Font Awesome to 4.5.0
+* Wrote user-side AJAX requests-responses, database updates on the server-side following, as well as some validation and changes highlighting via CSS
 
 
 ## Contributing
