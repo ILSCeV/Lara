@@ -1,95 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
-// Basic welcome Route
-Route::get('/', function () {
-
-
-	$entry = \Lara\ScheduleEntry::where('schdl_id', '=', 1)
-								->with('getJobType',
-									   'getPerson.getClub')
-								->get();
-
-	$clubs = \Lara\Club::lists('clb_title', 'id');
-
-	$persons =  \Lara\Person::whereNotNull("prsn_ldap_id")
-							->with('getClub')
-							->orderBy('clb_id')
-							->orderBy('prsn_name')
-							->get();
-
-	$clubEvent = \Lara\ClubEvent::where('id', '=', '1')->first();
-	
-
-	return View::make('test', compact('entry', 'clubs', 'persons', 'clubEvent'));
-});
-
-
-// RESTful RESOURCES
-Route::resource('entry', 'ScheduleEntryController');
-
-
-// AUTHENTIFICATION
-Route::get('login',								'CalendarController@currentMonth');
-Route::get('logout', 							'LoginController@doLogout');
-
-Route::post('login', 							'LoginController@doLogin');
-Route::post('logout', 							'LoginController@doLogout');
-
-
-///////////////////////////////////////////////////////
-// old lara 1.5 routes
-///////////////////////////////////////////////////////
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Global Patterns
-|--------------------------------------------------------------------------
-| 
-|  Route::pattern('id', '[0-9]+'); // only once
-| 
-|  Route::get('/aaa/bbb/{id}', '...');
-|  Route::get('/ccc/ddd/{id}', '...');
-| 
-|  instead of
-| 
-|  Route::get('/aaa/bbb/{id}', '...')->where('id', '[0-9]+');"
-|  Route::get('/ccc/ddd/{id}', '...')->where('id', '[0-9]+');" 
-| 
-*/ 
-
-/*
-// GLOBAL PATTERNS
-Route::pattern('id', 	'[0-9]+');
-Route::pattern('year', 	'[2][0][0-9][0-9]');
-Route::pattern('month',	'[0][1-9]|[1][0-2]');
-Route::pattern('week', 	'[0-5][0-9]');
-Route::pattern('day', 	'[0-3][0-9]');
-
-
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
 /* 
 |--------------------------------------------------------------------------
 | Default Laravel routes for reference
@@ -106,19 +16,45 @@ Route::pattern('day', 	'[0-3][0-9]');
 | 
 */
 
+
 /*
+|--------------------------------------------------------------------------
+| Global Patterns
+|--------------------------------------------------------------------------
+*/ 
+Route::pattern('id', 	'[0-9]+');
+Route::pattern('year', 	'[2][0][0-9][0-9]');
+Route::pattern('month',	'[0][1-9]|[1][0-2]');
+Route::pattern('week', 	'[0-5][0-9]');
+Route::pattern('day', 	'[0-3][0-9]');
+
+
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+*/
+
 // DEFAULT
-Route::get('/', 								'CalendarController@currentMonth');
-Route::get('/calendar/',						'CalendarController@currentMonth');
+Route::get('/', 								'MonthController@currentMonth');
+Route::get('/calendar/',						'MonthController@currentMonth');
+
+
+// AUTHENTIFICATION
+Route::get('login',								'MonthController@currentMonth');
+Route::get('logout', 							'LoginController@doLogout');
+
+Route::post('login', 							'LoginController@doLogin');
+Route::post('logout', 							'LoginController@doLogout');
 
 
 // YEAR
-Route::get('/calendar/year',					'CalendarController@currentYear');
-Route::get('/calendar/{year}',					'CalendarController@showYear');
+Route::get('/calendar/year',					'YearController@currentYear');
+Route::get('/calendar/{year}',					'YearController@showYear');
 
 
 // MONTH
-Route::get('/calendar/month',					'CalendarController@currentMonth');
+Route::get('/calendar/month',					'MonthController@currentMonth');
 Route::get('/calendar/{year}/{month}',			'MonthController@showMonth');
 
 
@@ -127,75 +63,67 @@ Route::get('/calendar/week/{id}', 				'WeekController@showId');
 Route::get('/calendar/week', 					'WeekController@currentWeek');
 Route::get('/calendar/{year}/KW{week}', 		'WeekController@showWeek');
 
-Route::post('/calendar/{year}/KW{week}',		['as'   => 'bulkUpdate', 
-												 'uses' => 'ScheduleController@bulkUpdateSchedule']);
+
+// DATE
+Route::get('/calendar/today',					'DateController@currentDate');
+Route::get('/calendar/{year}/{month}/{day}',	'DateController@showDate');
 
 
-// DAY
-Route::get('/calendar/today',					'CalendarController@currentDay');
-Route::get('/calendar/{year}/{month}/{day}',	'CalendarController@showDate');
+// RESTful RESOURCES
+Route::resource('entry', 'ScheduleEntryController');
+Route::resource('event', 'ClubEventController');
 
 
 // EVENT ID
-Route::get('/calendar/id/{id}', 				'CalendarController@showId');
-Route::get('/calendar/id/{id}/edit',			'EventController@showEditEvent');
-Route::get('/calendar/id/{id}/delete',			'EventController@deleteEvent');
+// Route::get('/calendar/id/{id}', 				'CalendarController@showId');
+// Route::get('/calendar/id/{id}/edit',			'EventController@showEditEvent');
+// Route::get('/calendar/id/{id}/delete',			'EventController@deleteEvent');
 
-Route::post('/calendar/id/{id}/edit', 			['as'   => 'editClubEvent', 
-												 'uses' => 'EventController@editEvent']);
+// Route::post('/calendar/id/{id}/edit', 			['as'   => 'editClubEvent', 
+//												 'uses' => 'EventController@editEvent']);
 
 
 // SCHEDULE
-Route::get('/schedule/',						'ScheduleController@showScheduleList');
-Route::get('/schedule/id/{id}',					'ScheduleController@showSchedule');
-
-Route::post('/schedule/id/{id}',				'ScheduleController@updateSchedule');
+// Route::get('/schedule/',						'ScheduleController@showScheduleList');
+// Route::get('/schedule/id/{id}',					'ScheduleController@showSchedule');
+// Route::post('/schedule/id/{id}',				'ScheduleController@updateSchedule');
 
 
 // TASK
-Route::get('/task',								'ScheduleController@showTaskList');								
-Route::get('/task/id/{id}',						'ScheduleController@showSchedule');
-Route::get('/task/id/{id}/edit',				'TaskController@showEditTask');
-Route::get('/task/id/{id}/delete',				'TaskController@deleteTask');
+// Route::get('/task',								'ScheduleController@showTaskList');								
+// Route::get('/task/id/{id}',						'ScheduleController@showSchedule');
+// Route::get('/task/id/{id}/edit',				'TaskController@showEditTask');
+// Route::get('/task/id/{id}/delete',				'TaskController@deleteTask');
 
-Route::post('/task/id/{id}',					'ScheduleController@updateSchedule');
-Route::post('/task/id/{id}/edit', 				['as'   => 'editTask',
-												 'uses' => 'TaskController@editTask']);
-
-
-// AUTHENTIFICATION
-Route::get('login',								'CalendarController@currentMonth');
-Route::get('logout', 							'LoginController@doLogout');
-
-Route::post('login', 							'LoginController@doLogin');
-Route::post('logout', 							'LoginController@doLogout');
+// Route::post('/task/id/{id}',					'ScheduleController@updateSchedule');
+// Route::post('/task/id/{id}/edit', 				['as'   => 'editTask',
+// 												 'uses' => 'TaskController@editTask']);
 
 
 // CREATE
-Route::get('/task/create',						'TaskController@showCreateTask');
-Route::get('/calendar/create',					'EventController@showCreateEventToday');
-Route::get('/calendar/create/{year}/{month}/{day}',	
-												'EventController@showCreateEvent');
-Route::get('/calendar/create/{year}/{month}/{day}/template/{id}', 
-												['as'   => 'templateSelect',
-												 'uses' => 'EventController@showCreateEventWithTemplate']);
-Route::get('/calendar/create/template/{id}', 	'EventController@showCreateEventTodayWithTemplateToday');
+// Route::get('/task/create',						'TaskController@showCreateTask');
+// Route::get('/calendar/create',					'EventController@showCreateEventToday');
+// Route::get('/calendar/create/{year}/{month}/{day}',	
+// 												'EventController@showCreateEvent');
+// Route::get('/calendar/create/{year}/{month}/{day}/template/{id}', 
+// 												['as'   => 'templateSelect',
+// 												 'uses' => 'EventController@showCreateEventWithTemplate']);
+// Route::get('/calendar/create/template/{id}', 	'EventController@showCreateEventTodayWithTemplateToday');
 
-Route::post('/task/create', 					['as'   => 'newTask',
-												 'uses' => 'TaskController@createTask']);
-Route::post('/calendar/create', 				['as'   => 'newClubEvent',
-												 'uses' => 'EventController@createEvent']);
+// Route::post('/task/create', 					['as'   => 'newTask',
+// 												 'uses' => 'TaskController@createTask']);
+// Route::post('/calendar/create', 				['as'   => 'newClubEvent',
+// 												 'uses' => 'EventController@createEvent']);
 
-
+/*
 // STATISTICS
-/* 
 Route::get('/statistics',						'StatisticsController@showStatistics');
 
 Route::post('/statistics', 						['as'   => 'statisticsChangeDate',
 											     'uses' => 'StatisticsController@showStatistics']);
-*/
 
-/*
+
+
 // MANAGEMENT
 Route::get('/management/jobtypes',				'ManagementController@showJobTypes');
 Route::get('/management/places',				'ManagementController@showPlaces');
@@ -210,14 +138,61 @@ Route::post('/management/templates', 			['as'   => 'updateTemplates',
 
 
 
+/*
+|--------------------------------------------------------------------------
+| Data
+|--------------------------------------------------------------------------
+*/
 
-////////////////////////////////////////////////////////////////
-// BETA VERSION - TESTING BELOW THIS LINE, WORKING CODE ABOVE //
-////////////////////////////////////////////////////////////////
+// TYPEAHEAD PERSON NAMES for bc-Club (club '2')
+Route::get('/data/persons-club-2.json', function() {
+    // Cache results for 10 minutes for a small performance boost because users don't change very often
+	$persons = Cache::remember('persons-club-2', 10 , function()
+		{
+			return  \Lara\Person::whereNotNull( "prsn_ldap_id" )
+								// Get all active members from club 2
+								->where( "clb_id", "=", "2" )
+								->whereIn( "prsn_status", ['member', 'candidate'] )
+								->orWhere(function($query)
+								{
+									// And add to the list any retired members only if they made a shift in the last 3 month
+									$timeSpan = new DateTime("now");
+									$timeSpan = $timeSpan->sub(DateInterval::createFromDateString('3 months'));
 
+									$query->whereNotNull( "prsn_ldap_id" )
+										  ->where( "clb_id", "=", "2" )
+										  ->where( "updated_at", ">=", $timeSpan->format('Y-m-d H:i:s') );	
+								})
+							   	->orderBy('prsn_name')
+							   	->get();
+		});
+       
+    return Response::json($persons);
+});
 
+// TYPEAHEAD PERSON NAMES for bc-Café (club '3')
+Route::get('/data/persons-club-3.json', function() {
+    // Cache results for 10 minutes for a small performance boost because users don't change very often
+	$persons = Cache::remember('persons-club-3', 10 , function()
+		{
+			return  \Lara\Person::whereNotNull( "prsn_ldap_id" )
+								// Get all active members from club 3
+								->where( "clb_id", "=", "3" )
+								->whereIn( "prsn_status", ['member', 'candidate'] )
+								->orWhere(function($query)
+								{
+									// And add to the list any retired members only if they made a shift in the last 3 month
+									$timeSpan = new DateTime("now");
+									$timeSpan = $timeSpan->sub(DateInterval::createFromDateString('3 months'));
 
+									$query->whereNotNull( "prsn_ldap_id" )
+										  ->where( "clb_id", "=", "3" )
+										  ->where( "updated_at", ">=", $timeSpan->format('Y-m-d H:i:s') );	
+								})
+							   	->orderBy('prsn_name')
+							   	->get();
+		});
 
-Route::get('/beta', 							function() { return View::make('betatest-index'); });
-
-
+    return Response::json($persons);
+});
+      

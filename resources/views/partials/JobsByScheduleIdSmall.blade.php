@@ -1,16 +1,20 @@
 <!-- Needs variables: entries, persons, clubs -->
 
+<!-- 
+IMPLEMENT LATER
+
 @if( $clubEvent->getSchedule->schdl_password != '')
-<div class="well">
+<div class="hidden-print">
     {!! Form::password('password', array('required', 
                                          'class'=>'col-md-12 col-xs-12',
                                          'placeholder'=>'Passwort hier eingeben')) !!}
     <br>
-</div>
-    
-@endif
+</div> 
+@endif 
 
-@foreach($entry as $entry)
+-->
+
+@foreach($entries as $entry)
     <div class="row">
         {!! Form::open(  array( 'id' => $entry->id, 
                                         'route' => 'entry.update', 
