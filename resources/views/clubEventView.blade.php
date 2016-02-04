@@ -84,19 +84,12 @@
 						<span class="visible-xs">&nbsp;</span>
 						<span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
-						<a href="{{ URL::route('event.destroy', $clubEvent->id) }}" 
-						   onclick="confirmation();return false;" 
-						   class="btn btn-default">Veranstaltung löschen</a>
-						   
-						<script type="text/javascript">
-							
-							function confirmation() {
-								if (confirm("Willst du diese Veranstaltung wirklich löschen?")){
-									window.location = "{{ URL::route('event.destroy', $clubEvent->id) }}";
-								}
-							}
-						</script>
-					
+							<a href="{{ $clubEvent->id }}"
+							   class="btn btn-default" 
+							   data-method="delete" 
+							   data-token="{{csrf_token()}}"
+							   rel="nofollow" 
+							   data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">Veranstaltung löschen</a>
 					</div>
 			@endif
 

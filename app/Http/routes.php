@@ -69,6 +69,17 @@ Route::get('/calendar/today',					'DateController@currentDate');
 Route::get('/calendar/{year}/{month}/{day}',	'DateController@showDate');
 
 
+// CREATE
+Route::get('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventController@create');
+
+/*
+
+Route::get('/task/create',						'TaskController@showCreateTask');
+
+Route::post('/task/create', 					['as'   => 'newTask',
+												 'uses' => 'TaskController@createTask']);
+
+*/
 // RESTful RESOURCES
 Route::resource('entry', 'ScheduleEntryController');
 Route::resource('event', 'ClubEventController');
@@ -100,20 +111,6 @@ Route::resource('event', 'ClubEventController');
 // 												 'uses' => 'TaskController@editTask']);
 
 
-// CREATE
-// Route::get('/task/create',						'TaskController@showCreateTask');
-// Route::get('/calendar/create',					'EventController@showCreateEventToday');
-// Route::get('/calendar/create/{year}/{month}/{day}',	
-// 												'EventController@showCreateEvent');
-// Route::get('/calendar/create/{year}/{month}/{day}/template/{id}', 
-// 												['as'   => 'templateSelect',
-// 												 'uses' => 'EventController@showCreateEventWithTemplate']);
-// Route::get('/calendar/create/template/{id}', 	'EventController@showCreateEventTodayWithTemplateToday');
-
-// Route::post('/task/create', 					['as'   => 'newTask',
-// 												 'uses' => 'TaskController@createTask']);
-// Route::post('/calendar/create', 				['as'   => 'newClubEvent',
-// 												 'uses' => 'EventController@createEvent']);
 
 /*
 // STATISTICS

@@ -4,11 +4,12 @@
     AND (Session::get('userGroup') == 'marketing'
     OR Session::get('userGroup') == 'clubleitung'))
     <a href="{{ Request::getBasePath() }}/
-			calendar/
-			create/
+			event/
 			{{ $date['year']}}/
 			{{ $date['month'] }}/
-			{{ strftime("%d", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}">
+			{{ strftime("%d", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}/
+			0/
+			create">
 	{{ date("j.", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}
 	</a>
 @else
