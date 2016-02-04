@@ -67,7 +67,7 @@
 	<br>
 	&nbsp;&nbsp;<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten ausblenden</button>
 	<div class="panel">
-		<div class="card-body">			
+		<div class="card-body panel panel-warning">			
 			@include('partials.jobsByScheduleIdLarge', $entries)
 		</div>
 	</div>

@@ -1,6 +1,10 @@
 <!-- Needs variables: i, date, id -->
-<div class="panel">
-	<div class="panel-heading">
+@if ($clubEvent->getPlace->plc_title == "bc-Club")
+	<div class="panel panel-danger">
+@else
+	<div class="panel panel-primary">
+@endif
+	<div class="panel panel-heading">
 		<h4 class="panel-title">
 			<a href="{{ URL::route('event.show', $clubEvent->id) }}"> 
 				<span class="name">{{{ $clubEvent->evnt_title }}}</span>

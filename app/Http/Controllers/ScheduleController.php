@@ -5,9 +5,11 @@ namespace Lara\Http\Controllers;
 use Request;
 use Session;
 use Input;
+use Hash;
 use Illuminate\Database\Eloquent\Collection;
 
 use Lara\Jobtype;
+use Lara\Schedule;
 use Lara\ScheduleEntry;
 
 use Carbon\Carbon;
@@ -71,15 +73,17 @@ class ScheduleController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
+   /**
+    * Update the specified resource in storage.
     * Edit or create a schedule with its entered information.
     * If $scheduleId is null create a new schedule, otherwise the schedule specified by $scheduleId will be edited.
-     *
+    *
+    * Should be static to be accessed from ClubEventController
+    *
     * @param int $scheduleId
     * @return Schedule newSchedule
      */
-    public function update($scheduleId)
+    public static function update($scheduleId)
     {
         $schedule = new Schedule;
 

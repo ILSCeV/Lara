@@ -137,8 +137,7 @@ class ClubEventController extends Controller
         $newEvent = $this->editClubEvent(null);
         $newEvent->save();  
 
-        $newSchedule = new Schedule();
-        $newSchedule->schdl_due_date = null;
+        $newSchedule = ScheduleController::update(null);
         $newSchedule->evnt_id = $newEvent->id;
 
         // log revision
@@ -389,7 +388,6 @@ class ClubEventController extends Controller
         
         return $event;
     }
-
 
 }
 
