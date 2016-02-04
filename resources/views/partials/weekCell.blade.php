@@ -1,10 +1,18 @@
 <!-- Needs variables: i, date, id -->
-@if ($clubEvent->getPlace->plc_title == "bc-Club")
-	<div class="panel panel-danger">
-@else
-	<div class="panel panel-primary">
-@endif
-	<div class="panel panel-heading">
+
+<div class="panel panel-default">
+	@if ($clubEvent->getPlace->plc_title == "bc-Club" AND $clubEvent->evnt_is_private )
+		<div class="panel panel-heading calendar-internal-event-bc-club white-text">
+	@elseif ($clubEvent->getPlace->plc_title == "bc-Café" AND $clubEvent->evnt_is_private)
+		<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
+	@elseif ($clubEvent->getPlace->plc_title == "bc-Club")
+		<div class="panel panel-heading calendar-public-event-bc-club white-text">
+	@elseif ($clubEvent->getPlace->plc_title == "bc-Café")
+		<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
+	@else
+		<div class="panel panel-heading calendar-task white-text">
+	@endif
+
 		<h4 class="panel-title">
 			<a href="{{ URL::route('event.show', $clubEvent->id) }}"> 
 				<span class="name">{{{ $clubEvent->evnt_title }}}</span>

@@ -74,13 +74,29 @@
 							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
 						@else
 							<div class="element-item private {{ $clubEvent->getPlace->plc_title }}">
-							}
 						@endif		
 							@include('partials.weekCell', $clubEvent)
+						</div>
+					@else
+						<!-- we compare the current week number with the week the event happens in
+							 to catch and hide any events on mondays and tuesdays (day < 3) next week 
+							 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view -->
+						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week'] 
+						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mo-so">
+						@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )  
+							  === date("W", strtotime("next Week".$weekStart))
+							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
+						@else
+							<div class="element-item private {{ $clubEvent->getPlace->plc_title }}">
+						@endif		
+							@include('partials.weekCellPrivate', $clubEvent)
 						</div>
 					@endif
 
 				@else
+
 					<!-- we compare the current week number with the week the event happens in
 						 to catch and hide any events on mondays and tuesdays (day < 3) next week 
 						 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view -->

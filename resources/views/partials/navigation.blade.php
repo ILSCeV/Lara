@@ -18,9 +18,9 @@
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
             <li><a href="{{ asset('/calendar/month') }}">Monat</a></li>
-            @if(Session::has('userId'))
+            
             <li><a href="{{ asset('/calendar/week') }}">Woche</a></li>
-            @endif
+            
             <li><a href="{{ asset('/schedule') }}">Liste</a></li>
             @if(Session::has('userId'))
             <li><a href="{{ asset('/task') }}">Aufgaben</a></li>

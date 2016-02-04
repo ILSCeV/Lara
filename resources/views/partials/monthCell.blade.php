@@ -34,6 +34,16 @@
 						{{{ $clubEvent->evnt_title }}}
 					</a>
 				</div>
+			@else
+				<!-- show private events as placeholders for external public -->
+				@if ($clubEvent->getPlace->plc_title == "bc-Club")
+					<div class="cal-event calendar-internal-event-bc-club">
+				@else
+					<div class="cal-event calendar-internal-event-bc-cafe">
+				@endif
+					<span class="marker-4"><i class="fa fa-eye-slash"></i></span>
+					<span class="white-text">Internes Event</span>	
+				</div>
 			@endif
 		@else 
 			@if ($clubEvent->getPlace->plc_title == "bc-Club")
