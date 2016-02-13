@@ -12,8 +12,8 @@
 <div class="panel-body">
 @foreach($entries as $entry)
     <div class="row">
-        {!! Form::open(  array( 'id' => $entry->id, 
-                                'route' => 'entry.update', 
+        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
+                                'id' => $entry->id, 
                                 'method' => 'put', 
                                 'class' => 'scheduleEntry')  ) !!}
 

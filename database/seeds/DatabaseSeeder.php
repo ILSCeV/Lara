@@ -11,9 +11,7 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        Model::unguard();
-        
+    {     
         // Each table gets its own seeder
         // Example: $this->call(UserTableSeeder::class);
         $this->call(ScheduleEntriesTableSeeder::class);
@@ -23,7 +21,5 @@ class DatabaseSeeder extends Seeder
         $this->call(PlacesTableSeeder::class);
         $this->call(PersonsTableSeeder::class);
         $this->call(JobtypesTableSeeder::class);
-
-        Model::reguard();
     }
 }

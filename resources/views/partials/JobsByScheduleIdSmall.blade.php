@@ -12,10 +12,11 @@
 
 @foreach($entries as $entry)
     <div class="row">
-        {!! Form::open(  array( 'id' => $entry->id, 
-                                        'route' => 'entry.update', 
-                                        'method' => 'put', 
-                                        'class' => 'scheduleEntry')  ) !!}
+
+        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
+                                'id' => $entry->id, 
+                                'method' => 'put', 
+                                'class' => 'scheduleEntry')  ) !!}
 
         <div class="col-xs-3 col-md-3">
             @include("partials.scheduleEntryTitle", $entry)

@@ -114,7 +114,7 @@ class WeekController extends Controller {
 							   	->get();
 		});
 
-		$clubs = Club::orderBy('clb_title')->lists('clb_title', 'id');
+		$clubs = Club::orderBy('clb_title')->pluck('clb_title', 'id');
 
         return View::make('weekView', compact('events', 'schedules',  'date', 
         									  'tasks', 'entries', 'weekStart', 

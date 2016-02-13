@@ -78,7 +78,7 @@ class ClubEventController extends Controller
 
         // get a list of possible clubs to create an event at
         $places = Place::orderBy('plc_title', 'ASC')
-                       ->lists('plc_title', 'id');
+                       ->pluck('plc_title', 'id');
         
         // get a list of available templates to choose from
         $templates = Schedule::where('schdl_is_template', '=', '1')
@@ -211,7 +211,7 @@ class ClubEventController extends Controller
                                        'getPerson.getClub')
                                 ->get();
 
-        $clubs = Club::orderBy('clb_title')->lists('clb_title', 'id');
+        $clubs = Club::orderBy('clb_title')->pluck('clb_title', 'id');
         
         $persons = Cache::remember('personsForDropDown', 10 , function()
         {

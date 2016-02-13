@@ -1,4 +1,4 @@
-## Club management software built on top of Laravel 5.1
+## Club management software built on top of Laravel 5.2
 
 ## This is a development version
 **Lara is a work in progress - and a beautiful mess sometimes.**
@@ -6,10 +6,10 @@ Some features are missing.
 Some bugs are still alive.
 Use at your own risk.
 
-## Current changes done
-* Switched from Laravel 5.0 to Laravel 5.1
+## Current changes compared to the "master" branch
+* ~~Switched from Laravel 5.0 to Laravel 5.1~~ *Changed to 5.2, see below.*
 * Changed namespace from "App" to "Lara"
-* Updated models, migrations and seeders to Laravel 5.1 style
+* Updated models, migrations and seeders to Laravel ~~5.1~~ 5.2 style
 * Added relationships to all models, edited namespaces accordingly
 * Created a RESTful Controller for every model, implementation following later
 * Added some internal resources (master layout, logos, etc.)
@@ -19,6 +19,7 @@ Use at your own risk.
 * Restructured ScheduleEntryById views, separated into multiple partials and removed table formatting -> divs instead
 * Returned event creation and deletion functionality
 * Event creation: "accept template" button gone, a click on a template name redirects to this template directly
+* Updated Laravel to 5.2 version. All systems nominal, keep flying!
 
 
 ## Contributing
@@ -29,7 +30,7 @@ For a detailed list of open requirements and change-requests visit [Issues](http
 Code published under [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE).
 
 Lara VedSt is based on: 
-- [Laravel 5.1](http://laravel.com)
+- [Laravel 5.2](http://laravel.com)
 - [Bootswatch 3.3.4+1](http://bootswatch.com)
 - [JQuery 2.1.3](http://jquery.com)
 - [Font Awesome 4.5.0](http://fortawesome.github.io/Font-Awesome) 
