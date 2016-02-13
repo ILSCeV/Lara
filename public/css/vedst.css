@@ -114,24 +114,28 @@ input[type=number],
   color: #ffffff;
 }
 
+.white-text {
+  color: #ffffff !important;
+}
+
 .calendar-task {
-  background-color: #519839;
+  background-color: #519839 !important;
 }
 
 .calendar-public-event-bc-club {
-  background-color: #e54545;
+  background-color: #e54545 !important;
 }
 
 .calendar-public-event-bc-cafe {
-  background-color: #268ac3;
+  background-color: #268ac3 !important;
 }
 
 .calendar-internal-event-bc-club {
-  background-color: #e98383;
+  background-color: #e98383 !important;
 }
 
 .calendar-internal-event-bc-cafe {
-  background-color: #52aadc;
+  background-color: #52aadc !important;
 }
 
 .light-grey {
