@@ -19,6 +19,7 @@ Use at your own risk.
 * Restructured ScheduleEntryById views, separated into multiple partials and removed table formatting -> divs instead
 * Returned event creation and deletion functionality
 * Event creation: "accept template" button gone, a click on a template name redirects to this template directly
+* Added placeholders for internal events for external guest, opened week view for all
 * Updated Laravel to 5.2 version. All systems nominal, keep flying!
 
 
