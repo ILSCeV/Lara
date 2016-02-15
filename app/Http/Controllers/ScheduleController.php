@@ -129,10 +129,10 @@ class ScheduleController extends Controller {
 	 */
     public function updateSchedule($id)
     {
-		$this->onUpdate($id);
-
-		Session::put('message', Config::get('messages_de.schedule-update-ok'));
-		Session::put('msgType', 'success');
+		if ( $this->onUpdate($id) ) {
+			Session::put('message', Config::get('messages_de.schedule-update-ok'));
+			Session::put('msgType', 'success');
+		}
 
 		return Redirect::back();
 	}
@@ -549,7 +549,7 @@ class ScheduleController extends Controller {
 	 *
 	 * @param int $id
      *
-	 * @return RedirectResponse
+	 * @return boolean, true = no errors
 	 */
     private function onUpdate($id)
     {
@@ -564,12 +564,29 @@ class ScheduleController extends Controller {
 			{
 				Session::put('message', Config::get('messages_de.schedule-pw-needed'));
 				Session::put('msgType', 'danger');
-				return Redirect::back();
+				
+				return false;
 			}
 		}
 
 		foreach($entries as $entry)
 		{
+			// Check if our hidden honeypot input was filled with any input.
+			// If it is filled with any input, then either a user was trying to edit it manually to tamper with the page 
+			// or a bot filled it out automatically - in both cases we simply reject any change received. 
+			// Will not cover all cases, but should get rid of the simple spambots.		
+			if ( !empty( Input::get('website' . $entry->id) ) ) {
+				    
+				    Session::put('message', 'Looks like you triggered our spambot honeypot, so no changes were saved. If you think this is a mistake, contact site admin (see page footer).');
+		            Session::put('msgType', 'danger');
+		 
+		            Log::info('Spambot honeypot triggered: event id=' . $schedule->getClubEvent->id . 
+		            		  ', schedule entry id=' . $entry->id . 
+		            		  ' and input: "' . Input::get('website' . $entry->id) . '). No changes were saved.');
+		 			
+		 			return false;
+			}
+
 			// Remember old value for logging
 			$oldPerson = $entry->getPerson;
 
@@ -587,8 +604,7 @@ class ScheduleController extends Controller {
 													$entry,					// entry object
 													"Dienst eingetragen",	// action description
 													$oldPerson,				// old value
-													$entry->getPerson()->first());		// new value
-					
+													$entry->getPerson()->first());		// new value					
 				}
 
 				// Otherwise no change found - do nothing
@@ -597,52 +613,58 @@ class ScheduleController extends Controller {
 			// Entry was not empty
 			else
 			{
-				// Same person there?
-				if( $entry->getPerson->prsn_name == Input::get('userName' . $entry->id)
-				AND Person::where('id', '=', $entry->prsn_id)->first()->prsn_ldap_id == Input::get('ldapId'. $entry->id) )
+				// check if we have shown this input, update only if not NULL
+				if ( !is_null( Input::get("userName" . $entry->id) ) ) 
 				{
-					// Was comment updated?
-					if ( $entry->entry_user_comment != Input::get('comment' . $entry->id) )
+					// Same person there?
+					if( $entry->getPerson->prsn_name == Input::get('userName' . $entry->id)
+					AND Person::where('id', '=', $entry->prsn_id)->first()->prsn_ldap_id == Input::get('ldapId'. $entry->id) )
 					{
-						$entry->entry_user_comment = Input::get('comment' . $entry->id);
+						// Was comment updated?
+						if ( $entry->entry_user_comment != Input::get('comment' . $entry->id) )
+						{
+							$entry->entry_user_comment = Input::get('comment' . $entry->id);
+						}
+						// Otherwise no change found - do nothing
 					}
-					// Otherwise no change found - do nothing
-				}
-				// New data entered
-				else
-				{
-					// Was entry deleted?
-					if ( Input::get('userName' . $entry->id) == '' )
-					{
-						$this->onDelete($entry);
-
-						// log revision
-						ScheduleController::logRevision($entry->getSchedule, 	// schedule object
-														$entry,					// entry object
-														"Dienst ausgetragen",	// action description
-														$oldPerson,				// old value
-														$entry->getPerson()->first());		// new value
-						
-					}
-					// So some new person was provided
+					// New data entered
 					else
 					{
-						// delete old data
-						$this->onDelete($entry);
+						// Was entry deleted?
+						if ( Input::get('userName' . $entry->id) == '' )
+						{
+							$this->onDelete($entry);
 
-						// add new data
-						$this->onAdd($entry);
+							// log revision
+							ScheduleController::logRevision($entry->getSchedule, 	// schedule object
+															$entry,					// entry object
+															"Dienst ausgetragen",	// action description
+															$oldPerson,				// old value
+															$entry->getPerson()->first());		// new value
+							
+						}
+						// So some new person was provided
+						else
+						{
+							// delete old data
+							$this->onDelete($entry);
 
-						// log revision
-						ScheduleController::logRevision($entry->getSchedule, 	// schedule object
-														$entry,					// entry object
-														"Dienst geändert",		// action description
-														$oldPerson,				// old value
-														$entry->getPerson()->first());		// new value
+							// add new data
+							$this->onAdd($entry);
+
+							// log revision
+							ScheduleController::logRevision($entry->getSchedule, 	// schedule object
+															$entry,					// entry object
+															"Dienst geändert",		// action description
+															$oldPerson,				// old value
+															$entry->getPerson()->first());		// new value
+						}
 					}
 				}
 			}
 		}
+		
+		return true;
 	}
 
 

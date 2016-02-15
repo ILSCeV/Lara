@@ -307,3 +307,8 @@ input[type=number],
       width: 98%;
     }
 }
+
+/* Greeting our mechanical overlords */
+#welcome-to-our-mechanical-overlords { 
+  display: none;
+}

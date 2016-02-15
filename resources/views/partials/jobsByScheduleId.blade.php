@@ -31,7 +31,13 @@
 				</td>
 
 				<td class="col-xs-4 col-md-2">
-				
+					
+<!-- Greeting the machines -->
+					<div id="welcome-to-our-mechanical-overlords">
+						If you can read this this - leave the following field empty. And switch CSS support on.
+						<input type="text" id="{!! 'website' . $entry->id !!}" name="{!! 'website' . $entry->id !!}" value="" />
+					</div>
+
 <!-- if entry is free - let anyone edit it -->
 					@if( is_null($entry->getPerson) )			
 
@@ -296,13 +302,12 @@
 		        	   			</div>				
 
 <!-- NAME -->
-								{!! Form::text( 'userName' . $entry->id, 
-												$entry->getPerson->prsn_name, 
-												array('readonly', 
-					   				     	  		  'class'=>'col-xs-8 col-md-8')) !!}
+								<div id="{!! 'userName' . $entry->id !!}" class="col-xs-10 col-md-10 no-padding">
+									{!! $entry->getPerson->prsn_name !!}
+								</div>					
 
 <!-- LDAP ID -->
-								{!! Form::hidden('ldapId' . $entry->id, $entry->getPerson->prsn_ldap_id ) !!}
+								<!-- show no LDAP ID for external guests -->
 
 							@endif
 						@endif
@@ -413,15 +418,10 @@
 								</div>
 							
 							@else
-
-							<!-- Guest are not allowed to edit members - read-only representation -->
-
-								{!! Form::text('club' . $entry->id, 
-								    		    (!is_null($entry->getPerson->getClub)) ? 
-								    		    $entry->getPerson->getClub->clb_title : 
-								    		    array('placeholder'=>'-'), array('readonly', 
-					   				     	  		  'class'=>'col-xs-8 col-md-8')) !!}
-
+<!-- Guest are not allowed to edit members - read-only representation -->
+								<span class="col-xs-12 col-md-12 no-padding" id="{!! 'club' . $entry->id !!}">
+									   {!! $entry->getPerson->getClub->clb_title !!}
+								</span>
 							@endif
 						@endif
 					@endif					
@@ -447,8 +447,7 @@
 								   		   $entry->entry_user_comment, 
 								   		   array('placeholder'=>'-',
 								   		   		 'class'=>'col-xs-12 col-md-12')) !!}
-						@else
-						
+						@else		
 <!-- if entry is used by a member (LDAP id set) - let only other members edit it -->
 							@if( Session::get('userId') ) 
 
@@ -458,12 +457,11 @@
 								   			   array('placeholder'=>'-',
 								   			   		 'class'=>'col-xs-12 col-md-12')) !!}
 							@else
-
+<!-- Guest are not allowed to edit members - read-only representation -->
 <!-- COMMENT -->
-								{!! Form::text('comment' . $entry->id, 
-								   	$entry->entry_user_comment, 
-								   	array('placeholder'=>'-',
-								   		  'class'=>'col-xs-12 col-md-12', 'readonly')) !!}
+								<span class="col-xs-12 col-md-12 no-padding" id="{!! 'comment' . $entry->id !!}">
+									{!! !empty($entry->entry_user_comment) ? $entry->entry_user_comment : "-" !!}
+								</span>
 							@endif
 						@endif
 					@endif
