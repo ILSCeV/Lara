@@ -35,6 +35,9 @@ Route::pattern('day', 	'[0-3][0-9]');
 |--------------------------------------------------------------------------
 */
 
+// LOG VIEWER
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
 // DEFAULT
 Route::get('/', 								'MonthController@currentMonth');
 Route::get('/calendar/',						'MonthController@currentMonth');
