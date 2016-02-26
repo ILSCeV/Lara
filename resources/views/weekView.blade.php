@@ -1,4 +1,4 @@
-<!-- Needs variables: 'events', 'schedules',  'date', 'tasks', 'entries', 'weekStart', 'weekEnd', 'persons', 'clubs' -->
+{{-- Needs variables: 'events', 'schedules',  'date', 'tasks', 'entries', 'weekStart', 'weekEnd', 'persons', 'clubs' --}}
 
 @extends('layouts.master')
 
@@ -8,7 +8,9 @@
 
 @section('content')
 	<div class="container">
-		<!-- prev/next week -->
+
+
+		{{-- prev/next week --}}
 		<div class="btn-group col-xs-12 col-md-6">
 			<a class="btn btn-default hidden-print" 
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}">
@@ -34,7 +36,7 @@
 		</div>
 
 
-		<!-- filter -->
+		{{-- filter --}}
 		<div class="col-xs-12 col-md-6 pull-right hidden-print">
 			<br class="visible-xs hidden-print">
 			@include('partials.filter')
@@ -49,22 +51,26 @@
 	<br class="visible-xs hidden-print">
 	<br class="visible-xs hidden-print">
 		
-	<!-- weekdays -->
+	{{-- weekdays --}}
 	@if (count($events)>0 OR count($tasks)>0)
 		<div class="isotope">
-			<!-- hack: empty day at the beginning, 
+			{{-- hack: empty day at the beginning, 
 				 prevents isotope collapsing to a single column if the very first element is hidden
-				 by creating an invisible block and putting it out of the way via negative margin -->
+				 by creating an invisible block and putting it out of the way via negative margin --}}
 			<div class="grid-sizer" style="margin-bottom: -34px;"></div>
-			<!-- end of hack -->
+			{{-- end of hack --}}
 
 			@foreach($events as $clubEvent)
-				@if($clubEvent->evnt_is_private)
 
-					@if(Session::has('userId'))
-						<!-- we compare the current week number with the week the event happens in
+				{{-- guests see private events as placeholders only, so check if user is logged in --}}
+				@if(!Session::has('userId'))
+					
+					{{-- show only a placeholder for private events --}}
+					@if($clubEvent->evnt_is_private)
+
+						{{-- we compare the current week number with the week the event happens in
 							 to catch and hide any events on mondays and tuesdays (day < 3) next week 
-							 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view -->
+							 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
 						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week'] 
 						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
 							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mo-so">
@@ -75,47 +81,74 @@
 						@else
 							<div class="element-item private {{ $clubEvent->getPlace->plc_title }}">
 						@endif		
-							@include('partials.weekCell', $clubEvent)
+							@include('partials.weekCellHidden')
 						</div>
+
+					{{-- show public events, but protect members' entries from being changed by guests --}}
 					@else
-						<!-- we compare the current week number with the week the event happens in
+
+						{{-- we compare the current week number with the week the event happens in
 							 to catch and hide any events on mondays and tuesdays (day < 3) next week 
-							 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view -->
+							 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
 						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week'] 
 						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mo-so">
+							<div class="element-item {{ $clubEvent->getPlace->plc_title }} week-mo-so">
 						@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )  
 							  === date("W", strtotime("next Week".$weekStart))
 							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
+							<div class="element-item {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
 						@else
-							<div class="element-item private {{ $clubEvent->getPlace->plc_title }}">
-						@endif		
-							@include('partials.weekCellPrivate', $clubEvent)
+							<div class="element-item {{ $clubEvent->getPlace->plc_title }}">
+						@endif
+							@include('partials.weekCellProtected')
 						</div>
+
 					@endif
 
+				{{-- show everything for members --}}
 				@else
+					
+					{{-- members see both private and public events, but still need to manage color scheme --}}
+					@if($clubEvent->evnt_is_private)
 
-					<!-- we compare the current week number with the week the event happens in
-						 to catch and hide any events on mondays and tuesdays (day < 3) next week 
-						 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view -->
-					@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week'] 
-					  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-						<div class="element-item {{ $clubEvent->getPlace->plc_title }} week-mo-so">
-					@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )  
-						  === date("W", strtotime("next Week".$weekStart))
+						{{-- we compare the current week number with the week the event happens in
+							 to catch and hide any events on mondays and tuesdays (day < 3) next week 
+							 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
+						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week'] 
 						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-						<div class="element-item {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
+							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mo-so">
+						@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )  
+							  === date("W", strtotime("next Week".$weekStart))
+							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
+						@else
+							<div class="element-item private {{ $clubEvent->getPlace->plc_title }}">
+						@endif		
+
 					@else
-						<div class="element-item {{ $clubEvent->getPlace->plc_title }}">
+						
+						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week'] 
+						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+							<div class="element-item {{ $clubEvent->getPlace->plc_title }} week-mo-so">
+						@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )  
+							  === date("W", strtotime("next Week".$weekStart))
+							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+							<div class="element-item {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
+						@else
+							<div class="element-item {{ $clubEvent->getPlace->plc_title }}">
+						@endif
+							
 					@endif
-						@include('partials.weekCell', $clubEvent)
+
+					@include('partials.weekCellFull')
+
 					</div>
 
 				@endif
+
 			@endforeach 
 
+{{-- IMPLEMENT TASKS LATER --}}
 			@if(Session::has('userId'))
 				@foreach($tasks as $task)
 					@if ( date('W', strtotime($task->schdl_due_date)) === $date['week'] 
@@ -128,11 +161,13 @@
 					@else
 						<div class="element-item private task bc-Club bc-Café">
 					@endif
-						@include('partials.taskWeekCell', $task)
+						@include('partials.taskWeekCell')
 					</div>
 				@endforeach 
+
 			@endif
-			
+
+
 		</div>
 	@else
 		<br>

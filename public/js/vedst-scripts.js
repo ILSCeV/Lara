@@ -70,6 +70,7 @@ $(function(){
 $(function(){
 	$('.showhide').click(function(e) {
 		$(this).parent().next('.hide').toggleClass('show');
+        $('.isotope').isotope('layout') 
 	});
 });
 

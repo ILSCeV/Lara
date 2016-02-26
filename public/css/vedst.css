@@ -142,6 +142,10 @@ input[type=number],
   background-color: #efefef;
 }
 
+.dark-grey {
+  background-color: darkgrey; 
+}
+
 .text-dark-grey {
   color: darkgrey;
 }
@@ -310,4 +314,14 @@ input[type=number],
       margin: 3px;
       width: 98%;
     }
+}
+
+
+
+
+/**
+ * Greeting our mechanical overlords 
+ */
+#welcome-to-our-mechanical-overlords { 
+  display: none;
 }

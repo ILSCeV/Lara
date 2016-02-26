@@ -1,5 +1,3 @@
-<!-- Needs variables: i, date, id -->
-
 <div class="panel panel-default">
 	<div class="panel panel-heading">
 

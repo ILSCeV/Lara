@@ -1,7 +1,3 @@
-<!-- Needs variables: persons -->
-
-<!-- guest shouldn't have a dropdown -->
-@if(Session::has('userId'))
 <a class="btn-small btn-default dropdown-toggle hidden-print" 
    data-toggle="dropdown" 
    href="javascript:void(0);">
@@ -43,7 +39,3 @@
     @endforeach
 
 </ul>
-
-@else
-    &nbsp;
-@endif
