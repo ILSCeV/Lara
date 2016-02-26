@@ -1,5 +1,3 @@
-<!-- Needs variables: $entry -->
-
 @if( is_null($entry->getPerson) )   
     {!! Form::text('comment' . $entry->id, 
                    Input::old('comment' . $entry->id),  

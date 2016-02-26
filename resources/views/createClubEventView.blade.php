@@ -1,5 +1,3 @@
-<!-- Needs variables: templates, places, jobtypes, date -->
-
 @extends('layouts.master')
 
 @section('title')

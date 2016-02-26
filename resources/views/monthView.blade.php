@@ -1,5 +1,3 @@
-<!-- Needs variables: events, date -->
-
 @extends('layouts.master')
 @section('title')
         {{ $date['monthName'] . " " . $date['year'] }}
@@ -7,7 +5,7 @@
 @section('content')
 
     <div class="container">
-        <!-- prev/next month -->
+        {{-- prev/next month --}}
         <div class="col-xs-12 col-md-5 btn-group">
 
             <a class="btn btn-default hidden-print" 
@@ -28,19 +26,19 @@
 
         </div>
 
-        <!-- create button -->
+        {{-- placeholder for a middle button --}}
         <div class="col-xs-12 col-md-3">
             &nbsp;
         </div>
 
-        <!-- filter -->
+        {{-- filter --}}
         <div class="col-xs-12 col-md-4 pull-right">
             @include('partials.filter')
         </div>
     </div>
         <br class="hidden-xs">
 
-<!-- month table -->
+{{-- month table --}}
 <div class="panel">
     <table class="table table-bordered ">
           
@@ -60,7 +58,7 @@
         <tbody>
         @for($i = 1; $i <= $date['daysOfMonth'] + ($date['startDay'] - 1) + (7 - $date['endDay']); $i++)
                
-                <!-- if monday then start new line -->
+                {{-- if monday then start new line --}}
                 @if(date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)
                         @if ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )   
                             <tr class="light-grey">
@@ -77,7 +75,7 @@
        
 
 
-                <!-- Show table  -->
+                {{-- Show table  --}}
                 @if($i - $date['startDay'] >= 0 AND $i-$date['startDay'] < $date['daysOfMonth'])
                
             
@@ -91,11 +89,11 @@
                         </td>
                 @else 
                         <td class="otherMonth" width=14%>
-                                <!-- date("j", strtotime($i-$date['startDay']." day", $date['startStamp'])) -->
+                                {{-- date("j", strtotime($i-$date['startDay']." day", $date['startStamp'])) --}}
                         </td>
                 @endif
                 
-                <!-- if sunday then end this line -->
+                {{-- if sunday then end this line --}}
                 @if(date("N",date("j", strtotime($i-$date['startDay']." day", $date['startStamp']))) == 7)
                         </tr>
                 @endif
@@ -125,7 +123,9 @@
     <span class="marker-5"><small>&nbsp;</small><i class="fa fa-eur text-dark-grey"></i><small>&nbsp;</small></span>
      - Nutzung
 </div>
-<!-- filter hack -->
+
+{{-- filter hack --}}
 <span id="own-filter-marker" hidden>&nbsp;</span>
-<!-- end filter hack -->
+{{-- end filter hack --}}
+
 @stop

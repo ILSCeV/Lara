@@ -1,5 +1,3 @@
-<!-- Needs variables: none -->
-
 @if( is_null($entry->getPerson) )
 
     {!! Form::hidden('ldapId' . $entry->id, 

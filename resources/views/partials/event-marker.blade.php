@@ -1,4 +1,3 @@
-<!-- Event marker -->
 @if( $clubEvent->evnt_type == 0)
 	<span class="marker-0"><i class="fa fa-calendar-o"></i></span>
 @elseif( $clubEvent->evnt_type == 1)

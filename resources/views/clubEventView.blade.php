@@ -1,5 +1,3 @@
-<!-- Needs variables: clubEvent, entries, persons, clubs -->
-
 @extends('layouts.master')
 
 @section('title')
@@ -72,7 +70,7 @@
 		</div>
 	</div>
 
-			<!-- CRUD -->
+			{{-- CRUD --}}
 			@if(Session::has('userGroup')
 					AND (Session::get('userGroup') == 'marketing'
 					OR Session::get('userGroup') == 'clubleitung'))
@@ -96,7 +94,7 @@
 	@endif
 
 	@if(Session::has('userId'))
-	<!-- CHANGE HISTORY -->
+	{{-- CHANGE HISTORY --}}
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a id="show-hide-history" class="text-muted" href="#">
 			Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>

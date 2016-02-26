@@ -1,5 +1,3 @@
-<!-- Needs variables: clubs -->
-
 <a class="btn-small btn-default dropdown-toggle hidden-print" 
    data-toggle="dropdown" 
    href="javascript:void(0);">

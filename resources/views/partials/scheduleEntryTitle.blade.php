@@ -1,5 +1,3 @@
-<!-- Needs variables: entry -->
-
 @if( is_null($entry->getPerson) )
     <div class="red">
 @else

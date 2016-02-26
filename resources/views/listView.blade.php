@@ -1,5 +1,3 @@
-<!-- Needs variables: events, date -->
-
 @extends('layouts.master')
 
 @section('title')

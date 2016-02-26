@@ -1,5 +1,3 @@
-<!-- Needs variables: entries, clubs -->
-
 @if( is_null($entry->getPerson) )
     <div class="btn-group col-xs-10 col-md-10 hidden-print no-padding">
 

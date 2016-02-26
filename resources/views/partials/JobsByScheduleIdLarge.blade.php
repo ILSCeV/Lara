@@ -1,5 +1,3 @@
-<!-- Needs variables: entries, persons, clubs -->
-
 @if( $clubEvent->getSchedule->schdl_password != '')
 <div class="hidden-print panel panel-heading">
     {!! Form::password('password', array('required', 
@@ -29,7 +27,7 @@
             @include("partials.scheduleEntryClub", [$entry, $clubs])                 
         </div>
 
-        <!-- LARGE COMMENT SECTION --> 
+        {{-- LARGE COMMENT SECTION --}} 
         <div class="col-md-5 col-xs-5">
             @include("partials.scheduleEntryCommentFull", $entry)
         </div>

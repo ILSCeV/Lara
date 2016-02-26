@@ -1,7 +1,3 @@
-<!-- Needs variables: $entry -->
-
-<!-- Needs variables: none -->
-
 @if( is_null($entry->getPerson) )
 
     {!! Form::hidden('timestamp' . $entry->id, 

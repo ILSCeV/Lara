@@ -1,15 +1,13 @@
-<!-- Needs variables: schedule, templates, jobtypes, entries -->
-
 <div class="panel">
 	<div class="panel-heading">
 		<h4 class="panel-title">Dienstplan anpassen:</h4>
 	</div>
 	<div class="panel-body" id="main">
 
-	<!-- jobtype fields -->
+	{{-- jobtype fields --}}
 	    <span hidden>{{$counter = 0}}</span>
 	    <div id="container" class="container">
-		    <!-- If there are entries passed - fill them with data and increment counter --> 
+		    {{-- If there are entries passed - fill them with data and increment counter --}} 
 		    @if(isset($entries))
 		        @foreach($entries as $entry)
 		            <div id={{ "box" . ++$counter }} class="box">
@@ -79,7 +77,7 @@
 		        @endforeach 
 		    @endif
 
-		    <!-- and add one empty entry -->
+		    {{-- and add one empty entry --}}
 		    <div id={{ "box" . ++$counter }} class="box">
 	           	<div class="input-append btn-group">
 		           	<input type="text" 

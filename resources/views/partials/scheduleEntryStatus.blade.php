@@ -1,5 +1,3 @@
-<!-- Needs variables: entry, persons -->
-
 @if( is_null($entry->getPerson) )
 
     <i class="fa fa-circle-o" 

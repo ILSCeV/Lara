@@ -1,4 +1,4 @@
-<!-- STATUS MESSAGE: if there are any errors, show them here -->
+{{-- STATUS MESSAGE: if there are any errors, show them here --}}
 @if(Session::has('message'))
     @if(Session::get('msgType') === 'danger')
     <div class="alert alert-centered alert-dismissable alert-danger"> 

@@ -50,7 +50,7 @@
             <li style="padding-top:17px">
                 @include('partials.create-btn')
             </li>          
-            <!-- LOGIN FORM -->
+            {{-- LOGIN FORM --}}
             @if(Session::has('userId'))
             <li style="padding-top: 5px;">
                 {!! Form::open(array('url' => 'logout', 
