@@ -24,6 +24,7 @@
 
                 @foreach($events as $clubEvent)
                         @include('partials.clubEventByIdSmall', $clubEvent)
+                        <br />
                 @endforeach
 
                 <center>{!! $events->render() !!}</center>
