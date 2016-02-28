@@ -208,7 +208,21 @@
 
 						{{-- LARGE COMMENT SECTION --}} 
 						<div class="col-md-6 hidden-xs">
-						    @include("partials.scheduleEntryCommentFull")
+						    @if( is_null($entry->getPerson) )   
+							    {!! Form::text('comment' . $entry->id, 
+							                   Input::old('comment' . $entry->id),  
+							                   array('placeholder'=>'Kommentar hier hinzufügen',
+							                         'id'=>'comment' . $entry->id, 
+							                         'class'=>'col-xs-12 col-md-12')) 
+							    !!}
+							 @else
+							    {!! Form::text('comment' . $entry->id, 
+							                   $entry->entry_user_comment, 
+							                   array('placeholder'=>'Kommentar hier hinzufügen',
+							                         'id'=>'comment' . $entry->id,
+							                         'class'=>'col-xs-12 col-md-12')) 
+							    !!}
+							@endif
 						</div>
 
 						{{-- SMALL COMMENT SECTION --}}

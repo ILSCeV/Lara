@@ -1,16 +1,14 @@
 <div class="col-xs-2 col-md-2 no-padding" id="clubStatus{{ $entry->id }}">
-    @include("partials.ScheduleEntryStatus", [$entry, $persons])
+    @include("partials.ScheduleEntryStatus")
 </div>
 
 @if( is_null($entry->getPerson) )
-
     {!! Form::text('userName' . $entry->id, 
                  Input::old('userName' . $entry->id), 
                  array('placeholder'=>'=FREI=', 
                        'id'=>'userName' . $entry->id, 
                        'class'=>'col-xs-9 col-md-9')) 
     !!}
-
 @else
     
     {!! Form::text('userName' . $entry->id, 
@@ -18,17 +16,40 @@
                  array('id'=>'userName' . $entry->id, 
                        'class'=>'col-xs-9 col-md-9') ) 
     !!}
-
 @endif
 
 <div class="col-xs-1 col-md-1 input-append btn-group no-padding">
-    @include("partials.dropdownUsernames", $persons)
+    @if(Session::has("userName"))
+        @include("partials.dropdownUsernames", $persons)
+    @else
+        &nbsp;
+    @endif
 </div>
 
 <div>
-    @include("partials.scheduleEntryLdapId")
+    @if( is_null($entry->getPerson) )
+        {!! Form::hidden('ldapId' . $entry->id, 
+                         '', 
+                         array('id'=>'ldapId' . $entry->id) ) 
+        !!}
+    @else
+        {!! Form::hidden('ldapId' . $entry->id, 
+                         $entry->getPerson->prsn_ldap_id, 
+                         array('id'=>'ldapId' . $entry->id) ) 
+        !!}
+    @endif
 </div>
 
 <div>
-    @include("partials.scheduleEntryTimestamp")
+    @if( is_null($entry->getPerson) )
+        {!! Form::hidden('timestamp' . $entry->id, 
+                         '', 
+                         array('id'=>'timestamp' . $entry->id) ) 
+        !!}
+    @else
+        {!! Form::hidden('timestamp' . $entry->id, 
+                         $entry->updated_at, 
+                         array('id'=>'timestamp' . $entry->id) ) 
+        !!}
+    @endif
 </div>

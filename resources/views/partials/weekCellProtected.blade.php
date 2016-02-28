@@ -66,7 +66,46 @@
 				        {{-- if entry occupied by member and the user is not logged in - show only the info without inputs --}}
 				        @if(isset($entry->getPerson->prsn_ldap_id))
 
-				            @include('partials.jobsByScheduleIdSmallProtected')
+				        	{{-- ENTRY STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
+				            <div class="col-xs-5 col-md-5 input-append btn-group">
+
+							    <div class="col-xs-2 col-md-2 no-padding" id="clubStatus{{ $entry->id }}">
+							        @include("partials.ScheduleEntryStatus")
+							    </div>
+
+							    <div id="{!! 'userName' . $entry->id !!}" class="col-xs-10 col-md-10">
+							        {!! $entry->getPerson->prsn_name !!}
+							    </div>
+
+							    {{-- no need to show LDAP ID or TIMESTAMP in this case --}}
+
+							</div>
+
+							{{-- ENTRY CLUB --}}
+							<div id="{!! 'club' . $entry->id !!}" class="col-xs-3 col-md-3 no-padding">
+							    {!! "(" . $entry->getPerson->getClub->clb_title . ")" !!}
+							</div>
+
+							{{-- ENTRY COMMENT --}}
+							{{-- Show only the icon first --}}
+							<div class="col-xs-1 col-md-1 no-padding">      
+							    @if( $entry->entry_user_comment == "" )
+							        <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
+							            <i class="fa fa-comment-o"></i>
+							        </button>
+							    @else
+							        <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
+							            <i class="fa fa-comment"></i>
+							        </button>
+							    @endif
+							</div>
+
+							{{-- Hidden comment field to be opened after the click on the icon 
+							     see vedst-scripts "Show/hide comments" function --}}         
+							<div id="{!! 'comment' . $entry->id !!}"
+							     class="col-xs-10 col-md-10 hidden-print hide col-md-offset-1 word-break">
+							    {!! !empty($entry->entry_user_comment) ? $entry->entry_user_comment : "-" !!}
+							</div>
 
 				        @else
 
@@ -80,8 +119,27 @@
 				                @include("partials.scheduleEntryClub")                 
 				            </div>   
 
-				            {{-- SMALL COMMENT ICON: divs handled inside the partial, col-md/xs-1 for the icon; col-md/xs-12 for the comment input --}}
-				            @include("partials.scheduleEntryCommentHidden")
+				            {{-- SMALL COMMENT ICON --}}
+				            <div class="col-xs-1 col-md-1 no-padding">      
+						        @if( $entry->entry_user_comment == "" )
+						            <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
+						                <i class="fa fa-comment-o"></i>
+						            </button>
+						        @else
+						            <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
+						                <i class="fa fa-comment"></i>
+						            </button>
+						        @endif
+							</div>
+
+							{{-- Hidden comment field to be opened after the click on the icon 
+								 see vedst-scripts "Show/hide comments" function --}}	     
+							{!! Form::text('comment' . $entry->id, 
+							               $entry->entry_user_comment, 
+							               array('placeholder'=>'Kommentar hier hinzufügen',
+							                     'id'=>'comment' . $entry->id,
+							                     'class'=>'col-xs-10 col-md-10 hidden-print hide col-md-offset-1 col-xs-offset-1 word-break' )) 
+							!!}
 
 				        @endif    
 				            

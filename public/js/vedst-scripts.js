@@ -535,47 +535,6 @@ jQuery( document ).ready( function( $ ) {
 
 
 
-///////////////
-// TYPEAHEAD //
-///////////////
-
-var personsClub2 = new Bloodhound({
-  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('prsn_name'),
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: '../data/persons-club-2.json'
-});
-
-var personsClub3 = new Bloodhound({
-  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('prsn_name'),
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: '../data/persons-club-3.json'
-});
-
-$('#multiple-datasets .typeahead').typeahead({
-  highlight: true
-},
-{
-  name: 'bcclub',
-  display: {
-    name: 'prsn_name',
-    status: 'prsn_status'
-  },
-  source: personsClub2,
-  templates: {
-    header: '<b>bc-Club</b>'
-  }
-},
-{
-  name: 'bccafe',
-  display: 'prsn_name',
-  source: personsClub3,
-  templates: {
-    header: '<b>bc-Café</b>'
-  }
-});
-
-
-
 ////////////////////////////////////
 // Clever RESTful Resource Delete //
 ////////////////////////////////////
