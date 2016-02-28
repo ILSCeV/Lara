@@ -10,7 +10,7 @@
         {!! $entry->getPerson->prsn_name !!}
     </div>
 
-    {{-- no need to show LDAP ID in this case --}}
+    {{-- no need to show LDAP ID or TIMESTAMP in this case --}}
 
 </div>
 

@@ -1,4 +1,4 @@
-<div class="col-xs-3 col-md-3 no-padding" id="clubStatus{{ $entry->id }}">
+<div class="col-xs-2 col-md-2 no-padding" id="clubStatus{{ $entry->id }}">
     @include("partials.ScheduleEntryStatus", [$entry, $persons])
 </div>
 
@@ -8,7 +8,7 @@
                  Input::old('userName' . $entry->id), 
                  array('placeholder'=>'=FREI=', 
                        'id'=>'userName' . $entry->id, 
-                       'class'=>'col-xs-8 col-md-8')) 
+                       'class'=>'col-xs-9 col-md-9')) 
     !!}
 
 @else
@@ -16,7 +16,7 @@
     {!! Form::text('userName' . $entry->id, 
                  $entry->getPerson->prsn_name, 
                  array('id'=>'userName' . $entry->id, 
-                       'class'=>'col-xs-8 col-md-8') ) 
+                       'class'=>'col-xs-9 col-md-9') ) 
     !!}
 
 @endif

@@ -70,6 +70,8 @@
 
 				    </div>
 
+				    <br class="visible-xs">
+
 				@endforeach
 
 			@endif
