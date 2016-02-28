@@ -16,11 +16,13 @@ Use at your own risk.
 * Updated Font Awesome to 4.5.0
 * Wrote user-side AJAX requests-responses, database updates on the server-side following, as well as some validation and changes highlighting via CSS
 * Wrote database updates for AJAX requests in ScheduleEntry changes
-* Restructured ScheduleEntryById views, separated into multiple partials and removed table formatting -> divs instead
+* ~~Restructured ScheduleEntryById views, separated into multiple partials and~~ removed table formatting -> divs instead
 * Returned event creation and deletion functionality
 * Event creation: "accept template" button gone, a click on a template name redirects to this template directly
 * Added placeholders for internal events for external guest, opened week view for all
 * Updated Laravel to 5.2 version. All systems nominal, keep flying!
+* Put together a simple structure for ScheduleEntryByID views
+* Added correct password handling for both week and event views
 
 
 ## Contributing
