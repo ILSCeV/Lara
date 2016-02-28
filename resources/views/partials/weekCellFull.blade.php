@@ -91,6 +91,7 @@
 					               $entry->entry_user_comment, 
 					               array('placeholder'=>'Kommentar hier hinzufügen',
 					                     'id'=>'comment' . $entry->id,
+					                     'name'=>'comment' . $entry->id,
 					                     'class'=>'col-xs-10 col-md-10 hidden-print hide col-md-offset-1 col-xs-offset-1 word-break' )) 
 					!!}
 			           

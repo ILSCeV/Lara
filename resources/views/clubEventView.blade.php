@@ -190,6 +190,7 @@
 						{{-- Hidden comment field to be opened after the click on the icon 
 						     see vedst-scripts "Show/hide comments" function --}}         
 						<div id="{!! 'comment' . $entry->id !!}"
+							 name="{!! 'comment' . $entry->id !!}"
 						     class="col-xs-10 col-md-10 hidden-print hide col-md-offset-1 word-break">
 						    {!! !empty($entry->entry_user_comment) ? $entry->entry_user_comment : "-" !!}
 						</div>
@@ -213,7 +214,8 @@
 							    {!! Form::text('comment' . $entry->id, 
 							                   Input::old('comment' . $entry->id),  
 							                   array('placeholder'=>'Kommentar hier hinzufügen',
-							                         'id'=>'comment' . $entry->id, 
+							                         'id'=>'comment' . $entry->id,
+					                     			 'name'=>'comment' . $entry->id, 
 							                         'class'=>'col-xs-12 col-md-12')) 
 							    !!}
 							 @else
@@ -221,6 +223,7 @@
 							                   $entry->entry_user_comment, 
 							                   array('placeholder'=>'Kommentar hier hinzufügen',
 							                         'id'=>'comment' . $entry->id,
+					                     			 'name'=>'comment' . $entry->id,
 							                         'class'=>'col-xs-12 col-md-12')) 
 							    !!}
 							@endif
@@ -246,6 +249,7 @@
 						               $entry->entry_user_comment, 
 						               array('placeholder'=>'Kommentar hier hinzufügen',
 						                     'id'=>'comment' . $entry->id,
+					                     	 'name'=>'comment' . $entry->id,
 						                     'class'=>'col-xs-10 col-xs-offset-1 hidden-print hide' )) 
 						!!}
 						  
