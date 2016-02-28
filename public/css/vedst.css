@@ -67,6 +67,13 @@ input[type=number],
   padding: 0 !important;
 }
 
+.padding-right-minimal {
+  padding-right: 5px !important;
+}
+.padding-left-minimal {
+  padding-left: 5px !important;
+}
+
 
 /**
  * More / Less Button

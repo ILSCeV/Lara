@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-warning">
 
 	@if ($clubEvent->getPlace->plc_title == "bc-Club" AND $clubEvent->evnt_is_private )
 		<div class="panel panel-heading calendar-internal-event-bc-club white-text">
@@ -30,19 +30,20 @@
 
 		</div>
 
+		{{-- Show password input if schedule needs one --}}
+		@if( $clubEvent->getSchedule->schdl_password != '')
+		    <div class="panel panel-heading hidden-print">
+		        {!! Form::password('password' . $clubEvent->getSchedule->id, array('required', 
+		                                             'class'=>'col-md-12 col-xs-12',
+		                                             'id'=>'password' . $clubEvent->getSchedule->id,
+		                                             'placeholder'=>'Passwort hier eingeben')) !!}
+		        <br />
+		    </div> 
+		@endif 
+
 		<div class="panel-body">
 
 			@if (!is_null($clubEvent->getSchedule))	
-
-				{{-- Show password input if schedule needs one --}}
-				@if( $clubEvent->getSchedule->schdl_password != '')
-				    <div class="well no-padding hidden-print">
-				        {!! Form::password('password', array('required', 
-				                                             'class'=>'col-md-12 col-xs-12',
-				                                             'placeholder'=>'Passwort hier eingeben')) !!}
-				        <br />
-				    </div> 
-				@endif 
 
 				{{-- Show schedule entries --}}
 				@foreach($clubEvent->getSchedule->getEntries as $entry)
@@ -59,7 +60,7 @@
 				        </div>
 
 				        {{-- ENTRY TITLE --}}
-				        <div class="col-xs-3 col-md-3">
+				        <div class="col-xs-4 col-md-4 padding-right-minimal">
 				            @include("partials.scheduleEntryTitle")
 				        </div>
 
@@ -67,13 +68,13 @@
 				        @if(isset($entry->getPerson->prsn_ldap_id))
 
 				        	{{-- ENTRY STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-				            <div class="col-xs-5 col-md-5 input-append btn-group">
+				            <div class="col-xs-4 col-md-4 input-append btn-group padding-left-minimal">
 
 							    <div class="col-xs-2 col-md-2 no-padding" id="clubStatus{{ $entry->id }}">
 							        @include("partials.ScheduleEntryStatus")
 							    </div>
 
-							    <div id="{!! 'userName' . $entry->id !!}" class="col-xs-10 col-md-10">
+							    <div class="col-xs-10 col-md-10 no-padding" id="{!! 'userName' . $entry->id !!}" >
 							        {!! $entry->getPerson->prsn_name !!}
 							    </div>
 
@@ -110,7 +111,7 @@
 				        @else
 
 				            {{-- ENTRY STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-				            <div class="col-xs-5 col-md-5 input-append btn-group">      
+				            <div class="col-xs-4 col-md-4 input-append btn-group padding-left-minimal">      
 				                @include("partials.scheduleEntryName")
 				            </div> 
 
