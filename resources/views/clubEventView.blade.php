@@ -118,7 +118,8 @@
 		@if( $clubEvent->getSchedule->schdl_password != '')
 			<div class="hidden-print panel panel-heading">
 			    {!! Form::password('password', array('required', 
-			                                         'class'=>'col-md-4 col-xs-12',
+			                                         'class'=>'col-md-4 col-xs-12 black-text',
+		                                             'id'=>'password' . $clubEvent->getSchedule->id,
 			                                         'placeholder'=>'Passwort hier eingeben')) !!}
 			    <br />
 			</div> 

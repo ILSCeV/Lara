@@ -125,6 +125,10 @@ input[type=number],
   color: #ffffff !important;
 }
 
+.black-text {
+  color: #000000 !important;
+}
+
 .calendar-task {
   background-color: #519839 !important;
 }

@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
 
+use Hash;
+
 use Lara\ScheduleEntry;
 use Lara\Jobtype;
 use Lara\Person;
@@ -124,15 +126,16 @@ class ScheduleEntryController extends Controller
         $timestamp   = Input::get( 'timestamp' );
         $userClub    = Input::get( 'userClub' );
         $userComment = Input::get( 'userComment' );
+        $password    = Input::get( 'password' );
 
         // Check if it's our form (CSRF protection)
         if ( Session::token() !== Input::get( '_token' ) ) {
-            return response()->json('Error 401: Unauthorized attempt. Try reloading the page.', 401);
+            return response()->json('Fehler: die Session ist abgelaufen. Bitte aktualisiere die Seite und logge dich ggf. erneut ein.', 401);
         }
 
         // Check if someone modified LDAP ID manually
         if ( !empty($ldapId) AND !is_numeric($ldapId) ) {
-            return response()->json("Error: I don't know how, but you gave me a wrong LDAP ID. I will not tolerate such reckless behaviour.", 400);
+            return response()->json("Fehler: die Clubnummer wurde in falschem Format angegeben. Bitte versuche erneut oder melde diesen Fehler dem Admin.", 400);
         }
 
         // Check if the entry was updated recently and user data is too old
@@ -143,32 +146,18 @@ class ScheduleEntryController extends Controller
         } else {
             $timestamp = "updated before you";
         }
-
         
-        // CHECK PASSWORD HERE
-// IMPLEMENT LATER
-        /*
-                $schedule = Schedule::findOrFail($id);
-        $entries = ScheduleEntry::where('schdl_id','=',$id)->get();
-
-        // Check if that schedule needs a password
-        if ($schedule->schdl_password !== '')
-        {
-            //get password for specific id here, similar to enty->id
-            if(!Hash::check(Input::get('password'), $schedule->schdl_password ))
-            {
-                Session::put('message', Config::get('messages_de.schedule-pw-needed'));
-                Session::put('msgType', 'danger');
-                return Redirect::back();
-            }
-        }
-        */
-
         // Find the corresponding entry object 
         $entry = ScheduleEntry::where('id', '=', $entryId)->first();
 
         // Remember old value for logging
         $oldPerson = $entry->getPerson;
+
+        // Check if that schedule needs a password and validate hashes
+        if ($entry->getSchedule->schdl_password !== ''
+            && !Hash::check( $password, $entry->getSchedule->schdl_password ) ) {
+                return response()->json("Fehler: das angegebene Passwort ist falsch, keine Änderungen wurden gespeichert. Bitte versuche erneut oder frage einen anderen Mitglied oder CL.", 401);
+        }
 
         // FYI: 
         // We separate schedule entry person change from comment change

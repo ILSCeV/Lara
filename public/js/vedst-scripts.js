@@ -445,6 +445,17 @@ $(function(){
 jQuery( document ).ready( function( $ ) { 
     $( '.scheduleEntry' ).on( 'submit', function() {
 
+        // For passworded schedules: check if a password field exists and is not empty
+        // We will check correctness on the server side
+        if ( $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").length
+          && !$(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val() ) 
+        {
+            var password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );
+            $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val(password);       
+        } else {
+            var password = $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
+        }
+
         $.ajax({  
             type: $( this ).prop( 'method' ),  
 
@@ -461,6 +472,7 @@ jQuery( document ).ready( function( $ ) {
                     "timestamp":    $(this).find("[name^=timestamp]").val(),
                     "userClub":     $(this).find("[name^=club]").val(),
                     "userComment":  $(this).find("[name^=comment]").val(),
+                    "password":     password, 
 
                     // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
                     "_method": "put"
@@ -470,12 +482,14 @@ jQuery( document ).ready( function( $ ) {
             
             beforeSend: function(data) {
                 // Show a spinner in the username status while we are waiting for a server response                
-                $(event.target).children().children("[id^=clubStatus]").children("i").removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner");
+                $(event.target).children().children("[id^=clubStatus]").children("i").removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner").attr("data-original-title", "In Arbeit...");
             },
             
             complete: function() {
                 // Hide spinner after response received, show change was made
-                $("#spinner").removeClass().addClass("fa fa-check");
+                // We make changes on success anyway, so the following state is only achieved 
+                // when a response from server was received, but errors occured - so let's inform the user
+                $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!");
             },
 
             success: function(data) {  
@@ -507,7 +521,7 @@ jQuery( document ).ready( function( $ ) {
                 // wait 2 sec, then switch to normal user status icon and clear "spinner"-markup
                 // we receive this parameters: e.g. ["status"=>"fa fa-adjust", "style"=>"color:yellowgreen;", "title"=>"Kandidat"] 
                 $("#spinner").attr("style", data["userStatus"]["style"]);
-                $("#spinner").attr("data-original-title", data["userStatus"]["title "]);
+                $("#spinner").attr("data-original-title", data["userStatus"]["title"]);
                 $("#spinner").removeClass().addClass(data["userStatus"]["status"]).removeAttr("id");               
 
                 // debugging info
@@ -516,6 +530,7 @@ jQuery( document ).ready( function( $ ) {
 
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(JSON.stringify(xhr.responseJSON));
+                $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!");
               }
 
 

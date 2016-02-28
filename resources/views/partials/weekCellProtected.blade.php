@@ -34,7 +34,7 @@
 		@if( $clubEvent->getSchedule->schdl_password != '')
 		    <div class="panel panel-heading hidden-print">
 		        {!! Form::password('password' . $clubEvent->getSchedule->id, array('required', 
-		                                             'class'=>'col-md-12 col-xs-12',
+		                                             'class'=>'col-md-12 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
 		                                             'placeholder'=>'Passwort hier eingeben')) !!}
 		        <br />
