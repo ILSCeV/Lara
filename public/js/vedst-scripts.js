@@ -19,8 +19,8 @@ $(function(){
 $(function(){
     $('.moreless-less-info').click(function(e) {
         $(this).parent().children('.more-info').toggleClass('moreshow-info');
-        $(this).parent().children('.more-info').css('height','125'); 
-        $(this).parent().children('.more-info').height(125);  
+        $(this).parent().children('.more-info').css('height','100'); 
+        $(this).parent().children('.more-info').height(100);  
         $(this).parent().children('.moreless-less-info').hide();
         $(this).parent().children('.moreless-more-info').show();  
     });
@@ -29,8 +29,8 @@ $(function(){
 $(function(){
     $('.moreless-more-info').hide();
     $('.moreless-less-info').hide();
-    if ($('.more-info').height() > 125) {   
-        $('.more-info').height(125);        
+    if ($('.more-info').height() > 100) {   
+        $('.more-info').height(100);        
         $('.moreless-more-info').show();
     };
 });
@@ -47,8 +47,8 @@ $(function(){
 $(function(){
     $('.moreless-less-details').click(function(e) {
         $(this).parent().children('.more-details').toggleClass('moreshow-details');
-        $(this).parent().children('.more-details').css('height','125'); 
-        $(this).parent().children('.more-details').height(125);  
+        $(this).parent().children('.more-details').css('height','100'); 
+        $(this).parent().children('.more-details').height(100);  
         $(this).parent().children('.moreless-less-details').hide();
         $(this).parent().children('.moreless-more-details').show();  
     });
@@ -57,8 +57,8 @@ $(function(){
 $(function(){
     $('.moreless-more-details').hide();
     $('.moreless-less-details').hide();
-    if ($('.more-details').height() > 125) {   
-        $('.more-details').height(125);        
+    if ($('.more-details').height() > 100) {   
+        $('.more-details').height(100);        
         $('.moreless-more-details').show();
     };
 
@@ -73,7 +73,6 @@ $(function(){
         $('.isotope').isotope('layout') 
 	});
 });
-
 
 
 // Show/hide change history
@@ -483,6 +482,7 @@ jQuery( document ).ready( function( $ ) {
             beforeSend: function(data) {
                 // Show a spinner in the username status while we are waiting for a server response                
                 $(event.target).children().children("[id^=clubStatus]").children("i").removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner").attr("data-original-title", "In Arbeit...");
+                console.log($(this).find("[name^=comment]").val());
             },
             
             complete: function() {
@@ -510,15 +510,22 @@ jQuery( document ).ready( function( $ ) {
                 $("input[id=club"     + data["entryId"] + "]").attr('value', data["userClub"]).attr("placeholder", "-");
                 $("input[id=comment"  + data["entryId"] + "]").attr('value', data["userComment"]).attr("placeholder", "Kommentar hier hinzufügen");
 
-                // Switch comment icon
+                // Switch comment icon in week view
                 if ( $("input[id=comment"  + data["entryId"] + "]").val() == "" ) {
                     $("input[id=comment"  + data["entryId"] + "]").parent().children().children("button").children("i").removeClass().addClass("fa fa-comment-o");
                 } else {
                     $("input[id=comment"  + data["entryId"] + "]").parent().children().children("button").children("i").removeClass().addClass("fa fa-comment");
                 };
 
-                // UPDATE STATUS ICON HERE
-                // wait 2 sec, then switch to normal user status icon and clear "spinner"-markup
+                // Switch comment in event view
+                if ( $("input[id=comment"  + data["entryId"] + "]").val() == "" ) {
+                    $("input[id=comment"  + data["entryId"] + "]").parent().children("span").children("i").removeClass().addClass("fa fa-comment-o");
+                } else {
+                    $("input[id=comment"  + data["entryId"] + "]").parent().children("span").children("i").removeClass().addClass("fa fa-comment");
+                };
+
+                // UPDATE STATUS ICON
+                // switch to normal user status icon and clear "spinner"-markup
                 // we receive this parameters: e.g. ["status"=>"fa fa-adjust", "style"=>"color:yellowgreen;", "title"=>"Kandidat"] 
                 $("#spinner").attr("style", data["userStatus"]["style"]);
                 $("#spinner").attr("data-original-title", data["userStatus"]["title"]);

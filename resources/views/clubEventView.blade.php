@@ -6,84 +6,82 @@
 
 @section('content')
 
-	<div class="row">
-		<div class="container col-xs-12 col-md-6">
-			<div class="panel">
-				@if ($clubEvent->getPlace->plc_title == "bc-Club" AND $clubEvent->evnt_is_private )
-					<div class="panel panel-heading calendar-internal-event-bc-club white-text">
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Café" AND $clubEvent->evnt_is_private)
-					<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Club")
-					<div class="panel panel-heading calendar-public-event-bc-club white-text">
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Café")
-					<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
-				@else
-					<div class="panel panel-heading calendar-task white-text">
-				@endif
-					<h4 class="panel-title">{{{ $clubEvent->evnt_title }}}</h4>
-					<h5 class="panel-title">{{{ $clubEvent->evnt_subtitle }}}</h5>
-				</div>
-					<table class="table table-hover">
-						<tr>
-							<td width="20%">
-								&nbsp;&nbsp;<i>Typ:</i>	
-							</td>
-							<td>
-								@if( $clubEvent->evnt_type == 0)
-									normales Programm
-								@elseif( $clubEvent->evnt_type == 1)
-									Information
-								@elseif( $clubEvent->evnt_type == 2)
-									Spezial
-								@elseif( $clubEvent->evnt_type == 3)
-									Live Band / Live DJ / Lesung
-								@elseif( $clubEvent->evnt_type == 4)
-									interne Veranstaltung
-								@elseif( $clubEvent->evnt_type == 5)
-									Nutzung
-								@endif
-							</td>
-						</tr>
-						<tr>
-							<td width="20%">
-								&nbsp;&nbsp;<i>Beginn:</i>
-							</td>
-							<td> 
-								{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start)) }} um 
-								{{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
-							</td>
-						</tr>
-						<tr>
-							<td width="20%">
-								&nbsp;&nbsp;<i>Ende:</i>
-							</td>
-							<td>
-								{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_end)) }} um 
-								{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
-							</td>
-						</tr>
-						<tr>
-							<td width="20%">
-								&nbsp;&nbsp;<i>DV-Zeit:</i>
-							</td>
-							<td>
-								{{ date("H:i", strtotime($clubEvent->getSchedule->schdl_time_preparation_start)) }}
-							</td>
-						</tr>
-						<tr>
-							<td width="20%">
-								&nbsp;&nbsp;<i>Verein:</i>
-							</td>
-							<td>
-								{{{ $clubEvent->getPlace->plc_title }}}
-							</td>
-						</tr>
-					</table>
-					
+	<div class="row no-margin">
+		<div class="panel col-xs-12 col-md-6 no-padding">
+			@if ($clubEvent->getPlace->plc_title == "bc-Club" AND $clubEvent->evnt_is_private )
+				<div class="panel panel-heading calendar-internal-event-bc-club white-text">
+			@elseif ($clubEvent->getPlace->plc_title == "bc-Café" AND $clubEvent->evnt_is_private)
+				<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
+			@elseif ($clubEvent->getPlace->plc_title == "bc-Club")
+				<div class="panel panel-heading calendar-public-event-bc-club white-text">
+			@elseif ($clubEvent->getPlace->plc_title == "bc-Café")
+				<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
+			@else
+				<div class="panel panel-heading calendar-task white-text">
+			@endif
+				<h4 class="panel-title">{{{ $clubEvent->evnt_title }}}</h4>
+				<h5 class="panel-title">{{{ $clubEvent->evnt_subtitle }}}</h5>
 			</div>
+				<table class="table table-hover">
+					<tr>
+						<td width="20%" class="left-padding-16">
+							<i>Typ:</i>	
+						</td>
+						<td>
+							@if( $clubEvent->evnt_type == 0)
+								normales Programm
+							@elseif( $clubEvent->evnt_type == 1)
+								Information
+							@elseif( $clubEvent->evnt_type == 2)
+								Spezial
+							@elseif( $clubEvent->evnt_type == 3)
+								Live Band / Live DJ / Lesung
+							@elseif( $clubEvent->evnt_type == 4)
+								interne Veranstaltung
+							@elseif( $clubEvent->evnt_type == 5)
+								Nutzung
+							@endif
+						</td>
+					</tr>
+					<tr>
+						<td width="20%" class="left-padding-16">
+							<i>Beginn:</i>
+						</td>
+						<td> 
+							{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start)) }} um 
+							{{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
+						</td>
+					</tr>
+					<tr>
+						<td width="20%" class="left-padding-16">
+							<i>Ende:</i>
+						</td>
+						<td>
+							{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_end)) }} um 
+							{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
+						</td>
+					</tr>
+					<tr>
+						<td width="20%" class="left-padding-16">
+							<i>DV-Zeit:</i>
+						</td>
+						<td>
+							{{ date("H:i", strtotime($clubEvent->getSchedule->schdl_time_preparation_start)) }}
+						</td>
+					</tr>
+					<tr>
+						<td width="20%" class="left-padding-16">
+							<i>Verein:</i>
+						</td>
+						<td>
+							{{{ $clubEvent->getPlace->plc_title }}}
+						</td>
+					</tr>
+				</table>
+				
 		</div>
 
-		<div class="container col-xs-12 col-md-6">
+		<div class="col-xs-12 col-md-6 no-padding">
 			@if( $clubEvent->evnt_public_info != '')
 			<div class="panel">
 				<div class="panel-body more-info">				
@@ -111,7 +109,6 @@
 	</div>
 
 	<br>
-
 	&nbsp;&nbsp;<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten ausblenden</button>
 	
 	<div class="panel panel-warning">	
@@ -126,7 +123,7 @@
 
 		@endif 
 
-		<div class="panel-body">
+		<div class="panel-body no-padding">
 			@foreach($entries as $entry)	
 				<div class="row">
 			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
@@ -141,16 +138,16 @@
 			        </div>
 
 			        {{-- ENTRY TITLE --}}
-			        <div class="col-xs-3 col-md-2">
+			        <div class="col-md-2 col-xs-4 left-padding-8">
 			            @include("partials.scheduleEntryTitle")
 			        </div>
 			        
 			        {{-- show public events, but protect members' entries from being changed by guests --}}
 			        @if( isset($entry->getPerson->prsn_ldap_id) AND !Session::has('userId'))
 
-						<div class="col-xs-5 col-md-2 input-append btn-group">
+						<div class="col-md-2 col-xs-4 input-append btn-group">
 						    {{-- ENTRY STATUS --}}
-						    <div class="col-xs-2 col-md-2 no-padding" id="clubStatus{{ $entry->id }}">
+						    <div class="col-md-2 col-xs-2 no-padding" id="clubStatus{{ $entry->id }}">
 						        @include("partials.ScheduleEntryStatus")
 						    </div>
 
@@ -163,104 +160,68 @@
 						</div>
 
 						{{-- ENTRY CLUB --}}
-						<div id="{!! 'club' . $entry->id !!}" class="col-xs-3 col-md-2">
+						<div id="{!! 'club' . $entry->id !!}" class="col-md-2 col-xs-4">
 						    {!! "(" . $entry->getPerson->getClub->clb_title . ")" !!}
 						</div>
 
-						{{-- LARGE COMMENT SECTION --}}        
-						<div id="{!! 'comment' . $entry->id !!}"
-						     class="col-md-6 hidden-print word-break hidden-xs">
-						    {!! !empty($entry->entry_user_comment) ? $entry->entry_user_comment : "-" !!}
-						</div>
+						<br class="visible-xs">
 
-						{{-- SMALL COMMENT SECTION --}}
-						{{-- Show only the icon first --}}
-						<div class="col-xs-1 col-md-1 no-padding visible-xs">      
-						    @if( $entry->entry_user_comment == "" )
-						        <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
-						            <i class="fa fa-comment-o"></i>
-						        </button>
-						    @else
-						        <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
-						            <i class="fa fa-comment"></i>
-						        </button>
-						    @endif
-						</div>
+						{{-- COMMENT SECTION --}}	        
+						<div class="col-md-6 col-xs-12 hidden-print word-break no-margin">
+						    <span class="pull-left">
+						    	{!! $entry->entry_user_comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
+						    	&nbsp;&nbsp;
+						    </span>
 
-						{{-- Hidden comment field to be opened after the click on the icon 
-						     see vedst-scripts "Show/hide comments" function --}}         
-						<div id="{!! 'comment' . $entry->id !!}"
-							 name="{!! 'comment' . $entry->id !!}"
-						     class="col-xs-10 col-md-10 hidden-print hide col-md-offset-1 word-break">
-						    {!! !empty($entry->entry_user_comment) ? $entry->entry_user_comment : "-" !!}
+						    <span class="col-md-10 col-xs-10 no-padding no-margin">
+							    {!! !empty($entry->entry_user_comment) ? $entry->entry_user_comment : "-" !!}
+							</span>
 						</div>
+						
 
 			        {{-- show everything for members --}}
 					@else
 
 			        	{{-- ENTRY STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-						<div class="col-xs-5 col-md-2 input-append btn-group">      
+						<div class="col-md-2 col-xs-4 input-append btn-group">      
 						    @include("partials.scheduleEntryName")
 						</div>                
 						        
 						{{-- ENTRY CLUB and DROPDOWN CLUB --}}
-						<div class="col-xs-3 col-md-2">
+						<div class="col-md-2 col-xs-4">
 						    @include("partials.scheduleEntryClub")                 
 						</div>   
 
-						{{-- LARGE COMMENT SECTION --}} 
-						<div class="col-md-6 hidden-xs">
-						    @if( is_null($entry->getPerson) )   
-							    {!! Form::text('comment' . $entry->id, 
-							                   Input::old('comment' . $entry->id),  
-							                   array('placeholder'=>'Kommentar hier hinzufügen',
-							                         'id'=>'comment' . $entry->id,
-					                     			 'name'=>'comment' . $entry->id, 
-							                         'class'=>'col-xs-12 col-md-12')) 
-							    !!}
-							 @else
-							    {!! Form::text('comment' . $entry->id, 
-							                   $entry->entry_user_comment, 
-							                   array('placeholder'=>'Kommentar hier hinzufügen',
-							                         'id'=>'comment' . $entry->id,
-					                     			 'name'=>'comment' . $entry->id,
-							                         'class'=>'col-xs-12 col-md-12')) 
-							    !!}
-							@endif
+						{{-- COMMENT SECTION --}}	
+						<br class="visible-print hidden-md hidden-sm hidden-xs">
+						<br class="visible-print hidden-md hidden-sm hidden-xs">   
+						<div class="col-md-6 col-xs-12 no-margin">
+						    <span class="pull-left">
+						    	{!! $entry->entry_user_comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
+						    	&nbsp;&nbsp;
+						    </span>
+						    
+						    {!! Form::text('comment' . $entry->id, 
+					                   $entry->entry_user_comment, 
+					                   array('placeholder'=>'Kommentar hier hinzufügen',
+					                         'id'=>'comment' . $entry->id,
+			                     			 'name'=>'comment' . $entry->id,
+					                         'class'=>'col-md-11 col-xs-10 no-padding no-margin')) 
+					    	!!}	
 						</div>
+						<br class="visible-print hidden-md hidden-sm hidden-xs">    
 
-						{{-- SMALL COMMENT SECTION --}}
-						{{-- Show only the icon first --}}
-						<div class="col-xs-1 visible-xs no-padding">      
-						    @if( $entry->entry_user_comment == "" )
-						        <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
-						            <i class="fa fa-comment-o"></i>
-						        </button>
-						    @else
-						        <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
-						            <i class="fa fa-comment"></i>
-						        </button>
-						    @endif
-						</div>
-
-						{{-- Hidden comment field to be opened after the click on the icon 
-							 see vedst-scripts "Show/hide comments" function --}}
-						{!! Form::text('comment' . $entry->id, 
-						               $entry->entry_user_comment, 
-						               array('placeholder'=>'Kommentar hier hinzufügen',
-						                     'id'=>'comment' . $entry->id,
-					                     	 'name'=>'comment' . $entry->id,
-						                     'class'=>'col-xs-10 col-xs-offset-1 hidden-print hide' )) 
-						!!}
-						  
 			        @endif
 			            
 			        {!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $entry->id, 'hidden') ) !!}
 			        {!! Form::close() !!}
 
 				</div>
-				
-				<br class="visible-xs">
+
+				{{-- Show a line after each row except the last one --}}
+				@if($entry !== $entries->last() ) 
+					<hr class="col-md-12 col-xs-12 top-padding no-margin">
+				@endif
 
 			@endforeach
 		</div>
@@ -272,7 +233,7 @@
 	@if(Session::has('userId'))
 		{{-- REVISIONS --}}
 		<span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-		<a id="show-hide-history" class="text-muted" href="#">
+		<a id="show-hide-history" class="text-muted hidden-print" href="#">
 			Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
 		</a>
 

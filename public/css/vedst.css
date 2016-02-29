@@ -63,17 +63,6 @@ input[type=number],
   font-size: 12px;
 }
 
-.no-padding {
-  padding: 0 !important;
-}
-
-.padding-right-minimal {
-  padding-right: 5px !important;
-}
-.padding-left-minimal {
-  padding-left: 5px !important;
-}
-
 
 /**
  * More / Less Button
@@ -121,14 +110,6 @@ input[type=number],
   color: #ffffff;
 }
 
-.white-text {
-  color: #ffffff !important;
-}
-
-.black-text {
-  color: #000000 !important;
-}
-
 .calendar-task {
   background-color: #519839 !important;
 }
@@ -160,6 +141,15 @@ input[type=number],
 .text-dark-grey {
   color: darkgrey;
 }
+
+.white-text {
+  color: #ffffff !important;
+}
+
+.black-text {
+  color: #000000 !important;
+}
+
 
 /* event type 0 - default */
 .marker-0 {
@@ -333,4 +323,46 @@ input[type=number],
  */
 #welcome-to-our-mechanical-overlords { 
   display: none;
+}
+
+/**
+ * Row margins
+ */
+.row {
+  margin: 8px !important;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.padding-right-minimal {
+  padding-right: 5px !important;
+}
+.padding-left-minimal {
+  padding-left: 5px !important;
+}
+
+.top-padding {
+  padding-bottom: 8px !important;
+}
+
+.bottom-padding {
+  padding-bottom: 8px !important;
+}
+
+.left-padding-8 {
+  padding-left: 8px !important;
+}
+
+.left-padding-16 {
+  padding-left: 16px !important;
+}
+
+.padding-right-16 {
+  padding-right: 16px !important;
 }

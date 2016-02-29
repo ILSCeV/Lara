@@ -3,53 +3,49 @@
 @extends('layouts.master')
 
 @section('title')
-	{{ utf8_encode(strftime("%d. %b", strtotime($weekStart))) }} - {{ utf8_encode(strftime("%d. %b", strtotime($weekEnd))) }}
+	{{ "KW" . $date['week'] . ": " . utf8_encode(strftime("%d. %b", strtotime($weekStart))) }} - {{ utf8_encode(strftime("%d. %b", strtotime($weekEnd))) }}
 @stop
 
 @section('content')
 	<div class="container">
 
-
 		{{-- prev/next week --}}
 		<div class="btn-group col-xs-12 col-md-6">
-			<a class="btn btn-default hidden-print" 
+			<a class="btn btn-default hidden-print col-md-1 col-xs-2" 
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}">
 			   	&lt;&lt;</a>
 
-			<span class="btn btn-lg disabled week-mo-so" style="text-align: center !important;">	
-				{{ Config::get('messages_de.week-name') . $date['week']}}: 
-				<br class="visible-xs hidden-print">
+			<h6 class="col-md-8 col-xs-8 week-mo-so" style="text-align: center !important;">	
+				{{ "KW" . $date['week']}}: 
+				<br class="visible-xs">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart))) }} - 
+				<br class="visible-xs">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd . '- 2 days'))) }}
-			</span>
+			</h6>
 
-			<span class="btn btn-lg disabled week-mi-di hide" style="text-align: center !important;">	
-				{{ Config::get('messages_de.week-name') . $date['week']}}: 
-				<br class="visible-xs hidden-print">
+			<h6 class="col-md-8 col-xs-8 week-mi-di hide" style="text-align: center !important;">	
+				{{ "KW" . $date['week']}}: 
+				<br class="visible-xs">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart . '+  2 days'))) }} - 
+				<br class="visible-xs">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd))) }}
-			</span>
+			</h6>
 
-			<a class="btn btn-default hidden-print" 
+			<a class="btn btn-default hidden-print col-md-1 col-xs-2" 
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}">
 			   	&gt;&gt;</a>
 		</div>
 
 
 		{{-- filter --}}
-		<div class="col-xs-12 col-md-6 pull-right hidden-print">
-			<br class="visible-xs hidden-print">
+		<div class="col-xs-12 col-md-6 hidden-print">
 			@include('partials.filter')
 			<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten einblenden</button>
-			<br class="hidden-xs hidden-print"><br class="visible-xs hidden-print"><br class="visible-xs hidden-print">
 			<button class="btn btn-xs pull-right hidden-print"  type="button" id="change-week-view">Woche: Montag - Sonntag</button>
-			<br class="visible-xs hidden-print"><br class="visible-xs hidden-print">
+			<br class="visible-xs hidden-print">
 		</div>
 	</div>
 
-	<br class="hidden-print">
-	<br class="visible-xs hidden-print">
-	<br class="visible-xs hidden-print">
 		
 	{{-- weekdays --}}
 	@if (count($events)>0 OR count($tasks)>0)
@@ -140,7 +136,7 @@
 							
 					@endif
 
-					@include('partials.weekCellFull')
+						@include('partials.weekCellFull')
 
 					</div>
 

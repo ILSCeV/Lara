@@ -15,7 +15,7 @@
                     </strong>
                     <div class="entry-time hide text-dark-grey">
                         {!! "(" . date("H:i", strtotime($entry->entry_time_start))
-                        . "-" . "<br class='visible-xs hidden-print'>" .
+                        . "-" .
                         date("H:i", strtotime($entry->entry_time_end)) . ")" !!}
                     </div>
                 </small>

@@ -152,6 +152,7 @@ class ScheduleEntryController extends Controller
 
         // Remember old value for logging
         $oldPerson = $entry->getPerson;
+        $oldComment = $entry->entry_user_comment;
 
         // Check if that schedule needs a password and validate hashes
         if ($entry->getSchedule->schdl_password !== ''
@@ -182,7 +183,9 @@ class ScheduleEntryController extends Controller
                                                 $entry,                             // entry object
                                                 "Dienst eingetragen",               // action description
                                                 $oldPerson,                         // old value
-                                                $entry->getPerson()->first());      // new value     
+                                                $entry->getPerson()->first(),       // new value 
+                                                $oldComment,                        // old comment
+                                                $oldComment);                       // new comment (no change here, so just append old one)
             }
             else
             {
@@ -206,7 +209,9 @@ class ScheduleEntryController extends Controller
                                                     $entry,                             // entry object
                                                     "Dienst ausgetragen",               // action description
                                                     $oldPerson,                         // old value
-                                                    $entry->getPerson()->first());      // new value
+                                                    $entry->getPerson()->first(),       // new value 
+                                                    $oldComment,                        // old comment
+                                                    $oldComment);                       // new comment (no change here, so just append old one)
                 }
                 else
                 {
@@ -217,7 +222,9 @@ class ScheduleEntryController extends Controller
                                                     $entry,                             // entry object
                                                     "Dienst geändert",                  // action description
                                                     $oldPerson,                         // old value
-                                                    $entry->getPerson()->first());      // new value
+                                                    $entry->getPerson()->first(),       // new value 
+                                                    $oldComment,                        // old comment
+                                                    $oldComment);                       // new comment (no change here, so just append old one)
                 }
             }
         }
@@ -230,14 +237,20 @@ class ScheduleEntryController extends Controller
         // Case ADDED:   Comment was empty, new comment entered                 -> add new data
         // Case DELETED: Comment was not empty, comment is empty now            -> delete old data
         // Case CHANGED: Comment was not empty, new comment entered             -> delete old data, then add new data        
-
-        if( !isset($entry->entry_user_comment) )
+        if( empty($entry->entry_user_comment) )
         {
             if ( !$userComment == '' )
             {
                 // Case ADDED: Comment was empty, new comment entered -> add new data
                 $entry->entry_user_comment = $userComment;
-                $entry->save();  
+                $entry->save(); 
+                ScheduleController::logRevision($entry->getSchedule,                    // schedule object
+                                                    $entry,                             // entry object
+                                                    "Kommentar hinzugefügt",            // action description
+                                                    null,                               // old value (no need to log no change)
+                                                    null,                               // new value (no need to log no change)
+                                                    null,                               // old comment
+                                                    $userComment);                      // new comment 
             }
             else
             {
@@ -257,12 +270,26 @@ class ScheduleEntryController extends Controller
                     // Case DELETED: Comment was not empty, comment is empty now -> delete old data
                     $entry->entry_user_comment = null;
                     $entry->save();
+                    ScheduleController::logRevision($entry->getSchedule,                // schedule object
+                                                    $entry,                             // entry object
+                                                    "Kommentar gelöscht",               // action description
+                                                    null,                               // old value (no need to log no change)
+                                                    null,                               // new value (no need to log no change)
+                                                    $oldComment,                        // old comment
+                                                    null);                              // new comment
                 }
                 else
                 {
                     // Case CHANGED: Comment was not empty, new comment entered -> delete old data, then add new data  
                     $entry->entry_user_comment = $userComment;
                     $entry->save();
+                    ScheduleController::logRevision($entry->getSchedule,                // schedule object
+                                                    $entry,                             // entry object
+                                                    "Kommentar geändert",               // action description
+                                                    null,                               // old value (no need to log no change)
+                                                    null,                               // new value (no need to log no change)
+                                                    $oldComment,                        // old comment
+                                                    $userComment);                      // new comment
                 }
             }
         }    

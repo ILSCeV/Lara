@@ -33,7 +33,7 @@
 		{{-- Show password input if schedule needs one --}}
 		@if( $clubEvent->getSchedule->schdl_password != '')
 		    <div class="panel panel-heading hidden-print">
-		        {!! Form::password('password', array('required', 
+		        {!! Form::password('password' . $clubEvent->getSchedule->id, array('required', 
 		                                             'class'=>'col-md-12 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
 		                                             'placeholder'=>'Passwort hier eingeben')) !!}
@@ -41,10 +41,10 @@
 		    </div> 
 		@endif 
 
-		<div class="panel-body">
+		<div class="panel panel-body no-padding">
 
 			{{-- Show schedule entries --}}
-			@foreach($clubEvent->getSchedule->getEntries as $entry)
+			@foreach($entries = $clubEvent->getSchedule->getEntries as $entry)
 			    <div class="row">
 			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
 			                                'id' => $entry->id, 
@@ -100,7 +100,10 @@
 
 			    </div>
 
-			    <br class="visible-xs">
+				{{-- Show a line after each row except the last one --}}
+				@if($entry !== $entries->last() ) 
+					<hr class="col-md-12 col-xs-12 top-padding no-margin">
+				@endif
 
 			@endforeach
 			
@@ -108,7 +111,8 @@
 	        @if(Session::has('userGroup')
 		        AND (Session::get('userGroup') == 'marketing'
 		        OR Session::get('userGroup') == 'clubleitung'))
-				<div class="pull-right hidden-print">
+		        <hr class="col-md-12 col-xs-12 top-padding no-margin">
+				<div class="padding-right-16 bottom-padding pull-right hidden-print">
 					<small><a href="#" class="hide-event">Ausblenden</a></small>
 				</div>
 			@endif

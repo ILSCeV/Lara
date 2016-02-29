@@ -142,17 +142,19 @@ class ClubEventController extends Controller
 
         // log revision
         $newSchedule->entry_revisions = json_encode(array("0"=>
-                               ["entry id" => null,
-                                "job type" => null,
-                                "action" => "Dienstplan erstellt",
-                                "old id" => null,
-                                "old value" => null,
-                                "new id" => null,
-                                "new value" => null,
-                                "user id" => Session::get('userId') != NULL ? Session::get('userId') : "",
-                                "user name" => Session::get('userId') != NULL ? Session::get('userName') . '(' . Session::get('userClub') . ')' : "Gast",
-                                "from ip" => \Illuminate\Support\Facades\Request::getClientIp(),
-                                "timestamp" => (new DateTime)->format('Y-m-d H:i:s')
+                               ["entry id"    => null,
+                                "job type"    => null,
+                                "action"      => "Dienstplan erstellt",
+                                "old id"      => null,
+                                "old value"   => null,
+                                "old comment" => null,
+                                "new id"      => null,
+                                "new value"   => null,
+                                "new comment" => null,
+                                "user id"     => Session::get('userId') != NULL ? Session::get('userId') : "",
+                                "user name"   => Session::get('userId') != NULL ? Session::get('userName') . '(' . Session::get('userClub') . ')' : "Gast",
+                                "from ip"     => \Illuminate\Support\Facades\Request::getClientIp(),
+                                "timestamp"   => (new DateTime)->format('Y-m-d H:i:s')
                                 ]));
 
         $newSchedule->save();
@@ -168,7 +170,9 @@ class ClubEventController extends Controller
                                             $newEntry,                  // entry object
                                             "Dienst erstellt",          // action description
                                             null,                       // old value
-                                            null);                      // new value
+                                            null,                       // new value
+                                            null,                       // old comment
+                                            null);                      // new comment
         }
 
         // log the action

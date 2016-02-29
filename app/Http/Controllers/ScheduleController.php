@@ -163,24 +163,29 @@ class ScheduleController extends Controller
      * @param string $action
      * @param string $old
      * @param string $new
+     * @param string $oldComment
+     * @param string $newComment
      * @return void
      */
-    public static function logRevision($schedule, $entry, $action, $old, $new)
+    public static function logRevision($schedule, $entry, $action, $old, $new, $oldComment, $newComment)
     {
         // workaround for older events where revision history is not present
         if($schedule->entry_revisions == "")
         {
-            $schedule->entry_revisions = json_encode(["0" => ["entry id" => "",
-                                                      "job type" => "",
-                                                      "action" => "Keine frühere Änderungen vorhanden.",
-                                                      "old id" => "",
-                                                      "old value" => "",
-                                                      "new id" => "",
-                                                      "new value" => "",
-                                                      "user id" => "",
-                                                      "user name" => "",
-                                                      "from ip" => "",
-                                                      "timestamp" => (new DateTime)->format('d.m.Y H:i:s')]]);
+            $schedule->entry_revisions = json_encode(["0" => ["entry id"    => "",
+                                                              "job type"    => "",
+                                                              "action"      => "Keine frühere Änderungen vorhanden.",
+                                                              "old id"      => "",
+                                                              "old value"   => "",
+                                                              "old comment" => "",
+                                                              "new id"      => "",
+                                                              "new value"   => "",
+                                                              "user id"     => "",
+                                                              "user name"   => "",
+                                                              "new comment" => "",
+                                                              "from ip"     => "",
+                                                              "timestamp"   => (new DateTime)->format('d.m.Y H:i:s') ]
+                                                     ]);
         }
     
         // decode revision history
@@ -243,17 +248,19 @@ class ScheduleController extends Controller
         }
         
         // append current change
-        array_push($revisions, ["entry id" => $entry->id,
-                                "job type" => $entry->getJobType->jbtyp_title,
-                                "action" => $action,
-                                "old id" => $oldId,
-                                "old value" => $oldName,
-                                "new id" => $newId,
-                                "new value" => $newName,
-                                "user id" => Session::get('userId') != NULL ? Session::get('userId') : "",
-                                "user name" => Session::get('userId') != NULL ? Session::get('userName') . '(' . Session::get('userClub') . ')' : "Gast",
-                                "from ip" => Request::getClientIp(),
-                                "timestamp" => (new DateTime)->format('d.m.Y H:i:s')]
+        array_push($revisions, ["entry id"    => $entry->id,
+                                "job type"    => $entry->getJobType->jbtyp_title,
+                                "action"      => $action,
+                                "old id"      => $oldId,
+                                "old value"   => $oldName,
+                                "old comment" => $oldComment,
+                                "new id"      => $newId,
+                                "new value"   => $newName,
+                                "new comment" => $newComment,
+                                "user id"     => Session::get('userId') != NULL ? Session::get('userId') : "",
+                                "user name"   => Session::get('userId') != NULL ? Session::get('userName') . ' (' . Session::get('userClub') . ')' : "Gast",
+                                "from ip"     => Request::getClientIp(),
+                                "timestamp"   => (new DateTime)->format('d.m.Y H:i:s') ]
                     );      
 
         // encode and save
@@ -285,7 +292,7 @@ class ScheduleController extends Controller
                                   ->where('jbtyp_time_end', '=', Input::get("timeEnd" . $i))
                                   ->first();
                 
-                // If not found - create new jpb type with data provided
+                // If not found - create new job type with data provided
                 if (is_null($jobType))
                 {
                     // TITLE

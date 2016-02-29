@@ -41,12 +41,12 @@
 		    </div> 
 		@endif 
 
-		<div class="panel-body">
+		<div class="panel panel-body no-padding">
 
 			@if (!is_null($clubEvent->getSchedule))	
 
 				{{-- Show schedule entries --}}
-				@foreach($clubEvent->getSchedule->getEntries as $entry)
+				@foreach($entries = $clubEvent->getSchedule->getEntries as $entry)
 				    <div class="row">
 				        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
 				                                'id' => $entry->id, 
@@ -149,7 +149,10 @@
 
 				    </div>
 
-				    <br class="visible-xs">
+				    {{-- Show a line after each row except the last one --}}
+					@if($entry !== $entries->last() ) 
+						<hr class="col-md-12 col-xs-12 top-padding no-margin">
+					@endif
 
 				@endforeach
 
