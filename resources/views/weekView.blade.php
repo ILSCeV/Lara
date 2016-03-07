@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-	<div class="container">
+	<div class="container-fluid no-padding">
 
 		{{-- prev/next week --}}
 		<div class="btn-group col-xs-12 col-md-6">
@@ -15,7 +15,8 @@
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}">
 			   	&lt;&lt;</a>
 
-			<h6 class="col-md-8 col-xs-8 week-mo-so" style="text-align: center !important;">	
+			<h6 class="col-md-8 col-xs-8 week-mo-so no-margin centered">	
+				<br class="hidden-xs">
 				{{ "KW" . $date['week']}}: 
 				<br class="visible-xs">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart))) }} - 
@@ -23,7 +24,8 @@
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd . '- 2 days'))) }}
 			</h6>
 
-			<h6 class="col-md-8 col-xs-8 week-mi-di hide" style="text-align: center !important;">	
+			<h6 class="col-md-8 col-xs-8 week-mi-di no-margin centered hide">
+				<br class="hidden-xs">	
 				{{ "KW" . $date['week']}}: 
 				<br class="visible-xs">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart . '+  2 days'))) }} - 
@@ -36,12 +38,16 @@
 			   	&gt;&gt;</a>
 		</div>
 
+		<br class="visible-xs">
+		<br class="visible-xs">
+		<br class="visible-xs">
 
 		{{-- filter --}}
 		<div class="col-xs-12 col-md-6 hidden-print">
 			@include('partials.filter')
-			<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten einblenden</button>
-			<button class="btn btn-xs pull-right hidden-print"  type="button" id="change-week-view">Woche: Montag - Sonntag</button>
+			<br class="hidden-xs">
+			<button class="btn btn-xs hidden-print" type="button" id="show-hide-time">Zeiten einblenden</button>
+			<button class="btn btn-xs hidden-print" type="button" id="change-week-view">Woche: Montag - Sonntag</button>
 			<br class="visible-xs hidden-print">
 		</div>
 	</div>

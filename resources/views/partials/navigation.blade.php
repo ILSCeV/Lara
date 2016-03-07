@@ -21,10 +21,12 @@
             
             <li><a href="{{ asset('/calendar/week') }}">Woche</a></li>
             
-            <li><a href="{{ asset('/schedule') }}">Liste</a></li>
+            {{-- 
+            <li><a href="{{ asset('/schedule') }}">Liste</a></li> 
             @if(Session::has('userId'))
-            <li><a href="{{ asset('/task') }}">Aufgaben</a></li>
+                <li><a href="{{ asset('/task') }}">Aufgaben</a></li>
             @endif
+            --}}
             @if   (Session::has('userGroup')
               AND (Session::get('userGroup') == 'marketing'
               OR   Session::get('userGroup') == 'clubleitung'))
@@ -56,49 +58,52 @@
                 {!! Form::open(array('url' => 'logout', 
                                     'method' => 'POST', 
                                     'class'=>'form-horizontal')) !!}
-                    <center class="hidden-md">
                     <div class="navbar-form">
                         &nbsp;&nbsp;
                         @if     ( Session::get('userStatus') === 'candidate' ) 
                             <i class="fa fa-adjust" 
                                style="color:yellowgreen;"
                                data-toggle="tooltip" 
-                               data-placement="top" 
+                               data-placement="bottom" 
                                title="Kandidat"></i>
                         @elseif ( Session::get('userStatus') === 'veteran' ) 
                             <i class="fa fa-star" 
                                style="color:gold;"
                                data-toggle="tooltip" 
-                               data-placement="top" 
+                               data-placement="bottom" 
                                title="Veteran"></i>
                         @elseif ( Session::get('userStatus') === 'retired' ) 
                             <i class="fa fa-star-o" 
                                style="color:gold;"
                                data-toggle="tooltip" 
-                               data-placement="top" 
+                               data-placement="bottom" 
                                title="ex-Mitglied"></i>
                         @elseif ( Session::get('userStatus') === 'member')
                             <i class="fa fa-circle" 
                                style="color:forestgreen;"
                                data-toggle="tooltip" 
-                               data-placement="top" 
+                               data-placement="bottom" 
                                title="Aktiv"></i>
                         @endif
                         &nbsp;
                         <strong>
-                            {{ Session::get('userName') }} 
-                            ( {{ Session::get('userClub') }} 
-                                    @if(Session::has('userGroup')
-                                    AND (Session::get('userGroup') == 'marketing'
-                                    OR Session::get('userGroup') == 'clubleitung'))
-                                        {{ Session::get('userGroup') }}
+                            <span data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="
+                                    @if(Session::get('userGroup') == 'marketing')
+                                        {{ Session::get('userClub') . " / Marketing" }}
+                                    @elseif (Session::get('userGroup') == 'clubleitung')
+                                        {{ Session::get('userClub') . " / Clubleitung" }}
+                                    @else
+                                        {{ Session::get('userClub') }}
                                     @endif
-                                    )
+                                  ">
+                                {{ Session::get('userName') }} 
+                            </span>
                         </strong>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         {!! Form::submit('Abmelden', array('class'=>'btn btn-default btn-sm')) !!}
                     </div>
-                    </center>
                 {!! Form::close() !!}
             </li>
 

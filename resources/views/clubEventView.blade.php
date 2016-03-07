@@ -78,10 +78,37 @@
 						</td>
 					</tr>
 				</table>
-				
+			{{-- CRUD --}}
+			@if(Session::has('userGroup')
+				AND (Session::get('userGroup') == 'marketing'
+				OR Session::get('userGroup') == 'clubleitung'))
+				<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">	
+					<span class="pull-right">
+						<a href="{{ URL::route('event.edit', $clubEvent->id) }}" 
+						   class="btn btn-primary"
+						   data-toggle="tooltip" 
+	                       data-placement="bottom" 
+	                       title="Veranstaltung ändern">
+						   <i class="fa fa-pencil"></i>
+						</a>
+						&nbsp;&nbsp;
+						<a href="{{ $clubEvent->id }}"
+						   class="btn btn-default"
+						   data-toggle="tooltip" 
+	                       data-placement="bottom" 
+	                       title="Veranstaltung löschen" 
+						   data-method="delete" 
+						   data-token="{{csrf_token()}}"
+						   rel="nofollow" 
+						   data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">
+						   <i class="fa fa-trash"></i>
+						</a>
+					</span>
+				</div>
+			@endif
 		</div>
 
-		<div class="col-xs-12 col-md-6 no-padding">
+		<div class="col-xs-12 col-md-6 no-padding left-padding-16">
 			@if( $clubEvent->evnt_public_info != '')
 			<div class="panel">
 				<div class="panel-body more-info">				
@@ -289,25 +316,6 @@
 		<br class="visible-xs">
 	@endif
 
-	{{-- CRUD --}}
-	@if(Session::has('userGroup')
-			AND (Session::get('userGroup') == 'marketing'
-			OR Session::get('userGroup') == 'clubleitung'))
-			<div class="pull-right hidden-print">						
-				<a href="{{ URL::route('event.edit', $clubEvent->id) }}" 
-				   class="btn btn-primary">Veranstaltung ändern</a>
-
-				<span class="visible-xs">&nbsp;</span>
-				<span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-
-					<a href="{{ $clubEvent->id }}"
-					   class="btn btn-default" 
-					   data-method="delete" 
-					   data-token="{{csrf_token()}}"
-					   rel="nofollow" 
-					   data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">Veranstaltung löschen</a>
-			</div>
-	@endif
 @stop
 
 
