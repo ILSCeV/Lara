@@ -102,7 +102,7 @@
 
 				{{-- Show a line after each row except the last one --}}
 				@if($entry !== $entries->last() ) 
-					<hr class="col-md-12 col-xs-12 top-padding no-margin">
+					<hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 				@endif
 
 			@endforeach
@@ -111,7 +111,7 @@
 	        @if(Session::has('userGroup')
 		        AND (Session::get('userGroup') == 'marketing'
 		        OR Session::get('userGroup') == 'clubleitung'))
-		        <hr class="col-md-12 col-xs-12 top-padding no-margin">
+		        <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 				<div class="padding-right-16 bottom-padding pull-right hidden-print">
 					<small><a href="#" class="hide-event">Ausblenden</a></small>
 				</div>
