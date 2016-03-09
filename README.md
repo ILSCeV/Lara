@@ -31,6 +31,7 @@ For a detailed list of open requirements and change-requests visit [Issues](http
 ## Requirements and installation instructions
 - [Installation on XAMPP on Windows](https://github.com/4D44H/lara-vedst/wiki/Installation-on-Windows)
 - [Installation on a CentOS production server](https://github.com/4D44H/lara-vedst/wiki/Installation-on-Linux)
+- [Installation in a virtual machine (Vagrant - Windows, Linus, OSX)](https://github.com/4D44H/lara-vedst/wiki/Installation-in-a-virtual-machine-(Windows,-Linux,-OSX))
 
 
 ### License
