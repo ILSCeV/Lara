@@ -504,11 +504,11 @@ jQuery( document ).ready( function( $ ) {
                 // yellow = "other user updated before you, here's the new data"
 
                 // Update the fields according to server response
-                $("input[id=userName" + data["entryId"] + "]").attr('value', data["userName"]).attr("placeholder", "=FREI=");
-                $("input[id=ldapId"   + data["entryId"] + "]").attr('value', data["ldapId"]);
-                $("input[id=timestamp"+ data["entryId"] + "]").attr('value', data["timestamp"]);
-                $("input[id=club"     + data["entryId"] + "]").attr('value', data["userClub"]).attr("placeholder", "-");
-                $("input[id=comment"  + data["entryId"] + "]").attr('value', data["userComment"]).attr("placeholder", "Kommentar hier hinzufügen");
+                $("input[id=userName" + data["entryId"] + "]").val(data["userName"]).attr("placeholder", "=FREI=");
+                $("input[id=ldapId"   + data["entryId"] + "]").val(data["ldapId"]);
+                $("input[id=timestamp"+ data["entryId"] + "]").val(data["timestamp"]);
+                $("input[id=club"     + data["entryId"] + "]").val(data["userClub"]).attr("placeholder", "-");
+                $("input[id=comment"  + data["entryId"] + "]").val(data["userComment"]).attr("placeholder", "Kommentar hier hinzufügen");
 
                 // Switch comment icon in week view
                 if ( $("input[id=comment"  + data["entryId"] + "]").val() == "" ) {

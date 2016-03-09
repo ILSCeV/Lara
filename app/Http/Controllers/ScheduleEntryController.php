@@ -167,11 +167,11 @@ class ScheduleEntryController extends Controller
 
         // Check for person change (we will check for comment change later):
         //
-        // Case EMPTY:   Entry was empty, entry is empty now              -> do nothing
-        // Case SAME:    Entry was not empty, but same person is there    -> do nothing
-        // Case ADDED:   Entry was empty, new data entered                -> add new data
-        // Case DELETED: Entry was not empty, entry is empty now          -> delete old data
-        // Case CHANGED: Entry was not empty, new data entered            -> delete old data, then add new data
+        // Case EMPTY:     Entry was empty, entry is empty now              -> do nothing
+        // Case SAME:      Entry was not empty, but same person is there    -> do nothing
+        // Case ADDED:     Entry was empty, new data entered                -> add new data
+        // Case DELETED:   Entry was not empty, entry is empty now          -> delete old data
+        // Case CHANGED:   Entry was not empty, new name entered            -> delete old data, then add new data
      
         if( !isset($entry->prsn_id) )
         {
@@ -182,10 +182,10 @@ class ScheduleEntryController extends Controller
                 ScheduleController::logRevision($entry->getSchedule,                // schedule object
                                                 $entry,                             // entry object
                                                 "Dienst eingetragen",               // action description
-                                                $oldPerson,                         // old value
+                                                null,                               // old value
                                                 $entry->getPerson()->first(),       // new value 
-                                                $oldComment,                        // old comment
-                                                $oldComment);                       // new comment (no change here, so just append old one)
+                                                null,                               // old comment - no change here
+                                                null);                              // new comment - no change here 
             }
             else
             {
@@ -194,42 +194,81 @@ class ScheduleEntryController extends Controller
         }
         else
         {
-            if( $entry->getPerson->prsn_name == $userName
-            AND Person::where('id', '=', $entry->prsn_id)->first()->prsn_ldap_id == $ldapId )
+            if ( $userName == '' )
             {
-                // Case SAME: Entry was not empty, but same person is there -> do nothing
+                // Case DELETED: Entry was not empty, entry is empty now -> delete old data
+                $this->onDelete($entry);
+                ScheduleController::logRevision($entry->getSchedule,                // schedule object
+                                                $entry,                             // entry object
+                                                "Dienst ausgetragen",               // action description
+                                                $oldPerson,                         // old value
+                                                null,                               // new value 
+                                                null,                               // old comment - no change here
+                                                null);                              // new comment - no change here 
             }
             else
-            { 
-                if ( $userName == '' )
+            {
+                // Differentiate between entries with members or with guests
+                if ( !is_null($entry->getPerson()->first()->prsn_ldap_id) ) 
                 {
-                    // Case DELETED: Entry was not empty, entry is empty now -> delete old data
-                    $this->onDelete($entry);
-                    ScheduleController::logRevision($entry->getSchedule,                // schedule object
-                                                    $entry,                             // entry object
-                                                    "Dienst ausgetragen",               // action description
-                                                    $oldPerson,                         // old value
-                                                    $entry->getPerson()->first(),       // new value 
-                                                    $oldComment,                        // old comment
-                                                    $oldComment);                       // new comment (no change here, so just append old one)
-                }
+                    // Member entries (with LDAP ID provided) shouldn't change club id, so no need to do anything in that case either
+                    if ( $entry->getPerson->prsn_name == $userName 
+                    AND  Person::where('id', '=', $entry->prsn_id)->first()->prsn_ldap_id == $ldapId ) 
+                    {
+                        // Possibility 1: same name, same ldap = same person
+                        // Case SAME: Entry was not empty, but same person is there -> do nothing
+                    }
+                    else 
+                    {
+                        // Possibility 2: same name, new/empty ldap  = another person 
+                        // Possibility 3: new name,  same ldap       = probably LDAP ID not cleared on save, assume another person
+                        // Possibility 4: new name,  new/empty ldap  = another person 
+                        // Case CHANGED: Entry was not empty, new data entered -> delete old data, then add new data           
+                        $this->onDelete($entry);
+                        $this->onAdd($entry, $userName, $ldapId, $userClub);
+                        ScheduleController::logRevision($entry->getSchedule,                // schedule object
+                                                        $entry,                             // entry object
+                                                        "Dienst geändert",                  // action description
+                                                        $oldPerson,                         // old value
+                                                        $entry->getPerson()->first(),       // new value 
+                                                        null,                               // old comment - no change here
+                                                        null);                              // new comment - no change here
+                    }
+                } 
                 else
                 {
-                    // Case CHANGED: Entry was not empty, new data entered -> delete old data, then add new data
-                    $this->onDelete($entry);
-                    $this->onAdd($entry, $userName, $ldapId, $userClub);
-                    ScheduleController::logRevision($entry->getSchedule,                // schedule object
-                                                    $entry,                             // entry object
-                                                    "Dienst geändert",                  // action description
-                                                    $oldPerson,                         // old value
-                                                    $entry->getPerson()->first(),       // new value 
-                                                    $oldComment,                        // old comment
-                                                    $oldComment);                       // new comment (no change here, so just append old one)
+                    // Guest entries may change club
+                    if ( $entry->getPerson->prsn_name == $userName 
+                    AND  $entry->getPerson->getClub->clb_title == $userClub
+                    AND  $ldapId == '' ) 
+                    {
+                        // Possibility 1: same name, same club, empty ldap  = do nothing
+                        // Case SAME: Entry was not empty, but same person is there -> do nothing
+                    } 
+                    else
+                    {
+                        // Possibility 2: same name, new club,  empty ldap  -> Case CHANGED
+                        // Possibility 3: same name, same club, new ldap    -> Case CHANGED
+                        // Possibility 4: same name, new club,  new ldap    -> Case CHANGED
+                        // Possibility 5: new name,  same club, empty ldap  -> Case CHANGED
+                        // Possibility 6: new name,  new club,  empty ldap  -> Case CHANGED
+                        // Possibility 7: new name,  same club, new ldap    -> Case CHANGED
+                        // Possibility 8: new name,  new club,  new ldap    -> Case CHANGED
+                        // Case NAME CHANGED: Entry was not empty, new data entered -> delete old data, then add new data           
+                        $this->onDelete($entry);
+                        $this->onAdd($entry, $userName, $ldapId, $userClub);
+                        ScheduleController::logRevision($entry->getSchedule,                // schedule object
+                                                        $entry,                             // entry object
+                                                        "Dienst geändert",                  // action description
+                                                        $oldPerson,                         // old value
+                                                        $entry->getPerson()->first(),       // new value 
+                                                        null,                               // old comment - no change here
+                                                        null);                              // new comment - no change here 
+                    }  
                 }
             }
         }
     
-
         // Now let's check for comment changes:
         //
         // Case EMPTY:   Comment was empty, comment is empty now                -> do nothing
@@ -295,20 +334,18 @@ class ScheduleEntryController extends Controller
         }    
 
         // Find user status icon parameters to return
-        $userStatus = $this->updateStatus($entry);           
+        $userStatus = $this->updateStatus($entry);        
 
         ////////////////////////////
         // Formulate the response //
         ////////////////////////////
-        
-
-        $content = ["entryId"     => $entryId, 
-                    "userName"    => $userName,
+        $content = ["entryId"     => $entry->id, 
                     "userStatus"  => $userStatus,
-                    "ldapId"      => $ldapId, 
-                    "timestamp"   => $timestamp,
-                    "userClub"    => $userClub,
-                    "userComment" => $userComment];
+                    "userName"    => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->prsn_name,
+                    "ldapId"      => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->prsn_ldap_id, 
+                    "userClub"    => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->getClub->clb_title,
+                    "userComment" => $entry->entry_user_comment,
+                    "timestamp"   => $timestamp];
         $status = 200;  
         return response()->json($content, $status);
     }
