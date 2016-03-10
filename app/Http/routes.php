@@ -51,6 +51,10 @@ Route::post('login', 							'LoginController@doLogin');
 Route::post('logout', 							'LoginController@doLogout');
 
 
+// TIMESTAMP
+Route::get('updates/{id}', 					'ScheduleController@getUpdates');
+
+
 // YEAR
 Route::get('/calendar/year',					'YearController@currentYear');
 Route::get('/calendar/{year}',					'YearController@showYear');
@@ -84,8 +88,9 @@ Route::post('/task/create', 					['as'   => 'newTask',
 
 */
 // RESTful RESOURCES
-Route::resource('entry', 'ScheduleEntryController');
-Route::resource('event', 'ClubEventController');
+Route::resource('entry', 'ScheduleEntryController', ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
+Route::resource('schedule', 'ScheduleController', ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
+Route::resource('event', 'ClubEventController', ['except' => ['index', 'update']]);
 
 
 // EVENT ID

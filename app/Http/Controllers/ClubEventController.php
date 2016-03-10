@@ -98,7 +98,7 @@ class ClubEventController extends Controller
             // put template data into entries
             $entries = $template->getEntries()
                             ->with('getJobType')
-                            ->getResults();
+                            ->get();
         
 
             // put name of the active template for further use
@@ -259,18 +259,18 @@ class ClubEventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd("test");//
+        //
     }
 
     /**
-     * Delete an event specified by parameter $id with schedule and scheduleEntries.
+     * Delete an event specified by parameter $id with schedule and schedule entries.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function destroy($id)
     {
-        // Check credentials: you can only delete, if you have rigths for marketing or clubleitung.     
+        // Check credentials: you can only delete, if you have rights for marketing or management.     
         if(!Session::has('userId') 
             OR (Session::get('userGroup') != 'marketing'
                 AND Session::get('userGroup') != 'clubleitung'))
@@ -281,33 +281,25 @@ class ClubEventController extends Controller
                                                                    'month' => date('m')));
         }
         
-        // at first get all the data
+        // Get all the data
         $event = ClubEvent::find($id);
         
-        // check if the event exists
-        if (is_null($event)) {
+        // Check if the event exists
+        if ( is_null($event) ) {
             Session::put('message', Config::get('messages_de.event-doesnt-exist') );
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
-        
-        // log the action
+
+        // Log the action while we still have the data
         Log::info('Delete event: User ' . Session::get('userName') . '(' . Session::get('userId') . ', ' 
                  . Session::get('userGroup') . ') deleted event ' . $event->evnt_title . ' (ID:' . $event->id . ').');
 
-        $schedule = $event->getSchedule();
+        // Delete schedule with entries
+        $result = (new ScheduleController)->destroy($event->getSchedule()->first()->id);
         
-        $entries = $schedule->GetResults()->getEntries()->GetResults();
-        
-        // delete data in reverse order because of dependencies in database
-        foreach ($entries as $entry) {
-            $entry->delete();
-        }
-
-        $schedule->delete();
-        
-        $event->delete();
-        
+        // Now delete the event itself
+        ClubEvent::destroy($id);
 
         // show current month afterwards
         Session::put('message', Config::get('messages_de.event-delete-ok'));

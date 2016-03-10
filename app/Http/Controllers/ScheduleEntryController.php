@@ -53,9 +53,6 @@ class ScheduleEntryController extends Controller
     {
         // Called as part of SCHEDULE CREATE
         // IMPLEMENT LATER
-        $content = "";
-        $status = 501;  // "Not implemented"
-        return response($content, $status);
     }
 
     /**
@@ -104,9 +101,6 @@ class ScheduleEntryController extends Controller
     {
         // Called as part of SCHEDULE CREATE
         // IMPLEMENT LATER
-        $content = "";
-        $status = 501;  // "Not implemented"
-        return response($content, $status);
     }
 
     /**
@@ -336,34 +330,39 @@ class ScheduleEntryController extends Controller
         // Find user status icon parameters to return
         $userStatus = $this->updateStatus($entry);        
 
-        ////////////////////////////
-        // Formulate the response //
-        ////////////////////////////
-        $content = ["entryId"     => $entry->id, 
-                    "userStatus"  => $userStatus,
-                    "userName"    => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->prsn_name,
-                    "ldapId"      => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->prsn_ldap_id, 
-                    "userClub"    => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->getClub->clb_title,
-                    "userComment" => $entry->entry_user_comment,
-                    "timestamp"   => $timestamp];
-        $status = 200;  
-        return response()->json($content, $status);
+        // Formulate the response
+        return response()->json(["entryId"     => $entry->id, 
+                                 "userStatus"  => $userStatus,
+                                 "userName"    => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->prsn_name,
+                                 "ldapId"      => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->prsn_ldap_id, 
+                                 "userClub"    => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->getClub->clb_title,
+                                 "userComment" => $entry->entry_user_comment,
+                                 "timestamp"   => $timestamp], 
+                                 200);
     }
 
 
     /**
      * Remove the specified resource from storage.
+     * Deletes the dataset in table Person if it's a guest (LDAP id = NULL), but doesn't touch club members.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function destroy($id)
     {
-        // Called as part of SCHEDULE UPDATE
-        // IMPLEMENT LATER
-        $content = "";
-        $status = 501;  // "Not implemented"
-        return response($content, $status);
+        // Get all the data
+        $entry = ScheduleEntry::find($id);
+
+        // Check if entry exists
+        if ( is_null( $entry ) ) {
+            Session::put('message', 'Fehler: Löschvorgang abgebrochen - der Dienstplaneintrag existiert nicht.');
+            Session::put('msgType', 'danger');
+            return Redirect::back();
+        }
+
+        // Delete the entry
+        ScheduleEntry::destroy($id);
     }
 
 

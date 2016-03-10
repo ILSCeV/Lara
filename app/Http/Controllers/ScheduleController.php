@@ -147,11 +147,26 @@ class ScheduleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function destroy($id)
     {
-        //
+        // Get all the data
+        $schedule = Schedule::find($id);
+
+        // Check if the schedule exists
+        if ( is_null($schedule) ) {
+            Session::put('message', 'Fehler: Löschvorgang abgebrochen - der Dienstplaneintrag existiert nicht.');
+            Session::put('msgType', 'danger');
+            return Redirect::back();
+        }
+        // Delete all corresponding entries first because of dependencies in database
+        foreach ( $schedule->getEntries()->get() as $entry ) {
+            $result = (new ScheduleEntryController)->destroy($entry->id);
+        }
+
+        // Delete the schedule
+        Schedule::destroy($id);
     }
 
 
@@ -325,6 +340,23 @@ class ScheduleController extends Controller
         }
 
         return $scheduleEntries;
+    }
+
+
+    /**
+     * Receives a timestamp, compares it to last update time of the schedule 
+     * and returns either a false boolean for "no updates since timestamp provided"
+     * or a JSON array of updated schedule entries
+     *
+     * @param int $scheduleId 
+     * @param String $timestamp
+     *
+     * @return \Illuminate\Http\Response 
+     */
+    public static function getUpdates($scheduleId, $timestamp) 
+    {
+        $updated = Schedule::where("id", "=", $id)->first()->updated_at;
+        return response()->json($updated, 200);
     }
 
 
