@@ -83,7 +83,7 @@ class ScheduleController extends Controller
     * @param int $scheduleId
     * @return Schedule newSchedule
      */
-    public static function update($scheduleId)
+    public function update($scheduleId)
     {
         $schedule = new Schedule;
 
