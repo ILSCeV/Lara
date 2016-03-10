@@ -75,8 +75,7 @@ class WeekController extends Controller {
 					  'weekEnd'			=> $weekEnd,
 					  'nextWeek'		=> $nextWeek,
 					  'previousWeek'	=> $previousWeek );
-				  
-           
+				       
         $events = ClubEvent::where('evnt_date_start','>=',$weekStart)
                            ->where('evnt_date_start','<=',$weekEnd)
                            ->with('getPlace',

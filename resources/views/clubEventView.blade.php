@@ -165,16 +165,16 @@
 			        </div>
 
 			        {{-- ENTRY TITLE --}}
-			        <div class="col-md-2 col-xs-4 left-padding-8">
+			        <div class="col-md-2 col-xs-3 left-padding-8">
 			            @include("partials.scheduleEntryTitle")
 			        </div>
 			        
 			        {{-- show public events, but protect members' entries from being changed by guests --}}
 			        @if( isset($entry->getPerson->prsn_ldap_id) AND !Session::has('userId'))
 
-						<div class="col-md-2 col-xs-4 input-append btn-group">
+						<div class="col-md-2 col-xs-5 input-append btn-group">
 						    {{-- ENTRY STATUS --}}
-						    <div class="col-md-2 col-xs-2 no-padding" id="clubStatus{{ $entry->id }}">
+						    <div class="col-md-2 col-xs-3 no-padding" id="clubStatus{{ $entry->id }}">
 						        @include("partials.ScheduleEntryStatus")
 						    </div>
 
@@ -210,12 +210,12 @@
 					@else
 
 			        	{{-- ENTRY STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-						<div class="col-md-2 col-xs-4 input-append btn-group">      
+						<div class="col-md-2 col-xs-5 input-append btn-group">      
 						    @include("partials.scheduleEntryName")
 						</div>                
 						        
 						{{-- ENTRY CLUB and DROPDOWN CLUB --}}
-						<div class="col-md-2 col-xs-4">
+						<div class="col-md-2 col-xs-4 no-padding">
 						    @include("partials.scheduleEntryClub")                 
 						</div>   
 
@@ -240,7 +240,6 @@
 
 			        @endif
 			            
-			        {!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $entry->id, 'hidden') ) !!}
 			        {!! Form::close() !!}
 
 				</div>

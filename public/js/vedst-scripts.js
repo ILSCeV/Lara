@@ -442,6 +442,13 @@ $(function(){
 
 // Update schedule entries
 jQuery( document ).ready( function( $ ) { 
+    // Show save icon on form change
+    $( '.scheduleEntry' ).find('input').on( 'input', function() {
+        $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]').removeClass('hide');
+        $(this).parents('.scheduleEntry').find("[name^=status-icon]").addClass('hide');
+    } );
+
+    // Submit changes
     $( '.scheduleEntry' ).on( 'submit', function() {
 
         // For passworded schedules: check if a password field exists and is not empty
@@ -462,7 +469,7 @@ jQuery( document ).ready( function( $ ) {
 
             data: {
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-                    "_token":       $( this ).find( 'input[name=_token]' ).val(),
+                    "_token":       $(this).find( 'input[name=_token]' ).val(),
 
                     // Actual data being sent below
                     "entryId":      $(this).closest("form").attr("id"), 
@@ -480,9 +487,13 @@ jQuery( document ).ready( function( $ ) {
             dataType: 'json',
             
             beforeSend: function(data) {
+                // Remove save icon, restore status icon
+                console.log($(event.target).children().find('[name^=btn-submit-change]'));
+                $(event.target).children().find('[name^=btn-submit-change]').addClass('hide');
+                $(event.target).children().find("[name^=status-icon]").removeClass('hide');
+
                 // Show a spinner in the username status while we are waiting for a server response                
                 $(event.target).children().children("[id^=clubStatus]").children("i").removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner").attr("data-original-title", "In Arbeit...");
-                console.log($(this).find("[name^=comment]").val());
             },
             
             complete: function() {
