@@ -1,5 +1,5 @@
 <div class="col-md-3 col-xs-3 no-padding" id="clubStatus{{ $entry->id }}">
-    @include("partials.ScheduleEntryStatus")
+    @include("partials.scheduleEntryStatus")
 </div>
 
 @if( is_null($entry->getPerson) )

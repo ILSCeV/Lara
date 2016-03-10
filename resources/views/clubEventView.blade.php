@@ -175,7 +175,7 @@
 						<div class="col-md-2 col-xs-5 input-append btn-group">
 						    {{-- ENTRY STATUS --}}
 						    <div class="col-md-2 col-xs-3 no-padding" id="clubStatus{{ $entry->id }}">
-						        @include("partials.ScheduleEntryStatus")
+						        @include("partials.scheduleEntryStatus")
 						    </div>
 
 						    {{-- ENTRY USERNAME--}}

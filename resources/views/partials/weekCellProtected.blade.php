@@ -71,7 +71,7 @@
 				            <div class="col-xs-4 col-md-4 input-append btn-group padding-left-minimal">
 
 							    <div class="col-xs-2 col-md-2 no-padding" id="clubStatus{{ $entry->id }}">
-							        @include("partials.ScheduleEntryStatus")
+							        @include("partials.scheduleEntryStatus")
 							    </div>
 
 							    <div class="col-xs-10 col-md-10 no-padding" id="{!! 'userName' . $entry->id !!}" >
