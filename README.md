@@ -45,3 +45,5 @@ Lara VedSt is based on:
 - [Isotope 2.2.0](http://isotope.metafizzy.co/)
 
 (All licensed under [MIT License](http://opensource.org/licenses/MIT) or [GNU GPL v.3](http://opensource.org/licenses/GPL-3.0)).
+
+.
