@@ -247,7 +247,32 @@ class ClubEventController extends Controller
      */
     public function edit($id)
     {
-        //
+        // find event
+        $event = ClubEvent::findOrFail($id);
+
+        // find schedule
+        $schedule = $event->getSchedule;
+
+        // get a list of possible clubs to create an event at
+        $places = Place::orderBy('plc_title', 'ASC')
+                       ->pluck('plc_title', 'id');
+        
+
+        // get a list of available job types
+        $jobtypes = Jobtype::where('jbtyp_is_archived', '=', '0')
+                           ->orderBy('jbtyp_title', 'ASC')
+                           ->get();
+        
+        // put template data into entries
+        $entries = $schedule->getEntries()
+                            ->with('getJobType')
+                            ->get();
+
+        return View::make('editClubEventView', compact('event', 
+                                                       'schedule', 
+                                                       'places', 
+                                                       'jobtypes',  
+                                                       'entries'));
     }
 
     /**
@@ -259,7 +284,33 @@ class ClubEventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //validate passwords
+        if (Input::get('password') != Input::get('passwordDouble')) {
+            Session::put('message', Config::get('messages_de.password-mismatch') );
+            Session::put('msgType', 'danger');
+            return Redirect::back()->withInput(); 
+            }
+
+        // first we fill objects with data
+        // if there is an error, we have not saved yet, so we need no rollback
+        $event = $this->editClubEvent($id);
+
+        $schedule = (new ScheduleController)->update($event->getSchedule->id);
+
+        $entries = (new ScheduleController)->editScheduleEntries($schedule->id);
+
+        // log the action
+        Log::info('Edit event: User ' . Session::get('userName') . '(' . Session::get('userId') . ', ' 
+                 . Session::get('userGroup') . ') edited ' . $event->evnt_title . ' (ID:' . $event->id . ').');
+        
+        // save all data in the database
+        $event->save(); 
+        $schedule->save();
+        foreach($entries as $entry)
+            $entry->save();
+                                                                           
+        // show event
+        return Redirect::action('ClubEventController@show', array('id' => $id));
     }
 
     /**

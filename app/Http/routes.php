@@ -38,6 +38,7 @@ Route::pattern('day', 	'[0-3][0-9]');
 // LOG VIEWER
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
+
 // DEFAULT
 Route::get('/', 								'MonthController@currentMonth');
 Route::get('/calendar/',						'MonthController@currentMonth');
@@ -52,7 +53,7 @@ Route::post('logout', 							'LoginController@doLogout');
 
 
 // TIMESTAMP
-Route::get('updates/{id}', 					'ScheduleController@getUpdates');
+Route::get('updates/{id}', 						'ScheduleController@getUpdates');
 
 
 // YEAR
@@ -87,10 +88,11 @@ Route::post('/task/create', 					['as'   => 'newTask',
 												 'uses' => 'TaskController@createTask']);
 
 */
+
 // RESTful RESOURCES
-Route::resource('entry', 'ScheduleEntryController', ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
-Route::resource('schedule', 'ScheduleController', ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
-Route::resource('event', 'ClubEventController', ['except' => ['index', 'update']]);
+Route::resource('entry', 	'ScheduleEntryController', 	['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
+Route::resource('schedule', 'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
+Route::resource('event', 	'ClubEventController', 		['except' => ['index']]);
 
 
 // EVENT ID

@@ -344,6 +344,109 @@ class ScheduleController extends Controller
 
 
     /**
+    * Edit and/or delete scheduleEntries refered to $scheduleId.
+    *
+    * @param Schedule $schedule
+    * @return Collection scheduleEntries
+    */
+    public static function editScheduleEntries($scheduleId)
+    {
+        // get number of submitted entries
+        $numberOfSubmittedEntries = Input::get('counter');
+
+        // get old entries for this schedule
+        $scheduleEntries = ScheduleEntry::where('schdl_id', '=', $scheduleId)->get();
+
+        // prepare a collection for updated entries
+        $newEntries = new Collection;
+
+        // Counter to traverse all inputs from 1 to N
+        $counterHelper = '1';
+
+        // check for changes in each entry
+        foreach ( $scheduleEntries as $entry ) 
+        {
+
+            // same job type as before - do nothing
+            if ( $entry->getJobType == Input::get('jobType' + $counterHelper) ) 
+            {
+                // add to new collection
+                $newEntries->add(ScheduleController::updateScheduleEntry($entry, $jobtype->id, $counterHelper));
+
+            } 
+            // job type empty - delete entry
+            elseif ( Input::get("jobType" . $counterHelper) == '' ) 
+            {
+                // log revision
+                ScheduleController::logRevision($entry->getSchedule,    // schedule object
+                                                $entry,                 // entry object
+                                                "Dienst gelöscht",      // action description
+                                                $entry->getPerson,      // old value
+                                                null,                   // new value
+                                                null,                   // old comment
+                                                null);                  // new comment
+
+                // proceed with deletion
+                $entry->delete();
+
+            } 
+            // some new job type added - change entry
+            else 
+            {       
+                $jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jobType" . $counterHelper)));
+                $entry->jbtyp_id = $jobtype->id;
+
+                // log revision
+                /*
+                ScheduleController::logRevision($entry->getSchedule,    // schedule object
+                                                $entry,                 // entry object
+                                                "Dienst aktualisiert",      // action description
+                                                $entry->getPerson,      // old value
+                                                $entry->getPerson);     // new value
+                */
+                // add to new collection
+                $newEntries->add(ScheduleController::updateScheduleEntry($entry, $jobtype->id, $counterHelper));
+            }
+
+            // move to next input
+            $counterHelper++;
+        }
+
+        // At this point we changed all existing entries - have any new ones been added?
+
+        if ($numberOfSubmittedEntries > $counterHelper - 1) {
+            
+            // create some new fields
+            for ($i= $counterHelper; $i <= $numberOfSubmittedEntries; $i++) 
+            {
+                // skip empty fields, create new fields only if input not empty
+                if (!empty(Input::get("jobType" . $i))) 
+                {
+                    $jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jobType" . $i)));
+
+                    $newEntry = new ScheduleEntry;
+                    $newEntry->jbtyp_id = $jobtype->id;
+                    $newEntry->schdl_id = $scheduleId;
+
+                    // log revision
+                    ScheduleController::logRevision($newEntry->getSchedule, // schedule object
+                                                    $newEntry,              // entry object
+                                                    "Dienst erstellt",      // action description
+                                                    null,                   // old value
+                                                    null,                   // new value
+                                                    null,                   // old comment
+                                                    null);                  // new comment                   
+
+                    // add to new collection
+                    $newEntries->add(ScheduleController::updateScheduleEntry($newEntry, $jobtype->id, $i));
+                }
+            }
+        }
+
+        return $newEntries;
+    }
+
+    /**
      * Receives a timestamp, compares it to last update time of the schedule 
      * and returns either a false boolean for "no updates since timestamp provided"
      * or a JSON array of updated schedule entries
