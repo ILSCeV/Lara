@@ -23,6 +23,7 @@ Use at your own risk.
 * Updated Laravel to 5.2 version. All systems nominal, keep flying!
 * Put together a simple structure for ScheduleEntryByID views
 * Added correct password handling for both week and event views
+* Restored event editing, but more work is needed (refactoring/optimisation)
 
 
 ## Contributing
