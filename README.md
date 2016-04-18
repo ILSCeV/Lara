@@ -12,16 +12,16 @@ Some bugs are still alive.
 Use at your own risk.
 
 
-## Current project status as of 01.03.2016
+## Current project status as of 18.04.2016
 * Rewriting backend and adding more features (see branch [lara-2.0-beta](https://github.com/4D44H/lara-vedst/tree/lara-2.0-beta)), est. completion date: 
- * 13.03.2016 for [2.0-milestone](https://github.com/4D44H/lara-vedst/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Lara+2.0+update%22)
- * 27.03.2016 for [2.1-milestone](https://github.com/4D44H/lara-vedst/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Lara+2.1+update%22)
+ * 24.04.2016 for [2.0-milestone](https://github.com/4D44H/lara-vedst/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Lara+2.0+update%22)
+ * 15.05.2016 for [2.1-milestone](https://github.com/4D44H/lara-vedst/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Lara+2.1+update%22)
 
 
 
 ## Future additions planned
-- Event statistics: *on hold* till 01.04.2016
-- Finances & controlling: *on hold* till 01.04.2016
+- Event statistics: *on hold* till 01.08.2016
+- Finances & controlling: *on hold* till 01.08.2016
 
 
 ## Contributing
