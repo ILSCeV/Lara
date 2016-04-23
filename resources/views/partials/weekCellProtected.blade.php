@@ -14,7 +14,7 @@
 
 			<h4 class="panel-title">
 				<a href="{{ URL::route('event.show', $clubEvent->id) }}"> 
-					<span class="name">{{{ $clubEvent->evnt_title }}}</span>
+					@include("partials.event-marker", $clubEvent)&nbsp;<span class="name">{{{ $clubEvent->evnt_title }}}</span>
 				</a>
 			</h4>
 			

@@ -114,6 +114,7 @@
 				</div>
 
 				&nbsp;&nbsp;&nbsp;&nbsp;
+				<br class="visible-xs">
 
 				<input type="time" class="input" 
 					   name={{ "timeStart" . $counter }}
@@ -138,7 +139,7 @@
 	        	<input type="button" value="+" class="btn btn-small btn-success btnAdd" /> 
 	        	&nbsp;&nbsp;
 				<input type="button" value="&#8211;" class="btn btn-small btn-danger btnRemove" />
-
+				<br class="visible-xs"><br class="visible-xs">
 	    	</div>
 	    	<br>
 			<input type="hidden" name="counter" id="counter" value="{{$counter}}" />

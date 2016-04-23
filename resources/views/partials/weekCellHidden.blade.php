@@ -2,7 +2,7 @@
 	<div class="panel panel-heading">
 
 		<h4 class="panel-title">
-				<span class="name">Interne Veranstaltung</span>
+			<i class="fa fa-eye-slash">&nbsp;&nbsp;</i><span class="name">Interne Veranstaltung</span>
 		</h4>
 		
 		{{ utf8_encode(strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start))) }} 

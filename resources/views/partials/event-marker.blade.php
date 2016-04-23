@@ -1,13 +1,21 @@
 @if( $clubEvent->evnt_type == 0)
-	<span class="marker-0"><i class="fa fa-calendar-o"></i></span>
+	<i class="fa fa-calendar-o white-text"></i>
 @elseif( $clubEvent->evnt_type == 1)
-	<span class="marker-1"><small>&nbsp;</small><i class="fa fa-info"></i><small>&nbsp;</small></span>
+	<small>&nbsp;</small><i class="fa fa-info white-text"></i><small>&nbsp;</small>
 @elseif( $clubEvent->evnt_type == 2)
-	<span class="marker-2"><i class="fa fa-star"></i></span>
+	<i class="fa fa-star white-text"></i>
 @elseif( $clubEvent->evnt_type == 3)
-	<span class="marker-3"><i class="fa fa-music"></i></span>
+	<i class="fa fa-music white-text"></i>
 @elseif( $clubEvent->evnt_type == 4)
-	<span class="marker-4"><i class="fa fa-eye-slash"></i></span>
+	<i class="fa fa-eye-slash white-text"></i>
 @elseif( $clubEvent->evnt_type == 5)
-	<span class="marker-5"><small>&nbsp;</small><i class="fa fa-eur"></i><small>&nbsp;</small></span>
+	<small>&nbsp;</small><i class="fa fa-eur white-text"></i><small>&nbsp;</small>
+@elseif( $clubEvent->evnt_type == 6)
+	<i class="fa fa-life-ring white-text"></i>
+@elseif( $clubEvent->evnt_type == 7)
+	<i class="fa fa-building white-text"></i>
+@elseif( $clubEvent->evnt_type == 8)
+	<i class="fa fa-ticket white-text"></i>
+@elseif( $clubEvent->evnt_type == 9)
+	<i class="fa fa-list-alt white-text"></i>
 @endif

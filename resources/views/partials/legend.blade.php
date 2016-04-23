@@ -1,29 +1,50 @@
 <hr>
-<div class="col-md-12 col-xs-12 text-dark-grey centered">
-      <span class="marker-0"><i class="fa fa-calendar-o text-dark-grey" aria-hidden="true"></i></span>
+<div class="col-md-12 col-xs-12 text-dark-grey centered text-dark-grey">
+      <i class="fa fa-calendar-o"></i>
        - normales Programm
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      <br class="visible-xs">
-      <span class="marker-1"><small>&nbsp;</small><i class="fa fa-info text-dark-grey" aria-hidden="true"></i><small>&nbsp;</small></span>
+
+      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+
+      <small>&nbsp;</small><i class="fa fa-info"></i><small>&nbsp;</small>
        - Information
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      <br class="visible-xs">
-      <span class="marker-2"><i class="fa fa-star text-dark-grey" aria-hidden="true"></i></span>
+
+      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+
+      <i class="fa fa-star text-dark-grey"></i></span>
        - Spezial
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      <br class="visible-xs">
-      <span class="marker-3"><i class="fa fa-music text-dark-grey" aria-hidden="true"></i></span>
+
+      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+
+      <i class="fa fa-music"></i>
        - Live Band / Live DJ / Lesung
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      <br class="visible-xs visible-sm">
-      <span class="marker-5"><i class="fa fa-eur text-dark-grey" aria-hidden="true"></i></span>
+
+      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+
+      <i class="fa fa-eur"></i>
        - Nutzung
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      <br class="visible-xs">
-      <span class="marker-4"><i class="fa fa-eye-slash text-dark-grey" aria-hidden="true"></i></span>
+
+      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
+
+      <i class="fa fa-eye-slash"></i>
        - interne Veranstaltung
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      <br class="visible-xs">
-      <span class="marker-6"><i class="fa fa-list-alt" aria-hidden="true"></i></span>
-       - interne Aufgabe
+
+      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+
+      <i class="fa fa-life-ring"></i>
+       - Fluten
+
+      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+
+      <i class="fa fa-building"></i>
+       - Marketing / Flyer / Plakate
+
+      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+
+      <i class="fa fa-ticket"></i>
+       - Vorverkauf
+
+      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs visible-sm">
+
+      <i class="fa fa-list-alt"></i>
+       - weitere interne Aufgaben
 </div>

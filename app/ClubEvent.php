@@ -25,13 +25,16 @@ class ClubEvent extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('evnt_type',			// 0 -> default 
+	protected $fillable = array('evnt_type',			// 0 -> default -> "normales Programm"
 														// 1 -> info only 
 														// 2 -> highlight / special
 														// 3 -> live band / DJ / reading
 														// 4 -> internal event
 														// 5 -> private party -> "Nutzung"
-														// 6 -> internal task -> e.g. "Fluten"
+														// 6 -> cleaning -> "Fluten"
+														// 7 -> flyer / poster
+														// 8 -> tickets -> "Vorverkauf"
+														// 9 -> internal task -> everything else
 								'evnt_title', 
 								'evnt_subtitle',
 								'plc_id',

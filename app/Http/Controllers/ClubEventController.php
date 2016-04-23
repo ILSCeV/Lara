@@ -76,10 +76,11 @@ class ClubEventController extends Controller
         // prepare correct date format to be used in the forms
         $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
 
-        // get a list of possible clubs to create an event at
-        $places = Place::orderBy('plc_title', 'ASC')
+        // get a list of possible clubs to create an event at, but without the id=1 (default value)
+        $places = Place::where("id", ">", 1)
+                       ->orderBy('plc_title', 'ASC')
                        ->pluck('plc_title', 'id');
-        
+
         // get a list of available templates to choose from
         $templates = Schedule::where('schdl_is_template', '=', '1')
                              ->orderBy('schdl_title', 'ASC')

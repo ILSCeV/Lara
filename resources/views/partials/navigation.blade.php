@@ -50,9 +50,7 @@
 
                     {{-- CREATE BUTTON --}}  
                     <li style="padding-top:5px" class="btn-group"> 
-                        @if(Session::has('userGroup')
-                            AND (Session::get('userGroup') == 'marketing'
-                            OR Session::get('userGroup') == 'clubleitung'))
+                        @if(Session::has('userGroup'))
                             {{-- small [+] button --}}
                             <a href="{{ URL::route('event.create') }}" 
                                class="btn btn-sm btn-primary hidden-xs entered"

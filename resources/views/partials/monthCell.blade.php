@@ -29,7 +29,7 @@
 					@if($clubEvent->evnt_is_private)
 
 						<div class="cal-event dark-grey">
-							<span class="marker-4"><i class="fa fa-eye-slash"></i></span>
+							<i class="fa fa-eye-slash white-text"></i>
 							<span class="white-text">Internes Event</span>	
 						</div>
 
@@ -92,7 +92,7 @@
 			@if(Session::has('userId'))	
 				{{-- show private events only if user is logged in --}}
 				<div class="cal-event calendar-task">
-					<i class="fa fa-tasks marker-0"></i>
+					<i class="fa fa-tasks"></i>
 					<a href="{{ Request::getBasePath() }}/task/id/{{ $task->id }}"> 
 						{{{ $task->schdl_title }}}
 					</a>
