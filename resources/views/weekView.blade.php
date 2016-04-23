@@ -180,6 +180,9 @@
 		</div>
 	@endif
 
+{{-- Legend --}}
+@include("partials.legend")
+
 @stop
 
 

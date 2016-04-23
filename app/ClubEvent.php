@@ -29,8 +29,9 @@ class ClubEvent extends Model
 														// 1 -> info only 
 														// 2 -> highlight / special
 														// 3 -> live band / DJ / reading
-														// 4 -> internal
+														// 4 -> internal event
 														// 5 -> private party -> "Nutzung"
+														// 6 -> internal task -> e.g. "Fluten"
 								'evnt_title', 
 								'evnt_subtitle',
 								'plc_id',

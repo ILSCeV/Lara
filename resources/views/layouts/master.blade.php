@@ -23,23 +23,31 @@
 	</head>
 
   <body>
-		<div class="navigation">
+		<header class="navigation">
 			@include('partials.navigation')
-		</div>
+		</header>
 
 		<div class="message" id="centerpoint">
 			@include('partials.message')
 		</div>
 
-    <div class="container">
+    <section class="container">
         @yield('content')
-    </div>
+    </section>
 
-	 	<div class="footer">
-			@include('partials.footer')
-		</div>
+ 	<footer class="container footer" id="footer">
+        <hr>
+        <span class="col-xs-12 col-md-6 text-dark-grey" align="center">
+            <small>Etwas funktioniert nicht? Schreibe <a href="mailto:maxim.drachinskiy@bc-studentenclub.de">Maxim</a> an.</small>
+        </span>
+        <span class="col-xs-12 col-md-6 text-dark-grey" align="center">
+            <small>Mehr Infos? Besuche die <a href="http://github.com/4D44H/lara-vedst">Projektseite auf GitHub</a>.</small>
+        </span>
+        <br class="visible-xs">
+        <br>
+        <br>
+	</footer>
 		
-    <!-- Scripts -->
     <script src="{{ asset('/js/jquery-2.1.3.min.js') }}"></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/js/isotope.pkgd.min.js') }}"></script>
