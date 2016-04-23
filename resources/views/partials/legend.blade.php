@@ -15,7 +15,7 @@
       <span class="marker-3"><i class="fa fa-music text-dark-grey" aria-hidden="true"></i></span>
        - Live Band / Live DJ / Lesung
       <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      <br class="visible-xs">
+      <br class="visible-xs visible-sm">
       <span class="marker-5"><i class="fa fa-eur text-dark-grey" aria-hidden="true"></i></span>
        - Nutzung
       <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>

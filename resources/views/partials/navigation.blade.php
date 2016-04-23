@@ -45,7 +45,7 @@
 
         <ul class="nav navbar-nav navbar-right">      
             <span class="col-xs-1 visible-xs">&nbsp;</span>
-            <div class="col-xs-10 col-md-12 no-margin no-padding centered"> 
+            <div class="col-xs-10 col-sm-12 col-md-12 no-margin no-padding centered"> 
                 @if(Session::has('userId'))
 
                     {{-- CREATE BUTTON --}}  
@@ -55,7 +55,7 @@
                             OR Session::get('userGroup') == 'clubleitung'))
                             {{-- small [+] button --}}
                             <a href="{{ URL::route('event.create') }}" 
-                               class="btn btn-sm btn-primary hidden-xs centered"
+                               class="btn btn-sm btn-primary hidden-xs entered"
                                data-toggle="tooltip" 
                                data-placement="bottom" 
                                title="Neue Veranstaltung erstellen">
@@ -140,7 +140,7 @@
                                                                                          'class'=>'form-control',
                                                                                          'autocomplete'=>'on',
                                                                                          'style'=>'cursor: auto')) !!}
-                                <br class="visible-xs visible-sm">
+                                <br class="visible-xs">
                                 {!! Form::password('password', array('placeholder'=>'Passwort',
                                                                     'class'=>'form-control',
                                                                     'autocomplete'=>'off', 
