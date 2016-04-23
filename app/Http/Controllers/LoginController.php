@@ -95,7 +95,8 @@ class LoginController extends Controller {
     public function doLogin()
     {
         // Placeholder for development, groups will be implemented later
-        $userGroup = 'marketing';
+        $inputGroup = ['marketing', 'bc-Club', 'bc-Café', 'clubleitung'];
+        $userGroup = array_rand($inputGroup, 1);
         $input = array("1001" => "Neo", "1002" => "Morpheus", "1003" => "Trinity", "1004" => "Cypher", 
                        "1004" => "Tank", "1005" => "Hawkeye", "1006" => "Blackwidow", "1007" => "Deadpool", 
                        "1008" => "Taskmaster", "1009" => "nicht-FREI", "1010" => "Venom", "1011" => "Superman", 
