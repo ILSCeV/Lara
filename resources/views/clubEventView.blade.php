@@ -102,7 +102,9 @@
 							<i>Verein:</i>
 						</td>
 						<td>
-							{{{ $clubEvent->getPlace->plc_title }}}
+							{{{ $clubEvent->getPlace->plc_title }}} 
+							&nbsp;&nbsp;<br class="visible-xs">
+							<i>(wird angezeigt für: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
 						</td>
 					</tr>
 				</table>

@@ -186,7 +186,7 @@
 				    </span>
 			   	</div>
 
-			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
 					<label for="filter" class="control-label col-md-2 col-sm-2 col-xs-12">Zeige für: &nbsp;</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						{{-- Set default values to the club the user is a member in.
@@ -318,7 +318,7 @@
 	@include('partials.editSchedule')
 	<br>
 	
-	{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'btn btn-primary')) !!}
+	{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'btn btn-primary', 'id'=>'button-create-submit')) !!}
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<br class="visible-xs">
 	<a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>

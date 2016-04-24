@@ -187,15 +187,16 @@ AND (Session::get('userGroup') == 'marketing'
 				    </span>
 			   	</div>
 
-{{-- IMPLEMENT LATER --}}
-			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
 					<label for="filter" class="control-label col-md-2 col-sm-2 col-xs-12">Zeige für: &nbsp;</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						<div id="filter">
-							{!! Form::checkbox('filterShowToClub2', '1', true) !!}
+							{!! Form::checkbox('filterShowToClub2', '1', 
+									in_array( "bc-Club", json_decode($event->evnt_show_to_club) ) ? true : false ) !!}
 								bc-Club
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							{!! Form::checkbox('filterShowToClub3', '1', false) !!}
+							{!! Form::checkbox('filterShowToClub3', '1', 
+									in_array("bc-Café", json_decode($event->evnt_show_to_club)) ? true : false ) !!}
 								bc-Café
 						</div>	   	
 				    </div>
@@ -291,13 +292,15 @@ AND (Session::get('userGroup') == 'marketing'
 	@include('partials.editSchedule')
 	<br>
 	
-	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success')) !!}
+	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<br class="visible-xs"><br class="visible-xs">
 	<a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
 	
 	{!! Form::close() !!}
+
 @else
+
 	<div class="panel panel-warning">
 		<div class="panel panel-heading">
 			<h4 class="white-text">Ne, das geht so nicht...</h4>
@@ -311,6 +314,7 @@ AND (Session::get('userGroup') == 'marketing'
 		</div>
 	</div>
 @endif
+
 @stop
 
 

@@ -239,7 +239,16 @@ class ClubEventController extends Controller
         // add LDAP-ID of the event creator - only this user + Marketing + CL will be able to edit
         $created_by = $revisions[0]["user id"];
         $creator_name = $revisions[0]["user name"];
+
+        // Filter - Workaround for older events: populate filter with event club
+        if (empty($clubEvent->evnt_show_to_club) ) {
+            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->getPlace->plc_title], true);
+            $clubEvent->save();
+        } 
         
+            
+        
+
         return View::make('clubEventView', compact('clubEvent', 'entries', 'clubs', 'persons', 'revisions', 'created_by', 'creator_name'));
     }
 
@@ -272,6 +281,12 @@ class ClubEventController extends Controller
         $entries = $schedule->getEntries()
                             ->with('getJobType')
                             ->get();
+
+        // Filter - Workaround for older events: populate filter with event club
+        if (empty($event->evnt_show_to_club) ) {
+            $event->evnt_show_to_club = json_encode([$event->getPlace->plc_title], true);
+            $event->save();
+        }
 
         // add LDAP-ID of the event creator - only this user + Marketing + CL will be able to edit
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
@@ -447,6 +462,12 @@ class ClubEventController extends Controller
         // format: tinyInt; validate on filled value
         // reversed this: input=1 means "event is public", input=0 means "event is private"
         $event->evnt_is_private = (Input::get('isPrivate') == '1') ? 0 : 1;
+
+        // Filter
+        $filter = [];
+        if (Input::get('filterShowToClub2') == '1') { array_push($filter, 'bc-Club'); }
+        if (Input::get('filterShowToClub3') == '1') { array_push($filter, 'bc-Café'); }
+        $event->evnt_show_to_club = json_encode($filter, true);
         
         return $event;
     }

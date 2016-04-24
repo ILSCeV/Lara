@@ -85,6 +85,14 @@ class WeekController extends Controller {
                            ->orderBy('evnt_time_start')
                            ->get();
 
+        // Filter - Workaround for older events: populate filter with event club
+        foreach ($events as $clubEvent) {	        
+	        if (empty($clubEvent->evnt_show_to_club) ) {
+	            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->getPlace->plc_title], true);
+	            $clubEvent->save();
+	        } 
+        }
+
 		$tasks = Schedule::where('schdl_show_in_week_view', '=', '1')
 					     ->where('schdl_due_date', '>=', $weekStart) 				
 					     ->where('schdl_due_date', '<=', $weekEnd) 

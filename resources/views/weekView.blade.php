@@ -63,25 +63,25 @@
 			{{-- end of hack --}}
 
 			@foreach($events as $clubEvent)
-
+				{{-- Filter: we add a css class later below if a club is mentioned in filter data --}}
+	
 				{{-- guests see private events as placeholders only, so check if user is logged in --}}
 				@if(!Session::has('userId'))
 					
 					{{-- show only a placeholder for private events --}}
 					@if($clubEvent->evnt_is_private)
-
 						{{-- we compare the current week number with the week the event happens in
 							 to catch and hide any events on mondays and tuesdays (day < 3) next week 
 							 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
 						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week'] 
 						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mo-so">
+							<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
 						@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )  
 							  === date("W", strtotime("next Week".$weekStart))
 							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
+							<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
 						@else
-							<div class="element-item private {{ $clubEvent->getPlace->plc_title }}">
+							<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
 						@endif		
 							@include('partials.weekCellHidden')
 						</div>
@@ -94,13 +94,13 @@
 							 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
 						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week'] 
 						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item {{ $clubEvent->getPlace->plc_title }} week-mo-so">
+							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
 						@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )  
 							  === date("W", strtotime("next Week".$weekStart))
 							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
+							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
 						@else
-							<div class="element-item {{ $clubEvent->getPlace->plc_title }}">
+							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
 						@endif
 							@include('partials.weekCellProtected')
 						</div>
@@ -118,26 +118,26 @@
 							 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
 						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week'] 
 						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mo-so">
+							<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
 						@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )  
 							  === date("W", strtotime("next Week".$weekStart))
 							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item private {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
+							<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
 						@else
-							<div class="element-item private {{ $clubEvent->getPlace->plc_title }}">
+							<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
 						@endif		
 
 					@else
 						
 						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week'] 
 						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item {{ $clubEvent->getPlace->plc_title }} week-mo-so">
+							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
 						@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )  
 							  === date("W", strtotime("next Week".$weekStart))
 							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item {{ $clubEvent->getPlace->plc_title }} week-mi-di hide">
+							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
 						@else
-							<div class="element-item {{ $clubEvent->getPlace->plc_title }}">
+							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
 						@endif
 							
 					@endif

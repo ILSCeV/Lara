@@ -1,3 +1,31 @@
+// Non-sticky footer at the bottom of the screen
+$(document).ready(function() {
+
+    var docHeight = $(window).height();
+    var footerHeight = $('#footer').height();
+    var footerTop = $('#footer').position().top + footerHeight;
+
+    if (footerTop < docHeight) {
+        $('#footer').css('margin-top', (docHeight - footerTop) + 'px');
+    }
+});
+
+// On event create/edit - check that at leaast one checkbox is checked, otherwise event won't be shown at all.
+$("#button-edit-submit").click(function(){
+    if($('#filter-checkboxes').find('input[type=checkbox]:checked').length == 0)
+    {
+        alert('Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.');
+        return false;
+    }
+});
+$("#button-create-submit").click(function(){
+    if($('#filter-checkboxes').find('input[type=checkbox]:checked').length == 0)
+    {
+        alert('Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.');
+        return false;
+    }
+});
+
 // Automatically close messages after 4 seconds (4000 milliseconds). M.
 window.setTimeout(function() {
     $(".message").fadeTo(1000, 0).slideUp(500, function(){
@@ -384,18 +412,17 @@ $(document).ready(function() {
         {
             if (localStorage.filter == "nur bc-Club") 
             {
+                $('.filter').hide();
                 $('.bc-Club').show(); 
-                $('.bc-Café').hide(); 
             }
             else if (localStorage.filter == "nur bc-Café")
             {
-                $('.bc-Club').hide(); 
+                $('.filter').hide();
                 $('.bc-Café').show(); 
             }
             else if (localStorage.filter == "Alle Sektionen") 
             {
-                $('.bc-Club').show(); 
-                $('.bc-Café').show(); 
+                $('.filter').show();  
             }
         }
 
@@ -405,18 +432,17 @@ $(document).ready(function() {
             var filterValue = $( this ).attr('data-filter');
             if (filterValue.match("bc-Club")) 
             {
+                $('.filter').hide();
                 $('.bc-Club').show(); 
-                $('.bc-Café').hide(); 
             }
             else if (filterValue.match("bc-Café"))
             {
-                $('.bc-Club').hide(); 
+                $('.filter').hide(); 
                 $('.bc-Café').show(); 
             }
             else if (filterValue.match("\\*")) 
             {
-                $('.bc-Club').show(); 
-                $('.bc-Café').show(); 
+                $('.filter').show(); 
             }
             
         });
@@ -438,15 +464,41 @@ $(function(){
 // AJAX //
 //////////
 
-
-
 // Update schedule entries
-jQuery( document ).ready( function( $ ) { 
-    // Show save icon on form change
+jQuery( document ).ready( function( $ ) {
+
     $( '.scheduleEntry' ).find('input').on( 'input', function() {
+        // Show save icon on form change
         $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]').removeClass('hide');
         $(this).parents('.scheduleEntry').find("[name^=status-icon]").addClass('hide');
+
+        // short delay to prevents double sending
+        $(this).delay('250');
+
+        // Request autocompleted names
+        $.ajax({  
+            type: $( this ).prop( 'method' ),  
+
+            url: "/person/" + $(this).val(),  
+
+            data: {
+                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                    "_token": $(this).find( 'input[name=_token]' ).val(),
+
+                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+                    "_method": "get"
+            },  
+
+            dataType: 'json',
+
+            success: function(response){
+                // external function handles the response
+                ajaxCallBack(response);
+            },
+        });
+
     } );
+
 
     // Submit changes
     $( '.scheduleEntry' ).on( 'submit', function() {
@@ -487,10 +539,11 @@ jQuery( document ).ready( function( $ ) {
             dataType: 'json',
             
             beforeSend: function(data) {
-                // Remove save icon, restore status icon
+                // Remove save icon, restore status icon, remove dropdown
                 console.log($(event.target).children().find('[name^=btn-submit-change]'));
                 $(event.target).children().find('[name^=btn-submit-change]').addClass('hide');
-                $(event.target).children().find("[name^=status-icon]").removeClass('hide');
+                $(event.target).children().find('[name^=status-icon]').removeClass('hide');
+                $(event.target).children().find('.dropdown-menu').hide();
 
                 // Show a spinner in the username status while we are waiting for a server response                
                 $(event.target).children().children("[id^=clubStatus]").children("i").removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner").attr("data-original-title", "In Arbeit...");

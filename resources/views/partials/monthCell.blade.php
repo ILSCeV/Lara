@@ -20,8 +20,14 @@
 @foreach($events as $clubEvent)
 	@if($clubEvent->evnt_date_start === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
 
-		<div class="{{ $clubEvent->getPlace->plc_title }} word-break">
-
+		{{-- Filter --}}
+        @if ( empty($clubEvent->evnt_show_to_club) )
+        	{{-- Workaround for older events: if filter is empty - use event club data instead --}}
+            <div class="filter {!! $clubEvent->getPlace->plc_title !!}  word-break">
+       	@else
+       		{{-- Normal scenario: add a css class accordnig to filter data --}}
+			<div class="filter {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} {!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} word-break">
+		@endif
 				{{-- guests see private events as placeholders only, so check if user is logged in --}}
 				@if(!Session::has('userId'))
 					
