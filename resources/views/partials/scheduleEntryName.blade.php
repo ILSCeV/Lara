@@ -7,24 +7,34 @@
                  Input::old('userName' . $entry->id), 
                  array('placeholder'=>'=FREI=', 
                        'id'=>'userName' . $entry->id, 
-                       'class'=>'col-xs-8 col-md-8')) 
+                       'class'=>'col-xs-8 col-md-8',
+                       'autocomplete'=>'off',
+                       'data-toggle'=>'tooltip',
+                       'data-placement'=>'top', 
+                       'title'=>'',
+                       'data-original-title'=>'')) 
     !!}
 @else
     
     {!! Form::text('userName' . $entry->id, 
                  $entry->getPerson->prsn_name, 
                  array('id'=>'userName' . $entry->id, 
-                       'class'=>'col-xs-8 col-md-8') ) 
+                       'class'=>'col-xs-8 col-md-8',
+                        'autocomplete'=>'off') ) 
     !!}
 @endif
 
-<div class="col-xs-1 col-md-1 input-append btn-group no-padding">
-    @if(Session::has("userName"))
-        @include("partials.dropdownUsernames", $persons)
-    @else
-        &nbsp;
-    @endif
-</div>
+<ul class="dropdown-menu" style="position: absolute;" id="dropdown">
+    <li id="yourself">
+        <a href="javascript:void(0);" 
+           onClick="document.getElementById('userName{{ ''. $entry->id }}').value='{{Session::get('userName')}}';
+                    document.getElementById('club{{ ''. $entry->id }}').value='{{Session::get('userClub')}}';
+                    document.getElementById('ldapId{{ ''. $entry->id }}').value='{{Session::get('userId')}}'
+                        document.getElementById('btn-submit-changes{{ ''. $entry->id }}').click();">
+            <b>Ich mach's!</b>
+        </a>
+    </li>
+</ul>
 
 <div>
     @if( is_null($entry->getPerson) )

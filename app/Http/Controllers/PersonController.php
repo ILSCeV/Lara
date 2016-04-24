@@ -3,6 +3,9 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Cache;
+use DateTime;
+use DateInterval;
 
 use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
@@ -14,9 +17,23 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( $query = NULL )
     {
-        //
+        if ( is_null($query) ) {
+            // if no parameter specified - empty means "show all"
+            $query = "";
+        }
+
+        $persons =  \Lara\Person::whereNotNull( "prsn_ldap_id" )
+                                // Look for autofill
+                                ->where('prsn_name', 'like', '%' . $query . '%')
+                                ->orderBy('prsn_name')
+                                ->get(['prsn_name',
+                                       'prsn_ldap_id',
+                                       'prsn_status',
+                                       'clb_id']);
+                     
+        return response()->json($persons);
     }
 
     /**

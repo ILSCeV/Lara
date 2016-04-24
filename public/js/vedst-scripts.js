@@ -467,10 +467,85 @@ $(function(){
 // Update schedule entries
 jQuery( document ).ready( function( $ ) {
 
+    // open dropdown on input selection and show only "I'll do it!" button at the beginning
+    $( '.scheduleEntry' ).find('input').on( 'focus', function() {
+        // remove all other dropdowns
+        $(document).find('.dropdown-menu').hide();
+        // open dropdown for current input
+        $(document.activeElement).parent().children('.dropdown-menu').show();
+    } );
+
+    // hide all dropdowns on ESC keypress
+    $(document).keyup(function(e) {
+      if (e.keyCode === 27) {
+        $(document).find('.dropdown-menu').hide();
+      }
+    });
+
     $( '.scheduleEntry' ).find('input').on( 'input', function() {
         // Show save icon on form change
         $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]').removeClass('hide');
         $(this).parents('.scheduleEntry').find("[name^=status-icon]").addClass('hide');
+
+        /////////////////////////////
+        // AUTOCOMPELETE USERNAMES //
+        /////////////////////////////
+
+        // do all the work here after AJAX response is received
+        function ajaxCallBack(response) { 
+
+            // clear array from previous results, but leave first element with current user's data
+            $(document.activeElement).parent().children('.dropdown-menu').contents().filter(function () {
+                return this.id != "yourself";
+            }).remove();
+
+            // format data received
+            response.forEach(function(data) {
+
+                // now we convert our data to meaningful text - could have done it on server side, but this is easier for now:
+                // convert club_id to text
+                if (data.clb_id == 2) { data.clb_id = "bc-Club" }
+                if (data.clb_id == 3) { data.clb_id = "bc-Café" }
+
+                // convert person_status to text
+                if ( data.prsn_status == 'candidate' ) { data.prsn_status = " (K)" }
+                else if ( data.prsn_status == 'veteran' ) { data.prsn_status = " (V)" }
+                else if ( data.prsn_status == 'resigned' ) { data.prsn_status = " (ex)" }
+                else { data.prsn_status = "" } 
+
+                // add found persons to the array
+                $(document.activeElement).parent().children('.dropdown-menu').append(
+                    '<li><a href="javascript:void(0);">' 
+                    + '<span id="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
+                    + '<span id="currentName">' + data.prsn_name + '</span>'
+                    + data.prsn_status
+                    + '(<span id="currentClub">' + data.clb_id + '</span>)'
+                    + '</a></li>');
+            });  
+
+            // process clicks inside the dropdown
+            $(document.activeElement).parent().children('.dropdown-menu').children('li').click(function(e){
+                // gather the data for debugging
+                var currentLdapId = $(this).find('#currentLdapId').html();
+                var currentName = $(this).find('#currentName').html();
+                var currentClub = $(this).find('#currentClub').html();
+                var currentEntryId = $(this).closest(".scheduleEntry").attr("id");
+
+                // update fields
+                $("input[id=userName" + currentEntryId + "]").val(currentName);
+                $("input[id=ldapId"   + currentEntryId + "]").val(currentLdapId);
+                $("input[id=club"     + currentEntryId + "]").val(currentClub);
+                $(this).submit();
+
+                // hide dropdown when no longer needed
+                $(this).parents('ul').toggle();
+                
+            });
+
+            // reveal newly created dropdown
+            $(document.activeElement).parent().children('.dropdown-menu').show();
+
+        }
 
         // short delay to prevents double sending
         $(this).delay('250');
