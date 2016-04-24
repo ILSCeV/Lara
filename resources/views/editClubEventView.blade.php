@@ -160,7 +160,7 @@ AND (Session::get('userGroup') == 'marketing'
 										<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
 										Diese Öffnung wird nur für eingeloggte Mitglieder sichtbar sein!<br>
 										Um sie für Externe sichtbar zu machen oder den Typ zu ändern, <br>
-										frage die Clubleitung oder die Marketingverantwortliche.
+										frage die Clubleitung oder die Marketingverantwortlichen.
 									</span>
 				            	@endif
 				            </div>
@@ -304,9 +304,9 @@ AND (Session::get('userGroup') == 'marketing'
 		</div>
 		<div class="panel panel-body">
 			@if ($creator_name == "")
-				<h6>Nur die <b>Clubleitung</b> oder die <b>Marketingverantwortliche</b> dürfen diese Veranstaltung/Aufgabe ändern.</h6>
+				<h6>Nur die <b>Clubleitung</b> oder die <b>Marketingverantwortlichen</b> dürfen diese Veranstaltung/Aufgabe ändern.</h6>
 			@else
-				<h6>Nur <b>{!! $creator_name !!}</b>, die <b>Clubleitung</b> oder die <b>Marketingverantwortliche</b> dürfen diese Veranstaltung/Aufgabe ändern.</h6>
+				<h6>Nur <b>{!! $creator_name !!}</b>, die <b>Clubleitung</b> oder die <b>Marketingverantwortlichen</b> dürfen diese Veranstaltung/Aufgabe ändern.</h6>
 			@endif
 		</div>
 	</div>

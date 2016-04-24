@@ -153,7 +153,7 @@
 								<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
 								Diese Öffnung wird nur für eingeloggte Mitglieder sichtbar sein!<br>
 								Um sie für Externe sichtbar zu machen oder den Typ zu ändern, <br>
-								frage die Clubleitung oder die Marketingverantwortliche.
+								frage die Clubleitung oder die Marketingverantwortlichen.
 							</span>
 			            
 				            </div>
