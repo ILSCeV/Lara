@@ -89,7 +89,7 @@ Route::post('/task/create', 					['as'   => 'newTask',
 
 */
 
-Route::get('person/{query?}', 'personController@index');
+Route::get('person/{query?}', 'PersonController@index');
 
 // RESTful RESOURCES
 Route::resource('entry', 	'ScheduleEntryController', 	['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
