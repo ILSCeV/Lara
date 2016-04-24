@@ -24,6 +24,11 @@ Use at your own risk.
 * Put together a simple structure for ScheduleEntryByID views
 * Added correct password handling for both week and event views
 * Restored event editing, but more work is needed (refactoring/optimisation)
+* Added autocomplete for member names
+* Converted tasks to events of a certain type, added various types, allowed members to create some of them for internal use. Those can be converted to public events by marketing oder management.
+* Members with normal rights may create/edit/delete events/tasks they created, marketing and management - all events
+* Added correct event filtering - now events can be shown to multiple clubs (checkboxes). Also added more colours.
+* Multiple visual changes, mostly minor ones.
 
 
 ## Contributing
