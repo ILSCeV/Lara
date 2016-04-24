@@ -525,6 +525,9 @@ jQuery( document ).ready( function( $ ) {
 
             // process clicks inside the dropdown
             $(document.activeElement).parent().children('.dropdown-menu').children('li').click(function(e){
+                // ignore "i'll do it myself" button (handeled in view)
+                if ( this.id == "yourself") return false;
+
                 // gather the data for debugging
                 var currentLdapId = $(this).find('#currentLdapId').html();
                 var currentName = $(this).find('#currentName').html();
@@ -535,11 +538,11 @@ jQuery( document ).ready( function( $ ) {
                 $("input[id=userName" + currentEntryId + "]").val(currentName);
                 $("input[id=ldapId"   + currentEntryId + "]").val(currentLdapId);
                 $("input[id=club"     + currentEntryId + "]").val(currentClub);
-                $(this).submit();
 
-                // hide dropdown when no longer needed
-                $(this).parents('ul').toggle();
-                
+                // send to server
+                // need to go via click instead of submit because otherwise ajax:beforesend, complete and so on won't be triggered
+                $("#btn-submit-changes"+currentEntryId).click();
+
             });
 
             // reveal newly created dropdown
@@ -614,11 +617,12 @@ jQuery( document ).ready( function( $ ) {
             dataType: 'json',
             
             beforeSend: function(data) {
-                // Remove save icon, restore status icon, remove dropdown
-                console.log($(event.target).children().find('[name^=btn-submit-change]'));
+                // hide dropdowns bacause they aren't no longer needed
+                $(document).find('.dropdown-menu').hide();
+
+                // Remove save icon, restore status icon
                 $(event.target).children().find('[name^=btn-submit-change]').addClass('hide');
                 $(event.target).children().find('[name^=status-icon]').removeClass('hide');
-                $(event.target).children().find('.dropdown-menu').hide();
 
                 // Show a spinner in the username status while we are waiting for a server response                
                 $(event.target).children().children("[id^=clubStatus]").children("i").removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner").attr("data-original-title", "In Arbeit...");
@@ -669,9 +673,6 @@ jQuery( document ).ready( function( $ ) {
                 $("#spinner").attr("style", data["userStatus"]["style"]);
                 $("#spinner").attr("data-original-title", data["userStatus"]["title"]);
                 $("#spinner").removeClass().addClass(data["userStatus"]["status"]).removeAttr("id");               
-
-                // debugging info
-                console.log(data);
             },
 
             error: function (xhr, ajaxOptions, thrownError) {

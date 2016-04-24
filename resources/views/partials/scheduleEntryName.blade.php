@@ -8,11 +8,7 @@
                  array('placeholder'=>'=FREI=', 
                        'id'=>'userName' . $entry->id, 
                        'class'=>'col-xs-8 col-md-8',
-                       'autocomplete'=>'off',
-                       'data-toggle'=>'tooltip',
-                       'data-placement'=>'top', 
-                       'title'=>'',
-                       'data-original-title'=>'')) 
+                       'autocomplete'=>'off')) 
     !!}
 @else
     
@@ -24,7 +20,7 @@
     !!}
 @endif
 
-<ul class="dropdown-menu" style="position: absolute;" id="dropdown">
+<ul class="dropdown-menu" style="position: absolute;">
     <li id="yourself">
         <a href="javascript:void(0);" 
            onClick="document.getElementById('userName{{ ''. $entry->id }}').value='{{Session::get('userName')}}';
