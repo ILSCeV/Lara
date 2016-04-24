@@ -20,17 +20,20 @@
     !!}
 @endif
 
-<ul class="dropdown-menu" style="position: absolute;">
-    <li id="yourself">
-        <a href="javascript:void(0);" 
-           onClick="document.getElementById('userName{{ ''. $entry->id }}').value='{{Session::get('userName')}}';
-                    document.getElementById('club{{ ''. $entry->id }}').value='{{Session::get('userClub')}}';
-                    document.getElementById('ldapId{{ ''. $entry->id }}').value='{{Session::get('userId')}}'
-                        document.getElementById('btn-submit-changes{{ ''. $entry->id }}').click();">
-            <b>Ich mach's!</b>
-        </a>
-    </li>
-</ul>
+{{-- Show dropdowns only for members --}}
+@if (Session::has("userName"))
+    <ul class="dropdown-menu dropdown-username" style="position: absolute;">
+        <li id="yourself">
+            <a href="javascript:void(0);" 
+               onClick="document.getElementById('userName{{ ''. $entry->id }}').value='{{Session::get('userName')}}';
+                        document.getElementById('club{{ ''. $entry->id }}').value='{{Session::get('userClub')}}';
+                        document.getElementById('ldapId{{ ''. $entry->id }}').value='{{Session::get('userId')}}'
+                            document.getElementById('btn-submit-changes{{ ''. $entry->id }}').click();">
+                <b>Ich mach's!</b>
+            </a>
+        </li>
+    </ul>
+@endif
 
 <div>
     @if( is_null($entry->getPerson) )

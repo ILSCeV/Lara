@@ -470,15 +470,15 @@ jQuery( document ).ready( function( $ ) {
     // open dropdown on input selection and show only "I'll do it!" button at the beginning
     $( '.scheduleEntry' ).find('input').on( 'focus', function() {
         // remove all other dropdowns
-        $(document).find('.dropdown-menu').hide();
+        $(document).find('.dropdown-username').hide();
         // open dropdown for current input
-        $(document.activeElement).parent().children('.dropdown-menu').show();
+        $(document.activeElement).parent().children('.dropdown-username').show();
     } );
 
     // hide all dropdowns on ESC keypress
     $(document).keyup(function(e) {
       if (e.keyCode === 27) {
-        $(document).find('.dropdown-menu').hide();
+        $(document).find('.dropdown-username').hide();
       }
     });
 
@@ -495,7 +495,7 @@ jQuery( document ).ready( function( $ ) {
         function ajaxCallBack(response) { 
 
             // clear array from previous results, but leave first element with current user's data
-            $(document.activeElement).parent().children('.dropdown-menu').contents().filter(function () {
+            $(document.activeElement).parent().children('.dropdown-username').contents().filter(function () {
                 return this.id != "yourself";
             }).remove();
 
@@ -514,7 +514,7 @@ jQuery( document ).ready( function( $ ) {
                 else { data.prsn_status = "" } 
 
                 // add found persons to the array
-                $(document.activeElement).parent().children('.dropdown-menu').append(
+                $(document.activeElement).parent().children('.dropdown-username').append(
                     '<li><a href="javascript:void(0);">' 
                     + '<span id="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
                     + '<span id="currentName">' + data.prsn_name + '</span>'
@@ -524,7 +524,7 @@ jQuery( document ).ready( function( $ ) {
             });  
 
             // process clicks inside the dropdown
-            $(document.activeElement).parent().children('.dropdown-menu').children('li').click(function(e){
+            $(document.activeElement).parent().children('.dropdown-username').children('li').click(function(e){
                 // ignore "i'll do it myself" button (handeled in view)
                 if ( this.id == "yourself") return false;
 
@@ -546,7 +546,7 @@ jQuery( document ).ready( function( $ ) {
             });
 
             // reveal newly created dropdown
-            $(document.activeElement).parent().children('.dropdown-menu').show();
+            $(document.activeElement).parent().children('.dropdown-username').show();
 
         }
 
@@ -618,7 +618,7 @@ jQuery( document ).ready( function( $ ) {
             
             beforeSend: function(data) {
                 // hide dropdowns bacause they aren't no longer needed
-                $(document).find('.dropdown-menu').hide();
+                $(document).find('.dropdown-username').hide();
 
                 // Remove save icon, restore status icon
                 $(event.target).children().find('[name^=btn-submit-change]').addClass('hide');
