@@ -109,7 +109,8 @@
 			{{-- CRUD --}}
 			@if(Session::has('userGroup')
 				AND (Session::get('userGroup') == 'marketing'
-				OR Session::get('userGroup') == 'clubleitung'))
+				OR Session::get('userGroup') == 'clubleitung'
+				OR Session::get('userId') == $created_by))
 				<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">	
 					<span class="pull-right">
 						<a href="{{ URL::route('event.edit', $clubEvent->id) }}" 

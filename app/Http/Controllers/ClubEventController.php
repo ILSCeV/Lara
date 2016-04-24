@@ -235,8 +235,12 @@ class ClubEventController extends Controller
                 unset($entry["from ip"]);
             }
         }
+
+        // add LDAP-ID of the event creator - only this user + Marketing + CL will be able to edit
+        $created_by = $revisions[0]["user id"];
+        $creator_name = $revisions[0]["user name"];
         
-        return View::make('clubEventView', compact('clubEvent', 'entries', 'clubs', 'persons', 'revisions'));
+        return View::make('clubEventView', compact('clubEvent', 'entries', 'clubs', 'persons', 'revisions', 'created_by', 'creator_name'));
     }
 
 
@@ -269,11 +273,18 @@ class ClubEventController extends Controller
                             ->with('getJobType')
                             ->get();
 
+        // add LDAP-ID of the event creator - only this user + Marketing + CL will be able to edit
+        $revisions = json_decode($event->getSchedule->entry_revisions, true);
+        $created_by = $revisions[0]["user id"];
+        $creator_name = $revisions[0]["user name"];
+
         return View::make('editClubEventView', compact('event', 
                                                        'schedule', 
                                                        'places', 
                                                        'jobtypes',  
-                                                       'entries'));
+                                                       'entries',
+                                                       'created_by',
+                                                       'creator_name'));
     }
 
     /**
@@ -322,25 +333,28 @@ class ClubEventController extends Controller
      */
     public function destroy($id)
     {
-        // Check credentials: you can only delete, if you have rights for marketing or management.     
-        if(!Session::has('userId') 
-            OR (Session::get('userGroup') != 'marketing'
-                AND Session::get('userGroup') != 'clubleitung'))
-        {
-            Session::put('message', Config::get('messages_de.access-denied'));
-            Session::put('msgType', 'danger');
-            return Redirect::action('MonthController@showMonth', array('year' => date('Y'), 
-                                                                   'month' => date('m')));
-        }
-        
         // Get all the data
-        $event = ClubEvent::find($id);
+        $event = ClubEvent::find($id);  
         
-        // Check if the event exists
+        // Check if event exists
         if ( is_null($event) ) {
             Session::put('message', Config::get('messages_de.event-doesnt-exist') );
             Session::put('msgType', 'danger');
             return Redirect::back();
+        }
+
+        // Check credentials: you can only delete, if you have rights for marketing or management. 
+        $revisions = json_decode($event->getSchedule->entry_revisions, true);
+        $created_by = $revisions[0]["user id"];  
+        if(!Session::has('userId') 
+            OR (Session::get('userGroup') != 'marketing'
+                AND Session::get('userGroup') != 'clubleitung'
+                AND Session::get('userId') != $created_by))
+        {
+            Session::put('message', 'Du darfst diese Veranstaltung/Aufgabe nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
+            Session::put('msgType', 'danger');
+            return Redirect::action('MonthController@showMonth', array('year' => date('Y'), 
+                                                                   'month' => date('m')));
         }
 
         // Log the action while we still have the data
