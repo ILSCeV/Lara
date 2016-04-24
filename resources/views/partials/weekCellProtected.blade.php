@@ -1,20 +1,53 @@
 <div class="panel panel-warning">
 
+	@if($clubEvent->evnt_is_private)
+		@if     ($clubEvent->evnt_type == 1)
+			<div class="panel panel-heading calendar-internal-info white-text">
+		@elseif ($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9)
+			<div class="panel panel-heading calendar-internal-task white-text">
+		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
+			<div class="panel panel-heading calendar-internal-marketing white-text">
+		@elseif ($clubEvent->getPlace->id == 2)
+			<div class="panel panel-heading calendar-internal-event-bc-club white-text">
+		@elseif ($clubEvent->getPlace->id == 3)
+			<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
+		@else
+			{{-- DEFAULT --}}
+			<div class="cal-event dark-grey">
+		@endif
+	@else
+		@if     ($clubEvent->evnt_type == 1)
+			<div class="panel panel-heading calendar-public-info white-text">
+		@elseif ($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9)
+			<div class="panel panel-heading calendar-public-task white-text">
+		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
+			<div class="panel panel-heading calendar-public-marketing white-text">
+		@elseif ($clubEvent->getPlace->id == 2)
+			<div class="panel panel-heading calendar-public-event-bc-club white-text">
+		@elseif ($clubEvent->getPlace->id == 3)
+			<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
+		@else
+			{{-- DEFAULT --}}
+			<div class="cal-event dark-grey">
+		@endif
+	@endif
+
+
 	@if ($clubEvent->getPlace->plc_title == "bc-Club" AND $clubEvent->evnt_is_private )
-		<div class="panel panel-heading calendar-internal-event-bc-club white-text">
+		
 	@elseif ($clubEvent->getPlace->plc_title == "bc-Café" AND $clubEvent->evnt_is_private)
-		<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
+		
 	@elseif ($clubEvent->getPlace->plc_title == "bc-Club")
-		<div class="panel panel-heading calendar-public-event-bc-club white-text">
+		
 	@elseif ($clubEvent->getPlace->plc_title == "bc-Café")
-		<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
+		
 	@else
 		<div class="panel panel-heading calendar-task white-text">
 	@endif
 
 			<h4 class="panel-title">
 				<a href="{{ URL::route('event.show', $clubEvent->id) }}"> 
-					@include("partials.event-marker", $clubEvent)&nbsp;<span class="name">{{{ $clubEvent->evnt_title }}}</span>
+					@include("partials.event-marker")&nbsp;<span class="name">{{{ $clubEvent->evnt_title }}}</span>
 				</a>
 			</h4>
 			

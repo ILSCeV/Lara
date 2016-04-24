@@ -35,10 +35,15 @@
 
 					{{-- show everything for public events --}}
 					@else
-
-						@if ($clubEvent->getPlace->plc_title == "bc-Club")
+						@if     ($clubEvent->evnt_type == 1)
+							<div class="cal-event calendar-public-info">
+						@elseif ($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9)
+							<div class="cal-event calendar-public-task">
+						@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
+							<div class="cal-event calendar-public-marketing">
+						@elseif ($clubEvent->getPlace->id == 2)
 							<div class="cal-event calendar-public-event-bc-club">
-						@else
+						@elseif ($clubEvent->getPlace->id == 3)
 							<div class="cal-event calendar-public-event-bc-cafe">
 						@endif
 							@include("partials.event-marker", $clubEvent)
@@ -51,23 +56,37 @@
 
 				{{-- show everything for members, but switch the color theme according to event type --}}
 				@else
-					
-					@if ($clubEvent->getPlace->plc_title == "bc-Club")
 
-						@if($clubEvent->evnt_is_private)
+					@if($clubEvent->evnt_is_private)
+						@if     ($clubEvent->evnt_type == 1)
+							<div class="cal-event calendar-internal-info">
+						@elseif ($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9)
+							<div class="cal-event calendar-internal-task">
+						@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
+							<div class="cal-event calendar-internal-marketing">
+						@elseif ($clubEvent->getPlace->id == 2)
 							<div class="cal-event calendar-internal-event-bc-club">
-						@else
-							<div class="cal-event calendar-public-event-bc-club">
-						@endif	
-
-					@else
-
-						@if ($clubEvent->evnt_is_private)
+						@elseif ($clubEvent->getPlace->id == 3)
 							<div class="cal-event calendar-internal-event-bc-cafe">
 						@else
+							{{-- DEFAULT --}}
+							<div class="cal-event dark-grey">
+						@endif
+					@else
+						@if     ($clubEvent->evnt_type == 1)
+							<div class="cal-event calendar-public-info">
+						@elseif ($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9)
+							<div class="cal-event calendar-public-task">
+						@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
+							<div class="cal-event calendar-public-marketing">
+						@elseif ($clubEvent->getPlace->id == 2)
+							<div class="cal-event calendar-public-event-bc-club">
+						@elseif ($clubEvent->getPlace->id == 3)
 							<div class="cal-event calendar-public-event-bc-cafe">
-						@endif			
-						
+						@else
+							{{-- DEFAULT --}}
+							<div class="cal-event dark-grey">
+						@endif
 					@endif
 
 						@include("partials.event-marker", $clubEvent)

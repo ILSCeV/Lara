@@ -56,15 +56,12 @@
                                class="btn btn-sm btn-primary hidden-xs entered"
                                data-toggle="tooltip" 
                                data-placement="bottom" 
-                               title="Neue Veranstaltung erstellen">
+                               title="Neue Veranstaltung/Aufgabe hinzufügen">
                                     &nbsp;+&nbsp;
                             </a>
                             {{-- large [add event] button --}}
                             <a href="{{ URL::route('event.create') }}" 
-                               class="btn btn-sm btn-primary visible-xs centered"
-                               data-toggle="tooltip" 
-                               data-placement="bottom" 
-                               title="Neue Veranstaltung erstellen">
+                               class="btn btn-sm btn-primary visible-xs centered">
                                     &nbsp;Veranstaltung/Aufgabe hinzufügen&nbsp;
                             </a>
                         @endif

@@ -14,7 +14,7 @@
 		<div class="panel col-md-6 col-sm-12 col-xs-12">
 
 			<div class="panel-heading">
-				<h4 class="panel-title">Neue Veranstaltung erstellen:</h4>
+				<h4 class="panel-title">Neue Veranstaltung/Aufgabe erstellen:</h4>
 			</div>
 
 			<br>

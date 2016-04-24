@@ -8,18 +8,38 @@
 
 	<div class="row no-margin">
 		<div class="panel col-xs-12 col-md-6 no-padding">
-			@if ($clubEvent->getPlace->plc_title == "bc-Club" AND $clubEvent->evnt_is_private )
+			@if	($clubEvent->evnt_type == 1 AND $clubEvent->evnt_is_private)
+				<div class="panel panel-heading calendar-internal-info white-text">			
+			@elseif     ($clubEvent->evnt_type == 1)
+				<div class="panel panel-heading calendar-public-info white-text">
+
+			@elseif (($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9) AND $clubEvent->evnt_is_private)
+				<div class="panel panel-heading calendar-internal-task white-text">
+			@elseif ($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9)
+				<div class="panel panel-heading calendar-public-task white-text">
+
+
+			@elseif (($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8) AND $clubEvent->evnt_is_private)
+				<div class="panel panel-heading calendar-internal-marketing white-text">
+			@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
+				<div class="panel panel-heading calendar-public-marketing white-text">
+
+
+			@elseif ($clubEvent->getPlace->plc_title == "bc-Club" AND $clubEvent->evnt_is_private )
 				<div class="panel panel-heading calendar-internal-event-bc-club white-text">
-			@elseif ($clubEvent->getPlace->plc_title == "bc-Café" AND $clubEvent->evnt_is_private)
-				<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
 			@elseif ($clubEvent->getPlace->plc_title == "bc-Club")
 				<div class="panel panel-heading calendar-public-event-bc-club white-text">
+
+			@elseif ($clubEvent->getPlace->plc_title == "bc-Café" AND $clubEvent->evnt_is_private)
+				<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
 			@elseif ($clubEvent->getPlace->plc_title == "bc-Café")
 				<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
-			@else
-				<div class="panel panel-heading calendar-task white-text">
+				
+			@else 
+				{{-- DEFAULT --}}
+				<div class="panel panel-heading white-text">		
 			@endif
-				<h4 class="panel-title">{{{ $clubEvent->evnt_title }}}</h4>
+				<h4 class="panel-title">@include("partials.event-marker")&nbsp;{{{ $clubEvent->evnt_title }}}</h4>
 				<h5 class="panel-title">{{{ $clubEvent->evnt_subtitle }}}</h5>
 			</div>
 				<table class="table table-hover">
@@ -40,6 +60,14 @@
 								interne Veranstaltung
 							@elseif( $clubEvent->evnt_type == 5)
 								Nutzung
+							@elseif( $clubEvent->evnt_type == 6)
+								Fluten
+							@elseif( $clubEvent->evnt_type == 7)
+								Flyer / Plakatieren
+							@elseif( $clubEvent->evnt_type == 8)
+								Vorverkauf
+							@elseif( $clubEvent->evnt_type == 9)
+								interne Aufgabe
 							@endif
 						</td>
 					</tr>
