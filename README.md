@@ -1,5 +1,7 @@
 ## Club management software built on top of Laravel 5.2
 
+[![Stories in Ready](https://badge.waffle.io/tuiSSE/lara-vedst.png?label=ready&title=Ready)](http://waffle.io/tuiSSE/lara-vedst)
+
 ## This is a development version
 **Lara is a work in progress - and a beautiful mess sometimes.**
 Some features are missing. 
