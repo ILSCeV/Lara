@@ -35,6 +35,7 @@ class ClubEvent extends Model
 														// 7 -> flyer / poster
 														// 8 -> tickets -> "Vorverkauf"
 														// 9 -> internal task -> everything else
+														// 10 -> survey -> "Umfrage"
 								'evnt_title', 
 								'evnt_subtitle',
 								'plc_id',

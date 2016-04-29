@@ -101,6 +101,9 @@
 				            {!! Form::radio('evnt_type', "1") !!}
 				            	Information
 				            <br>
+							{!! Form::radio('evnt_type', "10") !!}
+								Umfrage
+							<br>
 
 				            <br>
 				            <div>
@@ -145,6 +148,9 @@
 				            {!! Form::radio('evnt_type', "1") !!}
 				            	Information
 				            <br>
+							&nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+								Umfrage
+							<br>
 
 				            <br>
 				            <div>
