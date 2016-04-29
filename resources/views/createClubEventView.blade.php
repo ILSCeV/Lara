@@ -101,11 +101,6 @@
 				            {!! Form::radio('evnt_type', "1") !!}
 				            	Information
 				            <br>
-							{!! Form::radio('evnt_type', "10") !!}
-								Umfrage
-							<br>
-
-				            <br>
 				            <div>
 								{!! Form::checkbox('isPrivate', '1', true) !!}
 									Für Externe sichtbar machen?

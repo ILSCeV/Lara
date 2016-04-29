@@ -52,19 +52,18 @@
                     <li style="padding-top:5px" class="btn-group"> 
                         @if(Session::has('userGroup'))
                             {{-- small [+] button --}}
-                            <a href="{{ URL::route('event.create') }}" 
-                               class="btn btn-sm btn-primary hidden-xs entered"
-                               data-toggle="tooltip" 
-                               data-placement="bottom" 
-                               title="Neue Veranstaltung/Aufgabe hinzufügen">
-                                    &nbsp;+&nbsp;
-                            </a>
-                            {{-- large [add event] button --}}
-                            <a href="{{ URL::route('event.create') }}" 
-                               class="btn btn-sm btn-primary visible-xs centered">
-                                    &nbsp;Veranstaltung/Aufgabe hinzufügen&nbsp;
-                            </a>
+                            <div style="padding-top:15px" class="btn-group">
+                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <span class="fa fa-plus-square">
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ URL::route('event.create') }}">Neue Veranstaltung/Aufgabe hinzufügen</a></li>
+                                    <li><a href="{{ URL::route('survey.create') }}">Neue Umfrage hinzufügen</a></li>
+                                </ul>
+                            </div>
                         @endif
+
                     </li>
 
                     {{-- LOGIN FORM --}}

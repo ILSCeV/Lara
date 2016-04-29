@@ -96,6 +96,7 @@ Route::resource('entry', 	'ScheduleEntryController', 	['except' => ['index', 'cr
 Route::resource('schedule', 'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('event', 	'ClubEventController', 		['except' => ['index']]);
 Route::resource('person', 	'PersonController', 		['only'   => ['index']]);
+Route::resource('survey',	'SurveyController',			['except' => ['index']]);
 
 
 // EVENT ID
