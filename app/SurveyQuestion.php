@@ -7,23 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class SurveyQuestion extends Model
 {
     protected $table ='survey_question';
+    protected $fillable = array('fieldType', 'content');
     
-    //many SurveyQuestions in one Survey possible
-    public function survey()
+    public function getSurvey() 
     {
         return $this->belongsTo('App\Survey');
     }
     
-    //one SurveyQuestion can have many SurveyAnswers
-    public function answers()
+    public function getAnswers() 
     {
         return $this->hasMany('App\SurveyAnswer', 'SurveyQuestion_number', 'number');
     }
-
-    
-    public function nope()
-    {
-        return $this->hasMany('App\SurveyAnswer', 'SurveyQuestion_Survey_id', 'Survey_id');
-    }
-
 }
