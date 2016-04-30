@@ -11,11 +11,11 @@ class SurveyQuestion extends Model
     
     public function getSurvey() 
     {
-        return $this->belongsTo('App\Survey');
+        return $this->belongsTo('Lara\Survey');
     }
     
     public function getAnswers() 
     {
-        return $this->hasMany('App\SurveyAnswer', 'SurveyQuestion_number', 'number');
+        return $this->hasMany('Lara\SurveyAnswer', 'SurveyQuestion_number', 'number');
     }
 }
