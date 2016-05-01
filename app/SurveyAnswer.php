@@ -11,13 +11,13 @@ class SurveyAnswer extends Model
     
     public function getQuestion() 
     {
-        return $this->belongsTo('Lara\SurveyQuestion', 'SurveyQuestion_number', 'number');
+        return $this->belongsTo('Lara\SurveyQuestion', 'survey_question_number', 'number');
     }
 
     //returns Survey of the answer, don't know if this works properly at the moment
     public function getSurvey() 
     {
-        return $this->belongsTo('Lara\SurveyQuestion', 'SurveyQuestion_Survey_id', 'Survey_id')->belongsTo('App\Survey');
+        return $this->belongsTo('Lara\SurveyQuestion', 'survey_question_id', 'survey_id')->belongsTo('Lara\Survey');
     }
     
     public function getPerson()
