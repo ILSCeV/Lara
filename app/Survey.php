@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Survey extends Model
 {
     protected $table ='survey';
-    protected $fillabe = array('deadline', 'id');
+    protected $fillabe = array('deadline');
 
     /**
      * Get the corresponding questions.
