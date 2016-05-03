@@ -67,7 +67,7 @@
 		      										     'style'=>'cursor: auto') ) !!}
 			    </div>
 			    
-			    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung')
+			    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung' OR Session::get('userGroup') == 'admin')
 				    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 				     	<label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">Typ:</label>
 				     	<div class="col-md-10 col-sm-10 col-xs-10">

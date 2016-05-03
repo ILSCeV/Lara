@@ -36,7 +36,7 @@ Route::pattern('day', 	'[0-3][0-9]');
 */
 
 // LOG VIEWER
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+Route::get('logs', 								'LogViewerController@index');
 
 
 // DEFAULT

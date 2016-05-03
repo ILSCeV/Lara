@@ -7,6 +7,7 @@ use Session;
 use Input;
 use Log;
 use Redirect;
+use Config;
 
 use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
@@ -94,14 +95,13 @@ class LoginController extends Controller {
 /*  DELETE THIS LINE TO ACTIVATE WORKAROUND AND COMMENT OUT WORKING CONTROLLER BELOW */
     public function doLogin()
     {
-        // Placeholder for development, groups will be implemented later
-        $inputGroup = ['marketing', 'bc-Club', 'bc-Café', 'clubleitung'];
-        $userGroup = array_rand($inputGroup, 1);
+        $inputGroup = ["marketing", "bc-Club", "bc-Café", "clubleitung", "admin"];
+        $userGroup = $inputGroup[array_rand($inputGroup, 1)];
+
         $input = array("1001" => "Neo", "1002" => "Morpheus", "1003" => "Trinity", "1004" => "Cypher", 
                        "1004" => "Tank", "1005" => "Hawkeye", "1006" => "Blackwidow", "1007" => "Deadpool", 
                        "1008" => "Taskmaster", "1009" => "nicht-FREI", "1010" => "Venom", "1011" => "Superman", 
                        "1012" => "Bart", "1013" => "Fry", "1014" => "Bender");
-        
         $userId = array_rand($input, 1);
         $userName = $input[$userId];
         
@@ -131,11 +131,7 @@ class LoginController extends Controller {
 /*
     public function doLogin()
     {
-    
-
 // MASTERPASSWORD for LDAP-Server downtime, stored in hashed form in config/bcLDAP.php
-
-
         if (Input::get('username') === "LDAP-OVERRIDE" ) {
 
             if (Config::get('bcLDAP.ldap-override') === base64_encode(mhash(MHASH_MD5, Input::get('password')))) {
@@ -326,6 +322,13 @@ class LoginController extends Controller {
             for ($i=0; $i < $infoGroup[0]['member']['count']; $i++) { 
                 if($infoGroup[0]['member'][$i] == $userDn){ $userGroup = "clubleitung"; }
             }  
+        }
+
+// SETTING ADMIN CREDENTIALS
+
+        // Hardcoded admin LDAP ID from the config file
+        if ($info[0]['uidnumber'][0] == Config::get('bcLDAP.admin-ldap-id') ) {
+            $userGroup = "admin";
         }
        
 

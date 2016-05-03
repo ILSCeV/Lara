@@ -130,7 +130,8 @@
 			{{-- Show a "hide" button for management, that allows removal of an event from current view - needed for printing --}}
 	        @if(Session::has('userGroup')
 		        AND (Session::get('userGroup') == 'marketing'
-		        OR Session::get('userGroup') == 'clubleitung'))
+		        OR Session::get('userGroup') == 'clubleitung'
+		        OR Session::get('userGroup') == 'admin'))
 		        <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 				<div class="padding-right-16 bottom-padding pull-right hidden-print">
 					<small><a href="#" class="hide-event">Ausblenden</a></small>

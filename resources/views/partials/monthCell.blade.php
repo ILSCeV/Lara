@@ -1,8 +1,6 @@
 {{-- Needs variables: i, date, id --}}
 
-@if(Session::has('userGroup')
-    AND (Session::get('userGroup') == 'marketing'
-    OR Session::get('userGroup') == 'clubleitung'))
+@if(Session::has('userGroup'))
     <a href="{{ Request::getBasePath() }}/
 			event/
 			{{ $date['year']}}/
