@@ -7,6 +7,10 @@ use Request;
 
 use Lara\Http\Requests;
 use Lara\Survey;
+use DateTime;
+use DateTimeZone;
+use View;
+use Input;
 
 class SurveyController extends Controller
 {
@@ -37,7 +41,7 @@ class SurveyController extends Controller
         $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
 
 
-        return View('createSurveyView', compact($date));
+        return View('createSurveyView', compact('date'));
     }
 
     public function destroy()
@@ -45,9 +49,13 @@ class SurveyController extends Controller
         //;
     }
 
-    public function show()
+    public function show($id)
     {
-        return view('surveyView');
+        $survey = Survey::findOrFail($id);
+
+        //questions and answers need to be found and returned to View
+
+        return view('surveyView', compact('survey'));
     }
 
     public function update()
@@ -61,11 +69,10 @@ class SurveyController extends Controller
     }
     public function store()
     {
-        $request = Request::all();
-        //$request->$id = random_int(0,99999999);
-        //fill with random id, same id's are possible! need to be updated
+        //stores default survey, needs user input in future
+        $newSurvey = $this->editSurvey(null);
 
-        Survey::create($request);
+        Survey::create([$newSurvey]);
         return redirect('survey');
     }
 
@@ -81,19 +88,20 @@ class SurveyController extends Controller
             $survey = Survey::findOrFail($id);
         }
 
-        $survey->Survey_deadline    = Input::get('deadline');
+        //get deadline from Form
+        $survey->deadline = Input::get('deadline');
 
         //update deadline
         if (!empty(Input::get('deadline')))
         {
             $newDeadline = new DateTime(Input::get('deadline'), new DateTimeZone(Config::get('app.timezone')));
-            $survey->survey_deadline = $newDeadline->format('Y-m-d');
+            $survey->deadline = $newDeadline->format('Y-m-d');
         }
-        //if deadline is empty set new deadline, need to be in future... maybe use old deadline/default?
+        //if deadline is empty set new deadline, doesnt work at the moment
         else
         {
-            $survey->survey_deadline = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));;
+            $survey->deadline = date('Y-m-d', mktime(0, 0, 0, 12, 31, 2100));
         }
-
+        return $survey;
     }
 }
