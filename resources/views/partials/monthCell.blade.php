@@ -106,23 +106,3 @@
 	@endif
 	
 @endforeach 
-
-@foreach($tasks as $task)
-				
-	{{-- sucht die Events zu den passenden Tagen --}}
-	@if($task->schdl_due_date === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
-
-		<div class="word-break">
-			@if(Session::has('userId'))	
-				{{-- show private events only if user is logged in --}}
-				<div class="cal-event calendar-task">
-					<i class="fa fa-tasks"></i>
-					<a href="{{ Request::getBasePath() }}/task/id/{{ $task->id }}"> 
-						{{{ $task->schdl_title }}}
-					</a>
-				</div>
-			@endif
-		</div>
-	@endif
-	
-@endforeach 

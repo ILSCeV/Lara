@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Lara\Jobtype;
 use Lara\Schedule;
 use Lara\ScheduleEntry;
+use Lara\ClubEvent;
 
 use Carbon\Carbon;
 use \Datetime;
@@ -100,20 +101,6 @@ class ScheduleController extends Controller
         else
         { 
             $schedule->schdl_time_preparation_start = mktime(0, 0, 0);
-        }
-
-        // format: date; validate on filled value
-        // by tasks - stay this way, by schedules will be set to null by event creation.
-        // ToDo: evtl statt null auf today setzen? M.
-        if(!empty(Input::get('dueDate')))
-        {
-            $dueDate = new DateTime(Input::get('dueDate'),
-                       new DateTimeZone(Config::get('app.timezone')));
-            $schedule->schdl_due_date = $dueDate->format('Y-m-d');
-        }
-        else 
-        {
-            $schedule->schdl_due_date = date('Y-m-d', time());
         }
 
         // format: password; validate on filled value
@@ -481,6 +468,5 @@ class ScheduleController extends Controller
 
         return $scheduleEntry;
     }
-
     
 }

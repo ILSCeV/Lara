@@ -46,7 +46,4 @@ return [
 
 	'event-doesnt-exist'	=> 'Fehler: Die Veranstaltung, die du löschen wolltest, existiert nicht.',
 	'event-delete-ok'		=> 'Alles top, das Ding wurde gelöscht.',
-
-	'task-doesnt-exist'		=> 'Fehler: Die Aufgabe, die du löschen wolltest, existiert nicht.',
-	'task-delete-ok'		=> 'Alles top, das Ding wurde gelöscht.',	
 ];

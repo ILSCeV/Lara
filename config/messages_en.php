@@ -47,7 +47,4 @@ return [
 	'event-doesnt-exist'	=> 'The event you tried to delete does not exist.',
 	'event-delete-ok'		=> 'Event deleted.',
 
-	'task-doesnt-exist'		=> 'The task you tried to delete does not exist.',
-	'task-delete-ok'		=> 'Task deleted.',	
-
 ];

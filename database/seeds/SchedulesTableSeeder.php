@@ -25,14 +25,6 @@ class SchedulesTableSeeder extends Seeder
 									 'evnt_id' => '1',
 									 'entry_revisions' => NULL,
 									 'schdl_is_template' => '1'));
-		
-		/* 
-		 * Creating tasks
-		 */
-
-        \Lara\Schedule::create(array('schdl_title' => 'Example task', 
-									 'schdl_due_date' => '2015-11-01',
-									 'schdl_is_template' => '0'));
 							
 		/**
 		 * Reporting result to console

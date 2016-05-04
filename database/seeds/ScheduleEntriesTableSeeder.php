@@ -43,16 +43,7 @@ class ScheduleEntriesTableSeeder extends Seeder
 		\Lara\ScheduleEntry::create(array('schdl_id' => '1', 
 										  'jbtyp_id' => '1'));
 												
-						
-		/**
-		 * Creating task schedule entries
-		 */					
-        \Lara\ScheduleEntry::create(array('schdl_id' => '2', 
-										  'jbtyp_id' => '6',
-										  'prsn_id' => '3'));
-							
-        \Lara\ScheduleEntry::create(array('schdl_id' => '2', 
-										  'jbtyp_id' => '7'));
+					
 							
 		/**
 		 * Reporting result to console
