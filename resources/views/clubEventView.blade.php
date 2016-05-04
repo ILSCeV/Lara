@@ -219,7 +219,7 @@
 						</div>
 
 						{{-- ENTRY CLUB --}}
-						<div id="{!! 'club' . $entry->id !!}" class="col-md-2 col-xs-4">
+						<div id="{!! 'club' . $entry->id !!}" class="col-md-2 col-xs-4 no-padding">
 						    {!! "(" . $entry->getPerson->getClub->clb_title . ")" !!}
 						</div>
 

@@ -1,4 +1,4 @@
-<div class="col-md-3 col-xs-3 no-padding" id="clubStatus{{ $entry->id }}">
+<div class="col-md-2 col-xs-3 no-padding" id="clubStatus{{ $entry->id }}">
     @include("partials.scheduleEntryStatus")
 </div>
 
