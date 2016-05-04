@@ -22,6 +22,25 @@ AND (Session::get('userGroup') == 'marketing'
 			</div>
 
 			<br>
+
+			<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">			
+					{!! Form::checkbox('saveAsTemplate', '1', $event->getSchedule->schdl_is_template, array('class'=>'col-md-1 col-sm-1 col-xs-1', 'hidden')) !!}
+
+					@if ($event->getSchedule->schdl_is_template)
+						{!! Form::text('templateName', $event->getSchedule->schdl_title, array('id'=>'templateName', 'hidden') ) !!}
+						<label for="saveAsTemplate" class="col-md-12 col-sm-12 col-xs-12">
+							{!!'(Gespeichert als Vorlage <b>"' . $event->getSchedule->schdl_title . '"</b>)' !!}
+						</label>
+					@else
+						<label for="saveAsTemplate" class="col-md-12 col-sm-12 col-xs-12">
+							{!! "(Dieser Event ist nicht als Vorlage gespeichert.)" !!}
+						</label>
+					@endif
+
+					
+			   	</div>
+
+			<br>
 			
 			<div class="panel-body no-padding">
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
