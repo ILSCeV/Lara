@@ -95,25 +95,44 @@ class ClubEventController extends Controller
         if ( $templateId != 0 ) {
             $template = Schedule::where('id', '=', $templateId)
                                 ->first();
-            
-            // put template data into entries
-            $entries = $template->getEntries()
-                            ->with('getJobType')
-                            ->get();
-        
 
             // put name of the active template for further use
             $activeTemplate = $template->schdl_title;
+
+            // get template data
+            $entries    = $template->getEntries()->with('getJobType')->get();
+            $title      = $template->getClubEvent->evnt_title;
+            $subtitle   = $template->getClubEvent->evnt_subtitle;
+            $type       = $template->getClubEvent->evnt_type;
+            $place      = $template->getClubEvent->plc_id;
+            $filter     = $template->getClubEvent->evnt_show_to_club;
+            $dv         = $template->schdl_time_preparation_start;
+            $timeStart  = $template->getClubEvent->evnt_time_start;
+            $timeEnd    = $template->getClubEvent->evnt_time_end;
+            $info       = $template->getClubEvent->evnt_public_info;
+            $details    = $template->getClubEvent->evnt_private_details;
+            $private    = $template->getClubEvent->evnt_is_private;
         } else {
             // fill variables with no data if no template was chosen
             $activeTemplate = "";
-            $entries = null;
+            $entries    = null;
+            $title      = null;
+            $type       = null;
+            $subtitle   = null;
+            $place      = null;
+            $filter     = null;
+            $dv         = null;
+            $timeStart  = null;
+            $timeEnd    = null;
+            $info       = null;
+            $details    = null;
+            $private    = null;
         }
                 
-        return View::make('createClubEventView', compact('places', 
-                                                         'templates', 
-                                                         'jobtypes', 
-                                                         'entries', 
+        return View::make('createClubEventView', compact('places', 'jobtypes', 'templates', 
+                                                         'entries', 'title', 'subtitle', 'type',
+                                                         'place', 'filter', 'timeStart', 'timeEnd',
+                                                         'info', 'details', 'private', 'dv',
                                                          'activeTemplate', 
                                                          'date'));
     }

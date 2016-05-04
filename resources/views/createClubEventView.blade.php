@@ -54,17 +54,30 @@
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 			      	<label for="title" class="col-md-2 col-sm-2 col-xs-3">Titel:</label>
-		      		{!! Form::text( 'title', '', array('placeholder'=>'z.B. Weinabend',
+		      		@if(is_null($title))
+			      		{!! Form::text( 'title', '', array('placeholder'=>'z.B. Weinabend',
+			      										   'style'=>'cursor: auto',
+			      										   'class'=>'col-md-9 col-sm-9 col-xs-8',
+			      										   'required') ) !!}
+			      	@else
+			      		{!! Form::text( 'title', $title, array('placeholder'=>'z.B. Weinabend',
 		      										   'style'=>'cursor: auto',
 		      										   'class'=>'col-md-9 col-sm-9 col-xs-8',
 		      										   'required') ) !!}
+		      		@endif
 			    </div>
 
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 					<label for="subtitle" class="col-md-2 col-sm-2 col-xs-3">Subtitel:</label>
-					{!! Form::text('subtitle', '', array('placeholder'=>'z.B. Das Leben ist zu kurz, um schlechten Wein zu trinken', 
-														 'class'=>'col-md-9 col-sm-9 col-xs-8',
-		      										     'style'=>'cursor: auto') ) !!}
+					@if(is_null($subtitle))
+						{!! Form::text('subtitle', '', array('placeholder'=>'z.B. Das Leben ist zu kurz, um schlechten Wein zu trinken', 
+															 'class'=>'col-md-9 col-sm-9 col-xs-8',
+			      										     'style'=>'cursor: auto') ) !!}
+			      	@else
+			      		{!! Form::text('subtitle', $subtitle, array('placeholder'=>'z.B. Das Leben ist zu kurz, um schlechten Wein zu trinken', 
+															 'class'=>'col-md-9 col-sm-9 col-xs-8',
+			      										     'style'=>'cursor: auto') ) !!}
+			      	@endif
 			    </div>
 			    
 			    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung' OR Session::get('userGroup') == 'admin')
@@ -74,37 +87,37 @@
 				            {!! Form::radio('evnt_type', "0", array("checked")) !!}
 				            	normales Programm
 				            <br>
-				            {!! Form::radio('evnt_type', "2") !!}
+				            {!! Form::radio('evnt_type', "2", $type == 2 ? array("checked") : "") !!}
 				            	Spezial
 				            <br>
-				            {!! Form::radio('evnt_type', "3") !!}
+				            {!! Form::radio('evnt_type', "3", $type == 3 ? array("checked") : "") !!}
 				            	Live Band / Live DJ / Lesung 
 				            <br>
-				            {!! Form::radio('evnt_type', "5") !!}
+				            {!! Form::radio('evnt_type', "5", $type == 5 ? array("checked") : "") !!}
 				            	Nutzung
 				            <br>
-				            {!! Form::radio('evnt_type', "4") !!}
+				            {!! Form::radio('evnt_type', "4", $type == 4 ? array("checked") : "") !!}
 				            	interne Veranstaltung
 				            <br>
-				            {!! Form::radio('evnt_type', "6") !!}
+				            {!! Form::radio('evnt_type', "6", $type == 6 ? array("checked") : "") !!}
 				            	Fluten
 				            <br>
-				            {!! Form::radio('evnt_type', "7") !!}
+				            {!! Form::radio('evnt_type', "7", $type == 7 ? array("checked") : "") !!}
 				            	Flyer / Plakatieren
 				            <br>
-				            {!! Form::radio('evnt_type', "8") !!}
+				            {!! Form::radio('evnt_type', "8", $type == 8 ? array("checked") : "") !!}
 				            	Vorverkauf
 				            <br>
-				            {!! Form::radio('evnt_type', "9") !!}
+				            {!! Form::radio('evnt_type', "9", $type == 9 ? array("checked") : "") !!}
 				            	weitere interne Aufgaben
 				            <br>
-				            {!! Form::radio('evnt_type', "1") !!}
+				            {!! Form::radio('evnt_type', "1", $type == 1 ? array("checked") : "") !!}
 				            	Information
 				            <br>
 
 				            <br>
 				            <div>
-								{!! Form::checkbox('isPrivate', '1', true) !!}
+								{!! Form::checkbox('isPrivate', '1', $private ? false : true) !!}
 									Für Externe sichtbar machen?
 							</div>
 				            <br>
@@ -139,39 +152,42 @@
 				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
 				            	Vorverkauf
 				            <br>
-				            {!! Form::radio('evnt_type', "9") !!}
+				            {!! Form::radio('evnt_type', "9", $type == 9 ? array("checked") : "") !!}
 				            	weitere interne Aufgaben
 				            <br>
-				            {!! Form::radio('evnt_type', "1") !!}
+				            {!! Form::radio('evnt_type', "1", $type == 1 ? array("checked") : "") !!}
 				            	Information
 				            <br>
 
 				            <br>
 				            <div>
-			            	{!! Form::checkbox('isPrivate', '1', false, array('hidden')) !!}
-							<span style="color: red;">
-								<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-								Diese Öffnung wird nur für eingeloggte Mitglieder sichtbar sein!<br>
-								Um sie für Externe sichtbar zu machen oder den Typ zu ändern, <br>
-								frage die Clubleitung oder die Marketingverantwortlichen.
-							</span>
-			            
+				            	{!! Form::checkbox('isPrivate', '1', false, array('hidden')) !!}
+								<span style="color: red;">
+									<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+									Diese Öffnung wird nur für eingeloggte Mitglieder sichtbar sein!<br>
+									Um sie für Externe sichtbar zu machen oder den Typ zu ändern, <br>
+									frage die Clubleitung oder die Marketingverantwortlichen.
+								</span>
 				            </div>
-							
 						</div>
 				    </div>					
 				@endif
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="place" class="control-label col-md-2 col-sm-2 col-xs-12">Sektion: &nbsp;</label>
-					<span class="col-md-10 col-sm-10 col-xs-12">
-						{{-- Set default values to the club the user is a member in.
-						 	 This saves time retyping event start/end times, etc. --}}
-						@if(Session::get('userClub') == 'bc-Club')
+					<span class="col-md-10 col-sm-10 col-xs-12">	   	
+						@if($place == "1")
 							{!! Form::text('place', 'bc-Club', array('id'=>'place') ) !!}
-						@elseif(Session::get('userClub') == 'bc-Café')
+						@elseif($place == "2")
 							{!! Form::text('place', 'bc-Café', array('id'=>'place') ) !!}
-						@endif 	   	
+						@else
+							{{-- Set default values to the club the user is a member in. --}}
+							@if(Session::get('userClub') == 'bc-Club')
+								{!! Form::text('place', 'bc-Club', array('id'=>'place') ) !!}
+							@elseif(Session::get('userClub') == 'bc-Café')
+								{!! Form::text('place', 'bc-Café', array('id'=>'place') ) !!}
+							@endif 
+						@endif
 					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 					        <span class="caret"></span>
 					    </a>
@@ -189,38 +205,55 @@
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
 					<label for="filter" class="control-label col-md-2 col-sm-2 col-xs-12">Zeige für: &nbsp;</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						{{-- Set default values to the club the user is a member in.
-						 	 This saves time changing defaults for other sections --}}
-						@if(Session::get('userClub') == 'bc-Club')
+						@if(is_null($filter) OR $filter == "")
+							{{-- Set default values to the club the user is a member in.--}}
+							@if(Session::get('userClub') == 'bc-Club')
+								<div id="filter">
+									{!! Form::checkbox('filterShowToClub2', '1', true) !!}
+										bc-Club
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									{!! Form::checkbox('filterShowToClub3', '1', false) !!}
+										bc-Café
+								</div>
+							@elseif(Session::get('userClub') == 'bc-Café')
+								<div id="filter">
+									{!! Form::checkbox('filterShowToClub2', '1', false) !!}
+										bc-Club
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									{!! Form::checkbox('filterShowToClub3', '1', true) !!}
+										bc-Café
+								</div>
+							@endif 	  
+						@else
 							<div id="filter">
-								{!! Form::checkbox('filterShowToClub2', '1', true) !!}
+								{!! Form::checkbox('filterShowToClub2', '1', 
+										in_array( "bc-Club", json_decode($filter) ) ? true : false ) !!}
 									bc-Club
 								&nbsp;&nbsp;&nbsp;&nbsp;
-								{!! Form::checkbox('filterShowToClub3', '1', false) !!}
+								{!! Form::checkbox('filterShowToClub3', '1', 
+										in_array("bc-Café", json_decode($filter)) ? true : false ) !!}
 									bc-Café
-							</div>
-						@elseif(Session::get('userClub') == 'bc-Café')
-							<div id="filter">
-								{!! Form::checkbox('filterShowToClub2', '1', false) !!}
-									bc-Club
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								{!! Form::checkbox('filterShowToClub3', '1', true) !!}
-									bc-Café
-							</div>
-						@endif 	   	
+							</div>	 	
+						@endif
 				    </div>
 			   	</div>
 
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 					<label for="preparationTime" class="control-label col-md-2 col-sm-2 col-xs-4">DV-Zeit:</label>
 					<div class="col-md-3 col-sm-3 col-xs-3">
-						{{-- Set default values to the club the user is a member in.
-						 	 This saves time retyping event start/end times, etc. --}}
-						@if(Session::get('userClub') == 'bc-Club')
-							{!! Form::input('time', 'preparationTime', '20:00' ) !!}
-						@elseif(Session::get('userClub') == 'bc-Café')
+						@if(is_null($dv))
+							{{-- Set default values to the club the user is a member in.
+							 	 This saves time retyping event start/end times, etc. --}}
+							@if(Session::get('userClub') == 'bc-Club')
+								<span class="hidden-xs">&nbsp;&nbsp;</span>
+								{!! Form::input('time', 'preparationTime', '20:00' ) !!}
+							@elseif(Session::get('userClub') == 'bc-Café')
+								<span class="hidden-xs">&nbsp;&nbsp;</span>
+								{!! Form::input('time', 'preparationTime', '10:45' ) !!}
+							@endif
+						@else
 							<span class="hidden-xs">&nbsp;&nbsp;</span>
-							{!! Form::input('time', 'preparationTime', '10:45' ) !!}
+							{!! Form::input('time', 'preparationTime', $dv ) !!}
 						@endif
 					</div>
 			    </div>
@@ -228,14 +261,19 @@
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 					<label for="beginDate" class="control-label col-md-2 col-sm-2 col-xs-12">Beginn:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						{{-- Set default values to the club the user is a member in.
-						 	 This saves time retyping event start/end times, etc. --}}
-						@if(Session::get('userClub') == 'bc-Club')
+						@if(is_null($timeStart))
+							{{-- Set default values to the club the user is a member in.
+							 	 This saves time retyping event start/end times, etc. --}}
+							@if(Session::get('userClub') == 'bc-Club')
+								{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!} 
+									um {!! Form::input('time', 'beginTime', '21:00') !!}
+							@elseif(Session::get('userClub') == 'bc-Café')
+								{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!} 
+									um {!! Form::input('time', 'beginTime', '12:00') !!}
+							@endif
+						@else
 							{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!} 
-								um {!! Form::input('time', 'beginTime', '21:00') !!}
-						@elseif(Session::get('userClub') == 'bc-Café')
-							{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!} 
-								um {!! Form::input('time', 'beginTime', '12:00') !!}
+									um {!! Form::input('time', 'beginTime', $timeStart) !!}
 						@endif
 					</div>
 			    </div>
@@ -243,14 +281,19 @@
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="endDate" class="control-label col-md-2 col-sm-2 col-xs-12">Ende:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						{{-- Set default values to the club the user is a member in.
-						 	 This saves time retyping event start/end times, etc. --}}
-						@if(Session::get('userClub') == 'bc-Club')
-							{!! Form::input('date', 'endDate', date("Y-m-d", strtotime("+1 day", strtotime($date)))) !!} 
-								um {!! Form::input('time', 'endTime', '01:00') !!}
-						@elseif(Session::get('userClub') == 'bc-Café')
+						@if(is_null($timeEnd))
+							{{-- Set default values to the club the user is a member in.
+							 	 This saves time retyping event start/end times, etc. --}}
+							@if(Session::get('userClub') == 'bc-Club')
+								{!! Form::input('date', 'endDate', date("Y-m-d", strtotime("+1 day", strtotime($date)))) !!} 
+									um {!! Form::input('time', 'endTime', '01:00') !!}
+							@elseif(Session::get('userClub') == 'bc-Café')
+								{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($date))) !!} 
+									um {!! Form::input('time', 'endTime', '17:00') !!}
+							@endif
+						@else
 							{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($date))) !!} 
-								um {!! Form::input('time', 'endTime', '17:00') !!}
+									um {!! Form::input('time', 'endTime', $timeEnd) !!}
 						@endif
 					</div>
 			    </div>
@@ -289,9 +332,15 @@
 				<div class="panel-body">				
 				    <div class="form-group">	
 						<div class="col-md-12">
-							{!! Form::textarea('publicInfo', '', array('class'=>'form-control', 
+							@if(is_null($info))
+								{!! Form::textarea('publicInfo', '', array('class'=>'form-control', 
+																		  'rows'=>'8',
+																		  'placeholder'=>'z.B. Karten nur im Vorverkauf') ) !!}
+							@else
+								{!! Form::textarea('publicInfo', $info, array('class'=>'form-control', 
 																	  'rows'=>'8',
 																	  'placeholder'=>'z.B. Karten nur im Vorverkauf') ) !!}
+							@endif
 						</div>
 					</div>	
 				</div>
@@ -304,9 +353,15 @@
 				<div class="panel-body">
 				    <div class="form-group">
 						<div class="col-md-12">
-							{!! Form::textarea('privateDetails', '', array('class'=>'form-control', 
+							@if(is_null($details))
+								{!! Form::textarea('privateDetails', '', array('class'=>'form-control', 
+																			  'rows'=>'5', 
+																			  'placeholder'=>'z.B. DJ-Tisch wird gebraucht') ) !!}
+							@else
+								{!! Form::textarea('privateDetails', $details, array('class'=>'form-control', 
 																		  'rows'=>'5', 
 																		  'placeholder'=>'z.B. DJ-Tisch wird gebraucht') ) !!}
+							@endif
 						</div>
 				    </div>
 				</div>
