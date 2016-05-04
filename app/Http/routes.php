@@ -81,14 +81,17 @@ Route::get('/calendar/{year}/{month}/{day}',	'DateController@showDate');
 Route::get('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventController@create');
 
 
-
+// AJAX calls
 Route::get('person/{query?}', 'PersonController@index');
+Route::get('club/{query?}', 'ClubController@index');
+
 
 // RESTful RESOURCES
 Route::resource('entry', 	'ScheduleEntryController', 	['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('schedule', 'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('event', 	'ClubEventController', 		['except' => ['index']]);
 Route::resource('person', 	'PersonController', 		['only'   => ['index']]);
+Route::resource('club', 	'ClubController', 			['only'   => ['index']]);
 
 
 /*

@@ -7,7 +7,7 @@
                  Input::old('userName' . $entry->id), 
                  array('placeholder'=>'=FREI=', 
                        'id'=>'userName' . $entry->id, 
-                       'class'=>'col-xs-8 col-md-8',
+                       'class'=>'col-xs-8 col-md-8 ',
                        'autocomplete'=>'off')) 
     !!}
 @else
