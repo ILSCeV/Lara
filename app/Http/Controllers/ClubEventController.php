@@ -196,8 +196,8 @@ class ClubEventController extends Controller
         }
 
         // log the action
-        Log::info('Create event: User ' . Session::get('userName') . '(' . Session::get('userId') . ', ' 
-                 . Session::get('userGroup') . ') created event ' . $newEvent->evnt_title . ' (ID: ' . $newEvent->id . ').');
+        Log::info('Event created: ' . Session::get('userName') . ' (' . Session::get('userId') . ', ' 
+                 . Session::get('userGroup') . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
             
         // show new event
         return Redirect::action('ClubEventController@show', array('id' => $newEvent->id));
@@ -346,9 +346,10 @@ class ClubEventController extends Controller
         $entries = (new ScheduleController)->editScheduleEntries($schedule->id);
 
         // log the action
-        Log::info('Edit event: User ' . Session::get('userName') . '(' . Session::get('userId') . ', ' 
-                 . Session::get('userGroup') . ') edited ' . $event->evnt_title . ' (ID:' . $event->id . ').');
-        
+        Log::info('Event edited: ' . Session::get('userName') . ' (' . Session::get('userId') . ', ' 
+                 . Session::get('userGroup') . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+
+
         // save all data in the database
         $event->save(); 
         $schedule->save();
@@ -383,6 +384,7 @@ class ClubEventController extends Controller
         if(!Session::has('userId') 
             OR (Session::get('userGroup') != 'marketing'
                 AND Session::get('userGroup') != 'clubleitung'
+                AND Session::get('userGroup') != 'admin'
                 AND Session::get('userId') != $created_by))
         {
             Session::put('message', 'Du darfst diese Veranstaltung/Aufgabe nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
@@ -392,8 +394,9 @@ class ClubEventController extends Controller
         }
 
         // Log the action while we still have the data
-        Log::info('Delete event: User ' . Session::get('userName') . '(' . Session::get('userId') . ', ' 
-                 . Session::get('userGroup') . ') deleted event ' . $event->evnt_title . ' (ID:' . $event->id . ').');
+        Log::info('Event deleted: ' . Session::get('userName') . ' (' . Session::get('userId') . ', ' 
+                 . Session::get('userGroup') . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+
 
         // Delete schedule with entries
         $result = (new ScheduleController)->destroy($event->getSchedule()->first()->id);

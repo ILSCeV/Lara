@@ -117,7 +117,7 @@ class LoginController extends Controller {
         Session::put('userClub',    $userClub);
         Session::put('userStatus',  $userStatus);
 
-        Log::info('Auth success: User ' . $userName . ' (' . $userId .', group: ' . $userGroup . ') just logged in.');
+        Log::info('Auth success: ' . $userName . ' (' . $userId .', ' . $userGroup . ') just logged in.');
       
         return Redirect::back();
   
@@ -369,7 +369,7 @@ class LoginController extends Controller {
             Session::put('userClub', $userClub);
             Session::put('userStatus', $userStatus);
 
-            Log::info('Auth success: User ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] .', group: ' . $userGroup . ') just logged in.');
+            Log::info('Auth success: ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] .', ' . $userGroup . ') just logged in.');
           
             return Redirect::back();
         } 
@@ -382,7 +382,7 @@ class LoginController extends Controller {
             Session::put('message', Config::get('messages_de.login-fail'));
             Session::put('msgType', 'danger');
            
-            Log::info('Auth fail: User ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] .', group: ' . $userGroup . ') used wrong password.');
+            Log::info('Auth fail: ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] .', ' . $userGroup . ') used wrong password.');
            
             return Redirect::back();
         }
