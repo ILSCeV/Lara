@@ -17,7 +17,7 @@ class CreateSurveyQuestionTable extends Migration
             $table->integer('number')->unsigned();
             $table->primary(['survey_id', 'number']);
             $table->integer('fieldType')->unsigned();
-            $table->string('content');
+            $table->string('content', 1500);
             $table->timestamps();
         });
     }
