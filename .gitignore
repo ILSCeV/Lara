@@ -16,6 +16,7 @@ composer.phar
 
 .idea/
 _ide_helper.php
+.phpstorm.meta.php
 .DS_Store
 Thumbs.db
 

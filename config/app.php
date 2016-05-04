@@ -149,7 +149,10 @@ return [
          * Providers for Lara-VedSt
          */
         Collective\Html\HtmlServiceProvider::class,
-
+        /*
+         * ide-helper for php storm
+         */
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     ],
 
     /*
