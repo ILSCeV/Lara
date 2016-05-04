@@ -8,7 +8,7 @@
 	<div class="container-fluid no-padding">
 
 		{{-- prev/next week --}}
-		<div class="btn-group col-xs-12 col-md-6">
+		<div class="btn-group col-xs-12 col-md-6 hidden-print">
 			<a class="btn btn-default hidden-print col-md-1 col-xs-2" 
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}">
 			   	&lt;&lt;</a>
