@@ -13,9 +13,9 @@ class CreateSurveyQuestionTable extends Migration
     public function up()
     {
         Schema::create('survey_question', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('survey_id')->references('id')->on('survey')->unsigned();
             $table->integer('number')->unsigned();
-            $table->primary(['survey_id', 'number']);
             $table->integer('fieldType')->unsigned();
             $table->string('content', 1500);
             $table->timestamps();
