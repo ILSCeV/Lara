@@ -2,11 +2,12 @@
 
 namespace Lara\Http\Controllers;
 
-use Lara\SurveyQuestion;
-use Request;
-
-use Lara\Http\Requests;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Redirect;
+//use Lara\Http\Requests;
 use Lara\Survey;
+use Lara\SurveyQuestion;
 use DateTime;
 use DateTimeZone;
 use View;
@@ -41,6 +42,32 @@ class SurveyController extends Controller
         $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
         return View('createSurveyView', compact('date'));
     }
+
+    /**
+     * @param Request $input
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function store(Request $input)
+    {
+        $survey = new Survey;
+        $survey->prsn_id = 1;
+        $survey->title = $input->title;
+        $survey->description = $input->description;
+        $survey->deadline = $input->deadline;
+        $survey->save();
+
+        foreach($input->questions as $number => $question){
+            $question_db = new SurveyQuestion();
+            $question_db->survey_id = $survey->id;
+            $question_db->number = $number;
+            $question_db->fieldType = 1; //example
+            $question_db->content = $question;
+            $question_db->save();
+        }
+
+        return Redirect::action('SurveyController@create');
+    }
+
 
     public function destroy()
     {
@@ -98,23 +125,6 @@ class SurveyController extends Controller
         $answers = SurveyQuestion::findOrFail($questions->getAnswers->survey_question_number);
 
         return view('editSurveyView', compact('survey','questions','answers'));
-    }
-    public function store()
-    {
-        //load default
-        $newSurvey = $this->editSurvey(null);
-
-        $i = Input::get('number_of_questions');
-
-        //create and save the questions with the actual survey id
-        //$i = 2; //for testing purpose
-        for($i; $i>0; $i--)
-            new SurveyQuestion([$newSurvey->id]);
-
-        $newSurvey->save();
-
-        //calls index(), later we better show the surveyView($newSurvey->id)
-        return redirect('survey');
     }
 
     //private function, can only be called within the Controller
