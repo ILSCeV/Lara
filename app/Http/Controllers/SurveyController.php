@@ -49,7 +49,7 @@ class SurveyController extends Controller
     public function store(Request $input)
     {
         $survey = new Survey;
-        $survey->prsn_id = 1;
+        $survey->prsn_id = 1; // example
         $survey->title = $input->title;
         $survey->description = $input->description;
         $survey->deadline = $input->deadline;
@@ -125,7 +125,7 @@ class SurveyController extends Controller
     {
         //find survey
         $survey = Survey::findOrFail($id);
-
+        dd($survey);
         //find questions and answers
         $questions = Survey::findOrFail($survey->getQuestions->id);
         $answers = SurveyQuestion::findOrFail($questions->getAnswers->survey_question_number);

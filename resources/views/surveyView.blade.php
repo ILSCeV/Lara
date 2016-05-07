@@ -1,13 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Umfrage xyz
+    Umfrage {{$survey->title}}
 @stop
 
 @section('content')
-    <h1>Hier soll eine einzelne Umfrage angezeigt werden</h1>
     <div>
-        {{ $survey->title }}
+        <h1>{{ $survey->title }}</h1>
     </div>
     <div>
         {{ $survey->description }}
