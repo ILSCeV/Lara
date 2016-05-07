@@ -5,30 +5,32 @@
 @stop
 
 @section('content')
-    <div>
-        <h1>{{ $survey->title }}</h1>
+    <div class="row no-margin">
+        <div class="panel col-md-6 no-padding">
+            <h4 class="panel-title text-center">Umfrage {{ $survey->title }}}</h4>
+            <div class="panel-body">
+                <h6>Beschreibung:</h6>
+                {!! $survey->description!!}
+                <div class="panel-footer">
+                    Die Umfrage läuft noch bis: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} um
+                    {{ date("H:i", strtotime($survey->deadline)) }}
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        {{ $survey->description }}
-    </div>
-    <div>
-        Die Umfrage läuft bis:
-        {{ $survey->deadline }}
-    </div>
-
-    <div>
-        Fragen:
-    </div>
-    @foreach($questions as $question)
-        <div>
-            {{$question->content}}
-            @foreach($answers[$question->id] as $answer)
-                <div>
-                    {{ $answer->name }}:
-                    {{ $answer->content }}
+    <div class="row">
+        <div class="panel col-md-6">
+            <h5 class="panel-title text-center">Auswahlmöglichkeiten</h5>
+            @foreach($questions as $question)
+                <div class="row">
+                    {{$question->content}}
+                    @foreach($answers[$question->id] as $answer)
+                        <div class="col-md-3">
+                            {{ $answer->content }}
+                        </div>
+                    @endforeach
                 </div>
             @endforeach
         </div>
-    @endforeach
-
+    </div>
 @stop
