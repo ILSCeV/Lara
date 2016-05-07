@@ -24,7 +24,6 @@ class SurveyController extends Controller
     public function create($year = null, $month = null, $day = null)
     {
         //dont creates surveys, just returns the createSurveyView with todays date
-        // Filling missing date in case none is provided
         if ( is_null($year) ) {
             $year = date("Y");
         }
@@ -52,7 +51,7 @@ class SurveyController extends Controller
         $survey->prsn_id = 1; // example
         $survey->title = $input->title;
         $survey->description = $input->description;
-        $survey->deadline = $input->deadline;
+        $survey->deadline = strftime("%Y-%m-%d %H-%M-%S", strtotime($input->deadline));
         $survey->save();
 
         foreach($input->questions as $number => $question){
@@ -110,14 +109,6 @@ class SurveyController extends Controller
         //save everything
         $survey->save();
 
-        /*
-        foreach($questions as $question)
-        {
-            $question->save;
-            foreach ($answers as $answer)
-                $answer->save();
-        }
-        */
         return view('surveyView', compact('survey','questions','answers'));
     }
 
