@@ -1,9 +1,14 @@
 @extends('layouts.master')
 
 @section('title')
-    Bestehende Umfrage editieren
+    Umfrage editieren
 @stop
 
 @section('content')
-    <h1>Hier kann ich eine Umfrage editieren</h1>
+    <h4>Umfrage editieren:</h4>
+
+    {!! Form::model($survey, array('action' => ['SurveyController@update', $survey->id], 'method' => 'PATCH')) !!}
+        @include('partials.surveyForm', ['submitButtonText' => 'Umfrage ändern'])
+    {!! Form::close() !!}
+
 @stop
