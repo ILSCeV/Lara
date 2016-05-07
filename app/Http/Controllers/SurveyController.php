@@ -125,12 +125,11 @@ class SurveyController extends Controller
     {
         //find survey
         $survey = Survey::findOrFail($id);
-        dd($survey);
-        //find questions and answers
-        $questions = Survey::findOrFail($survey->getQuestions->id);
-        $answers = SurveyQuestion::findOrFail($questions->getAnswers->survey_question_number);
 
-        return view('editSurveyView', compact('survey','questions','answers'));
+        //find questions and answers
+        $questions = $survey->getQuestions;
+
+        return view('editSurveyView', compact('survey', 'questions'));
     }
 
     //private function, can only be called within the Controller
