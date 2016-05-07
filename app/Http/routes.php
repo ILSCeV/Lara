@@ -91,6 +91,9 @@ Route::post('/task/create', 					['as'   => 'newTask',
 
 Route::get('person/{query?}', 'PersonController@index');
 
+// additional route to store a SurveyAnswer
+Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');
+
 // RESTful RESOURCES
 Route::resource('entry', 	'ScheduleEntryController', 	['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('schedule', 'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);

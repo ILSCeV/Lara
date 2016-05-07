@@ -16,7 +16,7 @@ class SurveyAnswer extends Model
      */
     public function getQuestion()
     {
-        return $this->belongsTo('Lara\SurveyQuestion', 'survey_question_number', 'number');
+        return $this->belongsTo('Lara\SurveyQuestion', 'survey_question_id', 'id');
     }
 
     /**
