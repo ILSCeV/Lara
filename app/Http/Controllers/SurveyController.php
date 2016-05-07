@@ -4,10 +4,12 @@ namespace Lara\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+
 use Redirect;
 //use Lara\Http\Requests;
 use Lara\Survey;
 use Lara\SurveyQuestion;
+use Lara\SurveyAnswer;
 use DateTime;
 use DateTimeZone;
 use View;
@@ -17,10 +19,7 @@ class SurveyController extends Controller
 {
     public function index()
     {
-        $surveys = Survey::all();
-        foreach($surveys as $survey)
-            $questions = $survey->getQuestions;
-        return $questions;
+
     }
     public function create($year = null, $month = null, $day = null)
     {
@@ -74,6 +73,12 @@ class SurveyController extends Controller
         //;
     }
 
+    /**
+     * "getAnswers" does not work as expected, right now use this:
+     * SurveyAnswer::whereSurveyQuestionId($question->id)->get()
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show($id)
     {
         //find survey
@@ -82,10 +87,11 @@ class SurveyController extends Controller
         //find questions
         $questions = $survey->getQuestions;
 
-        //maybe finds only answers for a single question? need to check this
-        foreach($questions as $question)
-            $answers = $question->getAnswers;
-
+        //find answers(as collection object) to an array with the questionid as index
+        $answers = array();
+        foreach($questions as $question) {
+            $answers[$question->id] = SurveyAnswer::whereSurveyQuestionId($question->id)->get();
+        }
         return view('surveyView', compact('survey', 'questions', 'answers'));
     }
 
@@ -154,5 +160,10 @@ class SurveyController extends Controller
             $survey->deadline = date('Y-m-d', mktime(0, 0, 0, 12, 31, 2100));
         }
         return view('surveyView', compact($survey->id));
+    }
+
+    public function storeAnswer(Request $input)
+    {
+
     }
 }

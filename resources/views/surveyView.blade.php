@@ -23,6 +23,12 @@
     @foreach($questions as $question)
         <div>
             {{$question->content}}
+            @foreach($answers[$question->id] as $answer)
+                <div>
+                    {{ $answer->name }}:
+                    {{ $answer->content }}
+                </div>
+            @endforeach
         </div>
     @endforeach
 
