@@ -7,7 +7,7 @@
 @section('content')
     <div class="row no-margin">
         <div class="panel col-md-6 no-padding">
-            <h4 class="panel-title text-center">Umfrage {{ $survey->title }}}</h4>
+            <h4 class="panel-title text-center">Umfrage {{ $survey->title }}</h4>
             <div class="panel-body">
                 <h6>Beschreibung:</h6>
                 {!! $survey->description!!}
