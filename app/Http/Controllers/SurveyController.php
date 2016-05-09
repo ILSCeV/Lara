@@ -51,6 +51,15 @@ class SurveyController extends Controller
         $survey->prsn_id = 1; // example
         $survey->title = $input->title;
         $survey->description = $input->description;
+
+        //if URL is in the description, convert it to clickable hyperlink
+        $survey->description = preg_replace('$(https?://[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
+            ' <a href="$1" target="_blank">$1</a> ',
+            $survey->description);
+        $survey->description = preg_replace('$(www\.[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
+            '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
+            $survey->description);
+
         $survey->deadline = strftime("%Y-%m-%d %H-%M-%S", strtotime($input->deadline));
         $survey->save();
 
