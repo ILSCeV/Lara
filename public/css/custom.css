@@ -1,0 +1,114 @@
+/*
+    Add the styles to vedst.css ?
+*/
+.topRow {
+
+}
+
+.kalenderWoche {
+    text-align: left !important;
+}
+
+.wochenTag {
+    text-align: left !important;
+}
+
+.Tag{
+    text-align: left !important;
+}
+
+.Tag a:link{
+    color: #666666;
+}
+
+.Tag a:hover{
+    color: #040303;
+}
+
+.Tag a:visited{
+    color: #666666;
+}
+
+@media screen and (max-width: 978px) {
+    .Tag {
+        margin-top: 10vh !important;
+        background-color: #076161;
+        border-radius: 30px 30px 0 0;
+        font-weight: bold;
+        text-align: center !important;
+    }
+
+    .Tag a:link{
+        color: white;
+    }
+
+    .Tag a:hover{
+        color: black;
+    }
+
+    .Tag a:visited{
+        color: white;
+    }
+}
+
+.thisMonth{
+    background-color: white;
+}
+
+.empty {
+    display: block;
+}
+
+@media screen and (max-width: 978px) {
+    .empty {
+        display: none;
+    }
+}
+
+/*
+  Custom width of cols
+*/
+.custom-md-85 {
+    width: 12.5%;
+    float: left;
+    position: relative;
+    margin: 0px;
+    text-align: center;
+    line-height: 10vh;
+    height: 10vh;
+}
+
+@media screen and (max-width: 978px) {
+    .custom-md-85 {
+        width: 100%;
+        border-bottom: solid;
+        border-width: 3px;
+        border-bottom-color: #F6F5F3;
+        padding-bottom: 3px;
+    }
+
+    .custom-md-85:empty{
+        display: none;
+        height: 0px;
+    }
+}
+
+/*
+    space for number and space for event
+*/
+.cell10{
+    width: 10%;
+    float: left;
+    position: relative;
+    margin: 0px;
+    text-align: center;
+    line-height: 10vh;
+    height: 10vh;
+}
+
+.cell90{
+    width: 90%;
+    float: right;
+    position: relative;
+    padding-right: 20px;
+}
