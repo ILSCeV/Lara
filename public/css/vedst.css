@@ -15,8 +15,8 @@ table {
   background-color: #fbfbfb;
 }
 
-.table-borderless td,
-.table-borderless th {
+.table-borderless td, 
+.table-borderless th { 
   border: 0 !important;
   padding: 0 !important;
 }
@@ -63,10 +63,6 @@ input[type=number],
   font-size: 12px;
 }
 
-.no-padding {
-  padding: 0 !important;
-}
-
 
 /**
  * More / Less Button
@@ -98,82 +94,80 @@ input[type=number],
 .cal-event {
   width: 100%;
   margin: 0px;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 10vh;
+  padding: 5px;
   border-radius: 5px;
   -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
   word-break: break-word;
-  height: 10vh;
-
 }
 
 .today-marker {
-  background-color: #cccccc !important;
+  background-color: #cccccc;
 }
 
 .cal-event a{
   color: #ffffff;
 }
 
-.calendar-task {
-  background-color: #519839;
+.calendar-public-task {
+  background-color: #519839 !important;
+}
+
+.calendar-internal-task {
+  background-color: #7eb36d !important;
+}
+
+.calendar-public-info {
+  background-color: #89609E !important;
+}
+
+.calendar-internal-info {
+  background-color: #a78ab7 !important;
+}
+
+.calendar-public-marketing {
+  background-color: #D29034 !important;
+}
+
+.calendar-internal-marketing {
+  background-color: #ddad69 !important;
 }
 
 .calendar-public-event-bc-club {
-  background-color: #e54545;
+  background-color: #e54545 !important;
 }
 
 .calendar-public-event-bc-cafe {
-  background-color: #268ac3;
+  background-color: #268ac3 !important;
 }
 
 .calendar-internal-event-bc-club {
-  background-color: #e98383;
+  background-color: #e98383 !important;
 }
 
 .calendar-internal-event-bc-cafe {
-  background-color: #52aadc;
+  background-color: #52aadc !important;
 }
 
 .light-grey {
   background-color: #efefef;
 }
 
+.dark-grey {
+  background-color: darkgrey; 
+}
+
 .text-dark-grey {
   color: darkgrey;
 }
 
-/* event type 0 - default */
-.marker-0 {
-  color: #ffffff;
+.white-text {
+  color: #ffffff !important;
 }
 
-/* event type 1 - info only */
-.marker-1 {
-  color: #ffffff;
-}
-
-/* event type 2 - highlight / special */
-.marker-2 {
-  color: #ffffff;
-}
-
-/* event type 3 - live band/DJ/reading */
-.marker-3 {
-  color: #ffffff;
-}
-
-/* event type 4 - internal */
-.marker-4 {
-  color: #ffffff;
-}
-
-/* event type 5 - private party / Nutzung */
-.marker-5 {
-  color: #ffffff;
+.black-text {
+  color: #000000 !important;
 }
 
 .centered {
@@ -224,7 +218,7 @@ input[type=number],
   text-align: center;
   vertical-align: middle;
   -ms-touch-action: manipulation;
-  touch-action: manipulation;
+      touch-action: manipulation;
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
@@ -256,27 +250,27 @@ input[type=number],
  */
 
 #centerpoint {
-  left: 50%;
-  position: absolute;
+    left: 50%;
+    position: absolute;
 }
 
 .alert-centered{
-  position: relative;
-  width: 100%;
-  margin-left: -50%;
-  z-index:999999;
-
+    position: relative;
+    width: 100%;
+    margin-left: -50%;
+    z-index:999999;
+        
 }
 
 
-/**
+/** 
  * ISOTOPE - animates the week view
  */
 
 .isotope > * {
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 /* clear fix */
@@ -296,7 +290,7 @@ input[type=number],
 .grid-sizer {
   position: relative;
   float: left;
-  width: 350px;
+  width: 360px;
   margin: 10px;
   padding: 0px;
   white-space: normal;
@@ -304,15 +298,60 @@ input[type=number],
 }
 
 @media screen and (max-width : 480px) {
-  .element-item,
-  .grid-sizer {
-    padding: 0px;
-    margin: 3px;
-    width: 98%;
-  }
+    .element-item,
+    .grid-sizer {
+      padding: 0px;
+      margin: 3px;
+      width: 98%;
+    }
 }
 
-/* Greeting our mechanical overlords */
-#welcome-to-our-mechanical-overlords {
+
+/**
+ * Greeting our mechanical overlords 
+ */
+#welcome-to-our-mechanical-overlords { 
   display: none;
+}
+
+/**
+ * Row margins
+ */
+.row {
+  margin: 8px !important;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.padding-right-minimal {
+  padding-right: 5px !important;
+}
+.padding-left-minimal {
+  padding-left: 5px !important;
+}
+
+.top-padding {
+  padding-bottom: 8px !important;
+}
+
+.bottom-padding {
+  padding-bottom: 8px !important;
+}
+
+.left-padding-8 {
+  padding-left: 8px !important;
+}
+
+.left-padding-16 {
+  padding-left: 16px !important;
+}
+
+.padding-right-16 {
+  padding-right: 16px !important;
 }
