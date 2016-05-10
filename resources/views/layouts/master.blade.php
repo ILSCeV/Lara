@@ -48,7 +48,7 @@
         <br>
         <br>
 	</footer>
-		
+
     <script src="{{ asset('/js/jquery-2.1.3.min.js') }}"></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/js/isotope.pkgd.min.js') }}"></script>
