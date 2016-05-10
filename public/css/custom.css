@@ -84,7 +84,6 @@
         border-bottom: solid;
         border-width: 3px;
         border-bottom-color: #F6F5F3;
-        padding-bottom: 3px;
     }
 
     .custom-md-85:empty{
@@ -110,5 +109,13 @@
     width: 90%;
     float: right;
     position: relative;
-    padding-right: 20px;
+    padding-right: 5%;
+    padding-left: 5%;
+}
+
+@media screen and (max-width: 978px) {
+    .cell90{
+        padding-right: 10%;
+        padding-left: 0%;
+    }
 }
