@@ -103,7 +103,7 @@ input[type=number],
 }
 
 .today-marker {
-  background-color: #cccccc;
+  background-color: #cccccc !important;
 }
 
 .cal-event a{
