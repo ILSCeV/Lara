@@ -11,8 +11,9 @@
         <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/font-awesome.min.css') }}" />
         <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/vedst.css') }}" />
         <link rel="stylesheet" media="print" type="text/css" href="{{ asset('/css/print.css') }}" />
+        <link rel="stylesheet" media="print" type="text/css" href="{{ asset('/css/custom.css') }}" />
 
-    	<link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-48x48.png') }}">
+        <link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-48x48.png') }}">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

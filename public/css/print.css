@@ -9,26 +9,26 @@
 		line-height: 1.0;
 	}
 
-    * { 
-    	background: transparent 	!important; 
-    	color: black 				!important; 
-    	text-shadow: none 			!important; 
-    	filter:none 				!important; 
-    	-ms-filter: none 			!important; 
-    	margin: 0; 
+    * {
+    	background: transparent 	!important;
+    	color: black 				!important;
+    	text-shadow: none 			!important;
+    	filter:none 				!important;
+    	-ms-filter: none 			!important;
+    	margin: 0;
     	padding: 0;
     	text-overflow: ellipsis;
     }
 
-	.day-row 
-	{ 
+	.day-row
+	{
 		display: block;
 		page-break-inside: avoid;
 	   	white-space: pre;
 	}
 
 
-	.day-container 
+	.day-container
 	{
 		page-break-inside: avoid;
 		display: block;
@@ -42,9 +42,9 @@
 
 	.panel-heading
 	{
-		padding: 0;	
+		padding: 0;
 	}
-	
+
 
 	.panel-body
 	{
@@ -59,13 +59,13 @@
 		margin-bottom: 0;
 	}
 
-	table 
+	table
 	{
 		margin-bottom:0 !important;
 	}
 
-	.hidden-print, 
-	.navigation, 
+	.hidden-print,
+	.navigation,
 	.footer {
 		display: none !important;
 	}
