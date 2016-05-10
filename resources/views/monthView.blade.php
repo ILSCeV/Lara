@@ -1,121 +1,113 @@
-<!-- Needs variables: events, date -->
-
 @extends('layouts.master')
 @section('title')
-{{ $date['monthName'] . " " . $date['year'] }}
+        {{ $date['monthName'] . " " . $date['year'] }}
 @stop
 @section('content')
 
-        <!-- prev/next month -->
-<div class="col-xs-12 col-md-5 btn-group">
+    <div class="container">
+        {{-- prev/next month --}}
+        <div class="col-xs-12 col-md-5 btn-group">
 
-    <a class="btn btn-default hidden-print"
-       href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
+            <a class="btn btn-default hidden-print" 
+               href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m", 
                         strtotime("previous month", $date['startStamp'])) }}">
-        &lt;&lt;
-    </a>
+                &lt;&lt;
+            </a>
 
-                <span class="btn btn-lg disabled" style="text-align: center !important;">
-                    {{ $date['monthName'] . " " . $date['year'] }}
+                <span class="btn btn-lg disabled" style="text-align: center !important;">   
+                    {{ $date['monthName'] . " " . $date['year'] }} 
                 </span>
 
-    <a class="btn btn-default hidden-print"
-       href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
+            <a class="btn btn-default hidden-print" 
+               href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m", 
                         strtotime("next month", $date['startStamp'])) }}">
-        &gt;&gt;
-    </a>
-
-</div>
-
-<!-- create button -->
-<div class="col-xs-12 col-md-3">
-    &nbsp;
-</div>
-
-<!-- filter -->
-<div class="col-xs-12 col-md-4 pull-right">
-    @include('partials.filter')
-</div>
-
-<!--Mont Table-->
-<div class="row bgWhite">
-    <div class="col-md-1">
-    </div>
-    <div class="col-md-11">
-        <div class=" hidden-xs" id="ContentRow">
-            <div class="custom-md-85 kalenderWoche">
-                KW
-            </div>
-            <div class="custom-md-85 wochenTag">
-                Mo
-            </div>
-            <div class="custom-md-85 wochenTag">
-                Di
-            </div>
-            <div class="custom-md-85 wochenTag">
-                Mi
-            </div>
-            <div class="custom-md-85 wochenTag">
-                Do
-            </div>
-            <div class="custom-md-85 wochenTag">
-                Fr
-            </div>
-            <div class="custom-md-85 wochenTag">
-                Sa
-            </div>
-            <div class="custom-md-85 wochenTag">
-                So
-            </div>
-        </div>
-
-        <!--Print Weeks on left side-->
-        <?php $simpleDate = 1; ?>
-        @for($i = 1; $i <= $date['daysOfMonth'] + ($date['startDay'] - 1) + (7 - $date['endDay']); $i++)
-
-                <!-- Weeks on left side -->
-        @if(date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)
-            @if ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )
-                <div class="custom-md-85 Tag" style="background-color:lightgrey;>
-                @else
-                        <div class=" custom-md-85 Tag">
-            @endif
-            <a href="{!! Request::getBasePath() !!}/calendar/{!! $date['year'] !!}/KW{{ date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) }}">
-                KW {{ date("W", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) }}
+                &gt;&gt;
             </a>
-    </div>
-    @endif
-
-
-            <!-- Show Days  -->
-    @if($i - $date['startDay'] >= 0 AND $i-$date['startDay'] < $date['daysOfMonth'])
-            <!-- color current week gray -->
-    @if ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )
-        <div class="thisMonth today-marker custom-md-85">
-            @else
-                <div class="thisMonth custom-md-85">
-                    @endif
-                    <div class="cell10">
-                        {!! $simpleDate !!}
-                        <?php $simpleDate++; ?>
-                    </div>
-                    <div class="cell90">
-                        @include ('partials.calendarCellDate', $date)
-                    </div>
-                </div>
-                @else
-                    <div class="otherMonth custom-md-85 empty">
-                        <!-- date("j", strtotime($i-$date['startDay']." day", $date['startStamp'])) -->
-                    </div>
-                    @endif
-
-                            <!-- if sunday then end this line -->
-                    @if(date("N",date("j", strtotime($i-$date['startDay']." day", $date['startStamp']))) == 7)
-
-                    @endif
-
-                    @endfor
 
         </div>
+
+        {{-- placeholder for a middle button --}}
+        <div class="col-xs-12 col-md-3">
+            &nbsp;
+        </div>
+
+        {{-- filter --}}
+        <div class="col-xs-12 col-md-4 pull-right">
+            @include('partials.filter')
+        </div>
+    </div>
+        <br class="hidden-xs">
+
+{{-- month table --}}
+<div class="panel">
+    <table class="table table-bordered ">
+          
+        <thead>
+            <tr>
+                <th>KW</th>
+                <th>Mo</th>
+                <th>Di</th>
+                <th>Mi</th>
+                <th>Do</th>
+                <th>Fr</th>
+                <th>Sa</th>
+                <th>So</th>
+            </tr>
+        </thead>
+  
+        <tbody>
+        @for($i = 1; $i <= $date['daysOfMonth'] + ($date['startDay'] - 1) + (7 - $date['endDay']); $i++)
+               
+                {{-- if monday then start new line --}}
+                @if(date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)
+                        @if ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )   
+                            <tr class="light-grey">
+                        @else
+                            <tr>
+                        @endif
+                            <td>
+                                <a href="{!! Request::getBasePath() !!}/calendar/{!! $date['year'] !!}/KW{{ date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) }}">
+                                    {{ date("W", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) }}.
+                                </a>
+                            </td>
+                            
+                @endif
+       
+
+
+                {{-- Show table  --}}
+                @if($i - $date['startDay'] >= 0 AND $i-$date['startDay'] < $date['daysOfMonth'])
+               
+            
+
+                        @if( date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])) === date( "Y-m-d" ) )
+                            <td class="thisMonth today-marker" width=14%>
+                        @else
+                            <td class="thisMonth" width=14%>
+                        @endif      
+                                @include('partials.monthCell', $date)
+                        </td>
+                @else 
+                        <td class="otherMonth" width=14%>
+                                {{-- date("j", strtotime($i-$date['startDay']." day", $date['startStamp'])) --}}
+                        </td>
+                @endif
+                
+                {{-- if sunday then end this line --}}
+                @if(date("N",date("j", strtotime($i-$date['startDay']." day", $date['startStamp']))) == 7)
+                        </tr>
+                @endif
+               
+        @endfor
+        </tbody>        
+           
+    </table>
 </div>
+
+{{-- Legend --}}
+@include("partials.legend")
+
+{{-- filter hack --}}
+<span id="own-filter-marker" hidden>&nbsp;</span>
+
 @stop
