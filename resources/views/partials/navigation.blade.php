@@ -52,7 +52,7 @@
                     <li style="padding-top:5px" class="btn-group"> 
                         @if(Session::has('userGroup'))
                             {{-- small [+] button --}}
-                            <div style="padding-top:15px" class="btn-group">
+                            <div style="padding-top:5px" class="btn-group">
                                 <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
                                     <span class="fa fa-plus-square">
                                     </span>
