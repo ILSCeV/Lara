@@ -20,10 +20,3 @@
 
 @include('partials.surveyField')
 @include('partials.surveyField')
-
-<div class="form-group">
-    {!! Form::submit($submitButtonText, ['class'=>'btn btn-primary']) !!}
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <br class="visible-xs">
-    <a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
-</div>

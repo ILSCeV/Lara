@@ -129,7 +129,9 @@ class SurveyController extends Controller
         //find questions and answers
         $questions = $survey->getQuestions;
 
-        return view('editSurveyView', compact('survey', 'questions'));
+        $date= $survey->deadline;
+
+        return view('editSurveyView', compact('survey', 'questions', 'date'));
     }
 
     //private function, can only be called within the Controller
