@@ -19,10 +19,10 @@
 
 
 @foreach($surveys as $Survey)
-	@if($Survey->date($created_at) === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
-		<div class="cal-event dark-grey">
+	@if($Survey->create === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
+		<div class="cal-event dark-grey calendar-internal-info">
 
-		<i class="fa fa-eye-slash white-text"></i>
+		<i class="fa fa-bar-chart-o white-text"></i>
             <a href="{{ URL::route('survey.show', $Survey->id) }}">
              <span  class="white-text"></span> {{{ $Survey->title }}} </span>
             </a>
