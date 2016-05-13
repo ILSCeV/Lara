@@ -17,6 +17,23 @@
 @endif
 
 
+
+@foreach($surveys as $Survey)
+	@if($Survey->begin === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
+		<div class="cal-event dark-grey">
+
+		<i class="fa fa-eye-slash white-text"></i>
+            <a href="{{ URL::route('survey.show', $Survey->id) }}">
+             <span  class="white-text"></span> {{{ $Survey->title }}} </span>
+            </a>
+			</div>
+
+	@endif
+@endforeach
+
+
+
+
 @foreach($events as $clubEvent)
 	@if($clubEvent->evnt_date_start === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
 
@@ -105,8 +122,15 @@
 
 		</div>
 	@endif
-	
-@endforeach 
+
+
+@endforeach
+
+
+
+
+
+
 
 @foreach($tasks as $task)
 				

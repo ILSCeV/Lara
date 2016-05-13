@@ -5,6 +5,7 @@ namespace Lara\Http\Controllers;
 use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
 
+use Lara\Survey;
 use Redirect;
 use View; 
 
@@ -73,12 +74,17 @@ class MonthController extends Controller {
 						   ->orderBy('evnt_time_start')
 						   ->get();
 
+		$surveys = Survey::where('begin', '>=', $monthStart)
+							->where('begin','<=',$monthEnd)
+							->orderBy('begin')
+							->get();
+
 		$tasks = Schedule::where('schdl_show_in_week_view', '=', '1')
 			     ->where('schdl_due_date', '>=', $monthStart) 				
 			     ->where('schdl_due_date', '<=', $monthEnd)
 			     ->get();
 
-		return View::make('monthView', compact('events', 'tasks', 'date'));
+		return View::make('monthView', compact('events', 'tasks', 'date', 'surveys'));
 	}
 
 }
