@@ -39,10 +39,10 @@ class MonthController extends Controller {
 	*/
 	public function showMonth($year, $month) {
 		// Create a string of the start of the month
-        $monthStart = $year.$month.'01'; 
+        $monthStart = $year.$month.'01';
 
         // String of end of month
-		$monthEnd = $year.$month.'31';  
+		$monthEnd = $year.$month.'31';
 	    
 	    // Create timestamp of the first day of selected month. Time 12:12:12 used only as dummy time
 	    $usedTime=mktime(12,12,12,$month,1,$year);  
@@ -74,9 +74,9 @@ class MonthController extends Controller {
 						   ->orderBy('evnt_time_start')
 						   ->get();
 
-		$surveys = Survey::where('created_at', '>=', $monthStart)
-							->where('created_at','<=',$monthEnd)
-							->orderBy('created_at')
+		$surveys = Survey::where('create','>=',$monthStart)
+							->where('create','<=',$monthEnd)
+							->orderBy('create')
 							->get();
 
 		$tasks = Schedule::where('schdl_show_in_week_view', '=', '1')

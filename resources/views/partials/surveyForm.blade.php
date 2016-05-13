@@ -17,6 +17,10 @@
     {!! Form::label('deadline', 'Umfrage aktiv bis:') !!}
     {!! Form::date('deadline', $date, ['class' => 'form-control']) !!}
 </div>
+<div class="form-group">
+    {!! Form::label('create', 'In Kalender am:') !!}
+    {!! Form::date('create', $date, ['class' => 'form-control']) !!}
+</div>
 
 @include('partials.surveyField')
 @include('partials.surveyField')
