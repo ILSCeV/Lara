@@ -19,7 +19,7 @@
 
 
 @foreach($surveys as $Survey)
-	@if($Survey->begin === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
+	@if($Survey->date($created_at) === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
 		<div class="cal-event dark-grey">
 
 		<i class="fa fa-eye-slash white-text"></i>
