@@ -18,7 +18,6 @@ class CreateSurveyTable extends Migration
             $table->string('title', 255);
             $table->string('description', 1500)->nullable()->default(NULL);
             $table->timestamp('deadline');
-            $table->date('begin');
             $table->timestamps();
         });
     }
