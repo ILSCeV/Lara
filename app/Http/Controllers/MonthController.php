@@ -74,9 +74,9 @@ class MonthController extends Controller {
 						   ->orderBy('evnt_time_start')
 						   ->get();
 
-		$surveys = Survey::where('create','>=',$monthStart)
-							->where('create','<=',$monthEnd)
-							->orderBy('create')
+		$surveys = Survey::where('in_calendar','>=',$monthStart)
+							->where('in_calendar','<=',$monthEnd)
+							->orderBy('in_calendar')
 							->get();
 
 		$tasks = Schedule::where('schdl_show_in_week_view', '=', '1')
