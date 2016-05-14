@@ -19,14 +19,14 @@
 
 
 @foreach($surveys as $Survey)
-	@if($Survey->create === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
+	@if($Survey->in_calendar === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
 		<div class="cal-event dark-grey calendar-internal-info">
 
 		<i class="fa fa-bar-chart-o white-text"></i>
             <a href="{{ URL::route('survey.show', $Survey->id) }}">
-             <span  class="white-text"></span> {{{ $Survey->title }}} </span>
+             <span  class="white-text"></span> {{ $Survey->title }} </span>
             </a>
-			</div>
+		</div>
 
 	@endif
 @endforeach
@@ -71,7 +71,7 @@
 						@endif
 							@include("partials.event-marker", $clubEvent)
 						 	<a href="{{ URL::route('event.show', $clubEvent->id) }}"> 
-								{{{ $clubEvent->evnt_title }}}
+								{{ $clubEvent->evnt_title }}
 							</a>
 						</div>
 
@@ -114,7 +114,7 @@
 
 						@include("partials.event-marker", $clubEvent)
 						<a href="{{ URL::route('event.show', $clubEvent->id) }}"> 
-							{{{ $clubEvent->evnt_title }}}
+							{{ $clubEvent->evnt_title }}
 						</a>
 					</div>
 
@@ -143,7 +143,7 @@
 				<div class="cal-event calendar-task">
 					<i class="fa fa-tasks"></i>
 					<a href="{{ Request::getBasePath() }}/task/id/{{ $task->id }}"> 
-						{{{ $task->schdl_title }}}
+						{{ $task->schdl_title }}
 					</a>
 				</div>
 			@endif
