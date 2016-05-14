@@ -18,8 +18,8 @@
     {!! Form::date('deadline', $date, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('create', 'In Kalender am:') !!}
-    {!! Form::date('create', $date, ['class' => 'form-control']) !!}
+    {!! Form::label('in_calendar', 'In Kalender am:') !!}
+    {!! Form::date('in_calendar', $date, ['class' => 'form-control']) !!}
 </div>
 
 @include('partials.surveyField')

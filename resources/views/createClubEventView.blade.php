@@ -319,7 +319,7 @@
 	@include('partials.editSchedule')
 	<br>
 	
-	{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'btn btn-primary', 'id'=>'button-create-submit')) !!}
+	{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'btn btn-primary', 'id'=>'create'create
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<br class="visible-xs">
 	<a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
