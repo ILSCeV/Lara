@@ -61,7 +61,7 @@ class SurveyController extends Controller
             $survey->description);
 
         $survey->deadline = strftime("%Y-%m-%d %H-%M-%S", strtotime($input->deadline));
-        $survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
+        $survey->create = strftime("%Y-%m-%d", strtotime($input->create));
         $survey->save();
 
         foreach($input->questions as $number => $question){
