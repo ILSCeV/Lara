@@ -61,7 +61,7 @@ class SurveyController extends Controller
             $survey->description);
 
         $survey->deadline = strftime("%Y-%m-%d %H-%M-%S", strtotime($input->deadline));
-        $survey->create = strftime("%Y-%m-%d", strtotime($input->create));
+        $survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
         $survey->save();
 
         foreach($input->questions as $number => $question){
@@ -165,8 +165,14 @@ class SurveyController extends Controller
         return view('surveyView', compact($survey->id));
     }
 
-    public function storeAnswer(Request $input)
+    public function storeAnswer(Request $answer)
     {
+            $survey_answer = new SurveyAnswer;
+            $survey_answer->name = 1; //example
+            $survey_answer->content = $answer['answer'];
+            $survey_answer->survey_question_id = $answer->survey_id;
+            $survey_answer->save();
 
+        return view('surveyViewAnswer');
     }
 }
