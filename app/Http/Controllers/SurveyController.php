@@ -173,6 +173,6 @@ class SurveyController extends Controller
             $survey_answer->survey_question_id = $answer->survey_id;
             $survey_answer->save();
 
-        return view('surveyViewAnswer');
+        return view('surveyViewAnswer', compact('survey_answer'));
     }
 }

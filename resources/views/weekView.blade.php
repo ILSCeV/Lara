@@ -180,6 +180,43 @@
 		</div>
 	@endif
 
+
+
+	@if(count($surveys)>0)
+		@foreach($surveys as $Survey)
+		<div>
+		@if ( date('W', strtotime($Survey->in_calendar)) === $date['week']
+             AND date('N', strtotime($Survey->in_calendar)) < 3 )
+				<div class="element-item week-mo-so">
+			@elseif ( date("W", strtotime($Survey->in_calendar) )
+                      === date("W", strtotime("next Week".$weekStart))
+                    AND date('N', strtotime($Survey->in_calendar)) < 3 )
+					<div class="element-item week-mi-di hide">
+					@else
+						<div class="element-item">
+	@endif
+
+		@include('partials.weekCellSurvey')
+						</div>
+					</div>
+				</div>
+	</div>
+		@endforeach
+
+
+		@else
+			<br>
+			<div class="panel">
+				<div class="panel-heading">
+					<h5>Keine Umfragen diese Woche</h5>
+				</div>
+			</div>
+	@endif
+	</div>
+
+
+
+
 {{-- Legend --}}
 @include("partials.legend")
 

@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Lara\Survey;
 use Request;
 use Redirect;
 use View;
@@ -85,6 +86,12 @@ class WeekController extends Controller {
                            ->orderBy('evnt_time_start')
                            ->get();
 
+		$surveys = Survey::where('in_calendar', '>=', $weekStart)
+							->where('in_calendar', '<=', $weekEnd)
+							->orderBy('in_calendar')
+							->get();
+		
+
         // Filter - Workaround for older events: populate filter with event club
         foreach ($events as $clubEvent) {	        
 	        if (empty($clubEvent->evnt_show_to_club) ) {
@@ -125,7 +132,7 @@ class WeekController extends Controller {
 
         return View::make('weekView', compact('events', 'schedules',  'date', 
         									  'tasks', 'entries', 'weekStart', 
-        									  'weekEnd', 'persons', 'clubs'));
+        									  'weekEnd', 'persons', 'clubs', 'surveys'));
 
 	}
 		
