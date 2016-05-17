@@ -4,8 +4,9 @@ namespace Lara\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Session;
 use Redirect;
+
 //use Lara\Http\Requests;
 use Lara\Survey;
 use Lara\SurveyQuestion;
@@ -47,8 +48,13 @@ class SurveyController extends Controller
      */
     public function store(Request $input)
     {
+        if(!Session::get('userId')){
+            Session::put('message', 'Nur eingeloggte Nutzer können Umfragen erstellen!' );
+            Session::put('msgType', 'danger');
+            return Redirect::back();
+        }
         $survey = new Survey;
-        $survey->prsn_id = 1; // example
+        $survey->prsn_id = Session::get('userId');
         $survey->title = $input->title;
         $survey->description = $input->description;
 
@@ -72,7 +78,7 @@ class SurveyController extends Controller
             $question_db->save();
         }
 
-        return Redirect::action('SurveyController@create');
+        return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
 
 
