@@ -48,11 +48,6 @@ class SurveyController extends Controller
      */
     public function store(Request $input)
     {
-        if(!Session::get('userId')){
-            Session::put('message', 'Nur eingeloggte Nutzer können Umfragen erstellen!' );
-            Session::put('msgType', 'danger');
-            return Redirect::back();
-        }
         $survey = new Survey;
         $survey->prsn_id = Session::get('userId');
         $survey->title = $input->title;
