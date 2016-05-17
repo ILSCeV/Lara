@@ -107,11 +107,11 @@ input[type=number],
 }
 
 .today-marker {
-  background-color: #cccccc !important;
+  background-color: #efefef !important;
 }
 
 .today-marker-today{
-  background-color: #2196f3 !important;
+  background-color: #cccccc !important;
 }
 
 .cal-event a{
