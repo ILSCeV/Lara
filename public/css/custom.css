@@ -92,7 +92,7 @@
     height: 10vh;
     border: solid;
     border-width: 1px 0px 0px 1px;
-    border-color: #cccccc;
+    border-color: #dddddd;
 }
 
 @media screen and (max-width: 978px) {
