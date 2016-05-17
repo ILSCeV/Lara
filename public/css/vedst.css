@@ -110,6 +110,10 @@ input[type=number],
   background-color: #cccccc !important;
 }
 
+.today-marker-today{
+  background-color: #2196f3 !important;
+}
+
 .cal-event a{
   color: #ffffff;
 }
