@@ -31,7 +31,7 @@ OR Session::get('userGroup') == 'clubleitung'))
                         <div class="cal-event calendar-internal-event-bc-cafe">
                             @endif
                             @include("partials.event-marker", $clubEvent)
-                            <a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}">
+                            <a href="{{ Request::getBasePath() }}/event/{{ $clubEvent->id }}">
                                 {{{ $clubEvent->evnt_title }}}
                             </a>
                         </div>
@@ -43,7 +43,7 @@ OR Session::get('userGroup') == 'clubleitung'))
                                     <div class="cal-event calendar-public-event-bc-cafe">
                                         @endif
                                         @include("partials.event-marker", $clubEvent)
-                                        <a href="{{ Request::getBasePath() }}/calendar/id/{{ $clubEvent->id }}">
+                                        <a href="{{ Request::getBasePath() }}/event/{{ $clubEvent->id }}">
                                             {{{ $clubEvent->evnt_title }}}
                                         </a>
                                     </div>
