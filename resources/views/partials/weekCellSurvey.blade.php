@@ -3,7 +3,7 @@
 <div class="cal-event dark-grey">
 		<h4 class="panel-title">
 			<a href="{{ URL::route('survey.show', $Survey->id) }}">
-				<i class="fa fa-calendar-o white-text"></i>&nbsp;
+				<i class="fa fa-bar-chart-o white-text"></i>&nbsp;
 				<span class="name">{{ $Survey->title }}</span>
 			</a>
 		</h4>

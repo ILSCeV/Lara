@@ -102,7 +102,9 @@ class SurveyController extends Controller
         foreach($questions as $question) {
             $answers[$question->id] = SurveyAnswer::whereSurveyQuestionId($question->id)->get();
         }
-        return view('surveyView', compact('survey', 'questions', 'answers'));
+        $survey_answer = SurveyAnswer::all();
+
+        return view('surveyView', compact('survey', 'questions', 'answers', 'survey_answer'));
     }
 
     public function update($id)
@@ -172,6 +174,8 @@ class SurveyController extends Controller
             $survey_answer->content = $answer['answer'];
             $survey_answer->survey_question_id = $answer->survey_id;
             $survey_answer->save();
+        
+        $survey_answer = SurveyAnswer::all();
 
         return view('surveyViewAnswer', compact('survey_answer'));
     }
