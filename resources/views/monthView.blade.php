@@ -72,8 +72,13 @@
         <!--Print Weeks on left side-->
         <?php $simpleDate = 1; ?>
         @for($i = 1; $i <= $date['daysOfMonth'] + ($date['startDay'] - 1) + (7 - $date['endDay']); $i++)
+                <!--define row-->
+        @if($i == 1 || $i == 8 || $i == 15 )
+               <div class="calendarRow clearfix">
+        @endif
+                <!--End define row at bottom-->
 
-                <!-- Weeks on left side -->
+        <!-- Weeks on left side -->
         @if(date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)
             @if ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )
                 <div class="custom-md-85 Tag" style="background-color:#efefef;>
@@ -114,6 +119,10 @@
                                     <!-- if sunday then end this line -->
                             @if(date("N",date("j", strtotime($i-$date['startDay']." day", $date['startStamp']))) == 7)
 
+                            @endif
+
+                            @if( $i == 7 || $i == 16 || $i == 22 )
+                                </div>
                             @endif
 
                             @endfor
