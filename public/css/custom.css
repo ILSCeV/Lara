@@ -7,10 +7,13 @@
 
 .kalenderWoche {
     text-align: left !important;
+    border-top-width: 0px !important;
+    border-left-width: 0px !important;
 }
 
 .wochenTag {
     text-align: left !important;
+    border-top-width: 0px !important;
 }
 
 @media screen and (max-width: 978px) {
@@ -25,6 +28,7 @@
 
 .Tag{
     text-align: left !important;
+    border-left-width: 0px !important;
 }
 
 .Tag a:link{
@@ -86,6 +90,9 @@
     text-align: center;
     line-height: 10vh;
     height: 10vh;
+    border: solid;
+    border-width: 1px 0px 0px 1px;
+    border-color: #cccccc;
 }
 
 @media screen and (max-width: 978px) {
@@ -93,7 +100,7 @@
         width: 100%;
         border-bottom: solid;
         border-width: 3px;
-        border-bottom-color: #F6F5F3;
+        border-color: #F6F5F3;
     }
 
     .custom-md-85:empty{
