@@ -81,7 +81,7 @@
         <!-- Weeks on left side -->
         @if(date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)
             @if ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )
-                <div class="custom-md-85 Tag" style="background-color:#efefef;>
+                <div class="custom-md-85 Tag WeekMarker" >
                 @else
                         <div class=" custom-md-85 Tag">
             @endif
