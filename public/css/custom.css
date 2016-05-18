@@ -1,23 +1,43 @@
 /*
     Add the styles to vedst.css ?
 */
+
+
 .calendarWrapper{
     overflow: hidden;
 }
 
-.topRow {
-
+.height10vh{
+    height: 10vh !important;
 }
 
 .kalenderWoche {
     text-align: left !important;
     border-top-width: 0px !important;
     border-left-width: 0px !important;
+    width: 12.5%;
+    float: left;
+    margin: 0px;
+    text-align: center;
+    line-height: 10vh;
+    height:10vh;
+    border: solid;
+    border-width: 1px 0px 0px 1px;
+    border-color: #dddddd;
 }
 
 .wochenTag {
     text-align: left !important;
     border-top-width: 0px !important;
+    width: 12.5%;
+    float: left;
+    margin: 0px;
+    text-align: center;
+    line-height: 10vh;
+    height:10vh;
+    border: solid;
+    border-width: 1px 0px 0px 1px;
+    border-color: #dddddd;
 }
 
 @media screen and (max-width: 978px) {
@@ -121,30 +141,6 @@
     border-color: #dddddd;
 }
 
-/*
-    Why is this required?
-    In case you have several events at one day,
-    without this, the custom-md-85 elements would have
-    different height. To equalize the height, I am using Pseudo-Elements
-    questions @ jan.mensch@tu-ilmenau.de
-
-@media screen and (min-width: 978px){
-    .thisMonth, .thisMonth-md-85:before{
-        width: 12.5%;
-    }
-
-    .thisMonth:before{
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        z-index: -1;
-        left: 0;
-        background-color: red;
-        height:100%;
-    }
-}
-*/
 @media screen and (min-width: 978px) {
     .custom-md-85{
         margin-bottom: -99999px;

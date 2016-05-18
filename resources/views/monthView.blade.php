@@ -42,29 +42,29 @@
     <div class="col-md-1">
     </div>
     <div class="col-md-11 calendarWrapper">
-        <div class=" hidden-xs" id="ContentRow">
-            <div class="custom-md-85 kalenderWoche">
+        <div class=" hidden-xs" id="ContentRow" >
+            <div class=" kalenderWoche">
                 KW
             </div>
-            <div class="custom-md-85 wochenTag">
+            <div class="wochenTag">
                 Mo
             </div>
-            <div class="custom-md-85 wochenTag">
+            <div class="wochenTag">
                 Di
             </div>
-            <div class="custom-md-85 wochenTag">
+            <div class="wochenTag">
                 Mi
             </div>
-            <div class="custom-md-85 wochenTag">
+            <div class="wochenTag">
                 Do
             </div>
-            <div class="custom-md-85 wochenTag">
+            <div class="wochenTag">
                 Fr
             </div>
-            <div class="custom-md-85 wochenTag">
+            <div class="wochenTag">
                 Sa
             </div>
-            <div class="custom-md-85 wochenTag">
+            <div class="wochenTag">
                 So
             </div>
         </div>
@@ -73,7 +73,9 @@
         <?php $simpleDate = 1; ?>
         @for($i = 1; $i <= $date['daysOfMonth'] + ($date['startDay'] - 1) + (7 - $date['endDay']); $i++)
                 <!--define row-->
-        @if($i == 1 || $i == 8 || $i == 15 || $i == 22 || $i == 29 || $i == 36)
+        @if($i == 1)
+            <div class="calendarRow clearfix group height10vh">
+        @elseif( $i == 8 || $i == 15 || $i == 22 || $i == 29 || $i == 36)
                <div class="calendarRow clearfix group">
         @endif
                 <!--End define row at bottom-->
