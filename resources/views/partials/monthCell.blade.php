@@ -1,8 +1,6 @@
 {{-- Needs variables: i, date, id --}}
 
-@if(Session::has('userGroup')
-    AND (Session::get('userGroup') == 'marketing'
-    OR Session::get('userGroup') == 'clubleitung'))
+@if(Session::has('userGroup'))
     <a href="{{ Request::getBasePath() }}/
 			event/
 			{{ $date['year']}}/
@@ -23,6 +21,7 @@
 		{{-- Filter --}}
         @if ( empty($clubEvent->evnt_show_to_club) )
         	{{-- Workaround for older events: if filter is empty - use event club data instead --}}
+
             <div class="filter {!! $clubEvent->getPlace->plc_title !!}  word-break">
        	@else
        		{{-- Normal scenario: add a css class accordnig to filter data --}}
@@ -47,9 +46,9 @@
 							<div class="cal-event calendar-public-task">
 						@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 							<div class="cal-event calendar-public-marketing">
-						@elseif ($clubEvent->getPlace->id == 2)
+						@elseif ($clubEvent->getPlace->id == 1)
 							<div class="cal-event calendar-public-event-bc-club">
-						@elseif ($clubEvent->getPlace->id == 3)
+						@elseif ($clubEvent->getPlace->id == 2)
 							<div class="cal-event calendar-public-event-bc-cafe">
 						@endif
 							@include("partials.event-marker", $clubEvent)
@@ -70,9 +69,9 @@
 							<div class="cal-event calendar-internal-task">
 						@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 							<div class="cal-event calendar-internal-marketing">
-						@elseif ($clubEvent->getPlace->id == 2)
+						@elseif ($clubEvent->getPlace->id == 1)
 							<div class="cal-event calendar-internal-event-bc-club">
-						@elseif ($clubEvent->getPlace->id == 3)
+						@elseif ($clubEvent->getPlace->id == 2)
 							<div class="cal-event calendar-internal-event-bc-cafe">
 						@else
 							{{-- DEFAULT --}}
@@ -85,9 +84,9 @@
 							<div class="cal-event calendar-public-task">
 						@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 							<div class="cal-event calendar-public-marketing">
-						@elseif ($clubEvent->getPlace->id == 2)
+						@elseif ($clubEvent->getPlace->id == 1)
 							<div class="cal-event calendar-public-event-bc-club">
-						@elseif ($clubEvent->getPlace->id == 3)
+						@elseif ($clubEvent->getPlace->id == 2)
 							<div class="cal-event calendar-public-event-bc-cafe">
 						@else
 							{{-- DEFAULT --}}
@@ -103,26 +102,6 @@
 
 				@endif
 
-		</div>
-	@endif
-	
-@endforeach 
-
-@foreach($tasks as $task)
-				
-	{{-- sucht die Events zu den passenden Tagen --}}
-	@if($task->schdl_due_date === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
-
-		<div class="word-break">
-			@if(Session::has('userId'))	
-				{{-- show private events only if user is logged in --}}
-				<div class="cal-event calendar-task">
-					<i class="fa fa-tasks"></i>
-					<a href="{{ Request::getBasePath() }}/task/id/{{ $task->id }}"> 
-						{{{ $task->schdl_title }}}
-					</a>
-				</div>
-			@endif
 		</div>
 	@endif
 	

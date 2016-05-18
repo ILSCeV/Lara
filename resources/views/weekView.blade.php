@@ -1,5 +1,3 @@
-{{-- Needs variables: 'events', 'schedules',  'date', 'tasks', 'entries', 'weekStart', 'weekEnd', 'persons', 'clubs' --}}
-
 @extends('layouts.master')
 
 @section('title')
@@ -10,7 +8,7 @@
 	<div class="container-fluid no-padding">
 
 		{{-- prev/next week --}}
-		<div class="btn-group col-xs-12 col-md-6">
+		<div class="btn-group col-xs-12 col-md-6 hidden-print">
 			<a class="btn btn-default hidden-print col-md-1 col-xs-2" 
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}">
 			   	&lt;&lt;</a>
@@ -149,26 +147,6 @@
 				@endif
 
 			@endforeach 
-
-{{-- IMPLEMENT TASKS LATER --}}
-			@if(Session::has('userId'))
-				@foreach($tasks as $task)
-					@if ( date('W', strtotime($task->schdl_due_date)) === $date['week'] 
-					  AND date('N', strtotime($task->schdl_due_date)) < 3 )
-						<div class="element-item private task bc-Club bc-Café week-mo-so">
-					@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )  
-						  === date("W", strtotime("next Week".$weekStart))
-						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-						<div class="element-item private task bc-Club bc-Café week-mi-di hide">
-					@else
-						<div class="element-item private task bc-Club bc-Café">
-					@endif
-						@include('partials.taskWeekCell')
-					</div>
-				@endforeach 
-
-			@endif
-
 
 		</div>
 	@else

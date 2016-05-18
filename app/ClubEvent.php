@@ -38,6 +38,7 @@ class ClubEvent extends Model
 								'evnt_title', 
 								'evnt_subtitle',
 								'plc_id',
+								'evnt_show_to_club',
 								'evnt_date_start',
 								'evnt_date_end',
 								'evnt_time_start',

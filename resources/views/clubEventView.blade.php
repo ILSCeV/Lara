@@ -112,6 +112,7 @@
 			@if(Session::has('userGroup')
 				AND (Session::get('userGroup') == 'marketing'
 				OR Session::get('userGroup') == 'clubleitung'
+				OR Session::get('userGroup') == 'admin' 
 				OR Session::get('userId') == $created_by))
 				<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">	
 					<span class="pull-right">
@@ -218,7 +219,7 @@
 						</div>
 
 						{{-- ENTRY CLUB --}}
-						<div id="{!! 'club' . $entry->id !!}" class="col-md-2 col-xs-4">
+						<div id="{!! 'club' . $entry->id !!}" class="col-md-2 col-xs-4 no-padding">
 						    {!! "(" . $entry->getPerson->getClub->clb_title . ")" !!}
 						</div>
 

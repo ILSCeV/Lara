@@ -1,4 +1,4 @@
-<div class="col-md-3 col-xs-3 no-padding" id="clubStatus{{ $entry->id }}">
+<div class="col-md-2 col-xs-3 no-padding" id="clubStatus{{ $entry->id }}">
     @include("partials.scheduleEntryStatus")
 </div>
 
@@ -7,7 +7,7 @@
                  Input::old('userName' . $entry->id), 
                  array('placeholder'=>'=FREI=', 
                        'id'=>'userName' . $entry->id, 
-                       'class'=>'col-xs-8 col-md-8',
+                       'class'=>'col-xs-8 col-md-8 ',
                        'autocomplete'=>'off')) 
     !!}
 @else

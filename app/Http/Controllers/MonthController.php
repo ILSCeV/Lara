@@ -73,12 +73,7 @@ class MonthController extends Controller {
 						   ->orderBy('evnt_time_start')
 						   ->get();
 
-		$tasks = Schedule::where('schdl_show_in_week_view', '=', '1')
-			     ->where('schdl_due_date', '>=', $monthStart) 				
-			     ->where('schdl_due_date', '<=', $monthEnd)
-			     ->get();
-
-		return View::make('monthView', compact('events', 'tasks', 'date'));
+		return View::make('monthView', compact('events', 'date'));
 	}
 
 }

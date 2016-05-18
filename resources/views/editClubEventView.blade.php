@@ -9,6 +9,7 @@
 @if(Session::has('userId')
 AND (Session::get('userGroup') == 'marketing'
  OR Session::get('userGroup') == 'clubleitung'
+ OR Session::get('userGroup') == 'admin'
  OR Session::get('userId') == $created_by))
 	
 	{!! Form::open(['method' => 'PUT', 'route' => ['event.update', $event->id]]) !!}
@@ -19,6 +20,25 @@ AND (Session::get('userGroup') == 'marketing'
 			<div class="panel-heading">
 				<h4 class="panel-title">Veranstaltung/Aufgabe ändern:</h4>
 			</div>
+
+			<br>
+
+			<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">			
+					{!! Form::checkbox('saveAsTemplate', '1', $event->getSchedule->schdl_is_template, array('class'=>'col-md-1 col-sm-1 col-xs-1', 'hidden')) !!}
+
+					@if ($event->getSchedule->schdl_is_template)
+						{!! Form::text('templateName', $event->getSchedule->schdl_title, array('id'=>'templateName', 'hidden') ) !!}
+						<label for="saveAsTemplate" class="col-md-12 col-sm-12 col-xs-12">
+							{!!'(Gespeichert als Vorlage <b>"' . $event->getSchedule->schdl_title . '"</b>)' !!}
+						</label>
+					@else
+						<label for="saveAsTemplate" class="col-md-12 col-sm-12 col-xs-12">
+							{!! "(Dieser Event ist nicht als Vorlage gespeichert.)" !!}
+						</label>
+					@endif
+
+					
+			   	</div>
 
 			<br>
 			
@@ -42,7 +62,7 @@ AND (Session::get('userGroup') == 'marketing'
   										  'style'=>'cursor: auto') ) !!}
 			    </div>
 			    
-			    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung')
+			    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung'  OR Session::get('userGroup') == 'admin')
 				    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 				     	<label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">Typ:</label>
 				     	<div class="col-md-10 col-sm-10 col-xs-10">
