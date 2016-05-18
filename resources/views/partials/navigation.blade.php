@@ -21,10 +21,16 @@
             
             <li><a href="{{ asset('/calendar/week') }}">Woche</a></li>
             
-            <!-- remove next "FALSE AND" to show button -->
+            {{-- show logs tab for club management or admins only --}}
+            @if(Session::get('userGroup') == 'clubleitung' OR Session::get('userGroup') == 'admin')
+              <li><a href="{{ asset('/logs') }}">Logs</a></li>
+            @endif
+
+            {{-- remove next "FALSE AND" to show button --}}
             @if   (FALSE AND Session::has('userGroup')
               AND (Session::get('userGroup') == 'marketing'
-              OR   Session::get('userGroup') == 'clubleitung'))
+              OR   Session::get('userGroup') == 'clubleitung'
+              OR   Session::get('userGroup') == 'admin'))
             <li class="dropdown">
               <a href="#" 
                  class="dropdown-toggle" 
@@ -85,7 +91,7 @@
                                        data-toggle="tooltip" 
                                        data-placement="bottom" 
                                        title="Veteran"></i>
-                                @elseif ( Session::get('userStatus') === 'retired' ) 
+                                @elseif ( Session::get('userStatus') === 'resigned' ) 
                                     <i class="fa fa-star-o" 
                                        style="color:gold;"
                                        data-toggle="tooltip" 
@@ -107,6 +113,8 @@
                                                 {{ Session::get('userClub') . " / Marketing" }}
                                             @elseif (Session::get('userGroup') == 'clubleitung')
                                                 {{ Session::get('userClub') . " / Clubleitung" }}
+                                            @elseif (Session::get('userGroup') == 'admin')
+                                                {{ Session::get('userClub') . " / Admin" }}
                                             @else
                                                 {{ Session::get('userClub') }}
                                             @endif

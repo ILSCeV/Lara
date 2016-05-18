@@ -7,9 +7,9 @@
 			<div class="panel panel-heading calendar-internal-task white-text">
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 			<div class="panel panel-heading calendar-internal-marketing white-text">
-		@elseif ($clubEvent->getPlace->id == 2)
+		@elseif ($clubEvent->getPlace->id == 1)
 			<div class="panel panel-heading calendar-internal-event-bc-club white-text">
-		@elseif ($clubEvent->getPlace->id == 3)
+		@elseif ($clubEvent->getPlace->id == 2)
 			<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
 		@else
 			{{-- DEFAULT --}}
@@ -22,9 +22,9 @@
 			<div class="panel panel-heading calendar-public-task white-text">
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 			<div class="panel panel-heading calendar-public-marketing white-text">
-		@elseif ($clubEvent->getPlace->id == 2)
+		@elseif ($clubEvent->getPlace->id == 1)
 			<div class="panel panel-heading calendar-public-event-bc-club white-text">
-		@elseif ($clubEvent->getPlace->id == 3)
+		@elseif ($clubEvent->getPlace->id == 2)
 			<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
 		@else
 			{{-- DEFAULT --}}
@@ -130,7 +130,8 @@
 			{{-- Show a "hide" button for management, that allows removal of an event from current view - needed for printing --}}
 	        @if(Session::has('userGroup')
 		        AND (Session::get('userGroup') == 'marketing'
-		        OR Session::get('userGroup') == 'clubleitung'))
+		        OR Session::get('userGroup') == 'clubleitung'
+		        OR Session::get('userGroup') == 'admin'))
 		        <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 				<div class="padding-right-16 bottom-padding pull-right hidden-print">
 					<small><a href="#" class="hide-event">Ausblenden</a></small>

@@ -7,9 +7,9 @@
 			<div class="panel panel-heading calendar-internal-task white-text">
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 			<div class="panel panel-heading calendar-internal-marketing white-text">
-		@elseif ($clubEvent->getPlace->id == 2)
+		@elseif ($clubEvent->getPlace->id == 1)
 			<div class="panel panel-heading calendar-internal-event-bc-club white-text">
-		@elseif ($clubEvent->getPlace->id == 3)
+		@elseif ($clubEvent->getPlace->id == 2)
 			<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
 		@else
 			{{-- DEFAULT --}}
@@ -22,9 +22,9 @@
 			<div class="panel panel-heading calendar-public-task white-text">
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 			<div class="panel panel-heading calendar-public-marketing white-text">
-		@elseif ($clubEvent->getPlace->id == 2)
+		@elseif ($clubEvent->getPlace->id == 1)
 			<div class="panel panel-heading calendar-public-event-bc-club white-text">
-		@elseif ($clubEvent->getPlace->id == 3)
+		@elseif ($clubEvent->getPlace->id == 2)
 			<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
 		@else
 			{{-- DEFAULT --}}

@@ -93,39 +93,11 @@ class WeekController extends Controller {
 	        } 
         }
 
-		$tasks = Schedule::where('schdl_show_in_week_view', '=', '1')
-					     ->where('schdl_due_date', '>=', $weekStart) 				
-					     ->where('schdl_due_date', '<=', $weekEnd) 
-					     ->with('getEntries.getPerson.getClub',
-					     		'getEntries.getJobType')
-					     ->get();
-
-
-		$persons = Cache::remember('persons-club-2', 10 , function()
-		{
-			return  \Lara\Person::whereNotNull( "prsn_ldap_id" )
-								// Get all active members from club 2
-								->where( "clb_id", "=", "2" )
-								->whereIn( "prsn_status", ['member', 'candidate'] )
-								->orWhere(function($query)
-								{
-									// And add to the list any retired members only if they made a shift in the last 3 month
-									$timeSpan = new DateTime("now");
-									$timeSpan = $timeSpan->sub(DateInterval::createFromDateString('3 months'));
-
-									$query->whereNotNull( "prsn_ldap_id" )
-										  ->where( "clb_id", "=", "2" )
-										  ->where( "updated_at", ">=", $timeSpan->format('Y-m-d H:i:s') );	
-								})
-							   	->orderBy('prsn_name')
-							   	->get();
-		});
-
 		$clubs = Club::orderBy('clb_title')->pluck('clb_title', 'id');
 
         return View::make('weekView', compact('events', 'schedules',  'date', 
-        									  'tasks', 'entries', 'weekStart', 
-        									  'weekEnd', 'persons', 'clubs'));
+        									  'entries', 'weekStart', 
+        									  'weekEnd', 'clubs'));
 
 	}
 		

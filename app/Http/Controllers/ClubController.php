@@ -14,9 +14,13 @@ class ClubController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($query = NULL)
     {
-        //
+        if ( is_null($query) ) { $query = ""; } // if no parameter specified - empty means "show all"
+
+        $clubs =  \Lara\Club::where('clb_title', 'like', '%' . $query . '%')->orderBy('clb_title')->get(['clb_title']);
+                     
+        return response()->json($clubs);
     }
 
     /**
