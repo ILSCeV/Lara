@@ -149,7 +149,7 @@ return [
          * Providers for Lara-VedSt
          */
         Collective\Html\HtmlServiceProvider::class,
-		Orangehill\Iseed\IseedServiceProvider::class,
+        Orangehill\Iseed\IseedServiceProvider::class,
         /*
          * ide-helper for php storm
          */
