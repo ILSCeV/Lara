@@ -4,28 +4,28 @@ use Illuminate\Database\Seeder;
 
 class PlacesTableSeeder extends Seeder
 {
+
     /**
-     * Run the database seeds.
+     * Auto generated seed file
      *
-     * @return console info
+     * @return void
      */
     public function run()
     {
-		/**
-		 * Clearing table
-		 */
-        DB::table('places')->delete();
+        
 
-		/**
-		 * Creating places
-		 */
-
-        \Lara\Place::create(array('plc_title' => '-'));			// Default - do not delete!
-        														// This value is needed for production Lara to run.
-		
-		/**
-		 * Reporting result to console
-		 */
-		$this->command->info('Default location created.');
+        \DB::table('places')->delete();
+        
+        \DB::table('places')->insert(array (
+            0 => 
+            array (
+                'id' => 1,
+                'plc_title' => '-',
+                'created_at' => '2016-05-18 17:13:26',
+                'updated_at' => '2016-05-18 17:13:26',
+            ),
+        ));
+        
+        
     }
 }
