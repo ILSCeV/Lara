@@ -4,27 +4,28 @@ use Illuminate\Database\Seeder;
 
 class ClubsTableSeeder extends Seeder
 {
+
     /**
-     * Run the database seeds.
+     * Auto generated seed file
      *
-     * @return console info
+     * @return void
      */
     public function run()
     {
-		/**
-		 * Clearing table
-		 */
-        DB::table('clubs')->delete();
+        
 
-		/**
-		 * Creating clubs
-		 */
-        \Lara\Club::create(array('clb_title' => '-'));			// Default - do not delete! 
-        														// This value is needed for production Lara to run
-		
-		/**
-		 * Reporting result to console
-		 */
-		$this->command->info('Default club created.');
+        \DB::table('clubs')->delete();
+        
+        \DB::table('clubs')->insert(array (
+            0 => 
+            array (
+                'id' => 1,
+                'clb_title' => '-',
+                'created_at' => '2016-05-18 17:13:26',
+                'updated_at' => '2016-05-18 17:13:26',
+            ),
+        ));
+        
+        
     }
 }

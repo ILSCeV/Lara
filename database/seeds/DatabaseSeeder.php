@@ -7,19 +7,26 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     * Tables will be cleared and filled with example entries.
      *
      * @return void
      */
-    public function run()
-    {     
-        // Each table gets its own seeder
-        // Example: $this->call(UserTableSeeder::class);
-        $this->call(ScheduleEntriesTableSeeder::class);
-        $this->call(SchedulesTableSeeder::class);
-        $this->call(ClubEventsTableSeeder::class);
-        $this->call(ClubsTableSeeder::class);
-        $this->call(PlacesTableSeeder::class);
-        $this->call(PersonsTableSeeder::class);
-        $this->call(JobtypesTableSeeder::class);
+    public function run() {
+        Eloquent::unguard();
+
+        #iseed_start
+        // do not remove
+        // iSeed will store the calls for newly generated seeds here
+        $this->call('ClubEventsTableSeeder');
+        $this->call('SchedulesTableSeeder');
+        $this->call('PersonsTableSeeder');
+        $this->call('JobtypesTableSeeder');
+        $this->call('PlacesTableSeeder');
+        $this->call('ClubsTableSeeder');
+        $this->call('ScheduleEntriesTableSeeder');
+        $this->call('SurveyTableSeeder');
+        $this->call('SurveyQuestionTableSeeder');
+        $this->call('SurveyAnswerTableSeeder');
+        #iseed_end
     }
 }
