@@ -41,7 +41,7 @@
 <div class="row bgWhite">
     <div class="col-md-1">
     </div>
-    <div class="col-md-11">
+    <div class="col-md-11 calendarWrapper">
         <div class=" hidden-xs" id="ContentRow">
             <div class="custom-md-85 kalenderWoche">
                 KW
@@ -73,8 +73,8 @@
         <?php $simpleDate = 1; ?>
         @for($i = 1; $i <= $date['daysOfMonth'] + ($date['startDay'] - 1) + (7 - $date['endDay']); $i++)
                 <!--define row-->
-        @if($i == 1 || $i == 8 || $i == 15 )
-               <div class="calendarRow clearfix">
+        @if($i == 1 || $i == 8 || $i == 15 || $i == 22 || $i == 29 || $i == 36)
+               <div class="calendarRow clearfix group">
         @endif
                 <!--End define row at bottom-->
 
@@ -107,7 +107,7 @@
                                 <?php $simpleDate++; ?>
                             </div>
                             <div class="cell90">
-                                @include ('partials.calendarCellDate', $date)
+                                @include( 'partials.calendarCellDate', $date)
                             </div>
                         </div>
                         @else
@@ -121,7 +121,7 @@
 
                             @endif
 
-                            @if( $i == 7 || $i == 16 || $i == 22 )
+                            @if($i == 7 || $i == 14 || $i == 21 || $i == 28 || $i == 35 || $i == 42)
                                 </div>
                             @endif
 
