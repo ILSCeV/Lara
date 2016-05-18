@@ -22,6 +22,13 @@ class DatabaseSeeder extends Seeder
 
 		#iseed_start
 		// iSeed will store the calls for newly generated seeds here
+		$this->call(ScheduleEntriesTableSeeder::class);
+		$this->call(SchedulesTableSeeder::class);
+		$this->call(ClubEventsTableSeeder::class);
+		$this->call(ClubsTableSeeder::class);
+		$this->call(PlacesTableSeeder::class);
+		$this->call(PersonsTableSeeder::class);
+		$this->call(JobtypesTableSeeder::class);
 		#iseed_end
 	}
 }
