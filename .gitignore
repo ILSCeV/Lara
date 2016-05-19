@@ -5,3 +5,4 @@ Homestead.json
 .env
 logo.psd
 composer.lock
+config/bcLDAP.php
