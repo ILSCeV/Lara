@@ -1,0 +1,196 @@
+/*
+    Add the styles to vedst.css ?
+*/
+
+
+.calendarWrapper{
+    overflow: hidden;
+}
+
+.height10vh{
+    height: 10vh !important;
+}
+
+.kalenderWoche {
+    text-align: left !important;
+    border-top-width: 0px !important;
+    border-left-width: 0px !important;
+    width: 12.5%;
+    float: left;
+    margin: 0px;
+    text-align: center;
+    line-height: 10vh;
+    height:10vh;
+    border: solid;
+    border-width: 1px 0px 0px 1px;
+    border-color: #dddddd;
+}
+
+.wochenTag {
+    text-align: left !important;
+    border-top-width: 0px !important;
+    width: 12.5%;
+    float: left;
+    margin: 0px;
+    text-align: center;
+    line-height: 10vh;
+    height:10vh;
+    border: solid;
+    border-width: 1px 0px 0px 1px;
+    border-color: #dddddd;
+}
+
+@media screen and (max-width: 978px) {
+    .wochenTag{
+        display: none;
+    }
+    
+    .kalenderWoche{
+        display: none;
+    }
+}
+
+.WeekMarker{
+    background-color: #efefef;
+}
+
+@media screen and (max-width: 978px) {
+    .WeekMarker{
+        background-color: #098109 !important;
+    }
+}
+
+.Tag{
+    text-align: left !important;
+    border-left-width: 0px !important;
+
+}
+
+.Tag a:link{
+    color: #666666;
+}
+
+.Tag a:hover{
+    color: #040303;
+}
+
+.Tag a:visited{
+    color: #666666;
+}
+
+@media screen and (max-width: 978px) {
+    .Tag {
+        margin-top: 10vh !important;
+        background-color: #076161;
+        border-radius: 30px 30px 0 0;
+        font-weight: bold;
+        text-align: center !important;
+
+    }
+
+    .Tag a:link{
+        color: white;
+    }
+
+    .Tag a:hover{
+        color: black;
+    }
+
+    .Tag a:visited{
+        color: white;
+    }
+}
+
+.thisMonth{
+    background-color: white;
+}
+
+.empty {
+    display: block;
+}
+
+@media screen and (max-width: 978px) {
+    .empty {
+        display: none;
+    }
+}
+
+
+.calendarRow{
+    height:auto;
+    display: block;
+    min-height: 10vh;
+    position: relative;
+    background-color: transparent;
+    overflow: hidden;
+}
+
+
+/*
+  Custom width of cols
+*/
+.custom-md-85 {
+    width: 12.5%;
+    float: left;
+    margin: 0px;
+    text-align: center;
+    line-height: 10vh;
+    height:100%;
+    border: solid;
+    border-width: 1px 0px 0px 1px;
+    border-color: #dddddd;
+}
+
+@media screen and (min-width: 978px) {
+    .custom-md-85{
+        margin-bottom: -99999px;
+        padding-bottom: 99999px;
+    }
+
+    .calendarRow{
+        overflow: hidden;
+    }
+
+}
+
+@media screen and (max-width: 978px) {
+    .custom-md-85 {
+        width: 100%;
+        border-bottom: solid;
+        border-width: 3px;
+        border-color: #F6F5F3;
+    }
+
+    .custom-md-85:empty{
+        display: none;
+        height: 0px;
+    }
+}
+
+/*
+    space for number and space for event
+*/
+.cell10{
+    width: 10%;
+    float: left;
+    position: relative;
+    margin: 0px;
+    text-align: center;
+    line-height: 10vh;
+    height: 10vh;
+}
+
+.cell90{
+    width: 90%;
+    float: right;
+    position: relative;
+    padding-right: 5%;
+    padding-left: 5%;
+}
+
+@media screen and (max-width: 978px) {
+    .cell90{
+        padding-right: 10%;
+        padding-left: 0%;
+    }
+}
