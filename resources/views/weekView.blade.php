@@ -52,7 +52,7 @@
 
 		
 	{{-- weekdays --}}
-	@if (count($events)>0 OR count($tasks)>0)
+	@if (count($events)>0)
 		<div class="isotope">
 			{{-- hack: empty day at the beginning, 
 				 prevents isotope collapsing to a single column if the very first element is hidden
