@@ -5,6 +5,7 @@ namespace Lara\Http\Controllers;
 use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
 
+use Lara\Survey;
 use Redirect;
 use View; 
 
@@ -73,8 +74,12 @@ class MonthController extends Controller {
 						   ->orderBy('evnt_time_start')
 						   ->get();
 
-		return View::make('monthView', compact('events', 'date'));
-	}
+		$surveys = Survey::where('in_calendar','>=',$monthStart)
+							->where('in_calendar','<=',$monthEnd)
+							->orderBy('in_calendar')
+							->get();
 
+		return View::make('monthView', compact('events', 'date', 'surveys'));
+	}
 }
 

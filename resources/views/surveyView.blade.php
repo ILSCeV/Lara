@@ -5,8 +5,10 @@
 @stop
 
 @section('content')
-    <div class="row no-margin">
-        <div class="panel col-md-6 no-padding">
+
+    <div class="btn-group col-md-6">
+    <div class="row">
+        <div class="panel no-padding">
             <h4 class="panel-title text-center">Umfrage {{ $survey->title }}</h4>
             <div class="panel-body">
                 <h6>Beschreibung:</h6>
@@ -19,7 +21,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="panel col-md-6">
+        <div class="panel">
             <h5 class="panel-title text-center">Auswahlmöglichkeiten</h5>
             @foreach($questions as $question)
                 <div class="row">
@@ -33,4 +35,12 @@
             @endforeach
         </div>
     </div>
+        <div>
+            @include('partials.surveyAnswer')
+        </div>
+
+                <div>
+                    @include('partials.surveyEvaluation')
+                </div>
+
 @stop

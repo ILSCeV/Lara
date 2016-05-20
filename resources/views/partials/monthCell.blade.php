@@ -15,6 +15,23 @@
 @endif
 
 
+
+@foreach($surveys as $Survey)
+	@if($Survey->in_calendar === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
+		<div class="cal-event dark-grey calendar-internal-info">
+
+		<i class="fa fa-bar-chart-o white-text"></i>
+            <a href="{{ URL::route('survey.show', $Survey->id) }}">
+             <span  class="white-text"></span> {{ $Survey->title }} </span>
+            </a>
+		</div>
+
+	@endif
+@endforeach
+
+
+
+
 @foreach($events as $clubEvent)
 	@if($clubEvent->evnt_date_start === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
 
@@ -53,7 +70,7 @@
 						@endif
 							@include("partials.event-marker", $clubEvent)
 						 	<a href="{{ URL::route('event.show', $clubEvent->id) }}"> 
-								{{{ $clubEvent->evnt_title }}}
+								{{ $clubEvent->evnt_title }}
 							</a>
 						</div>
 
@@ -96,7 +113,7 @@
 
 						@include("partials.event-marker", $clubEvent)
 						<a href="{{ URL::route('event.show', $clubEvent->id) }}"> 
-							{{{ $clubEvent->evnt_title }}}
+							{{ $clubEvent->evnt_title }}
 						</a>
 					</div>
 
@@ -104,5 +121,11 @@
 
 		</div>
 	@endif
-	
-@endforeach 
+
+@endforeach
+
+
+
+
+
+
