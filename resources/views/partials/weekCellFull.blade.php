@@ -33,7 +33,11 @@
 	@endif
 
 			<h4 class="panel-title">
+<<<<<<< HEAD
 				<a href="{{ URL::route('event.show', $clubEvent->id) }}"> 
+=======
+				<a href="{{ URL::route('event.show', $clubEvent->id) }}">
+>>>>>>> parent of 8bab294... Fix: {{{ into {{ and }}} into }}
 					@include("partials.event-marker")&nbsp;<span class="name">{{{ $clubEvent->evnt_title }}}</span>
 				</a>
 			</h4>
