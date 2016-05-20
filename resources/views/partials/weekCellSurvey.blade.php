@@ -2,14 +2,14 @@
 <div>
 <div class="cal-event dark-grey">
 		<h4 class="panel-title">
-			<a href="{{ URL::route('survey.show', $Survey->id) }}">
+			<a href="{{ URL::route('survey.show', $survey->id) }}">
 				<i class="fa fa-bar-chart-o white-text"></i>&nbsp;
-				<span class="name">{{ $Survey->title }}</span>
+				<span class="name">{{ $survey->title }}</span>
 			</a>
 		</h4>
 
 
-		{{ utf8_encode(strftime("%a, %d. %b", strtotime($Survey->in_calendar))) }}
+		{{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->in_calendar))) }}
 </div>
 	<div class="panel panel-body no-padding">
 

@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div class="btn-group col-md-6">
+<div class="btn-group col-md-6">
     <div class="row">
         <div class="panel no-padding">
             <h4 class="panel-title text-center">Umfrage {{ $survey->title }}</h4>
@@ -35,12 +35,12 @@
             @endforeach
         </div>
     </div>
-        <div>
-            @include('partials.surveyAnswer')
-        </div>
 
-                <div>
-                    @include('partials.surveyEvaluation')
-                </div>
-
+    <div>
+        @include('partials.surveyAnswer')
+    </div>
+    <div>
+        @include('partials.surveyEvaluation')
+    </div>
+</div>
 @stop
