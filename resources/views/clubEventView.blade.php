@@ -39,8 +39,8 @@
 				{{-- DEFAULT --}}
 				<div class="panel panel-heading white-text">		
 			@endif
-				<h4 class="panel-title">@include("partials.event-marker")&nbsp;{{{ $clubEvent->evnt_title }}}</h4>
-				<h5 class="panel-title">{{{ $clubEvent->evnt_subtitle }}}</h5>
+				<h4 class="panel-title">@include("partials.event-marker")&nbsp;{{ $clubEvent->evnt_title }}</h4>
+				<h5 class="panel-title">{{ $clubEvent->evnt_subtitle }}</h5>
 			</div>
 				<table class="table table-hover">
 					<tr>
@@ -102,7 +102,7 @@
 							<i>Verein:</i>
 						</td>
 						<td>
-							{{{ $clubEvent->getPlace->plc_title }}} 
+							{{ $clubEvent->getPlace->plc_title }}
 							&nbsp;&nbsp;<br class="visible-xs">
 							<i>(wird angezeigt für: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
 						</td>

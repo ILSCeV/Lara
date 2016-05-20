@@ -14,6 +14,6 @@
     <button type="submit" class="btn btn-primary">Abstimmen</button>
     <a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
 </div>
-<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 </form>
 </div>

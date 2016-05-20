@@ -32,7 +32,7 @@ OR Session::get('userGroup') == 'clubleitung'))
                             @endif
                             @include("partials.event-marker", $clubEvent)
                             <a href="{{ Request::getBasePath() }}/event/{{ $clubEvent->id }}">
-                                {{{ $clubEvent->evnt_title }}}
+                                {{ $clubEvent->evnt_title }}
                             </a>
                         </div>
                     @endif
@@ -44,7 +44,7 @@ OR Session::get('userGroup') == 'clubleitung'))
                                         @endif
                                         @include("partials.event-marker", $clubEvent)
                                         <a href="{{ Request::getBasePath() }}/event/{{ $clubEvent->id }}">
-                                            {{{ $clubEvent->evnt_title }}}
+                                            {{ $clubEvent->evnt_title }}
                                         </a>
                                     </div>
                                 @endif
@@ -64,7 +64,7 @@ OR Session::get('userGroup') == 'clubleitung'))
                                     <div class="cal-event calendar-task">
                                         <i class="fa fa-tasks marker-0"></i>
                                         <a href="{{ Request::getBasePath() }}/task/id/{{ $task->id }}">
-                                            {{{ $task->schdl_title }}}
+                                            {{ $task->schdl_title }}
                                         </a>
                                     </div>
                                     @endif

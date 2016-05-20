@@ -34,7 +34,7 @@
 
 			<h4 class="panel-title">
 				<a href="{{ URL::route('event.show', $clubEvent->id) }}">
-					@include("partials.event-marker")&nbsp;<span class="name">{{{ $clubEvent->evnt_title }}}</span>
+					@include("partials.event-marker")&nbsp;<span class="name">{{ $clubEvent->evnt_title }}</span>
 				</a>
 			</h4>
 
@@ -46,7 +46,7 @@
 			-
 			{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 			&nbsp;
-			<i class="fa fa-map-marker">&nbsp;</i>{{{ $clubEvent->getPlace->plc_title }}}
+			<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->getPlace->plc_title }}
 
 		</div>
 
