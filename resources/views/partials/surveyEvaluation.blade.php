@@ -15,13 +15,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($survey_answer as $survey_answerid)
-                            @if($survey_answerid->survey_question_id == $survey->id)
-                            <tr>
-                                <td>{{ $survey_answerid->content }}</td>
-                            </tr>
-                            @endif
-                        @endforeach
+                        {{--@foreach($survey_answer as $survey_answerid)--}}
+                            {{--@if($survey_answerid->survey_question_id == $survey->id)--}}
+                            {{--<tr>--}}
+                                {{--<td>{{ $survey_answerid->content }}</td>--}}
+                            {{--</tr>--}}
+                            {{--@endif--}}
+                        {{--@endforeach--}}
                         </tbody>
                     </table>
                 </div>
