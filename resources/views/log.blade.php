@@ -77,13 +77,13 @@
 
 @foreach($logs as $key => $log)
 <tr>
-  <td class="text-{{{$log['level_class']}}}"><span class="glyphicon glyphicon-{{{$log['level_img']}}}-sign" aria-hidden="true"></span> &nbsp;{{$log['level']}}</td>
-  <td class="date">{{{$log['date']}}}</td>
+  <td class="text-{{$log['level_class']}}"><span class="glyphicon glyphicon-{{$log['level_img']}}-sign" aria-hidden="true"></span> &nbsp;{{$log['level']}}</td>
+  <td class="date">{{$log['date']}}</td>
   <td class="text">
-    @if ($log['stack']) <a class="pull-right expand btn btn-default btn-xs" data-display="stack{{{$key}}}"><span class="glyphicon glyphicon-search"></span></a>@endif
-    {{{$log['text']}}}
-    @if (isset($log['in_file'])) <br />{{{$log['in_file']}}}@endif
-    @if ($log['stack']) <div class="stack" id="stack{{{$key}}}" style="display: none; white-space: pre-wrap;">{{{ trim($log['stack']) }}}</div>@endif
+    @if ($log['stack']) <a class="pull-right expand btn btn-default btn-xs" data-display="stack{{$key}}"><span class="glyphicon glyphicon-search"></span></a>@endif
+    {{$log['text']}}
+    @if (isset($log['in_file'])) <br />{{$log['in_file']}}@endif
+    @if ($log['stack']) <div class="stack" id="stack{{$key}}" style="display: none; white-space: pre-wrap;">{{ trim($log['stack']) }}</div>@endif
   </td>
 </tr>
 @endforeach
