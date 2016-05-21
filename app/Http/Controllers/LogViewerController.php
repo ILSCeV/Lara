@@ -27,7 +27,7 @@ class LogViewerController extends Controller
 
         $logs = \Rap2hpoutre\LaravelLogViewer\LaravelLogViewer::all();
 
-        return View::make('laravel-log-viewer::log', [
+        return View::make('log', [
             'logs' => $logs,
             'files' => \Rap2hpoutre\LaravelLogViewer\LaravelLogViewer::getFiles(true),
             'current_file' => \Rap2hpoutre\LaravelLogViewer\LaravelLogViewer::getFileName()

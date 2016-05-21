@@ -1,5 +1,0 @@
-suites:
-    main:
-        namespace: Lara
-        psr4_prefix: Lara
-        src_path: app
