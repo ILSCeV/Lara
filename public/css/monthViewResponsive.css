@@ -131,6 +131,8 @@
 
 /*
   Custom width of cols
+  no longer default bootstrap cols,
+  because they do not have fitting width
 */
 .custom-md-85 {
     width: 12.5%;
@@ -162,6 +164,7 @@
         border-bottom: solid;
         border-width: 3px;
         border-color: #F6F5F3;
+        height: auto;
     }
 
     .custom-md-85:empty{
