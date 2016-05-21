@@ -120,7 +120,7 @@
                                                     <?php $simpleDate++; ?>
                                                 </div>
                                                 <div class="cell90">
-                                                    @include( 'partials.calendarCellDate', $date)
+                                                    @include( 'partials.monthCell', $date)
                                                 </div>
                                             </div>
                                             @else
