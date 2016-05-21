@@ -1,22 +1,11 @@
 {{-- Needs variables: i, date, id --}}
 
-@if(Session::has('userGroup'))
-	<a href="{{ Request::getBasePath() }}/
-			event/
-			{{ $date['year']}}/
-			{{ $date['month'] }}/
-			{{ strftime("%d", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}/
-			0/
-			create">
-		{{ date("j.", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}
-	</a>
-@else
-	{{ date("j.", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}
-@endif
 
 
-
-@foreach($surveys as $survey)
+<!--
+surveys is undefined!
+{{--
+@foreach(surveys as survey)
 	@if($survey->in_calendar === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
 		<div class="cal-event dark-grey calendar-internal-info">
 
@@ -28,8 +17,8 @@
 
 	@endif
 @endforeach
-
-
+--}}
+-->
 
 
 @foreach($events as $clubEvent)

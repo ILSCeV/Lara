@@ -140,7 +140,7 @@
     margin: 0px;
     text-align: center;
     line-height: 10vh;
-    height:100%;
+    min-height:10vh;
     border: solid;
     border-width: 1px 0px 0px 1px;
     border-color: #dddddd;
