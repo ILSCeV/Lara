@@ -35,28 +35,28 @@
     </div>
     <div class="col-md-11 calendarWrapper">
         <div class=" hidden-xs" id="ContentRow">
-            <div class=" kalenderWoche">
+            <div class=" calendarWeek">
                 KW
             </div>
-            <div class="wochenTag">
+            <div class="weekDay">
                 Mo
             </div>
-            <div class="wochenTag">
+            <div class="weekDay">
                 Di
             </div>
-            <div class="wochenTag">
+            <div class="weekDay">
                 Mi
             </div>
-            <div class="wochenTag">
+            <div class="weekDay">
                 Do
             </div>
-            <div class="wochenTag">
+            <div class="weekDay">
                 Fr
             </div>
-            <div class="wochenTag">
+            <div class="weekDay">
                 Sa
             </div>
-            <div class="wochenTag">
+            <div class="weekDay">
                 So
             </div>
         </div>
@@ -78,10 +78,10 @@
                         @if(date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)
                         @if ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )
                                 <!--Current Week -->
-                        <div class="custom-md-85 Tag WeekMarker">
+                        <div class="custom-md-85 day WeekMarker">
                             @else
                                     <!--Every other week-->
-                            <div class=" custom-md-85 Tag">
+                            <div class=" custom-md-85 day">
                                 @endif
                                 <a href="{!! Request::getBasePath() !!}/calendar/{!! $date['year'] !!}/KW{{ date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) }}">
                                     KW {{ date("W", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) }}
