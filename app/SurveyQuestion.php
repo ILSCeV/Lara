@@ -26,6 +26,6 @@ class SurveyQuestion extends Model
      */
     public function getAnswers() 
     {
-        return $this->hasMany('Lara\SurveyAnswer', 'id', 'survey_question_id');
+        return $this->hasMany('Lara\SurveyAnswer');
     }
 }
