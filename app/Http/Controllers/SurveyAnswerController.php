@@ -46,12 +46,12 @@ class SurveyAnswerController extends Controller
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
 
-    public function update($id)
+    public function update($surveyid, $id)
     {
 
     }
 
-    public function destroy()
+    public function destroy($surveyid, $id)
     {
 
     }
