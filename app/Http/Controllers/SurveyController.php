@@ -98,9 +98,8 @@ class SurveyController extends Controller
         $questions = $survey->getQuestions;
 
         //find answers(as collection object) to an array with the questionid as index
-        $answers = array();
         foreach($questions as $question) {
-            $answers[$question->id] = SurveyAnswer::whereSurveyQuestionId($question->id)->get();
+            $answers[$question->id] = $question->getAnswers;
         }
         return view('surveyView', compact('survey', 'questions', 'answers'));
     }
