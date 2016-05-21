@@ -72,8 +72,12 @@
         <!--Print Weeks on left side-->
         <?php $simpleDate = 1; ?>
         @for($i = 1; $i <= $date['daysOfMonth'] + ($date['startDay'] - 1) + (7 - $date['endDay']); $i++)
-                <!--define row-->
+              <!--define row-->
         @if($i == 1)
+            <div class="calendarRow clearfix group ">
+                <!--This is an empty row-->
+                <!--Without this row, the first real calendar row would disapear-->
+            </div>
             <div class="calendarRow clearfix group height10vh">
                 @elseif( $i == 8 || $i == 15 || $i == 22 || $i == 29 || $i == 36)
                     <div class="calendarRow clearfix group">
@@ -83,8 +87,10 @@
                         <!-- Weeks on left side -->
                         @if(date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)
                             @if ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )
+                                <!--Current Week -->
                                 <div class="custom-md-85 Tag WeekMarker">
                                     @else
+                                        <!--Every other week-->
                                         <div class=" custom-md-85 Tag">
                                             @endif
                                             <a href="{!! Request::getBasePath() !!}/calendar/{!! $date['year'] !!}/KW{{ date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) }}">
@@ -94,19 +100,20 @@
                                         @endif
 
 
-                                                <!-- Show Days  -->
+
                                         @if($i - $date['startDay'] >= 0 AND $i-$date['startDay'] < $date['daysOfMonth'])
-                                                <!-- color current week gray -->
                                         @if(date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])) === date( "Y-m-d" ) )
                                             <div class="thisMonth today-marker-today custom-md-85">
                                                 <!--The actual date of today marked in dark gray-->
                                                 @elseif ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )
+                                                    <!--The current week marked in light gray-->
                                                     <div class="thisMonth today-marker custom-md-85">
                                                         @else
+                                                            <!--All regular days in this month, white-->
                                                             <div class="thisMonth custom-md-85">
                                                                 @endif
                                                                 <div class="cell10">
-                                                                    {!! $simpleDate !!}
+                                                                        {!! $simpleDate !!}
                                                                     <?php $simpleDate++; ?>
                                                                 </div>
                                                                 <div class="cell90">
@@ -114,6 +121,7 @@
                                                                 </div>
                                                             </div>
                                                             @else
+                                                                <!--Days not in this month, no color-->
                                                                 <div class="otherMonth custom-md-85 empty">
                                                                     <!-- date("j", strtotime($i-$date['startDay']." day", $date['startStamp'])) -->
                                                                 </div>
