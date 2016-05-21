@@ -1,7 +1,7 @@
 <?php
 namespace Lara\Http\Controllers;
 
-use Illuminate\Routing\Controller;
+//use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
