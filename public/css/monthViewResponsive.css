@@ -8,7 +8,17 @@
 }
 
 .height10vh{
-    height: 10vh !important;
+    height: 10vh ;
+}
+
+@media screen and (max-width: 978px) {
+    .height10vh{
+        height: 0px;
+    }
+
+    .calendarRow{
+        min-height: 0px;
+    }
 }
 
 .calendarWeek {
@@ -128,6 +138,11 @@
     overflow: hidden;
 }
 
+@media screen and (max-width: 978px) {
+    .calendarRow{
+        min-height: 0;
+    }
+}
 
 /*
   Custom width of cols
@@ -152,9 +167,7 @@
         padding-bottom: 99999px;
     }
 
-    .calendarRow{
-        overflow: hidden;
-    }
+
 
 }
 

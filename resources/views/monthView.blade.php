@@ -65,7 +65,7 @@
         @for($i = 1; $i <= $date['daysOfMonth'] + ($date['startDay'] - 1) + (7 - $date['endDay']); $i++)
                 <!--define row-->
         @if($i == 1)
-            <div class="calendarRow clearfix group ">
+            <div class="calendarRow clearfix group noHeightMobile">
                 <!--This is an empty row-->
                 <!--Without this row, the first real calendar row would disapear-->
             </div>
