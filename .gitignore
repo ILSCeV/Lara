@@ -1,22 +1,21 @@
+/vendor
+/node_modules
+config/bcLDAP.php
+logo.psd
+
+.env
+.env-prod
+.env-local
 composer.phar
+composer.lock
+
+Homestead.yaml
+Homestead.json
 
 .idea/
 _ide_helper.php
-.phpstorm.meta.php
 _ide_helper_models.php
+.phpstorm.meta.php
 
 .DS_Store
 Thumbs.db
-
-
-/vendor
-/node_modules
-Homestead.yaml
-Homestead.json
-.env
-logo.psd
-composer.lock
-.env-prod
-.env-local
-composer.lock
-config/bcLDAP.php
