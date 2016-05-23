@@ -20,12 +20,12 @@ class SurveyQuestion extends Model
     }
 
     /**
-     * Get the corresponding answers.
+     * Get the corresponding answerOptions.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function getAnswers() 
+    public function getAnswerOptions()
     {
-        return $this->hasMany('Lara\SurveyAnswer');
+        return $this->hasMany('Lara\SurveyAnswerOption');
     }
 }
