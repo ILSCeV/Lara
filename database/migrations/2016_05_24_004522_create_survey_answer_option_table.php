@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSurveyQuestionTable extends Migration
+class CreateSurveyAnswerOptionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,9 @@ class CreateSurveyQuestionTable extends Migration
      */
     public function up()
     {
-        Schema::create('survey_question', function (Blueprint $table) {
+        Schema::create('survey_answer_option', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('survey_id')->references('id')->on('survey')->unsigned();
-            $table->integer('number')->unsigned();
-            $table->integer('fieldType')->unsigned();
+            $table->integer('survey_question_id')->references('id')->on('survey_question')->unsigned();
             $table->string('content', 1500);
             $table->timestamps();
         });
@@ -29,6 +27,6 @@ class CreateSurveyQuestionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('survey_question');
+        Schema::drop('survey_answer_option');
     }
 }
