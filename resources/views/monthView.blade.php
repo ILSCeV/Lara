@@ -31,9 +31,7 @@
 </div>
 <!--Mont Table-->
 <div class="row bgWhite">
-    <div class="col-md-1">
-    </div>
-    <div class="col-md-11 calendarWrapper">
+    <div class="col-md-12 calendarWrapper">
         <div class=" hidden-xs" id="ContentRow">
             <div class=" calendarWeek">
                 KW
