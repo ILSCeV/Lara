@@ -12,9 +12,8 @@
         <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/vedst.css') }}" />
         <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/monthViewResponsive.css') }}" />
         <link rel="stylesheet" media="print" type="text/css" href="{{ asset('/css/print.css') }}" />
-
     	<link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-48x48.png') }}">
-
+        @yield('moreStylesheets')
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
