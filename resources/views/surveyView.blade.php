@@ -39,7 +39,6 @@
     </div>
 </div>
 -->
-
 <!--
     Body Box
     Write Answers in here!
@@ -50,41 +49,40 @@
         <!--Title of answer box-->
         <h4 class="panel-title">
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-2">
                     Name
                 </div>
-                <div class="col-md-11">
+                <div class="col-md-10">
                     Verein, Frage 1, Frage 2
                 </div>
             </div>
         </h4>
-
         <!--new answer-->
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-2">
                 Textbox
             </div>
-            <div class="col-md-11">
+            <div class="col-md-10">
                 dropdown, Textbox 1, Textbox 2
             </div>
         </div>
-        
         <!--All answers until now-->
         <div class="row">
-            <div class="col-md-1">
-                Name
+            <div class="col-md-2">
+                mein Name
             </div>
-            <div class="col-md-11">
+            <div class="col-md-10">
                 mein Verein, Antwort 1, Antwort 2
             </div>
         </div>
     </div>
 </div>
-
-
 <div class="btn-group col-md-6">
     <div class="row">
         <div class="panel no-padding">
+            <br><br><br><br>
+            {{$questions[0]}}
+            <br><br><br><br>
             <h4 class="panel-title text-center">Umfrage {{ $survey->title }}</h4>
             <div class="panel-body">
                 <h6>Beschreibung:</h6>
