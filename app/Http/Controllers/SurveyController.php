@@ -65,12 +65,12 @@ class SurveyController extends Controller
         $survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
         $survey->save();
 
-        foreach($input->questions as $number => $question){
+        foreach($input->questions as $order => $question){
             $question_db = new SurveyQuestion();
             $question_db->survey_id = $survey->id;
-            $question_db->number = $number;
-            $question_db->fieldType = 1; //example
-            $question_db->content = $question;
+            $question_db->order = $order;
+            $question_db->field_type = 1; //example
+            $question_db->question = $question;
             $question_db->save();
         }
 
