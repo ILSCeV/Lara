@@ -75,48 +75,79 @@
                     mein Name
                 </div>
                 <div class="col-md-10 answers">
-                    mein Verein, Antwort 1, Antwort 2
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="btn-group col-md-6">
-        <div class="row">
-            <div class="panel no-padding">
-                <br><br><br><br>
-                {{$questions[0]}}
-                <br><br><br><br>
-                <h4 class="panel-title text-center">Umfrage {{ $survey->title }}</h4>
-                <div class="panel-body">
-                    <h6>Beschreibung:</h6>
-                    {!! $survey->description!!}
-                    <div class="panel-footer">
-                        Die Umfrage läuft noch bis: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} um
-                        {{ date("H:i", strtotime($survey->deadline)) }}
+                    <div>
+                        <!--
+                            Solution problem not scrollable:
+                            Build wrapper with "fixed" width. This width is a variable.
+                            It is the sum of the width of its sub-elements
+                            Example:
+                            3 sub element, each 50vw wide.
+                            2x margin 10vh
+                            Sum = 170vw
+                        -->
+                        <div style="width: 140%; background-color: red; float: left;">
+                            test
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="panel">
-                <h5 class="panel-title text-center">Auswahlmöglichkeiten</h5>
-                @foreach($questions as $question)
-                    <div class="row">
-                        {{$question->content}}
-                        @foreach($answers[$question->id] as $answer)
-                            <div class="col-md-3">
-                                {{ $answer->content }}
-                            </div>
-                        @endforeach
-                    </div>
-                @endforeach
+        <div class="answerBox" style="width: 100%;">
+            <div class="inner-container">
+                <div class="answers">
+                    this is some textthis is some textthis is some textthis is some textthis is some textthis is
+                    some
+                    textthis is some textthis is some textthis is some textthis is some textthis is some textthis is
+                    some
+                    textthis is some textthis is some textthis is some textthis is some textthis is some textthis is
+                    some
+                    textthis is some textthis is some textthis is some textthis is some textthis is some textthis is
+                    some
+                    textthis is some textthis is some textthis is some textthis is some textthis is some textthis is
+                    some
+                    textthis is some textthis is some textthis is some textthis is some textthis is some textthis is
+                    some
+                    textthis is some textthis is some textthis is some textthis is some text
+                </div>
             </div>
         </div>
-        <div>
-            @include('partials.surveyAnswer')
+        <div class="btn-group col-md-6">
+            <div class="row">
+                <div class="panel no-padding">
+                    <br><br><br><br>
+                    {{$questions[0]}}
+                    <br><br><br><br>
+                    <h4 class="panel-title text-center">Umfrage {{ $survey->title }}</h4>
+                    <div class="panel-body">
+                        <h6>Beschreibung:</h6>
+                        {!! $survey->description!!}
+                        <div class="panel-footer">
+                            Die Umfrage läuft noch bis: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} um
+                            {{ date("H:i", strtotime($survey->deadline)) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel">
+                    <h5 class="panel-title text-center">Auswahlmöglichkeiten</h5>
+                    @foreach($questions as $question)
+                        <div class="row">
+                            {{$question->content}}
+                            @foreach($answers[$question->id] as $answer)
+                                <div class="col-md-3">
+                                    {{ $answer->content }}
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div>
+                @include('partials.surveyAnswer')
+            </div>
+            <div>
+                @include('partials.surveyEvaluation')
+            </div>
         </div>
-        <div>
-            @include('partials.surveyEvaluation')
-        </div>
-    </div>
 @stop

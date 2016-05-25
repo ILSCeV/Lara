@@ -1,7 +1,26 @@
+.answerBox{
+    overflow: hidden;
+    position: relative;
+}
+
+.answerBox .inner-container{
+
+}
+
 .answerBox .names{
-    background-color: red;
+    overflow: hidden;
 }
 
 .answerBox .answers{
-    background-color: #0a68b4;
+    overflow-x: auto;
+    float: left;
+    word-wrap: normal;
+    display: block;
+    height: 20px;
+    position: relative;
+
+}
+
+.answerBox .answers::-webkit-scrollbar{
+    /*display none*/
 }
