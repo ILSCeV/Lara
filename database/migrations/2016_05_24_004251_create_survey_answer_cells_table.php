@@ -28,6 +28,6 @@ class CreateSurveyAnswerCellsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('survey_answer_cell');
+        Schema::drop('survey_answer_cells');
     }
 }

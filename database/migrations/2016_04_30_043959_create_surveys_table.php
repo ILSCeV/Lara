@@ -34,6 +34,6 @@ class CreateSurveysTable extends Migration
      */
     public function down()
     {
-        Schema::drop('survey');
+        Schema::drop('surveys');
     }
 }

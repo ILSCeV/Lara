@@ -29,6 +29,6 @@ class CreateSurveyQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('survey_question');
+        Schema::drop('survey_questions');
     }
 }
