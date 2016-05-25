@@ -26,11 +26,11 @@
             @foreach($questions as $question)
                 <div class="row">
                     {{$question->content}}
-                    @foreach($answers[$question->id] as $answer)
-                        <div class="col-md-3">
-                            {{ $answer->content }}
-                        </div>
-                    @endforeach
+                    {{--@foreach($answers as $answer)--}}
+                        {{--<div class="col-md-3">--}}
+                            {{--{{ $answer->content }}--}}
+                        {{--</div>--}}
+                    {{--@endforeach--}}
                 </div>
             @endforeach
         </div>
