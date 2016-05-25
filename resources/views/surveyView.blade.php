@@ -24,6 +24,18 @@
         </div>
     </div>
 
+
+    <div class="panel no-padding">
+        <div class="panel-body">
+            <h4 class="panel-title">
+                Name, Verein, Frage 1, Frage 2
+            </h4>
+            hier kannst Du deine Sachen eintragen
+            <br>
+            Jan keiner Antwort1 A2
+        </div>
+    </div>
+
     <div class="btn-group col-md-6">
         <div class="row">
             <div class="panel no-padding">
