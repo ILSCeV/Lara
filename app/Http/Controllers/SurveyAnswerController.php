@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Lara\Http\Requests;
 use Lara\Survey;
 use Lara\SurveyAnswer;
+use Lara\Person;
+use Lara\SurveyAnswerCell;
 
 use Session;
 use Redirect;
@@ -28,16 +30,24 @@ class SurveyAnswerController extends Controller
     public function store($surveyid, Request $input)
     {
         $survey = Survey::findOrFail($surveyid);
-        $questions = $survey->getQuestions;
+//        $creator = Person::findOrFail(Session::get('userId'));    //not able due to no corresponding persons and clubs in database
 
-        foreach($input->answer as $key => $answer) {
-            $survey_answer = new SurveyAnswer();
-            $survey_answer->survey_question_id = $questions[$key]->id;
-            $survey_answer->prsn_id = Session::get('userId');
-            $survey_answer->name = "Peter"; // example due to missing Views
-//            $survey_answer->name = $input->name; // redundant to save it for every answer -> look for better database concept
-            $survey_answer->content = $answer;
-            $survey_answer->save();
+        $survey_answer = new SurveyAnswer();
+        $survey_answer->creator_id = Session::get('userId');
+        $survey_answer->survey_id = $surveyid;
+        $survey_answer->name = "Peter";                             // example due to missing Views
+        $survey_answer->club_id = 0;                                // example
+//        $survey_answer->club_id = $creator->getClub->id;          // not able due to no corresponding persons and clubs in database
+        $survey_answer->order = 0;                                  // example, might be better to order bei updated_at?
+        $survey_answer->save();
+
+        $questions = $survey->getQuestions;
+        foreach($input->answer as $key => $answer_cell) {
+            $survey_answer_cell = new SurveyAnswerCell();
+            $survey_answer_cell->survey_question_id = $questions[$key]->id;
+            $survey_answer_cell->survey_answer_id = $survey_answer->id;
+            $survey_answer_cell->answer = $answer_cell;
+            $survey_answer_cell->save();
         }
 
         Session::put('message', 'Erfolgreich abgestimmt!' );

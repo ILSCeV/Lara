@@ -133,12 +133,12 @@
                     <h5 class="panel-title text-center">Auswahlmöglichkeiten</h5>
                     @foreach($questions as $question)
                         <div class="row">
-                            {{$question->content}}
-                            @foreach($answers[$question->id] as $answer)
-                                <div class="col-md-3">
-                                    {{ $answer->content }}
-                                </div>
-                            @endforeach
+                            {{$question->question}}
+                            {{--@foreach($answers[$question->id] as $answer)--}}
+                                {{--<div class="col-md-3">--}}
+                                    {{--{{ $answer->content }}--}}
+                                {{--</div>--}}
+                            {{--@endforeach--}}
                         </div>
                     @endforeach
                 </div>
