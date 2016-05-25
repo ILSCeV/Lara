@@ -27,6 +27,6 @@ class CreateSurveyAnswerOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('survey_answer_option');
+        Schema::drop('survey_answer_options');
     }
 }
