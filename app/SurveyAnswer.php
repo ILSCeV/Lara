@@ -6,27 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class SurveyAnswer extends Model
 {
-    protected $table ='survey_answer';
-    protected $fillable = array('name', 'content');
+    protected $table ='survey_answers';
+    protected $fillable = array('name', 'order');
 
     /**
      * Get the corresponding question.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function getQuestion()
-    {
-        return $this->belongsTo('Lara\SurveyQuestion', 'survey_question_id', 'id');
-    }
-
-    /**
-     * returns Survey of the answer, don't know if this works properly at the moment
-     * 
-     * @return mixed
-     */
     public function getSurvey()
     {
-        return $this->belongsTo('Lara\SurveyQuestion', 'survey_question_id', 'survey_id')->belongsTo('Lara\Survey');
+        return $this->belongsTo('Lara\Survey', 'survey_id', 'id');
     }
 
     /**
@@ -37,6 +27,26 @@ class SurveyAnswer extends Model
     public function getPerson()
     {
         return $this->belongsTo('Lara\Person', 'prsn_id', 'id');
+    }
+
+    /**
+     * Get the corresponding club.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function getClub()
+    {
+        return $this->belongsTo('Lara\Club', 'club_id', 'id');
+    }
+
+    /**
+     * Get the corresponding answerCells.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function getAnswerCells()
+    {
+        return $this->hasMany('Lara\SurveyAnswerCell');
     }
 
 }
