@@ -6,6 +6,10 @@
 
 @section('content')
 
+    <!--
+        Title Box
+        All relevant infos about survey are here!
+    -->
     <div class="panel no-padding">
         <div class="panel-body">
             <h4 class="panel-title">
@@ -25,6 +29,10 @@
     </div>
 
 
+    <!--
+        Body Box
+        Write Answers in here!
+    -->
     <div class="panel no-padding">
         <div class="panel-body">
             <h4 class="panel-title">
