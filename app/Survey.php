@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Survey extends Model
 {
-    protected $table ='survey';
+    protected $table ='surveys';
     protected $fillable = array('title', 'description', 'deadline', 'in_calendar');
 
     /**
@@ -16,7 +16,17 @@ class Survey extends Model
      */
     public function getPerson()
     {
-        return $this->belongsTo('Lara\Person', 'prsn_id', 'id');
+        return $this->belongsTo('Lara\Person', 'creator_id', 'id');
+    }
+
+    /**
+     * Get the corresponding club.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function getClub()
+    {
+        return $this->belongsTo('Lara\Club', 'club_id', 'id');
     }
 
     /**

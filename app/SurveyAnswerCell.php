@@ -6,16 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class SurveyAnswerCell extends Model
 {
-    protected $table ='survey_answer_cell';
-    protected $fillable = array('content');
+    protected $table ='survey_answer_cells';
+    protected $fillable = array('answer');
 
     /**
-     * Get the corresponding Answer.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+ * Get the corresponding Answer.
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+ */
     public function getAnswer()
     {
         return $this->belongsTo('Lara\SurveyAnswer', 'survey_answer_id', 'id');
+    }
+
+    /**
+     * Get the corresponding Question.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function getQuestion()
+    {
+        return $this->belongsTo('Lara\SurveyQuestion', 'survey_question_id', 'id');
     }
 }
