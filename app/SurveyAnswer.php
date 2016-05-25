@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SurveyAnswer extends Model
 {
-    protected $table ='survey_answer';
-    protected $fillable = array('name', 'club');
+    protected $table ='survey_answers';
+    protected $fillable = array('name', 'order');
 
     /**
      * Get the corresponding question.
@@ -27,6 +27,16 @@ class SurveyAnswer extends Model
     public function getPerson()
     {
         return $this->belongsTo('Lara\Person', 'prsn_id', 'id');
+    }
+
+    /**
+     * Get the corresponding club.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function getClub()
+    {
+        return $this->belongsTo('Lara\Club', 'club_id', 'id');
     }
 
     /**

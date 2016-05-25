@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SurveyQuestion extends Model
 {
-    protected $table ='survey_question';
-    protected $fillable = array('fieldType', 'content');
+    protected $table ='survey_questions';
+    protected $fillable = array('field_type', 'question', 'order');
 
     /**
      * Get the corresponding survey.
@@ -28,4 +28,16 @@ class SurveyQuestion extends Model
     {
         return $this->hasMany('Lara\SurveyAnswerOption');
     }
+
+    /**
+     * Get the corresponding answerCells.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function getAnswerCells()
+    {
+        return $this->hasMany('Lara\SurveyAnswerCell');
+    }
+
+
 }
