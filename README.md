@@ -1,39 +1,32 @@
 ## Club management software built on top of Laravel 5.2
 
+## About
+**Lara** ("**Ve**rwaltung **d**es **St**udentenclubs") is a planning tool that combines a calender with personnel scheduling, developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all Ilmenauer Studentenclub e.V. sections.
+It started as a softwareproject at [TU Ilmenau](http://tu-ilmenau.de) in WS2014/2015 and is currently being developed further as a personal project.
+
 ## This is a development version
 **Lara is a work in progress - and a beautiful mess sometimes.**
 Some features are missing. 
 Some bugs are still alive.
 Use at your own risk.
 
-## Current changes compared to the "master" branch
-* ~~Switched from Laravel 5.0 to Laravel 5.1~~ *Changed to 5.2, see below.*
-* Changed namespace from "App" to "Lara"
-* Updated models, migrations and seeders to Laravel ~~5.1~~ 5.2 style
-* Added relationships to all models, edited namespaces accordingly
-* Created a RESTful Controller for every model, implementation following later
-* Added some internal resources (master layout, logos, etc.)
-* Updated Font Awesome to 4.5.0
-* Wrote user-side AJAX requests-responses, database updates on the server-side following, as well as some validation and changes highlighting via CSS
-* Wrote database updates for AJAX requests in ScheduleEntry changes
-* ~~Restructured ScheduleEntryById views, separated into multiple partials and~~ removed table formatting -> divs instead
-* Returned event creation and deletion functionality
-* Event creation: "accept template" button gone, a click on a template name redirects to this template directly
-* Added placeholders for internal events for external guest, opened week view for all
-* Updated Laravel to 5.2 version. All systems nominal, keep flying!
-* Put together a simple structure for ScheduleEntryByID views
-* Added correct password handling for both week and event views
-* Restored event editing, but more work is needed (refactoring/optimisation)
-* Added autocomplete for member names
-* Converted tasks to events of a certain type, added various types, allowed members to create some of them for internal use. Those can be converted to public events by marketing oder management.
-* Members with normal rights may create/edit/delete events/tasks they created, marketing and management - all events
-* Added correct event filtering - now events can be shown to multiple clubs (checkboxes). Also added more colours.
-* Multiple visual changes, mostly minor ones.
+
+## Current project status as of 27.05.2016
+* Switched to [version 2.0](https://github.com/4D44H/lara-vedst/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Lara+2.0+update%22)
+* Tasks in progress - see issues @ [2.1-milestone](https://github.com/4D44H/lara-vedst/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Lara+2.1+update%22)
+* Further development - see issues @ [Maybe/Later](https://github.com/4D44H/lara-vedst/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Maybe+%2F+Later%22)
 
 
 ## Contributing
 For a detailed list of open requirements and change-requests visit [Issues](https://github.com/4D44H/lara-vedst/issues) and/or contact [Maxim](https://github.com/4D44H) if you want to help.
  
+ 
+## Requirements and installation instructions
+- [Installing Lara 2.0 on XAMPP on Windows](https://github.com/4D44H/lara-vedst/wiki/Installation-on-Windows)
+- [Installing Lara 2.0 on a CentOS production server](https://github.com/4D44H/lara-vedst/wiki/Installation-on-Linux)
+- [Installation in a virtual machine (Vagrant - Windows, Linux, OSX)](https://github.com/4D44H/lara-vedst/wiki/Installation-in-a-virtual-machine-(Windows,-Linux,-OSX))
+- [What's new in Lara 2.0 compared to version 1.5](https://github.com/4D44H/lara-vedst/wiki/Changes-introduced-in-Lara-2.0-compared-to-Lara-1.5)
+- [Upgrading from Lara 1.5 to Lara 2.0](https://github.com/4D44H/lara-vedst/wiki/Upgrading-from-Lara-1.5-to-Lara-2.0)
 
 ### License
 Code published under [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE).
