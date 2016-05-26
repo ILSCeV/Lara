@@ -24,9 +24,10 @@ class DatabaseSeeder extends Seeder
         $this->call('PlacesTableSeeder');
         $this->call('ClubsTableSeeder');
         $this->call('ScheduleEntriesTableSeeder');
-        $this->call('SurveyTableSeeder');
-        $this->call('SurveyQuestionTableSeeder');
-        $this->call('SurveyAnswerTableSeeder');
+        $this->call('SurveysTableSeeder');
+        $this->call('SurveyQuestionsTableSeeder');
+        $this->call('SurveyAnswersTableSeeder');
+        $this->call('SurveyAnswerCellsTableSeeder');
         #iseed_end
     }
 }
