@@ -31,6 +31,20 @@ class SurveysTableSeeder extends Seeder
                 'created_at' => '2016-05-25 23:19:07',
                 'updated_at' => '2016-05-25 23:19:07',
             ),
+            1 =>
+                array (
+                    'id' => 2,
+                    'prsn_id' => 1007,
+                    'title' => 'Bestellung der Clubshirts',
+                    'description' => 'Bitte gebt hier an ob ihr ein Tshirt haben möchtet und welche Größe es haben soll.',
+                    'deadline' => '2016-06-12 00:00:00',
+                    'in_calendar' => '2016-06-12',
+                    'is_private' => 0,
+                    'is_anonymous' => 0,
+                    'show_results_after_voting' => 0,
+                    'created_at' => '2016-05-25 23:19:07',
+                    'updated_at' => '2016-05-25 23:19:07',
+                ),
         ));
         
         
