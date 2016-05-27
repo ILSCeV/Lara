@@ -15,7 +15,7 @@
         &lt;&lt;
     </a>
 
-                <span class="btn btn-lg disabled" style="text-align: center !important;">
+                <span class="btn btn-lg disabled mobile72Width" style="text-align: center !important;">
                     {{ $date['monthName'] . " " . $date['year'] }}
                 </span>
     <a class="btn btn-default hidden-print"
