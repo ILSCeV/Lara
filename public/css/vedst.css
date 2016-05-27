@@ -1,6 +1,10 @@
 /**
  *  Bootstrap overrides
  */
+.containerPadding15Mobile{
+    margin: 18px;
+}
+
 @media (max-width: 768px) {
     .containerPadding15Mobile {
         padding: 0 15px 0 15px;
