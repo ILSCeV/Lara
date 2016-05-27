@@ -35,6 +35,12 @@ table {
   }
 }
 
+@media (max-width: 1000px) {
+  .no-padding-xs {
+    padding: 0px 0px 0px 0px;
+  }
+}
+
 .panel-group {
   margin-bottom: 8px;
 }

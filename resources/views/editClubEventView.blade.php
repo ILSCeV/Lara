@@ -274,7 +274,7 @@ AND (Session::get('userGroup') == 'marketing'
 		    </div>	
 		</div>
 
-		<div class="container col-xs-12 col-sm-12 col-md-6">
+		<div class="container col-xs-12 col-sm-12 col-md-6 no-padding-xs">
 			<br class="visible-xs visible-sm">
 			<div class="panel">
 				<div class="panel-heading">

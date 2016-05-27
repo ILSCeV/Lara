@@ -672,8 +672,7 @@ jQuery( document ).ready( function( $ ) {
         if ( $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").length
           && !$(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val() ) 
         {
-            var password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );
-            $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val(password);       
+            var password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );      
         } else {
             var password = $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
         }
@@ -765,7 +764,7 @@ jQuery( document ).ready( function( $ ) {
             },
 
             error: function (xhr, ajaxOptions, thrownError) {
-                // console.log(this);
+                alert(JSON.stringify(xhr.responseJSON));
                 // Hide spinner after response received
                 // We make changes on success anyway, so the following state is only achieved 
                 // when a response from server was received, but errors occured - so let's inform the user
