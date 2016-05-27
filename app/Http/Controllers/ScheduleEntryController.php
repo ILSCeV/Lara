@@ -114,8 +114,6 @@ class ScheduleEntryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Log::info($request);
-
         // Extract request data 
         $entryId     = $request->get('entryId');
         $userName    = $request->get('userName');
