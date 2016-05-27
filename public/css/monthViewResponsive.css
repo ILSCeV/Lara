@@ -1,10 +1,6 @@
 /*
     Add the styles to vedst.css ?
 */
-.row{
-    margin: 0px !important;
-}
-
 
 
 .calendarWrapper{
@@ -170,9 +166,6 @@
         margin-bottom: -99999px;
         padding-bottom: 99999px;
     }
-
-
-
 }
 
 @media screen and (max-width: 978px) {
@@ -182,6 +175,8 @@
         border-width: 3px;
         border-color: #F6F5F3;
         height: auto;
+        border-left-width: 0px;
+        border-right-width:0px;
     }
 
     .custom-md-85:empty{

@@ -3,7 +3,7 @@
 @section('title')
     {{ $date['monthName'] . " " . $date['year'] }}
 @stop
-@extends('layouts.master)
+@section('moreStylesheets')
 <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/monthViewResponsive.css') }}"/>
 @stop
 @section('content')
