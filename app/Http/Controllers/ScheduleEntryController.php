@@ -2,7 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
-use Request;
+use Illuminate\Http\Request;
 use Session;
 use Input;
 
@@ -17,6 +17,7 @@ use Lara\ScheduleEntry;
 use Lara\Jobtype;
 use Lara\Person;
 use Lara\Club;
+use Log;
 
 
 class ScheduleEntryController extends Controller
@@ -113,14 +114,16 @@ class ScheduleEntryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Log::info($request);
+
         // Extract request data 
-        $entryId     = Input::get( 'entryId' );
-        $userName    = Input::get( 'userName' );
-        $ldapId      = Input::get( 'ldapId' );
-        $timestamp   = Input::get( 'timestamp' );
-        $userClub    = Input::get( 'userClub' );
-        $userComment = Input::get( 'userComment' );
-        $password    = Input::get( 'password' );
+        $entryId     = $request->get('entryId');
+        $userName    = $request->get('userName');
+        $ldapId      = $request->get('ldapId');
+        $timestamp   = $request->get('timestamp');
+        $userClub    = $request->get('userClub');
+        $userComment = $request->get('userComment');
+        $password    = $request->get('password');
 
         // Check if it's our form (CSRF protection)
         if ( Session::token() !== Input::get( '_token' ) ) {
@@ -132,15 +135,6 @@ class ScheduleEntryController extends Controller
             return response()->json("Fehler: die Clubnummer wurde in falschem Format angegeben. Bitte versuche erneut oder melde diesen Fehler dem Admin.", 400);
         }
 
-        // Check if the entry was updated recently and user data is too old
-        // Return timestamp of last update and a message.
-// IMPLEMENT LATER
-        if ( $timestamp === Carbon::parse(ScheduleEntry::where("id", "=", $entryId)->first()->updated_at)->format("Y-m-d H:i:s")) {
-            $timestamp = "you are the last update";
-        } else {
-            $timestamp = "updated before you";
-        }
-        
         // Find the corresponding entry object 
         $entry = ScheduleEntry::where('id', '=', $entryId)->first();
 

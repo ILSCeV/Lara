@@ -683,7 +683,7 @@ jQuery( document ).ready( function( $ ) {
 
             url: $( this ).prop( 'action' ),  
 
-            data: {
+            data: JSON.stringify({
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
                     "_token":       $(this).find( 'input[name=_token]' ).val(),
 
@@ -698,31 +698,33 @@ jQuery( document ).ready( function( $ ) {
 
                     // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
                     "_method": "put"
-                },  
+                }),  
 
             dataType: 'json',
+
+            contentType: 'application/json',
             
-            beforeSend: function(data) {
-                // hide dropdowns bacause they aren't no longer needed
+            beforeSend: function() {
+                // console.log("beforesend");
+                
+                // hide dropdowns because they aren't no longer needed
                 $(document).find('.dropdown-username').hide();
                 $(document).find('.dropdown-club').hide();
 
-                // Remove save icon, restore status icon
-                $(event.target).children().find('[name^=btn-submit-change]').addClass('hide');
-                $(event.target).children().find('[name^=status-icon]').removeClass('hide');
+                // HOTFIX: resolve current schedule entry ID via looking for an active save button
+                var currentId = $('button.btn-primary').parents('form').attr('id');
 
-                // Show a spinner in the username status while we are waiting for a server response                
-                $(event.target).children().children("[id^=clubStatus]").children("i").removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner").attr("data-original-title", "In Arbeit...");
+                // Remove save icon and show a spinner in the username status while we are waiting for a server response
+                $('#btn-submit-changes' + currentId).addClass('hide').parent().children('i').removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner").attr("data-original-title", "In Arbeit...").css("color", "darkgrey");                
             },
             
             complete: function() {
-                // Hide spinner after response received, show change was made
-                // We make changes on success anyway, so the following state is only achieved 
-                // when a response from server was received, but errors occured - so let's inform the user
-                $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!");
+                // console.log('complete');
             },
 
             success: function(data) {  
+                // console.log("success");
+                
                 // COMMENT:
                 // we update to server response instead of just saving user input
                 // for the case when an entry has been updated recently by other user, 
@@ -763,7 +765,10 @@ jQuery( document ).ready( function( $ ) {
             },
 
             error: function (xhr, ajaxOptions, thrownError) {
-                alert(JSON.stringify(xhr.responseJSON));
+                // console.log(this);
+                // Hide spinner after response received
+                // We make changes on success anyway, so the following state is only achieved 
+                // when a response from server was received, but errors occured - so let's inform the user
                 $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!");
               }
 

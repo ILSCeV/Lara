@@ -187,7 +187,7 @@
 				<div class="row">
 			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
 			                                'id' => $entry->id, 
-			                                'method' => 'put', 
+			                                'method' => 'PUT', 
 			                                'class' => 'scheduleEntry')  ) !!}
 
 			        {{-- SPAMBOT HONEYPOT - this field will be hidden, so if it's filled, then it's a bot or a user tampering with page source --}}
