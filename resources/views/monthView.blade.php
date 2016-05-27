@@ -1,7 +1,10 @@
 <!-- Needs variables: events, date -->
 @extends('layouts.master')
 @section('title')
-{{ $date['monthName'] . " " . $date['year'] }}
+    {{ $date['monthName'] . " " . $date['year'] }}
+@stop
+@extends('layouts.master)
+<link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/monthViewResponsive.css') }}"/>
 @stop
 @section('content')
         <!-- prev/next month -->

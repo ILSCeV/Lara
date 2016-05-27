@@ -1,6 +1,10 @@
 /*
     Add the styles to vedst.css ?
 */
+.row{
+    margin: 0px !important;
+}
+
 
 
 .calendarWrapper{
