@@ -2,6 +2,16 @@
  *  Bootstrap overrides
  */
 
+
+
+.containerNopadding{
+  padding-left: 0 !important;
+}
+.navbar-toggle {
+  padding: 9px 15px 9px 10px;
+}
+
+
 body {
   background-color: #f6f5f3;
 }
@@ -333,7 +343,8 @@ input[type=number],
  * Row margins
  */
 .row {
-  margin: 8px !important;
+  margin: 0px !important;
+  padding: 0 -15px 0 -15px;
 }
 
 .no-padding {

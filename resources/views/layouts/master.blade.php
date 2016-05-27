@@ -30,7 +30,7 @@
 			@include('partials.message')
 		</div>
 
-    <section class="container">
+    <section class="container containerNopadding">
         @yield('content')
     </section>
 
