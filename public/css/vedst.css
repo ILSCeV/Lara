@@ -1,7 +1,14 @@
 /**
  *  Bootstrap overrides
  */
-.containerPadding15Mobile{
+@media (max-width: 768px) {
+    .testleft {
+        float: left;
+        width: 100%;
+    }
+}
+
+.containerPadding15Mobile {
     margin: 18px;
 }
 
