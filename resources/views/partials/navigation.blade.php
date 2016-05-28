@@ -51,11 +51,11 @@
 
         <ul class="nav navbar-nav navbar-right">      
             <span class="col-xs-1 visible-xs">&nbsp;</span>
-            <div class="col-xs-10 col-sm-12 col-md-12 no-margin no-padding centered"> 
+            <div class="col-xs-10 col-sm-12 col-md-12 no-margin no-padding">
                 @if(Session::has('userId'))
 
                     {{-- CREATE BUTTON --}}  
-                    <li style="padding-top:5px" class="btn-group"> 
+                    <li style="padding-top:5px" class="btn-group testleft">
                         @if(Session::has('userGroup'))
                             {{-- small [+] button --}}
                             <div style="padding-top:5px" class="btn-group">
@@ -73,7 +73,7 @@
                     </li>
 
                     {{-- LOGIN FORM --}}
-                    <li style="padding-top: 5px;" class="btn-group">
+                    <li style="padding-top: 5px;" class="btn-group testleft ">
                         {!! Form::open(array('url' => 'logout', 
                                             'method' => 'POST', 
                                             'class'=>'form-horizontal')) !!}
@@ -98,7 +98,7 @@
                                        data-placement="bottom" 
                                        title="ex-Mitglied"></i>
                                 @elseif ( Session::get('userStatus') === 'member')
-                                    <i class="fa fa-circle" 
+                                    <i class="fa fa-circle"
                                        style="color:forestgreen;"
                                        data-toggle="tooltip" 
                                        data-placement="bottom" 
