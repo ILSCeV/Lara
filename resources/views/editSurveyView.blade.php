@@ -19,6 +19,8 @@
         {!! Form::submit("Umfrage ändern", ['class'=>'btn btn-primary']) !!}
         <br class="visible-xs">
         <a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
+        <button type="submit" class="btn btn-primary">Löschen</button>
+        <!--TODO Kommentar: den Button an die richtige stelle bringen und richtigen Code geben -->
     </div>
 
     {!! Form::close() !!}
