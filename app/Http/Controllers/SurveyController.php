@@ -78,8 +78,20 @@ class SurveyController extends Controller
     }
 
 
-    public function destroy()
+    public function destroy($id)
     {
+        //find surveyid to later get answers,questions
+        $survey = Survey::findorFail($id);
+
+        /*
+        $questions = $survey->getQuestions;
+        $answers = $survey->getAnswers; */ //umschreiben nach unterem schema
+
+
+
+        //TODO Find Answers and Questions with ID
+
+        //TODO delete everything that is linked with the survey
         //;
     }
 
