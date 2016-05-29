@@ -10,8 +10,6 @@
     </div>
     <button type="submit" class="btn btn-primary">Abstimmen</button>
     <a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
-        <button type="submit" class="btn btn-primary">Löschen</button>
-        <!--TODO Kommentar: den Button an die richtige stelle bringen und richtigen Code geben -->
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
     </form>
 </div>
