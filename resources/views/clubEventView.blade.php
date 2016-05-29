@@ -67,7 +67,7 @@
 							@elseif( $clubEvent->evnt_type == 8)
 								Vorverkauf
 							@elseif( $clubEvent->evnt_type == 9)
-								interne Aufgabe
+								Sonstiges
 							@endif
 						</td>
 					</tr>

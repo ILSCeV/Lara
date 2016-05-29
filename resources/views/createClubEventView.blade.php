@@ -109,7 +109,7 @@
 				            	Vorverkauf
 				            <br>
 				            {!! Form::radio('evnt_type', "9", $type == 9 ? array("checked") : "") !!}
-				            	weitere interne Aufgaben
+				            	Sonstiges
 				            <br>
 				            {!! Form::radio('evnt_type', "1", $type == 1 ? array("checked") : "") !!}
 				            	Information
@@ -153,7 +153,7 @@
 				            	Vorverkauf
 				            <br>
 				            {!! Form::radio('evnt_type', "9", $type == 9 ? array("checked") : "") !!}
-				            	weitere interne Aufgaben
+				            	Sonstiges
 				            <br>
 				            {!! Form::radio('evnt_type', "1", $type == 1 ? array("checked") : "") !!}
 				            	Information

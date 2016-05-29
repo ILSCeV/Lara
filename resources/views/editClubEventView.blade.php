@@ -91,7 +91,7 @@ AND (Session::get('userGroup') == 'marketing'
 				            	Vorverkauf
 				            <br>
 				            {!! Form::radio('evnt_type', "9", $event->evnt_type == 9 ? array("checked") : "") !!}
-				            	weitere interne Aufgaben
+				            	Sonstiges
 				            <br>
 				            {!! Form::radio('evnt_type', "1", $event->evnt_type == 1 ? array("checked") : "") !!}
 				            	Information
@@ -163,7 +163,7 @@ AND (Session::get('userGroup') == 'marketing'
 				            	Vorverkauf
 				            <br>
 				            {!! Form::radio('evnt_type', "9", $event->evnt_type == 9 ? array("checked") : "") !!}
-				            	weitere interne Aufgaben
+				            	Sonstiges
 				            <br>
 				            {!! Form::radio('evnt_type', "1", $event->evnt_type == 1 ? array("checked") : "") !!}
 				            	Information
