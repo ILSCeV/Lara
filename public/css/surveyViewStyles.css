@@ -1,18 +1,36 @@
-.answerBox{
+.displayDesktop {
+    display: block;
+}
+
+.displayMobile {
+    display: none;
+}
+
+@media screen and (max-width: 978px) {
+    .displayMobile {
+        display: block;
+    }
+
+    .displayDesktop {
+        display: none;
+    }
+}
+
+.answerBox {
     overflow: hidden;
     position: relative;
 }
 
-.answerBox .inner-container{
+.answerBox .inner-container {
 
 }
 
-.answerBox .names{
+.answerBox .names {
     overflow: hidden;
 }
 
-.answerBox .answers{
-    overflow-x: auto;
+.answers {
+    overflow-x: scroll;
     float: left;
     word-wrap: normal;
     display: block;
@@ -21,6 +39,10 @@
 
 }
 
-.answerBox .answers::-webkit-scrollbar{
+.answers::-webkit-scrollbar {
     /*display none*/
+}
+
+.rowNoPadding {
+    padding: 0;
 }
