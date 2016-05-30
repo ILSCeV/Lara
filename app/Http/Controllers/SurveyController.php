@@ -99,12 +99,12 @@ class SurveyController extends Controller
         $answers = $survey->getAnswers;
 
         // <-----> example for accessing answers
-        foreach($answers as $answer) {
-            $cells = $answer->getAnswerCells;
-            foreach($cells as $cell) {
-                var_dump($cell->answer);
-            }
-        }
+//        foreach($answers as $answer) {
+//            $cells = $answer->getAnswerCells;
+//            foreach($cells as $cell) {
+//                var_dump($cell->answer);
+//            }
+//        }
         // <----->
 
         return view('surveyView', compact('survey', 'questions', 'answers'));
