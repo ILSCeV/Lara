@@ -103,20 +103,51 @@
     @endforeach
 
 
-    <?php $numberAnswers *= 50; ?>
-
+    <?php
+    $numberAnswers *= 50;
+    $firstLine = true;
+    ?>
     <div class="panel displayDesktop">
         <div class="row rowNoPadding">
             <div class="col-md-2">
                 @foreach($answers as $answer)
+                    @if($firstLine == true)
+                        <?php $firstLine = false; ?>
+                        <div class=" rowNoPadding nameToQuestion">
+                            names
+                        </div>
+                        <div class=" rowNoPadding nameToQuestion">
+                            enter your name here
+                        </div>
+                    @endif
                     <div class=" rowNoPadding nameToQuestion">
                         {{$answer->name}}
                     </div>
                 @endforeach
             </div>
+            <?php $firstLine = true; ?>
             <div class="col-md-10 answers">
                 <div style="width: {{$numberAnswers}}vw;">
                     @foreach($answers as $answer)
+                        @if($firstLine == true)
+                            <?php $firstLine = false; ?>
+                            <div class="rowNoPadding">
+                                @foreach($answer->getAnswerCells as $cell)
+                                    <div class="answerToQuestion">
+                                        question
+                                    </div>
+                                @endforeach
+                            </div>
+                            @if($userAlreadyParticipated == false)
+                                <div class="rowNoPadding">
+                                    @foreach($answer->getAnswerCells as $cell)
+                                        <div class="answerToQuestion">
+                                            enter answer here
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        @endif
                         <div class="rowNoPadding">
                             @foreach($answer->getAnswerCells as $cell)
                                 <div class="answerToQuestion">
@@ -130,19 +161,6 @@
         </div>
     </div>
 
-    <!--
-    desktop
-    <br>
-    <br>
-    Name................Frage 1................Frage 2................Frage 3
-    <br>
-    Textbox.............Textbox................Textbox................Textbox
-    <br>
-    Antwort 1...........Antwort 2..............Antwort 3..............Dropdown....Bearbeiten....Löschen
-    <br>
-    alle weiteren personen
-    -->
-    </div>
 
 
 
