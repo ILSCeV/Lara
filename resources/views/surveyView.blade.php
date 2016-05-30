@@ -10,7 +10,15 @@
         Title Box
         All relevant infos about survey are here!
     -->
+
     <div class="panel no-padding">
+        @foreach($answers as $answer)
+            @foreach($answer->getAnswerCells as $cell)
+                {{$cell}}
+                {{$cell->answer}}
+            @endforeach
+        @endforeach
+
         <div class="panel-body">
             <h4 class="panel-title">
                 {{ $survey->title }}
