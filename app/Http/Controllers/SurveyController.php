@@ -83,9 +83,19 @@ class SurveyController extends Controller
         //find surveyid to later get answers,questions
         $survey = Survey::findorFail($id);
 
-        /*
+
         $questions = $survey->getQuestions;
-        $answers = $survey->getAnswers; */ //umschreiben nach unterem schema
+        $answers = $survey->getAnswers;  //umschreiben nach unterem schema
+
+        // delete things
+        $questions->delete();
+        $answers->delete();
+
+
+        /*Session::flash('message', 'Survey deleted!');
+        Session::flash('msgType', 'success');
+
+        return Redirect::action('SurveyController@show', array('id' => $survey->id));*/
 
 
 
