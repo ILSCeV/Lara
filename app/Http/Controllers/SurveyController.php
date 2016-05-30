@@ -93,14 +93,20 @@ class SurveyController extends Controller
     {
         //find survey
         $survey = Survey::findOrFail($id);
-
         //find questions
         $questions = $survey->getQuestions;
+        //find answers
+        $answers = $survey->getAnswers;
 
-        //find answers(as collection object) to an array with the questionid as index
-        foreach($questions as $question) {
-            $answers[$question->id] = $question->getAnswers;
+        // <-----> example for accessing answers
+        foreach($answers as $answer) {
+            $cells = $answer->getAnswerCells;
+            foreach($cells as $cell) {
+                var_dump($cell->answer);
+            }
         }
+        // <----->
+
         return view('surveyView', compact('survey', 'questions', 'answers'));
     }
 
