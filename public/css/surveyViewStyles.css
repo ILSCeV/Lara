@@ -31,12 +31,6 @@
 
 .answers {
     overflow-x: scroll;
-    float: left;
-    word-wrap: normal;
-    display: block;
-    height: 20px;
-    position: relative;
-
 }
 
 .answers::-webkit-scrollbar {
@@ -45,4 +39,14 @@
 
 .rowNoPadding {
     padding: 0;
+}
+
+.nameToQuestion{
+    height: 20vh;
+}
+
+.answerToQuestion{
+    width: 40vw;
+    height: 20vh;
+    float: left;
 }
