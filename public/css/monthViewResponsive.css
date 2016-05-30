@@ -2,21 +2,20 @@
     Add the styles to vedst.css ?
 */
 
-
-.calendarWrapper{
+.calendarWrapper {
     overflow: hidden;
 }
 
-.height10vh{
-    height: 10vh ;
+.height10vh {
+    height: 10vh;
 }
 
 @media screen and (max-width: 978px) {
-    .height10vh{
+    .height10vh {
         height: 0px;
     }
 
-    .calendarRow{
+    .calendarRow {
         min-height: 0px;
     }
 }
@@ -30,7 +29,7 @@
     margin: 0px;
     text-align: center;
     line-height: 10vh;
-    height:10vh;
+    height: 10vh;
     border: solid;
     border-width: 1px 0px 0px 1px;
     border-color: #dddddd;
@@ -44,50 +43,50 @@
     margin: 0px;
     text-align: center;
     line-height: 10vh;
-    height:10vh;
+    height: 10vh;
     border: solid;
     border-width: 1px 0px 0px 1px;
     border-color: #dddddd;
 }
 
 @media screen and (max-width: 978px) {
-    .weekDay{
+    .weekDay {
         display: none;
     }
-    
-    .calendarWeek{
+
+    .calendarWeek {
         display: none;
     }
 }
 
-.WeekMarker{
+.WeekMarker {
     background-color: #efefef;
 }
 
 @media screen and (max-width: 978px) {
-    .WeekMarker{
-        background-color: #a1a1a1    !important;
+    .WeekMarker {
+        background-color: #a1a1a1 !important;
     }
 }
 
-.day{
+.day {
     text-align: left !important;
     border-left-width: 0px !important;
 
 }
 
 .cell10 a:link,
-.day a:link{
+.day a:link {
     color: #666666;
 }
 
 .cell10 a:hover,
-.day a:hover{
+.day a:hover {
     color: #040303;
 }
 
 .cell10 a:visited,
-.day a:visited{
+.day a:visited {
     color: #666666;
 }
 
@@ -101,20 +100,20 @@
 
     }
 
-    .day a:link{
+    .day a:link {
         color: white;
     }
 
-    .day a:hover{
+    .day a:hover {
         color: black;
     }
 
-    .day a:visited{
+    .day a:visited {
         color: white;
     }
 }
 
-.thisMonth{
+.thisMonth {
     background-color: white;
 }
 
@@ -128,9 +127,8 @@
     }
 }
 
-
-.calendarRow{
-    height:auto;
+.calendarRow {
+    height: auto;
     display: block;
     min-height: 10vh;
     position: relative;
@@ -139,7 +137,7 @@
 }
 
 @media screen and (max-width: 978px) {
-    .calendarRow{
+    .calendarRow {
         min-height: 0;
     }
 }
@@ -155,20 +153,17 @@
     margin: 0px;
     text-align: center;
     line-height: 10vh;
-    min-height:10vh;
+    min-height: 10vh;
     border: solid;
     border-width: 1px 0px 0px 1px;
     border-color: #dddddd;
 }
 
 @media screen and (min-width: 978px) {
-    .custom-md-85{
+    .custom-md-85 {
         margin-bottom: -99999px;
         padding-bottom: 99999px;
     }
-
-
-
 }
 
 @media screen and (max-width: 978px) {
@@ -178,9 +173,11 @@
         border-width: 3px;
         border-color: #F6F5F3;
         height: auto;
+        border-left-width: 0px;
+        border-right-width: 0px;
     }
 
-    .custom-md-85:empty{
+    .custom-md-85:empty {
         display: none;
         height: 0px;
     }
@@ -189,7 +186,7 @@
 /*
     space for number and space for event
 */
-.cell10{
+.cell10 {
     width: 10%;
     float: left;
     position: relative;
@@ -199,7 +196,7 @@
     height: 10vh;
 }
 
-.cell90{
+.cell90 {
     width: 90%;
     float: right;
     position: relative;
@@ -208,8 +205,14 @@
 }
 
 @media screen and (max-width: 978px) {
-    .cell90{
+    .cell90 {
         padding-right: 10%;
         padding-left: 0%;
+    }
+}
+
+@media screen and (max-width: 978px) {
+    .mobile72Width {
+        width: 72%;
     }
 }
