@@ -13,12 +13,17 @@
 
     <div class="panel no-padding">
         @foreach($answers as $answer)
+            answer: {{$answer}}
+            <br>
             @foreach($answer->getAnswerCells as $cell)
-                {{$cell}}
-                {{$cell->answer}}
+                cell:    {{$cell}}
+                <br>
+                cell->answer:    {{$cell->answer}}
+                <br>
             @endforeach
+            <br>
+            <br>
         @endforeach
-
         <div class="panel-body">
             <h4 class="panel-title">
                 {{ $survey->title }}
@@ -35,21 +40,106 @@
             {{ date("H:i", strtotime($survey->deadline)) }}
         </div>
     </div>
-    <!--
-        Body Box
-        Write Answers in here!
 
-    <div class="panel no-padding">
-        <div class="panel-body">
-            <h4 class="panel-title">
-                Name, Verein, Frage 1, Frage 2
-            </h4>
-            hier kannst Du deine Sachen eintragen
-            <br>
-            Jan keiner Antwort1 A2
+
+    <div class="panel displayMobile">
+        <!--
+        mobile
+        <br>
+        <br>
+        Tragen Sie bitte Ihre Antwort ein <br>
+        Frage 1: <br>
+        Tetxtbox 1 <br>
+        Frage 2: <br>
+        Textbox 2<br>
+        Frage 3<br>
+        Dropdown zu Frage 3<br>
+        <br>
+        Person 1
+        Frage 1: <br>
+        Antwort 1 <br>
+        Frage 2: <br>
+        Antwort 2<br>
+        Frage 3<br>
+        Antwort 3<br>
+        <br>
+        alle weiteren Personen
+        -->
+    </div>
+
+
+    {{--        @foreach($answers as $answer)
+                answer: {{$answer}}
+                <br>
+                @foreach($answer->getAnswerCells as $cell)
+                    cell:    {{$cell}}
+                    <br>
+                    cell->answer:    {{$cell->answer}}
+                    <br>
+                @endforeach
+                <br>
+                <br>
+            @endforeach
+    --}}
+
+
+    <div class="panel displayDesktop">
+        <div class="row rowNoPadding">
+            <div class="col-md-2">
+                @foreach($answers as $answer)
+                    <div class="container rowNoPadding">
+                        {{$answer->name}}
+                    </div>
+                @endforeach
+            </div>
+            <div class="col-md-10 answers2">
+                @foreach($answers as $answer)
+                    <div class="container rowNoPadding">
+                        content
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
+
+    <!--
+    desktop
+    <br>
+    <br>
+    Name................Frage 1................Frage 2................Frage 3
+    <br>
+    Textbox.............Textbox................Textbox................Textbox
+    <br>
+    Antwort 1...........Antwort 2..............Antwort 3..............Dropdown....Bearbeiten....Löschen
+    <br>
+    alle weiteren personen
     -->
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+
     <!--
         Body Box
         Write Answers in here!
@@ -103,19 +193,6 @@
         <div class="answerBox" style="width: 100%;">
             <div class="inner-container">
                 <div class="answers">
-                    this is some textthis is some textthis is some textthis is some textthis is some textthis is
-                    some
-                    textthis is some textthis is some textthis is some textthis is some textthis is some textthis is
-                    some
-                    textthis is some textthis is some textthis is some textthis is some textthis is some textthis is
-                    some
-                    textthis is some textthis is some textthis is some textthis is some textthis is some textthis is
-                    some
-                    textthis is some textthis is some textthis is some textthis is some textthis is some textthis is
-                    some
-                    textthis is some textthis is some textthis is some textthis is some textthis is some textthis is
-                    some
-                    textthis is some textthis is some textthis is some textthis is some text
                 </div>
             </div>
         </div>
@@ -143,9 +220,9 @@
                         <div class="row">
                             {{$question->question}}
                             {{--@foreach($answers[$question->id] as $answer)--}}
-                                {{--<div class="col-md-3">--}}
-                                    {{--{{ $answer->content }}--}}
-                                {{--</div>--}}
+                            {{--<div class="col-md-3">--}}
+                            {{--{{ $answer->content }}--}}
+                            {{--</div>--}}
                             {{--@endforeach--}}
                         </div>
                     @endforeach
