@@ -81,23 +81,51 @@
                 <br>
             @endforeach
     --}}
+            <!--
+        Calculate width of row in answers
 
+    <?php
+    $numberAnswers = 0;
+    $userAlreadyParticipated = false;
+    ?>
+    @foreach($answers as $answer)
+    @if($numberAnswers == 0)
+    @foreach($answer->getAnswerCells as $cell)
+    <?php $numberAnswers = $numberAnswers + 1;  ?>
+    @endforeach
+    @endif
+            <!--
+                    if user did already participate in poll,
+                    do not display textareas
+
+                    also add delete / edit buttons at the end of the line
+                        -->
+    @endforeach
+
+
+    <?php $numberAnswers *= 50; ?>
 
     <div class="panel displayDesktop">
         <div class="row rowNoPadding">
             <div class="col-md-2">
                 @foreach($answers as $answer)
-                    <div class="container rowNoPadding">
+                    <div class=" rowNoPadding nameToQuestion">
                         {{$answer->name}}
                     </div>
                 @endforeach
             </div>
-            <div class="col-md-10 answers2">
-                @foreach($answers as $answer)
-                    <div class="container rowNoPadding">
-                        content
-                    </div>
-                @endforeach
+            <div class="col-md-10 answers">
+                <div style="width: {{$numberAnswers}}vw;">
+                    @foreach($answers as $answer)
+                        <div class="rowNoPadding">
+                            @foreach($answer->getAnswerCells as $cell)
+                                <div class="answerToQuestion">
+                                    {{$cell->answer}}
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
