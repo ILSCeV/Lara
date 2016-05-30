@@ -41,12 +41,21 @@
     padding: 0;
 }
 
-.nameToQuestion{
+.nameToQuestion {
     height: 20vh;
 }
 
-.answerToQuestion{
+.answerToQuestion {
     width: 40vw;
     height: 20vh;
     float: left;
+    background-color: transparent;
+}
+
+.color1 {
+    background-color: red;
+}
+
+.color2 {
+    background-color: blue;
 }
