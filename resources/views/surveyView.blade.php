@@ -6,10 +6,25 @@
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
     @stop
     @section('content')
+
             <!--
         Title Box
         All relevant infos about survey are here!
     -->
+
+    @foreach($answers as $answer)
+        answer: {{$answer}}
+        <br>
+        @foreach($answer->getAnswerCells as $cell)
+            cell {{$cell}}
+            <br>
+            cell->answer: {{$cell->answer}}
+            <br>
+        @endforeach
+        <br>
+        <br>
+    @endforeach
+
     <div class="panel no-padding">
         <div class="panel-body">
             <h4 class="panel-title">
@@ -31,6 +46,8 @@
     <!--
 Calculate width of row in answers
 -->
+
+
     <?php
     $numberAnswers = 0;
     $userAlreadyParticipated = false;
@@ -155,7 +172,7 @@ Calculate width of row in answers
     ?>
     Wo sollen die Fragen stehen?
     <br>
-    Why do the form-controls look so different? 
+    Why do the form-controls look so different?
     <div class="panel displayMobile">
         <div class="panel-body">
             <h4 class="panel-title">
