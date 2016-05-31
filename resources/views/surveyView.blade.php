@@ -154,6 +154,7 @@ Calculate width of row in answers
     $alternatingColor = 0;
     $userAlreadyParticipated = false;
     ?>
+    Wo sollen die Fragen stehen?
     <div class="panel displayMobile">
         <div class="panel-body">
             <h4 class="panel-title">
@@ -163,7 +164,17 @@ Calculate width of row in answers
                     <!--First Line-->
             @if($userAlreadyParticipated == false && $firstLine == true)
                 <?php $firstLine = false; ?>
-                textboxes and dropdowns
+                Name: <br>
+                textbox
+                <br>
+                Verein: <br>
+                dropdown
+                @foreach($answer->getAnswerCells as $cell)
+                    <br>
+                    Antwort:
+                    <br>
+                    textbox
+                @endforeach
                 <div class="line"></div>
             @endif
             @if($userAlreadyParticipated == true && $firstLine == true)
@@ -173,7 +184,13 @@ Calculate width of row in answers
                 @endif
                         <!--All other Answers / Lines-->
                 @if($firstLine == false)
-                    test
+                    Name: {{$answer->name}}
+                    <br>
+                    Verein: {{$answer->club_id}}
+                    @foreach($answer->getAnswerCells as $cell)
+                        <br>
+                        Antwort:    {{$cell->answer}}
+                    @endforeach
                 @endif
                 <div class="line"></div>
                 @endforeach
