@@ -37,9 +37,10 @@ class SurveyController extends Controller
             $day = date("d");
         }
 
-        // prepare correct date format to be used in the forms
+        // prepare correct date and time format to be used in forms for deadline/in_calendar
         $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
-        return View('createSurveyView', compact('date'));
+        $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($year.$month.$day));
+        return View('createSurveyView', compact('date','time'));
     }
 
     /**
@@ -61,7 +62,7 @@ class SurveyController extends Controller
             '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
             $survey->description);
 
-        $survey->deadline = strftime("%Y-%m-%d %H-%M-%S", strtotime($input->deadline));
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
         $survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
         $survey->save();
 
@@ -128,7 +129,7 @@ class SurveyController extends Controller
             '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
             $survey->description);
 
-        $survey->deadline = strftime("%Y-%m-%d %H-%M-%S", strtotime($input->deadline));
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
         $survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
         //$survey->isAnonymous = &input->isAnonymous;
         //$survey->isSecretResult = §input->isSecret Result;
@@ -145,8 +146,9 @@ class SurveyController extends Controller
         //find questions
         $questions = $survey->getQuestions;
 
-        $date= $survey->deadline;
-
-        return view('editSurveyView', compact('survey', 'questions', 'date'));
+        // prepare correct date and time format to be used in forms for deadline/in_calendar
+        $date = strftime("%d-%m-%Y", strtotime($survey->in_calendar));
+        $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
+        return view('editSurveyView', compact('survey', 'questions', 'date', 'time'));
     }
 }

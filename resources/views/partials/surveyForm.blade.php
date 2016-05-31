@@ -15,7 +15,7 @@
 </div>
 <div class="form-group">
     {!! Form::label('deadline', 'Umfrage aktiv bis:') !!}
-    {!! Form::date('deadline', $date, ['class' => 'form-control']) !!}
+    {!! Form::date('deadline', $time, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
     {!! Form::label('in_calendar', 'In Kalender am:') !!}
