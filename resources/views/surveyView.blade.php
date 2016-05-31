@@ -177,7 +177,7 @@ Calculate width of row in answers
     ?>
     Fragen nur Oben hinschreiben
     <br>
-    userAlreadyParticipated rausnehmen!     
+    userAlreadyParticipated rausnehmen!
     <br>
     Why do the form-controls look so different?
     <div class="panel displayMobile">
