@@ -15,6 +15,10 @@
     @foreach($answers as $answer)
         answer: {{$answer}}
         <br>
+        @if($club = $clubs->find($answer->club_id))
+        club: {{$club->clb_title}}
+        @endif
+        <br>
         @foreach($answer->getAnswerCells as $cell)
             cell {{$cell}}
             <br>
