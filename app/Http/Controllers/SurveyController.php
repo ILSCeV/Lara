@@ -11,6 +11,7 @@ use Redirect;
 use Lara\Survey;
 use Lara\SurveyQuestion;
 use Lara\SurveyAnswer;
+use Lara\Club;
 use DateTime;
 use DateTimeZone;
 use View;
@@ -97,6 +98,8 @@ class SurveyController extends Controller
         $questions = $survey->getQuestions;
         //find answers
         $answers = $survey->getAnswers;
+        //find all clubs
+        $clubs = Club::all();
 
         // <-----> example for accessing answers
 //        foreach($answers as $answer) {
@@ -107,7 +110,7 @@ class SurveyController extends Controller
 //        }
         // <----->
 
-        return view('surveyView', compact('survey', 'questions', 'answers'));
+        return view('surveyView', compact('survey', 'questions', 'answers', 'clubs'));
     }
 
     public function update($id)
