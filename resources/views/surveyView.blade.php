@@ -111,9 +111,9 @@ Calculate width of row in answers
                                     @if($firstLine == true)
                                         <?php $firstLine = false; ?>
                                         <div class="rowNoPadding ">
-                                            @foreach($answer->getAnswerCells as $cell)
+                                            @foreach($questions as $question)
                                                 <div class="answerToQuestion">
-                                                    question
+                                                    {{$question->question}}
                                                 </div>
                                             @endforeach
                                         </div>
