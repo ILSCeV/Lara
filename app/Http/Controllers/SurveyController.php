@@ -110,8 +110,7 @@ class SurveyController extends Controller
 
         //find survey and questions
         $survey = Survey::findOrFail($id);
-        $questions_db[$survey->id] = $survey->getQuestions;
-        //$questions_db = $survey->getQuestions;
+        $questions_db = $survey->getQuestions;
 
         //edit existing survey
         $survey->prsn_id = Session::get('userId');
@@ -141,7 +140,6 @@ class SurveyController extends Controller
         */
 
         foreach($input->questions as $order => $question) {
-            $questions_db[$order] = SurveyQuestion::FindOrFail($id);
             $questions_db[$order]->order = $input->order;
             $questions_db[$order]->survey_id = $survey->id;
             $questions_db[$order]->order = $order;
