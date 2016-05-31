@@ -154,6 +154,8 @@ Calculate width of row in answers
     $userAlreadyParticipated = false;
     ?>
     Wo sollen die Fragen stehen?
+    <br>
+    Why do the form-controls look so different? 
     <div class="panel displayMobile">
         <div class="panel-body">
             <h4 class="panel-title">
