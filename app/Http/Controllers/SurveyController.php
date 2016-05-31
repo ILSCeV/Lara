@@ -104,19 +104,34 @@ class SurveyController extends Controller
         return view('surveyView', compact('survey', 'questions', 'answers'));
     }
 
-    public function update($id)
+    public function update($id, Request $input)
     {
+
         //find survey
         $survey = Survey::findOrFail($id);
 
-        //find questions and answers
-        $questions = Survey::findOrFail($survey->getQuestions->id);
-        $answers = SurveyQuestion::findOrFail($questions->getAnswers->survey_question_number);
+        $questions = $survey->getQuestions;
+        foreach($questions as $question) {
+            $answers[$question->id] = $question->getAnswers;
+        }
 
-        //edit survey
-        $survey = $this->editSurvey($id);
+        //edit existing survey
+        $survey->prsn_id = Session::get('userId');
+        $survey->title = $input->title;
+        $survey->description = $input->description;
 
-        //save everything
+        //if URL is in the description, convert it to clickable hyperlink
+        $survey->description = preg_replace('$(https?://[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
+            ' <a href="$1" target="_blank">$1</a> ',
+            $survey->description);
+        $survey->description = preg_replace('$(www\.[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
+            '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
+            $survey->description);
+
+        $survey->deadline = strftime("%Y-%m-%d %H-%M-%S", strtotime($input->deadline));
+        $survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
+        //$survey->isAnonymous = &input->isAnonymous;
+        //$survey->isSecretResult = §input->isSecret Result;
         $survey->save();
 
         return view('surveyView', compact('survey','questions','answers'));
@@ -127,41 +142,11 @@ class SurveyController extends Controller
         //find survey
         $survey = Survey::findOrFail($id);
 
-        //find questions and answers
+        //find questions
         $questions = $survey->getQuestions;
 
         $date= $survey->deadline;
 
         return view('editSurveyView', compact('survey', 'questions', 'date'));
     }
-
-    //private function, can only be called within the Controller
-    private function editSurvey($id)
-    {
-        $survey = new Survey;
-
-        //get existing survey by id if provided
-        if (!is_null($id))
-        {
-            $survey = Survey::findOrFail($id);
-        }
-
-        //get deadline from Form
-        $survey->deadline = Input::get('deadline');
-
-        //update deadline
-        if (!empty(Input::get('deadline')))
-        {
-            $newDeadline = new DateTime(Input::get('deadline'), mktime(0, 0, 0, 12, 31, 2100));
-            $survey->deadline = $newDeadline->format('Y-m-d');
-        }
-
-        //if deadline is empty set new deadline, doesnt work at the moment
-        else
-        {
-            $survey->deadline = date('Y-m-d', mktime(0, 0, 0, 12, 31, 2100));
-        }
-        return view('surveyView', compact($survey->id));
-    }
-
 }
