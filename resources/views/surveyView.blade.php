@@ -10,7 +10,6 @@
         Title Box
         All relevant infos about survey are here!
     -->
-
     <div class="panel no-padding">
         <div class="panel-body">
             <h4 class="panel-title">
@@ -164,16 +163,24 @@ Calculate width of row in answers
                     <!--First Line-->
             @if($userAlreadyParticipated == false && $firstLine == true)
                 <?php $firstLine = false; ?>
-                Name: <br>
-                textbox
+                <label for="name">Name:</label>
                 <br>
-                Verein: <br>
-                dropdown
+                <input type="text" placeholder="dein Name" class="form-control" id="name">
+                <br>
+                <label for="organization">Verein</label>
+                <br>
+                <label for="sel1">Select list:</label>
+                <select class="form-control" id="sel1">
+                    <option>D</option>
+                    <option>C</option>
+                    <option>Cafe</option>
+                    <option>I</option>
+                </select>
                 @foreach($answer->getAnswerCells as $cell)
                     <br>
-                    Antwort:
+                    <label for="answer">Frage:</label>
                     <br>
-                    textbox
+                    <textarea class="form-control" rows="5" id="answer" placeholder="meine Antwort ist, dass..."></textarea>
                 @endforeach
                 <div class="line"></div>
             @endif
