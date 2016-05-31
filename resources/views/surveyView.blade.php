@@ -29,7 +29,7 @@
         </div>
     </div>
 
-            <!--
+    <!--
 Calculate width of row in answers
 -->
     <?php
@@ -133,7 +133,7 @@ Calculate width of row in answers
 
 
 
-    
+
     {{--        @foreach($answers as $answer)
                    answer: {{$answer}}
                    <br>
@@ -160,71 +160,23 @@ Calculate width of row in answers
                 mobile
             </h4>
             @foreach($answers as $answer)
-                @if($firstLine == true)
-                    <?php $firstLine = false; ?>
-                    <div class=" rowNoPadding nameToQuestion">
-                        names
-                    </div>
-                    <div class=" rowNoPadding nameToQuestion">
-                        enter your name here
-                    </div>
+                    <!--First Line-->
+            @if($userAlreadyParticipated == false && $firstLine == true)
+                <?php $firstLine = false; ?>
+                textboxes and dropdowns
+                <div class="line"></div>
+            @endif
+            @if($userAlreadyParticipated == true && $firstLine == true)
+                <?php $firstLine = false; ?>
+                here Answer of User
+                <div class="line"></div>
                 @endif
-                @if($alternatingColor == 0)
-                    <?php $alternatingColor = 1; ?>
-                    <div class=" rowNoPadding nameToQuestion color1 shadow">
-                        @else
-                            <?php $alternatingColor = 0; ?>
-                            <div class="rowNoPadding nameToQuestion color2 shadow">
-                                @endif
-                                {{$answer->name}}
-                            </div>
-                            @endforeach
-                    </div>
-                    <?php $firstLine = true;
-                    $alternatingColor = 0;
-                    ?>
-                    <div class="col-md-10 answers rowNoPadding">
-                        <div>
-                            @foreach($answers as $answer)
-                                @if($firstLine == true)
-                                    <?php $firstLine = false; ?>
-                                    <div class="rowNoPadding ">
-                                        @foreach($answer->getAnswerCells as $cell)
-                                            <div class="answerToQuestion">
-                                                question
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                    @if($userAlreadyParticipated == false)
-                                        <div class="rowNoPadding">
-                                            @foreach($answer->getAnswerCells as $cell)
-                                                <div class="answerToQuestion">
-                                                    enter answer here
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                @endif
-                                <div class="rowNoPadding">
-                                    @if($alternatingColor == 0)
-                                        <?php $alternatingColor = 1; ?>
-                                        @foreach($answer->getAnswerCells as $cell)
-                                            <div class="answerToQuestion color1">
-                                                {{$cell->answer}}
-                                            </div>
-                                        @endforeach
-                                    @else
-                                        <?php $alternatingColor = 0; ?>
-                                        @foreach($answer->getAnswerCells as $cell)
-                                            <div class="answerToQuestion color2">
-                                                {{$cell->answer}}
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-
+                        <!--All other Answers / Lines-->
+                @if($firstLine == false)
+                    test
+                @endif
+                <div class="line"></div>
+                @endforeach
+        </div>
+    </div>
 @stop
