@@ -132,13 +132,6 @@ class SurveyController extends Controller
         //$survey->isSecretResult = §input->isSecret Result;
 
         //edit questions
-        /* 1. load old questions
-        2. if old question_id exists-> edit
-        3. if new question $question_db = new SurveyQuestion(); and edit
-        maybe 2+3 in private function
-        old deleted questions in delete? -> called function QuestionDelete via routes in button
-        */
-
         foreach($input->questions as $order => $question) {
             $questions_db[$order]->order = $input->order;
             $questions_db[$order]->survey_id = $survey->id;
@@ -149,8 +142,10 @@ class SurveyController extends Controller
         }
 
         $survey->save();
-        return $questions_db;
-        //return view('surveyView', compact('survey','questions'));
+
+        //get updated questions for the view
+        $questions = $survey->getQuestions;
+        return view('surveyView', compact('survey','questions'));
     }
 
     public function edit($id)
