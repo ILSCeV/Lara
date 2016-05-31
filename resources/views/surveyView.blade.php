@@ -6,7 +6,6 @@
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
     @stop
     @section('content')
-
             <!--
         Title Box
         All relevant infos about survey are here!
@@ -16,7 +15,9 @@
         answer: {{$answer}}
         <br>
         @if($club = $clubs->find($answer->club_id))
-        club: {{$club->clb_title}}
+            club: {{$club->clb_title}}
+        @else
+            club: kein Club
         @endif
         <br>
         @foreach($answer->getAnswerCells as $cell)
@@ -174,7 +175,9 @@ Calculate width of row in answers
     $alternatingColor = 0;
     $userAlreadyParticipated = false;
     ?>
-    Wo sollen die Fragen stehen?
+    Fragen nur Oben hinschreiben
+    <br>
+    userAlreadyParticipated rausnehmen!     
     <br>
     Why do the form-controls look so different?
     <div class="panel displayMobile">
@@ -203,7 +206,8 @@ Calculate width of row in answers
                     <br>
                     <label for="answer">Frage:</label>
                     <br>
-                    <textarea class="form-control" rows="5" id="answer" placeholder="meine Antwort ist, dass..."></textarea>
+                    <textarea class="form-control" rows="5" id="answer"
+                              placeholder="meine Antwort ist, dass..."></textarea>
                 @endforeach
                 <div class="line"></div>
             @endif
