@@ -78,3 +78,13 @@
 .color2 {
     background-color: #a1a1a1;
 }
+
+/*
+    Style of mobile elements
+*/
+
+.line{
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}
