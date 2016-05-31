@@ -108,13 +108,9 @@ class SurveyController extends Controller
     public function update($id, Request $input)
     {
 
-        //find survey
+        //find survey and questions
         $survey = Survey::findOrFail($id);
-
-        $questions = $survey->getQuestions;
-        foreach($questions as $question) {
-            $answers[$question->id] = $question->getAnswers;
-        }
+        $questions_db = $survey->getQuestions;
 
         //edit existing survey
         $survey->prsn_id = Session::get('userId');
@@ -129,13 +125,27 @@ class SurveyController extends Controller
             '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
             $survey->description);
 
+        //format deadline and in_calender for database
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
         $survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
         //$survey->isAnonymous = &input->isAnonymous;
         //$survey->isSecretResult = §input->isSecret Result;
-        $survey->save();
 
-        return view('surveyView', compact('survey','questions','answers'));
+        //edit questions
+        foreach($input->questions as $order => $question) {
+            foreach($questions_db as $question_db) {
+                $question_db->order = $input->order;
+                $question_db->survey_id = $survey->id;
+                $question_db->order = $order;
+                $question_db->field_type = 1; //example
+                $question_db->question = $question;
+            }
+        }
+
+        $survey->save();
+        $questions =$questions_db;
+
+        return view('surveyView', compact('survey','questions'));
     }
 
     public function edit($id)
