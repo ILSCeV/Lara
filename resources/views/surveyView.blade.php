@@ -42,6 +42,22 @@
     </div>
 
 
+
+
+    {{--        @foreach($answers as $answer)
+                   answer: {{$answer}}
+                   <br>
+                   @foreach($answer->getAnswerCells as $cell)
+                       cell:    {{$cell}}
+                       <br>
+                       cell->answer:    {{$cell->answer}}
+                       <br>
+                   @endforeach
+                   <br>
+                   <br>
+               @endforeach
+       --}}
+
     <div class="panel displayMobile">
         <!--
         mobile
@@ -67,23 +83,9 @@
         -->
     </div>
 
-
-    {{--        @foreach($answers as $answer)
-                answer: {{$answer}}
-                <br>
-                @foreach($answer->getAnswerCells as $cell)
-                    cell:    {{$cell}}
-                    <br>
-                    cell->answer:    {{$cell->answer}}
-                    <br>
-                @endforeach
-                <br>
-                <br>
-            @endforeach
-    --}}
             <!--
         Calculate width of row in answers
-
+-->
     <?php
     $numberAnswers = 0;
     $userAlreadyParticipated = false;
@@ -110,7 +112,7 @@
     ?>
     <div class="panel displayDesktop">
         <div class="row rowNoPadding">
-            <div class="col-md-2">
+            <div class="col-md-2 rowNoPadding shadow">
                 @foreach($answers as $answer)
                     @if($firstLine == true)
                         <?php $firstLine = false; ?>
@@ -123,10 +125,10 @@
                     @endif
                     @if($alternatingColor == 0)
                         <?php $alternatingColor = 1; ?>
-                        <div class=" rowNoPadding nameToQuestion color1">
+                        <div class=" rowNoPadding nameToQuestion color1 shadow">
                             @else
                                 <?php $alternatingColor = 0; ?>
-                                <div class=" rowNoPadding nameToQuestion color2">
+                                <div class=" rowNoPadding nameToQuestion color2 shadow">
                                     @endif
                                     {{$answer->name}}
                                 </div>
@@ -135,7 +137,7 @@
                         <?php $firstLine = true;
                         $alternatingColor = 0;
                         ?>
-                        <div class="col-md-10 answers">
+                        <div class="col-md-10 answers rowNoPadding">
                             <div style="width: {{$numberAnswers}}vw;">
                                 @foreach($answers as $answer)
                                     @if($firstLine == true)
