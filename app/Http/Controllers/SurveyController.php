@@ -110,7 +110,8 @@ class SurveyController extends Controller
 
         //find survey and questions
         $survey = Survey::findOrFail($id);
-        $questions_db = $survey->getQuestions;
+        $questions_db[$survey->id] = $survey->getQuestions;
+        //$questions_db = $survey->getQuestions;
 
         //edit existing survey
         $survey->prsn_id = Session::get('userId');
@@ -132,20 +133,26 @@ class SurveyController extends Controller
         //$survey->isSecretResult = §input->isSecret Result;
 
         //edit questions
+        /* 1. load old questions
+        2. if old question_id exists-> edit
+        3. if new question $question_db = new SurveyQuestion(); and edit
+        maybe 2+3 in private function
+        old deleted questions in delete? -> called function QuestionDelete via routes in button
+        */
+
         foreach($input->questions as $order => $question) {
-            foreach($questions_db as $question_db) {
-                $question_db->order = $input->order;
-                $question_db->survey_id = $survey->id;
-                $question_db->order = $order;
-                $question_db->field_type = 1; //example
-                $question_db->question = $question;
-            }
+            $questions_db[$order] = SurveyQuestion::FindOrFail($id);
+            $questions_db[$order]->order = $input->order;
+            $questions_db[$order]->survey_id = $survey->id;
+            $questions_db[$order]->order = $order;
+            $questions_db[$order]->field_type = 1; //example
+            $questions_db[$order]->question = $question;
+            $questions_db[$order]->save();
         }
 
         $survey->save();
-        $questions =$questions_db;
-
-        return view('surveyView', compact('survey','questions'));
+        return $questions_db;
+        //return view('surveyView', compact('survey','questions'));
     }
 
     public function edit($id)
