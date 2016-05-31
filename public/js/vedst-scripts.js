@@ -10,6 +10,31 @@ $(document).ready(function() {
     }
 });
 
+$(document).ready(function() {
+    // if set, internal events will trigger selection of all clubs
+    // if user sets the club manually, we want to keep his selection
+    var autoSelectAllClubs = true;
+    $("#filter").find("input[type=checkbox]").click(function() {
+        autoSelectAllClubs = false;
+    });
+
+    // values of events that should trigger the selection of all clubs
+    var internalEventValues = [
+        '1', // Info
+        '4', // Internal event
+        '5', // private party
+        '6', // cleaning
+        '9'  // other
+    ];
+    $("[name='evnt_type']").click(function(){
+        if (autoSelectAllClubs) {
+            if (internalEventValues.indexOf($(this).attr('value')) !== -1) {
+                $("#filter").find("input[type=checkbox]").attr('checked', true);
+            }
+        }
+    });
+});
+
 // On event create/edit - check that at leaast one checkbox is checked, otherwise event won't be shown at all.
 $("#button-edit-submit").click(function(){
     if($('#filter-checkboxes').find('input[type=checkbox]:checked').length == 0)
