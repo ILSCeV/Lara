@@ -161,23 +161,23 @@ Calculate width of row in answers
                                                 <div class="answerToQuestion color1">
                                                     {{$cell->answer}}
                                                 </div>
-                                            @endforeach
-                                        @else
-                                            <!--Color 2-->
-                                            <?php $alternatingColor = 0; ?>
-                                            <div class="answerToQuestion color2">
-                                                @if($club = $clubs->find($answer->club_id))
-                                                    club: {{$club->clb_title}}
+                                                @endforeach
                                                 @else
-                                                    club: kein Club
-                                                @endif
-                                            </div>
-                                            @foreach($answer->getAnswerCells as $cell)
+                                                        <!--Color 2-->
+                                                <?php $alternatingColor = 0; ?>
                                                 <div class="answerToQuestion color2">
-                                                    {{$cell->answer}}
+                                                    @if($club = $clubs->find($answer->club_id))
+                                                        club: {{$club->clb_title}}
+                                                    @else
+                                                        club: kein Club
+                                                    @endif
                                                 </div>
-                                            @endforeach
-                                        @endif
+                                                @foreach($answer->getAnswerCells as $cell)
+                                                    <div class="answerToQuestion color2">
+                                                        {{$cell->answer}}
+                                                    </div>
+                                                @endforeach
+                                                @endif
                                     </div>
                                 @endforeach
                             </div>
@@ -257,7 +257,12 @@ Calculate width of row in answers
                 @if($firstLine == false)
                     Name: {{$answer->name}}
                     <br>
-                    Verein: {{$answer->club_id}}
+                    Verein:
+                    @if($club = $clubs->find($answer->club_id))
+                        club: {{$club->clb_title}}
+                    @else
+                        club: kein Club
+                    @endif
                     @foreach($answer->getAnswerCells as $cell)
                         <br>
                         Antwort:    {{$cell->answer}}
