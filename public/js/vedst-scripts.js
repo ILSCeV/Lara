@@ -512,7 +512,7 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.scheduleEntry' ).find('input').on( 'input', function() {
+    $( '.scheduleEntry' ).find("input[id^='userName']").on( 'input', function() {
         // Show save icon on form change
         $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]').removeClass('hide');
         $(this).parents('.scheduleEntry').find("[name^=status-icon]").addClass('hide');
@@ -621,7 +621,7 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.scheduleEntry' ).find('input').on( 'input', function() {
+    $( '.scheduleEntry' ).find("input[id^='club']").on( 'input', function() {
         // Show save icon on form change
         $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]').removeClass('hide');
         $(this).parents('.scheduleEntry').find("[name^=status-icon]").addClass('hide');
