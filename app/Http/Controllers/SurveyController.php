@@ -18,6 +18,11 @@ use Input;
 
 class SurveyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('creatorSurvey', ['only' => ['edit', 'update', 'delete']]);
+    }
+
     public function index()
     {
 
