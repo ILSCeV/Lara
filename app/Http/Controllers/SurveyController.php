@@ -101,6 +101,9 @@ class SurveyController extends Controller
         //find all clubs
         $clubs = Club::all();
 
+        $userId = Session::get('userId');
+        $userGroup = Session::get('userGroup');
+
         // <-----> example for accessing answers
 //        foreach($answers as $answer) {
 //            $cells = $answer->getAnswerCells;
@@ -110,7 +113,8 @@ class SurveyController extends Controller
 //        }
         // <----->
 
-        return view('surveyView', compact('survey', 'questions', 'answers', 'clubs'));
+
+        return view('surveyView', compact('survey', 'questions', 'answers', 'clubs', 'userId', 'userGroup'));
     }
 
     public function update($id)
