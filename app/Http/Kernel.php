@@ -49,5 +49,9 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \Lara\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+
+        //custom middleware
+        'creatorSurvey' => \Lara\Http\Middleware\CreatorSurvey::class
+
     ];
 }
