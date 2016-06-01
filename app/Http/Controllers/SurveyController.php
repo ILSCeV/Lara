@@ -49,7 +49,7 @@ class SurveyController extends Controller
     public function store(Request $input)
     {
         $survey = new Survey;
-        $survey->prsn_id = Session::get('userId');
+        $survey->creator_id = Session::get('userId');
         $survey->title = $input->title;
         $survey->description = $input->description;
 
