@@ -10,25 +10,26 @@
         Title Box
         All relevant infos about survey are here!
     -->
-
-    @foreach($answers as $answer)
-        answer: {{$answer}}
-        <br>
-        @if($club = $clubs->find($answer->club_id))
-            club: {{$club->clb_title}}
-        @else
-            club: kein Club
-        @endif
-        <br>
-        @foreach($answer->getAnswerCells as $cell)
-            cell {{$cell}}
+    {{--
+        @foreach($answers as $answer)
+            answer: {{$answer}}
             <br>
-            cell->answer: {{$cell->answer}}
+            @if($club = $clubs->find($answer->club_id))
+                club: {{$club->clb_title}}
+            @else
+                club: kein Club
+            @endif
+            <br>
+            @foreach($answer->getAnswerCells as $cell)
+                cell {{$cell}}
+                <br>
+                cell->answer: {{$cell->answer}}
+                <br>
+            @endforeach
+            <br>
             <br>
         @endforeach
-        <br>
-        <br>
-    @endforeach
+    --}}
 
     <div class="panel no-padding">
         <div class="panel-body">
@@ -48,6 +49,11 @@
         </div>
     </div>
 
+
+
+    <!-- /////////////////////////////////////////// Start of desktop View /////////////////////////////////////////// -->
+
+
     <!--
 Calculate width of row in answers
 -->
@@ -64,11 +70,8 @@ Calculate width of row in answers
     @endforeach
     @endif
             <!--
-                    if user did already participate in poll,
-                    do not display textareas
-
-                    also add delete / edit buttons at the end of the line
-                        -->
+                also add delete / edit buttons at the end of the line
+            -->
     @endforeach
 
 
@@ -88,7 +91,7 @@ Calculate width of row in answers
                             names
                         </div>
                         <div class=" rowNoPadding nameToQuestion">
-                            enter your name here
+                            <input type="text" placeholder="dein Name" class="form-control" id="name">
                         </div>
                     @endif
                     @if($alternatingColor == 0)
@@ -121,7 +124,8 @@ Calculate width of row in answers
                                             <div class="rowNoPadding">
                                                 @foreach($answer->getAnswerCells as $cell)
                                                     <div class="answerToQuestion">
-                                                        enter answer here
+                                                        <textarea class="form-control" rows="5" id="answer"
+                                                                  placeholder="meine Antwort..."></textarea>
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -152,7 +156,7 @@ Calculate width of row in answers
     </div>
 
 
-
+    <!-- /////////////////////////////////////////// Start of mobile View /////////////////////////////////////////// -->
 
 
     {{--        @foreach($answers as $answer)
@@ -204,10 +208,10 @@ Calculate width of row in answers
                 </select>
                 @foreach($answer->getAnswerCells as $cell)
                     <br>
-                    <label for="answer">Frage:</label>
+                    <label for="answer">{{$question->question}}</label>
                     <br>
                     <textarea class="form-control" rows="5" id="answer"
-                              placeholder="meine Antwort ist, dass..."></textarea>
+                              placeholder="meine Antwort..."></textarea>
                 @endforeach
                 <div class="line"></div>
             @endif
