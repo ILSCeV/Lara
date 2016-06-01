@@ -76,7 +76,12 @@ Calculate width of row in answers
 
 
     <?php
-    $numberAnswers *= 50;
+    /* columnWidth = width of answerToQuestion */
+    $columnWidth = 50;
+    /* number of columns * width */
+    $numberAnswers *= $columnWidth;
+    /* Club Column is added as a default */
+    $numberAnswers += $columnWidth;
     $firstLine = true;
     $alternatingColor = 0;
     ?>
@@ -114,33 +119,59 @@ Calculate width of row in answers
                                     @if($firstLine == true)
                                         <?php $firstLine = false; ?>
                                         <div class="rowNoPadding ">
+                                            <div class="answerToQuestion">
+                                                Club
+                                            </div>
                                             @foreach($questions as $question)
                                                 <div class="answerToQuestion">
                                                     {{$question->question}}
                                                 </div>
                                             @endforeach
                                         </div>
-                                        @if($userAlreadyParticipated == false)
-                                            <div class="rowNoPadding">
-                                                @foreach($answer->getAnswerCells as $cell)
-                                                    <div class="answerToQuestion">
-                                                        <textarea class="form-control" rows="5" id="answer"
-                                                                  placeholder="meine Antwort..."></textarea>
-                                                    </div>
-                                                @endforeach
+                                        <div class="rowNoPadding">
+                                            <div class="answerToQuestion">
+                                                <select class="form-control" id="sel1">
+                                                    <option>D</option>
+                                                    <option>C</option>
+                                                    <option>Cafe</option>
+                                                    <option>I</option>
+                                                </select>
                                             </div>
-                                        @endif
+                                            @foreach($answer->getAnswerCells as $cell)
+                                                <div class="answerToQuestion">
+                                                        <textarea class="form-control" rows="5" id="answer"
+                                                                  placeholder="meine Antwort...">
+                                                        </textarea>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     @endif
                                     <div class="rowNoPadding">
+                                        <!--Color 1-->
                                         @if($alternatingColor == 0)
                                             <?php $alternatingColor = 1; ?>
+                                            <div class="answerToQuestion color1">
+                                                @if($club = $clubs->find($answer->club_id))
+                                                    club: {{$club->clb_title}}
+                                                @else
+                                                    club: kein Club
+                                                @endif
+                                            </div>
                                             @foreach($answer->getAnswerCells as $cell)
                                                 <div class="answerToQuestion color1">
                                                     {{$cell->answer}}
                                                 </div>
                                             @endforeach
                                         @else
+                                            <!--Color 2-->
                                             <?php $alternatingColor = 0; ?>
+                                            <div class="answerToQuestion color2">
+                                                @if($club = $clubs->find($answer->club_id))
+                                                    club: {{$club->clb_title}}
+                                                @else
+                                                    club: kein Club
+                                                @endif
+                                            </div>
                                             @foreach($answer->getAnswerCells as $cell)
                                                 <div class="answerToQuestion color2">
                                                     {{$cell->answer}}
@@ -179,11 +210,13 @@ Calculate width of row in answers
     $alternatingColor = 0;
     $userAlreadyParticipated = false;
     ?>
-    Fragen nur Oben hinschreiben
-    <br>
-    userAlreadyParticipated rausnehmen!
-    <br>
-    Why do the form-controls look so different?
+    <div class="panel displayMobile">
+        Fragen nur Oben hinschreiben
+        <br>
+        userAlreadyParticipated rausnehmen!
+        <br>
+        Why do the form-controls look so different?
+    </div>
     <div class="panel displayMobile">
         <div class="panel-body">
             <h4 class="panel-title">
