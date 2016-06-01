@@ -1,6 +1,6 @@
 &nbsp;
-<div>
-<div class="cal-event dark-grey">
+<div class="panel panel-warning">
+<div class="panel panel-heading calendar-public-info white-text">
 		<h4 class="panel-title">
 			<a href="{{ URL::route('survey.show', $survey->id) }}">
 				<i class="fa fa-bar-chart-o white-text"></i>&nbsp;
@@ -8,15 +8,18 @@
 			</a>
 		</h4>
 
-
 		{{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->in_calendar))) }}
+		&nbsp;
+	<i class="fa fa-times" aria-hidden="true"></i>
+		{{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->deadline))) }}
 </div>
 	<div class="panel panel-body no-padding">
 
 
 @if(Session::has('userGroup')
                AND (Session::get('userGroup') == 'marketing'
-               OR Session::get('userGroup') == 'clubleitung'))
+               OR Session::get('userGroup') == 'clubleitung'
+               OR Session::get('userGroup') == 'admin'))
 	<hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 	<div class="padding-right-16 bottom-padding pull-right hidden-print">
 		<small><a href="#" class="hide-event">Ausblenden</a></small>
