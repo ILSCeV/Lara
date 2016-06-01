@@ -20,19 +20,9 @@ class SurveyAnswerController extends Controller
      */
     public function show($surveyid, $id)
     {
-        $answer = SurveyAnswer::FindOrFail($id);
-        //$answers = $survey->getAnswers;
 
-            foreach ($answer->getAnswerCells as $cell){
-                //delete the AnswerCells
-                $cell->delete();
-            }
-
-        // Now delete the SurveyAnswer itself
-        $answer->delete();
-
-        return Redirect::action('SurveyController@show', array('id' => $surveyid->id));
     }
+
     /**
      * @param int $surveyid
      * @param Request $input
@@ -53,7 +43,7 @@ class SurveyAnswerController extends Controller
         $survey_answer->save();
 
         $questions = $survey->getQuestions;
-        foreach($input->answer as $key => $answer_cell) {
+        foreach ($input->answer as $key => $answer_cell) {
             $survey_answer_cell = new SurveyAnswerCell();
             $survey_answer_cell->survey_question_id = $questions[$key]->id;
             $survey_answer_cell->survey_answer_id = $survey_answer->id;
@@ -61,7 +51,7 @@ class SurveyAnswerController extends Controller
             $survey_answer_cell->save();
         }
 
-        Session::put('message', 'Erfolgreich abgestimmt!' );
+        Session::put('message', 'Erfolgreich abgestimmt!');
         Session::put('msgType', 'success');
 
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
@@ -74,6 +64,16 @@ class SurveyAnswerController extends Controller
 
     public function destroy($surveyid, $id)
     {
+        $answer = SurveyAnswer::FindOrFail($id);
 
+        foreach ($answer->getAnswerCells as $cell) {
+            //delete the AnswerCells
+            $cell->delete();
+        }
+
+        // Now delete the SurveyAnswer itself
+        $answer->delete();
+
+        return Redirect::action('SurveyController@show', array('id' => $surveyid->id));
     }
 }
