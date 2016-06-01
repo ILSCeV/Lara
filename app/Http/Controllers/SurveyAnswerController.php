@@ -20,6 +20,26 @@ class SurveyAnswerController extends Controller
      */
     public function show($surveyid, $id)
     {
+        //find survey
+        $survey = Survey::findOrFail($surveyid);
+
+
+        $answer = SurveyAnswer::FindOrFail($id);
+        //$answers = $survey->getAnswers;
+
+
+
+            foreach ($answer->getAnswerCells as $cell){
+                $cell->answer;
+                //delete the AnswerCells
+                $cell->delete();
+            }
+
+        
+        // Now delete the SurveyAnswer itself
+        SurveyAnswer::destroy($id);
+
+        return compact('survey', 'questions', 'answers');
 
     }
     /**
