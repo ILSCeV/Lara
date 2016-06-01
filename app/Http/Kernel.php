@@ -51,7 +51,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
         //custom middleware
-        'creatorSurvey' => \Lara\Http\Middleware\CreatorSurvey::class
+        'creatorSurvey' => \Lara\Http\Middleware\CreatorSurvey::class,
+        'privateSurvey' => \Lara\Http\Middleware\PrivateSurvey::class,
 
     ];
 }

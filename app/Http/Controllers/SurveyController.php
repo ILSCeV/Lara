@@ -21,6 +21,7 @@ class SurveyController extends Controller
     public function __construct()
     {
         $this->middleware('creatorSurvey', ['only' => ['edit', 'update', 'delete']]);
+        $this->middleware('privateSurvey');
     }
 
     public function index()
