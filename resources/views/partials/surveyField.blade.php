@@ -83,12 +83,13 @@
         <div class="questions">
 
             <div id="questions1" class="clonedInput">
-                <h4 id="reference" name="reference" class="heading-reference">Frage #1</h4>
+                <h4 id="reference" name="reference" class="heading-reference">Frage</h4>
 
                 <fieldset>
                     <label class="question" for="question">Frage:</label>
 
-                    <input class="question" type="text" name="questions[]" id="question" value="">
+                    <input class="question" type="text" name="questions[]" id="question"
+                           value=<?php echo htmlspecialchars($question->question); ?>>
                 </fieldset>
 
 

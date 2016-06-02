@@ -22,4 +22,9 @@
     {!! Form::date('in_calendar', $date, ['class' => 'form-control']) !!}
 </div>
 
-@include('partials.surveyField')
+
+@foreach($questions as $question)
+    <div class="row">
+        @include('partials.surveyField', compact($question))
+    </div>
+@endforeach
