@@ -92,19 +92,22 @@ class SurveyController extends Controller
         $answers->delete();*/
 
 
-        foreach($answers as $answer){
-            foreach($answer->getAnswerCells as $cellA)
+        /*foreach($answers as $answer){
+            foreach($answer->getAnswerCells as $cellA) {
                 $cellA->answer;
+            }
+        }*/
+
+
+        foreach($questions as $question) {
+            foreach($question->getAnswerOptions as $answerOption) {
+                $answerOption->delete();
+            }
+            $question->delete();
         }
 
 
-        foreach($questions as $question){
-            foreach($question->getQuestionCells as $cellQ)
-                $cellQ->question;
-        }
-
-        $cellA->delete();
-        $cellQ->delete();
+        //$cellA->delete();
 
         $survey->delete();
 
@@ -117,7 +120,7 @@ class SurveyController extends Controller
 
 
         //TODO Find Answers and Questions with ID
-
+        //TODO Delete Answers
         //TODO delete everything that is linked with the survey
         //;
     }
