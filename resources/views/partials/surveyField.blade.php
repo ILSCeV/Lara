@@ -1,9 +1,5 @@
 <div class="form-group">
-    {!! Form::label('questions[]', 'Frage:') !!}
-    {!! Form::textarea('questions[]', null, ['placeholder'=>'z.B. Kommst du zur Weihnachtsfeier?',
-                                            'size' => '100x3',
-                                            'class' => 'form-control'
-                                            ]) !!}
+
 </div>
 
 <html>
@@ -61,6 +57,24 @@
 
     </script>
 
+    <script>
+    function clone_this(button, objid){
+    // Tabelle innerhalb des DIVs mit ID "new_passage" clonen
+    // Achtung: Es dürfen keine Zeichen zwischen dem DIV- und dem TABLE-Tag stehen!
+    var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
+
+    // Im Parent-DIV vor dem Kindknoten "button" einhängen
+    button.parentNode.insertBefore(clone_me, button);
+    }
+    </script>
+
+    <script>
+        function remove_this(objLink)
+        {
+            objLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(objLink.parentNode.parentNode.parentNode.parentNode);
+        }
+    </script>
+
 </head>
 
 <body>
@@ -77,8 +91,27 @@
                     <label class="question" for="question">Frage:</label>
 
                     <input class="question" type="text" name="questions[]" id="question" value="">
-
                 </fieldset>
+
+
+                <div style="visibility:hidden; display:none">
+                    <div id="new_passage"><table name="cloneTable">
+                            <tr>
+                                <td>Antwortmöglichkeit</td>
+                                <td><input type="text" name="answer[]"></input></td>
+                                <td class="helltab" rowspan="3">
+                                    <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
+                                         <i class="fa fa-trash" aria-hidden="true"></i></a>
+                                </td>
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+                    <input class="btn btn-default" value="Antwortmöglichkeit hinzufügen" onclick="javascript:clone_this(this, 'new_passage');" type="button"></input>
+                </div>
+
+
 
                 <fieldset class="checkbox entrylist">
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
@@ -97,6 +130,7 @@
 
 
     </div>
+
 </div>
 </body>
 </html>
