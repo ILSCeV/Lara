@@ -6,12 +6,13 @@
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
     @stop
     @section('content')
-            <!--
+            <!-- to do: make small JS code for moving all scrollbars at the same time.
         Title Box
         All relevant infos about survey are here!
     -->
     <div class="panel no-padding">
         <div class="panel-body">
+            <!-- using panels because tables break in the mobile view -->
             <h4 class="panel-title">
                 {{ $survey->title }}
             </h4>
@@ -49,7 +50,7 @@
     -->
     <div class="panel no-padding">
         <div class="panel-body">
-            <!--Title of answer box-->
+            <!--Title of answer box, using panels because tables break in the mobile view-->
             <h4 class="panel-title">
                 <div class="row">
                     <div class="col-md-2 names">
