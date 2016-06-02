@@ -20,6 +20,11 @@
         <br class="visible-xs">
         <a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
         <button type="submit" class="btn btn-primary">Löschen</button>
+        <form action="{{ url('survey/'.$survey->id) }}" method="POST">
+            {{ csrf_field() }}
+            {{ method_field('DELETE') }}
+            <button type="submit" class="fa fa-btn fa-trash" id="archive"></button>
+        </form>
         <!--TODO Kommentar: den Button an die richtige stelle bringen und richtigen Code geben -->
     </div>
 

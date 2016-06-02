@@ -88,8 +88,9 @@ class SurveyController extends Controller
         $answers = $survey->getAnswers;  //umschreiben nach unterem schema
 
         // delete things
-        $questions->delete();
-        $answers->delete();
+        /*$questions->delete();
+        $answers->delete();*/
+        $survey->delete();
 
 
         /*Session::flash('message', 'Survey deleted!');
