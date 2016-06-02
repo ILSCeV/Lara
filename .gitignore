@@ -9,3 +9,4 @@ composer.lock
 .env-local
 composer.lock
 config/bcLDAP.php
+public/gitrevision.txt
