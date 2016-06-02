@@ -90,13 +90,29 @@ class SurveyController extends Controller
         // delete things
         /*$questions->delete();
         $answers->delete();*/
+
+
+        foreach($answers as $answer){
+            foreach($answer->getAnswerCells as $cellA)
+                $cellA->answer;
+        }
+
+
+        foreach($questions as $question){
+            foreach($question->getQuestionCells as $cellQ)
+                $cellQ->question;
+        }
+
+        $cellA->delete();
+        $cellQ->delete();
+
         $survey->delete();
 
 
-        /*Session::flash('message', 'Survey deleted!');
-        Session::flash('msgType', 'success');
+        //Session::flash('message', 'Survey deleted!');
+        //Session::flash('msgType', 'success');
 
-        return Redirect::action('SurveyController@show', array('id' => $survey->id));*/
+        //return Redirect::action('SurveyController@show', array('id' => $survey->id));
 
 
 
