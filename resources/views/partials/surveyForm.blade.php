@@ -23,4 +23,3 @@
 </div>
 
 @include('partials.surveyField')
-@include('partials.surveyField')
