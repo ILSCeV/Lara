@@ -2,17 +2,12 @@
 
 namespace Lara\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Session;
 use Redirect;
 
-//use Lara\Http\Requests;
 use Lara\Survey;
 use Lara\SurveyQuestion;
-use Lara\SurveyAnswer;
-use DateTime;
-use DateTimeZone;
 use View;
 use Input;
 
@@ -107,13 +102,11 @@ class SurveyController extends Controller
 
     public function update($id, Request $input)
     {
-
         //find survey and questions
         $survey = Survey::findOrFail($id);
         $questions_db = $survey->getQuestions;
 
         //edit existing survey
-        $survey->prsn_id = Session::get('userId');
         $survey->title = $input->title;
         $survey->description = $input->description;
 
@@ -129,16 +122,21 @@ class SurveyController extends Controller
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
         $survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
         //$survey->isAnonymous = &input->isAnonymous;
-        //$survey->isSecretResult = §input->isSecret Result;
+        //$survey->isSecretResult = §input->isSecretResult;
 
-        //edit questions
-        foreach($input->questions as $order => $question) {
-            $questions_db[$order]->order = $input->order;
-            $questions_db[$order]->survey_id = $survey->id;
-            $questions_db[$order]->order = $order;
-            $questions_db[$order]->field_type = 1; //example
-            $questions_db[$order]->question = $question;
-            $questions_db[$order]->save();
+        foreach($input->questions as $index => $question) {
+            //check if input question already exists
+            $question_check = SurveyQuestion::where('id', '=', $index->first());
+            //if it doesnt exist, create a new model instance
+            if ($question_check === null) {
+                $question_db[$index] = new SurveyQuestion();
+                $question_db[$index]->survey_id = $survey->id;
+            }
+            //edit question
+            $questions_db[$index]->order = $index;
+            $questions_db[$index]->field_type = 1; //example
+            $questions_db[$index]->question = $question;
+            $questions_db[$index]->save();
         }
 
         $survey->save();
