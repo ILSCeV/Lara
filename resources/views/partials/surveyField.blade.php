@@ -59,11 +59,9 @@
 
     <script>
     function clone_this(button, objid){
-    // Tabelle innerhalb des DIVs mit ID "new_passage" clonen
-    // Achtung: Es dürfen keine Zeichen zwischen dem DIV- und dem TABLE-Tag stehen!
-    var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
 
-    // Im Parent-DIV vor dem Kindknoten "button" einhängen
+    var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
+        
     button.parentNode.insertBefore(clone_me, button);
     }
     </script>
