@@ -126,11 +126,10 @@ class SurveyController extends Controller
 
         foreach($input->questions as $index => $question) {
             //check if input question already exists
-            $question_check = SurveyQuestion::where('id', '=', $index->first());
-            //if it doesnt exist, create a new model instance
-            if ($question_check === null) {
-                $question_db[$index] = new SurveyQuestion();
-                $question_db[$index]->survey_id = $survey->id;
+            if (SurveyQuestion::where('id', '!=', $index)->exists()) {
+                //if it doesnt exist, create a new model instance
+                $questions_db[$index] = new SurveyQuestion();
+                $questions_db[$index]->survey_id = $survey->id;
             }
             //edit question
             $questions_db[$index]->order = $index;
