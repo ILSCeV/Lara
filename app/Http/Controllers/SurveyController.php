@@ -117,12 +117,12 @@ class SurveyController extends Controller
         //$cellA->delete();
 
         $survey->delete();
+        
 
+        Session::put('message', 'Umfrage gelöscht!' );
+        Session::put('msgType', 'success');
 
-        //Session::flash('message', 'Survey deleted!');
-        //Session::flash('msgType', 'success');
-
-        //return Redirect::action('SurveyController@show', array('id' => $survey->id));
+        return Redirect::action('MonthController@currentMonth');
 
 
 
