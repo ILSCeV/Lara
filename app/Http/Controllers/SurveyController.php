@@ -80,24 +80,14 @@ class SurveyController extends Controller
 
     public function destroy($id)
     {
-        //find surveyid to later get answers,questions
+        //find SurveyID
         $survey = Survey::findorFail($id);
 
-
+        //find answers and questions that belong to SurveyID
         $questions = $survey->getQuestions;
-        $answers = $survey->getAnswers;  //umschreiben nach unterem schema
+        $answers = $survey->getAnswers;
 
-        // delete things
-        /*$questions->delete();
-        $answers->delete();*/
-
-
-        /*foreach($answers as $answer){
-            foreach($answer->getAnswerCells as $cellA) {
-                $cellA->answer;
-            }
-        }*/
-
+        //find AnswerCells belonging to Answer and delete both
         foreach($answers as $answer) {
             foreach($answer->getAnswerCells as $answerCell) {
                 $answerCell->delete();
@@ -105,7 +95,7 @@ class SurveyController extends Controller
             $answer->delete();
         }
 
-
+        //find AnswerOptions belonging to Questions and delete both
         foreach($questions as $question) {
             foreach($question->getAnswerOptions as $answerOption) {
                 $answerOption->delete();
@@ -113,22 +103,14 @@ class SurveyController extends Controller
             $question->delete();
         }
 
-
-        //$cellA->delete();
-
+        //finally delete survey
         $survey->delete();
         
-
+        //Successmessage and redirect 
         Session::put('message', 'Umfrage gelöscht!' );
         Session::put('msgType', 'success');
 
         return Redirect::action('MonthController@currentMonth');
-
-
-
-        //TODO Find Answers and Questions with ID
-        //TODO Delete Answers
-        //TODO delete everything that is linked with the survey
         //;
     }
 
