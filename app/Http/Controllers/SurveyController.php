@@ -98,6 +98,13 @@ class SurveyController extends Controller
             }
         }*/
 
+        foreach($answers as $answer) {
+            foreach($answer->getAnswerCells as $answerCell) {
+                $answerCell->delete();
+            }
+            $answer->delete();
+        }
+
 
         foreach($questions as $question) {
             foreach($question->getAnswerOptions as $answerOption) {
