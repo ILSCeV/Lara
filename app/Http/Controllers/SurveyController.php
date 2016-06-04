@@ -78,8 +78,39 @@ class SurveyController extends Controller
     }
 
 
-    public function destroy()
+    public function destroy($id)
     {
+        //find SurveyID
+        $survey = Survey::findorFail($id);
+
+        //find answers and questions that belong to SurveyID
+        $questions = $survey->getQuestions;
+        $answers = $survey->getAnswers;
+
+        //find AnswerCells belonging to Answer and delete both
+        foreach($answers as $answer) {
+            foreach($answer->getAnswerCells as $answerCell) {
+                $answerCell->delete();
+            }
+            $answer->delete();
+        }
+
+        //find AnswerOptions belonging to Questions and delete both
+        foreach($questions as $question) {
+            foreach($question->getAnswerOptions as $answerOption) {
+                $answerOption->delete();
+            }
+            $question->delete();
+        }
+
+        //finally delete survey
+        $survey->delete();
+        
+        //Successmessage and redirect 
+        Session::put('message', 'Umfrage gelöscht!' );
+        Session::put('msgType', 'success');
+
+        return Redirect::action('MonthController@currentMonth');
         //;
     }
 
