@@ -3,6 +3,7 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Lara\SurveyAnswerOption;
 use Session;
 use Redirect;
 
@@ -158,6 +159,14 @@ class SurveyController extends Controller
                 $question_db->field_type = 1; //example
                 $question_db->question = $question;
                 $question_db->save();
+                //make answer options and fill them
+                foreach ($input->answer_options as $question_id[$answer_option_id] => $answer_option) {
+                    $answer_option_db = new SurveyAnswerOption();
+                    $answer_option_db->survey_question_id = $question_id;
+                    $answer_option_db->answer_option = $answer_option;
+                    $answer_option_db->save();
+                }
+
             }
             else {
                 //question exists in database
@@ -176,6 +185,36 @@ class SurveyController extends Controller
                     $question_db->field_type = 1; //example
                     $question_db->question = $question;
                     $question_db->save();
+
+                    //loop through all answer options for one question
+                    for($i = 1; $i < count($input->answer_options[$question_id]); $i++) {
+                        //find existing answer option
+                        $answer_option_db = SurveyAnswerOption::Find($input->answer_options[$question_id][$i]);
+                        if ($answer_option_db === null) {
+                            //answer option doesn't exist, make new model instance and fill it
+                            $answer_option_db = new SurveyAnswerOption();
+                            $answer_option_db->survey_question_id = $question_id;
+                            $answer_option_db->answer_option = $input->answer_options[$question_id][$i];
+                            $answer_option_db->save();
+                        }
+                        else {
+                            //answer option exists, update it
+
+                            //check matching question ids in case of id manipulation
+                            if ($answer_option_db->question_id != $question_id) {
+                                //question ids don't match
+                                Session::put('message', 'Antwortmöglichkeit konnte nicht geändert werden!');
+                                Session::put('msgType', 'danger');
+                                return Redirect::back();
+                            }
+                            else {
+                                //question ids match, update answer option
+                                $answer_option_db->survey_question_id = $question_id;
+                                $answer_option_db->answer_option = $input->answer_options[$question_id][$i];
+                                $answer_option_db->save();
+                            }
+                        }
+                    }
                 }
             }
             //increment iteration so a new question will get an incremented order
@@ -186,7 +225,9 @@ class SurveyController extends Controller
 
         //get updated questions for the view
         $questions = $survey->getQuestions;
-        return view('surveyView', compact('survey','questions'));
+        foreach($questions as $question)
+            $answer_options = $question->getAnswerOptions;
+        return view('surveyView', compact('survey','questions', 'answer_options'));
     }
 
     public function edit($id)
@@ -194,12 +235,14 @@ class SurveyController extends Controller
         //find survey
         $survey = Survey::findOrFail($id);
 
-        //find questions
+        //find questions and answer options
         $questions = $survey->getQuestions;
+        foreach($questions as $question)
+            $answer_options = $question->getAnswerOptions;
 
         // prepare correct date and time format to be used in forms for deadline/in_calendar
         $date = strftime("%d-%m-%Y", strtotime($survey->in_calendar));
         $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-        return view('editSurveyView', compact('survey', 'questions', 'date', 'time'));
+        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
     }
 }
