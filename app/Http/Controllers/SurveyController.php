@@ -160,7 +160,7 @@ class SurveyController extends Controller
                 $question_db->question = $question;
                 $question_db->save();
                 //make answer options and fill them
-                foreach ($input->answer_options as $question_id[$answer_option_id] => $answer_option) {
+                foreach ($input->answer_option as $question_id[$answer_option_id] => $answer_option) {
                     $answer_option_db = new SurveyAnswerOption();
                     $answer_option_db->survey_question_id = $question_id;
                     $answer_option_db->answer_option = $answer_option;
@@ -187,14 +187,14 @@ class SurveyController extends Controller
                     $question_db->save();
 
                     //loop through all answer options for one question
-                    for($i = 1; $i < count($input->answer_options[$question_id]); $i++) {
+                    for($i = 1; $i < count($input->answer_option[$question_id]); $i++) {
                         //find existing answer option
-                        $answer_option_db = SurveyAnswerOption::Find($input->answer_options[$question_id][$i]);
+                        $answer_option_db = SurveyAnswerOption::Find($input->answer_option[$question_id][$i]);
                         if ($answer_option_db === null) {
                             //answer option doesn't exist, make new model instance and fill it
                             $answer_option_db = new SurveyAnswerOption();
                             $answer_option_db->survey_question_id = $question_id;
-                            $answer_option_db->answer_option = $input->answer_options[$question_id][$i];
+                            $answer_option_db->answer_option = $input->answer_option[$question_id][$i];
                             $answer_option_db->save();
                         }
                         else {
@@ -210,7 +210,7 @@ class SurveyController extends Controller
                             else {
                                 //question ids match, update answer option
                                 $answer_option_db->survey_question_id = $question_id;
-                                $answer_option_db->answer_option = $input->answer_options[$question_id][$i];
+                                $answer_option_db->answer_option = $input->answer_option[$question_id][$i];
                                 $answer_option_db->save();
                             }
                         }
