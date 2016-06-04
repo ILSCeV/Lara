@@ -36,10 +36,17 @@
 
  	<footer class="container footer" id="footer">
         <hr class="hidden-print">
-        <span class="col-xs-12 col-sm-6 col-md-6 text-dark-grey" align="center">
-            <small>Etwas funktioniert nicht? Schreibe <a href="mailto:maxim.drachinskiy@bc-studentenclub.de">Maxim</a> an.</small>
+        <span class="col-xs-12 col-sm-4 col-md-4 text-dark-grey" style="text-align: center;">
+            <small>Etwas funktioniert nicht? Schreibe <a href="mailto:maxim.drachinskiy@bc-studentenclub.de">Maxim</a> eine Mail.</small>
         </span>
-        <span class="col-xs-12 col-sm-6 col-md-6 text-dark-grey" align="center">
+        <span class="col-xs-6 col-sm-4 col-md-4 text-dark-grey" style="text-align: center;">
+            @if(File::exists("gitrevision.txt"))
+                <small>{{File::get("gitrevision.txt")}}</small>
+            @else
+                <small>&nbsp;</small>
+            @endif
+        </span>
+        <span class="col-xs-6 col-sm-4 col-md-4 text-dark-grey" style="text-align: center;">
             <small>Mehr Infos? Besuche die <a href="http://github.com/4D44H/lara-vedst">Projektseite auf GitHub</a>.</small>
         </span>
         <br class="visible-xs visible-sm">
