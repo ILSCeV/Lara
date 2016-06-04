@@ -1,6 +1,5 @@
 /vendor
 /node_modules
-config/bcLDAP.php
 logo.psd
 
 .env
@@ -8,6 +7,8 @@ logo.psd
 .env-local
 composer.phar
 composer.lock
+config/bcLDAP.php
+public/gitrevision.txt
 
 Homestead.yaml
 Homestead.json
