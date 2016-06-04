@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Session;
 use Redirect;
 
+use Carbon\Carbon;
 use Lara\Survey;
 use Lara\SurveyQuestion;
 use View;
@@ -35,7 +36,28 @@ class SurveyController extends Controller
         // prepare correct date and time format to be used in forms for deadline/in_calendar
         $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
         $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($year.$month.$day));
-        return View('createSurveyView', compact('date','time'));
+
+        //surveyForm uses $questions for editing purposes
+        //has here to be filled with standard questions like this
+        /*$questions = [array("id" => 20,
+                            "survey_id" => 22,
+                            "order" => 0,
+                            "field_type" => 1,
+                            "question" => "Kommst du?",
+                            "createdAt" => Carbon::now(),
+                            "updatedAt" => Carbon::now()
+                        ),
+                        array("id" => 21,
+                            "survey_id" => 22,
+                            "order" => 1,
+                            "field_type" => 1,
+                            "question" => "Bringst du jemanden mit?",
+                            "createdAt" => Carbon::now(),
+                            "updatedAt" => Carbon::now()
+                        )
+                    ];
+         */
+        return View('createSurveyView', compact('date','time', 'questions'));
     }
 
     /**
@@ -45,7 +67,7 @@ class SurveyController extends Controller
     public function store(Request $input)
     {
         $survey = new Survey;
-        $survey->prsn_id = Session::get('userId');
+        $survey->creator_id = Session::get('userId');
         $survey->title = $input->title;
         $survey->description = $input->description;
 
@@ -102,9 +124,8 @@ class SurveyController extends Controller
 
     public function update($id, Request $input)
     {
-        //find survey and questions
+        //find survey
         $survey = Survey::findOrFail($id);
-        $questions_db = $survey->getQuestions;
 
         //edit existing survey
         $survey->title = $input->title;
@@ -124,20 +145,34 @@ class SurveyController extends Controller
         //$survey->isAnonymous = &input->isAnonymous;
         //$survey->isSecretResult = §input->isSecretResult;
 
-        foreach($input->questions as $index => $question) {
-            //check if input question already exists
-            if (SurveyQuestion::where('id', '!=', $index)->exists()) {
-                //if it doesnt exist, create a new model instance
-                $questions_db[$index] = new SurveyQuestion();
-                $questions_db[$index]->survey_id = $survey->id;
+        //set up iteration variable for the order
+        $iteration = 0;
+        foreach ($input->questions as $question_id => $question) {
+            //look up for the questions id in the database
+            $question_db = SurveyQuestion::Find($question_id);
+            if ($question_db === null) {
+                //doesn't exist, make new model instance and fill it
+                $question_db = new SurveyQuestion();
+                $question_db->survey_id = $survey->id;
+                $question_db->order = $iteration;
+                $question_db->field_type = 1; //example
+                $question_db->question = $question;
+                $question_db->save();
             }
-            //edit question
-            $questions_db[$index]->order = $index;
-            $questions_db[$index]->field_type = 1; //example
-            $questions_db[$index]->question = $question;
-            $questions_db[$index]->save();
-        }
+            else {
+                //question exists in database
 
+                //security risk: user manipulates source text and changes id manually
+                //then hes able to edit every question in lara!
+                $question_db->order = $iteration;
+                $question_db->field_type = 1; //example
+                $question_db->question = $question;
+                $question_db->save();
+            }
+            //increment iteration so a new question will get an incremented order
+            $iteration++;
+        }
+        
         $survey->save();
 
         //get updated questions for the view
