@@ -162,12 +162,21 @@ class SurveyController extends Controller
             else {
                 //question exists in database
 
-                //security risk: user manipulates source text and changes id manually
-                //then hes able to edit every question in lara!
-                $question_db->order = $iteration;
-                $question_db->field_type = 1; //example
-                $question_db->question = $question;
-                $question_db->save();
+                //user can manipulate source text, security risk!
+                //so we better check if the question is part of the actual survey
+                if ($question_db->survey_id != $survey->id) {
+                    //survey ids don't match
+                    Session::put('message', 'Frage konnte nicht geändert werden!');
+                    Session::put('msgType', 'danger');
+                    return Redirect::back();
+                }
+                else {
+                    //matching survey ids, no manipulation
+                    $question_db->order = $iteration;
+                    $question_db->field_type = 1; //example
+                    $question_db->question = $question;
+                    $question_db->save();
+                }
             }
             //increment iteration so a new question will get an incremented order
             $iteration++;
