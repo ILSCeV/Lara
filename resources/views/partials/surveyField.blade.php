@@ -88,7 +88,7 @@
                 <h4 id="reference" name="reference" class="heading-reference">Frage #1</h4>
 
                 <fieldset>
-                    <label class="questions" for="question">Frage:</label>
+                    <label class="questions" for="question">Frage: &nbsp</label>
 
                     <input class="questions" type="text" name="questions[]" id="question" value="">
                 </fieldset>
@@ -97,7 +97,7 @@
                 <div style="visibility:hidden; display:none">
                     <div id="new_passage"><table class="passage" id="new_passage" name="cloneTable">
                             <tr>
-                                <td>Antwortmöglichkeit</td>
+                                <td>Antwortmöglichkeit: &nbsp</td>
                                 <td><input class="answer_option" type="text" name="answer_option[][]"></input></td>
                                 <td class="helltab" rowspan="3">
                                     <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
@@ -108,7 +108,7 @@
                 </div>
 
                 <div>
-                    <input class="btn btn-default" value="Antwortmöglichkeit hinzufügen" onclick="javascript:clone_this(this, 'new_passage');" type="button"></input>
+                    <input class="btn btn-success btn-sm" value="Antwortmöglichkeit hinzufügen" onclick="javascript:clone_this(this, 'new_passage');" type="button"></input>
                 </div>
 
 
