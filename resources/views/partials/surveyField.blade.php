@@ -100,7 +100,7 @@
                     <div id="new_passage"><table name="cloneTable">
                             <tr>
                                 <td>Antwortmöglichkeit</td>
-                                <td><input type="text" name="answer[<?php echo $question->id; ?>][]"></input></td>
+                                <td><input type="text" name="answer_options[<?php echo $question->id; ?>][]"></input></td>
                                 <td class="helltab" rowspan="3">
                                     <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
                                          <i class="fa fa-trash" aria-hidden="true"></i></a>
