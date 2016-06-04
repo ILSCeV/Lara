@@ -23,6 +23,8 @@
                 newElem.find('.questions').attr('for', 'ID' + newNum + 'questions[]');
                 newElem.find('.questions').attr('id', 'ID' + newNum + 'questions[]').attr('name', 'ID' + newNum + 'questions[]').val('');
 
+                newElem.find('.answer_option').val('');
+                newElem.find('.passage').remove();
 
                 $('#questions' + num).after(newElem);
                 $('#ID' + newNum + '_title').focus();
@@ -93,10 +95,10 @@
 
 
                 <div style="visibility:hidden; display:none">
-                    <div id="new_passage"><table id="new_passage" name="cloneTable">
+                    <div id="new_passage"><table class="passage" id="new_passage" name="cloneTable">
                             <tr>
                                 <td>Antwortmöglichkeit</td>
-                                <td><input type="text" name="answer_option[][]"></input></td>
+                                <td><input class="answer_option" type="text" name="answer_option[][]"></input></td>
                                 <td class="helltab" rowspan="3">
                                     <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
                                          <i class="fa fa-trash" aria-hidden="true"></i></a>
