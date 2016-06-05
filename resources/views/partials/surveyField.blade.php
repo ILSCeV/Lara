@@ -23,8 +23,13 @@
                 newElem.find('.questions').attr('for', 'ID' + newNum + 'questions[]');
                 newElem.find('.questions').attr('id', 'ID' + newNum + 'questions[]').attr('name', 'ID' + newNum + 'questions[]').val('');
 
+                newElem.find('.field_type').attr('for', 'ID' + newNum + '_type');
+                newElem.find('.btn btn-group btn-default dropdown-toggle btn-sm').attr('id', 'ID' + newNum + '_type').attr('name', 'ID' + newNum + '_type').val('');
+
                 newElem.find('.answer_option').val('');
                 newElem.find('.passage').remove();
+
+                newElem.find('.caret').val('');
 
                 $('#questions' + num).after(newElem);
                 $('#ID' + newNum + '_title').focus();
@@ -111,9 +116,21 @@
                     <input class="btn btn-success btn-sm" value="Antwortmöglichkeit hinzufügen" onclick="javascript:clone_this(this, 'new_passage');" type="button"></input>
                 </div>
 
+                &nbsp
 
+                <fieldset>
+                    <div>
+                        <label class="field_type" for="type">Frage-Typ:</label>
+                            <select class="btn btn-default dropdown-toggle btn-sm" type="button" name="type" id="field_type" data-toggle="dropdown">
+                                <option value="" selected="selected" disabled="disabled">Frage-Typ Auswählen</option>
+                                <option value="1">Freitext</option>
+                                <option value="2">Checkbox</option>
+                                <option value="3">Dropdown</option>
+                            </select>
+                    </div>
+                </fieldset>
 
-                <fieldset class="checkbox entrylist">
+        <fieldset class="checkbox entrylist">
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
                     <ul>
                         <li><label><input type="checkbox" id="colorBlue" value="colorBlue" name="checkboxitem" class="input_checkboxitem"> erforderlich</label></li>
