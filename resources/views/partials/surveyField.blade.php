@@ -21,10 +21,13 @@
 
 
                 newElem.find('.questions').attr('for', 'ID' + newNum + 'questions[]');
-                newElem.find('.questions').attr('id', 'ID' + newNum + 'questions[]').attr('name', 'ID' + newNum + 'questions[]').val('');
+                newElem.find('.questions').attr('id', 'ID' + newNum + 'questions[]').attr('name', 'questions[]').val('');
 
                 newElem.find('.field_type').attr('for', 'ID' + newNum + '_type');
                 newElem.find('.btn btn-group btn-default dropdown-toggle btn-sm').attr('id', 'ID' + newNum + '_type').attr('name', 'ID' + newNum + '_type').val('');
+
+                newElem.find('.label_checkboxitem').attr('for', 'ID' + newNum + '_checkboxitem');
+                newElem.find('.input_checkboxitem').attr('id', 'ID' + newNum + '_checkboxitem-0').val([]);
 
                 newElem.find('.answer_option').val('');
                 newElem.find('.passage').remove();
@@ -103,7 +106,7 @@
                     <div id="new_passage"><table class="passage" id="new_passage" name="cloneTable">
                             <tr>
                                 <td>Antwortmöglichkeit: &nbsp</td>
-                                <td><input class="answer_option" type="text" name="answer_option[][]"></input></td>
+                                <td><input class="answer_option" type="text" name="answer_options[][]"></input></td>
                                 <td class="helltab" rowspan="3">
                                     <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
                                          <i class="fa fa-trash" aria-hidden="true"></i></a>
@@ -133,7 +136,7 @@
         <fieldset class="checkbox entrylist">
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
                     <ul>
-                        <li><label><input type="checkbox" id="colorBlue" value="colorBlue" name="checkboxitem" class="input_checkboxitem"> erforderlich</label></li>
+                        <li><label><input type="checkbox" id="required" value="required" name="required[]" class="input_checkboxitem"> erforderlich</label></li>
 
                     </ul>
                 </fieldset>
