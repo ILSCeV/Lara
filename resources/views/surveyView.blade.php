@@ -210,7 +210,7 @@ Calculate width of row in answers
                                                            data-method="delete"
                                                            data-token="{{csrf_token()}}"
                                                            rel="nofollow"
-                                                           data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">
+                                                           data-confirm="Möchtest Du diese Antwort wirklich löschen?">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
                                                     </div>
@@ -372,7 +372,7 @@ Calculate width of row in answers
                                data-method="delete"
                                data-token="{{csrf_token()}}"
                                rel="nofollow"
-                               data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">
+                               data-confirm="Möchtest Du diese Antwort wirklich löschen?">
                                 <i class="fa fa-trash"></i>
                             </a>
                             <br>
