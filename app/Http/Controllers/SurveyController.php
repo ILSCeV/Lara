@@ -146,81 +146,48 @@ class SurveyController extends Controller
         //$survey->isAnonymous = &input->isAnonymous;
         //$survey->isSecretResult = §input->isSecretResult;
 
-        //set up iteration variable for the order
-        $iteration = 0;
-        foreach ($input->questions as $question_id => $question) {
-            //look up for the questions id in the database
-            $question_db = SurveyQuestion::Find($question_id);
-            if ($question_db === null) {
-                //doesn't exist, make new model instance and fill it
-                $question_db = new SurveyQuestion();
-                $question_db->survey_id = $survey->id;
-                $question_db->order = $iteration;
-                $question_db->field_type = 1; //example
-                $question_db->question = $question;
-                $question_db->save();
-                //make answer options and fill them
-                foreach ($input->answer_option as $question_id[$answer_option_id] => $answer_option) {
-                    $answer_option_db = new SurveyAnswerOption();
-                    $answer_option_db->survey_question_id = $question_id;
-                    $answer_option_db->answer_option = $answer_option;
-                    $answer_option_db->save();
-                }
+        $questions_db = $survey->getQuestions;
 
-            }
-            else {
-                //question exists in database
+        //old questions to array with objects as elements
+        $questions_db = (array) $questions_db;
+        $questions_db = array_shift($questions_db);
+        $questions_new = $input->questions;
 
-                //user can manipulate source text, security risk!
-                //so we better check if the question is part of the actual survey
-                if ($question_db->survey_id != $survey->id) {
-                    //survey ids don't match
-                    Session::put('message', 'Frage konnte nicht geändert werden!');
-                    Session::put('msgType', 'danger');
-                    return Redirect::back();
-                }
-                else {
-                    //matching survey ids, no manipulation
-                    $question_db->order = $iteration;
-                    $question_db->field_type = 1; //example
-                    $question_db->question = $question;
-                    $question_db->save();
+        //sort database array by order
+        usort($questions_db, array($this, "cmp"));
 
-                    //loop through all answer options for one question
-                    for($i = 1; $i < count($input->answer_option[$question_id]); $i++) {
-                        //find existing answer option
-                        $answer_option_db = SurveyAnswerOption::Find($input->answer_option[$question_id][$i]);
-                        if ($answer_option_db === null) {
-                            //answer option doesn't exist, make new model instance and fill it
-                            $answer_option_db = new SurveyAnswerOption();
-                            $answer_option_db->survey_question_id = $question_id;
-                            $answer_option_db->answer_option = $input->answer_option[$question_id][$i];
-                            $answer_option_db->save();
-                        }
-                        else {
-                            //answer option exists, update it
-
-                            //check matching question ids in case of id manipulation
-                            if ($answer_option_db->question_id != $question_id) {
-                                //question ids don't match
-                                Session::put('message', 'Antwortmöglichkeit konnte nicht geändert werden!');
-                                Session::put('msgType', 'danger');
-                                return Redirect::back();
-                            }
-                            else {
-                                //question ids match, update answer option
-                                $answer_option_db->survey_question_id = $question_id;
-                                $answer_option_db->answer_option = $input->answer_option[$question_id][$i];
-                                $answer_option_db->save();
-                            }
-                        }
-                    }
-                }
-            }
-            //increment iteration so a new question will get an incremented order
-            $iteration++;
+        //make arrays have the same length
+        if(count($questions_new) > count($questions_db)) {
+            //more questions in input
+            //make new empty questions and push them to the database array
+            for($i=count($questions_new); $i >= count($questions_db) ; $i--)
+                array_push($questions_db, new SurveyQuestion());
         }
-        
+
+        if(count($questions_db) > count($questions_new)) {
+            //less questions in input
+            //delete unnecessary questions in database and array
+            for($i=count($questions_db)-1; $i >= count($questions_new) ; $i--) {
+                SurveyQuestion::FindOrFail($questions_db[$i]->id)->delete();
+                unset($questions_db[$i]);
+            }
+        }
+
+        //arrays have the same length now
+        for($i = 0; $i < count($questions_db); $i++) {
+            //check if question text or field type was updated
+            if (strcmp($questions_db[$i]->question, $questions_new[$i]) !== 0 or
+                $questions_db[$i]->field_type !== 1) {
+                //updated question, change it
+                $questions_db[$i]->order = $i;
+                $questions_db[$i]->question = $questions_new[$i];
+                //survey_id has to be filled in case of new questions
+                $questions_db[$i]->survey_id = $survey->id;
+                $questions_db[$i]->field_type = 1; //example
+                $questions_db[$i]->save();
+            }
+        }
+
         $survey->save();
 
         //get updated questions for the view
@@ -245,4 +212,13 @@ class SurveyController extends Controller
         $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
         return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
     }
+
+    private function cmp($a, $b)
+    {
+        if ($a->order == $b->order) {
+            return 0;
+        }
+        return ($a->order < $b->order) ? -1 : 1;
+    }
+
 }
