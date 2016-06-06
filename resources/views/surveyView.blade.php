@@ -194,7 +194,25 @@ Calculate width of row in answers
                                             @if($userAlreadyParticipated)
                                                 @if($answer->creator_id == $userId)
                                                     <div class="answerToQuestion color1">
-                                                        buttons, bearbeiten, löschen 1
+                                                        <a href="#"
+                                                           class="btn btn-primary"
+                                                           data-toggle="tooltip"
+                                                           data-placement="bottom"
+                                                           title="Veranstaltung ändern">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                        &nbsp;&nbsp;
+                                                        <a href="#"
+                                                           class="btn btn-default"
+                                                           data-toggle="tooltip"
+                                                           data-placement="bottom"
+                                                           title="Veranstaltung löschen"
+                                                           data-method="delete"
+                                                           data-token="{{csrf_token()}}"
+                                                           rel="nofollow"
+                                                           data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
                                                     </div>
                                                 @else
                                                     <div class="answerToQuestion color1">
@@ -220,7 +238,25 @@ Calculate width of row in answers
                                                     @if($userAlreadyParticipated)
                                                         @if($answer->creator_id == $userId)
                                                             <div class="answerToQuestion color2">
-                                                                buttons, bearbeiten, löschen 2
+                                                                <a href="#"
+                                                                   class="btn btn-primary"
+                                                                   data-toggle="tooltip"
+                                                                   data-placement="bottom"
+                                                                   title="Veranstaltung ändern">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                &nbsp;&nbsp;
+                                                                <a href="#"
+                                                                   class="btn btn-default"
+                                                                   data-toggle="tooltip"
+                                                                   data-placement="bottom"
+                                                                   title="Veranstaltung löschen"
+                                                                   data-method="delete"
+                                                                   data-token="{{csrf_token()}}"
+                                                                   rel="nofollow"
+                                                                   data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a>
                                                             </div>
                                                         @else
                                                             <div class="answerToQuestion color1">
