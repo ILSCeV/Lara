@@ -153,6 +153,14 @@ class SurveyController extends Controller
         $questions_db = array_shift($questions_db);
         $questions_new = $input->questions;
 
+        //ignore empty questions
+        foreach($questions_new as $index => $question) {
+            if(empty($question)) {
+                unset($questions_new[$index]);
+                $questions_new = array_values(array_filter($questions_new));
+            }
+        }
+
         //sort database array by order
         usort($questions_db, array($this, "cmp"));
 
@@ -175,9 +183,6 @@ class SurveyController extends Controller
 
         //arrays have the same length now
         for($i = 0; $i < count($questions_db); $i++) {
-            //ignore questions with empty question text
-            if (empty($questions_new[$i])) continue;
-
             //check if question text or field type was updated
             if (strcmp($questions_db[$i]->question, $questions_new[$i]) !== 0 or
                 $questions_db[$i]->field_type !== 1) {
