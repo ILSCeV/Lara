@@ -295,7 +295,6 @@ Calculate width of row in answers
     <?php
     $firstLine = true;
     $alternatingColor = 0;
-    $userAlreadyParticipated = false;
     ?>
     <div class="panel displayMobile">
         Fragen nur Oben hinschreiben
@@ -311,7 +310,7 @@ Calculate width of row in answers
             </h4>
             @foreach($answers as $answer)
                     <!--First Line-->
-            @if($userAlreadyParticipated == false && $firstLine == true)
+            @if($firstLine == true)
                 <?php $firstLine = false; ?>
                 <label for="name">Name:</label>
                 <br>
@@ -354,6 +353,32 @@ Calculate width of row in answers
                         <br>
                         Antwort:    {{$cell->answer}}
                     @endforeach
+                    @if($userAlreadyParticipated)
+                        @if($answer->creator_id == $userId)
+                            <br>
+                            <a href="#"
+                               class="btn btn-primary"
+                               data-toggle="tooltip"
+                               data-placement="bottom"
+                               title="Veranstaltung ändern">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            &nbsp;&nbsp;
+                            <a href="#"
+                               class="btn btn-default"
+                               data-toggle="tooltip"
+                               data-placement="bottom"
+                               title="Veranstaltung löschen"
+                               data-method="delete"
+                               data-token="{{csrf_token()}}"
+                               rel="nofollow"
+                               data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                            <br>
+                            <br>
+                        @endif
+                    @endif
                 @endif
                 <div class="line"></div>
                 @endforeach
