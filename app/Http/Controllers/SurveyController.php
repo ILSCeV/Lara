@@ -175,10 +175,13 @@ class SurveyController extends Controller
 
         //arrays have the same length now
         for($i = 0; $i < count($questions_db); $i++) {
+            //ignore questions with empty question text
+            if (empty($questions_new[$i])) continue;
+
             //check if question text or field type was updated
             if (strcmp($questions_db[$i]->question, $questions_new[$i]) !== 0 or
                 $questions_db[$i]->field_type !== 1) {
-                //updated question, change it
+                //is updated question, change it
                 $questions_db[$i]->order = $i;
                 $questions_db[$i]->question = $questions_new[$i];
                 //survey_id has to be filled in case of new questions
