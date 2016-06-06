@@ -27,7 +27,10 @@
                 newElem.find('.btn btn-group btn-default dropdown-toggle btn-sm').attr('id', 'ID' + newNum + '_type').attr('name', 'ID' + newNum + '_type').val('');
 
                 newElem.find('.label_checkboxitem').attr('for', 'ID' + newNum + '_checkboxitem');
-                newElem.find('.input_checkboxitem').attr('id', 'ID' + newNum + '_checkboxitem-0').val([]);
+                newElem.find('.input_checkboxitem').attr('id', 'ID' + newNum + '_checkboxitem').val([]);
+
+                newElem.find('.answ_option').attr('id', 'answ_opt' + newNum);
+                newElem.find('#button_answ').attr('onclick', 'javascript:clone_this' + newNum + '(this, "new_passage");');
 
                 newElem.find('.answer_option').val('');
                 newElem.find('.passage').remove();
@@ -40,7 +43,7 @@
 
                 $('#btnDel').attr('disabled', false);
 
-                if (newNum == 5)
+                if (newNum == 10)
                     $('#btnAdd').attr('disabled', true).prop('value', "Limit erreicht");
             });
 
@@ -70,9 +73,112 @@
     <script>
     function clone_this(button, objid){
 
-    var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
-        
-    button.parentNode.insertBefore(clone_me, button);
+            $(".passage").find('.answer_option').eq(0).attr({
+                name: 'answer_options[' + 0 + ']' + '[]'
+            });
+
+            var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
+
+            button.parentNode.insertBefore(clone_me, button);
+          }
+
+        function clone_this2(button, objid){
+
+            $(".passage").find('.answer_option').eq(0).attr({
+                name: 'answer_options[' + 1 + ']' + '[]'
+            });
+
+            var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
+
+            button.parentNode.insertBefore(clone_me, button);
+         }
+
+    function clone_this3(button, objid){
+
+        $(".passage").find('.answer_option').eq(0).attr({
+            name: 'answer_options[' + 2 + ']' + '[]'
+        });
+
+        var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
+
+        button.parentNode.insertBefore(clone_me, button);
+    }
+
+    function clone_this4(button, objid){
+
+        $(".passage").find('.answer_option').eq(0).attr({
+            name: 'answer_options[' + 3 + ']' + '[]'
+        });
+
+        var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
+
+        button.parentNode.insertBefore(clone_me, button);
+    }
+
+    function clone_this5(button, objid){
+
+        $(".passage").find('.answer_option').eq(0).attr({
+            name: 'answer_options[' + 4 + ']' + '[]'
+        });
+
+        var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
+
+        button.parentNode.insertBefore(clone_me, button);
+    }
+
+    function clone_this6(button, objid){
+
+        $(".passage").find('.answer_option').eq(0).attr({
+            name: 'answer_options[' + 5 + ']' + '[]'
+        });
+
+        var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
+
+        button.parentNode.insertBefore(clone_me, button);
+    }
+
+    function clone_this7(button, objid){
+
+        $(".passage").find('.answer_option').eq(0).attr({
+            name: 'answer_options[' + 6 + ']' + '[]'
+        });
+
+        var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
+
+        button.parentNode.insertBefore(clone_me, button);
+    }
+
+    function clone_this8(button, objid){
+
+        $(".passage").find('.answer_option').eq(0).attr({
+            name: 'answer_options[' + 6 + ']' + '[]'
+        });
+
+        var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
+
+        button.parentNode.insertBefore(clone_me, button);
+    }
+
+    function clone_this9(button, objid){
+
+        $(".passage").find('.answer_option').eq(0).attr({
+            name: 'answer_options[' + 7 + ']' + '[]'
+        });
+
+        var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
+
+        button.parentNode.insertBefore(clone_me, button);
+    }
+
+    function clone_this10(button, objid){
+
+        $(".passage").find('.answer_option').eq(0).attr({
+            name: 'answer_options[' + 8 + ']' + '[]'
+        });
+
+        var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
+
+        button.parentNode.insertBefore(clone_me, button);
     }
     </script>
 
@@ -115,8 +221,8 @@
                     </div>
                 </div>
 
-                <div>
-                    <input class="btn btn-success btn-sm" value="Antwortmöglichkeit hinzufügen" onclick="javascript:clone_this(this, 'new_passage');" type="button"></input>
+                <div class="answ_option" id="answ_opt">
+                    <input class="btn btn-success btn-sm" id="button_answ" name="1" value="Antwortmöglichkeit hinzufügen" onclick="javascript:clone_this(this, 'new_passage');" type="button"></input>
                 </div>
 
                 &nbsp
