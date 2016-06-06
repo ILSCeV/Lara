@@ -202,11 +202,17 @@ Calculate width of row in answers
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
                                                         &nbsp;&nbsp;
-                                                        <form action="{{ url('survey/'.$survey->id.'/answer/'.$answer->id) }}" method="POST">
-                                                            {{ csrf_field() }}
-                                                            {{ method_field('DELETE') }}
-                                                            <button type="submit" class="fa fa-btn fa-trash" id="archive"></button>
-                                                        </form>
+                                                        <a href="#"
+                                                           class="btn btn-default"
+                                                           data-toggle="tooltip"
+                                                           data-placement="bottom"
+                                                           title="Veranstaltung löschen"
+                                                           data-method="delete"
+                                                           data-token="{{csrf_token()}}"
+                                                           rel="nofollow"
+                                                           data-confirm="Möchtest Du diese Antwort wirklich löschen?">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
                                                     </div>
                                                 @else
                                                     <div class="answerToQuestion color1">
@@ -240,11 +246,17 @@ Calculate width of row in answers
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a>
                                                                 &nbsp;&nbsp;
-                                                                <form action="{{ url('survey/'.$survey->id.'/answer/'.$answer->id) }}" method="POST">
-                                                                    {{ csrf_field() }}
-                                                                    {{ method_field('DELETE') }}
-                                                                    <button type="submit" class="fa fa-btn fa-trash" id="archive"></button>
-                                                                </form>
+                                                                <a href="#"
+                                                                   class="btn btn-default"
+                                                                   data-toggle="tooltip"
+                                                                   data-placement="bottom"
+                                                                   title="Veranstaltung löschen"
+                                                                   data-method="delete"
+                                                                   data-token="{{csrf_token()}}"
+                                                                   rel="nofollow"
+                                                                   data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a>
                                                             </div>
                                                         @else
                                                             <div class="answerToQuestion color1">
