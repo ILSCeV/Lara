@@ -63,6 +63,16 @@ class SurveyAnswerController extends Controller
 
     public function destroy($surveyid, $id)
     {
+        $answer = SurveyAnswer::FindOrFail($id);
 
+        foreach ($answer->getAnswerCells as $cell) {
+            //delete the AnswerCells
+            $cell->delete();
+        }
+
+        // Now delete the SurveyAnswer itself
+        $answer->delete();
+
+        return Redirect::action('SurveyController@show', array('id' => $surveyid->id));
     }
 }
