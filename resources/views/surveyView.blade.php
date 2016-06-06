@@ -68,9 +68,9 @@ Calculate width of row in answers
     @foreach($answer->getAnswerCells as $cell)
     <?php $numberAnswers = $numberAnswers + 1;  ?>
     @if($answer->creator_id == $userId)
-        /* if creator of one of the the questions is currently loged in, display edit / delete buttons */
-            <?php $userAlreadyParticipated = true; ?>
-        @endif
+            <!--if creator of one of the the questions is currently loged in, display edit / delete buttons -->
+    <?php $userAlreadyParticipated = true; ?>
+    @endif
     @endforeach
     @endif
             <!--
@@ -81,7 +81,7 @@ Calculate width of row in answers
 
     <?php
     /* columnWidth = width of answerToQuestion */
-    $columnWidth = 50;
+    $columnWidth = 40;
     /* number of columns * width */
     $numberAnswers *= $columnWidth;
     /* Club Column is added as a default */
@@ -145,6 +145,11 @@ Calculate width of row in answers
                                                     {{$question->question}}
                                                 </div>
                                             @endforeach
+                                            @if($userAlreadyParticipated)
+                                                <div class="answerToQuestion ">
+                                                    erste Reihe emty
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="rowNoPadding">
                                             <div class="answerToQuestion">
@@ -162,6 +167,11 @@ Calculate width of row in answers
                                                         </textarea>
                                                 </div>
                                             @endforeach
+                                            @if($userAlreadyParticipated)
+                                                <div class="answerToQuestion ">
+                                                    zweite Reihe emty
+                                                </div>
+                                            @endif
                                         </div>
                                     @endif
                                     <div class="rowNoPadding">
@@ -179,12 +189,19 @@ Calculate width of row in answers
                                                 <div class="answerToQuestion color1">
                                                     {{$cell->answer}}
                                                 </div>
+                                            @endforeach
+
+                                            @if($userAlreadyParticipated)
                                                 @if($answer->creator_id == $userId)
                                                     <div class="answerToQuestion color1">
-                                                        buttons, bearbeiten, löschen
+                                                        buttons, bearbeiten, löschen 1
+                                                    </div>
+                                                @else
+                                                    <div class="answerToQuestion color1">
+                                                        emty
                                                     </div>
                                                     @endif
-                                                    @endforeach
+                                                    @endif
                                                     @else
                                                             <!--Color 2-->
                                                     <?php $alternatingColor = 0; ?>
@@ -199,12 +216,18 @@ Calculate width of row in answers
                                                         <div class="answerToQuestion color2">
                                                             {{$cell->answer}}
                                                         </div>
+                                                    @endforeach
+                                                    @if($userAlreadyParticipated)
                                                         @if($answer->creator_id == $userId)
+                                                            <div class="answerToQuestion color2">
+                                                                buttons, bearbeiten, löschen 2
+                                                            </div>
+                                                        @else
                                                             <div class="answerToQuestion color1">
-                                                                buttons, bearbeiten, löschen
+                                                                empty
                                                             </div>
                                                         @endif
-                                                    @endforeach
+                                                    @endif
                                                 @endif
                                     </div>
                                 @endforeach
