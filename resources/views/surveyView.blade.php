@@ -67,6 +67,10 @@ Calculate width of row in answers
     @if($numberAnswers == 0)
     @foreach($answer->getAnswerCells as $cell)
     <?php $numberAnswers = $numberAnswers + 1;  ?>
+    @if($answer->creator_id == $userId)
+        /* if creator of one of the the questions is currently loged in, display edit / delete buttons */
+            <?php $userAlreadyParticipated = true; ?>
+        @endif
     @endforeach
     @endif
             <!--
@@ -86,7 +90,21 @@ Calculate width of row in answers
     $alternatingColor = 0;
     ?>
 
+    @if($userAlreadyParticipated == true)
+        <?php $numberAnswers += $columnWidth ?>
+    @endif
+
     <div class="panel displayDesktop">
+        meine Daten: <br>
+        userID: {{$userId}}
+        <br>
+        userGroup: {{$userGroup}}
+        <br>
+        @foreach($answers as $answer)
+            User der geantwortet hat: {{$answer->creator_id}}
+            <br>
+            <br>
+        @endforeach
         <div class="row rowNoPadding">
             <div class="col-md-2 rowNoPadding shadow">
                 @foreach($answers as $answer)
@@ -161,22 +179,32 @@ Calculate width of row in answers
                                                 <div class="answerToQuestion color1">
                                                     {{$cell->answer}}
                                                 </div>
-                                                @endforeach
-                                                @else
-                                                        <!--Color 2-->
-                                                <?php $alternatingColor = 0; ?>
-                                                <div class="answerToQuestion color2">
-                                                    @if($club = $clubs->find($answer->club_id))
-                                                        club: {{$club->clb_title}}
-                                                    @else
-                                                        club: kein Club
-                                                    @endif
-                                                </div>
-                                                @foreach($answer->getAnswerCells as $cell)
-                                                    <div class="answerToQuestion color2">
-                                                        {{$cell->answer}}
+                                                @if($answer->creator_id == $userId)
+                                                    <div class="answerToQuestion color1">
+                                                        buttons, bearbeiten, löschen
                                                     </div>
-                                                @endforeach
+                                                    @endif
+                                                    @endforeach
+                                                    @else
+                                                            <!--Color 2-->
+                                                    <?php $alternatingColor = 0; ?>
+                                                    <div class="answerToQuestion color2">
+                                                        @if($club = $clubs->find($answer->club_id))
+                                                            club: {{$club->clb_title}}
+                                                        @else
+                                                            club: kein Club
+                                                        @endif
+                                                    </div>
+                                                    @foreach($answer->getAnswerCells as $cell)
+                                                        <div class="answerToQuestion color2">
+                                                            {{$cell->answer}}
+                                                        </div>
+                                                        @if($answer->creator_id == $userId)
+                                                            <div class="answerToQuestion color1">
+                                                                buttons, bearbeiten, löschen
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
                                                 @endif
                                     </div>
                                 @endforeach
