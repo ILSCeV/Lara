@@ -146,42 +146,67 @@ class SurveyController extends Controller
         //$survey->isAnonymous = &input->isAnonymous;
         //$survey->isSecretResult = §input->isSecretResult;
 
+        //get questions and answer options from database
         $questions_db = $survey->getQuestions;
+        foreach($questions_db as $question) {
+            $answer_options_db = $question->getAnswerOptions;
+        }
 
-        //old questions to array with objects as elements
+        //old questions and answer options to arrays with objects as elements
         $questions_db = (array) $questions_db;
         $questions_db = array_shift($questions_db);
-        $questions_new = $input->questions;
+        $answer_options_db = (array) $answer_options_db;
+        $answer_options_db = array_shift($answer_options_db);
 
-        //ignore empty questions
-        foreach($questions_new as $index => $question) {
+        //get questions and answer options from the input
+        $questions_new = $input->questions;
+        $answer_options_new = $input->answer_options;
+
+        //ignore empty questions and answer options
+        foreach($questions_new as $i => $question) {
             if(empty($question)) {
-                unset($questions_new[$index]);
+                unset($questions_new[$i]);
                 $questions_new = array_values(array_filter($questions_new));
+            }
+            foreach($answer_options_new as $j => $answer_option) {
+                unset($answer_options_new[$i][$j]);
+                $answer_options_new = array_values(array_filter($answer_options_new));
             }
         }
 
         //sort database array by order
         usort($questions_db, array($this, "cmp"));
 
-        //make arrays have the same length
+        //make question arrays have the same length
         if(count($questions_new) > count($questions_db)) {
             //more questions in input
             //make new empty questions and push them to the database array
-            for($i=count($questions_new); $i >= count($questions_db) ; $i--)
+            for($i=count($questions_new); $i >= count($questions_db) ; $i--) {
                 array_push($questions_db, new SurveyQuestion());
+
+                //also push to the array for the database answer options
+                //to make sure questions and answer option arrays have the same length
+                array_push($answer_options_db, []);
+                //make new empty answer options if provided
+                foreach($answer_options_new[$i] as $answer_option) {
+                    array_push($answer_options_db[$i], new SurveyAnswerOption());
+                }
+            }
         }
 
         if(count($questions_db) > count($questions_new)) {
             //less questions in input
             //delete unnecessary questions in database and array
-            for($i=count($questions_db)-1; $i >= count($questions_new) ; $i--) {
-                SurveyQuestion::FindOrFail($questions_db[$i]->id)->delete();
+            for($i=count($questions_db); $i > count($questions_new) ; $i--) {
+                $question = SurveyQuestion::FindOrFail($questions_db[$i]->id);
+                foreach($question->getAnswerOptions() as $answer_option) {
+                    $answer_option->delete();
+                }
                 unset($questions_db[$i]);
             }
         }
 
-        //arrays have the same length now
+        //question arrays have the same length now
         for($i = 0; $i < count($questions_db); $i++) {
             //check if question text or field type was updated
             if (strcmp($questions_db[$i]->question, $questions_new[$i]) !== 0 or
@@ -200,8 +225,9 @@ class SurveyController extends Controller
 
         //get updated questions for the view
         $questions = $survey->getQuestions;
-        foreach($questions as $question)
+        foreach($questions as $question) {
             $answer_options = $question->getAnswerOptions;
+        }
         return view('surveyView', compact('survey','questions', 'answer_options'));
     }
 
