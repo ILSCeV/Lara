@@ -153,7 +153,7 @@
             </div>
         </div>
         <div id="addDelButtons">
-            <input type="button" id="btnAdd" value="Frage hinzufügen" class="btn btn-primary"> <input type="button" id="btnDel" value="letzte Frage löschen" class="btn btn-danger">
+            <input type="button" id="btnAdd" value="Frage hinzufügen" class="btn btn-war"> <input type="button" id="btnDel" value="letzte Frage löschen" class="btn btn-danger">
         </div>
 
 
