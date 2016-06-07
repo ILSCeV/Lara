@@ -58,7 +58,7 @@ class SurveyController extends Controller
                         )
                     ];
          */
-        return View('createSurveyView', compact('date','time', 'questions'));
+        return View('createSurveyView', compact('date','time','questions'));
     }
 
     /**
@@ -70,15 +70,8 @@ class SurveyController extends Controller
         $survey = new Survey;
         $survey->creator_id = Session::get('userId');
         $survey->title = $input->title;
-        $survey->description = $input->description;
-
         //if URL is in the description, convert it to clickable hyperlink
-        $survey->description = preg_replace('$(https?://[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
-            ' <a href="$1" target="_blank">$1</a> ',
-            $survey->description);
-        $survey->description = preg_replace('$(www\.[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
-            '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
-            $survey->description);
+        $survey->description = $this->addLinks($input->description);
 
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
         $survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
@@ -96,11 +89,6 @@ class SurveyController extends Controller
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
 
-
-    public function destroy()
-    {
-        //;
-    }
 
     /**
      * "getAnswers" does not work as expected, right now use this:
@@ -123,6 +111,22 @@ class SurveyController extends Controller
         return view('surveyView', compact('survey', 'questions', 'answers'));
     }
 
+    public function edit($id)
+    {
+        //find survey
+        $survey = Survey::findOrFail($id);
+
+        //find questions and answer options
+        $questions = $survey->getQuestions;
+        foreach($questions as $question)
+            $answer_options = $question->getAnswerOptions;
+
+        // prepare correct date and time format to be used in forms for deadline/in_calendar
+        $date = strftime("%d-%m-%Y", strtotime($survey->in_calendar));
+        $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
+        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
+    }
+    
     public function update($id, Request $input)
     {
         //find survey
@@ -130,15 +134,9 @@ class SurveyController extends Controller
 
         //edit existing survey
         $survey->title = $input->title;
-        $survey->description = $input->description;
-
         //if URL is in the description, convert it to clickable hyperlink
-        $survey->description = preg_replace('$(https?://[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
-            ' <a href="$1" target="_blank">$1</a> ',
-            $survey->description);
-        $survey->description = preg_replace('$(www\.[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
-            '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
-            $survey->description);
+        $survey->description = $this->addLinks($input->description);
+
 
         //format deadline and in_calender for database
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
@@ -264,21 +262,15 @@ class SurveyController extends Controller
         return view('surveyView', compact('survey','questions', 'answer_options'));
     }
 
-    public function edit($id)
+
+    public function destroy()
     {
-        //find survey
-        $survey = Survey::findOrFail($id);
-
-        //find questions and answer options
-        $questions = $survey->getQuestions;
-        foreach($questions as $question)
-            $answer_options = $question->getAnswerOptions;
-
-        // prepare correct date and time format to be used in forms for deadline/in_calendar
-        $date = strftime("%d-%m-%Y", strtotime($survey->in_calendar));
-        $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
+        //;
     }
+
+    /*
+     *  -------------------- END OF REST-CONTROLLER --------------------
+     */
 
     private function cmp($a, $b)
     {
@@ -286,6 +278,16 @@ class SurveyController extends Controller
             return 0;
         }
         return ($a->order < $b->order) ? -1 : 1;
+    }
+
+    private function addLinks($text) {
+        $text = preg_replace('$(https?://[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
+            ' <a href="$1" target="_blank">$1</a> ',
+            $text);
+        $text = preg_replace('$(www\.[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
+            '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
+            $text);
+        return $text;
     }
 
 }
