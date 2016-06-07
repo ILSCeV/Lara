@@ -23,14 +23,16 @@
                 newElem.find('.questions').attr('for', 'ID' + newNum + 'questions[]');
                 newElem.find('.questions').attr('id', 'ID' + newNum + 'questions[]').attr('name', 'questions[]').val('');
 
-                newElem.find('.field_type').attr('for', 'ID' + newNum + '_type');
-                newElem.find('.btn btn-group btn-default dropdown-toggle btn-sm').attr('id', 'ID' + newNum + '_type').attr('name', 'ID' + newNum + '_type').val('');
 
                 newElem.find('.label_checkboxitem').attr('for', 'ID' + newNum + '_checkboxitem');
                 newElem.find('.input_checkboxitem').attr('id', 'ID' + newNum + '_checkboxitem').val([]);
 
+                newElem.find('.dropdown-toggle').attr('id', 'field_type' + newNum);
+                newElem.find('.btn-success').attr('id', 'button_answ' + newNum);
+
                 newElem.find('.answ_option').attr('id', 'answ_opt' + newNum);
-                newElem.find('#button_answ').attr('onclick', 'javascript:clone_this(this, "new_passage",' + (newNum - 1) + ');');
+                newElem.find('.btn-success').attr('onclick', 'javascript:clone_this(this, "new_passage",' + (newNum - 1) + ');');
+
 
                 newElem.find('.answer_option').val('');
                 newElem.find('.passage').remove();
@@ -39,7 +41,6 @@
 
                 $('#questions' + num).after(newElem);
                 $('#ID' + newNum + '_title').focus();
-
 
                 $('#btnDel').attr('disabled', false);
 
@@ -62,7 +63,6 @@
                 }
                 return false;
 
-                $('#btnAdd').attr('disabled', false);
             });
 
             $('#btnDel').attr('disabled', true);
@@ -88,6 +88,23 @@
         function remove_this(objLink)
         {
             objLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(objLink.parentNode.parentNode.parentNode.parentNode);
+        }
+    </script>
+
+    <script>
+        function check_question_type() {
+
+          if ($('#field_type').val() === "3")
+              $('#button_answ').attr('disabled', false);
+
+            else $('#button_answ').attr('disabled', true);
+
+            if ($('#field_type2').val() === "3")
+                $('#button_answ2').attr('disabled', false);
+
+            else $('#button_answ2').attr('disabled', true);
+
+
         }
     </script>
 
@@ -124,7 +141,7 @@
                 </div>
 
                 <div class="answ_option" id="answ_opt">
-                    <input class="btn btn-success btn-sm" id="button_answ" name="1" value="Antwortmöglichkeit hinzufügen" onclick="javascript:clone_this(this, 'new_passage', 0);" type="button"></input>
+                    <input class="btn btn-success btn-sm" id="button_answ" value="Antwortmöglichkeit hinzufügen" disabled="true" onclick="javascript:clone_this(this, 'new_passage', 0);" type="button"></input>
                 </div>
 
                 &nbsp
@@ -132,7 +149,7 @@
                 <fieldset>
                     <div>
                         <label class="field_type" for="type">Frage-Typ:</label>
-                            <select class="btn btn-default dropdown-toggle btn-sm" type="button" name="type" id="field_type" data-toggle="dropdown">
+                            <select class="btn btn-default dropdown-toggle btn-sm" type="button" name="type" id="field_type" data-toggle="dropdown" onchange="javascript:check_question_type();">
                                 <option value="" selected="selected" disabled="disabled">Frage-Typ Auswählen</option>
                                 <option value="1">Freitext</option>
                                 <option value="2">Checkbox</option>
@@ -153,7 +170,7 @@
             </div>
         </div>
         <div id="addDelButtons">
-            <input type="button" id="btnAdd" value="Frage hinzufügen" class="btn btn-war"> <input type="button" id="btnDel" value="letzte Frage löschen" class="btn btn-danger">
+            <input type="button" id="btnAdd" value="Frage hinzufügen" class="btn btn-warning"> <input type="button" id="btnDel" value="letzte Frage löschen" class="btn btn-danger">
         </div>
 
 
