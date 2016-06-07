@@ -27,8 +27,10 @@
                 newElem.find('.label_checkboxitem').attr('for', 'ID' + newNum + '_checkboxitem');
                 newElem.find('.input_checkboxitem').attr('id', 'ID' + newNum + '_checkboxitem').val([]);
 
-                newElem.find('.dropdown-toggle').attr('id', 'field_type' + newNum);
-                newElem.find('.btn-success').attr('id', 'button_answ' + newNum);
+                newElem.find('.dropdown-toggle').attr('id', 'field_type' + (newNum - 1));
+                newElem.find('.btn-success').attr('id', 'button_answ' + (newNum - 1));
+
+                newElem.find('.dropdown-toggle').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ')');
 
                 newElem.find('.answ_option').attr('id', 'answ_opt' + newNum);
                 newElem.find('.btn-success').attr('onclick', 'javascript:clone_this(this, "new_passage",' + (newNum - 1) + ');');
@@ -41,6 +43,8 @@
 
                 $('#questions' + num).after(newElem);
                 $('#ID' + newNum + '_title').focus();
+
+                newElem.find('#button_answ' + (newNum - 1)).attr('style', 'visibility:hidden');
 
                 $('#btnDel').attr('disabled', false);
 
@@ -92,18 +96,17 @@
     </script>
 
     <script>
-        function check_question_type() {
+        function check_question_type(number) {
 
-          if ($('#field_type').val() === "3")
-              $('#button_answ').attr('disabled', false);
+            if ($('#field_type').val() === "3")
+                $('#button_answ').attr('style', 'visibility:visible');
 
-            else $('#button_answ').attr('disabled', true);
+            else $('#button_answ').attr('style', 'visibility:hidden');
 
-            if ($('#field_type2').val() === "3")
-                $('#button_answ2').attr('disabled', false);
+          if ($('#field_type' + number).val() === "3")
+              $('#button_answ' + number).attr('style', 'visibility:visible');
 
-            else $('#button_answ2').attr('disabled', true);
-
+            else $('#button_answ' + number).attr('style', 'visibility:hidden');
 
         }
     </script>
@@ -141,7 +144,7 @@
                 </div>
 
                 <div class="answ_option" id="answ_opt">
-                    <input class="btn btn-success btn-sm" id="button_answ" value="Antwortmöglichkeit hinzufügen" disabled="true" onclick="javascript:clone_this(this, 'new_passage', 0);" type="button"></input>
+                    <input class="btn btn-success btn-sm" id="button_answ" value="Antwortmöglichkeit hinzufügen" style="visibility:hidden"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button"></input>
                 </div>
 
                 &nbsp
@@ -149,7 +152,7 @@
                 <fieldset>
                     <div>
                         <label class="field_type" for="type">Frage-Typ:</label>
-                            <select class="btn btn-default dropdown-toggle btn-sm" type="button" name="type" id="field_type" data-toggle="dropdown" onchange="javascript:check_question_type();">
+                            <select class="btn btn-default dropdown-toggle btn-sm" type="button" name="type" id="field_type" data-toggle="dropdown" onchange="javascript:check_question_type(0);">
                                 <option value="" selected="selected" disabled="disabled">Frage-Typ Auswählen</option>
                                 <option value="1">Freitext</option>
                                 <option value="2">Checkbox</option>
