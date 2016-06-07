@@ -72,6 +72,9 @@ class SurveyController extends Controller
         $survey->title = $input->title;
         //if URL is in the description, convert it to clickable hyperlink
         $survey->description = $this->addLinks($input->description);
+        $survey->is_anonymous = isset($input->is_anonymous);
+        $survey->is_private = isset($input->is_private);
+        $survey->show_results_after_voting = isset($input->show_results_after_voting);
 
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
         $survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
@@ -82,8 +85,18 @@ class SurveyController extends Controller
             $question_db->survey_id = $survey->id;
             $question_db->order = $order;
             $question_db->field_type = 1; //example
+//            $question_db->field_type = $input->field_type[$order];
+//            $question_db->is_required = $input->required[$order];  not working
             $question_db->question = $question;
             $question_db->save();
+            // field_type 3 == dropdown
+//            if($input->field_type[$order] == 3) {
+//                foreach($input->answer_options[$order] as $answer_option) {
+//                    $answer_option_db = new SurveyAnswerOption();
+//                    $answer_option_db->survey_question_id = $question_db->id;
+//                    $answer_option_db->answer_option = $answer_option;
+//                }
+//            }
         }
 
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
