@@ -22,13 +22,14 @@
     {!! Form::date('in_calendar', $date, ['class' => 'form-control']) !!}
 </div>
 
-<fieldset class="checkbox entrylist">
+<div class="form-group">
     <label class="label_checkboxitem" for="checkboxitemitem"></label>
         <label><input type="checkbox" id="required1" value="required1" name="is_private" class="input_checkboxitem"> is private</label>
     <label class="label_checkboxitem" for="checkboxitemitem"></label>
         <label><input type="checkbox" id="required2" value="required2" name="is_anonymous" class="input_checkboxitem"> is anonymous</label>
     <label class="label_checkboxitem" for="checkboxitemitem"></label>
         <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem"> show results after voting</label>
-</fieldset>
+    </div>
+<hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 
 @include('partials.surveyField')
