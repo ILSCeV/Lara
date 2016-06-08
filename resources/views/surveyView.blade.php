@@ -97,20 +97,6 @@ Calculate width of row in answers
     @endif
 
     <div class="panel displayDesktop">
-        meine Daten: <br>
-        userID: {{$userId}}
-        <br>
-        userGroup: {{$userGroup}}
-        <br>
-        answers: {{$answers}}
-        <br>
-        questions: {{$questions}}
-        <br>
-        @foreach($answers as $answer)
-            User der geantwortet hat: {{$answer->creator_id}}
-            <br>
-            <br>
-        @endforeach
         <div class="row rowNoPadding">
             <div class="col-md-2 rowNoPadding shadow">
                 @if($firstLine == true)
@@ -394,4 +380,6 @@ Calculate width of row in answers
                 @endforeach
         </div>
     </div>
+    <button type="button" class="btn btn-primary btn-margin" data-dismiss="alert" style="display: inline-block;">Speichern!</button>
+
 @stop
