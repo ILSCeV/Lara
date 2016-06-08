@@ -47,7 +47,7 @@
 
                 newElem.find('.input_checkboxitem').attr('name', 'required[' + (newNum - 1) + ']');
 
-                newElem.find('#button_answ' + (newNum - 1)).attr('style', 'visibility:hidden');
+                newElem.find('#button_answ' + (newNum - 1)).attr('style', 'display:none');
 
                 $('#btnDel').attr('disabled', false);
 
@@ -105,15 +105,53 @@
         function check_question_type(number) {
 
             if ($('#field_type').val() === "3")
+                $('#button_answ').fadeTo('slow', 1)&
                 $('#button_answ').attr('style', 'visibility:visible');
 
-            else $('#button_answ').attr('style', 'visibility:hidden');
+            var att = document.getElementById('button_answ').getAttribute('style');
+            if (att === 'display:none')
+                void(0);
+
+           if ($('#field_type').val() !== "3" && att !== 'display:none')
+                   $('#button_answ').fadeTo('slow', 0) &
+                 $('#button_answ').attr('style', 'visibility:hidden') &
+                    timeOut(number);
 
           if ($('#field_type' + number).val() === "3")
+              $('#button_answ' + number).fadeTo('slow', 1) &
               $('#button_answ' + number).attr('style', 'visibility:visible');
 
-            else $('#button_answ' + number).attr('style', 'visibility:hidden');
+            var att2 = document.getElementById('button_answ' + number).getAttribute('style');
+            if (att2 === 'display:none')
+                void(0);
 
+            if ($('#field_type' + number).val() !== "3" && att2 !== 'display:none')
+                 $('#button_answ' + number).fadeTo('slow', 0) &
+                 $('#button_answ' + number).attr('style', 'visibility:hidden') &
+                    timeOut2(number);
+
+        }
+
+        function timeOut() {
+            setTimeout(function(){
+
+               var att = document.getElementById('button_answ').getAttribute('style');
+                if (att === 'display:none')
+                        void(0);
+                else
+                $('#button_answ').attr('style', 'display:none')
+            },600);
+        }
+
+        function timeOut2(number) {
+            setTimeout(function(){
+
+                var att2 = document.getElementById('button_answ' + number).getAttribute('style');
+                if (att2 === 'display:none')
+                    void(0);
+                else
+                    $('#button_answ' + number).attr('style', 'display:none');
+            },600);
         }
     </script>
 
@@ -163,7 +201,7 @@
                 </div>
 
                 <div class="answ_option" id="answ_opt">
-                    <input class="btn btn-success btn-sm" id="button_answ" value="Antwortmöglichkeit hinzufügen" style="visibility:hidden"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button"></input>
+                    <input class="btn btn-success btn-sm" id="button_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button"></input>
                 </div>
 
                 &nbsp
@@ -182,10 +220,7 @@
 
         <fieldset class="checkbox entrylist">
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
-                    <ul>
-                        <li><label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label></li>
-
-                    </ul>
+                        <label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
                 </fieldset>
 
 
