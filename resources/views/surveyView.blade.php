@@ -115,10 +115,10 @@ Calculate width of row in answers
                 @foreach($answers as $answer)
                     @if($alternatingColor == 0)
                         <?php $alternatingColor = 1; ?>
-                        <div class=" rowNoPadding nameToQuestion color1 shadow">
+                        <div class=" rowNoPadding nameToQuestion color1 ">
                             @else
                                 <?php $alternatingColor = 0; ?>
-                                <div class=" rowNoPadding nameToQuestion color2 shadow">
+                                <div class=" rowNoPadding nameToQuestion color2 ">
                                     @endif
                                     {{$answer->name}}
                                 </div>
