@@ -291,13 +291,6 @@ Calculate width of row in answers
     $alternatingColor = 0;
     ?>
     <div class="panel displayMobile">
-        Fragen nur Oben hinschreiben
-        <br>
-        userAlreadyParticipated rausnehmen!
-        <br>
-        Why do the form-controls look so different?
-    </div>
-    <div class="panel displayMobile">
         <div class="panel-body">
             <h4 class="panel-title">
                 mobile
