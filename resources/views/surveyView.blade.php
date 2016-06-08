@@ -32,10 +32,12 @@
     --}}
 
     <div class="panel no-padding">
-        <div class="panel-body">
+        <div class="panel-title-box">
             <h4 class="panel-title">
                 {{ $survey->title }}
             </h4>
+        </div>
+        <div class="panel-body">
             Beschreibung:
             @if($survey->description == null)
                 keine Beschreibung vorhanden
@@ -49,7 +51,8 @@
         </div>
     </div>
 
-
+    <br>
+    <br>
 
     <!-- /////////////////////////////////////////// Start of desktop View /////////////////////////////////////////// -->
 
@@ -102,7 +105,7 @@ Calculate width of row in answers
                 @if($firstLine == true)
                     <?php $firstLine = false; ?>
                     <div class=" rowNoPadding nameToQuestion">
-                        names
+                        Namen
                     </div>
                     <div class=" rowNoPadding nameToQuestion">
                         <input type="text" placeholder="dein Name" class="form-control" id="name">
@@ -152,7 +155,8 @@ Calculate width of row in answers
                                         </div>
                                         @foreach($questions as $q)
                                             <div class="answerToQuestion">
-                                                <textarea class="form-control" rows="2" id="answer" placeholder="Antwort hier hinzufügen"></textarea>
+                                                <textarea class="form-control" rows="2" id="answer"
+                                                          placeholder="Antwort hier hinzufügen"></textarea>
                                             </div>
                                         @endforeach
                                         @if($userAlreadyParticipated)
@@ -323,7 +327,8 @@ Calculate width of row in answers
                     <br>
                     <label for="answer">{{$question->question}}</label>
                     <br>
-                    <textarea class="form-control" rows="2" id="answer"placeholder="Antwort hier hinzufügen"></textarea>
+                    <textarea class="form-control" rows="2" id="answer"
+                              placeholder="Antwort hier hinzufügen"></textarea>
                 @endforeach
                 <div class="line"></div>
             @endif
@@ -377,6 +382,8 @@ Calculate width of row in answers
                 @endforeach
         </div>
     </div>
-    <button type="button" class="btn btn-primary btn-margin" data-dismiss="alert" style="display: inline-block;">Speichern!</button>
+    <button type="button" class="btn btn-primary btn-margin" data-dismiss="alert" style="display: inline-block;">
+        Speichern!
+    </button>
 
 @stop
