@@ -150,7 +150,6 @@ Calculate width of row in answers
                                         @endforeach
                                         @if($userAlreadyParticipated)
                                             <div class="answerToQuestion ">
-                                                erste Reihe emty
                                             </div>
                                         @endif
                                     </div>
@@ -172,7 +171,6 @@ Calculate width of row in answers
                                         @endforeach
                                         @if($userAlreadyParticipated)
                                             <div class="answerToQuestion ">
-                                                zweite Reihe emty
                                             </div>
                                         @endif
                                     </div>
@@ -220,7 +218,6 @@ Calculate width of row in answers
                                                     </div>
                                                 @else
                                                     <div class="answerToQuestion color1">
-                                                        emty
                                                     </div>
                                                     @endif
                                                     @endif
