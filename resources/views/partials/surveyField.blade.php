@@ -45,6 +45,8 @@
                 $('#questions' + num).after(newElem);
                 $('#ID' + newNum + '_title').focus();
 
+                newElem.find('.input_checkboxitem').attr('name', 'required[' + (newNum - 1) + ']');
+
                 newElem.find('#button_answ' + (newNum - 1)).attr('style', 'visibility:hidden');
 
                 $('#btnDel').attr('disabled', false);
@@ -181,7 +183,7 @@
         <fieldset class="checkbox entrylist">
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
                     <ul>
-                        <li><label><input type="checkbox" id="required" value="required" name="required[]" class="input_checkboxitem"> erforderlich</label></li>
+                        <li><label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label></li>
 
                     </ul>
                 </fieldset>
