@@ -62,6 +62,7 @@ Calculate width of row in answers
     <?php
     $numberQuestions = 0;
     $userAlreadyParticipated = false;
+    $tableNot100Percent = false;
     ?>
     @foreach($answers as $answer)
     @foreach($answer->getAnswerCells as $cell)
@@ -74,14 +75,12 @@ Calculate width of row in answers
         also add delete / edit buttons at the end of the line
     -->
     @endforeach
-
     @foreach($questions as $question)
-        <?php $numberQuestions = $numberQuestions + 1;  ?>
+    <?php $numberQuestions = $numberQuestions + 1;  ?>
     @endforeach
-
     <?php
     /* columnWidth = width of answerToQuestion */
-    $columnWidth = 40;
+    $columnWidth = 20;
     /* number of columns * width */
     $numberQuestions *= $columnWidth;
     /* Club Column is added as a default */
@@ -89,9 +88,12 @@ Calculate width of row in answers
     $firstLine = true;
     $alternatingColor = 0;
     ?>
-
     @if($userAlreadyParticipated == true)
-        <?php $numberQuestions += $columnWidth ?>
+    <?php $numberQuestions += $columnWidth ?>
+    @endif
+            <!--table min 100% width of page-->
+    @if($numberQuestions < 100)
+        <?php $tableNot100Percent = true ?>
     @endif
 
     <div class="panel displayDesktop">
@@ -136,7 +138,7 @@ Calculate width of row in answers
                         $alternatingColor = 0;
                         ?>
                         <div class="col-md-10 answers rowNoPadding">
-                            <div style="width: {{$numberQuestions}}vw;" class="displayDesktop">
+                            <div id="rightPart" style="width: {{$numberQuestions}}vw;" class="displayDesktop">
                                 @if($firstLine == true)
                                     <?php $firstLine = false; ?>
                                     <div class="rowNoPadding ">
@@ -165,7 +167,7 @@ Calculate width of row in answers
                                         @foreach($questions as $q)
                                             <div class="answerToQuestion">
                                                 <textarea class="form-control" rows="5" id="answer"
-                                                          placeholder="meine Antwort...">
+                                                          placeholder="Antwort hier hinzufügen">
                                                 </textarea>
                                             </div>
                                         @endforeach
@@ -269,6 +271,13 @@ Calculate width of row in answers
                                     </div>
                                 @endforeach
                             </div>
+                            @if($tableNot100Percent )
+                                <div class="ifTableNotfullPage">&nbsp;</div>
+                                <div class="ifTableNotfullPage">&nbsp;</div>
+                                @foreach($answers as $answer)
+                                    <div class="ifTableNotfullPage">&nbsp;</div>
+                                @endforeach
+                            @endif
                         </div>
             </div>
         </div>
@@ -331,7 +340,7 @@ Calculate width of row in answers
                     <label for="answer">{{$question->question}}</label>
                     <br>
                     <textarea class="form-control" rows="5" id="answer"
-                              placeholder="meine Antwort..."></textarea>
+                              placeholder="Antwort hier hinzufügen"></textarea>
                 @endforeach
                 <div class="line"></div>
             @endif

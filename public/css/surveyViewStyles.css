@@ -35,7 +35,8 @@
 }
 
 .answers::-webkit-scrollbar {
-    display: none;
+    /*display: none;
+    */
 }
 
 .answers::-webkit-scrollbar {
@@ -46,20 +47,24 @@
     padding: 0;
 }
 
-.shadow{
+.shadow {
     -webkit-box-shadow: 10px 0 5px -2px #888;
-    box-shadow: 10px 0 5px -2px #888;
+    box-shadow: 5px 0 5px -2px #888;
     position: relative;
     z-index: 10;
 }
 
-.nameToQuestion {
-    height: 20vh;
+.nameToQuestion, .answerToQuestion, .ifTableNotfullPage {
+    height: 10vh;
+    border-top: 1px solid #eeeeee;
+}
+
+.nameToQuestion, .answerToQuestion{
+    padding-left: 8px;
 }
 
 .answerToQuestion {
-    width: 40vw;
-    height: 20vh;
+    width: 20vw;
     float: left;
     background-color: transparent;
 }
@@ -71,6 +76,10 @@
     color: #666666;
 }
 
+/*
+    Why not implement alternating colors?
+    This would make it much easier for the user to read
+
 .color1 {
     background-color: #F6F5F3;
 }
@@ -78,33 +87,22 @@
 .color2 {
     background-color: #a1a1a1;
 }
+*/
+
+.color1, .color2 {
+    background-color: white;
+}
 
 /*
     Style of mobile elements
 */
 
-.line{
+.line {
     width: 100%;
     height: 1px;
     background-color: black;
 }
-/*
-.form-control{
-    display: block !important;
-    width: 100% !important;
-    height: 37px !important;
-    padding: 6px 16px !important;
-    font-size: 13px !important;
-    line-height: 1.846 !important;
-    color: #666666 !important;
-    background-color: transparent !important;
-    background-image: none !important;
-    border: 1px solid transparent !important;
-    border-radius: 3px !important;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075) !important;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075) !important;
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s !important;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s !important;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s !important;
+
+.ifTableNotfullPage{
+
 }
-*/
