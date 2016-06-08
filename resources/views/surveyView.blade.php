@@ -99,6 +99,7 @@ Calculate width of row in answers
         <?php $tableNot100Percent = true ?>
     @endif
 
+
     <div class="panel displayDesktop">
         <div class="row rowNoPadding">
             <div class="col-md-2 rowNoPadding shadow">
@@ -147,10 +148,9 @@ Calculate width of row in answers
                                     <div class="rowNoPadding">
                                         <div class="answerToQuestion">
                                             <select class="form-control" id="sel1">
-                                                <option>D</option>
-                                                <option>C</option>
-                                                <option>Cafe</option>
-                                                <option>I</option>
+                                                @foreach($clubs as $club)
+                                                    <option>{{$club->clb_title}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         @foreach($questions as $q)
