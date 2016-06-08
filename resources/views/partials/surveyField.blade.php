@@ -30,14 +30,15 @@
                 newElem.find('.dropdown-toggle').attr('id', 'field_type' + (newNum - 1));
                 newElem.find('.btn-success').attr('id', 'button_answ' + (newNum - 1));
 
-                newElem.find('.dropdown-toggle').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ')');
+                newElem.find('.dropdown-toggle').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ');' + 'check_question_type2('+ (newNum - 1) + ');');
 
-                newElem.find('.answ_option').attr('id', 'answ_opt' + newNum);
+                newElem.find('.answ_option').attr('id', 'answ_opt' + (newNum - 1));
                 newElem.find('.btn-success').attr('onclick', 'javascript:clone_this(this, "new_passage",' + (newNum - 1) + ');');
 
-
                 newElem.find('.answer_option').val('');
-                newElem.find('.passage').remove();
+
+                newElem.find('.passage').slice(1).remove();
+                newElem.find('.passage' + (newNum-2)).remove();
 
                 newElem.find('.caret').val('');
 
@@ -84,6 +85,9 @@
             var clone_me = document.getElementById(objid).firstChild.cloneNode(true);
 
             button.parentNode.insertBefore(clone_me, button);
+
+        $('#answ_opt').find('table:last').attr('class', 'passage' + number);
+        $('#answ_opt' + number).find('table:last').attr('class', 'passage' + number);
           }
 
     </script>
@@ -111,6 +115,19 @@
         }
     </script>
 
+    <script>
+        function check_question_type2(number) {
+
+            if ($('#field_type').val() !== "3")
+                $('#answ_opt').find('.passage' + number).remove();
+                $('#answ_opt').find('.passage' + (number+1)).remove();
+
+
+            if ($('#field_type' + number).val() !== "3")
+                $('#answ_opt' + number).find('.passage' + number).remove();
+
+        }
+    </script>
 </head>
 
 <body>
@@ -134,7 +151,7 @@
                     <div id="new_passage"><table class="passage" id="new_passage" name="cloneTable">
                             <tr>
                                 <td>Antwortmöglichkeit: &nbsp</td>
-                                <td><input class="answer_option" type="text" name="answer_options[][]"></input></td>
+                                <td><input id="answer_option" class="answer_option" type="text" name="answer_options[][]"></input></td>
                                 <td class="helltab" rowspan="3">
                                     <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
                                          <i class="fa fa-trash" aria-hidden="true"></i></a>
@@ -152,7 +169,7 @@
                 <fieldset>
                     <div>
                         <label class="field_type" for="type">Frage-Typ:</label>
-                            <select class="btn btn-default dropdown-toggle btn-sm" type="button" name="type" id="field_type" data-toggle="dropdown" onchange="javascript:check_question_type(0);">
+                            <select class="btn btn-default dropdown-toggle btn-sm" type="button" name="type" id="field_type" data-toggle="dropdown" onchange="javascript:check_question_type(0); check_question_type2(0);">
                                 <option value="" selected="selected" disabled="disabled">Frage-Typ Auswählen</option>
                                 <option value="1">Freitext</option>
                                 <option value="2">Checkbox</option>
