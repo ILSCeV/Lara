@@ -60,38 +60,38 @@ Calculate width of row in answers
 
 
     <?php
-    $numberAnswers = 0;
+    $numberQuestions = 0;
     $userAlreadyParticipated = false;
     ?>
     @foreach($answers as $answer)
-    @if($numberAnswers == 0)
     @foreach($answer->getAnswerCells as $cell)
-    <?php $numberAnswers = $numberAnswers + 1;  ?>
     @if($answer->creator_id == $userId)
             <!--if creator of one of the the questions is currently loged in, display edit / delete buttons -->
     <?php $userAlreadyParticipated = true; ?>
     @endif
     @endforeach
-    @endif
             <!--
-                also add delete / edit buttons at the end of the line
-            -->
+        also add delete / edit buttons at the end of the line
+    -->
     @endforeach
 
+    @foreach($questions as $question)
+        <?php $numberQuestions = $numberQuestions + 1;  ?>
+    @endforeach
 
     <?php
     /* columnWidth = width of answerToQuestion */
     $columnWidth = 40;
     /* number of columns * width */
-    $numberAnswers *= $columnWidth;
+    $numberQuestions *= $columnWidth;
     /* Club Column is added as a default */
-    $numberAnswers += $columnWidth;
+    $numberQuestions += $columnWidth;
     $firstLine = true;
     $alternatingColor = 0;
     ?>
 
     @if($userAlreadyParticipated == true)
-        <?php $numberAnswers += $columnWidth ?>
+        <?php $numberQuestions += $columnWidth ?>
     @endif
 
     <div class="panel displayDesktop">
@@ -100,6 +100,10 @@ Calculate width of row in answers
         <br>
         userGroup: {{$userGroup}}
         <br>
+        answers: {{$answers}}
+        <br>
+        questions: {{$questions}}
+        <br>
         @foreach($answers as $answer)
             User der geantwortet hat: {{$answer->creator_id}}
             <br>
@@ -107,16 +111,16 @@ Calculate width of row in answers
         @endforeach
         <div class="row rowNoPadding">
             <div class="col-md-2 rowNoPadding shadow">
+                @if($firstLine == true)
+                    <?php $firstLine = false; ?>
+                    <div class=" rowNoPadding nameToQuestion">
+                        names
+                    </div>
+                    <div class=" rowNoPadding nameToQuestion">
+                        <input type="text" placeholder="dein Name" class="form-control" id="name">
+                    </div>
+                @endif
                 @foreach($answers as $answer)
-                    @if($firstLine == true)
-                        <?php $firstLine = false; ?>
-                        <div class=" rowNoPadding nameToQuestion">
-                            names
-                        </div>
-                        <div class=" rowNoPadding nameToQuestion">
-                            <input type="text" placeholder="dein Name" class="form-control" id="name">
-                        </div>
-                    @endif
                     @if($alternatingColor == 0)
                         <?php $alternatingColor = 1; ?>
                         <div class=" rowNoPadding nameToQuestion color1 shadow">
@@ -132,48 +136,48 @@ Calculate width of row in answers
                         $alternatingColor = 0;
                         ?>
                         <div class="col-md-10 answers rowNoPadding">
-                            <div style="width: {{$numberAnswers}}vw;" class="displayDesktop">
+                            <div style="width: {{$numberQuestions}}vw;" class="displayDesktop">
+                                @if($firstLine == true)
+                                    <?php $firstLine = false; ?>
+                                    <div class="rowNoPadding ">
+                                        <div class="answerToQuestion">
+                                            Club
+                                        </div>
+                                        @foreach($questions as $question)
+                                            <div class="answerToQuestion">
+                                                {{$question->question}}
+                                            </div>
+                                        @endforeach
+                                        @if($userAlreadyParticipated)
+                                            <div class="answerToQuestion ">
+                                                erste Reihe emty
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="rowNoPadding">
+                                        <div class="answerToQuestion">
+                                            <select class="form-control" id="sel1">
+                                                <option>D</option>
+                                                <option>C</option>
+                                                <option>Cafe</option>
+                                                <option>I</option>
+                                            </select>
+                                        </div>
+                                        @foreach($questions as $q)
+                                            <div class="answerToQuestion">
+                                                <textarea class="form-control" rows="5" id="answer"
+                                                          placeholder="meine Antwort...">
+                                                </textarea>
+                                            </div>
+                                        @endforeach
+                                        @if($userAlreadyParticipated)
+                                            <div class="answerToQuestion ">
+                                                zweite Reihe emty
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
                                 @foreach($answers as $answer)
-                                    @if($firstLine == true)
-                                        <?php $firstLine = false; ?>
-                                        <div class="rowNoPadding ">
-                                            <div class="answerToQuestion">
-                                                Club
-                                            </div>
-                                            @foreach($questions as $question)
-                                                <div class="answerToQuestion">
-                                                    {{$question->question}}
-                                                </div>
-                                            @endforeach
-                                            @if($userAlreadyParticipated)
-                                                <div class="answerToQuestion ">
-                                                    erste Reihe emty
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="rowNoPadding">
-                                            <div class="answerToQuestion">
-                                                <select class="form-control" id="sel1">
-                                                    <option>D</option>
-                                                    <option>C</option>
-                                                    <option>Cafe</option>
-                                                    <option>I</option>
-                                                </select>
-                                            </div>
-                                            @foreach($answer->getAnswerCells as $cell)
-                                                <div class="answerToQuestion">
-                                                        <textarea class="form-control" rows="5" id="answer"
-                                                                  placeholder="meine Antwort...">
-                                                        </textarea>
-                                                </div>
-                                            @endforeach
-                                            @if($userAlreadyParticipated)
-                                                <div class="answerToQuestion ">
-                                                    zweite Reihe emty
-                                                </div>
-                                            @endif
-                                        </div>
-                                    @endif
                                     <div class="rowNoPadding">
                                         <!--Color 1-->
                                         @if($alternatingColor == 0)
