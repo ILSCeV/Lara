@@ -152,9 +152,7 @@ Calculate width of row in answers
                                         </div>
                                         @foreach($questions as $q)
                                             <div class="answerToQuestion">
-                                                <textarea class="form-control" rows="5" id="answer"
-                                                          placeholder="Antwort hier hinzufügen">
-                                                </textarea>
+                                                <textarea class="form-control" rows="5" id="answer" placeholder="Antwort hier hinzufügen"></textarea>
                                             </div>
                                         @endforeach
                                         @if($userAlreadyParticipated)
@@ -325,8 +323,7 @@ Calculate width of row in answers
                     <br>
                     <label for="answer">{{$question->question}}</label>
                     <br>
-                    <textarea class="form-control" rows="5" id="answer"
-                              placeholder="Antwort hier hinzufügen"></textarea>
+                    <textarea class="form-control" rows="5" id="answer"placeholder="Antwort hier hinzufügen"></textarea>
                 @endforeach
                 <div class="line"></div>
             @endif
