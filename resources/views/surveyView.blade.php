@@ -185,12 +185,11 @@ Calculate width of row in answers
 
                                             @if($userAlreadyParticipated)
                                                 @if($answer->creator_id == $userId)
-                                                    <div class="answerToQuestion color1">
+                                                    <div class="answerToQuestion color1 editDelete">
                                                         <a href="#"
                                                            class="btn btn-primary"
                                                            data-toggle="tooltip"
-                                                           data-placement="bottom"
-                                                           title="Veranstaltung ändern">
+                                                           data-placement="bottom">
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
                                                         &nbsp;&nbsp;
@@ -198,7 +197,6 @@ Calculate width of row in answers
                                                            class="btn btn-default"
                                                            data-toggle="tooltip"
                                                            data-placement="bottom"
-                                                           title="Veranstaltung löschen"
                                                            data-method="delete"
                                                            data-token="{{csrf_token()}}"
                                                            rel="nofollow"
@@ -228,12 +226,11 @@ Calculate width of row in answers
                                                     @endforeach
                                                     @if($userAlreadyParticipated)
                                                         @if($answer->creator_id == $userId)
-                                                            <div class="answerToQuestion color2">
+                                                            <div class="answerToQuestion color2 editDelete">
                                                                 <a href="#"
                                                                    class="btn btn-primary"
                                                                    data-toggle="tooltip"
-                                                                   data-placement="bottom"
-                                                                   title="Veranstaltung ändern">
+                                                                   data-placement="bottom">
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a>
                                                                 &nbsp;&nbsp;
@@ -241,7 +238,6 @@ Calculate width of row in answers
                                                                    class="btn btn-default"
                                                                    data-toggle="tooltip"
                                                                    data-placement="bottom"
-                                                                   title="Veranstaltung löschen"
                                                                    data-method="delete"
                                                                    data-token="{{csrf_token()}}"
                                                                    rel="nofollow"

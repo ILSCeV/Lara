@@ -67,6 +67,7 @@
 .nameToQuestion, .answerToQuestion, .ifTableNotfullPage {
     height: 10vh;
     border-top: 1px solid #eeeeee;
+    overflow-y: hidden;
 }
 
 .nameToQuestion, .answerToQuestion{
@@ -112,7 +113,6 @@
     height: 1px;
     background-color: black;
 }
-
-.ifTableNotfullPage{
-
+.editDelete{
+    line-height: 10vh;
 }
