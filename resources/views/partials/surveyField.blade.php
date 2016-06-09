@@ -37,7 +37,8 @@
 
                 newElem.find('.answer_option').val('');
 
-                newElem.find('.passage').slice(1).remove();
+                newElem.find('.passage' + newNum).slice(1).remove();
+                newElem.find('.passage' + (newNum - 1)).remove();
                 newElem.find('.passage' + (newNum-2)).remove();
 
                 newElem.find('.caret').val('');
@@ -89,7 +90,7 @@
             button.parentNode.insertBefore(clone_me, button);
 
         $('#answ_opt').find('table:last').attr('class', 'passage' + number);
-        $('#answ_opt' + number).find('table:last').attr('class', 'passage' + number);
+        $('#answ_opt' + number).find('table:last').attr('class', 'passage' + (number + 1));
           }
 
     </script>
@@ -121,6 +122,7 @@
               $('#button_answ' + number).fadeTo('slow', 1) &
               $('#button_answ' + number).attr('style', 'visibility:visible');
 
+            if (document.getElementById('button_answ' + number))
             var att2 = document.getElementById('button_answ' + number).getAttribute('style');
             if (att2 === 'display:none')
                 void(0);
@@ -146,6 +148,7 @@
         function timeOut2(number) {
             setTimeout(function(){
 
+                if (document.getElementById('button_answ' + number))
                 var att2 = document.getElementById('button_answ' + number).getAttribute('style');
                 if (att2 === 'display:none')
                     void(0);
@@ -160,11 +163,10 @@
 
             if ($('#field_type').val() !== "3")
                 $('#answ_opt').find('.passage' + number).remove();
-                $('#answ_opt').find('.passage' + (number+1)).remove();
-
+                $('#answ_opt').find('.passage' + (number +1)).remove();
 
             if ($('#field_type' + number).val() !== "3")
-                $('#answ_opt' + number).find('.passage' + number).remove();
+                $('#answ_opt' + number).find('.passage' + (number + 1)).remove();
 
         }
     </script>
