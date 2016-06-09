@@ -144,10 +144,8 @@
                 if (att === 'display:none')
                         void(0);
                 else
-                $('#button_answ').attr('style', 'display:none')
-            },600);
-
-            $('#button_answ').attr('style', 'display:none')
+                $('#button_answ').attr('style', 'display:none');
+            },700);
         }
 
         function timeOut2(number) {
@@ -159,9 +157,7 @@
                     void(0);
                 else
                     $('#button_answ' + number).attr('style', 'display:none');
-            },600);
-
-            $('#button_answ' + number).attr('style', 'display:none');
+            },700);
         }
     </script>
 
