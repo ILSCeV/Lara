@@ -89,8 +89,11 @@
 
             button.parentNode.insertBefore(clone_me, button);
 
-        $('#answ_opt').find('table:last').attr('class', 'passage' + number);
-        $('#answ_opt' + number).find('table:last').attr('class', 'passage' + (number + 1));
+        if (number == '0')
+        $('#answ_opt').find('table:last').attr('class', 'passage' + number );
+
+        if (number >= 1)
+        $('#answ_opt' + number).find('table:last').attr('class', 'passage' + (number ));
           }
 
     </script>
@@ -163,10 +166,9 @@
 
             if ($('#field_type').val() !== "3")
                 $('#answ_opt').find('.passage' + number).remove();
-                $('#answ_opt').find('.passage' + (number +1)).remove();
 
             if ($('#field_type' + number).val() !== "3")
-                $('#answ_opt' + number).find('.passage' + (number + 1)).remove();
+                $('#answ_opt' + number).find('.passage' + number).remove();
 
         }
     </script>
