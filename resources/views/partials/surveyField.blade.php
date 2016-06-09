@@ -217,7 +217,7 @@
                 <fieldset>
                     <div>
                         <label class="field_type" for="type">Frage-Typ:</label>
-                            <select class="btn btn-default dropdown-toggle btn-sm" type="button" name="type" id="field_type" data-toggle="dropdown" onchange="javascript:check_question_type(0); check_question_type2(0);">
+                            <select class="btn btn-default dropdown-toggle btn-sm" type="button" name="type[]" id="field_type" data-toggle="dropdown" onchange="javascript:check_question_type(0); check_question_type2(0);">
                                 <option value="" selected="selected" disabled="disabled">Frage-Typ Auswählen</option>
                                 <option value="1">Freitext</option>
                                 <option value="2">Checkbox</option>
