@@ -146,6 +146,8 @@
                 else
                 $('#button_answ').attr('style', 'display:none')
             },600);
+
+            $('#button_answ').attr('style', 'display:none')
         }
 
         function timeOut2(number) {
@@ -158,6 +160,8 @@
                 else
                     $('#button_answ' + number).attr('style', 'display:none');
             },600);
+
+            $('#button_answ' + number).attr('style', 'display:none');
         }
     </script>
 
