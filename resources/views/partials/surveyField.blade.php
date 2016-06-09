@@ -116,7 +116,7 @@
             if (att === 'display:none')
                 void(0);
 
-           if ($('#field_type').val() !== "3" && att !== 'display:none')
+           if ($('#field_type').val() !== "3" && att !== 'display:none' && number == '0')
                    $('#button_answ').fadeTo('slow', 0) &
                  $('#button_answ').attr('style', 'visibility:hidden') &
                     timeOut(number);
