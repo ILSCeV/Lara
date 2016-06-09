@@ -99,7 +99,6 @@ Calculate width of row in answers
         <?php $tableNot100Percent = true ?>
     @endif
 
-
     <div class="panel displayDesktop">
         <div class="row rowNoPadding">
             <div class="col-md-2 rowNoPadding shadow">
@@ -373,6 +372,7 @@ Calculate width of row in answers
     </div>
     <button type="button" class="btn btn-primary btn-margin" data-dismiss="alert" style="display: inline-block;">
         Speichern!
+        <!--Sende an SurveyAnswerController mit der Methode Store-->
     </button>
 
 @stop
