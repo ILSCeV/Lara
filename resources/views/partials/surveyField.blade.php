@@ -165,10 +165,14 @@
         function check_question_type2(number) {
 
             if ($('#field_type').val() !== "3")
-                $('#answ_opt').find('.passage' + number).remove();
+                $('#answ_opt').find('.passage' + number).fadeOut() & setTimeout(function () {
+                     $('#answ_opt').find('.passage' + number).remove();
+                 },700);
 
             if ($('#field_type' + number).val() !== "3")
-                $('#answ_opt' + number).find('.passage' + number).remove();
+                $('#answ_opt' + number).find('.passage' + number).fadeOut() & setTimeout(function () {
+                    $('#answ_opt' + number).find('.passage' + number).remove();
+                },700);
 
         }
     </script>
