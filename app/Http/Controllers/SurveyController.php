@@ -161,36 +161,52 @@ class SurveyController extends Controller
         //get questions and answer options from the input
         $questions_new = $input->questions;
         $answer_options_new = $input->answer_options;
+        $field_type = $input->type;
 
-        //ignore empty questions and answer options
+        //ignore empty questions, answer options and questions without field type
         foreach($questions_new as $i => $question) {
 
             //check if empty question exists
-            if (empty($question->question)) {
+            if (empty($question)) {
 
-                /* ignore answer options from empty dropdown question
-                 * type = 1 -> text field
-                 * type = 2 -> Checkbox
-                 * type = 3 -> dropdown, has answer options
+                //ignore question
+                unset($questions_new[$i]);
+                $questions_new = array_values(array_filter($questions_new));
+
+                /* ignore answer options from empty dropdown question, type identifies question types
+                 * type = 0: no type given from user, delete question
+                 * 1: text field
+                 * 2: checkbox
+                 * 3: dropdown, has answer options
                  */
-                if($question->type = 3) {
-                    foreach ($answer_options_new[$i] as $j => $answer_option) {
+                if($field_type[$i] = 3) {
+                    unset($answer_options_new[$i]);
+                    $answer_options_new = array_values(array_filter($answer_options_new));
+                }
+
+            }
+
+            //check if empty answer options exists
+            if($field_type[$i] === 3) {
+                foreach($answer_options_new[$i] as $j => $answer_option) {
+                    if (empty($answer_option->answer_option)) {
                         unset($answer_options_new[$i][$j]);
                         $answer_options_new[$i] = array_values(array_filter($answer_options_new[$i]));
                     }
                 }
-
-                //ignore question itself
-                unset($questions_new[$i]);
-                $questions_new = array_values(array_filter($questions_new));
             }
 
-            //check if empty answer options exists
-            foreach($answer_options_new[$i] as $j => $answer_option) {
-                if (empty($answer_option->answer_option)) {
-                    unset($answer_options_new[$i][$j]);
-                    $answer_options_new[$i] = array_values(array_filter($answer_options_new[$i]));
-                }
+            //check if no field type was given from user (type = 0)
+            if ($field_type[$i] === 0) {
+
+                //ignore question and answer options
+                unset($questions_new[$i]);
+                unset($answer_options_new[$i]);
+
+                //reindexing
+                $questions_new = array_values(array_filter($questions_new));
+                $answer_options_new = array_values(array_filter($answer_options_new));
+
             }
         }
 
@@ -215,7 +231,7 @@ class SurveyController extends Controller
 
             //less questions in input than in database
             //delete unnecessary questions and answer options in database
-            for($i=count($questions_db); $i > count($questions_new) ; $i--) {
+            for($i=count($questions_db)-1; $i > count($questions_new) ; $i--) {
                 $question = SurveyQuestion::FindOrFail($questions_db[$i]->id);
                 foreach($question->getAnswerOptions() as $key => $answer_option) {
                     $answer_option->delete();
@@ -235,7 +251,7 @@ class SurveyController extends Controller
         //all arrays should have the same length now
         for($i = 0; $i < count($questions_db); $i++) {
 
-            $questions_db[$i]->field_type = 1;
+            $questions_db[$i]->field_type = $field_type[$i];
             $questions_db[$i]->order = $i;
             $questions_db[$i]->question = $questions_new[$i];
 
@@ -245,7 +261,7 @@ class SurveyController extends Controller
             $questions_db[$i]->save();
 
             //check if question is dropdown question
-            if ($questions_db[$i]->field_type = 2) {
+            if ($questions_db[$i]->field_type === 3) {
 
                 //make answer options arrays have the same length
                 if (count($answer_options_new[$i]) > count($answer_options_db[$i])) {
@@ -271,7 +287,7 @@ class SurveyController extends Controller
                     }
                 }
 
-                //answer option arrays should have the same length now so we can update
+                //answer option arrays should have the same length now
                 for($j = 0; $j < count($answer_options_db[$i]); $j++) {
                     $answer_options_db[$i][$j]->survey_question_id = $questions_db[$i]->id;
                     $answer_options_db[$i][$j]->answer_option = $answer_options_new[$i][$j]->answer_option;
