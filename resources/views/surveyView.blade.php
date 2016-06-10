@@ -94,22 +94,21 @@ Calculate width of row in answers
     @endif
             <!--table min 100% width of page-->
     @if($numberQuestions < 100)
-        <?php $tableNot100Percent = true ?>
+    <?php $tableNot100Percent = true ?>
     @endif
-
-<!--
+            <!--
 
     userID: {{$userId}}
-    <br>
-    @foreach($answers as $answer)
-        answersUSerID: {{$answer->creator_id}}
+            <br>
+            @foreach($answers as $answer)
+            answersUSerID: {{$answer->creator_id}}
     @endforeach
-    <br>
-    userGroup: {{$userGroup}}<br>
+            <br>
+            userGroup: {{$userGroup}}<br>
 
 
     questions: {{$questions}}
--->
+            -->
     <form method="POST" action="/survey/{{ $survey->id }}/answer">
         <div class="panel displayDesktop">
             <div class="row rowNoPadding">
@@ -217,9 +216,6 @@ Calculate width of row in answers
                                                             <i class="fa fa-trash"></i>
                                                         </a>
                                                     </div>
-                                                @else
-                                                    <div class="answerToQuestion color1">
-                                                    </div>
                                                     @endif
                                                     @else
                                                             <!--Color 2-->
@@ -255,10 +251,6 @@ Calculate width of row in answers
                                                                data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">
                                                                 <i class="fa fa-trash"></i>
                                                             </a>
-                                                        </div>
-                                                    @else
-                                                        <div class="answerToQuestion color1">
-                                                            empty
                                                         </div>
                                                     @endif
                                                 @endif
