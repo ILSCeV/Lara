@@ -185,6 +185,10 @@ Calculate width of row in answers
                                                     @endforeach
 
                                                     @if($userCanEditOrDeleteAnswer)
+
+                                                            <!--Edid Delete Buttons-->
+
+
                                                         <div class="answerToQuestion color1 editDelete">
                                                             <a href="#"
                                                                class="btn btn-primary"
@@ -256,6 +260,9 @@ Calculate width of row in answers
                     </div>
                 </div>
                 <div class="displayDesktop">
+
+                    <!--Speichern desktop -->
+                    
                     <button type="submit" class="btn btn-primary btn-margin" style="display: inline-block;">
                         Speichern!
                     </button>
@@ -323,6 +330,11 @@ Calculate width of row in answers
                                 Antwort:    {{$cell->answer}}
                             @endforeach
                             @if($userCanEditOrDeleteAnswer)
+
+                                <!--Edid Delete Buttons-->
+
+
+
                                 <br>
                                 <a href="#"
                                    class="btn btn-primary"
@@ -350,6 +362,9 @@ Calculate width of row in answers
                         <div class="line"></div>
                         @endforeach
                 </div>
+
+                <!--Speichern mobile -->
+
                 <button type="submit" class="btn btn-primary btn-margin" style="display: inline-block;">
                     Speichern!
                 </button>
