@@ -225,7 +225,10 @@ Calculate width of row in answers
                                                             </div>
                                                         @endforeach
                                                         @if($userCanEditOrDeleteAnswer)
-                                                            <div class="answerToQuestion color2 editDelete">
+                                                                <!--Edid Delete Buttons-->
+
+
+                                                                <div class="answerToQuestion color2 editDelete">
                                                                 <a href="#"
                                                                    class="btn btn-primary"
                                                                    data-toggle="tooltip"
@@ -262,7 +265,7 @@ Calculate width of row in answers
                 <div class="displayDesktop">
 
                     <!--Speichern desktop -->
-                    
+
                     <button type="submit" class="btn btn-primary btn-margin" style="display: inline-block;">
                         Speichern!
                     </button>
