@@ -6,30 +6,7 @@
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
     @stop
     @section('content')
-            <!--
-        Title Box
-        All relevant infos about survey are here!
-    -->
-    {{--
-        @foreach($answers as $answer)
-            answer: {{$answer}}
-            <br>
-            @if($club = $clubs->find($answer->club_id))
-                club: {{$club->clb_title}}
-            @else
-                club: kein Club
-            @endif
-            <br>
-            @foreach($answer->getAnswerCells as $cell)
-                cell {{$cell}}
-                <br>
-                cell->answer: {{$cell->answer}}
-                <br>
-            @endforeach
-            <br>
-            <br>
-        @endforeach
-    --}}
+
 
     <div class="panel no-padding">
         <div class="panel-title-box">
@@ -120,7 +97,7 @@ Calculate width of row in answers
                                 Name *
                             </div>
                             <div class=" rowNoPadding nameToQuestion">
-                                <input name="answer[]" type="text" placeholder="dein Name" class="form-control" required
+                                <input name="answer[]" type="text" placeholder="dein Name" class="form-control" required="true"
                                        oninvalid="this.setCustomValidity('Bitte gib deinen Namen ein')"></div>
                         @endif
                         @foreach($answers as $answer)
@@ -174,7 +151,7 @@ Calculate width of row in answers
                                                                       pla ceholder="Antwort hier hinzufügen"></textarea>
                                                         @else
                                                             <textarea name="answer[]" class="form-control" rows="2"
-                                                                      pla ceholder="Antwort hier hinzufügen" required
+                                                                      pla ceholder="Antwort hier hinzufügen" required="true"
                                                                       oninvalid="this.setCustomValidity('Bitte beantworte die Frage')"></textarea>
                                                         @endif
                                                     </div>
@@ -274,41 +251,16 @@ Calculate width of row in answers
                                 </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-margin" style="display: inline-block;">
-                    Speichern!
-                </button>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                <div class="displayDesktop">
+                    <button type="submit" class="btn btn-primary btn-margin" style="display: inline-block;">
+                        Speichern!
+                    </button>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                </div>
             </form>
         </div>
-        <!--
-    <form method="POST" action="/survey/{{ $survey->id }}/answer">
-    <div class="panel padding-left-minimal">
-        <h5 class="panel-title text-center">Antwort</h5>
-            <div class="form-group">
-                <h6>Hier Antwort eingeben:</h6>
-                <textarea name="answer[]" class="form-control"></textarea>
-                <textarea name="answer[]" class="form-control"></textarea>
-            </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Abstimmen</button>
-    <a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a >
-    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-    </form>
-    -->
         <!-- /////////////////////////////////////////// Start of mobile View /////////////////////////////////////////// -->
-        {{--        @foreach($answers as $answer)
-                       answer: {{$answer}}
-                       <br>
-                       @foreach($answer->getAnswerCells as $cell)
-                           cell:    {{$cell}}
-                           <br>
-                           cell->answer:    {{$cell->answer}}
-                           <br>
-                       @endforeach
-                       <br>
-                       <br>
-                   @endforeach
-           --}}
+
 
 
         <?php
@@ -316,90 +268,99 @@ Calculate width of row in answers
         $alternatingColor = 0;
         ?>
         <div class="panel displayMobile">
-            <div class="panel-body">
-                <h4 class="panel-title">
-                    mobile
-                </h4>
-                @foreach($answers as $answer)
-                        <!--First Line-->
-                @if($firstLine == true)
-                    <?php $firstLine = false; ?>
-                    <label for="name">Name *</label>
-                    <br>
-                    <input type="text" placeholder="dein Name" class="form-control" id="name" required
-                           oninvalid="this.setCustomValidity('Bitte beantworte die Frage')">
-                    <br>
-                    <label for="organization">Verein</label>
-                    <br>
-                    <label for="sel1">Select list:</label>
-                    <select class="form-control" id="sel1">
-                        @foreach($clubs as $club)
-                            <option>{{$club->clb_title}}</option>
-                        @endforeach
-                    </select>
-                    @foreach($questions as $question)
+            <form method="POST" action="/survey/{{ $survey->id }}/answer" id="surveyAnswerFormMobile">
+                <div class="panel-body">
+                    <h4 class="panel-title">
+                        mobile
+                    </h4>
+                    @foreach($answers as $answer)
+                            <!--First Line-->
+                    @if($firstLine == true)
+                        <?php $firstLine = false; ?>
+                        <label for="name">Name *</label>
                         <br>
-                        <label for="answer">{{$question->question}}</label>
-                        @if($question->is_required == 1)
-                            *
-                            <br>
-                            <textarea name="answer[]" class="form-control" rows="2"
-                                      pla ceholder="Antwort hier hinzufügen" required
-                                      oninvalid="this.setCustomValidity('Bitte beantworte die Frage')"></textarea>
-                        @else
-                            <br>
-                            <textarea class="form-control" rows="2" id="answer"
-                                      placeholder="Antwort hier hinzufügen"></textarea>
-                        @endif
-                    @endforeach
-                    <div class="line"></div>
-                    @endif
-                            <!--All other Answers / Lines-->
-                    @if($firstLine == false)
-                        Name: {{$answer->name}}
+                        <input type="text" placeholder="dein Name" class="form-control" id="name" required="true"
+                               oninvalid="this.setCustomValidity('Bitte gib deinen Namen ein')">
                         <br>
-                        Verein:
-                        @if($club = $clubs->find($answer->club_id))
-                            club: {{$club->clb_title}}
-                        @else
-                            club: kein Club
-                        @endif
-                        @foreach($answer->getAnswerCells as $cell)
+                        <label for="organization">Verein</label>
+                        <br>
+                        <label for="sel1">Select list:</label>
+                        <select class="form-control" id="sel1">
+                            @foreach($clubs as $club)
+                                <option>{{$club->clb_title}}</option>
+                            @endforeach
+                        </select>
+                        @foreach($questions as $question)
                             <br>
-                            Antwort:    {{$cell->answer}}
+                            <label for="answer">{{$question->question}}</label>
+                            @if($question->is_required == 1)
+                                *
+                                <br>
+                                <textarea name="answer[]" class="form-control" rows="2"
+                                          placeholder="Antwort hier hinzufügen" required="true"
+                                          oninvalid="this.setCustomValidity('Bitte beantworte die Frage')"></textarea>
+                            @else
+                                <br>
+                                <textarea class="form-control" rows="2" id="answer"
+                                          placeholder="Antwort hier hinzufügen"></textarea>
+                            @endif
                         @endforeach
-                        @if($userCanEditOrDeleteAnswer)
-                            <br>
-                            <a href="#"
-                               class="btn btn-primary"
-                               data-toggle="tooltip"
-                               data-placement="bottom"
-                               title="Veranstaltung ändern">
-                                <i class="fa fa-pencil"></i>
-                            </a>
-                            &nbsp;&nbsp;
-                            <a href="#"
-                               class="btn btn-default"
-                               data-toggle="tooltip"
-                               data-placement="bottom"
-                               title="Veranstaltung löschen"
-                               data-method="delete"
-                               data-token="{{csrf_token()}}"
-                               rel="nofollow"
-                               data-confirm="Möchtest Du diese Antwort wirklich löschen?">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                            <br>
-                            <br>
+                        <div class="line"></div>
                         @endif
-                    @endif
-                    <div class="line"></div>
-                    @endforeach
-            </div>
+                                <!--All other Answers / Lines-->
+                        @if($firstLine == false)
+                            Name: {{$answer->name}}
+                            <br>
+                            Verein:
+                            @if($club = $clubs->find($answer->club_id))
+                                club: {{$club->clb_title}}
+                            @else
+                                club: kein Club
+                            @endif
+                            @foreach($answer->getAnswerCells as $cell)
+                                <br>
+                                Antwort:    {{$cell->answer}}
+                            @endforeach
+                            @if($userCanEditOrDeleteAnswer)
+                                <br>
+                                <a href="#"
+                                   class="btn btn-primary"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="Veranstaltung ändern">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                &nbsp;&nbsp;
+                                <a href="#"
+                                   class="btn btn-default"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="Veranstaltung löschen"
+                                   data-method="delete"
+                                   data-token="{{csrf_token()}}"
+                                   rel="nofollow"
+                                   data-confirm="Möchtest Du diese Antwort wirklich löschen?">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                                <br>
+                                <br>
+                            @endif
+                        @endif
+                        <div class="line"></div>
+                        @endforeach
+                </div>
+                <button type="submit" class="btn btn-primary btn-margin" style="display: inline-block;">
+                    Speichern!
+                </button>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+            </form>
         </div>
         <script>
             $(document).ready(function () {
                 $('#surveyAnswerForm').formValidation();
+            });
+            $(document).ready(function () {
+                $('#surveyAnswerFormMobile').formValidation();
             });
         </script>
     </div>
