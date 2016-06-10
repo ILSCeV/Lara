@@ -4,8 +4,8 @@
 @stop
 @section('moreStylesheets')
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
-    @stop
-    @section('content')
+@stop
+@section('content')
 
 
     <div class="panel no-padding">
@@ -83,9 +83,9 @@ Calculate width of row in answers
             <br>
             userGroup: {{$userGroup}}<br>
 
-
+-->
     questions: {{$questions}}
-            -->
+
     <div class="form-group">
         <div class="panel displayDesktop">
             <form method="POST" action="/survey/{{ $survey->id }}/answer" id="surveyAnswerForm">
@@ -97,7 +97,8 @@ Calculate width of row in answers
                                 Name *
                             </div>
                             <div class=" rowNoPadding nameToQuestion">
-                                <input name="answer[]" type="text" placeholder="dein Name" class="form-control" required="true"
+                                <input name="answer[]" type="text" placeholder="dein Name" class="form-control"
+                                       required="true"
                                        oninvalid="this.setCustomValidity('Bitte gib deinen Namen ein')"></div>
                         @endif
                         @foreach($answers as $answer)
@@ -148,11 +149,14 @@ Calculate width of row in answers
                                                     <div class="answerToQuestion">
                                                         @if($question->is_required == 0)
                                                             <textarea name="answer[]" class="form-control" rows="2"
-                                                                      pla ceholder="Antwort hier hinzufügen"></textarea>
+                                                                      pla ceholder="Antwort hier hinzufügen"
+                                                                      id="{{$question->id}}"></textarea>
                                                         @else
                                                             <textarea name="answer[]" class="form-control" rows="2"
-                                                                      pla ceholder="Antwort hier hinzufügen" required="true"
-                                                                      oninvalid="this.setCustomValidity('Bitte beantworte die Frage')"></textarea>
+                                                                      pla ceholder="Antwort hier hinzufügen"
+                                                                      required="true"
+                                                                      oninvalid="this.setCustomValidity('Bitte beantworte die Frage')"
+                                                                      id="{{$question->id}}"></textarea>
                                                         @endif
                                                     </div>
                                                 @endforeach
@@ -260,9 +264,6 @@ Calculate width of row in answers
             </form>
         </div>
         <!-- /////////////////////////////////////////// Start of mobile View /////////////////////////////////////////// -->
-
-
-
         <?php
         $firstLine = true;
         $alternatingColor = 0;
@@ -297,11 +298,11 @@ Calculate width of row in answers
                                 *
                                 <br>
                                 <textarea name="answer[]" class="form-control" rows="2"
-                                          placeholder="Antwort hier hinzufügen" required="true"
+                                          placeholder="Antwort hier hinzufügen" required="true" id="{{$question->id}}Mobile"
                                           oninvalid="this.setCustomValidity('Bitte beantworte die Frage')"></textarea>
                             @else
                                 <br>
-                                <textarea class="form-control" rows="2" id="answer"
+                                <textarea class="form-control" rows="2" id="{{$question->id}}Mobile"
                                           placeholder="Antwort hier hinzufügen"></textarea>
                             @endif
                         @endforeach
