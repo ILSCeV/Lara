@@ -184,6 +184,19 @@
         }
     </script>
 
+    <script>
+        $(document).ready(function() {
+            $('.questions' || '.input_checkboxitem' || '.dropdown-toggle').change(function() {
+                $(window).bind('beforeunload', function() {
+                    return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
+                });
+            });
+            $("form").submit(function() {
+                $(window).unbind('beforeunload');
+            });
+        });
+    </script>
+
 </head>
 
 <body>

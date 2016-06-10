@@ -1,4 +1,16 @@
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.form-group').change(function() {
+            $(window).bind('beforeunload', function() {
+                return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
+            });
+        });
+        $("form").submit(function() {
+            $(window).unbind('beforeunload');
+        });
+    });
+</script>
 
 <div class="form-group">
     {!! Form::label('title', 'Umfragentitel:') !!}
