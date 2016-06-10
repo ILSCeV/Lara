@@ -18,7 +18,7 @@ class CreateSurveyQuestionsTable extends Migration
             $table->integer('order')->unsigned();
             $table->integer('field_type')->unsigned();
             $table->string('question', 1500);
-            $table->boolean('is_mandatory');
+            $table->boolean('is_required');
             $table->timestamps();
         });
     }

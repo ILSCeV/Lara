@@ -97,7 +97,7 @@ Calculate width of row in answers
         <?php $tableNot100Percent = true ?>
     @endif
 
-
+<!--
 
     userID: {{$userId}}
     <br>
@@ -108,8 +108,8 @@ Calculate width of row in answers
     userGroup: {{$userGroup}}<br>
 
 
-
-
+    questions: {{$questions}}
+-->
     <form method="POST" action="/survey/{{ $survey->id }}/answer">
         <div class="panel displayDesktop">
             <div class="row rowNoPadding">
@@ -149,6 +149,9 @@ Calculate width of row in answers
                                             @foreach($questions as $question)
                                                 <div class="answerToQuestion">
                                                     {{$question->question}}
+                                                    @if($question->is_required == 1)
+                                                        *
+                                                    @endif
                                                 </div>
                                             @endforeach
                                             @if($userCanEditOrDeleteAnswer)
@@ -314,9 +317,12 @@ Calculate width of row in answers
                             <option>{{$club->clb_title}}</option>
                         @endforeach
                     </select>
-                    @foreach($answer->getAnswerCells as $cell)
+                    @foreach($questions as $question)
                         <br>
                         <label for="answer">{{$question->question}}</label>
+                        @if($question->is_required == 1)
+                            *
+                        @endif
                         <br>
                         <textarea class="form-control" rows="2" id="answer"
                                   placeholder="Antwort hier hinzufügen"></textarea>
