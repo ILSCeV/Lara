@@ -6,7 +6,7 @@ use Closure;
 use Lara\Survey;
 use Redirect;
 
-class CreatorSurvey
+class Private_
 {
     /**
      * Handle an incoming request.
@@ -15,13 +15,12 @@ class CreatorSurvey
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $classpath, $routeParameterName)
     {
-        $survey = Survey::findOrFail($request->route()->getParameter('survey'));
-        if($survey->prsn_id == $request->session()->get('userId')
-            OR $request->session()->get('userGroup') == "clubleitung"
-            OR $request->session()->get('userGroup') == "marketing"
-            OR $request->session()->get('userGroup') == "admin") {
+        $object = new $classpath;
+        $object->findOrFail($request->route()->getParameter($routeParameterName));
+        if(!$object->is_private
+            OR $request->session()->get('userId')) {
             return $next($request);
         } else {
             $request->session()->put('message', 'Dir fehlt die nötige Berechtigung!');

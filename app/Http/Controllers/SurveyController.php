@@ -20,8 +20,9 @@ class SurveyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('creatorSurvey', ['only' => ['edit', 'update', 'delete']]);
-        $this->middleware('privateSurvey');
+        $this->middleware('private:Lara\Survey,survey');
+        $this->middleware('creator:Lara\Survey,survey', ['only' => ['edit', 'update', 'destroy']]);
+        $this->middleware('deadlineSurvey', ['only' => ['edit', 'update', 'destroy']]);
     }
 
     public function index()
@@ -55,7 +56,7 @@ class SurveyController extends Controller
     public function store(Request $input)
     {
         $survey = new Survey;
-        $survey->prsn_id = Session::get('userId');
+        $survey->creator_id = Session::get('userId');
         $survey->title = $input->title;
         $survey->description = $input->description;
 

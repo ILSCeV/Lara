@@ -2,11 +2,12 @@
 
 namespace Lara\Http\Middleware;
 
+use Carbon\Carbon;
 use Closure;
-use Lara\Survey;
 use Redirect;
+use Lara\Survey;
 
-class PrivateSurvey
+class DeadlineSurvey
 {
     /**
      * Handle an incoming request.
@@ -18,11 +19,13 @@ class PrivateSurvey
     public function handle($request, Closure $next)
     {
         $survey = Survey::findOrFail($request->route()->getParameter('survey'));
-        if(!$survey->is_private
-            OR $request->session()->get('userId')) {
+        if(Carbon::now() < Carbon::createFromTimestamp(strtotime($survey->deadline))
+            OR $request->session()->get('userGroup') == "clubleitung"
+            OR $request->session()->get('userGroup') == "marketing"
+            OR $request->session()->get('userGroup') == "admin") {
             return $next($request);
         } else {
-            $request->session()->put('message', 'Dir fehlt die nötige Berechtigung!');
+            $request->session()->put('message', 'Die Deadline ist überschritten, jetzt können nurnoch Clubleitung/Marketing/Admin die Umfrage ausfüllen');
             $request->session()->put('msgType', 'danger');
             return Redirect::action('MonthController@currentMonth');
         }

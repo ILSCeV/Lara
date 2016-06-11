@@ -51,8 +51,9 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
         //custom middleware
-        'creatorSurvey' => \Lara\Http\Middleware\CreatorSurvey::class,
-        'privateSurvey' => \Lara\Http\Middleware\PrivateSurvey::class,
+        'creator' => \Lara\Http\Middleware\Creator::class,
+        'private' => \Lara\Http\Middleware\Private_::class,         // _ is used because "Private" would be a taken word in php: "private function ..."
+        'deadlineSurvey' => \Lara\Http\Middleware\DeadlineSurvey::class,
 
     ];
 }
