@@ -188,7 +188,7 @@ class SurveyController extends Controller
                                      weil alle Fragen leer gelassen wurden!');
             Session::put('msgType', 'danger');
 
-            //find questions and answer options
+            //find old questions and answer options
             $questions = $survey->getQuestions;
             foreach($questions as $question)
                 $answer_options = $question->getAnswerOptions;
@@ -204,7 +204,7 @@ class SurveyController extends Controller
             Session::put('message', 'Es wurden keine Fragen geändert, weil kein einziger Frage-Typ ausgewählt wurde!');
             Session::put('msgType', 'danger');
 
-            //find questions and answer options
+            //find old questions and answer options
             $questions = $survey->getQuestions;
             foreach($questions as $question)
                 $answer_options = $question->getAnswerOptions;
@@ -341,11 +341,10 @@ class SurveyController extends Controller
             }
         }
 
-        //get updated questions for the view
-        $questions = $survey->getQuestions;
-        foreach($questions as $question) {
-            $answer_options = $question->getAnswerOptions;
-        }
+        //get updated questions and answer options for the view
+        $questions = $questions_db;
+        $answer_options = $answer_options_db;
+        
         return view('surveyView', compact('survey','questions','answer_options'));
     }
 
