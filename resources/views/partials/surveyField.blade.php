@@ -50,6 +50,14 @@
 
                 newElem.find('#button_answ' + (newNum - 1)).attr('style', 'display:none');
 
+                $("form").submit(function() {
+
+                    if ($('#field_type' + (newNum -1)).val() === '0') {
+                        alert("Frage-Typ muss bei Frage " + (newNum -1) + " ausgewählt sein");
+                        return false;
+                    }
+                });
+
                 $('#btnDel').attr('disabled', false);
 
                 if (newNum == 10)
@@ -178,13 +186,6 @@
     </script>
 
     <script>
-            window.onload = function () {
-
-            document.getElementById('field_type_empty').disabled= "";
-        }
-    </script>
-
-    <script>
         $(document).ready(function() {
             $('.questions' || '.input_checkboxitem' || '.dropdown-toggle').change(function() {
                 $(window).bind('beforeunload', function() {
@@ -195,6 +196,18 @@
                 $(window).unbind('beforeunload');
             });
         });
+    </script>
+
+    <script>
+
+        $("form").submit(function() {
+
+                if ($('#field_type').val() === '0') {
+                    alert("Frage-Typ muss bei Frage 1 ausgewählt sein");
+                    return false;
+                }
+        });
+
     </script>
 
 </head>
@@ -239,7 +252,7 @@
                     <div>
                         <label class="field_type" for="type">Frage-Typ:</label>
                             <select class="btn btn-default dropdown-toggle btn-sm" type="button" name="type[]" id="field_type" data-toggle="dropdown" onchange="javascript:check_question_type(0); check_question_type2(0);">
-                                <option value="0" selected="selected" id="field_type_empty" disabled="disabled">Frage-Typ Auswählen</option>
+                                <option value="0" selected="selected">Frage-Typ Auswählen</option>
                                 <option value="1">Freitext</option>
                                 <option value="2">Checkbox</option>
                                 <option value="3">Dropdown</option>
