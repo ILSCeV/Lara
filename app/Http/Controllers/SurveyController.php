@@ -123,8 +123,8 @@ class SurveyController extends Controller
 
         // prepare correct date and time format to be used in forms for deadline
         $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-        $date = 0;
-        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
+
+        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
     }
     
     public function update($id, Request $input)
@@ -142,7 +142,7 @@ class SurveyController extends Controller
         $survey->is_anonymous = (bool) $input->is_anonymous;
         $survey->is_private = (bool) $input->is_private;
         $survey->show_results_after_voting = (bool) $input->show_results_after_voting;
-        
+
         $survey->save();
 
         //get questions and answer options as arrays from the input
@@ -187,13 +187,15 @@ class SurveyController extends Controller
                                      weil alle Fragen leer gelassen wurden!');
             Session::put('msgType', 'danger');
 
-            //get questions for the view
+            //find questions and answer options
             $questions = $survey->getQuestions;
-            foreach($questions as $question) {
+            foreach($questions as $question)
                 $answer_options = $question->getAnswerOptions;
-            }
-            //todo: maybe return editSurveyView here?
-            return view('surveyView', compact('survey','questions', 'answer_options'));
+
+            //prepare correct date and time format to be used
+            $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
+
+            return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
         }
 
         //if no single field type is given abort
@@ -201,13 +203,15 @@ class SurveyController extends Controller
             Session::put('message', 'Es wurden keine Fragen geändert, weil kein einziger Frage-Typ ausgewählt wurde!');
             Session::put('msgType', 'danger');
 
-            //get questions for the view
+            //find questions and answer options
             $questions = $survey->getQuestions;
-            foreach($questions as $question) {
+            foreach($questions as $question)
                 $answer_options = $question->getAnswerOptions;
-            }
-            //todo: maybe return editSurveyView here?
-            return view('surveyView', compact('survey','questions', 'answer_options'));
+
+            //prepare correct date and time format to be used
+            $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
+
+            return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
         }
 
         //ignore empty questions
@@ -278,10 +282,10 @@ class SurveyController extends Controller
             }
         }
 
-        //question arrays should have the same length now
+        //question arrays should have the same length now so we can update questions
         for($i = 0; $i < count($questions_db); $i++) {
 
-            //delete answer options if field type gets changed to something else than dropdown
+            //delete answer options if question type gets changed to something else than dropdown
             if($questions_db[$i]->field_type == 3 and $questions_type[$i] != 3){
                 $answer_options = $questions_db[$i]->getAnswerOptions;
                 foreach($answer_options as $answer_option) {
@@ -315,7 +319,6 @@ class SurveyController extends Controller
 
                 //less answer options in input than in database
                 //delete unnecessary answer options in database
-
                 for($j = count($answer_options_db[$i]); $j > count($answer_options_new[$i]); $j--) {
                     $answer_option = SurveyAnswerOption::FindOrFail($answer_options_db[$i][$j]->id);
                     $answer_option->delete();
@@ -341,7 +344,7 @@ class SurveyController extends Controller
         foreach($questions as $question) {
             $answer_options = $question->getAnswerOptions;
         }
-        return view('surveyView', compact('survey','questions', 'answer_options'));
+        return view('surveyView', compact('survey','questions','answer_options'));
     }
 
 
