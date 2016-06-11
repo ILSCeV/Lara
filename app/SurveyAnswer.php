@@ -26,7 +26,7 @@ class SurveyAnswer extends Model
      */
     public function getPerson()
     {
-        return $this->belongsTo('Lara\Person', 'prsn_id', 'id');
+        return $this->belongsTo('Lara\Person', 'creator_id', 'id');
     }
 
     /**
