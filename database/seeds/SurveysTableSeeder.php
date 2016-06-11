@@ -20,7 +20,7 @@ class SurveysTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'prsn_id' => 1003,
+                'creator_id' => 1003,
                 'title' => 'Clubfahrt',
                 'description' => '',
                 'deadline' => '2016-05-25 00:00:00',
@@ -34,7 +34,7 @@ class SurveysTableSeeder extends Seeder
             1 =>
                 array (
                     'id' => 2,
-                    'prsn_id' => 1007,
+                    'creator_id' => 1007,
                     'title' => 'Bestellung der Clubshirts',
                     'description' => 'Bitte gebt hier an ob ihr ein Tshirt haben möchtet und welche Größe es haben soll.',
                     'deadline' => '2016-06-12 00:00:00',
