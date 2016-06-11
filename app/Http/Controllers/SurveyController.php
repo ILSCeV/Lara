@@ -121,8 +121,7 @@ class SurveyController extends Controller
         foreach($questions as $question)
             $answer_options = $question->getAnswerOptions;
 
-        // prepare correct date and time format to be used in forms for deadline/in_calendar
-        $date = strftime("%d-%m-%Y", strtotime($survey->in_calendar));
+        // prepare correct date and time format to be used in forms for deadline
         $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
         return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
     }
@@ -137,9 +136,8 @@ class SurveyController extends Controller
         //if URL is in the description, convert it to clickable hyperlink
         $survey->description = $this->addLinks($input->description);
 
-        //format deadline and in_calender for database
+        //format deadline for database
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
-        $survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
         //$survey->isAnonymous = &input->isAnonymous;
         //$survey->isSecretResult = §input->isSecretResult;
 
