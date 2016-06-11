@@ -372,8 +372,9 @@ class SurveyController extends Controller
         //get updated questions and answer options for the view
         $questions = $questions_db;
         $answer_options = $answer_options_db;
+        $answers = $survey->getAnswers;
         
-        return view('surveyView', compact('survey','questions','answer_options'));
+        return view('surveyView', compact('survey','questions','answers','answer_options'));
     }
 
 
