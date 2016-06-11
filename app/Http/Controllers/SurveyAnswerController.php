@@ -15,6 +15,13 @@ use Redirect;
 
 class SurveyAnswerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('private:Lara\SurveyAnswer,answer');
+        $this->middleware('creator:Lara\SurveyAnswer,answer', ['only' => ['update', 'destroy']]);
+        $this->middleware('deadlineSurvey', ['only' => ['update', 'destroy']]);
+    }
+
     /*
      * testing purposes only
      */
