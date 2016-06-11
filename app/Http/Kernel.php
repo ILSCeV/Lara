@@ -49,5 +49,12 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \Lara\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+
+        //custom middleware
+        'creator' => \Lara\Http\Middleware\Creator::class,
+        'privateEntry' => \Lara\Http\Middleware\PrivateEntry::class,         // _ is used because "Private" would be a taken word in php: "private function ..."
+        'deadlineSurvey' => \Lara\Http\Middleware\DeadlineSurvey::class,
+        'rejectGuests' => \Lara\Http\Middleware\RejectGuests::class,
+
     ];
 }
