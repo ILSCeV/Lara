@@ -14,7 +14,7 @@ class CreateSurveysTable extends Migration
     {
         Schema::create('surveys', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('prsn_id')->references('id')->on('persons')->unsigned();
+            $table->integer('creator_id')->references('id')->on('persons')->unsigned();
             $table->string('title', 255);
             $table->string('description', 1500)->nullable()->default(NULL);
             $table->timestamp('deadline');
