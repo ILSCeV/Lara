@@ -20,8 +20,13 @@ class SurveyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('private:Lara\Survey,survey');
+        // reject guests
+        $this->middleware('rejectGuests', ['only' => 'create', 'store']);
+        // if survey is private, reject guests
+        $this->middleware('privateEntry:Lara\Survey,survey', ['except' => ['create', 'store']]);
+        // only Ersteller/Admin/Marketing/Clubleitung
         $this->middleware('creator:Lara\Survey,survey', ['only' => ['edit', 'update', 'destroy']]);
+        // after deadline, only Ersteller/Admin/Marketing/Clubleitung
         $this->middleware('deadlineSurvey', ['only' => ['edit', 'update', 'destroy']]);
     }
 

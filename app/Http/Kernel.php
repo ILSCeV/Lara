@@ -52,8 +52,9 @@ class Kernel extends HttpKernel
 
         //custom middleware
         'creator' => \Lara\Http\Middleware\Creator::class,
-        'private' => \Lara\Http\Middleware\Private_::class,         // _ is used because "Private" would be a taken word in php: "private function ..."
+        'privateEntry' => \Lara\Http\Middleware\PrivateEntry::class,         // _ is used because "Private" would be a taken word in php: "private function ..."
         'deadlineSurvey' => \Lara\Http\Middleware\DeadlineSurvey::class,
+        'rejectGuests' => \Lara\Http\Middleware\RejectGuests::class,
 
     ];
 }
