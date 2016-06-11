@@ -183,7 +183,8 @@ class SurveyController extends Controller
 
         //if all questions are empty abort
         if(array_unique($questions_new) === array('')){
-            Session::put('message', 'Alle Fragen konnten aufgrund leerer Felder nicht geändert werden!');
+            Session::put('message', 'Es konnten keine Fragen geändert werden, 
+                                     weil alle Fragen leer gelassen wurden!');
             Session::put('msgType', 'danger');
 
             //get questions for the view
@@ -197,7 +198,7 @@ class SurveyController extends Controller
 
         //if no single field type is given abort
         if(array_unique($questions_type) === array('0')){
-            Session::put('message', 'Alle Fragen konnten nicht geändert werden, weil kein einziger Frage-Typ ausgewählt wurde!');
+            Session::put('message', 'Es wurden keine Fragen geändert, weil kein einziger Frage-Typ ausgewählt wurde!');
             Session::put('msgType', 'danger');
 
             //get questions for the view
@@ -209,35 +210,32 @@ class SurveyController extends Controller
             return view('surveyView', compact('survey','questions', 'answer_options'));
         }
 
-        //ignore empty questions, answer options and questions without field type
+        //ignore empty questions
         for($i = 0; $i < count($questions_new); $i++) {
 
-            //check if single empty questions exist
+            //check if single empty questions exist or no question type is given
             if (empty($question) or $questions_type[$i] == 0) {
 
                 //ignore question
                 unset($questions_new[$i]);
-                $questions_new = array_values($questions_new);
-
                 unset($questions_type[$i]);
-                $questions_type = array_values($questions_type);
-
                 unset($answer_options_new[$i]);
+
+                //reindex arrays
+                $questions_new = array_values($questions_new);
+                $questions_type = array_values($questions_type);
                 $answer_options_new = array_values($answer_options_new);
             }
         }
 
         //ignore empty answer options
-        for($i = 0; $i < count($questions_new); $i++) {
+        for($i = 0; $i < count($answer_options_new); $i++) {
 
-            //check if dropdown question
-            if($questions_type[$i] == 3) {
-                for ($j = 0; $j < count($answer_options_new[$i]); $j++) {
-                    if (isset($answer_options_new[$i][$j]) and empty($answer_options_new[$i][$j])) {
-                        unset($answer_options_new[$i][$j]);
-                        $answer_options_new[$i] = array_values($answer_options_new[$i]);
-                    }
-                }
+            //check if dropdown question and answer options exist
+            if($questions_type[$i] == 3 and is_array($answer_options_new[$i])) {
+                //filter empty answer options and reindex
+                $answer_options_new[$i] = array_values(array_filter($answer_options_new[$i]));
+
             }
         }
 
@@ -280,7 +278,7 @@ class SurveyController extends Controller
             }
         }
 
-        //all arrays should have the same length now
+        //question arrays should have the same length now
         for($i = 0; $i < count($questions_db); $i++) {
 
             //delete answer options if field type gets changed to something else than dropdown
@@ -299,40 +297,42 @@ class SurveyController extends Controller
             $questions_db[$i]->survey_id = $survey->id;
 
             $questions_db[$i]->save();
+        }
 
-            //check if question is dropdown question
-            if ($questions_db[$i]->field_type == 3) {
-
-                //make answer options arrays have the same length
-                if (count($answer_options_new[$i]) > count($answer_options_db[$i])) {
+        for($i = 0; $i < count($questions_db); $i++) {
+            if ($questions_db[$i]->field_type == 3 and
+             count($answer_options_new[$i]) > count($answer_options_db[$i])) {
 
                     //more answer options in input than in database
                     //make new empty answer options and push them to the database array
                     for($j = count($answer_options_new); $j >= count($answer_options_db[$i]); $j--) {
                         array_push($answer_options_db[$i], new SurveyAnswerOption());
                     }
-                }
-                
-                if (count($answer_options_db[$i]) > count($answer_options_new[$i])) {
+             }
 
-                    //less answer options in input than in database
-                    //delete unnecessary answer options in database
-                    for($j = count($answer_options_db); $j > count($answer_options_new[$i]); $j--) {
-                        $answer_option = SurveyAnswerOption::FindOrFail($answer_options_db[$i]->id);
-                        $answer_option->delete();
+            if ($questions_db[$i]->field_type == 3 and
+                count($answer_options_new[$i]) < count($answer_options_db[$i])) {
 
-                        //also delete element in answer option array and reindex array keys
-                        unset($answer_options_db[$i]);
-                        $answer_options_db[$i] = array_values(($answer_options_db[$i]));
-                    }
-                }
+                //less answer options in input than in database
+                //delete unnecessary answer options in database
 
-                //answer option arrays should have the same length now
-                for($j = 0; $j < count($answer_options_db[$i]); $j++) {
-                    $answer_options_db[$i][$j]->survey_question_id = $questions_db[$i]->id;
-                    $answer_options_db[$i][$j]->answer_option = $answer_options_new[$i][$j];
-                    $answer_options_db[$i][$j]->save();
+                for($j = count($answer_options_db[$i]); $j > count($answer_options_new[$i]); $j--) {
+                    $answer_option = SurveyAnswerOption::FindOrFail($answer_options_db[$i][$j]->id);
+                    $answer_option->delete();
+
+                    //also delete element in answer option array and reindex array keys
+                    unset($answer_options_db[$i]);
+                    $answer_options_db[$i] = array_values(($answer_options_db[$i]));
                 }
+            }
+        }
+
+        //answer option arrays should have the same length now
+        for($i = 0; $i < count($questions_db); $i++) {
+            for($j = 0; $j < count($answer_options_db[$i]); $j++) {
+                $answer_options_db[$i][$j]->survey_question_id = $questions_db[$i]->id;
+                $answer_options_db[$i][$j]->answer_option = $answer_options_new[$i][$j];
+                $answer_options_db[$i][$j]->save();
             }
         }
 
