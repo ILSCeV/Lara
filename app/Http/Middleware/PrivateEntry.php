@@ -6,7 +6,7 @@ use Closure;
 use Lara\Survey;
 use Redirect;
 
-class Private_
+class PrivateEntry
 {
     /**
      * Handle an incoming request.
@@ -17,8 +17,9 @@ class Private_
      */
     public function handle($request, Closure $next, $classpath, $routeParameterName)
     {
-        $object = new $classpath;
-        $object->findOrFail($request->route()->getParameter($routeParameterName));
+        $newObject = new $classpath;
+        $object = $newObject->findOrFail($request->route()->getParameter($routeParameterName));
+
         if(!$object->is_private
             OR $request->session()->get('userId')) {
             return $next($request);
