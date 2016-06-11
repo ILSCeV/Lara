@@ -150,22 +150,32 @@ class SurveyController extends Controller
         $questions_new = $input->questions;
         $answer_options_new = $input->answer_options;
 
+        $required = $input->required;
+
         /* get question type as array
          * type = 0: no type given from user, delete question
          * 1: text field
          * 2: checkbox
          * 3: dropdown, has answer options!
          */
-        $questions_type = $input->type;
+        $question_type = $input->type;
 
-        //array for the answer options doesn't have an entry for questions without answer options
-        //better we fill missing keys, so we can iterate through it later
+        /*
+         * array for the answer options doesn't have an entry for questions without answer options
+         * better we fill missing keys, so we can iterate through it later
+         * same problem with required array
+         */
+     
         for($i = 0; $i < count($questions_new); $i++) {
             if(array_key_exists($i, $answer_options_new) === False) {
                 $answer_options_new[$i] = '';
             }
+            if(array_key_exists($i, $required) === False) {
+                $required[$i] = null;
+            }
         }
         ksort($answer_options_new);
+        ksort($required);
 
         //get questions and answer options from database
         $questions_db = $survey->getQuestions;
@@ -200,7 +210,7 @@ class SurveyController extends Controller
         }
 
         //if no single field type is given abort
-        if(array_unique($questions_type) === array('0')){
+        if(array_unique($question_type) === array('0')){
             Session::put('message', 'Es wurden keine Fragen geändert, weil kein einziger Frage-Typ ausgewählt wurde!');
             Session::put('msgType', 'danger');
 
@@ -219,17 +229,19 @@ class SurveyController extends Controller
         for($i = 0; $i < count($questions_new); $i++) {
 
             //check if single empty questions exist or no question type is given
-            if (empty($question) or $questions_type[$i] == 0) {
+            if (empty($question) or $question_type[$i] == 0) {
 
                 //ignore question
                 unset($questions_new[$i]);
-                unset($questions_type[$i]);
+                unset($question_type[$i]);
                 unset($answer_options_new[$i]);
+                unset($required[$i]);
 
                 //reindex arrays
                 $questions_new = array_values($questions_new);
-                $questions_type = array_values($questions_type);
+                $question_type = array_values($question_type);
                 $answer_options_new = array_values($answer_options_new);
+                $required = array_values($required);
             }
         }
 
@@ -237,7 +249,7 @@ class SurveyController extends Controller
         for($i = 0; $i < count($answer_options_new); $i++) {
 
             //check if dropdown question and answer options exist
-            if($questions_type[$i] == 3 and is_array($answer_options_new[$i])) {
+            if($question_type[$i] == 3 and is_array($answer_options_new[$i])) {
                 //filter empty answer options and reindex
                 $answer_options_new[$i] = array_values(array_filter($answer_options_new[$i]));
 
@@ -280,6 +292,8 @@ class SurveyController extends Controller
                 //reindexing
                 $questions_db = array_values($questions_db);
                 $answer_options_db = array_values($answer_options_db);
+
+                //deleting the element in required and question type array is not necessary
             }
         }
 
@@ -287,14 +301,15 @@ class SurveyController extends Controller
         for($i = 0; $i < count($questions_db); $i++) {
 
             //delete answer options if question type gets changed to something else than dropdown
-            if($questions_db[$i]->field_type == 3 and $questions_type[$i] != 3){
+            if($questions_db[$i]->field_type == 3 and $question_type[$i] != 3){
                 $answer_options = $questions_db[$i]->getAnswerOptions;
                 foreach($answer_options as $answer_option) {
                     $answer_option->delete();
                 }
             }
 
-            $questions_db[$i]->field_type = $questions_type[$i];
+            $questions_db[$i]->field_type = $question_type[$i];
+            //$questions_db[$i]->required = $required[$i];
             $questions_db[$i]->order = $i;
             $questions_db[$i]->question = $questions_new[$i];
 
