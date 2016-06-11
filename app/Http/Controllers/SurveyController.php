@@ -145,9 +145,16 @@ class SurveyController extends Controller
 
         $survey->save();
 
-        //get questions and answer options from the input
+        //get questions and answer options as arrays from the input
         $questions_new = $input->questions;
         $answer_options_new = $input->answer_options;
+
+        /* get question type as array
+         * type = 0: no type given from user, delete question
+         * 1: text field
+         * 2: checkbox
+         * 3: dropdown, has answer options!
+         */
         $questions_type = $input->type;
 
         //array for the answer options doesn't have an entry for questions without answer options
@@ -166,10 +173,6 @@ class SurveyController extends Controller
             $answer_options_db[] = $question->getAnswerOptions;
         }
 
-        if(empty($answer_options_db)) {
-            array_merge($answer_options_db, $answer_options_new);
-        }
-
         //make old questions and answer options to arrays with objects as elements
         $questions_db = (array) $questions_db;
         $questions_db = array_shift($questions_db);
@@ -178,7 +181,21 @@ class SurveyController extends Controller
             $answer_options_db[$i] = array_shift($answer_options_db[$i]);
         }
 
-        //if no single field type is given abort and return ed
+        //if all questions are empty abort
+        if(array_unique($questions_new) === array('')){
+            Session::put('message', 'Alle Fragen konnten aufgrund leerer Felder nicht geändert werden!');
+            Session::put('msgType', 'danger');
+
+            //get questions for the view
+            $questions = $survey->getQuestions;
+            foreach($questions as $question) {
+                $answer_options = $question->getAnswerOptions;
+            }
+            //todo: maybe return editSurveyView here?
+            return view('surveyView', compact('survey','questions', 'answer_options'));
+        }
+
+        //if no single field type is given abort
         if(array_unique($questions_type) === array('0')){
             Session::put('message', 'Alle Fragen konnten nicht geändert werden, weil kein einziger Frage-Typ ausgewählt wurde!');
             Session::put('msgType', 'danger');
@@ -195,7 +212,7 @@ class SurveyController extends Controller
         //ignore empty questions, answer options and questions without field type
         for($i = 0; $i < count($questions_new); $i++) {
 
-            //check if empty question exists
+            //check if single empty questions exist
             if (empty($question) or $questions_type[$i] == 0) {
 
                 //ignore question
@@ -207,16 +224,13 @@ class SurveyController extends Controller
 
                 unset($answer_options_new[$i]);
                 $answer_options_new = array_values($answer_options_new);
-
-                /* ignore answer options from empty dropdown question, type identifies question types
-                 * type = 0: no type given from user, delete question
-                 * 1: text field
-                 * 2: checkbox
-                 * 3: dropdown, has answer options
-                 */
             }
+        }
 
-            //check if empty answer options exists
+        //ignore empty answer options
+        for($i = 0; $i < count($questions_new); $i++) {
+
+            //check if dropdown question
             if($questions_type[$i] == 3) {
                 for ($j = 0; $j < count($answer_options_new[$i]); $j++) {
                     if (isset($answer_options_new[$i][$j]) and empty($answer_options_new[$i][$j])) {
@@ -227,23 +241,8 @@ class SurveyController extends Controller
             }
         }
 
-        //if all questions are empty don't change any question in database
-        if(empty($questions_new)){
-            Session::put('message', 'Alle Fragen konnten aufgrund leerer Felder nicht geändert werden!');
-            Session::put('msgType', 'danger');
-
-            //get questions for the view
-            $questions = $survey->getQuestions;
-            foreach($questions as $question) {
-                $answer_options = $question->getAnswerOptions;
-            }
-            //todo: maybe return editSurveyView here?
-            return view('surveyView', compact('survey','questions', 'answer_options'));
-        }
-
         //sort database question array by order
         usort($questions_db, array($this, "cmp"));
-
 
         //make question arrays have the same length
         if(count($questions_new) > count($questions_db)) {
@@ -290,7 +289,6 @@ class SurveyController extends Controller
                 foreach($answer_options as $answer_option) {
                     $answer_option->delete();
                 }
-
             }
 
             $questions_db[$i]->field_type = $questions_type[$i];
@@ -314,7 +312,7 @@ class SurveyController extends Controller
                         array_push($answer_options_db[$i], new SurveyAnswerOption());
                     }
                 }
-
+                
                 if (count($answer_options_db[$i]) > count($answer_options_new[$i])) {
 
                     //less answer options in input than in database
