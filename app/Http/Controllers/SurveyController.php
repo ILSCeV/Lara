@@ -123,6 +123,7 @@ class SurveyController extends Controller
 
         // prepare correct date and time format to be used in forms for deadline
         $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
+        $date = 0;
         return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
     }
     
@@ -138,9 +139,10 @@ class SurveyController extends Controller
 
         //format deadline for database
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
-        //$survey->isAnonymous = &input->isAnonymous;
-        //$survey->isSecretResult = §input->isSecretResult;
-
+        $survey->is_anonymous = (bool) $input->is_anonymous;
+        $survey->is_private = (bool) $input->is_private;
+        $survey->show_results_after_voting = (bool) $input->show_results_after_voting;
+        
         $survey->save();
 
         //get questions and answer options as arrays from the input
