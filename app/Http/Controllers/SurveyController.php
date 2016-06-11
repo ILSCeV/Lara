@@ -170,12 +170,14 @@ class SurveyController extends Controller
             if(array_key_exists($i, $answer_options_new) === False) {
                 $answer_options_new[$i] = '';
             }
+            /*
             if(array_key_exists($i, $required) === False) {
                 $required[$i] = null;
             }
+            */
         }
         ksort($answer_options_new);
-        ksort($required);
+        //ksort($required);
 
         //get questions and answer options from database
         $questions_db = $survey->getQuestions;
@@ -283,6 +285,9 @@ class SurveyController extends Controller
                 foreach($question->getAnswerOptions as $answer_option) {
                     $answer_option->delete();
                 }
+                foreach($question->getAnswerCells as $answer_cell) {
+                    $answer_cell->delete();
+                }
                 $question->delete();
 
                 //delete questions in the arrays
@@ -305,6 +310,14 @@ class SurveyController extends Controller
                 $answer_options = $questions_db[$i]->getAnswerOptions;
                 foreach($answer_options as $answer_option) {
                     $answer_option->delete();
+                }
+            }
+
+            //delete answer cells if question type gets changed
+            if($questions_db[$i]->field_type != $question_type[$i]){
+                $answer_cells = $questions_db[$i]->getAnswerCells;
+                foreach($answer_cells as $answer_cell) {
+                    $answer_cell->delete();
                 }
             }
 
