@@ -129,6 +129,7 @@ class SurveyController extends Controller
     
     public function update($id, Request $input)
     {
+
         //find survey
         $survey = Survey::findOrFail($id);
 
@@ -304,12 +305,13 @@ class SurveyController extends Controller
         }
 
         for($i = 0; $i < count($questions_db); $i++) {
+
             if ($questions_db[$i]->field_type == 3 and
              count($answer_options_new[$i]) > count($answer_options_db[$i])) {
 
                     //more answer options in input than in database
                     //make new empty answer options and push them to the database array
-                    for($j = count($answer_options_new); $j >= count($answer_options_db[$i]); $j--) {
+                    for($j = count($answer_options_new[$i]); $j >= count($answer_options_db[$i]); $j--) {
                         array_push($answer_options_db[$i], new SurveyAnswerOption());
                     }
              }
@@ -319,12 +321,12 @@ class SurveyController extends Controller
 
                 //less answer options in input than in database
                 //delete unnecessary answer options in database
-                for($j = count($answer_options_db[$i]); $j > count($answer_options_new[$i]); $j--) {
+                for($j = count($answer_options_db[$i])-1; $j >= count($answer_options_new[$i]); $j--) {
                     $answer_option = SurveyAnswerOption::FindOrFail($answer_options_db[$i][$j]->id);
                     $answer_option->delete();
 
                     //also delete element in answer option array and reindex array keys
-                    unset($answer_options_db[$i]);
+                    unset($answer_options_db[$i][$j]);
                     $answer_options_db[$i] = array_values(($answer_options_db[$i]));
                 }
             }
