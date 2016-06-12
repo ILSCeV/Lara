@@ -83,32 +83,16 @@ class SurveyController extends Controller
                                      weil alle Fragen leer gelassen wurden!');
             Session::put('msgType', 'danger');
 
-            //find old questions and answer options
-            $questions = $survey->getQuestions;
-            foreach($questions as $question)
-                $answer_options = $question->getAnswerOptions;
-
-            //prepare correct date and time format to be used
-            $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-
-            return view('createSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
+            return Redirect::action('SurveyController@edit', array('id' => $survey->id));
         }
-        return var_dump($input->field_type);
+
         //abort if no single field type is given
         if(empty($input->field_type) or array_unique($input->field_type) === array('0')){
             Session::put('message', 'Es konnten keine Fragen gespeichert werden, 
                                      weil kein einziger Frage-Typ angegeben wurde!');
             Session::put('msgType', 'danger');
 
-            //find old questions and answer options
-            $questions = $survey->getQuestions;
-            foreach($questions as $question)
-                $answer_options = $question->getAnswerOptions;
-
-            //prepare correct date and time format to be used
-            $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-
-            return view('createSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
+            return Redirect::action('SurveyController@edit', array('id' => $survey->id));
         }
 
         //ignore empty questions
