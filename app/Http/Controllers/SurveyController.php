@@ -79,6 +79,14 @@ class SurveyController extends Controller
 
         $questions = $input->questions;
         $answer_options = $input->answer_options;
+
+        /*
+         * get question type as array
+         * type = 0: no type given from user, delete question
+         * 1: text field
+         * 2: checkbox
+         * 3: dropdown, has answer options!
+         */
         $questions_type = $input->type;
         //$required = $input->required;
 
@@ -92,7 +100,7 @@ class SurveyController extends Controller
         }
 
         //abort if no single field type is given
-        if(empty($questions_type) or array_unique($questions_type) === array('0')){
+        if(empty($questions_type) and array_unique($questions_type) === array('0')){
             Session::put('message', 'Es konnten keine Fragen gespeichert werden, 
                                      weil kein einziger Frage-Typ angegeben wurde!');
             Session::put('msgType', 'danger');
@@ -120,7 +128,6 @@ class SurveyController extends Controller
             }
         }
 
-
         //ignore empty answer options
         for($i = 0; $i < count($answer_options); $i++) {
 
@@ -128,10 +135,10 @@ class SurveyController extends Controller
             if($questions_type[$i] == 3 and is_array($answer_options[$i])) {
                 //filter empty answer options and reindex
                 $answer_options[$i] = array_values(array_filter($answer_options[$i]));
-
             }
         }
-        
+
+        //make new question model instance, fill it and save it
         foreach($questions as $order => $question){
             $question_db = new SurveyQuestion();
             $question_db->survey_id = $survey->id;
@@ -140,14 +147,16 @@ class SurveyController extends Controller
             //$question_db->is_required = $required[$order];
             $question_db->question = $question;
             $question_db->save();
-            // field_type 3 == dropdown
-//            if($input->field_type[$order] == 3) {
-//                foreach($input->answer_options[$order] as $answer_option) {
-//                    $answer_option_db = new SurveyAnswerOption();
-//                    $answer_option_db->survey_question_id = $question_db->id;
-//                    $answer_option_db->answer_option = $answer_option;
-//                }
-//            }
+
+            //check if question is dropdown question
+             if($questions_type[$order] == 3) {
+                 foreach($answer_options[$order] as $answer_option) {
+                     $answer_option_db = new SurveyAnswerOption();
+                     $answer_option_db->survey_question_id = $question_db->id;
+                     $answer_option_db->answer_option = $answer_option;
+                     $answer_option_db->save();
+                 }
+             }
         }
 
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
