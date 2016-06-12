@@ -3,11 +3,9 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Lara\SurveyAnswerOption;
 use Session;
 use Redirect;
 
-use Carbon\Carbon;
 use Lara\Survey;
 use Lara\SurveyQuestion;
 use View;
@@ -77,15 +75,48 @@ class SurveyController extends Controller
         $survey->show_results_after_voting = isset($input->show_results_after_voting);
 
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
-        $survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
         $survey->save();
 
+        //abort if all questions are empty
+        if(array_unique($input->questions) === array('')){
+            Session::put('message', 'Es konnten keine Fragen gespeichert werden, 
+                                     weil alle Fragen leer gelassen wurden!');
+            Session::put('msgType', 'danger');
+
+            //find old questions and answer options
+            $questions = $survey->getQuestions;
+            foreach($questions as $question)
+                $answer_options = $question->getAnswerOptions;
+
+            //prepare correct date and time format to be used
+            $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
+
+            return view('createSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
+        }
+
+        //abort if no single field type is given
+        if(empty($input->field_tyepe) or array_unique($input->field_type) === array('0')){
+            Session::put('message', 'Es konnten keine Fragen gespeichert werden, 
+                                     weil kein einziger Frage-Typ angegeben wurde!');
+            Session::put('msgType', 'danger');
+
+            //find old questions and answer options
+            $questions = $survey->getQuestions;
+            foreach($questions as $question)
+                $answer_options = $question->getAnswerOptions;
+
+            //prepare correct date and time format to be used
+            $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
+
+            return view('createSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
+        }
+
+        
         foreach($input->questions as $order => $question){
             $question_db = new SurveyQuestion();
             $question_db->survey_id = $survey->id;
             $question_db->order = $order;
-            $question_db->field_type = 1; //example
-//            $question_db->field_type = $input->field_type[$order];
+            $question_db->field_type = $input->field_type[$order];
 //            $question_db->is_required = $input->required[$order];  not working
             $question_db->question = $question;
             $question_db->save();
