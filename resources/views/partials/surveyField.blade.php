@@ -53,7 +53,7 @@
                 $("form").submit(function() {
 
                     if ($('#field_type' + (newNum -1)).val() === '0') {
-                        alert("Frage-Typ muss bei Frage " + (newNum -1) + " ausgewählt sein");
+                        alert("Frage-Typ muss bei Frage " + (newNum) + " ausgewählt sein");
                         return false;
                     }
                 });
