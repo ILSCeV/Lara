@@ -93,9 +93,9 @@ class SurveyController extends Controller
 
             return view('createSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
         }
-
+        return var_dump($input->field_type);
         //abort if no single field type is given
-        if(empty($input->field_tyepe) or array_unique($input->field_type) === array('0')){
+        if(empty($input->field_type) or array_unique($input->field_type) === array('0')){
             Session::put('message', 'Es konnten keine Fragen gespeichert werden, 
                                      weil kein einziger Frage-Typ angegeben wurde!');
             Session::put('msgType', 'danger');
@@ -111,6 +111,38 @@ class SurveyController extends Controller
             return view('createSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
         }
 
+        //ignore empty questions
+        for($i = 0; $i < count($input->questions); $i++) {
+
+            //check if single empty questions exist or no question type is given
+            //todo delete empty(question)? dont know if this works fine here
+            if (empty($question) or $input->field_type[$i] == 0) {
+
+                //ignore question
+                unset($input->questions[$i]);
+                unset($input->field_type[$i]);
+                unset($input->answer_options[$i]);
+                unset($input->required[$i]);
+
+                //reindex arrays
+                $input->questions = array_values($input->questions);
+                $input->field_type = array_values($input->field_type);
+                $input->answer_options = array_values($input->answer_options);
+                $input->required = array_values($input->required);
+            }
+        }
+
+
+        //ignore empty answer options
+        for($i = 0; $i < count($input->answer_options); $i++) {
+
+            //check if dropdown question and answer options exist
+            if($input->field_type[$i] == 3 and is_array($input->answer_options[$i])) {
+                //filter empty answer options and reindex
+                $input->answer_options[$i] = array_values(array_filter($input->answer_options[$i]));
+
+            }
+        }
         
         foreach($input->questions as $order => $question){
             $question_db = new SurveyQuestion();
