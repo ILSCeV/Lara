@@ -199,32 +199,14 @@ class SurveyController extends Controller
             Session::put('message', 'Es konnten keine Fragen geändert werden, 
                                      weil alle Fragen leer gelassen wurden!');
             Session::put('msgType', 'danger');
-
-            //find old questions and answer options
-            $questions = $survey->getQuestions;
-            foreach($questions as $question)
-                $answer_options = $question->getAnswerOptions;
-
-            //prepare correct date and time format to be used
-            $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-
-            return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
+            return Redirect::action('SurveyController@edit', array('id' => $survey->id));
         }
 
         //if no single field type is given abort
         if(array_unique($question_type) === array('0')){
             Session::put('message', 'Es wurden keine Fragen geändert, weil kein einziger Frage-Typ ausgewählt wurde!');
             Session::put('msgType', 'danger');
-
-            //find old questions and answer options
-            $questions = $survey->getQuestions;
-            foreach($questions as $question)
-                $answer_options = $question->getAnswerOptions;
-
-            //prepare correct date and time format to be used
-            $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-
-            return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
+            return Redirect::action('SurveyController@edit', array('id' => $survey->id));
         }
 
         //ignore empty questions
@@ -369,12 +351,7 @@ class SurveyController extends Controller
             }
         }
 
-        //get updated questions and answer options for the view
-        $questions = $questions_db;
-        $answer_options = $answer_options_db;
-        $answers = $survey->getAnswers;
-        
-        return view('surveyView', compact('survey','questions','answers','answer_options'));
+        return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
 
 
