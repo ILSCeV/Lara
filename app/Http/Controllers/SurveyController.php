@@ -77,63 +77,67 @@ class SurveyController extends Controller
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
         $survey->save();
 
+        $questions = $input->questions;
+        $answer_options = $input->answer_options;
+        $questions_type = $input->type;
+        //$required = $input->required;
+
         //abort if all questions are empty
-        if(array_unique($input->questions) === array('')){
+        if(array_unique($questions) === array('')){
             Session::put('message', 'Es konnten keine Fragen gespeichert werden, 
                                      weil alle Fragen leer gelassen wurden!');
             Session::put('msgType', 'danger');
 
-            return Redirect::action('SurveyController@edit', array('id' => $survey->id));
+            return Redirect::action('SurveyController@create', array('id' => $survey->id));
         }
 
         //abort if no single field type is given
-        if(empty($input->field_type) or array_unique($input->field_type) === array('0')){
+        if(empty($questions_type) or array_unique($questions_type) === array('0')){
             Session::put('message', 'Es konnten keine Fragen gespeichert werden, 
                                      weil kein einziger Frage-Typ angegeben wurde!');
             Session::put('msgType', 'danger');
 
-            return Redirect::action('SurveyController@edit', array('id' => $survey->id));
+            return Redirect::action('SurveyController@create', array('id' => $survey->id));
         }
 
         //ignore empty questions
-        for($i = 0; $i < count($input->questions); $i++) {
+        for($i = 0; $i < count($questions); $i++) {
 
             //check if single empty questions exist or no question type is given
-            //todo delete empty(question)? dont know if this works fine here
-            if (empty($question) or $input->field_type[$i] == 0) {
+            if (empty($questions[$i]->question) or $questions_type[$i] == 0) {
 
                 //ignore question
-                unset($input->questions[$i]);
-                unset($input->field_type[$i]);
-                unset($input->answer_options[$i]);
-                unset($input->required[$i]);
+                unset($questions[$i]);
+                unset($questions_type[$i]);
+                unset($answer_options[$i]);
+                //unset($required[$i]);
 
                 //reindex arrays
-                $input->questions = array_values($input->questions);
-                $input->field_type = array_values($input->field_type);
-                $input->answer_options = array_values($input->answer_options);
-                $input->required = array_values($input->required);
+                $questions = array_values($questions);
+                $questions_type = array_values($questions_type);
+                $answer_options = array_values($answer_options);
+                //$required = array_values($required);
             }
         }
 
 
         //ignore empty answer options
-        for($i = 0; $i < count($input->answer_options); $i++) {
+        for($i = 0; $i < count($answer_options); $i++) {
 
             //check if dropdown question and answer options exist
-            if($input->field_type[$i] == 3 and is_array($input->answer_options[$i])) {
+            if($questions_type[$i] == 3 and is_array($answer_options[$i])) {
                 //filter empty answer options and reindex
-                $input->answer_options[$i] = array_values(array_filter($input->answer_options[$i]));
+                $answer_options[$i] = array_values(array_filter($answer_options[$i]));
 
             }
         }
         
-        foreach($input->questions as $order => $question){
+        foreach($questions as $order => $question){
             $question_db = new SurveyQuestion();
             $question_db->survey_id = $survey->id;
             $question_db->order = $order;
-            $question_db->field_type = $input->field_type[$order];
-//            $question_db->is_required = $input->required[$order];  not working
+            $question_db->field_type = $questions_type[$order];
+            //$question_db->is_required = $required[$order];
             $question_db->question = $question;
             $question_db->save();
             // field_type 3 == dropdown
