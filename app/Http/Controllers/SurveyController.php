@@ -112,7 +112,7 @@ class SurveyController extends Controller
         for($i = 0; $i < count($questions); $i++) {
 
             //check if single empty questions exist or no question type is given
-            if (empty($questions[$i]->question) or $questions_type[$i] == 0) {
+            if (empty($questions[$i]) or $questions_type[$i] == 0) {
 
                 //ignore question
                 unset($questions[$i]);
@@ -127,7 +127,7 @@ class SurveyController extends Controller
                 //$required = array_values($required);
             }
         }
-
+        
         //ignore empty answer options
         for($i = 0; $i < count($answer_options); $i++) {
 
