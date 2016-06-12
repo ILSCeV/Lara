@@ -203,7 +203,7 @@ class SurveyController extends Controller
         }
 
         //if no single field type is given abort
-        if(array_unique($question_type) === array('0')){
+        if(empty($question_type) or array_unique($question_type) === array('0')){
             Session::put('message', 'Es wurden keine Fragen geändert, weil kein einziger Frage-Typ ausgewählt wurde!');
             Session::put('msgType', 'danger');
             return Redirect::action('SurveyController@edit', array('id' => $survey->id));
