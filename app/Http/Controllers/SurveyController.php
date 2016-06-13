@@ -3,12 +3,13 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Lara\SurveyAnswerOption;
 use Session;
 use Redirect;
 
+use DateTime;
 use Lara\Survey;
 use Lara\SurveyQuestion;
+use Lara\SurveyAnswerOption;
 use View;
 use Input;
 
@@ -18,23 +19,12 @@ class SurveyController extends Controller
     {
 
     }
-    public function create($year = null, $month = null, $day = null)
+    public function create()
     {
-        //dont creates surveys, just returns the createSurveyView with todays date
-        if (is_null($year) ) {
-            $year = date("Y");
-        }
-
-        if (is_null($month) ) {
-            $month = date("m");
-        }
-
-        if (is_null($day) ) {
-            $day = date("d");
-        }
-
         //prepare correct date and time format to be used in forms for deadline
-        $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($year.$month.$day));
+        $time = new DateTime();
+        $time->modify('+14 days');
+        $time = $time->format('d-m-Y H:i:s');
 
         //placeholder because createSurveyView needs variable, can set defaults here
         $survey = new Survey();
