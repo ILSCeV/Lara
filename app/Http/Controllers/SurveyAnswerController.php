@@ -74,6 +74,9 @@ class SurveyAnswerController extends Controller
         // Now delete the SurveyAnswer itself
         $answer->delete();
 
-        return Redirect::action('SurveyController@show', array('id' => $surveyid->id));
+        Session::put('message', 'Erfolgreich gelöscht!' );
+        Session::put('msgType', 'success');
+
+        return Redirect::action('SurveyController@show', array('id' => $surveyid));
     }
 }
