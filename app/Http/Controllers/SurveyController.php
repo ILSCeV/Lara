@@ -3,6 +3,7 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Lara\SurveyAnswerOption;
 use Session;
 use Redirect;
 
