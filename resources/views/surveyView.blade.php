@@ -81,20 +81,8 @@ Calculate width of row in answers
     @endforeach
             <br>
             userGroup: {{$userGroup}}<br>
-
--->
     questions: {{$questions}}
-
-
-    <br>
-    <br>
-    <br>
-    {!! Form::open() !!}
-    <div class=" form-group">
-        {!! Form::label('name', 'Name:') !!}
-        {!! Form::text('name', null, ['class' => 'form-control']) !!}
-    </div>
-    {!! Form::close() !!}
+            -->
 
     <div class="panel displayDesktop">
         {!! Form::open() !!}
@@ -109,7 +97,7 @@ Calculate width of row in answers
                            required="true"
                            oninvalid="this.setCustomValidity('Bitte gib deinen Namen ein')">
                            -->
-                    {!! Form::text('answer[]', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true]) !!}
+                    {!! Form::text('answer[]', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                 </div>
                 @foreach($answers as $answer)
                     @if($alternatingColor == 0)
@@ -160,7 +148,7 @@ Calculate width of row in answers
                                             {!! Form::text('answer[]', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
                                             @else
                                                     <!--Answer* required-->
-                                            {!! Form::text('answer[]', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+                                            {!! Form::text('answer[]', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                                             @endif
                                         </div>
                                     @endforeach
@@ -290,7 +278,7 @@ Calculate width of row in answers
                     <!--First Line-->
             <label for="name">Name *</label>
             <br>
-            {!! Form::text('answer[]', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true]) !!}
+            {!! Form::text('answer[]', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
             <br>
             <label for="organization">Verein</label>
             <br>
@@ -309,7 +297,7 @@ Calculate width of row in answers
                 @else
                         <!--Answer* required-->
                 <label for="answer">{{$question->question}} *</label>
-                {!! Form::text('answer[]', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+                {!! Form::text('answer[]', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                 @endif
             @endforeach
             <div class="line"></div>
@@ -372,5 +360,4 @@ Calculate width of row in answers
             $('#surveyAnswerFormMobile').formValidation();
         });
     </script>
-    </div>
 @stop
