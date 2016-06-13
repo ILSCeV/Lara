@@ -85,7 +85,7 @@ Calculate width of row in answers
             -->
 
     <div class="panel displayDesktop">
-        {!! Form::open() !!}
+        {!! Form::open(['action' => 'survey\{{'. $survey->id .'}}\answer']) !!}
         <div class="row rowNoPadding">
             <div class="col-md-2 rowNoPadding shadow">
                 <div class=" rowNoPadding nameToQuestion">
