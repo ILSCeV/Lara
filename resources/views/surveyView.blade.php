@@ -63,7 +63,6 @@ Calculate width of row in answers
     $numberQuestions *= $columnWidth;
     /* Club Column is added as a default */
     $numberQuestions += $columnWidth;
-    $firstLine = true;
     $alternatingColor = 0;
     ?>
     @if($userCanEditOrDeleteAnswer == true)
@@ -101,20 +100,17 @@ Calculate width of row in answers
         {!! Form::open() !!}
         <div class="row rowNoPadding">
             <div class="col-md-2 rowNoPadding shadow">
-                @if($firstLine == true)
-                    <?php $firstLine = false; ?>
-                    <div class=" rowNoPadding nameToQuestion">
-                        Name *
-                    </div>
-                    <div class=" rowNoPadding nameToQuestion">
-                        <!--
-                        <input name="answer[]" type="text" placeholder="dein Name" class="form-control"
-                               required="true"
-                               oninvalid="this.setCustomValidity('Bitte gib deinen Namen ein')">
-                               -->
-                        {!! Form::text('answer[]', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true]) !!}
-                    </div>
-                @endif
+                <div class=" rowNoPadding nameToQuestion">
+                    Name *
+                </div>
+                <div class=" rowNoPadding nameToQuestion">
+                    <!--
+                    <input name="answer[]" type="text" placeholder="dein Name" class="form-control"
+                           required="true"
+                           oninvalid="this.setCustomValidity('Bitte gib deinen Namen ein')">
+                           -->
+                    {!! Form::text('answer[]', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true]) !!}
+                </div>
                 @foreach($answers as $answer)
                     @if($alternatingColor == 0)
                         <?php $alternatingColor = 1; ?>
@@ -127,55 +123,52 @@ Calculate width of row in answers
                                 </div>
                                 @endforeach
                         </div>
-                        <?php $firstLine = true;
+                        <?php
                         $alternatingColor = 0;
                         ?>
                         <div class="col-md-10 answers rowNoPadding">
                             <div id="rightPart" style="width: {{$numberQuestions}}vw;" class="displayDesktop">
-                                @if($firstLine == true)
-                                    <?php $firstLine = false; ?>
-                                    <div class="rowNoPadding ">
-                                        <div class="answerToQuestion">
-                                            Club
-                                        </div>
-                                        @foreach($questions as $question)
-                                            <div class="answerToQuestion">
-                                                {{$question->question}}
-                                                @if($question->is_required == 1)
-                                                    *
-                                                @endif
-                                            </div>
-                                        @endforeach
-                                        @if($userCanEditOrDeleteAnswer)
-                                            <div class="answerToQuestion ">
-                                            </div>
-                                        @endif
+                                <div class="rowNoPadding ">
+                                    <div class="answerToQuestion">
+                                        Club
                                     </div>
-                                    <div class="rowNoPadding">
+                                    @foreach($questions as $question)
                                         <div class="answerToQuestion">
-                                            <select class="form-control" id="sel1">
-                                                @foreach($clubs as $club)
-                                                    <option>{{$club->clb_title}}</option>
-                                                @endforeach
-                                            </select>
+                                            {{$question->question}}
+                                            @if($question->is_required == 1)
+                                                *
+                                            @endif
                                         </div>
-                                        @foreach($questions as $question)
-                                            <div class="answerToQuestion">
-                                                @if($question->is_required == 0)
-                                                        <!--Answer not required-->
-                                                {!! Form::text('answer[]', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
-                                                @else
-                                                        <!--Answer* required-->
-                                                {!! Form::text('answer[]', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
-                                                @endif
-                                            </div>
-                                        @endforeach
-                                        @if($userCanEditOrDeleteAnswer)
-                                            <div class="answerToQuestion ">
-                                            </div>
-                                        @endif
+                                    @endforeach
+                                    @if($userCanEditOrDeleteAnswer)
+                                        <div class="answerToQuestion ">
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="rowNoPadding">
+                                    <div class="answerToQuestion">
+                                        <select class="form-control" id="sel1">
+                                            @foreach($clubs as $club)
+                                                <option>{{$club->clb_title}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                @endif
+                                    @foreach($questions as $question)
+                                        <div class="answerToQuestion">
+                                            @if($question->is_required == 0)
+                                                    <!--Answer not required-->
+                                            {!! Form::text('answer[]', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+                                            @else
+                                                    <!--Answer* required-->
+                                            {!! Form::text('answer[]', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                    @if($userCanEditOrDeleteAnswer)
+                                        <div class="answerToQuestion ">
+                                        </div>
+                                    @endif
+                                </div>
                                 @foreach($answers as $answer)
                                     <div class="rowNoPadding">
                                         <!--Color 1-->
@@ -285,7 +278,6 @@ Calculate width of row in answers
 
     <!-- /////////////////////////////////////////// Start of mobile View /////////////////////////////////////////// -->
     <?php
-    $firstLine = true;
     $alternatingColor = 0;
     ?>
     <div class="panel displayMobile">
@@ -296,79 +288,74 @@ Calculate width of row in answers
             </h4>
             @foreach($answers as $answer)
                     <!--First Line-->
-            @if($firstLine == true)
-                <?php $firstLine = false; ?>
-                <label for="name">Name *</label>
-                <br>
-                {!! Form::text('answer[]', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true]) !!}
-                <br>
-                <label for="organization">Verein</label>
-                <br>
-                <label for="sel1">Select list:</label>
-                <select class="form-control" id="sel1">
-                    @foreach($clubs as $club)
-                        <option>{{$club->clb_title}}</option>
-                    @endforeach
-                </select>
-                @foreach($questions as $question)
-                    <br>
-                    @if($question->is_required == 0)
-                            <!--Answer not required-->
-                        <label for="answer">{{$question->question}}</label>
-                    {!! Form::text('answer[]', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
-                    @else
-                            <!--Answer* required-->
-                        <label for="answer">{{$question->question}} *</label>
-                    {!! Form::text('answer[]', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
-                    @endif
+            <label for="name">Name *</label>
+            <br>
+            {!! Form::text('answer[]', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true]) !!}
+            <br>
+            <label for="organization">Verein</label>
+            <br>
+            <label for="sel1">Select list:</label>
+            <select class="form-control" id="sel1">
+                @foreach($clubs as $club)
+                    <option>{{$club->clb_title}}</option>
                 @endforeach
-                <div class="line"></div>
+            </select>
+            @foreach($questions as $question)
+                <br>
+                @if($question->is_required == 0)
+                        <!--Answer not required-->
+                <label for="answer">{{$question->question}}</label>
+                {!! Form::text('answer[]', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+                @else
+                        <!--Answer* required-->
+                <label for="answer">{{$question->question}} *</label>
+                {!! Form::text('answer[]', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
                 @endif
-                        <!--All other Answers / Lines-->
-                @if($firstLine == false)
-                    Name: {{$answer->name}}
-                    <br>
-                    Verein:
-                    @if($club = $clubs->find($answer->club_id))
-                        club: {{$club->clb_title}}
-                    @else
-                        club: kein Club
-                    @endif
-                    @foreach($answer->getAnswerCells as $cell)
-                        <br>
-                        Antwort:    {{$cell->answer}}
-                        @endforeach
-                        @if($userCanEditOrDeleteAnswer)
-                                <!--Edid Delete Buttons-->
+            @endforeach
+            <div class="line"></div>
+            <!--All other Answers / Lines-->
+            Name: {{$answer->name}}
+            <br>
+            Verein:
+            @if($club = $clubs->find($answer->club_id))
+                club: {{$club->clb_title}}
+            @else
+                club: kein Club
+            @endif
+            @foreach($answer->getAnswerCells as $cell)
+                <br>
+                Antwort:    {{$cell->answer}}
+                @endforeach
+                @if($userCanEditOrDeleteAnswer)
+                        <!--Edid Delete Buttons-->
 
 
 
-                        <br>
-                        <a href="#"
-                           class="btn btn-primary"
-                           data-toggle="tooltip"
-                           data-placement="bottom"
-                           title="Veranstaltung ändern">
-                            <i class="fa fa-pencil"></i>
-                        </a>
-                        &nbsp;&nbsp;
-                        <a href="#"
-                           class="btn btn-default"
-                           data-toggle="tooltip"
-                           data-placement="bottom"
-                           title="Veranstaltung löschen"
-                           data-method="delete"
-                           data-token="{{csrf_token()}}"
-                           rel="nofollow"
-                           data-confirm="Möchtest Du diese Antwort wirklich löschen?">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                        <br>
-                        <br>
-                        @endif
-                        @endif
-                        <div class="line"></div>
-                    @endforeach
+                <br>
+                <a href="#"
+                   class="btn btn-primary"
+                   data-toggle="tooltip"
+                   data-placement="bottom"
+                   title="Veranstaltung ändern">
+                    <i class="fa fa-pencil"></i>
+                </a>
+                &nbsp;&nbsp;
+                <a href="#"
+                   class="btn btn-default"
+                   data-toggle="tooltip"
+                   data-placement="bottom"
+                   title="Veranstaltung löschen"
+                   data-method="delete"
+                   data-token="{{csrf_token()}}"
+                   rel="nofollow"
+                   data-confirm="Möchtest Du diese Antwort wirklich löschen?">
+                    <i class="fa fa-trash"></i>
+                </a>
+                <br>
+                <br>
+                @endif
+                <div class="line"></div>
+            @endforeach
         </div>
         <!--Speichern mobile -->
         <button type="submit" class="btn btn-primary btn-margin" style="display: inline-block;">
