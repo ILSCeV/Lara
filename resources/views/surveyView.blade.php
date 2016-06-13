@@ -104,7 +104,7 @@ Calculate width of row in answers
                     {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                 </div>
                 @foreach($answers as $answer)
-                    <div class=" rowNoPadding nameToQuestion color<?php echo $alternatingColor?>">
+                    <div class=" rowNoPadding nameToQuestion color{{$alternatingColor}}">
                     {{$answer->name}}
                     </div>
                     <?php $alternatingColor == 0 ? $alternatingColor = 1 : $alternatingColor = 0; ?>
@@ -160,7 +160,7 @@ Calculate width of row in answers
                                 @foreach($answers as $answer)
                                     <div class="rowNoPadding">
                                         <!--Color 1-->
-                                            <div class="answerToQuestion color<?php echo $alternatingColor?>">
+                                            <div class="answerToQuestion color{{$alternatingColor}}">
                                                 @if($club = $clubs->find($answer->club_id))
                                                     club: {{$club->clb_title}}
                                                 @else
@@ -168,13 +168,13 @@ Calculate width of row in answers
                                                 @endif
                                             </div>
                                             @foreach($answer->getAnswerCells as $cell)
-                                                <div class="answerToQuestion color<?php echo $alternatingColor?>">
+                                                <div class="answerToQuestion color{{$alternatingColor}}">
                                                     {{$cell->answer}}
                                                 </div>
                                             @endforeach
                                             @if($userId == $answer->creator_id OR $userCanEditDueToRole)
                                                         <!--Edid Delete Buttons-->
-                                                <div class="answerToQuestion color<?php echo $alternatingColor?> editDelete">
+                                                <div class="answerToQuestion color{{$alternatingColor}} editDelete">
                                                     <a href="#"
                                                        class="btn btn-primary"
                                                        data-toggle="tooltip"
