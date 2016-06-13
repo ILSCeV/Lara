@@ -85,7 +85,6 @@ Calculate width of row in answers
             -->
 
 
-    
 
 
     <div class="panel displayDesktop">
@@ -104,16 +103,11 @@ Calculate width of row in answers
                     {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                 </div>
                 @foreach($answers as $answer)
-                    @if($alternatingColor == 0)
-                        <?php $alternatingColor = 1; ?>
-                        <div class=" rowNoPadding nameToQuestion color1 ">
-                            @else
-                                <?php $alternatingColor = 0; ?>
-                                <div class=" rowNoPadding nameToQuestion color2 ">
-                                    @endif
-                                    {{$answer->name}}
-                                </div>
-                                @endforeach
+                    <div class=" rowNoPadding nameToQuestion color<?php echo $alternatingColor?>">
+                    {{$answer->name}}
+                    </div>
+                    <?php $alternatingColor == 0 ? $alternatingColor = 1 : $alternatingColor = 0; ?>
+                @endforeach
                         </div>
                         <?php
                         $alternatingColor = 0;
@@ -164,9 +158,7 @@ Calculate width of row in answers
                                 @foreach($answers as $answer)
                                     <div class="rowNoPadding">
                                         <!--Color 1-->
-                                        @if($alternatingColor == 0)
-                                            <?php $alternatingColor = 1; ?>
-                                            <div class="answerToQuestion color1">
+                                            <div class="answerToQuestion color<?php echo $alternatingColor?>">
                                                 @if($club = $clubs->find($answer->club_id))
                                                     club: {{$club->clb_title}}
                                                 @else
@@ -174,20 +166,19 @@ Calculate width of row in answers
                                                 @endif
                                             </div>
                                             @foreach($answer->getAnswerCells as $cell)
-                                                <div class="answerToQuestion color1">
+                                                <div class="answerToQuestion color<?php echo $alternatingColor?>">
                                                     {{$cell->answer}}
                                                 </div>
-                                                @endforeach
-                                                @if($userCanEditOrDeleteAnswer)
+                                            @endforeach
+                                             @if($userCanEditOrDeleteAnswer)
                                                         <!--Edid Delete Buttons-->
-                                                <div class="answerToQuestion color1 editDelete">
+                                                <div class="answerToQuestion color<?php echo $alternatingColor?> editDelete">
                                                     <a href="#"
                                                        class="btn btn-primary"
                                                        data-toggle="tooltip"
                                                        data-placement="bottom">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
-                                                    &nbsp;&nbsp;
                                                     <a href="#"
                                                        class="btn btn-default"
                                                        data-toggle="tooltip"
@@ -199,47 +190,8 @@ Calculate width of row in answers
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </div>
-                                                @endif
-                                                @else
-                                                        <!--Color 2-->
-                                                <?php $alternatingColor = 0; ?>
-                                                <div class="answerToQuestion color2">
-                                                    @if($club = $clubs->find($answer->club_id))
-                                                        club: {{$club->clb_title}}
-                                                    @else
-                                                        club: kein Club
-                                                    @endif
-                                                </div>
-                                                @foreach($answer->getAnswerCells as $cell)
-                                                    <div class="answerToQuestion color2">
-                                                        {{$cell->answer}}
-                                                    </div>
-                                                    @endforeach
-                                                    @if($userCanEditOrDeleteAnswer)
-                                                            <!--Edid Delete Buttons-->
-
-
-                                                    <div class="answerToQuestion color2 editDelete">
-                                                        <a href="#"
-                                                           class="btn btn-primary"
-                                                           data-toggle="tooltip"
-                                                           data-placement="bottom">
-                                                            <i class="fa fa-pencil"></i>
-                                                        </a>
-                                                        &nbsp;&nbsp;
-                                                        <a href="#"
-                                                           class="btn btn-default"
-                                                           data-toggle="tooltip"
-                                                           data-placement="bottom"
-                                                           data-method="delete"
-                                                           data-token="{{csrf_token()}}"
-                                                           rel="nofollow"
-                                                           data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a>
-                                                    </div>
-                                                    @endif
-                                                    @endif
+                                             @endif
+                                        <?php $alternatingColor == 0 ? $alternatingColor = 1 : $alternatingColor = 0; ?>
                                     </div>
                                 @endforeach
                             </div>

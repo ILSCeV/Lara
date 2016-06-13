@@ -87,22 +87,22 @@
     color: #666666;
 }
 
-/*
-    Why not implement alternating colors?
-    This would make it much easier for the user to read
+
+    /*Why not implement alternating colors?*/
+    /*This would make it much easier for the user to read*/
+
+.color0 {
+    background-color: whitesmoke;
+}
 
 .color1 {
-    background-color: #F6F5F3;
-}
-
-.color2 {
-    background-color: #a1a1a1;
-}
-*/
-
-.color1, .color2 {
     background-color: white;
 }
+
+
+/*.color0, .color1 {*/
+    /*background-color: white;*/
+/*}*/
 
 /*
     Style of mobile elements
