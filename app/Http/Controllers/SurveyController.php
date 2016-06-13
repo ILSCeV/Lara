@@ -174,14 +174,12 @@ class SurveyController extends Controller
             if(array_key_exists($i, $answer_options_new) === False) {
                 $answer_options_new[$i] = '';
             }
-            /*
-            if(array_key_exists($i, $required) === False) {
+            if(empty($required) or array_key_exists($i, $required) === False) {
                 $required[$i] = null;
             }
-            */
         }
         ksort($answer_options_new);
-        //ksort($required);
+        ksort($required);
 
         //get questions and answer options from database
         $questions_db = $survey->getQuestions;
@@ -308,7 +306,7 @@ class SurveyController extends Controller
             }
 
             $questions_db[$i]->field_type = $question_type[$i];
-            //$questions_db[$i]->required = $required[$i];
+            $questions_db[$i]->required = (bool) $required[$i];
             $questions_db[$i]->order = $i;
             $questions_db[$i]->question = $questions_new[$i];
 
