@@ -4,6 +4,7 @@ namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Lara\Club;
 use Lara\Http\Requests;
 use Lara\Survey;
 use Lara\SurveyAnswer;
@@ -31,18 +32,18 @@ class SurveyAnswerController extends Controller
     {
         $survey = Survey::findOrFail($surveyid);
 //        $creator = Person::findOrFail(Session::get('userId'));    //not able due to no corresponding persons and clubs in database
+        $club = Club::where('clb_title', $input->club)->first();
 
         $survey_answer = new SurveyAnswer();
         $survey_answer->creator_id = Session::get('userId');
         $survey_answer->survey_id = $surveyid;
-        $survey_answer->name = "Peter";                             // example due to missing Views
-        $survey_answer->club_id = 0;                                // example
-//        $survey_answer->club_id = $creator->getClub->id;          // not able due to no corresponding persons and clubs in database
+        $survey_answer->name = $input->name;
+        $survey_answer->club_id = $club->id;
         $survey_answer->order = 0;                                  // example, might be better to order bei updated_at?
         $survey_answer->save();
 
         $questions = $survey->getQuestions;
-        foreach($input->answer as $key => $answer_cell) {
+        foreach($input->answers as $key => $answer_cell) {
             $survey_answer_cell = new SurveyAnswerCell();
             $survey_answer_cell->survey_question_id = $questions[$key]->id;
             $survey_answer_cell->survey_answer_id = $survey_answer->id;
