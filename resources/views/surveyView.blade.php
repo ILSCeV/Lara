@@ -40,6 +40,7 @@ Calculate width of row in answers
     <?php
     $numberQuestions = 0;
     $userCanEditOrDeleteAnswer = false;
+    $userGroup == 'admin' OR  $userGroup == 'marketing' OR $userGroup == 'clubleitung' ? $userCanEditDueToRole = true : $userCanEditDueToRole = false;
     $tableNot100Percent = false;
     ?>
     @foreach($answers as $answer)
@@ -150,10 +151,11 @@ Calculate width of row in answers
                                             @endif
                                         </div>
                                     @endforeach
-                                    @if($userCanEditOrDeleteAnswer)
-                                        <div class="answerToQuestion ">
-                                        </div>
-                                    @endif
+                                <!-- Antwort speichern desktop -->
+                                    <div class="answerToQuestion ">
+                                        {!! Form::submit('Speichern', ['class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;']) !!}
+                                        {!! Form::close() !!}
+                                    </div>
                                 </div>
                                 @foreach($answers as $answer)
                                     <div class="rowNoPadding">
@@ -170,7 +172,7 @@ Calculate width of row in answers
                                                     {{$cell->answer}}
                                                 </div>
                                             @endforeach
-                                             @if($userCanEditOrDeleteAnswer)
+                                            @if($userId == $answer->creator_id OR $userCanEditDueToRole)
                                                         <!--Edid Delete Buttons-->
                                                 <div class="answerToQuestion color<?php echo $alternatingColor?> editDelete">
                                                     <a href="#"
@@ -179,7 +181,7 @@ Calculate width of row in answers
                                                        data-placement="bottom">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
-                                                    <a href="#"
+                                                    <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                                        class="btn btn-default"
                                                        data-toggle="tooltip"
                                                        data-placement="bottom"
@@ -206,11 +208,8 @@ Calculate width of row in answers
             </div>
         </div>
         <div class="displayDesktop">
-            <!--Speichern desktop -->
-            {!! Form::submit('Speichern', ['class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;']) !!}
-            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+
         </div>
-        {!! Form::close() !!}
     </div>
 
 
