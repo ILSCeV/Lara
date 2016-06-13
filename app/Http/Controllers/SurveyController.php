@@ -58,7 +58,8 @@ class SurveyController extends Controller
                         )
                     ];
          */
-        return View('createSurveyView', compact('date','time','questions'));
+        $survey = new Survey();
+        return View('createSurveyView', compact('date','time','questions','survey'));
     }
 
     /**
