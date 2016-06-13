@@ -88,7 +88,7 @@ class SurveyController extends Controller
          * 3: dropdown, has answer options!
          */
         $questions_type = $input->type;
-        //$required = $input->required;
+        $required = $input->required;
 
         //abort if all questions are empty
         if(array_unique($questions) === array('')){
@@ -108,6 +108,28 @@ class SurveyController extends Controller
             return Redirect::action('SurveyController@create', array('id' => $survey->id));
         }
 
+        //actual bug: answer options array is too long, must delete unnecessary elements
+        for($i = count($answer_options)+1; $i >= count($questions); $i--) {
+            unset($answer_options[$i]);
+        }
+
+        /*
+         * array for the answer options doesn't have an entry for questions without answer options
+         * better we fill missing keys, so we can iterate through it later
+         * same problem with required array
+         */
+
+        for($i = 0; $i < count($questions); $i++) {
+            if(array_key_exists($i, $answer_options) === False) {
+                $answer_options_new[$i] = '';
+            }
+            if(empty($required) or array_key_exists($i, $required) === False) {
+                $required[$i] = null;
+            }
+        }
+        ksort($answer_options);
+        ksort($required);
+
         //ignore empty questions
         for($i = 0; $i < count($questions); $i++) {
 
@@ -118,13 +140,13 @@ class SurveyController extends Controller
                 unset($questions[$i]);
                 unset($questions_type[$i]);
                 unset($answer_options[$i]);
-                //unset($required[$i]);
+                unset($required[$i]);
 
                 //reindex arrays
                 $questions = array_values($questions);
                 $questions_type = array_values($questions_type);
                 $answer_options = array_values($answer_options);
-                //$required = array_values($required);
+                $required = array_values($required);
             }
         }
         
@@ -137,14 +159,14 @@ class SurveyController extends Controller
                 $answer_options[$i] = array_values(array_filter($answer_options[$i]));
             }
         }
-
+        
         //make new question model instance, fill it and save it
         foreach($questions as $order => $question){
             $question_db = new SurveyQuestion();
             $question_db->survey_id = $survey->id;
             $question_db->order = $order;
             $question_db->field_type = $questions_type[$order];
-            //$question_db->is_required = $required[$order];
+            $question_db->required = (bool) $required[$order];
             $question_db->question = $question;
             $question_db->save();
 
