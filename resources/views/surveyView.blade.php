@@ -84,22 +84,24 @@ Calculate width of row in answers
     questions: {{$questions}}
             -->
 
-    {!! Form::open(['action' => 'SurveyAnswerController@store']) !!}
+
+    {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id]]) !!}
+
     <div class="form-group">
-        Name: {!! Form::text('answer[]', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+        Name: {!! Form::text(null, ['name' => 'name', 'class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
     </div>
 
-    <div class="form-group"> Antwort
-        1: {!! Form::text('answer[]', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+    <div class="form-group">
+        Antwort 1: {!! Form::text(null, ['name' => 'answers[]', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
     </div>
 
-    <div class="form-group"> Antwort
-        2: {!! Form::text('answer[]', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+    <div class="form-group">
+        Antwort 2: {!! Form::text( null, ['name' => 'answers[]', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
     </div>
 
     <div class="form-group">
         Clubs:
-        <select class="form-control" id="sel1">
+        <select class="form-control" name="club">
             @foreach($clubs as $club)
                 <option>{{$club->clb_title}}</option>
             @endforeach
@@ -111,7 +113,6 @@ Calculate width of row in answers
     </div>
 
     {!! Form::close() !!}
-
 
     <br>
     <br>
