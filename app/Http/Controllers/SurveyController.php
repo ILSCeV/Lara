@@ -21,43 +21,25 @@ class SurveyController extends Controller
     public function create($year = null, $month = null, $day = null)
     {
         //dont creates surveys, just returns the createSurveyView with todays date
-        if ( is_null($year) ) {
+        if (is_null($year) ) {
             $year = date("Y");
         }
 
-        if ( is_null($month) ) {
+        if (is_null($month) ) {
             $month = date("m");
         }
 
-        if ( is_null($day) ) {
+        if (is_null($day) ) {
             $day = date("d");
         }
 
-        // prepare correct date and time format to be used in forms for deadline/in_calendar
-        $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
+        //prepare correct date and time format to be used in forms for deadline
         $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($year.$month.$day));
 
-        //surveyForm uses $questions for editing purposes
-        //has here to be filled with standard questions like this
-        /*$questions = [array("id" => 20,
-                            "survey_id" => 22,
-                            "order" => 0,
-                            "field_type" => 1,
-                            "question" => "Kommst du?",
-                            "createdAt" => Carbon::now(),
-                            "updatedAt" => Carbon::now()
-                        ),
-                        array("id" => 21,
-                            "survey_id" => 22,
-                            "order" => 1,
-                            "field_type" => 1,
-                            "question" => "Bringst du jemanden mit?",
-                            "createdAt" => Carbon::now(),
-                            "updatedAt" => Carbon::now()
-                        )
-                    ];
-         */
-        return View('createSurveyView', compact('date','time','questions'));
+        //placeholder because createSurveyView needs variable, can set defaults here
+        $survey = new Survey();
+
+        return View('createSurveyView', compact('survey','time'));
     }
 
     /**
