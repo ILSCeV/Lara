@@ -160,12 +160,16 @@ class SurveyController extends Controller
          */
         $question_type = $input->type;
 
+        //actual bug: answer options array from input is too long, must delete unnecessary elements
+        for($i = count($answer_options_new)+1; $i >= count($questions_new); $i--) {
+            unset($answer_options_new[$i]);
+        }
+
         /*
          * array for the answer options doesn't have an entry for questions without answer options
          * better we fill missing keys, so we can iterate through it later
          * same problem with required array
          */
-     
         for($i = 0; $i < count($questions_new); $i++) {
             if(array_key_exists($i, $answer_options_new) === False) {
                 $answer_options_new[$i] = '';
