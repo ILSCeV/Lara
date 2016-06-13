@@ -84,8 +84,46 @@ Calculate width of row in answers
     questions: {{$questions}}
             -->
 
+    {!! Form::open(['action' => 'SurveyAnswerController@store']) !!}
+    <div class="form-group">
+        Name: {!! Form::text('answer[]', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+    </div>
+
+    <div class="form-group"> Antwort
+        1: {!! Form::text('answer[]', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+    </div>
+
+    <div class="form-group"> Antwort
+        2: {!! Form::text('answer[]', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+    </div>
+
+    <div class="form-group">
+        Clubs:
+        <select class="form-control" id="sel1">
+            @foreach($clubs as $club)
+                <option>{{$club->clb_title}}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="form-group">
+        {!! Form::submit('Speichern', ['class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;']) !!}
+    </div>
+
+    {!! Form::close() !!}
+
+
+    <br>
+    <br>
+    <br>
+
+
+
+
     <div class="panel displayDesktop">
-        {!! Form::open(['action' => 'survey\{{'. $survey->id .'}}\answer']) !!}
+        {!! Form::open() !!}{{--
+        ['action' => 'survey\{{'. $survey->id .'}}\answer', 'method' => 'POST']
+        --}}
         <div class="row rowNoPadding">
             <div class="col-md-2 rowNoPadding shadow">
                 <div class=" rowNoPadding nameToQuestion">
@@ -251,9 +289,7 @@ Calculate width of row in answers
         </div>
         <div class="displayDesktop">
             <!--Speichern desktop -->
-            <button type="submit" class="btn btn-primary btn-margin" style="display: inline-block;">
-                Speichern!
-            </button>
+            {!! Form::submit('Speichern', ['class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;']) !!}
             <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
         </div>
         {!! Form::close() !!}
@@ -346,9 +382,7 @@ Calculate width of row in answers
             @endforeach
         </div>
         <!--Speichern mobile -->
-        <button type="submit" class="btn btn-primary btn-margin" style="display: inline-block;">
-            Speichern!
-        </button>
+        {!! Form::submit('Speichern', ['class' => 'btn btn-primary btn-margin']) !!}
         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
         {!! Form::close() !!}
     </div>
