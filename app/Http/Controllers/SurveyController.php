@@ -158,7 +158,7 @@ class SurveyController extends Controller
          * 2: checkbox
          * 3: dropdown, has answer options!
          */
-        $question_type = $input->field_type;
+        $question_type = $input->type;
 
         /*
          * array for the answer options doesn't have an entry for questions without answer options

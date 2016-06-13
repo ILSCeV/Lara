@@ -14,14 +14,14 @@
 
 <div class="form-group">
     {!! Form::label('title', 'Umfragentitel:') !!}
-    {!! Form::text('title', null, ['placeholder'=>'z.B. Teilnahme an der Clubfahrt',
+    {!! Form::text('title', $survey->title, ['placeholder'=>'z.B. Teilnahme an der Clubfahrt',
         'required',
         'class' => 'form-control'
         ]) !!}
 </div>
 <div class="form-group">
     {!! Form::label('description', 'Umfragenbeschreibung:') !!}
-    {!! Form::textarea('description', null, ['size' => '100x4',
+    {!! Form::textarea('description', $survey->description, ['size' => '100x4',
         'class' => 'form-control'
         ]) !!}
 </div>
@@ -29,18 +29,20 @@
     {!! Form::label('deadline', 'Umfrage aktiv bis:') !!}
     {!! Form::date('deadline', $time, ['class' => 'form-control']) !!}
 </div>
-<div class="form-group">
-    {!! Form::label('in_calendar', 'In Kalender am:') !!}
-    {!! Form::date('in_calendar', $date, ['class' => 'form-control']) !!}
-</div>
 
 <div class="form-group">
     <label class="label_checkboxitem" for="checkboxitemitem"></label>
-        <label><input type="checkbox" id="required1" value="required1" name="is_private" class="input_checkboxitem"> is private</label>
+        <label><input type="checkbox" id="required1" value="required1" name="is_private" class="input_checkboxitem"
+            @if($survey->is_private) checked @endif
+            > Nur für eingeloggte Nutzer sichtbar?  </label>
     <label class="label_checkboxitem" for="checkboxitemitem"></label>
-        <label><input type="checkbox" id="required2" value="required2" name="is_anonymous" class="input_checkboxitem"> is anonymous</label>
+        <label><input type="checkbox" id="required2" value="required2" name="is_anonymous" class="input_checkboxitem"
+            @if($survey->is_anonymous) checked @endif
+            > anonyme Umfrage</label>
     <label class="label_checkboxitem" for="checkboxitemitem"></label>
-        <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem"> show results after voting</label>
+        <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem"
+            @if($survey->show_results_after_voting) checked @endif
+            > zeige Ergebnisse nach der Abstimmung</label>
     </div>
 <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 
