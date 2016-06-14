@@ -19,11 +19,16 @@
         {!! Form::submit("Umfrage ändern", ['class'=>'btn btn-primary']) !!}
         <br class="visible-xs">
         <a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
-        <form action="{{ url('survey/'.$survey->id) }}" method="POST">
-            {{ csrf_field() }}
-            {{ method_field('DELETE') }}
-            <button type="submit" class="btn btn-primary">Umfrage löschen</button>
-        </form>
+        <a href="/survey/{{$survey->id}}"
+           class="btn btn-default"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           data-method="delete"
+           data-token="{{csrf_token()}}"
+           rel="nofollow"
+           data-confirm='Möchtest du die Umfrage "{{$survey->title}}" wirklich löschen?'>
+            <i class="fa fa-trash"></i>
+        </a>
     </div>
 
     {!! Form::close() !!}
