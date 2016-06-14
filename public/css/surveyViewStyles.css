@@ -1,26 +1,118 @@
-.answerBox{
-    overflow: hidden;
-    position: relative;
+.panel{
+    margin: 15px;
 }
 
-.answerBox .inner-container{
-
+.panel-title-box{
+    background-color: #DF0024;
+    color: white;
+    padding: 15px;
 }
 
-.answerBox .names{
-    overflow: hidden;
-}
-
-.answerBox .answers{
-    overflow-x: auto;
-    float: left;
-    word-wrap: normal;
+.displayDesktop {
     display: block;
-    height: 20px;
+}
+
+.displayMobile {
+    display: none;
+}
+
+@media screen and (max-width: 978px) {
+    .displayMobile {
+        display: block;
+    }
+
+    .displayDesktop {
+        display: none;
+        width: 0 !important;
+    }
+}
+
+.answerBox {
+    overflow: hidden;
     position: relative;
+}
+
+.answerBox .inner-container {
 
 }
 
-.answerBox .answers::-webkit-scrollbar{
+.answerBox .names {
+    overflow: hidden;
+}
+
+.answers {
+    overflow-x: scroll;
+}
+
+.answers::-webkit-scrollbar {
+    /*display: none;
+    */
+}
+
+.answers::-webkit-scrollbar {
     /*display none*/
+}
+
+.rowNoPadding {
+    padding: 0;
+}
+
+.shadow {
+    -webkit-box-shadow: 10px 0 5px -2px #888;
+    box-shadow: 5px 0 5px -2px #888;
+    position: relative;
+    z-index: 10;
+}
+
+.nameToQuestion, .answerToQuestion, .ifTableNotfullPage {
+    height: 10vh;
+    border-top: 1px solid #eeeeee;
+    overflow-y: hidden;
+}
+
+.nameToQuestion, .answerToQuestion{
+    padding-left: 8px;
+}
+
+.answerToQuestion {
+    width: 20vw;
+    float: left;
+    background-color: transparent;
+}
+
+/*
+    colors of Table
+*/
+.displayDesktop, .displayMobile {
+    color: #666666;
+}
+
+
+    /*Why not implement alternating colors?*/
+    /*This would make it much easier for the user to read*/
+
+.color0 {
+    background-color: whitesmoke;
+}
+
+.color1 {
+    background-color: white;
+}
+
+
+/*.color0, .color1 {*/
+    /*background-color: white;*/
+/*}*/
+
+/*
+    Style of mobile elements
+*/
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}
+.editDelete{
+    line-height: 10vh;
 }

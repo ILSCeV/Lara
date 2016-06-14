@@ -2,16 +2,19 @@
 
 namespace Lara\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use Session;
 use Redirect;
-
 use DateTime;
-use Lara\Survey;
-use Lara\SurveyQuestion;
-use Lara\SurveyAnswerOption;
 use View;
 use Input;
+
+use Lara\Survey;
+use Lara\SurveyQuestion;
+use Lara\SurveyAnswer;
+use Lara\SurveyAnswerOption;
+use Lara\Club;
 
 class SurveyController extends Controller
 {
@@ -216,15 +219,27 @@ class SurveyController extends Controller
     {
         //find survey
         $survey = Survey::findOrFail($id);
-
         //find questions
         $questions = $survey->getQuestions;
+        //find answers
+        $answers = $survey->getAnswers;
+        //find all clubs
+        $clubs = Club::all();
 
-        //find answers(as collection object) to an array with the questionid as index
-        foreach($questions as $question) {
-            $answers[$question->id] = $question->getAnswers;
-        }
-        return view('surveyView', compact('survey', 'questions', 'answers'));
+        $userId = Session::get('userId');
+        $userGroup = Session::get('userGroup');
+
+        // <-----> example for accessing answers
+//        foreach($answers as $answer) {
+//            $cells = $answer->getAnswerCells;
+//            foreach($cells as $cell) {
+//                var_dump($cell->answer);
+//            }
+//        }
+        // <----->
+
+
+        return view('surveyView', compact('survey', 'questions', 'answers', 'clubs', 'userId', 'userGroup'));
     }
 
     public function edit($id)
@@ -246,7 +261,6 @@ class SurveyController extends Controller
     
     public function update($id, Request $input)
     {
-
         //find survey
         $survey = Survey::findOrFail($id);
 
