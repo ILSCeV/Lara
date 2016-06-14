@@ -3,19 +3,29 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use Lara\Club;
-use Lara\Http\Requests;
-use Lara\Survey;
-use Lara\SurveyAnswer;
-use Lara\Person;
-use Lara\SurveyAnswerCell;
-
 use Session;
 use Redirect;
 
+use Lara\Survey;
+use Lara\SurveyQuestion;
+use Lara\SurveyAnswer;
+use Lara\SurveyAnswerOption;
+use Lara\SurveyAnswerCell;
+use Lara\Club;
+
+
+/**
+ * Class SurveyAnswerController
+ * @package Lara\Http\Controllers
+ * 
+ * RESTful Resource Controller, implements only 3 RESTful actions (store, update, destroy)
+ */
 class SurveyAnswerController extends Controller
 {
+    /**
+     * SurveyAnswerController constructor.
+     * call middleware to give only authenticated users access to the methods
+     */
     public function __construct()
     {
         // if survey is private, reject guests
@@ -25,15 +35,7 @@ class SurveyAnswerController extends Controller
         // after deadline, only Ersteller/Admin/Marketing/Clubleitung
         $this->middleware('deadlineSurvey', ['only' => ['update', 'destroy']]);
     }
-
-    /*
-     * testing purposes only
-     */
-    public function show($surveyid, $id)
-    {
-
-    }
-
+    
     /**
      * @param int $surveyid
      * @param Request $input
@@ -67,14 +69,24 @@ class SurveyAnswerController extends Controller
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
 
+    /**
+     * @param int $surveyid
+     * @param int $id
+     */
     public function update($surveyid, $id)
     {
 
     }
 
+    /**
+     * @param int $surveyid
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function destroy($surveyid, $id)
     {
-        $answer = SurveyAnswer::FindOrFail($id);
+        $answer = SurveyAnswer::findOrFail($id);
 
         foreach ($answer->getAnswerCells as $cell) {
             //delete the AnswerCells
@@ -84,7 +96,7 @@ class SurveyAnswerController extends Controller
         // Now delete the SurveyAnswer itself
         $answer->delete();
 
-        Session::put('message', 'Erfolgreich gelöscht!' );
+        Session::put('message', 'Erfolgreich gelÃ¶scht!' );
         Session::put('msgType', 'success');
 
         return Redirect::action('SurveyController@show', array('id' => $surveyid));

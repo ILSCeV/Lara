@@ -2,13 +2,10 @@
 
 namespace Lara\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Session;
 use Redirect;
 use DateTime;
-use View;
-use Input;
 
 use Lara\Survey;
 use Lara\SurveyQuestion;
@@ -16,8 +13,19 @@ use Lara\SurveyAnswer;
 use Lara\SurveyAnswerOption;
 use Lara\Club;
 
+
+/**
+ * Class SurveyController
+ * @package Lara\Http\Controllers
+ *
+ * RESTful Resource Controller, implements all RESTful actions (index, create, store, show, edit, update, destroy)
+ */
 class SurveyController extends Controller
 {
+    /**
+     * SurveyController constructor.
+     * call middleware to give only authenticated users access to the methods
+     */
     public function __construct()
     {
         // reject guests
@@ -34,6 +42,10 @@ class SurveyController extends Controller
     {
 
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         //prepare correct date and time format to be used in forms for deadline
@@ -44,7 +56,7 @@ class SurveyController extends Controller
         //placeholder because createSurveyView needs variable, can set defaults here
         $survey = new Survey();
 
-        return View('createSurveyView', compact('survey','time'));
+        return view('createSurveyView', compact('survey','time'));
     }
 
     /**
@@ -173,6 +185,11 @@ class SurveyController extends Controller
     }
 
 
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function destroy($id)
     {
         //find SurveyID
@@ -210,9 +227,7 @@ class SurveyController extends Controller
     }
 
     /**
-     * "getAnswers" does not work as expected, right now use this:
-     * SurveyAnswer::whereSurveyQuestionId($question->id)->get()
-     * @param $id
+     * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
@@ -229,19 +244,13 @@ class SurveyController extends Controller
         $userId = Session::get('userId');
         $userGroup = Session::get('userGroup');
 
-        // <-----> example for accessing answers
-//        foreach($answers as $answer) {
-//            $cells = $answer->getAnswerCells;
-//            foreach($cells as $cell) {
-//                var_dump($cell->answer);
-//            }
-//        }
-        // <----->
-
-
         return view('surveyView', compact('survey', 'questions', 'answers', 'clubs', 'userId', 'userGroup'));
     }
 
+    /**
+     * @param  int $id
+     * @return mixed
+     */
     public function edit($id)
     {
         //find survey
@@ -258,7 +267,13 @@ class SurveyController extends Controller
 
         return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
     }
-    
+
+    /**
+     * @param int $id
+     * @param Request $input
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function update($id, Request $input)
     {
         //find survey
@@ -395,7 +410,7 @@ class SurveyController extends Controller
             //less questions in input than in database
             //delete unnecessary questions and answer options in database
             for($i=count($questions_db)-1; $i >= count($questions_new) ; $i--) {
-                $question = SurveyQuestion::FindOrFail($questions_db[$i]->id);
+                $question = SurveyQuestion::findOrFail($questions_db[$i]->id);
 
                 foreach($question->getAnswerOptions as $answer_option) {
                     $answer_option->delete();
@@ -465,7 +480,7 @@ class SurveyController extends Controller
                 //less answer options in input than in database
                 //delete unnecessary answer options in database
                 for($j = count($answer_options_db[$i])-1; $j >= count($answer_options_new[$i]); $j--) {
-                    $answer_option = SurveyAnswerOption::FindOrFail($answer_options_db[$i][$j]->id);
+                    $answer_option = SurveyAnswerOption::findOrFail($answer_options_db[$i][$j]->id);
                     $answer_option->delete();
 
                     //also delete element in answer option array and reindex array keys
@@ -492,6 +507,13 @@ class SurveyController extends Controller
      *  -------------------- END OF REST-CONTROLLER --------------------
      */
 
+    /**
+     * @param $a
+     * @param $b
+     * @return int
+     *
+     * compares to elements which have an "order" attribute
+     */
     private function cmp($a, $b)
     {
         if ($a->order == $b->order) {
@@ -500,6 +522,10 @@ class SurveyController extends Controller
         return ($a->order < $b->order) ? -1 : 1;
     }
 
+    /**
+     * @param string $text
+     * @return string
+     */
     private function addLinks($text) {
         $text = preg_replace('$(https?://[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
             ' <a href="$1" target="_blank">$1</a> ',
