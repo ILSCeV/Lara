@@ -145,10 +145,10 @@
                 </div>
             </div>
             <div>
-                @include('partials.surveyAnswer')
+{{--                @include('partials.surveyAnswer')--}}
             </div>
             <div>
-                @include('partials.surveyEvaluation')
+                {{--@include('partials.surveyEvaluation')--}}
             </div>
         </div>
 @stop

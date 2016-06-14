@@ -240,11 +240,13 @@ class SurveyController extends Controller
         // prepare correct date and time format to be used in forms for deadline/in_calendar
 //        $date = strftime("%d-%m-%Y", strtotime($survey->in_calendar));
         $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
+
+        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
     }
     
     public function update($id, Request $input)
     {
+
         //find survey
         $survey = Survey::findOrFail($id);
 
@@ -253,20 +255,57 @@ class SurveyController extends Controller
         //if URL is in the description, convert it to clickable hyperlink
         $survey->description = $this->addLinks($input->description);
 
-
-        //format deadline and in_calender for database
+        //format deadline for database
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
-        //$survey->in_calendar = strftime("%Y-%m-%d", strtotime($input->in_calendar));
-        //$survey->isAnonymous = &input->isAnonymous;
-        //$survey->isSecretResult = §input->isSecretResult;
+        $survey->is_anonymous = (bool) $input->is_anonymous;
+        $survey->is_private = (bool) $input->is_private;
+        $survey->show_results_after_voting = (bool) $input->show_results_after_voting;
+
+        $survey->save();
+
+        //get questions and answer options as arrays from the input
+        $questions_new = $input->questions;
+        $answer_options_new = $input->answer_options;
+
+        $required = $input->required;
+
+        /* get question type as array
+         * type = 0: no type given from user, delete question
+         * 1: text field
+         * 2: checkbox
+         * 3: dropdown, has answer options!
+         */
+        $question_type = $input->type;
+
+        //actual bug: answer options array from input is too long, must delete unnecessary elements
+        for($i = count($answer_options_new)+1; $i >= count($questions_new); $i--) {
+            unset($answer_options_new[$i]);
+        }
+
+        /*
+         * array for the answer options doesn't have an entry for questions without answer options
+         * better we fill missing keys, so we can iterate through it later
+         * same problem with required array
+         */
+        for($i = 0; $i < count($questions_new); $i++) {
+            if(array_key_exists($i, $answer_options_new) === False) {
+                $answer_options_new[$i] = '';
+            }
+            if(empty($required) or array_key_exists($i, $required) === False) {
+                $required[$i] = null;
+            }
+        }
+        ksort($answer_options_new);
+        ksort($required);
 
         //get questions and answer options from database
         $questions_db = $survey->getQuestions;
+        $answer_options_db = [];
         foreach($questions_db as $question) {
             $answer_options_db[] = $question->getAnswerOptions;
         }
 
-        //old questions and answer options to arrays with objects as elements
+        //make old questions and answer options to arrays with objects as elements
         $questions_db = (array) $questions_db;
         $questions_db = array_shift($questions_db);
         for($i = 0; $i < count($answer_options_db); $i++) {
@@ -274,41 +313,59 @@ class SurveyController extends Controller
             $answer_options_db[$i] = array_shift($answer_options_db[$i]);
         }
 
-        //get questions and answer options from the input
-        $questions_new = $input->questions;
-        $answer_options_new = $input->answer_options;
+        //if all questions are empty abort
+        if(array_unique($questions_new) === array('')){
+            Session::put('message', 'Es konnten keine Fragen geändert werden, 
+                                     weil alle Fragen leer gelassen wurden!');
+            Session::put('msgType', 'danger');
+            return Redirect::action('SurveyController@edit', array('id' => $survey->id));
+        }
 
-        //ignore empty questions and answer options
-        foreach($questions_new as $i => $question) {
-            if (empty($question)) {
+        //if no single field type is given abort
+        if(empty($question_type) or array_unique($question_type) === array('0')){
+            Session::put('message', 'Es wurden keine Fragen geändert, weil kein einziger Frage-Typ ausgewählt wurde!');
+            Session::put('msgType', 'danger');
+            return Redirect::action('SurveyController@edit', array('id' => $survey->id));
+        }
 
-                //ignore answer options from empty question
-                foreach ($answer_options_new[$i] as $j => $answer_option) {
-                    unset($answer_options_new[$i][$j]);
-                    $answer_options_new[$i] = array_values(array_filter($answer_options_new[$i]));
-                }
+        //ignore empty questions
+        for($i = 0; $i < count($questions_new); $i++) {
 
-                //ignore question itself
+            //check if single empty questions exist or no question type is given
+            if (empty($question) or $question_type[$i] == 0) {
+
+                //ignore question
                 unset($questions_new[$i]);
-                $questions_new = array_values(array_filter($questions_new));
-            }
+                unset($question_type[$i]);
+                unset($answer_options_new[$i]);
+                unset($required[$i]);
 
-            //check if empty answer options exist
-            foreach($answer_options_new[$i] as $k => $answer_option) {
-                if (empty($answer_option)) {
-                    unset($answer_options_new[$i][$k]);
-                    $answer_options_new[$i] = array_values(array_filter($answer_options_new[$i]));
-                }
+                //reindex arrays
+                $questions_new = array_values($questions_new);
+                $question_type = array_values($question_type);
+                $answer_options_new = array_values($answer_options_new);
+                $required = array_values($required);
             }
         }
 
-        //sort database array by order
+        //ignore empty answer options
+        for($i = 0; $i < count($answer_options_new); $i++) {
+
+            //check if dropdown question and answer options exist
+            if($question_type[$i] == 3 and is_array($answer_options_new[$i])) {
+                //filter empty answer options and reindex
+                $answer_options_new[$i] = array_values(array_filter($answer_options_new[$i]));
+
+            }
+        }
+
+        //sort database question array by order
         usort($questions_db, array($this, "cmp"));
 
         //make question arrays have the same length
         if(count($questions_new) > count($questions_db)) {
 
-            //more questions in input
+            //more questions in input than in database
             //make new empty questions and push them to the database array
             for($i=count($questions_new); $i >= count($questions_db) ; $i--) {
                 array_push($questions_db, new SurveyQuestion());
@@ -318,15 +375,19 @@ class SurveyController extends Controller
                 array_push($answer_options_db, []);
             }
         }
-        //return var_dump($answer_options_db);
+
         if(count($questions_db) > count($questions_new)) {
 
-            //less questions in input
+            //less questions in input than in database
             //delete unnecessary questions and answer options in database
-            for($i=count($questions_db); $i > count($questions_new) ; $i--) {
+            for($i=count($questions_db)-1; $i >= count($questions_new) ; $i--) {
                 $question = SurveyQuestion::FindOrFail($questions_db[$i]->id);
-                foreach($question->getAnswerOptions() as $key => $answer_option) {
+
+                foreach($question->getAnswerOptions as $answer_option) {
                     $answer_option->delete();
+                }
+                foreach($question->getAnswerCells as $answer_cell) {
+                    $answer_cell->delete();
                 }
                 $question->delete();
 
@@ -335,43 +396,83 @@ class SurveyController extends Controller
                 unset($answer_options_db[$i]);
 
                 //reindexing
-                $questions_db = array_values(array_filter($questions_db));
-                $answer_options_db = array_values(array_filter($answer_options_db));
+                $questions_db = array_values($questions_db);
+                $answer_options_db = array_values($answer_options_db);
+
+                //deleting the element in required and question type array is not necessary
             }
         }
 
-        //all arrays should have the same length now
+        //question arrays should have the same length now so we can update questions
         for($i = 0; $i < count($questions_db); $i++) {
 
-            //check if question text or field type was updated
-            if (strcmp($questions_db[$i]->question, $questions_new[$i]) !== 0 or
-                $questions_db[$i]->field_type !== 1) {
-
-                //is updated question, change it
-                $questions_db[$i]->order = $i;
-                $questions_db[$i]->question = $questions_new[$i];
-
-                //survey_id has to be filled in case of new questions
-                $questions_db[$i]->survey_id = $survey->id;
-                $questions_db[$i]->field_type = 1; //example
-
-                //todo: make answer options array from database have the answer options in input
-
-                //check if field_type is dropdown now
-                //question has answer options
-                /*
-                for($j = 0; $j < count($answer_options_db[$i]); $j++) {
-                    $answer_options_db[$i][$j] = $answer_options_new[$i][$j];
+            //delete answer options if question type gets changed to something else than dropdown
+            if($questions_db[$i]->field_type == 3 and $question_type[$i] != 3){
+                $answer_options = $questions_db[$i]->getAnswerOptions;
+                foreach($answer_options as $answer_option) {
+                    $answer_option->delete();
                 }
-                */
-                $questions_db[$i]->save();
+            }
+
+            //delete answer cells if question type gets changed
+            if($questions_db[$i]->field_type != $question_type[$i]){
+                $answer_cells = $questions_db[$i]->getAnswerCells;
+                foreach($answer_cells as $answer_cell) {
+                    $answer_cell->delete();
+                }
+            }
+
+            $questions_db[$i]->field_type = $question_type[$i];
+            $questions_db[$i]->required = (bool) $required[$i];
+            $questions_db[$i]->order = $i;
+            $questions_db[$i]->question = $questions_new[$i];
+
+            //survey_id has to be filled in case of new questions
+            $questions_db[$i]->survey_id = $survey->id;
+
+            $questions_db[$i]->save();
+        }
+
+        for($i = 0; $i < count($questions_db); $i++) {
+
+            if ($questions_db[$i]->field_type == 3 and
+             count($answer_options_new[$i]) > count($answer_options_db[$i])) {
+
+                    //more answer options in input than in database
+                    //make new empty answer options and push them to the database array
+                    for($j = count($answer_options_new[$i]); $j >= count($answer_options_db[$i]); $j--) {
+                        array_push($answer_options_db[$i], new SurveyAnswerOption());
+                    }
+             }
+
+            if ($questions_db[$i]->field_type == 3 and
+                count($answer_options_new[$i]) < count($answer_options_db[$i])) {
+
+                //less answer options in input than in database
+                //delete unnecessary answer options in database
+                for($j = count($answer_options_db[$i])-1; $j >= count($answer_options_new[$i]); $j--) {
+                    $answer_option = SurveyAnswerOption::FindOrFail($answer_options_db[$i][$j]->id);
+                    $answer_option->delete();
+
+                    //also delete element in answer option array and reindex array keys
+                    unset($answer_options_db[$i][$j]);
+                    $answer_options_db[$i] = array_values(($answer_options_db[$i]));
+                }
             }
         }
 
-        $survey->save();
+        //answer option arrays should have the same length now
+        for($i = 0; $i < count($questions_db); $i++) {
+            for($j = 0; $j < count($answer_options_db[$i]); $j++) {
+                $answer_options_db[$i][$j]->survey_question_id = $questions_db[$i]->id;
+                $answer_options_db[$i][$j]->answer_option = $answer_options_new[$i][$j];
+                $answer_options_db[$i][$j]->save();
+            }
+        }
 
-        return Redirect::action('SurveyController@create', array('id' => $survey->id));
+        return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
+
 
     /*
      *  -------------------- END OF REST-CONTROLLER --------------------
