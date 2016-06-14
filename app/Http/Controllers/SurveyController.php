@@ -2,19 +2,17 @@
 
 namespace Lara\Http\Controllers;
 
-
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Session;
 use Redirect;
 use DateTime;
-use Input;
 
 use Lara\Survey;
 use Lara\SurveyQuestion;
 use Lara\SurveyAnswer;
 use Lara\SurveyAnswerOption;
 use Lara\Club;
+
 
 /**
  * Class SurveyController

@@ -3,16 +3,16 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use Lara\Club;
-use Lara\Http\Requests;
-use Lara\Survey;
-use Lara\SurveyAnswer;
-use Lara\Person;
-use Lara\SurveyAnswerCell;
-
 use Session;
 use Redirect;
+
+use Lara\Survey;
+use Lara\SurveyQuestion;
+use Lara\SurveyAnswer;
+use Lara\SurveyAnswerOption;
+use Lara\SurveyAnswerCell;
+use Lara\Club;
+
 
 /**
  * Class SurveyAnswerController
