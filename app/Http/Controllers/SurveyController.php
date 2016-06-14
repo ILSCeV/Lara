@@ -154,7 +154,7 @@ class SurveyController extends Controller
             $question_db->survey_id = $survey->id;
             $question_db->order = $order;
             $question_db->field_type = $questions_type[$order];
-            $question_db->required = (bool) $required[$order];
+            $question_db->is_required = (bool) $required[$order];
             $question_db->question = $question;
             $question_db->save();
 
@@ -437,7 +437,7 @@ class SurveyController extends Controller
             }
 
             $questions_db[$i]->field_type = $question_type[$i];
-            $questions_db[$i]->required = (bool) $required[$i];
+            $questions_db[$i]->is_required = (bool) $required[$i];
             $questions_db[$i]->order = $i;
             $questions_db[$i]->question = $questions_new[$i];
 
