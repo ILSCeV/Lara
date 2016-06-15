@@ -74,9 +74,9 @@ class MonthController extends Controller {
 						   ->orderBy('evnt_time_start')
 						   ->get();
 
-		$surveys = Survey::where('in_calendar','>=',$monthStart)
-							->where('in_calendar','<=',$monthEnd)
-							->orderBy('in_calendar')
+		$surveys = Survey::where('deadline','>=',$monthStart)
+							->where('deadline','<=',$monthEnd)
+							->orderBy('deadline')
 							->get();
 
 		return View::make('monthView', compact('events', 'date', 'surveys'));
