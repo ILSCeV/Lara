@@ -18,7 +18,6 @@ class CreateSurveysTable extends Migration
             $table->string('title', 255);
             $table->string('description', 1500)->nullable()->default(NULL);
             $table->timestamp('deadline');
-            $table->date('in_calendar');
             $table->boolean('is_private');
             $table->boolean('is_anonymous');
             $table->boolean('show_results_after_voting');
