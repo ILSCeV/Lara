@@ -165,12 +165,12 @@
 	@if(count($surveys)>0)
 		@foreach($surveys as $survey)
 		<div>
-		@if ( date('W', strtotime($survey->in_calendar)) === $date['week']
-             AND date('N', strtotime($survey->in_calendar)) < 3 )
+		@if ( date('W', strtotime($survey->deadline)) === $date['week']
+             AND date('N', strtotime($survey->deadline)) < 3 )
 				<div class="element-item week-mo-so">
-			@elseif ( date("W", strtotime($survey->in_calendar) )
+			@elseif ( date("W", strtotime($survey->deadline) )
                       === date("W", strtotime("next Week".$weekStart))
-                    AND date('N', strtotime($survey->in_calendar)) < 3 )
+                    AND date('N', strtotime($survey->deadline)) < 3 )
 					<div class="element-item week-mi-di hide">
 					@else
 						<div class="element-item">

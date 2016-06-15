@@ -86,9 +86,9 @@ class WeekController extends Controller {
                            ->orderBy('evnt_time_start')
                            ->get();
 
-		$surveys = Survey::where('in_calendar', '>=', $weekStart)
-							->where('in_calendar', '<=', $weekEnd)
-							->orderBy('in_calendar')
+		$surveys = Survey::where('deadline', '>=', $weekStart)
+							->where('deadline', '<=', $weekEnd)
+							->orderBy('deadline')
 							->get();
 		
 
