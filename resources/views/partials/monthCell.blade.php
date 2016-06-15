@@ -1,7 +1,7 @@
 {{-- Needs variables: $surveys, $events --}}
 
 @foreach($surveys as $survey)
-	@if($survey->in_calendar === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
+    @if(date("Y-m-d", strtotime($survey->deadline)) === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
 		<div class="cal-event dark-grey calendar-internal-info">
 			<i class="fa fa-bar-chart-o white-text"></i>
 			<a href="{{ URL::route('survey.show', $survey->id) }}">
