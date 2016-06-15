@@ -1,7 +1,3 @@
-<div class="form-group">
-
-</div>
-
 <html>
 <head>
     <meta charset="utf-8">
