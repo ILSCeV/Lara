@@ -102,8 +102,10 @@ Calculate width of row in answers
                 <div class=" rowNoPadding nameToQuestion">
                     {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                 </div>
+                <?php $countNames = 0 ?>
                 @foreach($answers as $answer)
-                    <div class=" rowNoPadding nameToQuestion color{{$alternatingColor}}">
+                    <?php $countNames += 1 ?>
+                    <div class="Name<?php echo $countNames; ?> rowNoPadding nameToQuestion color{{$alternatingColor}}">
                         {{$answer->name}}
                     </div>
                     <?php $alternatingColor == 0 ? $alternatingColor = 1 : $alternatingColor = 0; ?>
@@ -154,7 +156,9 @@ Calculate width of row in answers
                                 {!! Form::close() !!}
                             </div>
                     </div>
+                    <?php $countAnswersRow = 0; ?>
                     @foreach($answers as $answer)
+                        <?php $countAnswersRow += 1; ?>
                         <div class="rowNoPadding">
                             <!--Color 1-->
                             <div class="answerToQuestion color{{$alternatingColor}}">
@@ -165,7 +169,7 @@ Calculate width of row in answers
                                 @endif
                             </div>
                             @foreach($answer->getAnswerCells as $cell)
-                                <div class="answerToQuestion color{{$alternatingColor}}">
+                                <div class="answerToQuestion color{{$alternatingColor}} answerRow<?php echo $countAnswersRow; ?>">
                                     {{$cell->answer}}
                                 </div>
                                 @endforeach
