@@ -31,6 +31,9 @@
     <br>
     <br>
 
+
+
+
     <!-- /////////////////////////////////////////// Start of desktop View /////////////////////////////////////////// -->
 
 
@@ -96,11 +99,6 @@ Calculate width of row in answers
                     Name *
                 </div>
                 <div class=" rowNoPadding nameToQuestion">
-                    <!--
-                    <input name="answer[]" type="text" placeholder="dein Name" class="form-control"
-                           required="true"
-                           oninvalid="this.setCustomValidity('Bitte gib deinen Namen ein')">
-                           -->
                     {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                 </div>
                 @foreach($answers as $answer)
@@ -174,7 +172,7 @@ Calculate width of row in answers
                                             @endforeach
                                             @if($userId == $answer->creator_id OR $userCanEditDueToRole)
                                                         <!--Edid Delete Buttons-->
-                                                <div class="answerToQuestion color{{$alternatingColor}} editDelete">
+                                                <div class="marginLeft15 answerToQuestion color{{$alternatingColor}} editDelete">
                                                     <a href="#"
                                                        class="btn btn-primary"
                                                        data-toggle="tooltip"
@@ -218,6 +216,9 @@ Calculate width of row in answers
 
 
     <!-- /////////////////////////////////////////// Start of mobile View /////////////////////////////////////////// -->
+
+
+
     <?php
     $alternatingColor = 0;
     ?>
