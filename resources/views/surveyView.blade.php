@@ -177,7 +177,7 @@ Calculate width of row in answers
                                         <!--Edid Delete Buttons-->
                                 <div class="marginLeft15 answerToQuestion color{{$alternatingColor}} editDelete">
                                     <a
-                                       class="btn btn-primary editRow<?php echo $countAnswersRow; ?>"
+                                       class="editButton btn btn-primary editRow<?php echo $countAnswersRow; ?>"
                                        data-toggle="tooltip"
                                        data-placement="bottom">
                                         <i class="fa fa-pencil"></i>

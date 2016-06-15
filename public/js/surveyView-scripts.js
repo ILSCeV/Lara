@@ -18,4 +18,19 @@ $(".editRow1").click(function() {
     //replace div with textarea
     $(".Name1").replaceWith(editableText);
     //editableText.focus(); (optional)
+
+
+
 });
+
+
+//Replace edit icon with save icon
+$('.editButton').click(function() {
+    $('#display_advance').toggle('1000');
+    $("i", this).toggleClass("fa-pencil fa-floppy-o");
+});
+
+
+
+
+
