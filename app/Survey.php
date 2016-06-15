@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Survey extends Model
 {
     protected $table ='surveys';
-    protected $fillable = array('title', 'description', 'deadline', 'in_calendar');
+    protected $fillable = array('title', 'description', 'deadline');
 
     /**
      * Get the corresponding person.
