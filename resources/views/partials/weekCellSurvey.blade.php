@@ -8,8 +8,6 @@
 			</a>
 		</h4>
 
-		{{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->in_calendar))) }}
-		&nbsp;
 	<i class="fa fa-times" aria-hidden="true"></i>
 		{{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->deadline))) }}
 </div>

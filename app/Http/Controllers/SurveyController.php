@@ -261,8 +261,7 @@ class SurveyController extends Controller
         foreach($questions as $question)
             $answer_options = $question->getAnswerOptions;
 
-        // prepare correct date and time format to be used in forms for deadline/in_calendar
-//        $date = strftime("%d-%m-%Y", strtotime($survey->in_calendar));
+        // prepare correct date and time format to be used in forms for deadline
         $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
 
         return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
