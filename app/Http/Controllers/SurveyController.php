@@ -290,6 +290,8 @@ class SurveyController extends Controller
         $survey->is_private = (bool) $input->is_private;
         $survey->show_results_after_voting = (bool) $input->show_results_after_voting;
 
+        $survey->save();
+
         //get questions and answer options as arrays from the input
         $questions_new = $input->questions;
         $answer_options_new = $input->answer_options;
@@ -496,8 +498,6 @@ class SurveyController extends Controller
                 $answer_options_db[$i][$j]->save();
             }
         }
-
-        $survey->save();
 
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
