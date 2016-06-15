@@ -11,8 +11,19 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <script type="text/javascript">
+
+        window.onload = function () {
+            $('.questions' || '.input_checkboxitem' || '.dropdown-toggle').change(function () {
+                $(window).bind('beforeunload', function () {
+                    return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
+                });
+            });
+        };
+
         $(function () {
+            var c3 = 1;
             $('#btnAdd').click(function () {
+                c3++;
                 var num     = $('.clonedInput').length,
                         newNum  = new Number(num + 1),
                         newElem = $('#questions' + num).clone().attr('id', 'questions' + newNum).fadeIn('slow');
@@ -57,6 +68,54 @@
                         return false;
                     }
                 });
+
+                $(document).ready(function () {
+                    $('.questions' || '.input_checkboxitem' || '.dropdown-toggle').change(function () {
+                        $(window).bind('beforeunload', function () {
+                            return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
+                        });
+                    });
+
+                    var x = false;
+                    var z = 0;
+                    var c1 = 0;
+                    var c2 = 0;
+
+                    $("form").submit(function () {
+                        x = false;
+                        z = 0;
+                        c1 = 0;
+                        c2 = 0;
+                        if ($('#field_type').val() !== '0' && $('#field_type' + (c3 - 1)).val() !== '0') {
+                            x = true;
+
+                            check_unbind2();
+                            for (i = 0; i < (newNum - 2); i++) {
+                                z++;
+                                if ($('#field_type' + z).val() === '0')
+                                    c1++;
+                                else
+                                    c2++;
+                            }
+                        }
+                        if (z >= (c3 - 2) && (c1 + c2) === z)
+                            check_unbind();
+
+                    });
+                    function check_unbind() {
+
+                        if (x === true && c1 === 0 && c3 >= '3' && c2 > 0) {
+                            $(window).unbind('beforeunload');
+                        }
+                    }
+
+                    function check_unbind2() {
+                        if (x === true && c3 === 2) {
+                            $(window).unbind('beforeunload');
+                        }
+                    }
+                });
+
 
                 $('#btnDel').attr('disabled', false);
 
@@ -183,19 +242,6 @@
                 },700);
 
         }
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('.questions' || '.input_checkboxitem' || '.dropdown-toggle').change(function() {
-                $(window).bind('beforeunload', function() {
-                    return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
-                });
-            });
-            $("form").submit(function() {
-                $(window).unbind('beforeunload');
-            });
-        });
     </script>
 
     <script>
