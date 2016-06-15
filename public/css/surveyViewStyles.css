@@ -1,8 +1,8 @@
-.panel{
+.panel {
     margin: 15px;
 }
 
-.panel-title-box{
+.panel-title-box {
     background-color: #DF0024;
     color: white;
     padding: 15px;
@@ -70,7 +70,7 @@
     overflow-y: hidden;
 }
 
-.nameToQuestion, .answerToQuestion{
+.nameToQuestion, .answerToQuestion {
     padding-left: 8px;
 }
 
@@ -81,16 +81,18 @@
 }
 
 /*
-    colors of Table
+    text color of Table
 */
 .displayDesktop, .displayMobile {
     color: #666666;
 }
 
 
-    /*Why not implement alternating colors?*/
-    /*This would make it much easier for the user to read*/
 
+/*
+    Why not implement alternating colors?
+    This would make it much easier for the user to read
+*/
 .color0 {
     background-color: whitesmoke;
 }
@@ -99,30 +101,22 @@
     background-color: white;
 }
 
-
-/*.color0, .color1 {*/
-    /*background-color: white;*/
-/*}*/
-
-/*
-    Style of mobile elements
-*/
-
 .line {
     width: 100%;
     height: 1px;
     background-color: black;
 }
-.editDelete{
+
+.editDelete {
     line-height: 10vh;
 }
 
-.marginLeft15{
+.marginLeft15 {
     padding-left: 22px;
 }
 
 @media screen and (max-width: 978px) {
-    .marginLeft15{
+    .marginLeft15 {
         padding-left: 0px;
     }
 }
