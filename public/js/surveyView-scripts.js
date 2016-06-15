@@ -7,14 +7,15 @@ $(document).ready(function() {
 });
 
 //source: http://stackoverflow.com/questions/2441565/how-do-i-make-a-div-element-editable-like-a-textarea-when-i-click-it
-$("div").click(function() {
+//On click of edid(Number) div, all divs in that row should be editable
+$(".editRow1").click(function() {
     //save HTML within div
-    var divHtml = $(this).html(); // notice "this" instead of a specific #myDiv
+    var divText = $(".Name1").text();
     //create dynamic textarea
     var editableText = $("<textarea />");
     //fill textarea with text of former div
-    editableText.val(divHtml);
+    editableText.val(divText);
     //replace div with textarea
-    $(this).replaceWith(editableText);
-    //editableText.focus(); (optional) 
+    $(".Name1").replaceWith(editableText);
+    //editableText.focus(); (optional)
 });
