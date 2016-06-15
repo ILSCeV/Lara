@@ -75,7 +75,6 @@ class SurveyController extends Controller
         $survey->show_results_after_voting = isset($input->show_results_after_voting);
 
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
-        $survey->save();
 
         $questions = $input->questions;
         $answer_options = $input->answer_options;
@@ -180,6 +179,8 @@ class SurveyController extends Controller
                  }
              }
         }
+
+        $survey->save();
 
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
@@ -289,6 +290,8 @@ class SurveyController extends Controller
         $survey->is_anonymous = (bool) $input->is_anonymous;
         $survey->is_private = (bool) $input->is_private;
         $survey->show_results_after_voting = (bool) $input->show_results_after_voting;
+
+        $survey->save();
 
         //get questions and answer options as arrays from the input
         $questions_new = $input->questions;
@@ -496,8 +499,6 @@ class SurveyController extends Controller
                 $answer_options_db[$i][$j]->save();
             }
         }
-
-        $survey->save();
 
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
