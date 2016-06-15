@@ -116,3 +116,13 @@
 .editDelete{
     line-height: 10vh;
 }
+
+.marginLeft15{
+    padding-left: 22px;
+}
+
+@media screen and (max-width: 978px) {
+    .marginLeft15{
+        padding-left: 0px;
+    }
+}
