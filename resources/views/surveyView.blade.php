@@ -4,6 +4,10 @@
 @stop
 @section('moreStylesheets')
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
+    <script src="js/surveyView-scripts.js"></script>
+@stop
+@section('moreScripts')
+    <script src="{{ asset('js/surveyView-scripts.js') }}"></script>
 @stop
 @section('content')
 
