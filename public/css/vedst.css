@@ -108,6 +108,10 @@ input[type=number],
   word-break: break-word;
 }
 
+.past-event {
+  opacity:0.5;
+}
+
 .today-marker {
   background-color: #cccccc;
 }
