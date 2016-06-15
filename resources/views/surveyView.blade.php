@@ -176,14 +176,14 @@ Calculate width of row in answers
                                 @if($userId == $answer->creator_id OR $userCanEditDueToRole)
                                         <!--Edid Delete Buttons-->
                                 <div class="marginLeft15 answerToQuestion color{{$alternatingColor}} editDelete">
-                                    <a href="#"
-                                       class="btn btn-primary"
+                                    <a
+                                       class="btn btn-primary editRow<?php echo $countAnswersRow; ?>"
                                        data-toggle="tooltip"
                                        data-placement="bottom">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                     <a href="{{$survey->id}}/answer/{{$answer->id}}"
-                                       class="btn btn-default"
+                                       class="btn btn-default deleteRow<?php echo $countAnswersRow; ?>"
                                        data-toggle="tooltip"
                                        data-placement="bottom"
                                        data-method="delete"
