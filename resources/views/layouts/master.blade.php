@@ -7,6 +7,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <link rel="stylesheet" href="{{ asset('/css/bootstrap-select.min.css') }}">
         <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/bootstrap-bootswatch-paper.min.css') }}" />
         <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/font-awesome.min.css') }}" />
         <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/vedst.css') }}" />
@@ -58,5 +59,6 @@
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('/js/vedst-scripts.js') }}"></script>
+    <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>
   </body>
 </html>

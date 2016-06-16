@@ -5,10 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script>
+        $(function () {
+            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+                $('.selectpicker').selectpicker('mobile');
+            }
+        });
+    </script>
     <script type="text/javascript">
 
         window.onload = function () {
-            $('.questions' || '.input_checkboxitem' || '.dropdown-toggle').change(function () {
+            $('.questions' || '.input_checkboxitem' || '.selectpicker').change(function () {
                 $(window).bind('beforeunload', function () {
                     return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
                 });
@@ -19,6 +27,7 @@
                     $(window).unbind('beforeunload');
             });
         };
+
         $(function () {
             var count_questions = 1;
             $('#btnAdd').click(function () {
@@ -37,10 +46,10 @@
                 newElem.find('.label_checkboxitem').attr('for', 'ID' + newNum + '_checkboxitem');
                 newElem.find('.input_checkboxitem').attr('id', 'ID' + newNum + '_checkboxitem').val([]);
 
-                newElem.find('.dropdown-toggle').attr('id', 'field_type' + (newNum - 1));
+                newElem.find('.selectpicker').attr('id', 'field_type' + (newNum - 1));
                 newElem.find('.btn-success').attr('id', 'button_answ' + (newNum - 1));
 
-                newElem.find('.dropdown-toggle').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ');' + 'check_question_type2('+ (newNum - 1) + ');');
+                newElem.find('.selectpicker').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ');' + 'check_question_type2('+ (newNum - 1) + ');');
 
                 newElem.find('.answ_option').attr('id', 'answ_opt' + (newNum - 1));
                 newElem.find('.btn-success').attr('onclick', 'javascript:clone_this(this, "new_passage",' + (newNum - 1) + ');');
@@ -51,10 +60,16 @@
                 newElem.find('.passage' + (newNum - 1)).remove();
                 newElem.find('.passage' + (newNum-2)).remove();
 
-                newElem.find('.caret').val('');
+                $('.del').attr('class', 'not_del');
 
                 $('#questions' + num).after(newElem);
                 $('#ID' + newNum + '_title').focus();
+
+                newElem.find('.bootstrap-select').attr('class', '.bootstrap-select del');
+
+                $('.del').find('.dropdown-toggle').remove();
+
+                $('.selectpicker').selectpicker('refresh');
 
                 newElem.find('.input_checkboxitem').attr('name', 'required[' + (newNum - 1) + ']');
 
@@ -69,7 +84,7 @@
                 });
 
                 $(document).ready(function () {
-                    $('.questions' || '.input_checkboxitem' || '.dropdown-toggle').change(function () {
+                    $('.questions' || '.input_checkboxitem' || '.selectpicker').change(function () {
                         $(window).bind('beforeunload', function () {
                             return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
                         });
@@ -353,9 +368,9 @@
 
                 <fieldset>
                     <div>
-                        <label class="field_type" for="type">Frage-Typ:</label>
-                        <select class="btn btn-default dropdown-toggle btn-sm" type="button" name="type[]" id="field_type" data-toggle="dropdown" onchange="javascript:check_question_type(0); check_question_type2(0);">
+                        <select class="selectpicker" name="type[]" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0);">
                             <option value="0" selected="selected">Frage-Typ Auswählen</option>
+                            <option data-divider="true"></option>
                             <option value="1">Freitext</option>
                             <option value="2">Checkbox</option>
                             <option value="3">Dropdown</option>
@@ -368,18 +383,13 @@
                     <label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
                 </fieldset>
 
-
             </div>
         </div>
         <div id="addDelButtons">
             <input type="button" id="btnAdd" value="Frage hinzufügen" class="btn btn-warning"> <input type="button" id="btnDel" value="letzte Frage löschen" class="btn btn-danger">
         </div>
 
-
     </div>
-
 </div>
 </body>
 </html>
-
-
