@@ -76,7 +76,7 @@
                 newElem.find('#button_answ' + (newNum - 1)).attr('style', 'display:none');
 
                 $("form").submit(function() {
-
+                        $('.bootstrap-select').find('#field_type' + (newNum -1));
                     if ($('#field_type' + (newNum -1)).val() === '0') {
                         alert("Frage-Typ muss bei Frage " + (newNum) + " ausgewählt sein");
                         return false;
@@ -135,6 +135,10 @@
 
                 if (newNum == 10)
                     $('#btnAdd').attr('disabled', true).prop('value', "Limit erreicht");
+
+                $('#btnDel').click(function () {
+                    newNum--;
+                });
             });
 
             $('#btnDel').click(function () {
