@@ -77,7 +77,7 @@
 
                 $("form").submit(function() {
                         $('.bootstrap-select').find('#field_type' + (newNum -1));
-                    if ($('#field_type' + (newNum -1)).val() === '0') {
+                    if ($('#field_type' + (newNum -1)).val() === '') {
                         alert("Frage-Typ muss bei Frage " + (newNum) + " ausgewählt sein");
                         return false;
                     }
@@ -100,13 +100,13 @@
                         z = 0;
                         field_type_not_selected = 0;
                         field_type_selected = 0;
-                        if ($('#field_type').val() !== '0' && $('#field_type' + (count_questions - 1)).val() !== '0') {
+                        if ($('#field_type').val() !== '' && $('#field_type' + (count_questions - 1)).val() !== '') {
                             x = true;
 
                             check_unbind2();
                             for (i = 0; i < (count_questions - 2); i++) {
                                 z++;
-                                if ($('#field_type' + z).val() === '0')
+                                if ($('#field_type' + z).val() === '')
                                     field_type_not_selected++;
                                 else
                                     field_type_selected++;
@@ -266,7 +266,7 @@
 
         $("form").submit(function() {
 
-            if ($('#field_type').val() === '0') {
+            if ($('#field_type').val() === '') {
                 alert("Frage-Typ muss bei Frage 1 ausgewählt sein");
                 return false;
             }
@@ -372,9 +372,7 @@
 
                 <fieldset>
                     <div>
-                        <select class="selectpicker" name="type[]" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0);">
-                            <option value="0" selected="selected">Frage-Typ Auswählen</option>
-                            <option data-divider="true"></option>
+                        <select class="selectpicker" title="Frage-Typ Auswählen" name="type[]" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0);">
                             <option value="1">Freitext</option>
                             <option value="2">Checkbox</option>
                             <option value="3">Dropdown</option>
