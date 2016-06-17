@@ -288,9 +288,7 @@
              });
          });
 </script>
-<div class="panel-group">
-<div class="panel col-md-8 col-sm-12 col-xs-12">
-    <h4>Neue Umfrage erstellen:</h4>
+
 <div class="panel-body">
 
     <div class="form-group">
