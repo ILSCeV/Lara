@@ -373,9 +373,9 @@
                 <fieldset>
                     <div>
                         <select class="selectpicker" title="Frage-Typ Auswählen" name="type[]" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0);">
-                            <option value="1">Freitext</option>
-                            <option value="2">Checkbox</option>
-                            <option value="3">Dropdown</option>
+                            <option value="1" data-icon="fa fa-file-text-o">Freitext</option>
+                            <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
+                            <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
                         </select>
                     </div>
                 </fieldset>
