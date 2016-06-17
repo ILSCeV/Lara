@@ -77,7 +77,7 @@
 
                 $("form").submit(function() {
                         $('.bootstrap-select').find('#field_type' + (newNum -1));
-                    if ($('#field_type' + (newNum -1)).val() === '') {
+                    if ($('#field_type' + (newNum -1)).val() === '0') {
                         alert("Frage-Typ muss bei Frage " + (newNum) + " ausgewählt sein");
                         return false;
                     }
@@ -100,13 +100,13 @@
                         z = 0;
                         field_type_not_selected = 0;
                         field_type_selected = 0;
-                        if ($('#field_type').val() !== '' && $('#field_type' + (count_questions - 1)).val() !== '') {
+                        if ($('#field_type').val() !== '' && $('#field_type' + (count_questions - 1)).val() !== '0') {
                             x = true;
 
                             check_unbind2();
                             for (i = 0; i < (count_questions - 2); i++) {
                                 z++;
-                                if ($('#field_type' + z).val() === '')
+                                if ($('#field_type' + z).val() === '0')
                                     field_type_not_selected++;
                                 else
                                     field_type_selected++;
@@ -266,7 +266,7 @@
 
         $("form").submit(function() {
 
-            if ($('#field_type').val() === '') {
+            if ($('#field_type').val() === '0') {
                 alert("Frage-Typ muss bei Frage 1 ausgewählt sein");
                 return false;
             }
@@ -373,6 +373,7 @@
                 <fieldset>
                     <div>
                         <select class="selectpicker" title="Frage-Typ Auswählen" name="type[]" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0);">
+                            <option selected value="0" style="display:none"></option>
                             <option value="1" data-icon="fa fa-file-text-o">Freitext</option>
                             <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
                             <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
