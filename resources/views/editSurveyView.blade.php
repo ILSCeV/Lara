@@ -14,11 +14,13 @@
 
             </div>
         </div>
-
+    &nbsp;
     <div class="form-group">
         {!! Form::submit("Umfrage ändern", ['class'=>'btn btn-primary']) !!}
+        &nbsp;&nbsp;&nbsp;&nbsp;
         <br class="visible-xs">
         <a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
+        &nbsp;
         <a href="/survey/{{$survey->id}}"
            class="btn btn-default"
            data-toggle="tooltip"
