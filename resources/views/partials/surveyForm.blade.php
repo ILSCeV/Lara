@@ -288,7 +288,9 @@
              });
          });
 </script>
-
+<div class="panel-group">
+<div class="panel col-md-8 col-sm-12 col-xs-12">
+    <h4>Neue Umfrage erstellen:</h4>
 <div class="panel-body">
 
     <div class="form-group">
@@ -331,13 +333,20 @@
         </div>
 
     </div>
-    <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
+    <hr class="col-md-6 col-xs-12 top-padding no-margin no-padding">
+</div>
+    </div>
+
 
     <div id="wrapper">
 
         <div class="questions">
 
             <div id="questions1" class="clonedInput">
+                <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
+                <div class="panel col-md-8 col-sm-12 col-xs-12">
+                    <div class="panel-body">
+
                 <h4 id="reference" name="reference" class="heading-reference">Frage #1</h4>
 
                 <fieldset>
@@ -383,11 +392,19 @@
                 </fieldset>
 
             </div>
+                    </div>
+
+            </div>
+
         </div>
+        <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
+        <div class="panel col-md-8 col-sm-12 col-xs-12">
+            <div class="panel-body">
         <div id="addDelButtons">
             <input type="button" id="btnAdd" value="Frage hinzufügen" class="btn btn-success"> <input type="button" id="btnDel" value="letzte Frage löschen" class="btn btn-danger">
         </div>
-
+        </div>
+        </div>
     </div>
 </div>
 </body>
