@@ -130,11 +130,7 @@
                     }
                 });
 
-
                 $('#btnDel').attr('disabled', false);
-
-                if (newNum == 10)
-                    $('#btnAdd').attr('disabled', true).prop('value', "Limit erreicht");
 
                 $('#btnDel').click(function () {
                     newNum--;
