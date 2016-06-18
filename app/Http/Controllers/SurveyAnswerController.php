@@ -44,6 +44,13 @@ class SurveyAnswerController extends Controller
     public function store($surveyid, Request $input)
     {
         $survey = Survey::findOrFail($surveyid);
+
+        //check if survey needs a password and validate hashes
+        if ($survey->password !== ''
+            && !Hash::check( $input->password, $survey->password ) ) {
+            return response()->json("Fehler: das angegebene Passwort ist falsch, keine Änderungen wurden gespeichert. Bitte versuche erneut oder frage ein anderes Mitglied oder CL.", 401);
+        }
+
         $club = Club::where('clb_title', $input->club)->first();
 
         $survey_answer = new SurveyAnswer();
