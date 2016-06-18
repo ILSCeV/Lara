@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Config;
 use Illuminate\Http\Request;
 use Hash;
 use Session;
