@@ -46,7 +46,22 @@
         <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem"
                       @if($survey->show_results_after_voting) checked @endif> zeige Ergebnisse nach der Abstimmung</label>
     </div>
+</div>
 
+<div class="form-group">
+    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+        <label for="password" class="control-label col-md-5 col-sm-5 col-xs-12">Passwort zum Eintragen:</label>
+        <div class="col-md-7 col-sm-7 col-xs-12">
+            {!! Form::password('password', '' ) !!}
+        </div>
+    </div>
+
+    <div class="form-groupcol-md-12 col-sm-12 col-xs-12 no-padding">
+        <label fro="passwordDouble" class="control-label col-md-5 col-sm-5 col-xs-12">Passwort wiederholen:</label>
+        <div class="col-md-7 col-sm-7 col-xs-12">
+            {!! Form::password('passwordDouble', '') !!}
+        </div>
+    </div>
 </div>
 <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 
