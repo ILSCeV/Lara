@@ -63,6 +63,14 @@
         </div>
     </div>
 </div>
+@if ($is_edit AND $survey->password !== '')
+    <div style="color: #ff9800;">
+        <small>Um das Passwort zu löschen, trage in beide Felder "delete" ein (ohne
+            Anführungszeichen).
+        </small>
+    </div>
+@endif
+
 <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 
 @include('partials.surveyField')

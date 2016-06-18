@@ -57,7 +57,9 @@ class SurveyController extends Controller
         //placeholder because createSurveyView needs variable, can set defaults here
         $survey = new Survey();
 
-        return view('createSurveyView', compact('survey','time'));
+        //variable to determine later which view includes the partials
+        $is_edit = false;
+        return view('createSurveyView', compact('survey','time','is_edit'));
     }
 
     /**
@@ -276,8 +278,10 @@ class SurveyController extends Controller
 
         // prepare correct date and time format to be used in forms for deadline
         $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-
-        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
+        
+        //variable to determine later which view includes the partials
+        $is_edit = true;
+        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time', 'is_edit'));
     }
 
     /**
