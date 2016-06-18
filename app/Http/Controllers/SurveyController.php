@@ -103,7 +103,7 @@ class SurveyController extends Controller
                                      weil alle Fragen leer gelassen wurden!');
             Session::put('msgType', 'danger');
 
-            return Redirect::action('SurveyController@create', array('id' => $survey->id));
+            return Redirect::back()->withInput();
         }
 
         //abort if no single field type is given
@@ -112,7 +112,7 @@ class SurveyController extends Controller
                                      weil kein einziger Frage-Typ angegeben wurde!');
             Session::put('msgType', 'danger');
 
-            return Redirect::action('SurveyController@create', array('id' => $survey->id));
+            return Redirect::back()->withInput();
         }
 
         //actual bug: answer options array is too long, must delete unnecessary elements
@@ -360,14 +360,14 @@ class SurveyController extends Controller
             Session::put('message', 'Es konnten keine Fragen geändert werden, 
                                      weil alle Fragen leer gelassen wurden!');
             Session::put('msgType', 'danger');
-            return Redirect::action('SurveyController@edit', array('id' => $survey->id));
+            return Redirect::back()->withInput();
         }
 
         //if no single field type is given abort
         if(empty($question_type) or array_unique($question_type) === array('0')){
             Session::put('message', 'Es wurden keine Fragen geändert, weil kein einziger Frage-Typ ausgewählt wurde!');
             Session::put('msgType', 'danger');
-            return Redirect::action('SurveyController@edit', array('id' => $survey->id));
+            return Redirect::back()->withInput();
         }
 
         //ignore empty questions
