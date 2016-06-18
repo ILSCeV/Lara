@@ -32,18 +32,6 @@
     </div>
 
 
-            @if( $survey->password != '')
-                <div class="hidden-print panel panel-heading col-md-4 col-xs-12">
-                    {!! Form::password('password', array('required',
-                                                         'class'=>'black-text',
-                                                         'id'=>'password' . $survey->password,
-                                                         'placeholder'=>'Passwort hier eingeben')) !!}
-                    <br />
-                </div>
-
-            @endif
-
-
     <br>
     <br>
 
@@ -106,6 +94,17 @@ Calculate width of row in answers
 
     <div class="panel displayDesktop">
         {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id]]) !!}
+        @if( $survey->password != '')
+            <div class="hidden-print panel panel-heading col-md-2 col-xs-12">
+                {!! Form::password('password', array('required',
+                                                     'class'=>'black-text',
+                                                     'id'=>'password' . $survey->id,
+                                                     'placeholder'=>'Passwort hier eingeben')) !!}
+            </div>
+            <br>
+            <br> <!-- maybe br is not ideal here -->
+            <br>
+        @endif
         <div class="row rowNoPadding">
             <div class="col-md-2 rowNoPadding shadow">
                 <div class=" rowNoPadding nameToQuestion">
