@@ -3,6 +3,7 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Hash;
 use Session;
 use Redirect;
 use DateTime;
@@ -65,23 +66,28 @@ class SurveyController extends Controller
      */
     public function store(Request $input)
     {
-        /*
         if ($input->password != $input->passwordDouble) {
             Session::put('message', Config::get('messages_de.password-mismatch') );
             Session::put('msgType', 'danger');
             return Redirect::back()->withInput();
         }
-        */
+
         $survey = new Survey;
         $survey->creator_id = Session::get('userId');
         $survey->title = $input->title;
         //if URL is in the description, convert it to clickable hyperlink
         $survey->description = $this->addLinks($input->description);
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
         $survey->is_anonymous = isset($input->is_anonymous);
         $survey->is_private = isset($input->is_private);
         $survey->show_results_after_voting = isset($input->show_results_after_voting);
+        
+        if (!empty($input->password)
+            AND !empty($input->passwordDouble)
+            AND $input->password == $input->passwordDouble) {
+            $survey->password = Hash::make($input->password);
+        }
 
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
         $survey->save();
 
         $questions = $input->questions;
@@ -302,6 +308,18 @@ class SurveyController extends Controller
         $survey->is_anonymous = (bool) $input->is_anonymous;
         $survey->is_private = (bool) $input->is_private;
         $survey->show_results_after_voting = (bool) $input->show_results_after_voting;
+
+        //delete password if user changes both to delete
+        if ($input->password == "delete" AND $input->passwordDouble == "delete")
+        {
+            $survey->password = '';
+        }
+        //set new password
+        elseif (!empty($input->password)
+                AND !empty($input->passwordDouble)
+                AND $input->password == $input->passwordDouble) {
+            $survey->password = Hash::make($input->password);
+        }
 
         $survey->save();
 
