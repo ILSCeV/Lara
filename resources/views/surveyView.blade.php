@@ -26,7 +26,6 @@
                 {{$survey->description }}
             @endif
             <br>
-            {!! $survey->description!!}
             Die Umfrage läuft noch bis: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} um
             {{ date("H:i", strtotime($survey->deadline)) }}
         </div>
