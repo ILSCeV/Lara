@@ -31,6 +31,19 @@
         </div>
     </div>
 
+
+            @if( $survey->password != '')
+                <div class="hidden-print panel panel-heading col-md-4 col-xs-12">
+                    {!! Form::password('password', array('required',
+                                                         'class'=>'black-text',
+                                                         'id'=>'password' . $survey->password,
+                                                         'placeholder'=>'Passwort hier eingeben')) !!}
+                    <br />
+                </div>
+
+            @endif
+
+
     <br>
     <br>
 

@@ -3,6 +3,7 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Hash;
 use Session;
 use Redirect;
 
