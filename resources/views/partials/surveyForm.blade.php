@@ -347,47 +347,54 @@
 
                 <h4 id="reference" name="reference" class="heading-reference">Frage #1</h4>
 
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                 <fieldset>
                     <label class="questions" for="question">Frage: &nbsp</label>
 
-                    <input class="questions" type="text" name="questions[]" id="question" value="">
+                    <textarea class="form-control" type="text" name="questions[]" id="question"></textarea>
                 </fieldset>
+                        </div>
+
+                        
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <fieldset>
+                            <select class="selectpicker" title="Frage-Typ Auswählen" name="type[]" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0);">
+                                <option selected value="0" style="display:none"></option>
+                                <option value="1" data-icon="fa fa-file-text-o">Freitext</option>
+                                <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
+                                <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
+                            </select>
+                        </fieldset>
+                            </div>
 
 
-                <div style="visibility:hidden; display:none">
-                    <div id="new_passage"><table class="passage" id="new_passage" name="cloneTable">
-                            <tr>
-                                <td>Antwortmöglichkeit: &nbsp</td>
-                                <td><input id="answer_option" class="answer_option" type="text" name="answer_options[][]"></input></td>
-                                <td class="helltab" rowspan="3">
-                                    <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
-                                        <i class="fa fa-trash" aria-hidden="true"></i></a>
-                                </td>
-                        </table>
-                    </div>
-                </div>
 
-                <div class="answ_option" id="answ_opt">
-                    <input class="btn btn-success btn-sm" id="button_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button"></input>
-                </div>
 
-                &nbsp
-
-                <fieldset>
-                    <div>
-                        <select class="selectpicker" title="Frage-Typ Auswählen" name="type[]" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0);">
-                            <option selected value="0" style="display:none"></option>
-                            <option value="1" data-icon="fa fa-file-text-o">Freitext</option>
-                            <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
-                            <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
-                        </select>
-                    </div>
-                </fieldset>
-
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                 <fieldset class="checkbox entrylist">
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
                     <label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
                 </fieldset>
+                            </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div style="visibility:hidden; display:none">
+                                <div id="new_passage"><table class="passage" id="new_passage" name="cloneTable">
+                                        <tr>
+                                            <td>Antwortmöglichkeit: &nbsp</td>
+                                            <td><input id="answer_option" class="answer_option" type="text" name="answer_options[][]"></input></td>
+                                            <td class="helltab" rowspan="3">
+                                                <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i></a>
+                                            </td>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="answ_option" id="answ_opt">
+                                <input class="btn btn-success btn-sm" id="button_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button"></input>
+                            </div>
+                        </div>
 
             </div>
                     </div>
