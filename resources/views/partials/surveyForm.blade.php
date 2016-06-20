@@ -383,7 +383,7 @@
                                 <div id="new_passage"><table class="passage" id="new_passage" name="cloneTable">
                                         <tr>
                                             <td>Antwortmöglichkeit: &nbsp</td>
-                                            <td><input id="answer_option" class="answer_option" type="text" name="answer_options[][]"></input></td>
+                                            <td><textarea id="answer_option" class="answer_option" type="text" name="answer_options[][]"></textarea></td>
                                             <td class="helltab" rowspan="3">
                                                 <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
                                                     <i class="fa fa-trash" aria-hidden="true"></i></a>
