@@ -43,26 +43,49 @@ class SurveyAnswerController extends Controller
      */
     public function store($surveyid, Request $input)
     {
+//        var_dump($input->answers);
         $survey = Survey::findOrFail($surveyid);
         $club = Club::where('clb_title', $input->club)->first();
-
+        
         $survey_answer = new SurveyAnswer();
         $survey_answer->creator_id = Session::get('userId');
         $survey_answer->survey_id = $surveyid;
         $survey_answer->name = $input->name;
-        $survey_answer->club_id = $club->id;
+        if(!empty($club)) {
+            $survey_answer->club_id = $club->id;
+        }
         $survey_answer->order = 0;                                  // example, might be better to order bei updated_at?
         $survey_answer->save();
 
         $questions = $survey->getQuestions;
-        foreach($input->answers as $key => $answer_cell) {
+
+        foreach($questions as $key => $question) {
             $survey_answer_cell = new SurveyAnswerCell();
-            $survey_answer_cell->survey_question_id = $questions[$key]->id;
+            $survey_answer_cell->survey_question_id = $question->id;
             $survey_answer_cell->survey_answer_id = $survey_answer->id;
-            $survey_answer_cell->answer = $answer_cell;
+            switch($question->field_type) {
+                case 1: //Freitext
+                    $survey_answer_cell->answer = $input->answers[$key];
+                    break;
+                case 2: //Checkbox (Ja/Nein)
+                    if($input->answers[$key] == -1) {
+                        $survey_answer_cell->answer = "keine Angabe";
+                    } elseif ($input->answers[$key] == 0) {
+                        $survey_answer_cell->answer = "Nein";
+                    } elseif ($input->answers[$key] == 1) {
+                        $survey_answer_cell->answer = "Ja";
+                    }
+                    break;
+                case 3: //Dropdown
+                    if($input->answers[$key] == -1) {
+                        $survey_answer_cell->answer = "keine Angabe";
+                    } else {
+                        $survey_answer_cell->answer = $input->answers[$key];
+                    }
+                    break;
+            }
             $survey_answer_cell->save();
         }
-
         Session::put('message', 'Erfolgreich abgestimmt!');
         Session::put('msgType', 'success');
 
