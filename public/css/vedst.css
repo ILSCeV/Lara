@@ -375,6 +375,10 @@ input[type=number],
     margin: 0 !important;
 }
 
+.paddingTop10Px{
+    padding-top: 10px;
+}
+
 .padding-right-minimal {
     padding-right: 5px !important;
 }

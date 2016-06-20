@@ -3,9 +3,7 @@
 @section('title')
 	{{ $clubEvent->evnt_title }}
 @stop
-
 @section('content')
-
 	<div class="row no-margin">
 		<div class="panel col-xs-12 col-md-6 no-padding">
 			@if	($clubEvent->evnt_type == 1 AND $clubEvent->evnt_is_private)
@@ -184,7 +182,7 @@
 
 		<div class="panel-body no-padding">
 			@foreach($entries as $entry)	
-				<div class="row">
+				<div class="row paddingTop10Px" 	>
 			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
 			                                'id' => $entry->id, 
 			                                'method' => 'put', 
