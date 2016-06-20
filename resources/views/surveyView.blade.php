@@ -142,23 +142,16 @@ Calculate width of row in answers
                                     @endif
                                 @elseif($question->field_type == 3)
                                 <!-- Dropdown -->
-                                        <?php
-                                        $answerOptionsDatabase = $question->getAnswerOptions;
-                                        $answerOptions = [];
-                                        foreach($answerOptionsDatabase as $answerOptionDatabase) {
-                                            $answerOptions[$answerOptionDatabase->answer_option] = $answerOptionDatabase->answer_option;
-                                        }
-                                        if(!$question->is_required){
-                                            $answerOptions[-1] = "keine Angabe";
-                                        }
-                                    ?>
+                                    <select class="form-control" name="answers[{{$key}}]">
                                     @if(!$question->is_required)
-                                    <!--Answer not required-->
-                                        {{ Form::select('answers['.$key.']', $answerOptions, -1) }}
-                                    @else
-                                    <!--Answer* required-->
-                                        {{ Form::select('answers['.$key.']', $answerOptions) }}
+                                        <option>keine Angabe</option>
                                     @endif
+                                    @foreach($question->getAnswerOptions as $answerOption)
+                                        <option>{{$answerOption->answer_option}}</option>
+                                    @endforeach
+                                    </select>
+
+
                                 @endif
                             </div>
                             @endforeach
