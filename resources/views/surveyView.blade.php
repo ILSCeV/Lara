@@ -161,11 +161,8 @@ Calculate width of row in answers
                                 {!! Form::close() !!}
                             </div>
                     </div>
-                    <?php $countAnswersRow = 0; ?>
                     @foreach($answers as $key => $answer)
-                        <?php $countAnswersRow += 1; ?>
                         <div class="rowNoPadding">
-                            <!--Color 1-->
                             <div class="answerToQuestion color{{$alternatingColor}}">
                                 @if($club = $clubs->find($answer->club_id))
                                     {{$club->clb_title}}
@@ -174,7 +171,7 @@ Calculate width of row in answers
                                 @endif
                             </div>
                             @foreach($answer->getAnswerCells as $cell)
-                                <div class="answerToQuestion color{{$alternatingColor}} answerRow<?php echo $countAnswersRow; ?>">
+                                <div class="answerToQuestion color{{$alternatingColor}} answerRow">
                                     {{$cell->answer}}
                                 </div>
                                 @endforeach
@@ -182,13 +179,13 @@ Calculate width of row in answers
                                         <!--Edid Delete Buttons-->
                                 <div class="marginLeft15 answerToQuestion color{{$alternatingColor}} editDelete">
                                     <a
-                                       class="editButton btn btn-primary editRow<?php echo $countAnswersRow; ?>"
+                                       class="editButton btn btn-primary editRow"
                                        data-toggle="tooltip"
                                        data-placement="bottom">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                     <a href="{{$survey->id}}/answer/{{$answer->id}}"
-                                       class="btn btn-default deleteRow<?php echo $countAnswersRow; ?>"
+                                       class="btn btn-default deleteRow"
                                        data-toggle="tooltip"
                                        data-placement="bottom"
                                        data-method="delete"
