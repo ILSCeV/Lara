@@ -8,6 +8,12 @@
     }
 }
 
+.plusSymbol{
+    font-weight: bold;
+    font-size: 20px;
+    line-height: normal;
+}
+
 .containerPadding15Mobile {
     margin: 18px;
 }
@@ -353,7 +359,7 @@ input[type=number],
 }
 
 /**
- * Greeting our mechanical overlords 
+ * Greeting our mechanical overlords
  */
 #welcome-to-our-mechanical-overlords {
     display: none;
@@ -403,6 +409,42 @@ input[type=number],
     padding-left: 16px !important;
 }
 
+
+@media screen and (max-width: 978px) {
+    .left-padding-16{
+        padding-left: 0px !important;
+    }
+}
+
 .padding-right-16 {
     padding-right: 16px !important;
+}
+
+
+.displayDesktop {
+    display: block;
+}
+
+.displayMobile {
+    display: none;
+}
+
+@media screen and (max-width: 978px) {
+    .displayMobile {
+        display: block;
+    }
+
+    .displayDesktop {
+        display: none;
+        width: 0 !important;
+    }
+}
+
+/* On Event View */
+.panelEventView{
+    padding: 0px 15px 15px 15px;
+}
+
+.paddingTop{
+    padding-top: 6px;
 }
