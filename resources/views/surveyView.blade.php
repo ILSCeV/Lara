@@ -47,6 +47,7 @@ Calculate width of row in answers
     <?php
     $numberQuestions = 0;
     $userCanEditOrDeleteAnswer = false;
+    $userCanEditDueToRole = false;
     $userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung' ? $userCanEditDueToRole = true : $userCanEditDueToRole = false;
     $tableNot100Percent = false;
     ?>
