@@ -6,10 +6,11 @@
 
 @section('content')
 
+    <div class="panelEventView">
 	<div class="row no-margin">
 		<div class="panel col-xs-12 col-md-6 no-padding">
 			@if	($clubEvent->evnt_type == 1 AND $clubEvent->evnt_is_private)
-				<div class="panel panel-heading calendar-internal-info white-text">			
+				<div class="panel panel-heading calendar-internal-info white-text">
 			@elseif     ($clubEvent->evnt_type == 1)
 				<div class="panel panel-heading calendar-public-info white-text">
 
@@ -34,10 +35,10 @@
 				<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
 			@elseif ($clubEvent->getPlace->plc_title == "bc-Café")
 				<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
-				
-			@else 
+
+			@else
 				{{-- DEFAULT --}}
-				<div class="panel panel-heading white-text">		
+				<div class="panel panel-heading white-text">
 			@endif
 				<h4 class="panel-title">@include("partials.event-marker")&nbsp;{{ $clubEvent->evnt_title }}</h4>
 				<h5 class="panel-title">{{ $clubEvent->evnt_subtitle }}</h5>
@@ -45,7 +46,7 @@
 				<table class="table table-hover">
 					<tr>
 						<td width="20%" class="left-padding-16">
-							<i>Typ:</i>	
+							<i>Typ:</i>
 						</td>
 						<td>
 							@if( $clubEvent->evnt_type == 0)
@@ -75,8 +76,8 @@
 						<td width="20%" class="left-padding-16">
 							<i>Beginn:</i>
 						</td>
-						<td> 
-							{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start)) }} um 
+						<td>
+							{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start)) }} um
 							{{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
 						</td>
 					</tr>
@@ -85,7 +86,7 @@
 							<i>Ende:</i>
 						</td>
 						<td>
-							{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_end)) }} um 
+							{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_end)) }} um
 							{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 						</td>
 					</tr>
@@ -112,26 +113,26 @@
 			@if(Session::has('userGroup')
 				AND (Session::get('userGroup') == 'marketing'
 				OR Session::get('userGroup') == 'clubleitung'
-				OR Session::get('userGroup') == 'admin' 
+				OR Session::get('userGroup') == 'admin'
 				OR Session::get('userId') == $created_by))
-				<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">	
+				<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">
 					<span class="pull-right">
-						<a href="{{ URL::route('event.edit', $clubEvent->id) }}" 
+						<a href="{{ URL::route('event.edit', $clubEvent->id) }}"
 						   class="btn btn-primary"
-						   data-toggle="tooltip" 
-	                       data-placement="bottom" 
+						   data-toggle="tooltip"
+	                       data-placement="bottom"
 	                       title="Veranstaltung ändern">
 						   <i class="fa fa-pencil"></i>
 						</a>
 						&nbsp;&nbsp;
 						<a href="{{ $clubEvent->id }}"
 						   class="btn btn-default"
-						   data-toggle="tooltip" 
-	                       data-placement="bottom" 
-	                       title="Veranstaltung löschen" 
-						   data-method="delete" 
+						   data-toggle="tooltip"
+	                       data-placement="bottom"
+	                       title="Veranstaltung löschen"
+						   data-method="delete"
 						   data-token="{{csrf_token()}}"
-						   rel="nofollow" 
+						   rel="nofollow"
 						   data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">
 						   <i class="fa fa-trash"></i>
 						</a>
@@ -139,12 +140,17 @@
 				</div>
 			@endif
 		</div>
+                        <span class="displayMobile">
+                            <br>	&nbsp;
+                        </span>
+
+
 
 		<div class="col-xs-12 col-md-6 no-padding left-padding-16">
 			@if( $clubEvent->evnt_public_info != '')
 			<div class="panel">
-				<div class="panel-body more-info">				
-					<h5 class="panel-title">Zusatzinfos:</h5> 
+				<div class="panel-body more-info">
+					<h5 class="panel-title">Zusatzinfos:</h5>
 					{!! nl2br(e($clubEvent->evnt_public_info)) !!}
 				</div>
 				<button type="button" class="moreless-more-info btn btn-primary btn-margin" data-dismiss="alert">mehr anzeigen</button>
@@ -153,10 +159,10 @@
 			@endif
 
 			@if(Session::has('userId'))
-				@if($clubEvent->evnt_private_details != '') 
+				@if($clubEvent->evnt_private_details != '')
 				<div class="panel hidden-print">
 					<div class="panel-body more-details">
-						<h5 class="panel-title">Weitere Details:</h5> 
+						<h5 class="panel-title">Weitere Details:</h5>
 						{!! nl2br(e($clubEvent->evnt_private_details)) !!}
 					</div>
 					<button type="button" class="moreless-more-details btn btn-primary btn-margin" data-dismiss="alert">mehr anzeigen</button>
@@ -166,28 +172,31 @@
 			@endif
 		</div>
 	</div>
+</div>
 
 	<br>
+                        <div class="panelEventView">
 	&nbsp;&nbsp;<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten ausblenden</button>
-	
-	<div class="panel panel-warning">	
+
+
+	<div class="panel panel-warning">
 		@if( $clubEvent->getSchedule->schdl_password != '')
 			<div class="hidden-print panel panel-heading">
-			    {!! Form::password('password', array('required', 
+			    {!! Form::password('password', array('required',
 			                                         'class'=>'col-md-4 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
 			                                         'placeholder'=>'Passwort hier eingeben')) !!}
 			    <br />
-			</div> 
+			</div>
 
-		@endif 
+		@endif
 
 		<div class="panel-body no-padding">
-			@foreach($entries as $entry)	
+			@foreach($entries as $entry)
 				<div class="row">
 			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
-			                                'id' => $entry->id, 
-			                                'method' => 'put', 
+			                                'id' => $entry->id,
+			                                'method' => 'put',
 			                                'class' => 'scheduleEntry')  ) !!}
 
 			        {{-- SPAMBOT HONEYPOT - this field will be hidden, so if it's filled, then it's a bot or a user tampering with page source --}}
@@ -200,7 +209,7 @@
 			        <div class="col-md-2 col-xs-3 left-padding-8">
 			            @include("partials.scheduleEntryTitle")
 			        </div>
-			        
+
 			        {{-- show public events, but protect members' entries from being changed by guests --}}
 			        @if( isset($entry->getPerson->prsn_ldap_id) AND !Session::has('userId'))
 
@@ -225,7 +234,7 @@
 
 						<br class="visible-xs">
 
-						{{-- COMMENT SECTION --}}	        
+						{{-- COMMENT SECTION --}}
 						<div class="col-md-6 col-xs-12 hidden-print word-break no-margin">
 						    <span class="pull-left">
 						    	{!! $entry->entry_user_comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
@@ -236,48 +245,48 @@
 							    {!! !empty($entry->entry_user_comment) ? $entry->entry_user_comment : "-" !!}
 							</span>
 						</div>
-						
+
 
 			        {{-- show everything for members --}}
 					@else
 
 			        	{{-- ENTRY STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-						<div class="col-md-2 col-xs-5 input-append btn-group">      
+						<div class="col-md-2 col-xs-5 input-append btn-group">
 						    @include("partials.scheduleEntryName")
-						</div>                
-						        
+						</div>
+
 						{{-- ENTRY CLUB and DROPDOWN CLUB --}}
 						<div class="col-md-2 col-xs-4 no-padding">
-						    @include("partials.scheduleEntryClub")                 
-						</div>   
+						    @include("partials.scheduleEntryClub")
+						</div>
 
-						{{-- COMMENT SECTION --}}	
+						{{-- COMMENT SECTION --}}
 						<br class="visible-print hidden-md hidden-sm hidden-xs">
-						<br class="visible-print hidden-md hidden-sm hidden-xs">   
+						<br class="visible-print hidden-md hidden-sm hidden-xs">
 						<div class="col-md-6 col-xs-12 no-margin">
 						    <span class="pull-left">
 						    	{!! $entry->entry_user_comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
 						    	&nbsp;&nbsp;
 						    </span>
-						    
-						    {!! Form::text('comment' . $entry->id, 
-					                   $entry->entry_user_comment, 
+
+						    {!! Form::text('comment' . $entry->id,
+					                   $entry->entry_user_comment,
 					                   array('placeholder'=>'Kommentar hier hinzufügen',
 					                         'id'=>'comment' . $entry->id,
 			                     			 'name'=>'comment' . $entry->id,
-					                         'class'=>'col-md-11 col-xs-10 no-padding no-margin')) 
-					    	!!}	
+					                         'class'=>'col-md-11 col-xs-10 no-padding no-margin'))
+					    	!!}
 						</div>
-						<br class="visible-print hidden-md hidden-sm hidden-xs">    
+						<br class="visible-print hidden-md hidden-sm hidden-xs">
 
 			        @endif
-			            
+
 			        {!! Form::close() !!}
 
 				</div>
 
 				{{-- Show a line after each row except the last one --}}
-				@if($entry !== $entries->last() ) 
+				@if($entry !== $entries->last() )
 					<hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 				@endif
 
@@ -345,8 +354,8 @@
 		</div>
 		<br>
 		<br class="visible-xs">
+                    </div>
 	@endif
-
 @stop
 
 

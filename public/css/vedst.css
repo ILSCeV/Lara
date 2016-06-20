@@ -408,3 +408,28 @@ input[type=number],
 .padding-right-16 {
     padding-right: 16px !important;
 }
+
+
+.displayDesktop {
+    display: block;
+}
+
+.displayMobile {
+    display: none;
+}
+
+@media screen and (max-width: 978px) {
+    .displayMobile {
+        display: block;
+    }
+
+    .displayDesktop {
+        display: none;
+        width: 0 !important;
+    }
+}
+
+/* On Event View */
+.panelEventView{
+    padding: 0px 15px 15px 15px;
+}
