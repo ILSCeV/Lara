@@ -46,12 +46,14 @@ class SurveyAnswerController extends Controller
 //        var_dump($input->answers);
         $survey = Survey::findOrFail($surveyid);
         $club = Club::where('clb_title', $input->club)->first();
-
+        
         $survey_answer = new SurveyAnswer();
         $survey_answer->creator_id = Session::get('userId');
         $survey_answer->survey_id = $surveyid;
         $survey_answer->name = $input->name;
-        $survey_answer->club_id = $club->id;
+        if(!empty($club)) {
+            $survey_answer->club_id = $club->id;
+        }
         $survey_answer->order = 0;                                  // example, might be better to order bei updated_at?
         $survey_answer->save();
 
