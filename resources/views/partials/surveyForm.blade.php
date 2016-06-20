@@ -63,7 +63,7 @@
         </div>
     </div>
 </div>
-@if ($is_edit AND $survey->password !== '')
+@if (!empty($survey->password))
     <div style="color: #ff9800;">
         <small>Um das Passwort zu löschen, trage in beide Felder "delete" ein (ohne
             Anführungszeichen).
