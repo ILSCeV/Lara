@@ -70,18 +70,6 @@ Calculate width of row in answers
     <?php $tableNot100Percent = true ?>
     @endif
 
-    {{--userID: {{$userId}}--}}
-    {{--<br>--}}
-    {{--@foreach($answers as $answer)--}}
-            {{--answersUSerID: {{$answer->creator_id}}--}}
-    {{--@endforeach--}}
-     {{--<br>--}}
-     {{--userGroup: {{$userGroup}}<br>--}}
-     {{--questions: {{$questions}}--}}
-
-
-
-
     <div class="panel displayDesktop">
         {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id]]) !!}
         <div class="row rowNoPadding">
@@ -124,6 +112,7 @@ Calculate width of row in answers
                     <div class="rowNoPadding">
                         <div class="answerToQuestion">
                             <select class="form-control" id="sel1" name="club">
+                                <option>kein Club</option>
                                 @foreach($clubs as $club)
                                     <option>{{$club->clb_title}}</option>
                                 @endforeach
@@ -132,25 +121,44 @@ Calculate width of row in answers
                         @foreach($questions as $key => $question)
                             <div class="answerToQuestion">
                                 @if($question->field_type == 1)
-                                    @if($question->is_required == 0)
-                                            <!--Answer not required-->
-                                    {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+                                <!-- Freitext -->
+                                    @if(!$question->is_required)
+                                    <!--Answer not required-->
+                                        {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
                                     @else
-                                            <!--Answer* required-->
-                                    {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                                    <!--Answer* required-->
+                                        {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                                     @endif
                                 @elseif($question->field_type == 2)
-                                    {{ Form::checkbox('answers['.$key.']', null) }}
+                                <!-- Ja/Nein -->
+                                    {{ Form::radio('answers['.$key.']', 1) }} Ja
+                                    @if(!$question->is_required)
+                                    <!--Answer not required-->
+                                        {{ Form::radio('answers['.$key.']', 0) }} Nein
+                                        {{ Form::radio('answers['.$key.']', -1, true)}} keine Angabe
+                                    @else
+                                    <!--Answer* required-->
+                                        {{ Form::radio('answers['.$key.']', 0, true) }} Nein
+                                    @endif
                                 @elseif($question->field_type == 3)
-                                    <?php
+                                <!-- Dropdown -->
+                                        <?php
                                         $answerOptionsDatabase = $question->getAnswerOptions;
                                         $answerOptions = [];
                                         foreach($answerOptionsDatabase as $answerOptionDatabase) {
-                                            array_push($answerOptions, $answerOptionDatabase->answer_option);
+                                            $answerOptions[$answerOptionDatabase->answer_option] = $answerOptionDatabase->answer_option;
+                                        }
+                                        if(!$question->is_required){
+                                            $answerOptions[-1] = "keine Angabe";
                                         }
                                     ?>
-                                    {{ Form::select('answers['.$key.']', $answerOptions) }}
-
+                                    @if(!$question->is_required)
+                                    <!--Answer not required-->
+                                        {{ Form::select('answers['.$key.']', $answerOptions, -1) }}
+                                    @else
+                                    <!--Answer* required-->
+                                        {{ Form::select('answers['.$key.']', $answerOptions) }}
+                                    @endif
                                 @endif
                             </div>
                             @endforeach
@@ -161,15 +169,15 @@ Calculate width of row in answers
                             </div>
                     </div>
                     <?php $countAnswersRow = 0; ?>
-                    @foreach($answers as $answer)
+                    @foreach($answers as $key => $answer)
                         <?php $countAnswersRow += 1; ?>
                         <div class="rowNoPadding">
                             <!--Color 1-->
                             <div class="answerToQuestion color{{$alternatingColor}}">
                                 @if($club = $clubs->find($answer->club_id))
-                                    club: {{$club->clb_title}}
+                                    {{$club->clb_title}}
                                 @else
-                                    club: kein Club
+                                    kein Club
                                 @endif
                             </div>
                             @foreach($answer->getAnswerCells as $cell)

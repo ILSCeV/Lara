@@ -43,6 +43,7 @@ class SurveyAnswerController extends Controller
      */
     public function store($surveyid, Request $input)
     {
+//        var_dump($input->answers);
         $survey = Survey::findOrFail($surveyid);
         $club = Club::where('clb_title', $input->club)->first();
 
@@ -65,11 +66,20 @@ class SurveyAnswerController extends Controller
                     $survey_answer_cell->answer = $input->answers[$key];
                     break;
                 case 2: //Checkbox (Ja/Nein)
-                    array_key_exists($key, $input->answers) ? $survey_answer_cell->answer = "Ja" : $survey_answer_cell->answer = "Nein";
+                    if($input->answers[$key] == -1) {
+                        $survey_answer_cell->answer = "keine Angabe";
+                    } elseif ($input->answers[$key] == 0) {
+                        $survey_answer_cell->answer = "Nein";
+                    } elseif ($input->answers[$key] == 1) {
+                        $survey_answer_cell->answer = "Ja";
+                    }
                     break;
                 case 3: //Dropdown
-                    $answer_options = $question->getAnswerOptions;
-                    $survey_answer_cell->answer = $input->answers[$key];
+                    if($input->answers[$key] == -1) {
+                        $survey_answer_cell->answer = "keine Angabe";
+                    } else {
+                        $survey_answer_cell->answer = $input->answers[$key];
+                    }
                     break;
             }
             $survey_answer_cell->save();
