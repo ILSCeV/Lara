@@ -8,6 +8,12 @@
     }
 }
 
+.plusSymbol{
+    font-weight: bold;
+    font-size: 20px;
+    line-height: normal;
+}
+
 .containerPadding15Mobile {
     margin: 18px;
 }
@@ -353,7 +359,7 @@ input[type=number],
 }
 
 /**
- * Greeting our mechanical overlords 
+ * Greeting our mechanical overlords
  */
 #welcome-to-our-mechanical-overlords {
     display: none;

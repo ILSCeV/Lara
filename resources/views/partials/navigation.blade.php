@@ -54,22 +54,22 @@
             <div class="col-xs-10 col-sm-12 col-md-12 no-margin no-padding">
                 @if(Session::has('userId'))
 
-                    {{-- CREATE BUTTON --}}  
+                    {{-- CREATE BUTTON --}}
                     <li style="padding-top:5px" class="btn-group testleft">
                         @if(Session::has('userGroup'))
-                            {{-- small [+] button --}}
-                            <div style="padding-top:5px" class="btn-group">
-                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <span class="fa fa-plus-square">
-                                    </span>
+                            {{-- small [+] button--}}
+                            <div style="padding-top:2px" class="btn-group">
+                                <a class="btn btn-primary dropdown-toggle plusSymbol" data-toggle="dropdown"
+                                   href="#">
+                                    <span class="test">+</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ URL::route('event.create') }}">Neue Veranstaltung/Aufgabe hinzufügen</a></li>
+                                    <li><a href="{{ URL::route('event.create') }}">Neue Veranstaltung/Aufgabe
+                                            hinzufügen</a></li>
                                     <li><a href="{{ URL::route('survey.create') }}">Neue Umfrage hinzufügen</a></li>
                                 </ul>
                             </div>
                         @endif
-
                     </li>
 
                     {{-- LOGIN FORM --}}
