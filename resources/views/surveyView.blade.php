@@ -92,19 +92,19 @@ Calculate width of row in answers
 
 
 
-    <div class="panel displayDesktop">
-        {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id]]) !!}
+    <div class="displayDesktop">
+        <div class="panel panel-warning">
         @if( $survey->password != '')
-            <div class="hidden-print panel panel-heading col-md-2 col-xs-12">
+            <div class="hidden-print panel-heading">
                 {!! Form::password('password', array('required',
-                                                     'class'=>'black-text',
+                                                     'class'=>'col-md-4 col-xs-12 black-text',
                                                      'id'=>'password' . $survey->id,
                                                      'placeholder'=>'Passwort hier eingeben')) !!}
+                <br>
             </div>
-            <br>
-            <br> <!-- maybe br is not ideal here -->
-            <br>
         @endif
+            {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id]]) !!}
+            <div class="panel-body">
         <div class="row rowNoPadding">
             <div class="col-md-2 rowNoPadding shadow">
                 <div class=" rowNoPadding nameToQuestion">
@@ -221,6 +221,7 @@ Calculate width of row in answers
                 @endif
             </div>
         </div>
+            </div>
     </div>
     <div class="displayDesktop">
     </div>
