@@ -93,6 +93,7 @@ Calculate width of row in answers
 
 
     <div class="displayDesktop">
+        {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id]]) !!}
         <div class="panel panel-warning">
         @if( $survey->password != '')
             <div class="hidden-print panel-heading">
@@ -103,7 +104,6 @@ Calculate width of row in answers
                 <br>
             </div>
         @endif
-            {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id]]) !!}
             <div class="panel-body">
         <div class="row rowNoPadding">
             <div class="col-md-2 rowNoPadding shadow">
