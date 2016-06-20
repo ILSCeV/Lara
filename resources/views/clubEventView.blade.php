@@ -182,7 +182,7 @@
 
 		<div class="panel-body no-padding">
 			@foreach($entries as $entry)	
-				<div class="row paddingTop10Px" 	>
+				<div class="row paddingTop10Px">
 			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
 			                                'id' => $entry->id, 
 			                                'method' => 'put', 
