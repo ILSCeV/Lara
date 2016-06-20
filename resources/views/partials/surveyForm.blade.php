@@ -40,7 +40,8 @@
 
 
                 newElem.find('.questions').attr('for', 'ID' + newNum + 'questions[]');
-                newElem.find('.questions').attr('id', 'ID' + newNum + 'questions[]').attr('name', 'questions[]').val('');
+                newElem.find('.questions').attr('id', 'ID' + newNum + 'questions[]');
+                newElem.find('#question').val('');
 
 
                 newElem.find('.label_checkboxitem').attr('for', 'ID' + newNum + '_checkboxitem');
