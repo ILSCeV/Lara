@@ -318,17 +318,17 @@
         <div>
             <label class="label_checkboxitem" for="checkboxitemitem"></label>
             <label><input type="checkbox" id="required1" value="required1" name="is_private" class="input_checkboxitem"
-                          @if($survey->is_private) checked @endif> Nur für eingeloggte Nutzer sichtbar?  </label>
+                          @if($survey->is_private) checked @endif> nur für eingeloggte Nutzer sichtbar  </label>
         </div>
         <div>
             <label class="label_checkboxitem" for="checkboxitemitem"></label>
             <label><input type="checkbox" id="required2" value="required2" name="is_anonymous" class="input_checkboxitem"
-                          @if($survey->is_anonymous) checked @endif> anonyme Umfrage</label>
+                          @if($survey->is_anonymous) checked @endif> Ergebnisse sind nur für den Umfragenersteller sichtbar </label>
         </div>
         <div>
             <label class="label_checkboxitem" for="checkboxitemitem"></label>
             <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem"
-                          @if($survey->show_results_after_voting) checked @endif> zeige Ergebnisse nach der Abstimmung</label>
+                          @if($survey->show_results_after_voting) checked @endif> Ergebnisse sind erst nach dem Ausfüllen sichtbar </label>
         </div>
 
     </div>
