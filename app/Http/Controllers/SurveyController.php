@@ -236,6 +236,7 @@ class SurveyController extends Controller
         $survey = Survey::findOrFail($id);
         //find questions
         $questions = $survey->getQuestions;
+        $questionCount = count($questions);
         //find answers
         $answers = $survey->getAnswers;
         //find all clubs
@@ -244,7 +245,11 @@ class SurveyController extends Controller
         $userId = Session::get('userId');
         $userGroup = Session::get('userGroup');
 
-        return view('surveyView', compact('survey', 'questions', 'answers', 'clubs', 'userId', 'userGroup'));
+        //check if the role of the user allows edit/delete for all  answers
+        $userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung' ? $userCanEditDueToRole = true : $userCanEditDueToRole = false;
+
+
+        return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId', 'userGroup', 'userCanEditDueToRole'));
     }
 
     /**

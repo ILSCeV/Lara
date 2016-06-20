@@ -55,14 +55,25 @@ class SurveyAnswerController extends Controller
         $survey_answer->save();
 
         $questions = $survey->getQuestions;
-        foreach($input->answers as $key => $answer_cell) {
+
+        foreach($questions as $key => $question) {
             $survey_answer_cell = new SurveyAnswerCell();
-            $survey_answer_cell->survey_question_id = $questions[$key]->id;
+            $survey_answer_cell->survey_question_id = $question->id;
             $survey_answer_cell->survey_answer_id = $survey_answer->id;
-            $survey_answer_cell->answer = $answer_cell;
+            switch($question->field_type) {
+                case 1: //Freitext
+                    $survey_answer_cell->answer = $input->answers[$key];
+                    break;
+                case 2: //Checkbox (Ja/Nein)
+                    array_key_exists($key, $input->answers) ? $survey_answer_cell->answer = "Ja" : $survey_answer_cell->answer = "Nein";
+                    break;
+                case 3: //Dropdown
+                    $answer_options = $question->getAnswerOptions;
+                    $survey_answer_cell->answer = $input->answers[$key];
+                    break;
+            }
             $survey_answer_cell->save();
         }
-
         Session::put('message', 'Erfolgreich abgestimmt!');
         Session::put('msgType', 'success');
 
