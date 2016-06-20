@@ -191,9 +191,9 @@
 
 		@endif
 
-		<div class="panel-body no-padding">
+		<div class="panel-body no-padding ">
 			@foreach($entries as $entry)
-				<div class="row">
+				<div class="row paddingTop">
 			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
 			                                'id' => $entry->id,
 			                                'method' => 'put',
