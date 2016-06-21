@@ -4,6 +4,10 @@
 	{{ $clubEvent->evnt_title }}
 @stop
 
+@section('moreStylesheets')
+    <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/clubEventViewStyle.css') }}"/>
+@stop
+
 @section('content')
 
     <div class="panelEventView">
@@ -299,7 +303,6 @@
 
 	@if(Session::has('userId'))
 		{{-- REVISIONS --}}
-		<span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 		<a id="show-hide-history" class="text-muted hidden-print" href="#">
 			Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
 		</a>

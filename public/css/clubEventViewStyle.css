@@ -1,0 +1,90 @@
+/*
+Generic Styling, for Desktops/Laptops
+*/
+#change-history table {
+    width: 100%;
+    border-collapse: collapse;
+}
+/* Zebra striping*/
+@media screen and (max-width: 978px) {
+    #change-history tr:nth-of-type(odd) {
+        background: #f5f5f5;
+    }
+}
+
+/*
+#change-history th {
+    background: #333;
+    color: white;
+    font-weight: bold;
+}
+*/
+
+#change-history td, #change-history th {
+    padding: 6px;
+    border: 1px solid #eeeeee;
+    text-align: left;
+}
+
+/*
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+    /* Force table to not be like tables anymore */
+    #change-history table, #change-history thead, #change-history tbody, #change-history th, #change-history td, #change-history tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    #change-history thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    #change-history tr { border: 1px solid #eeeeee; }
+
+    #change-history td {
+        /* Behave  like a "row" */
+        border: none;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    #change-history tr:nth-of-type(even) td {
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    #change-history tr:nth-of-type(odd) td {
+        border-bottom: 1px solid #c0c0c0;
+    }
+
+
+
+
+    #change-history td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+    }
+
+    /*
+    Label the data
+    */
+    #change-history td:nth-of-type(1):before { content: "Dienst"; }
+    #change-history td:nth-of-type(2):before { content: "Was wurde geändert?"; }
+    #change-history td:nth-of-type(3):before { content: "Alter Eintrag"; }
+    #change-history td:nth-of-type(4):before { content: "Neuer Eintrag"; }
+    #change-history td:nth-of-type(5):before { content: "Wer ist schuld?"; }
+    #change-history td:nth-of-type(6):before { content: "Wann war das?"; }
+}
