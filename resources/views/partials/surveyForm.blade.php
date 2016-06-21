@@ -291,6 +291,18 @@
         }
     </script>
 
+    <script>
+        $(function () {
+
+            if (window.location.pathname === '/survey/create') {
+                $('#heading_create').attr('style', '')
+            }
+            else
+                $('#heading_edit').attr('style', '')
+
+        });
+    </script>
+
 </head>
 
 <body>
@@ -309,6 +321,12 @@
              });
          });
 </script>
+
+<div class="panel-group">
+    <div class="panel col-md-8 col-sm-12 col-xs-12">
+        <h4 id="heading_create" style="display:none">Neue Umfrage erstellen:</h4>
+
+        <h4 id="heading_edit" style="display:none">Umfrage editieren:</h4>
 
 <div class="panel-body">
 
@@ -388,7 +406,7 @@
                             <input class="hidden" type="hidden" id="hiddenField" name="type[]" value="nothingYet">
                         </fieldset>
                             </div>
-                        <input class="hidden" type="hidden" id="hiddenField" name="test[]" value="hallo">
+
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
                 <fieldset class="checkbox entrylist">
@@ -431,6 +449,7 @@
         </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>
