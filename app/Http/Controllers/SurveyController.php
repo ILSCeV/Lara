@@ -2,7 +2,9 @@
 
 namespace Lara\Http\Controllers;
 
+use Config;
 use Illuminate\Http\Request;
+use Hash;
 use Session;
 use Redirect;
 use DateTime;
@@ -55,7 +57,7 @@ class SurveyController extends Controller
 
         //placeholder because createSurveyView needs variable, can set defaults here
         $survey = new Survey();
-
+        
         return view('createSurveyView', compact('survey','time'));
     }
 
@@ -65,16 +67,28 @@ class SurveyController extends Controller
      */
     public function store(Request $input)
     {
+        if ($input->password != $input->passwordDouble) {
+            Session::put('message', Config::get('messages_de.password-mismatch') );
+            Session::put('msgType', 'danger');
+            return Redirect::back()->withInput();
+        }
+
         $survey = new Survey;
         $survey->creator_id = Session::get('userId');
         $survey->title = $input->title;
         //if URL is in the description, convert it to clickable hyperlink
         $survey->description = $this->addLinks($input->description);
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
         $survey->is_anonymous = isset($input->is_anonymous);
         $survey->is_private = isset($input->is_private);
         $survey->show_results_after_voting = isset($input->show_results_after_voting);
+        
+        if (!empty($input->password)
+            AND !empty($input->passwordDouble)
+            AND $input->password == $input->passwordDouble) {
+            $survey->password = Hash::make($input->password);
+        }
 
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
         $survey->save();
 
         $questions = $input->questions;
@@ -96,7 +110,7 @@ class SurveyController extends Controller
                                      weil alle Fragen leer gelassen wurden!');
             Session::put('msgType', 'danger');
 
-            return Redirect::action('SurveyController@create', array('id' => $survey->id));
+            return Redirect::back()->withInput();
         }
 
         //abort if no single field type is given
@@ -105,7 +119,7 @@ class SurveyController extends Controller
                                      weil kein einziger Frage-Typ angegeben wurde!');
             Session::put('msgType', 'danger');
 
-            return Redirect::action('SurveyController@create', array('id' => $survey->id));
+            return Redirect::back()->withInput();
         }
 
         //actual bug: answer options array is too long, must delete unnecessary elements
@@ -268,7 +282,7 @@ class SurveyController extends Controller
 
         // prepare correct date and time format to be used in forms for deadline
         $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-
+        
         return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
     }
 
@@ -280,6 +294,13 @@ class SurveyController extends Controller
      */
     public function update($id, Request $input)
     {
+        /*
+        if ($input->password != $input->passwordDouble) {
+            Session::put('message', Config::get('messages_de.password-mismatch') );
+            Session::put('msgType', 'danger');
+            return Redirect::back()->withInput();
+        }
+        */
         //find survey
         $survey = Survey::findOrFail($id);
 
@@ -293,6 +314,18 @@ class SurveyController extends Controller
         $survey->is_anonymous = (bool) $input->is_anonymous;
         $survey->is_private = (bool) $input->is_private;
         $survey->show_results_after_voting = (bool) $input->show_results_after_voting;
+
+        //delete password if user changes both to delete
+        if ($input->password == "delete" AND $input->passwordDouble == "delete")
+        {
+            $survey->password = '';
+        }
+        //set new password
+        elseif (!empty($input->password)
+                AND !empty($input->passwordDouble)
+                AND $input->password == $input->passwordDouble) {
+            $survey->password = Hash::make($input->password);
+        }
 
         $survey->save();
 
@@ -351,14 +384,14 @@ class SurveyController extends Controller
             Session::put('message', 'Es konnten keine Fragen geändert werden, 
                                      weil alle Fragen leer gelassen wurden!');
             Session::put('msgType', 'danger');
-            return Redirect::action('SurveyController@edit', array('id' => $survey->id));
+            return Redirect::back()->withInput();
         }
 
         //if no single field type is given abort
         if(empty($question_type) or array_unique($question_type) === array('0')){
             Session::put('message', 'Es wurden keine Fragen geändert, weil kein einziger Frage-Typ ausgewählt wurde!');
             Session::put('msgType', 'danger');
-            return Redirect::action('SurveyController@edit', array('id' => $survey->id));
+            return Redirect::back()->withInput();
         }
 
         //ignore empty questions

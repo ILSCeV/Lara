@@ -3,6 +3,7 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Hash;
 use Session;
 use Redirect;
 
@@ -45,6 +46,15 @@ class SurveyAnswerController extends Controller
     {
 //        var_dump($input->answers);
         $survey = Survey::findOrFail($surveyid);
+
+        //check if survey needs a password and validate hashes
+        if ($survey->password !== ''
+            && !Hash::check( $input->password, $survey->password ) ) {
+            Session::put('message', 'Fehler: das angegebene Passwort ist falsch, keine Änderungen wurden gespeichert. Bitte versuche es erneut oder frage ein anderes Mitglied oder CL.');
+            Session::put('msgType', 'danger');
+            return Redirect::action('SurveyController@show', array('id' => $survey->id));
+        }
+
         $club = Club::where('clb_title', $input->club)->first();
         
         $survey_answer = new SurveyAnswer();

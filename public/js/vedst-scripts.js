@@ -775,6 +775,22 @@ jQuery( document ).ready( function( $ ) {
 
     });
 
+    /*
+    $( '.survey' ).on( 'submit', function() {
+
+        // For passworded surveys: check if a password field exists and is not empty
+        // We will check correctness on the server side
+        if ($(this).parentsUntil($(this), '.panel-warning').find("[name^=password]").length
+            && !$(this).parentsUntil($(this), '.panel-warning').find("[name^=password]").val()) {
+            var password = window.prompt('Bitte noch das Passwort für diese Umfrage eingeben:');
+            $(this).parentsUntil($(this), '.panel-warning').find("[name^=password]").val(password);
+        } else {
+            var password = $(this).parentsUntil($(this), '.panel-warning').find("[name^=password]").val();
+        }
+        //return false; ?
+    });
+    */
+
     // Detect entry name change and remove LDAP id from the previous entry
     $('.scheduleEntry').find("[name^=userName]").on('input propertychange paste', function() {
         $(this).parent().find("[name^=ldapId]").val("");

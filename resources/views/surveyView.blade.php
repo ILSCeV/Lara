@@ -36,11 +36,11 @@ $userCanEditDueToRole
                 {{$survey->description }}
             @endif
             <br>
-            {!! $survey->description!!}
             Die Umfrage läuft noch bis: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} um
             {{ date("H:i", strtotime($survey->deadline)) }}
         </div>
     </div>
+
 
     <br>
     <br>
@@ -70,8 +70,19 @@ Calculate width of row in answers
     <?php $tableNot100Percent = true ?>
     @endif
 
-    <div class="panel displayDesktop">
+    <div class="displayDesktop">
         {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id]]) !!}
+        <div class="panel panel-warning">
+        @if( $survey->password != '')
+            <div class="hidden-print panel-heading">
+                {!! Form::password('password', array('required',
+                                                     'class'=>'col-md-4 col-xs-12 black-text',
+                                                     'id'=>'password' . $survey->id,
+                                                     'placeholder'=>'Passwort hier eingeben')) !!}
+                <br>
+            </div>
+        @endif
+            <div class="panel-body">
         <div class="row rowNoPadding">
             <div class="col-md-2 rowNoPadding shadow">
                 <div class=" rowNoPadding nameToQuestion">
@@ -212,6 +223,7 @@ Calculate width of row in answers
                 @endif
             </div>
         </div>
+            </div>
     </div>
     <div class="displayDesktop">
     </div>
