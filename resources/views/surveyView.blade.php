@@ -37,7 +37,7 @@ $userCanEditDueToRole
             @endif
             <br>
             Die Umfrage läuft noch bis: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} um
-            {{ date("H:i", strtotime($survey->deadline)) }}
+            {{ date("H:i", strtotime($survey->deadline)) }}. Es haben bereits {{count($answers)}} Personen abgestimmt.
         </div>
     </div>
 
