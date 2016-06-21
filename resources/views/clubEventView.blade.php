@@ -66,7 +66,7 @@
 							@elseif( $clubEvent->evnt_type == 8)
 								Vorverkauf
 							@elseif( $clubEvent->evnt_type == 9)
-								interne Aufgabe
+								Sonstiges
 							@endif
 						</td>
 					</tr>
@@ -142,9 +142,7 @@
                             <br>	&nbsp;
                         </span>
 
-
-
-		<div class="col-xs-12 col-md-6 no-padding left-padding-16">
+		<div class="col-xs-12 col-md-6 col-sm-12 no-padding-xs">
 			@if( $clubEvent->evnt_public_info != '')
 			<div class="panel">
 				<div class="panel-body more-info">
@@ -181,7 +179,7 @@
 		@if( $clubEvent->getSchedule->schdl_password != '')
 			<div class="hidden-print panel panel-heading">
 			    {!! Form::password('password', array('required',
-			                                         'class'=>'col-md-4 col-xs-12 black-text',
+			                                         'class'=>'col-md-4 col-sm-4 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
 			                                         'placeholder'=>'Passwort hier eingeben')) !!}
 			    <br />
@@ -193,8 +191,8 @@
 			@foreach($entries as $entry)
 				<div class="row paddingTop">
 			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
-			                                'id' => $entry->id,
-			                                'method' => 'put',
+			                                'id' => $entry->id, 
+			                                'method' => 'PUT', 
 			                                'class' => 'scheduleEntry')  ) !!}
 
 			        {{-- SPAMBOT HONEYPOT - this field will be hidden, so if it's filled, then it's a bot or a user tampering with page source --}}
@@ -204,16 +202,16 @@
 			        </div>
 
 			        {{-- ENTRY TITLE --}}
-			        <div class="col-md-2 col-xs-3 left-padding-8">
+			        <div class="col-md-2 col-sm-2 col-xs-4 left-padding-8">
 			            @include("partials.scheduleEntryTitle")
 			        </div>
 
 			        {{-- show public events, but protect members' entries from being changed by guests --}}
 			        @if( isset($entry->getPerson->prsn_ldap_id) AND !Session::has('userId'))
 
-						<div class="col-md-2 col-xs-5 input-append btn-group">
+						<div class="col-md-2 col-sm-2 col-xs-4 input-append btn-group">
 						    {{-- ENTRY STATUS --}}
-						    <div class="col-md-2 col-xs-3 no-padding" id="clubStatus{{ $entry->id }}">
+						    <div class="col-md-3 col-sm-2 col-xs-3 no-padding" id="clubStatus{{ $entry->id }}">
 						        @include("partials.scheduleEntryStatus")
 						    </div>
 
@@ -226,20 +224,20 @@
 						</div>
 
 						{{-- ENTRY CLUB --}}
-						<div id="{!! 'club' . $entry->id !!}" class="col-md-2 col-xs-4 no-padding">
+						<div id="{!! 'club' . $entry->id !!}" class="col-md-2 col-xs-3 no-padding">
 						    {!! "(" . $entry->getPerson->getClub->clb_title . ")" !!}
 						</div>
 
-						<br class="visible-xs">
+						<br class="visible-xs hidden-sm">
 
 						{{-- COMMENT SECTION --}}
-						<div class="col-md-6 col-xs-12 hidden-print word-break no-margin">
+						<div class="col-md-6 col-sm-6 col-xs-12 hidden-print word-break no-margin">
 						    <span class="pull-left">
 						    	{!! $entry->entry_user_comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
 						    	&nbsp;&nbsp;
 						    </span>
 
-						    <span class="col-md-10 col-xs-10 no-padding no-margin">
+						    <span class="col-md-10 col-sm-10 col-xs-10 no-padding no-margin">
 							    {!! !empty($entry->entry_user_comment) ? $entry->entry_user_comment : "-" !!}
 							</span>
 						</div>
@@ -249,19 +247,18 @@
 					@else
 
 			        	{{-- ENTRY STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-						<div class="col-md-2 col-xs-5 input-append btn-group">
+						<div class="col-md-2 col-sm-2 col-xs-5 input-append btn-group">      
 						    @include("partials.scheduleEntryName")
 						</div>
 
 						{{-- ENTRY CLUB and DROPDOWN CLUB --}}
-						<div class="col-md-2 col-xs-4 no-padding">
+						<div class="col-md-2 col-sm-2 col-xs-3 no-padding">
 						    @include("partials.scheduleEntryClub")
 						</div>
 
 						{{-- COMMENT SECTION --}}
 						<br class="visible-print hidden-md hidden-sm hidden-xs">
-						<br class="visible-print hidden-md hidden-sm hidden-xs">
-						<div class="col-md-6 col-xs-12 no-margin">
+						<div class="col-md-6 col-sm-12 col-xs-12 no-margin">
 						    <span class="pull-left">
 						    	{!! $entry->entry_user_comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
 						    	&nbsp;&nbsp;
@@ -272,8 +269,8 @@
 					                   array('placeholder'=>'Kommentar hier hinzufügen',
 					                         'id'=>'comment' . $entry->id,
 			                     			 'name'=>'comment' . $entry->id,
-					                         'class'=>'col-md-11 col-xs-10 no-padding no-margin'))
-					    	!!}
+					                         'class'=>'col-md-11 col-sm-11 col-xs-10 no-padding no-margin')) 
+					    	!!}	
 						</div>
 						<br class="visible-print hidden-md hidden-sm hidden-xs">
 
@@ -285,7 +282,7 @@
 
 				{{-- Show a line after each row except the last one --}}
 				@if($entry !== $entries->last() )
-					<hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
+					<hr class="col-md-12 col-md-12 col-xs-12 top-padding no-margin no-padding">
 				@endif
 
 			@endforeach
@@ -352,7 +349,6 @@
 		</div>
 		<br>
 		<br class="visible-xs">
-                    </div>
 	@endif
 
 @stop
