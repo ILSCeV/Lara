@@ -262,7 +262,42 @@ class SurveyController extends Controller
         $userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung' ? $userCanEditDueToRole = true : $userCanEditDueToRole = false;
 
 
-        return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId', 'userGroup', 'userCanEditDueToRole'));
+        //evaluation part
+
+        //maybe sort questions by order here
+        foreach($questions as $order => $question) {
+            switch($question->field_type) {
+                case 1: break; //nothing to do here
+                case 2:
+                    $checkbox_evaluation[$order] = [
+                        'Ja' => 0,
+                        'Nein' => 0,
+                        'keine Angabe' => 0
+                    ];
+                    foreach($question->getAnswerCells as $answerCell) {
+                        switch($answerCell->answer) {
+                            case 'Ja':
+                                $checkbox_evaluation[$order]['Ja'] += 1;
+                                break;
+                            case 'Nein':
+                                $checkbox_evaluation[$order]['Nein'] += 1;
+                                break;
+                            case 'keine Angabe':
+                                $checkbox_evaluation[$order]['keine Angabe'] += 1;
+                                break;
+                        }
+                    }
+                    break;
+                case 3:
+                    //same like case 2 but now use answer_options -> how many of each is in database?
+                    break;
+            }
+
+        }
+        //todo: use evaluation array like = [question]['ja'/'nein'/...] so there is an array element for every question
+
+        return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
+            'userGroup', 'userCanEditDueToRole', 'checkbox_evaluation'));
     }
 
     /**
