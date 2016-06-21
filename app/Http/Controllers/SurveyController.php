@@ -52,7 +52,6 @@ class SurveyController extends Controller
     {
         //prepare correct date and time format to be used in forms for deadline
         $time = new DateTime();
-        $time->modify('+14 days');
         $time = $time->format('d-m-Y H:i:s');
 
         //placeholder because createSurveyView needs variable, can set defaults here
