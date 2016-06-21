@@ -267,9 +267,10 @@ class SurveyController extends Controller
         //maybe sort questions by order here
         foreach($questions as $order => $question) {
             switch($question->field_type) {
-                case 1: break; //nothing to do here
+                case 1: $evaluation[$order] = [];
+                    break; //nothing to do here except pushing an element to the array that stands for the question
                 case 2:
-                    $checkbox_evaluation[$order] = [
+                    $evaluation[$order] = [
                         'Ja' => 0,
                         'Nein' => 0,
                         'keine Angabe' => 0
@@ -277,27 +278,33 @@ class SurveyController extends Controller
                     foreach($question->getAnswerCells as $answerCell) {
                         switch($answerCell->answer) {
                             case 'Ja':
-                                $checkbox_evaluation[$order]['Ja'] += 1;
+                                $evaluation[$order]['Ja'] += 1;
                                 break;
                             case 'Nein':
-                                $checkbox_evaluation[$order]['Nein'] += 1;
+                                $evaluation[$order]['Nein'] += 1;
                                 break;
                             case 'keine Angabe':
-                                $checkbox_evaluation[$order]['keine Angabe'] += 1;
+                                $evaluation[$order]['keine Angabe'] += 1;
                                 break;
                         }
                     }
                     break;
                 case 3:
-                    //same like case 2 but now use answer_options -> how many of each is in database?
+                    foreach ($question->getAnswerOptions as $answer_option) {
+                        $evaluation[$order][$answer_option->answer_option] = 0;
+                        foreach($question->getAnswerCells as $answerCell) {
+                            if ($answer_option->answer_option === $answerCell->answer) {
+                                $evaluation[$order][$answer_option->answer_option] += 1;
+                            }
+                        }
+                    }
                     break;
             }
-
         }
-        //todo: use evaluation array like = [question]['ja'/'nein'/...] so there is an array element for every question
-
+        //todo: make $evaluation[$order][$answer_option->answer_option] a string (casting???)
+        
         return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
-            'userGroup', 'userCanEditDueToRole', 'checkbox_evaluation'));
+            'userGroup', 'userCanEditDueToRole', 'evaluation'));
     }
 
     /**
