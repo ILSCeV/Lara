@@ -23,7 +23,7 @@
                 <a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
             </div>
     {!! Form::close() !!}
-
-
+</div>
+</div>
 
 @stop

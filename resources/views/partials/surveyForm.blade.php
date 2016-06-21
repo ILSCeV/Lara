@@ -49,8 +49,9 @@
 
                 newElem.find('.selectpicker').attr('id', 'field_type' + (newNum - 1));
                 newElem.find('.btn-success').attr('id', 'button_answ' + (newNum - 1));
+                newElem.find('.hidden').attr('id', 'hiddenField' + (newNum - 1));
 
-                newElem.find('.selectpicker').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ');' + 'check_question_type2('+ (newNum - 1) + ');');
+                newElem.find('.selectpicker').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ');' + 'check_question_type2('+ (newNum - 1) + ');' + 'setField(); setField2(' + (newNum-1) + ');');
 
                 newElem.find('.answ_option').attr('id', 'answ_opt' + (newNum - 1));
                 newElem.find('.btn-success').attr('onclick', 'javascript:clone_this(this, "new_passage",' + (newNum - 1) + ');');
@@ -271,6 +272,25 @@
 
     </script>
 
+    <script type="text/JavaScript" language="JavaScript">
+        function setField() {
+            toWhat = document.getElementById("field_type").value;
+            document.getElementById("hiddenField").value = toWhat;
+        }
+
+        function setField2(number) {
+            if (document.getElementById('field_type1'))
+                    setField3();
+            else
+                void(0);
+
+                function setField3() {
+                    toWhat = document.getElementById("field_type" + number).value;
+                    document.getElementById("hiddenField" + number).value = toWhat;
+                }
+        }
+    </script>
+
 </head>
 
 <body>
@@ -359,17 +379,16 @@
                         
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         <fieldset>
-                            <select class="selectpicker" title="Frage-Typ Auswählen" name="type[]" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0);">
+                            <select class="selectpicker" title="Frage-Typ Auswählen" name="type_test" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0); setField(); setField2(0);">
                                 <option selected value="0" style="display:none"></option>
                                 <option value="1" data-icon="fa fa-file-text-o">Freitext</option>
                                 <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
                                 <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
                             </select>
+                            <input class="hidden" type="hidden" id="hiddenField" name="type[]" value="nothingYet">
                         </fieldset>
                             </div>
-
-
-
+                        <input class="hidden" type="hidden" id="hiddenField" name="test[]" value="hallo">
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
                 <fieldset class="checkbox entrylist">
