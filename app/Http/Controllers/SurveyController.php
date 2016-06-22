@@ -66,6 +66,7 @@ class SurveyController extends Controller
      */
     public function store(SurveyRequest $request)
     {
+        
         $survey = new Survey;
         $survey->creator_id = Session::get('userId');
         $survey->title = $request->title;
@@ -89,22 +90,12 @@ class SurveyController extends Controller
 
         /*
          * get question type as array
-         * type = 0: no type given from user, delete question
          * 1: text field
          * 2: checkbox
          * 3: dropdown, has answer options!
          */
         $questions_type = $request->type;
         $required = $request->required;
-
-        //abort if no single field type is given
-        if(empty($questions_type) and array_unique($questions_type) === array('0')){
-            Session::put('message', 'Es konnten keine Fragen gespeichert werden, 
-                                     weil kein einziger Frage-Typ angegeben wurde!');
-            Session::put('msgType', 'danger');
-
-            return Redirect::back()->withInput();
-        }
 
         //actual bug: answer options array is too long, must delete unnecessary elements
         for($i = count($answer_options)+1; $i >= count($questions); $i--) {
@@ -127,26 +118,6 @@ class SurveyController extends Controller
         }
         ksort($answer_options);
         ksort($required);
-
-        //ignore questions without question type
-        for($i = 0; $i < count($questions); $i++) {
-
-            //check if no question type is given
-            if ($questions_type[$i] == 0) {
-
-                //ignore question
-                unset($questions[$i]);
-                unset($questions_type[$i]);
-                unset($answer_options[$i]);
-                unset($required[$i]);
-
-                //reindex arrays
-                $questions = array_values($questions);
-                $questions_type = array_values($questions_type);
-                $answer_options = array_values($answer_options);
-                $required = array_values($required);
-            }
-        }
         
         //ignore empty answer options
         for($i = 0; $i < count($answer_options); $i++) {
@@ -355,7 +326,6 @@ class SurveyController extends Controller
         $required = $request->required;
 
         /* get question type as array
-         * type = 0: no type given from user, delete question
          * 1: text field
          * 2: checkbox
          * 3: dropdown, has answer options!
@@ -396,33 +366,6 @@ class SurveyController extends Controller
         for($i = 0; $i < count($answer_options_db); $i++) {
             $answer_options_db[$i] = (array) $answer_options_db[$i];
             $answer_options_db[$i] = array_shift($answer_options_db[$i]);
-        }
-
-        //if no single field type is given abort
-        if(empty($question_type) or array_unique($question_type) === array('0')){
-            Session::put('message', 'Es wurden keine Fragen geändert, weil kein einziger Frage-Typ ausgewählt wurde!');
-            Session::put('msgType', 'danger');
-            return Redirect::back()->withInput();
-        }
-
-        //ignore questions without question type
-        for($i = 0; $i < count($questions_new); $i++) {
-
-            //check if no question type is given
-            if ($question_type[$i] == 0) {
-
-                //ignore question
-                unset($questions_new[$i]);
-                unset($question_type[$i]);
-                unset($answer_options_new[$i]);
-                unset($required[$i]);
-
-                //reindex arrays
-                $questions_new = array_values($questions_new);
-                $question_type = array_values($question_type);
-                $answer_options_new = array_values($answer_options_new);
-                $required = array_values($required);
-            }
         }
 
         //ignore empty answer options
