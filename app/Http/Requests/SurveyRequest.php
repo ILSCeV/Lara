@@ -25,7 +25,7 @@ class SurveyRequest extends Request
     public function rules()
     {
         $today = \Carbon\Carbon::now()->format('d-m-Y H:i:s');
-        return [
+        $rules = [
             'title' => 'string|required|max:255',
             'description' => 'string|max:1500',
             'deadline' => "required|date_format:d-m-Y H:i:s|after:.$today.",
@@ -34,5 +34,12 @@ class SurveyRequest extends Request
             'answer_options' => 'array',
             'required' => 'array'
         ];
+
+        foreach($this->request->get('questions') as $key => $question)
+        {
+            $rules['question.'.$key] = 'required|min:3';
+        }
+
+        return $rules;
     }
 }
