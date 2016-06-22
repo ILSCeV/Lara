@@ -66,12 +66,6 @@ class SurveyController extends Controller
      */
     public function store(Request $input)
     {
-        if ($input->password != $input->passwordDouble) {
-            Session::put('message', Config::get('messages_de.password-mismatch') );
-            Session::put('msgType', 'danger');
-            return Redirect::back()->withInput();
-        }
-
         $survey = new Survey;
         $survey->creator_id = Session::get('userId');
         $survey->title = $input->title;
@@ -83,8 +77,8 @@ class SurveyController extends Controller
         $survey->show_results_after_voting = isset($input->show_results_after_voting);
         
         if (!empty($input->password)
-            AND !empty($input->passwordDouble)
-            AND $input->password == $input->passwordDouble) {
+            AND !empty($input->password_confirmation)
+            AND $input->password == $input->password_confirmation) {
             $survey->password = Hash::make($input->password);
         }
 

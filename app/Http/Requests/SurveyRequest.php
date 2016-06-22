@@ -32,7 +32,7 @@ class SurveyRequest extends Request
             'is_private' => 'boolean',
             'is_anonymous' => 'boolean',
             'show_results_after_voting' => 'boolean',
-            'password' => 'same:passwordDouble', //maybe use confirmation here later
+            'password' => 'string|confirmed',
             'questions' => 'array|required',
             'answer_options' => 'array',
             'required' => 'array'
