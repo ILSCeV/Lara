@@ -61,31 +61,31 @@ class SurveyController extends Controller
     }
 
     /**
-     * @param Request $input
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(SurveyRequest $input)
+    public function store(SurveyRequest $request)
     {
         $survey = new Survey;
         $survey->creator_id = Session::get('userId');
-        $survey->title = $input->title;
+        $survey->title = $request->title;
         //if URL is in the description, convert it to clickable hyperlink
-        $survey->description = $this->addLinks($input->description);
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
-        $survey->is_anonymous = isset($input->is_anonymous);
-        $survey->is_private = isset($input->is_private);
-        $survey->show_results_after_voting = isset($input->show_results_after_voting);
+        $survey->description = $this->addLinks($request->description);
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadline));
+        $survey->is_anonymous = isset($request->is_anonymous);
+        $survey->is_private = isset($request->is_private);
+        $survey->show_results_after_voting = isset($request->show_results_after_voting);
         
-        if (!empty($input->password)
-            AND !empty($input->password_confirmation)
-            AND $input->password == $input->password_confirmation) {
-            $survey->password = Hash::make($input->password);
+        if (!empty($request->password)
+            AND !empty($request->password_confirmation)
+            AND $request->password == $request->password_confirmation) {
+            $survey->password = Hash::make($request->password);
         }
 
         $survey->save();
 
-        $questions = $input->questions;
-        $answer_options = $input->answer_options;
+        $questions = $request->questions;
+        $answer_options = $request->answer_options;
 
         /*
          * get question type as array
@@ -94,8 +94,8 @@ class SurveyController extends Controller
          * 2: checkbox
          * 3: dropdown, has answer options!
          */
-        $questions_type = $input->type;
-        $required = $input->required;
+        $questions_type = $request->type;
+        $required = $request->required;
 
         //abort if all questions are empty
         if(array_unique($questions) === array('')){
@@ -323,45 +323,45 @@ class SurveyController extends Controller
 
     /**
      * @param int $id
-     * @param SurveyRequest $input
+     * @param SurveyRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function update($id, SurveyRequest $input)
+    public function update($id, SurveyRequest $request)
     {
         //find survey
         $survey = Survey::findOrFail($id);
 
         //edit existing survey
-        $survey->title = $input->title;
+        $survey->title = $request->title;
         //if URL is in the description, convert it to clickable hyperlink
-        $survey->description = $this->addLinks($input->description);
+        $survey->description = $this->addLinks($request->description);
 
         //format deadline for database
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
-        $survey->is_anonymous = (bool) $input->is_anonymous;
-        $survey->is_private = (bool) $input->is_private;
-        $survey->show_results_after_voting = (bool) $input->show_results_after_voting;
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadline));
+        $survey->is_anonymous = (bool) $request->is_anonymous;
+        $survey->is_private = (bool) $request->is_private;
+        $survey->show_results_after_voting = (bool) $request->show_results_after_voting;
 
         //delete password if user changes both to delete
-        if ($input->password == "delete" AND $input->passwordDouble == "delete")
+        if ($request->password == "delete" AND $request->passwordDouble == "delete")
         {
             $survey->password = '';
         }
         //set new password
-        elseif (!empty($input->password)
-                AND !empty($input->passwordDouble)
-                AND $input->password == $input->passwordDouble) {
-            $survey->password = Hash::make($input->password);
+        elseif (!empty($request->password)
+                AND !empty($request->passwordDouble)
+                AND $request->password == $request->passwordDouble) {
+            $survey->password = Hash::make($request->password);
         }
 
         $survey->save();
 
         //get questions and answer options as arrays from the input
-        $questions_new = $input->questions;
-        $answer_options_new = $input->answer_options;
+        $questions_new = $request->questions;
+        $answer_options_new = $request->answer_options;
 
-        $required = $input->required;
+        $required = $request->required;
 
         /* get question type as array
          * type = 0: no type given from user, delete question
@@ -369,7 +369,7 @@ class SurveyController extends Controller
          * 2: checkbox
          * 3: dropdown, has answer options!
          */
-        $question_type = $input->type;
+        $question_type = $request->type;
 
         //actual bug: answer options array from input is too long, must delete unnecessary elements
         for($i = count($answer_options_new)+1; $i >= count($questions_new); $i--) {
