@@ -14,7 +14,7 @@ use Lara\SurveyQuestion;
 use Lara\SurveyAnswer;
 use Lara\SurveyAnswerOption;
 use Lara\Club;
-
+use Lara\Http\Requests\SurveyRequest;
 
 /**
  * Class SurveyController
@@ -64,7 +64,7 @@ class SurveyController extends Controller
      * @param Request $input
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $input)
+    public function store(SurveyRequest $input)
     {
         $survey = new Survey;
         $survey->creator_id = Session::get('userId');
@@ -323,19 +323,12 @@ class SurveyController extends Controller
 
     /**
      * @param int $id
-     * @param Request $input
+     * @param SurveyRequest $input
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function update($id, Request $input)
+    public function update($id, SurveyRequest $input)
     {
-        /*
-        if ($input->password != $input->passwordDouble) {
-            Session::put('message', Config::get('messages_de.password-mismatch') );
-            Session::put('msgType', 'danger');
-            return Redirect::back()->withInput();
-        }
-        */
         //find survey
         $survey = Survey::findOrFail($id);
 
