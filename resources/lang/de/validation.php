@@ -92,8 +92,14 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'title' => [
+            'required' => 'Der Titel darf nicht leer bleiben!',
+        ],
+        'deadline' =>[
+            'required' => 'Für die Anzeige im Kalender darf die Deadline nicht leer bleiben.'
+        ],
+        'password' => [
+            'confirmed' => 'Die eingegebenen Passwörter stimmen nicht überein!'
         ],
     ],
 
