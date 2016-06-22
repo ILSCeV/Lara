@@ -97,15 +97,6 @@ class SurveyController extends Controller
         $questions_type = $request->type;
         $required = $request->required;
 
-        //abort if all questions are empty
-        if(array_unique($questions) === array('')){
-            Session::put('message', 'Es konnten keine Fragen gespeichert werden, 
-                                     weil alle Fragen leer gelassen wurden!');
-            Session::put('msgType', 'danger');
-
-            return Redirect::back()->withInput();
-        }
-
         //abort if no single field type is given
         if(empty($questions_type) and array_unique($questions_type) === array('0')){
             Session::put('message', 'Es konnten keine Fragen gespeichert werden, 
@@ -137,11 +128,11 @@ class SurveyController extends Controller
         ksort($answer_options);
         ksort($required);
 
-        //ignore empty questions
+        //ignore questions without question type
         for($i = 0; $i < count($questions); $i++) {
 
-            //check if single empty questions exist or no question type is given
-            if (empty($questions[$i]) or $questions_type[$i] == 0) {
+            //check if no question type is given
+            if ($questions_type[$i] == 0) {
 
                 //ignore question
                 unset($questions[$i]);
@@ -407,14 +398,6 @@ class SurveyController extends Controller
             $answer_options_db[$i] = array_shift($answer_options_db[$i]);
         }
 
-        //if all questions are empty abort
-        if(array_unique($questions_new) === array('')){
-            Session::put('message', 'Es konnten keine Fragen geändert werden, 
-                                     weil alle Fragen leer gelassen wurden!');
-            Session::put('msgType', 'danger');
-            return Redirect::back()->withInput();
-        }
-
         //if no single field type is given abort
         if(empty($question_type) or array_unique($question_type) === array('0')){
             Session::put('message', 'Es wurden keine Fragen geändert, weil kein einziger Frage-Typ ausgewählt wurde!');
@@ -422,11 +405,11 @@ class SurveyController extends Controller
             return Redirect::back()->withInput();
         }
 
-        //ignore empty questions
+        //ignore questions without question type
         for($i = 0; $i < count($questions_new); $i++) {
 
-            //check if single empty questions exist or no question type is given
-            if (empty($question) or $question_type[$i] == 0) {
+            //check if no question type is given
+            if ($question_type[$i] == 0) {
 
                 //ignore question
                 unset($questions_new[$i]);
