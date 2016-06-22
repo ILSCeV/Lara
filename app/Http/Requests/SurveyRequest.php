@@ -38,6 +38,7 @@ class SurveyRequest extends Request
             'questions.*' => 'string|required|min:3',
 
             'answer_options' => 'array',
+            'answer_options.*.*' => 'string|min:3',
 
             'required' => 'array',
             'required.*' => 'in:1,2,3',
