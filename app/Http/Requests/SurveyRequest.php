@@ -40,8 +40,8 @@ class SurveyRequest extends Request
             'answer_options' => 'array',
             'answer_options.*.*' => 'string|min:3',
 
-            'required' => 'array',
-            'required.*' => 'in:1,2,3',
+            'type' => 'array',
+            'type.*' => 'in:1,2,3',
         ];
         return $rules;
     }
@@ -49,17 +49,16 @@ class SurveyRequest extends Request
     public function messages()
     {
         $messages = [];
-        foreach($this->request->get('questions') as $key => $val)
-        {
+        
+        foreach($this->request->get('questions') as $key => $val) {
             $messages['questions.'.$key.'.min'] = 'Die Frage #'.($key+1).' muss mindestens :min Zeichen enthalten.';
             $messages['questions.'.$key.'.required'] = 'Die Frage #'.($key+1).'wurde leer gelassen. Bitte fülle sie aus oder lösche sie!';
         }
-        if(is_array($this->request->get('required'))) {
-            foreach($this->request->get('required') as $key => $val)
-            {
-                $messages['required.'.$key.'.in'] = 'Für die Frage #'.($key+1).' wurde ein fehlerhafter Fragetyp ausgewählt!';
-            }
+
+        foreach($this->request->get('type') as $key => $val) {
+            $messages['type.'.$key.'.in'] = 'Für die Frage #'.($key+1).' wurde ein fehlerhafter Fragetyp ausgewählt!';
         }
+
         return $messages;
     }
 }
