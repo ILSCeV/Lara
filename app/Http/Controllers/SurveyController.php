@@ -351,7 +351,7 @@ class SurveyController extends Controller
         //set new password
         elseif (!empty($request->password)
                 AND !empty($request->password_confirmation)
-                AND $request->password == $request->password_confirmation {
+                AND $request->password == $request->password_confirmation) {
             $survey->password = Hash::make($request->password);
         }
 
