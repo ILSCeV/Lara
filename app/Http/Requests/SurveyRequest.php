@@ -14,7 +14,6 @@ class SurveyRequest extends Request
      */
     public function authorize()
     {
-        //implement later: check if user has permission to create/edit -> has LDAP_Id?
         return true;
     }
 
@@ -28,7 +27,7 @@ class SurveyRequest extends Request
         return [
             'title' => 'string|required|max:255',
             'description' => 'string|max:1500',
-            //'deadline' => 'date|required|after:Carbon::now' ??? deadline is dateTime not Date, maybe use RegEx
+            'deadline' => 'required|date_format:d-m-Y H:i:s|after:Carbon::now',
             'password' => 'string|confirmed',
             'questions' => 'array|required',
             'answer_options' => 'array',

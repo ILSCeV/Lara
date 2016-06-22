@@ -96,10 +96,12 @@ return [
             'required' => 'Der Titel darf nicht leer bleiben!',
         ],
         'deadline' =>[
-            'required' => 'Für die Anzeige im Kalender darf die Deadline nicht leer bleiben.'
+            'required' => 'Für die Anzeige im Kalender darf die Deadline nicht leer bleiben.',
+            'date_format' => 'Bitte gib die Deadline in dieser Form an: DD-MM-YYYY hh:mm:ss.',
+            'after' => 'Die Deadline muss in der Zukunft liegen.'
         ],
         'password' => [
-            'confirmed' => 'Die eingegebenen Passwörter stimmen nicht überein!'
+            'confirmed' => 'Die eingegebenen Passwörter stimmen nicht überein!',
         ],
     ],
 
