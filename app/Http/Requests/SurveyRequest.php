@@ -28,10 +28,14 @@ class SurveyRequest extends Request
         return [
             'title' => 'string|required|size:255',
             'description' => 'string|size:1500',
-            //'deadline' => 'date, after:Carbon::now' ??? deadline is dateTime not Date
+            //'deadline' => 'date, after:Carbon::now' ??? deadline is dateTime not Date, maybe use RegEx
             'is_private' => 'boolean',
             'is_anonymous' => 'boolean',
-            'show_results_after_voting' => 'boolean'
+            'show_results_after_voting' => 'boolean',
+            'password' => 'same:passwordDouble', //maybe use confirmation here later
+            'questions' => 'array|required',
+            'answer_options' => 'array',
+            'required' => 'array'
         ];
     }
 }
