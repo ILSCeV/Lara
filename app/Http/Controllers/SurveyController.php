@@ -344,14 +344,14 @@ class SurveyController extends Controller
         $survey->show_results_after_voting = (bool) $request->show_results_after_voting;
 
         //delete password if user changes both to delete
-        if ($request->password == "delete" AND $request->passwordDouble == "delete")
+        if ($request->password == "delete" AND $request->password_confirmation == "delete")
         {
             $survey->password = '';
         }
         //set new password
         elseif (!empty($request->password)
-                AND !empty($request->passwordDouble)
-                AND $request->password == $request->passwordDouble) {
+                AND !empty($request->password_confirmation)
+                AND $request->password == $request->password_confirmation {
             $survey->password = Hash::make($request->password);
         }
 
