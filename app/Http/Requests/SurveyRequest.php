@@ -26,12 +26,9 @@ class SurveyRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'string|required|size:255',
-            'description' => 'string|size:1500',
-            //'deadline' => 'date, after:Carbon::now' ??? deadline is dateTime not Date, maybe use RegEx
-            'is_private' => 'boolean',
-            'is_anonymous' => 'boolean',
-            'show_results_after_voting' => 'boolean',
+            'title' => 'string|required|max:255',
+            'description' => 'string|max:1500',
+            //'deadline' => 'date|required|after:Carbon::now' ??? deadline is dateTime not Date, maybe use RegEx
             'password' => 'string|confirmed',
             'questions' => 'array|required',
             'answer_options' => 'array',
