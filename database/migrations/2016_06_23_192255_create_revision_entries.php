@@ -16,8 +16,8 @@ class CreateRevisionEntries extends Migration
             $table->increments('id');
             $table->integer('revision_id')->references('id')->on('revisions')->unsigned()->nullable();
             $table->string('changed_column_name', 255);
-            $table->string('old_value', 1500);
-            $table->string('new_value', 1500);
+            $table->string('old_value', 1500)->nullable();
+            $table->string('new_value', 1500)->nullable();
         });
     }
 
