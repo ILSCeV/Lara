@@ -164,7 +164,7 @@ class SurveyController extends Controller
         }
         
         //ignore empty answer options
-        foreach($answer_options as $i => $answer_option) {
+        for($i = 0; $i < count($answer_options); $i++) {
 
             //check if dropdown question and answer options exist
             if($questions_type[$i] == 3 and is_array($answer_options[$i])) {
@@ -293,12 +293,13 @@ class SurveyController extends Controller
      */
     public function update($id, Request $input)
     {
+        /*
         if ($input->password != $input->passwordDouble) {
             Session::put('message', Config::get('messages_de.password-mismatch') );
             Session::put('msgType', 'danger');
             return Redirect::back()->withInput();
         }
-
+        */
         //find survey
         $survey = Survey::findOrFail($id);
 
@@ -413,7 +414,7 @@ class SurveyController extends Controller
         }
 
         //ignore empty answer options
-        foreach($answer_options_new as $i => $answer_options_new) {
+        for($i = 0; $i < count($answer_options_new); $i++) {
 
             //check if dropdown question and answer options exist
             if($question_type[$i] == 3 and is_array($answer_options_new[$i])) {
