@@ -76,12 +76,6 @@ table {
     }
 }
 
-@media (max-width: 1000px) {
-  .no-padding-xs {
-    padding: 0px 0px 0px 0px;
-  }
-}
-
 .panel-group {
     margin-bottom: 8px;
 }
@@ -156,10 +150,6 @@ input[type=number],
     white-space: nowrap;
     display: inline-block;
     color: white;
-}
-
-.past-event {
-  opacity:0.5;
 }
 
 .today-marker {
