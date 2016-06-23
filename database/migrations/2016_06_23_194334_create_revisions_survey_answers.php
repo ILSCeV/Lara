@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRevisionsSurveys extends Migration
+class CreateRevisionsSurveyAnswers extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class CreateRevisionsSurveys extends Migration
      */
     public function up()
     {
-        Schema::create('revisions_surveys', function (Blueprint $table) {
+        Schema::create('revisions_survey_answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('survey_id')->references('id')->on('surveys')->unsigned()->nullable();
+            $table->integer('survey_answers_id')->references('id')->on('survey_answers')->unsigned()->nullable();
             $table->integer('revision_id')->references('id')->on('revisions')->unsigned()->nullable();
         });
     }
@@ -26,6 +26,6 @@ class CreateRevisionsSurveys extends Migration
      */
     public function down()
     {
-        Schema::drop('revisions_surveys');
+        Schema::drop('revisions_survey_answers');
     }
 }

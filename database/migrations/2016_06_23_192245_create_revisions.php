@@ -12,7 +12,7 @@ class CreateRevisions extends Migration
      */
     public function up()
     {
-        Schema::create('surveys', function (Blueprint $table) {
+        Schema::create('revisions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('creator_id')->references('id')->on('persons')->unsigned()->nullable();
             $table->string('ip', 255);

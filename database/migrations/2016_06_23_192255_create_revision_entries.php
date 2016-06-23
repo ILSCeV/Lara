@@ -12,7 +12,7 @@ class CreateRevisionEntries extends Migration
      */
     public function up()
     {
-        Schema::create('surveys', function (Blueprint $table) {
+        Schema::create('revision_entries', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('revision_id')->references('id')->on('revisions')->unsigned()->nullable();
             $table->string('changed_column_name', 255);
