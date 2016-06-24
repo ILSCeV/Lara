@@ -14,7 +14,7 @@ class CreateRevisionsSurveys extends Migration
     {
         Schema::create('revisions_surveys', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('survey_id')->references('id')->on('surveys')->unsigned()->nullable();
+            $table->integer('object_id')->references('id')->on('surveys')->unsigned()->nullable();
             $table->integer('revision_id')->references('id')->on('revisions')->unsigned()->nullable();
         });
     }
