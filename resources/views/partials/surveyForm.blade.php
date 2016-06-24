@@ -15,7 +15,6 @@
 <div class="form-group">
     {!! Form::label('title', 'Umfragentitel:') !!}
     {!! Form::text('title', $survey->title, ['placeholder'=>'z.B. Teilnahme an der Clubfahrt',
-        'required',
         'class' => 'form-control'
         ]) !!}
 </div>
@@ -59,7 +58,7 @@
     <div class="form-groupcol-md-12 col-sm-12 col-xs-12 no-padding">
         <label fro="passwordDouble" class="control-label col-md-5 col-sm-5 col-xs-12">Passwort wiederholen:</label>
         <div class="col-md-7 col-sm-7 col-xs-12">
-            {!! Form::password('passwordDouble', '') !!}
+            {!! Form::password('password_confirmation', '') !!}
         </div>
     </div>
 </div>
@@ -74,3 +73,13 @@
 <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 
 @include('partials.surveyField')
+
+@if($errors->any())
+    <div style="color: #b0141a">
+        @foreach($errors->all() as $error)
+            <ul class="left-padding-16">
+                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> {{$error}}
+            </ul>
+        @endforeach
+    </div>
+@endif
