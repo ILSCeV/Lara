@@ -10,6 +10,7 @@ namespace Lara\Library;
 
 use Illuminate\Database\Eloquent\Model;
 use Lara\RevisionEntry;
+use Illuminate\Support\Facades\Session;
 
 
 /**
@@ -40,20 +41,23 @@ class Revision
 
     /**
      * @param Model $new_model
-     * @param int $user_id
-     * @param string $client_ip
      * @return bool
      */
-    public function save($new_model, $user_id, $client_ip)
+    public function save(Model $new_model)
     {
         if($new_model->getTable() !== $this->old_model->getTable()) {
             // old and new model dont have the same class -> they are not compareable
             return false;
         }
+//        dd($new_model->toArray(), $this->old_model->toArray(), ($new_model->toArray() == $this->old_model->toArray()));
+//        if($new_model == $this->old_model) {
+//            // no changes -> no entry
+//            return false;
+//        }
 
         $revision = new \Lara\Revision();
-        $revision->creator_id = $user_id;
-        $revision->ip = $client_ip;
+        $revision->creator_id = Session::get('userId');
+        $revision->ip = request()->ip();
         $revision->save();
 
         $relation_model_class_name = $this->parse_relation_model_name($new_model);
@@ -86,7 +90,7 @@ class Revision
      * @param Model $model
      * @return string
      */
-    protected function parse_relation_model_name($model)
+    protected function parse_relation_model_name(Model $model)
     {
         $class = $this->parse_classname(get_class($model));
         $path = "\\".$class['namespace'][0]."\\Revision_".$class['classname'];
