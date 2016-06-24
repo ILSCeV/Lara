@@ -46,8 +46,8 @@ class Revision
      */
     public function save($new_model, $user_id, $client_ip)
     {
-        var_dump($client_ip);
         if($new_model->getTable() !== $this->old_model->getTable()) {
+            // old and new model dont have the same class -> they are not compareable
             return false;
         }
 
@@ -62,34 +62,20 @@ class Revision
         $relation_model->revision_id = $revision->id;
         $relation_model->save();
 
-        dd($new_model->attributesToArray());
-        if (empty($this->old_model->attributesToArray())) {
+        if ($new_model->wasRecentlyCreated) {     // empty($this->old_model->attributesToArray())
             // new entry
             foreach($new_model->attributesToArray() as $column_name => $column_value) {
-                $revision_entry = new RevisionEntry();
-                $revision_entry->revision_id = $revision->id;
-                $revision_entry->changed_column_name = $column_name;
-                $revision_entry->new_value = $column_value;
-                $revision_entry->save();
+                $this->save_revision_entry($column_name, $column_value, $revision->id, "create");
             }
-        } elseif (empty($new_model->attributesToArray())) {
-            dd($this->old_model);
+        } elseif (!$new_model->exists) {
             // deleted entry
             foreach($this->old_model->attributesToArray() as $column_name => $column_value) {
-                $revision_entry = new RevisionEntry();
-                $revision_entry->revision_id = $revision->id;
-                $revision_entry->changed_column_name = $column_name;
-                $revision_entry->old_value = $column_value;
-                $revision_entry->save();
+                $this->save_revision_entry($column_name, $column_value, $revision->id, "delete");
             }
         } else {
             foreach($new_model->attributesToArray() as $column_name => $column_value) {
                 if($column_value != $this->old_model->attributesToArray()[$column_name]) {
-                    $revision_entry = new RevisionEntry();
-                    $revision_entry->revision_id = $revision->id;
-                    $revision_entry->changed_column_name = $column_name;
-                    $revision_entry->new_value = $column_value;
-                    $revision_entry->save();
+                    $this->save_revision_entry($column_name, $column_value, $revision->id, "update");
                 }
             }
         }
@@ -97,7 +83,7 @@ class Revision
     }
 
     /**
-     * @param $model
+     * @param Model $model
      * @return string
      */
     protected function parse_relation_model_name($model)
@@ -108,7 +94,7 @@ class Revision
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return array
      */
     protected function parse_classname ($name)
@@ -120,10 +106,37 @@ class Revision
     }
 
     /**
-     * @param $model
+     * @param string $column_name
+     * @param string $column_value
+     * @param int $revision_id
+     * @param string $type "create" | "update" | "delete"
+     * @return bool
      */
-    protected function parse_relation_model_id_name($model)
+    protected function save_revision_entry($column_name, $column_value, $revision_id, $type)
     {
+        if (in_array($column_name, $this->ignoreArray)) {
+            // filter columns which should not be shown in revisions
+            return false;
+        }
+        if ($type != "create" AND $type != "update" AND $type != "delete") {
+            // type needs to be one of those 3 options
+            return false;
+        }
 
+        $revision_entry = new RevisionEntry();
+        $revision_entry->revision_id = $revision_id;
+        $revision_entry->changed_column_name = $column_name;
+        switch ($type) {
+            case "create":
+                $revision_entry->new_value = $column_value;
+                break;
+            case "delete":
+                $revision_entry->old_value = $column_value;
+                break;
+            case "update":
+                $revision_entry->new_value = $column_value;
+                $revision_entry->old_value = $this->old_model->attributesToArray()[$column_name];
+        }
+        return $revision_entry->save();
     }
 }
