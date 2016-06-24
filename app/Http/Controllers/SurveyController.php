@@ -215,7 +215,7 @@ class SurveyController extends Controller
         $userGroup = Session::get('userGroup');
 
         //check if the role of the user allows edit/delete for all  answers
-        $userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung' ? $userCanEditDueToRole = true : $userCanEditDueToRole = false;
+        ($userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung') ? ($userCanEditDueToRole = true) : ($userCanEditDueToRole = false);
 
 
         //evaluation part
