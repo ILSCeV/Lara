@@ -331,7 +331,8 @@
         $(function () {
 
             if (window.location.pathname === '/survey/create') {
-                $('#heading_create').attr('style', '')
+                $('#heading_create').attr('style', '');
+                $('.question_edit').remove();
             }
             else {
                 $('#heading_edit').attr('style', '');
@@ -394,17 +395,17 @@
     <div class="form-group">
         <div>
             <label class="label_checkboxitem" for="checkboxitemitem"></label>
-            <label><input type="checkbox" id="required1" value="required1" name="is_private" class="input_checkboxitem"
+            <label><input type="checkbox" id="required1" value="required1" name="is_private" class="input_checkboxitem" @if($survey->is_private === 1) checked="checked" @endif
                           @if($survey->is_private) checked @endif> nur für eingeloggte Nutzer sichtbar  </label>
         </div>
         <div>
             <label class="label_checkboxitem" for="checkboxitemitem"></label>
-            <label><input type="checkbox" id="required2" value="required2" name="is_anonymous" class="input_checkboxitem"
+            <label><input type="checkbox" id="required2" value="required2" name="is_anonymous" class="input_checkboxitem" @if($survey->is_anonymous === 1) checked="checked" @endif
                           @if($survey->is_anonymous) checked @endif> Ergebnisse sind nur für den Umfragenersteller sichtbar </label>
         </div>
         <div>
             <label class="label_checkboxitem" for="checkboxitemitem"></label>
-            <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem"
+            <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem" @if($survey->show_results_after_voting === 1) checked="checked" @endif
                           @if($survey->show_results_after_voting) checked @endif> Ergebnisse sind erst nach dem Ausfüllen sichtbar </label>
         </div>
     </div>
@@ -429,6 +430,7 @@
 
         <div class="questions">
 
+            <div class="question_edit">
             <span hidden>{{$counter = 0}}</span>
             @if(isset($questions))
                 @foreach($questions as $question)
@@ -474,7 +476,7 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <fieldset class="checkbox entrylist">
                                         <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
-                                        <label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
+                                        <label><input type="checkbox" id="required" @if($question->is_required === 1) checked="checked" @endif value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
                                     </fieldset>
                                 </div>
 
@@ -506,12 +508,15 @@
             @endif
 
             <span hidden>{{$counter2 = 0}}</span>
+           @if(isset($questions))
             @foreach($questions as $question)
                 <script>
                         check_question_type({{$counter2}}); check_question_type2({{$counter2}}); setField({{$counter2}}); setField2({{$counter2}});
                 </script>
                 <span hidden>{{++$counter2}}</span>
             @endforeach
+               @endif
+            </div>
 
             <div class="create_survey">
             <div id="questions1" class="clonedInput">
