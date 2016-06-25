@@ -483,7 +483,7 @@
                                     <fieldset>
                                         <label class="questions" for="ID{{$counter}}questions[]" name="quest_label">Frage: &nbsp</label>
 
-                                        <textarea class="form-control" type="text" name="questions[]" id="question">{{ $question->question }}</textarea>
+                                        <textarea class="form-control" type="text" name="questions[]" id="question" style="max-width: 100%; max-height: 300px">{{ $question->question }}</textarea>
                                     </fieldset>
                                 </div>
 
@@ -567,7 +567,7 @@
                 <fieldset>
                     <label class="questions" for="question" name="quest_label">Frage: &nbsp</label>
 
-                    <textarea class="form-control" type="text" name="questions[]" id="question"></textarea>
+                    <textarea class="form-control" type="text" name="questions[]" id="question" style="max-width: 100%; max-height: 300px"></textarea>
                 </fieldset>
                         </div>
 
