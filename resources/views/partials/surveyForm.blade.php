@@ -333,8 +333,11 @@
             if (window.location.pathname === '/survey/create') {
                 $('#heading_create').attr('style', '')
             }
-            else
-                $('#heading_edit').attr('style', '')
+            else {
+                $('#heading_edit').attr('style', '');
+                $('.create_survey').remove();
+                $('.btnRemoveQuestion').attr('disabled', false);
+            }
 
         });
     </script>
@@ -426,6 +429,85 @@
 
         <div class="questions">
 
+            <span hidden>{{$counter = 0}}</span>
+            @if(isset($questions))
+                @foreach($questions as $question)
+
+                    <div id="{{"questions" . ++$counter }}" class="clonedInput">
+                        <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
+                        <div class="panel col-md-8 col-sm-12 col-xs-12">
+                            <div class="panel-body">
+
+
+                                <div class="col-md-11 col-sm-11 col-xs-10">
+                                    <h4 id="ID{{$counter}}_reference" name="reference" class="heading-reference">Frage #{{$counter}}</h4>
+                                </div>
+
+                                <div class="col-md-1 col-sm-1 col-xs-2">
+                                    <input id="button_del_question{{$counter}}" type="button" class="btn btn-small btn-danger fa fa-trash btnRemoveQuestion" name="button_del_question" value="&#xf1f8;">
+                                </div>
+
+
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <fieldset>
+                                        <label class="questions" for="ID{{$counter}}questions[]" name="quest_label">Frage: &nbsp</label>
+
+                                        <textarea class="form-control" type="text" name="questions[]" id="question">{{ $question->question }}</textarea>
+                                    </fieldset>
+                                </div>
+
+                                <div class="visible-xs col-xs-12">
+                                    <br>
+                                </div>
+
+
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <fieldset>
+                                        <select class="selectpicker" name="type_select" id="field_type{{$counter-1}}" onchange="javascript:check_question_type({{$counter-1}}); check_question_type2({{$counter-1}}); setField({{$counter-1}}); setField2({{$counter-1}});">
+                                            <option value="1" data-icon="fa fa-file-text-o">Freitext</option>
+                                            <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
+                                            <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
+                                        </select>
+                                        <input class="hidden" type="hidden" id="hiddenField{{$counter-1}}" name="type[]" value="nothingYet">
+                                    </fieldset>
+                                </div>
+
+
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <fieldset class="checkbox entrylist">
+                                        <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
+                                        <label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
+                                    </fieldset>
+                                </div>
+
+
+
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="answ_option" id="answ_opt{{$counter-1}}" name="answer_options_div">
+                                        @foreach($answer_options = $question->getAnswerOptions as $answer_option)
+                                            <table class="passage" id="new_passage" name="cloneTable">
+                                                <tr>
+                                                    <td>Antwortmöglichkeit: &nbsp</td>
+                                                    <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[{{$counter-1}}][]">{{ $answer_option->answer_option }}</textarea></td>
+                                                    <td class="helltab" rowspan="3">
+                                                        <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                    </td>
+                                            </table>
+                                        @endforeach
+                                        <input class="btn btn-success btn-sm" id="button_answ{{$counter-1}}" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', {{$counter-1}});" type="button">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                @endforeach
+            @endif
+
+            <div class="create_survey">
             <div id="questions1" class="clonedInput">
                 <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
                 <div class="panel col-md-8 col-sm-12 col-xs-12">
@@ -485,6 +567,7 @@
             </div>
 
             </div>
+                </div>
 
         </div>
         <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
