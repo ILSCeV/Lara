@@ -367,20 +367,20 @@
 <div class="panel-body">
 
     <div class="form-group">
-        {!! Form::label('title', 'Umfragentitel:') !!}
+        {!! Form::label('title', 'Titel:') !!}
         {!! Form::text('title', $survey->title, ['placeholder'=>'z.B. Teilnahme an der Clubfahrt',
             'required',
             'class' => 'form-control'
             ]) !!}
     </div>
     <div class="form-group">
-        {!! Form::label('description', 'Umfragenbeschreibung:') !!}
+        {!! Form::label('description', 'Beschreibung:') !!}
         {!! Form::textarea('description', $survey->description, ['size' => '100x4',
             'class' => 'form-control'
             ]) !!}
     </div>
     <div class="form-group">
-        {!! Form::label('deadline', 'Umfrage aktiv bis:') !!}
+        {!! Form::label('deadline', 'Aktiv bis:') !!}
         {!! Form::date('deadline', $time, ['class' => 'form-control']) !!}
     </div>
     {{--<div class="form-group">--}}
@@ -404,9 +404,7 @@
             <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem"
                           @if($survey->show_results_after_voting) checked @endif> Ergebnisse sind erst nach dem Ausfüllen sichtbar </label>
         </div>
-
     </div>
-    <hr class="col-md-6 col-xs-12 top-padding no-margin no-padding">
 </div>
     </div>
 
