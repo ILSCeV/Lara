@@ -36,7 +36,7 @@
                         newNum  = new Number(num + 1),
                         newElem = $('#questions' + num).clone().attr('id', 'questions' + newNum).fadeIn('slow');
 
-                newElem.find('.heading-reference').attr('id', 'ID' + newNum + '_reference').attr('name', 'ID' + newNum + '_reference').html('Frage #' + newNum);
+                newElem.find('.heading-reference').attr('id', 'ID' + newNum + '_reference').html('Frage #' + newNum);
 
 
                 newElem.find('.questions').attr('for', 'ID' + newNum + 'questions[]');
@@ -50,13 +50,15 @@
                 newElem.find('.selectpicker').attr('id', 'field_type' + (newNum - 1));
                 newElem.find('.btn-success').attr('id', 'button_answ' + (newNum - 1));
                 newElem.find('.hidden').attr('id', 'hiddenField' + (newNum - 1));
+                newElem.find('.hidden').attr('value', 'nothingYet');
 
-                newElem.find('.selectpicker').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ');' + 'check_question_type2('+ (newNum - 1) + ');' + 'setField(); setField2(' + (newNum-1) + ');');
+                newElem.find('.selectpicker').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ');' + 'check_question_type2('+ (newNum - 1) + ');' + 'setField(' + (newNum-1) + ');' + 'setField2(' + (newNum-1) + ');');
 
                 newElem.find('.answ_option').attr('id', 'answ_opt' + (newNum - 1));
                 newElem.find('.btn-success').attr('onclick', 'javascript:clone_this(this, "new_passage",' + (newNum - 1) + ');');
 
                 newElem.find('.answer_option').val('');
+                newElem.find('.btnRemove').attr('id', 'button_del_question' + newNum);
 
                 newElem.find('.passage' + newNum).slice(1).remove();
                 newElem.find('.passage' + (newNum - 1)).remove();
@@ -139,6 +141,35 @@
                 });
             });
 
+            $(document).ready(function() {
+
+
+                $(document).on("click", ".btnRemoveQuestion", function () {
+
+                    var temp = $(this).closest('.clonedInput');
+                    var tempId = parseInt(temp.attr('id').substring(9, 12)) - 1;
+
+                    temp.nextUntil("br").each(function () {
+                        $(this).attr('id', "questions" + ++tempId);
+                        $(this).find("[name^=reference]").attr('id', 'ID' + tempId + '_reference').html('Frage #' + tempId);
+                        $(this).find("[name^=button_del_question]").attr('id', 'button_del_question' + tempId);
+                        $(this).find("[name^=quest_label]").attr('id', 'ID' + tempId + 'questions[]').attr('for', 'ID' + tempId + 'questions[]');
+                        $(this).find("[name^=type]").attr('id', 'hiddenField' + (tempId-1));
+                        $(this).find("[name^=type_select]").attr('id', 'field_type' + (tempId-1)).attr('onchange', 'javascript:check_question_type(' + (tempId-1) + '); check_question_type2(' + (tempId-1) + '); setField(' + (tempId-1) + ');' + 'setField2(' + (tempId-1) + ');');
+                        $(this).find("[name^=btn_answ]").attr('id', 'button_answ' + (tempId-1));
+                        $(this).find("[name^=btn_answ]").attr('onclick', 'javascript:clone_this(this,' + '"new_passage"' + ',' + (tempId-1) + ');');
+                        $(this).find("[name^=answer_options_div]").attr('id', 'answ_opt' + (tempId-1));
+                        $(this).find("[name^=cloneTable]").attr('class', 'passage' + (tempId-1));
+                        $(this).find("[id^=answer_option]").attr('name', 'answer_options[' + (tempId-1) + '][]');
+                        $(this).find("[name^=req_label]").attr('for', 'ID' + tempId + '_checkboxitem');
+                        $(this).find("[name^=required]").attr('id', 'ID' + tempId + '_checkboxitem').attr('name', 'required[' + (tempId-1) + ']');
+                    });
+
+                    $(this).closest(".clonedInput").remove();
+
+                });
+            });
+
             $('#btnDel').click(function () {
 
                 if (confirm("Bist du sicher, dass du die Frage löschen möchtest?"))
@@ -194,8 +225,14 @@
             if ($('#field_type').val() === "3")
                 $('#button_answ').fadeTo('slow', 1)&
                 $('#button_answ').attr('style', 'visibility:visible');
+            else
+                void(0);
 
-            var att = document.getElementById('button_answ').getAttribute('style');
+            if (document.getElementById('button_answ'))
+                    var att = document.getElementById('button_answ').getAttribute('style');
+            else
+                var att = document.getElementById('button_answ' + number).getAttribute('style');
+
             if (att === 'display:none')
                 void(0);
 
@@ -273,13 +310,21 @@
     </script>
 
     <script type="text/JavaScript" language="JavaScript">
-        function setField() {
-            toWhat = document.getElementById("field_type").value;
-            document.getElementById("hiddenField").value = toWhat;
+        function setField(number) {
+            if (document.getElementById("field_type")) {
+                toWhat = document.getElementById("field_type").value;
+                document.getElementById("hiddenField").value = toWhat;
+            }
+
+            else {
+                toWhat = document.getElementById("field_type" + number).value;
+                document.getElementById("hiddenField" + number).value = toWhat;
+            }
+
         }
 
         function setField2(number) {
-            if (document.getElementById('field_type1'))
+            if (document.getElementById('field_type' + number))
                     setField3();
             else
                 void(0);
@@ -377,6 +422,19 @@
 
     <div id="wrapper">
 
+        <div style="visibility:hidden; display:none">
+            <div id="new_passage"><table class="passage" id="new_passage" name="cloneTable">
+                    <tr>
+                        <td>Antwortmöglichkeit: &nbsp</td>
+                        <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[][]"></textarea></td>
+                        <td class="helltab" rowspan="3">
+                            <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
+                                <i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
+                </table>
+            </div>
+        </div>
+
         <div class="questions">
 
             <div id="questions1" class="clonedInput">
@@ -384,20 +442,31 @@
                 <div class="panel col-md-8 col-sm-12 col-xs-12">
                     <div class="panel-body">
 
+
+                        <div class="col-md-11 col-sm-11 col-xs-10">
                 <h4 id="reference" name="reference" class="heading-reference">Frage #1</h4>
+                        </div>
+
+                        <div class="col-md-1 col-sm-1 col-xs-2">
+                            <i id="button_del_question1" class="btn btn-small btn-danger fa fa-trash btnRemoveQuestion" name="button_del_question"></i>
+                        </div>
+
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
                 <fieldset>
-                    <label class="questions" for="question">Frage: &nbsp</label>
+                    <label class="questions" for="question" name="quest_label">Frage: &nbsp</label>
 
                     <textarea class="form-control" type="text" name="questions[]" id="question"></textarea>
                 </fieldset>
                         </div>
 
-                        
+                        <div class="visible-xs col-xs-12">
+                           <br>
+                        </div>
+
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         <fieldset>
-                            <select class="selectpicker" title="Frage-Typ Auswählen" name="type_test" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0); setField(); setField2(0);">
+                            <select class="selectpicker" title="Frage-Typ Auswählen" name="type_select" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0); setField(0); setField2(0);">
                                 <option selected value="0" style="display:none"></option>
                                 <option value="1" data-icon="fa fa-file-text-o">Freitext</option>
                                 <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
@@ -410,32 +479,22 @@
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
                 <fieldset class="checkbox entrylist">
-                    <label class="label_checkboxitem" for="checkboxitemitem"></label>
+                    <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
                     <label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
                 </fieldset>
                             </div>
 
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div style="visibility:hidden; display:none">
-                                <div id="new_passage"><table class="passage" id="new_passage" name="cloneTable">
-                                        <tr>
-                                            <td>Antwortmöglichkeit: &nbsp</td>
-                                            <td><textarea id="answer_option" class="answer_option" type="text" name="answer_options[][]"></textarea></td>
-                                            <td class="helltab" rowspan="3">
-                                                <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i></a>
-                                            </td>
-                                    </table>
-                                </div>
-                            </div>
 
-                            <div class="answ_option" id="answ_opt">
-                                <input class="btn btn-success btn-sm" id="button_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button"></input>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="answ_option" id="answ_opt" name="answer_options_div">
+                                <input class="btn btn-success btn-sm" id="button_answ" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button">
                             </div>
                         </div>
 
+
             </div>
-                    </div>
+            </div>
 
             </div>
 
