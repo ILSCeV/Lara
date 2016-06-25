@@ -11,10 +11,10 @@
 	{!! Form::open(['method' => 'POST', 'route' => ['event.store']]) !!}
 
 	<div class="row">
-		<div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
+		<div class="panel col-md-6 col-sm-12 col-xs-12">
 
 			<div class="panel-heading">
-				<h4 class="panel-title">Neues Event erstellen:</h4>
+				<h4 class="panel-title">Neue Veranstaltung/Aufgabe erstellen:</h4>
 			</div>
 
 			<br>
@@ -109,7 +109,7 @@
 				            	Vorverkauf
 				            <br>
 				            {!! Form::radio('evnt_type', "9", $type == 9 ? array("checked") : "") !!}
-				            	Sonstiges
+				            	weitere interne Aufgaben
 				            <br>
 				            {!! Form::radio('evnt_type', "1", $type == 1 ? array("checked") : "") !!}
 				            	Information
@@ -151,7 +151,7 @@
 				            	Vorverkauf
 				            <br>
 				            {!! Form::radio('evnt_type', "9", $type == 9 ? array("checked") : "") !!}
-				            	Sonstiges
+				            	weitere interne Aufgaben
 				            <br>
 				            {!! Form::radio('evnt_type', "1", $type == 1 ? array("checked") : "") !!}
 				            	Information
@@ -324,7 +324,7 @@
 		    </div>	
 		</div>
 
-		<div class="container col-xs-12 col-sm-12 col-md-6 no-padding-xs">
+		<div class="container col-xs-12 col-sm-12 col-md-6">
 			<br class="visible-xs visible-sm">
 			<div class="panel">
 				<div class="panel-heading">

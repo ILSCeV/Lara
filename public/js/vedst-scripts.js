@@ -10,31 +10,6 @@ $(document).ready(function() {
     }
 });
 
-$(document).ready(function() {
-    // if set, internal events will trigger selection of all clubs
-    // if user sets the club manually, we want to keep his selection
-    var autoSelectAllClubs = true;
-    $("#filter").find("input[type=checkbox]").click(function() {
-        autoSelectAllClubs = false;
-    });
-
-    // values of events that should trigger the selection of all clubs
-    var internalEventValues = [
-        '1', // Info
-        '4', // Internal event
-        '5', // private party
-        '6', // cleaning
-        '9'  // other
-    ];
-    $("[name='evnt_type']").click(function(){
-        if (autoSelectAllClubs) {
-            if (internalEventValues.indexOf($(this).attr('value')) !== -1) {
-                $("#filter").find("input[type=checkbox]").attr('checked', true);
-            }
-        }
-    });
-});
-
 // On event create/edit - check that at leaast one checkbox is checked, otherwise event won't be shown at all.
 $("#button-edit-submit").click(function(){
     if($('#filter-checkboxes').find('input[type=checkbox]:checked').length == 0)
@@ -512,7 +487,7 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.scheduleEntry' ).find("input[id^='userName']").on( 'input', function() {
+    $( '.scheduleEntry' ).find('input').on( 'input', function() {
         // Show save icon on form change
         $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]').removeClass('hide');
         $(this).parents('.scheduleEntry').find("[name^=status-icon]").addClass('hide');
@@ -621,7 +596,7 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.scheduleEntry' ).find("input[id^='club']").on( 'input', function() {
+    $( '.scheduleEntry' ).find('input').on( 'input', function() {
         // Show save icon on form change
         $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]').removeClass('hide');
         $(this).parents('.scheduleEntry').find("[name^=status-icon]").addClass('hide');
@@ -697,7 +672,8 @@ jQuery( document ).ready( function( $ ) {
         if ( $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").length
           && !$(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val() ) 
         {
-            var password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );      
+            var password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );
+            $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val(password);       
         } else {
             var password = $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
         }
@@ -707,7 +683,7 @@ jQuery( document ).ready( function( $ ) {
 
             url: $( this ).prop( 'action' ),  
 
-            data: JSON.stringify({
+            data: {
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
                     "_token":       $(this).find( 'input[name=_token]' ).val(),
 
@@ -722,33 +698,31 @@ jQuery( document ).ready( function( $ ) {
 
                     // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
                     "_method": "put"
-                }),  
+                },  
 
             dataType: 'json',
-
-            contentType: 'application/json',
             
-            beforeSend: function() {
-                // console.log("beforesend");
-                
-                // hide dropdowns because they aren't no longer needed
+            beforeSend: function(data) {
+                // hide dropdowns bacause they aren't no longer needed
                 $(document).find('.dropdown-username').hide();
                 $(document).find('.dropdown-club').hide();
 
-                // HOTFIX: resolve current schedule entry ID via looking for an active save button
-                var currentId = $('button.btn-primary').parents('form').attr('id');
+                // Remove save icon, restore status icon
+                $(event.target).children().find('[name^=btn-submit-change]').addClass('hide');
+                $(event.target).children().find('[name^=status-icon]').removeClass('hide');
 
-                // Remove save icon and show a spinner in the username status while we are waiting for a server response
-                $('#btn-submit-changes' + currentId).addClass('hide').parent().children('i').removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner").attr("data-original-title", "In Arbeit...").css("color", "darkgrey");                
+                // Show a spinner in the username status while we are waiting for a server response                
+                $(event.target).children().children("[id^=clubStatus]").children("i").removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner").attr("data-original-title", "In Arbeit...");
             },
             
             complete: function() {
-                // console.log('complete');
+                // Hide spinner after response received, show change was made
+                // We make changes on success anyway, so the following state is only achieved 
+                // when a response from server was received, but errors occured - so let's inform the user
+                $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!");
             },
 
             success: function(data) {  
-                // console.log("success");
-                
                 // COMMENT:
                 // we update to server response instead of just saving user input
                 // for the case when an entry has been updated recently by other user, 
@@ -790,9 +764,6 @@ jQuery( document ).ready( function( $ ) {
 
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(JSON.stringify(xhr.responseJSON));
-                // Hide spinner after response received
-                // We make changes on success anyway, so the following state is only achieved 
-                // when a response from server was received, but errors occured - so let's inform the user
                 $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!");
               }
 

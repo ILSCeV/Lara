@@ -369,15 +369,7 @@ class LoginController extends Controller {
             Session::put('userClub', $userClub);
             Session::put('userStatus', $userStatus);
 
-            Log::info('Auth success: ' . 
-                       $info[0]['cn'][0] . 
-                       ' (' . 
-                       $info[0]['uidnumber'][0] . 
-                       ', "' . 
-                       (!empty($info[0]['mozillanickname'][0]) ? $info[0]['mozillanickname'][0] : $info[0]['givenname'][0]) . 
-                       '", ' . 
-                       $userGroup . 
-                       ') just logged in.');
+            Log::info('Auth success: ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] .', ' . $userGroup . ') just logged in.');
           
             return Redirect::back();
         } 
