@@ -446,7 +446,7 @@
                                 </div>
 
                                 <div class="col-md-1 col-sm-1 col-xs-2">
-                                    <input id="button_del_question{{$counter}}" type="button" class="btn btn-small btn-danger fa fa-trash btnRemoveQuestion" name="button_del_question" value="&#xf1f8;">
+                                    <input id="button_del_question{{$counter}}" type="button" class="btn btn-sm btn-danger fa fa-trash btnRemoveQuestion" name="button_del_question" value="&#xf1f8;">
                                 </div>
 
 
