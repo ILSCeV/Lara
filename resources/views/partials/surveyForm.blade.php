@@ -582,7 +582,7 @@
                                 <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
                                 <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
                             </select>
-                            <input class="hidden" type="hidden" id="hiddenField" name="type[]" value="nothingYet">
+                            <input class="hidden" type="hidden" id="hiddenField" name="type[]" value="1">
                         </fieldset>
                             </div>
 
