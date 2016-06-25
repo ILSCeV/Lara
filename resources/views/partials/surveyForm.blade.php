@@ -460,18 +460,16 @@
                                     <br>
                                 </div>
 
-
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <fieldset>
                                         <select class="selectpicker" name="type_select" id="field_type{{$counter-1}}" onchange="javascript:check_question_type({{$counter-1}}); check_question_type2({{$counter-1}}); setField({{$counter-1}}); setField2({{$counter-1}});">
-                                            <option value="1" data-icon="fa fa-file-text-o">Freitext</option>
-                                            <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
-                                            <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
+                                            <option value="1" data-icon="fa fa-file-text-o" @if($question->field_type === 1) selected @endif >Freitext</option>
+                                            <option value="2" data-icon="fa fa-check-square-o" @if($question->field_type === 2) selected @endif >Checkbox</option>
+                                            <option value="3" data-icon="fa fa-caret-square-o-down" @if($question->field_type === 3) selected @endif >Dropdown</option>
                                         </select>
                                         <input class="hidden" type="hidden" id="hiddenField{{$counter-1}}" name="type[]" value="nothingYet">
                                     </fieldset>
                                 </div>
-
 
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <fieldset class="checkbox entrylist">
@@ -506,6 +504,14 @@
                     </div>
                 @endforeach
             @endif
+
+            <span hidden>{{$counter2 = 0}}</span>
+            @foreach($questions as $question)
+                <script>
+                        check_question_type({{$counter2}}); check_question_type2({{$counter2}}); setField({{$counter2}}); setField2({{$counter2}});
+                </script>
+                <span hidden>{{++$counter2}}</span>
+            @endforeach
 
             <div class="create_survey">
             <div id="questions1" class="clonedInput">
