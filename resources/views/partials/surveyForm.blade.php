@@ -143,39 +143,68 @@
 
             $(document).ready(function() {
 
+                    $(document).on("click", ".btnRemoveQuestion", function () {
 
-                $(document).on("click", ".btnRemoveQuestion", function () {
+                        if (window.location.pathname === '/survey/create') {
 
-                    if (confirm("Bist du sicher, dass du die Frage löschen möchtest?"))
-                    {
-                            var temp = $(this).closest('.clonedInput');
-                            var tempId = parseInt(temp.attr('id').substring(9, 12)) - 1;
-                            var num = $('.clonedInput').length;
+                                var temp = $(this).closest('.clonedInput');
+                                var tempId = parseInt(temp.attr('id').substring(9, 12)) - 1;
+                                var num = $('.clonedInput').length;
 
-                            temp.nextUntil("br").each(function () {
-                                $(this).attr('id', "questions" + ++tempId);
-                                $(this).find("[name^=reference]").attr('id', 'ID' + tempId + '_reference').html('Frage #' + tempId);
-                                $(this).find("[name^=button_del_question]").attr('id', 'button_del_question' + tempId);
-                                $(this).find("[name^=quest_label]").attr('id', 'ID' + tempId + 'questions[]').attr('for', 'ID' + tempId + 'questions[]');
-                                $(this).find("[name^=type]").attr('id', 'hiddenField' + (tempId - 1));
-                                $(this).find("[name^=type_select]").attr('id', 'field_type' + (tempId - 1)).attr('onchange', 'javascript:check_question_type(' + (tempId - 1) + '); check_question_type2(' + (tempId - 1) + '); setField(' + (tempId - 1) + ');' + 'setField2(' + (tempId - 1) + ');');
-                                $(this).find("[name^=btn_answ]").attr('id', 'button_answ' + (tempId - 1));
-                                $(this).find("[name^=btn_answ]").attr('onclick', 'javascript:clone_this(this,' + '"new_passage"' + ',' + (tempId - 1) + ');');
-                                $(this).find("[name^=answer_options_div]").attr('id', 'answ_opt' + (tempId - 1));
-                                $(this).find("[name^=cloneTable]").attr('class', 'passage' + (tempId - 1));
-                                $(this).find("[id^=answer_option]").attr('name', 'answer_options[' + (tempId - 1) + '][]');
-                                $(this).find("[name^=req_label]").attr('for', 'ID' + tempId + '_checkboxitem');
-                                $(this).find("[name^=required]").attr('id', 'ID' + tempId + '_checkboxitem').attr('name', 'required[' + (tempId - 1) + ']');
-                            });
+                                temp.nextUntil("br").each(function () {
+                                    $(this).attr('id', "questions" + ++tempId);
+                                    $(this).find("[name^=reference]").attr('id', 'ID' + tempId + '_reference').html('Frage #' + tempId);
+                                    $(this).find("[name^=button_del_question]").attr('id', 'button_del_question' + tempId);
+                                    $(this).find("[name^=quest_label]").attr('id', 'ID' + tempId + 'questions[]').attr('for', 'ID' + tempId + 'questions[]');
+                                    $(this).find("[name^=type]").attr('id', 'hiddenField' + (tempId - 1));
+                                    $(this).find("[name^=type_select]").attr('id', 'field_type' + (tempId - 1)).attr('onchange', 'javascript:check_question_type(' + (tempId - 1) + '); check_question_type2(' + (tempId - 1) + '); setField(' + (tempId - 1) + ');' + 'setField2(' + (tempId - 1) + ');');
+                                    $(this).find("[name^=btn_answ]").attr('id', 'button_answ' + (tempId - 1));
+                                    $(this).find("[name^=btn_answ]").attr('onclick', 'javascript:clone_this(this,' + '"new_passage"' + ',' + (tempId - 1) + ');');
+                                    $(this).find("[name^=answer_options_div]").attr('id', 'answ_opt' + (tempId - 1));
+                                    $(this).find("[name^=cloneTable]").attr('class', 'passage' + (tempId - 1));
+                                    $(this).find("[id^=answer_option]").attr('name', 'answer_options[' + (tempId - 1) + '][]');
+                                    $(this).find("[name^=req_label]").attr('for', 'ID' + tempId + '_checkboxitem');
+                                    $(this).find("[name^=required]").attr('id', 'ID' + tempId + '_checkboxitem').attr('name', 'required[' + (tempId - 1) + ']');
+                                });
 
-                            $(this).closest(".clonedInput").remove();
+                                $(this).closest(".clonedInput").remove();
 
-                            if (num - 1 === 1)
-                                $('.btnRemoveQuestion').attr('disabled', true);
-                    }
-                    return false;
+                                if (num - 1 === 1)
+                                    $('.btnRemoveQuestion').attr('disabled', true);
 
-                });
+                        }
+
+                        else
+
+                if (confirm("Bist du sicher, dass du die Frage löschen möchtest?")) {
+                    var temp = $(this).closest('.clonedInput');
+                    var tempId = parseInt(temp.attr('id').substring(9, 12)) - 1;
+                    var num = $('.clonedInput').length;
+
+                    temp.nextUntil("br").each(function () {
+                        $(this).attr('id', "questions" + ++tempId);
+                        $(this).find("[name^=reference]").attr('id', 'ID' + tempId + '_reference').html('Frage #' + tempId);
+                        $(this).find("[name^=button_del_question]").attr('id', 'button_del_question' + tempId);
+                        $(this).find("[name^=quest_label]").attr('id', 'ID' + tempId + 'questions[]').attr('for', 'ID' + tempId + 'questions[]');
+                        $(this).find("[name^=type]").attr('id', 'hiddenField' + (tempId - 1));
+                        $(this).find("[name^=type_select]").attr('id', 'field_type' + (tempId - 1)).attr('onchange', 'javascript:check_question_type(' + (tempId - 1) + '); check_question_type2(' + (tempId - 1) + '); setField(' + (tempId - 1) + ');' + 'setField2(' + (tempId - 1) + ');');
+                        $(this).find("[name^=btn_answ]").attr('id', 'button_answ' + (tempId - 1));
+                        $(this).find("[name^=btn_answ]").attr('onclick', 'javascript:clone_this(this,' + '"new_passage"' + ',' + (tempId - 1) + ');');
+                        $(this).find("[name^=answer_options_div]").attr('id', 'answ_opt' + (tempId - 1));
+                        $(this).find("[name^=cloneTable]").attr('class', 'passage' + (tempId - 1));
+                        $(this).find("[id^=answer_option]").attr('name', 'answer_options[' + (tempId - 1) + '][]');
+                        $(this).find("[name^=req_label]").attr('for', 'ID' + tempId + '_checkboxitem');
+                        $(this).find("[name^=required]").attr('id', 'ID' + tempId + '_checkboxitem').attr('name', 'required[' + (tempId - 1) + ']');
+                    });
+
+                    $(this).closest(".clonedInput").remove();
+
+                    if (num - 1 === 1)
+                        $('.btnRemoveQuestion').attr('disabled', true);
+                }
+                        return false;
+
+                    });
             });
 
             $('.btnRemoveQuestion').attr('disabled', true);
