@@ -134,9 +134,9 @@
                     }
                 });
 
-                $('#btnDel').attr('disabled', false);
+                $('.btnRemoveQuestion').attr('disabled', false);
 
-                $('#btnDel').click(function () {
+                $('.btnRemoveQuestion').click(function () {
                     newNum--;
                 });
             });
@@ -146,48 +146,39 @@
 
                 $(document).on("click", ".btnRemoveQuestion", function () {
 
-                    var temp = $(this).closest('.clonedInput');
-                    var tempId = parseInt(temp.attr('id').substring(9, 12)) - 1;
+                    if (confirm("Bist du sicher, dass du die Frage löschen möchtest?"))
+                    {
+                            var temp = $(this).closest('.clonedInput');
+                            var tempId = parseInt(temp.attr('id').substring(9, 12)) - 1;
+                            var num = $('.clonedInput').length;
 
-                    temp.nextUntil("br").each(function () {
-                        $(this).attr('id', "questions" + ++tempId);
-                        $(this).find("[name^=reference]").attr('id', 'ID' + tempId + '_reference').html('Frage #' + tempId);
-                        $(this).find("[name^=button_del_question]").attr('id', 'button_del_question' + tempId);
-                        $(this).find("[name^=quest_label]").attr('id', 'ID' + tempId + 'questions[]').attr('for', 'ID' + tempId + 'questions[]');
-                        $(this).find("[name^=type]").attr('id', 'hiddenField' + (tempId-1));
-                        $(this).find("[name^=type_select]").attr('id', 'field_type' + (tempId-1)).attr('onchange', 'javascript:check_question_type(' + (tempId-1) + '); check_question_type2(' + (tempId-1) + '); setField(' + (tempId-1) + ');' + 'setField2(' + (tempId-1) + ');');
-                        $(this).find("[name^=btn_answ]").attr('id', 'button_answ' + (tempId-1));
-                        $(this).find("[name^=btn_answ]").attr('onclick', 'javascript:clone_this(this,' + '"new_passage"' + ',' + (tempId-1) + ');');
-                        $(this).find("[name^=answer_options_div]").attr('id', 'answ_opt' + (tempId-1));
-                        $(this).find("[name^=cloneTable]").attr('class', 'passage' + (tempId-1));
-                        $(this).find("[id^=answer_option]").attr('name', 'answer_options[' + (tempId-1) + '][]');
-                        $(this).find("[name^=req_label]").attr('for', 'ID' + tempId + '_checkboxitem');
-                        $(this).find("[name^=required]").attr('id', 'ID' + tempId + '_checkboxitem').attr('name', 'required[' + (tempId-1) + ']');
-                    });
+                            temp.nextUntil("br").each(function () {
+                                $(this).attr('id', "questions" + ++tempId);
+                                $(this).find("[name^=reference]").attr('id', 'ID' + tempId + '_reference').html('Frage #' + tempId);
+                                $(this).find("[name^=button_del_question]").attr('id', 'button_del_question' + tempId);
+                                $(this).find("[name^=quest_label]").attr('id', 'ID' + tempId + 'questions[]').attr('for', 'ID' + tempId + 'questions[]');
+                                $(this).find("[name^=type]").attr('id', 'hiddenField' + (tempId - 1));
+                                $(this).find("[name^=type_select]").attr('id', 'field_type' + (tempId - 1)).attr('onchange', 'javascript:check_question_type(' + (tempId - 1) + '); check_question_type2(' + (tempId - 1) + '); setField(' + (tempId - 1) + ');' + 'setField2(' + (tempId - 1) + ');');
+                                $(this).find("[name^=btn_answ]").attr('id', 'button_answ' + (tempId - 1));
+                                $(this).find("[name^=btn_answ]").attr('onclick', 'javascript:clone_this(this,' + '"new_passage"' + ',' + (tempId - 1) + ');');
+                                $(this).find("[name^=answer_options_div]").attr('id', 'answ_opt' + (tempId - 1));
+                                $(this).find("[name^=cloneTable]").attr('class', 'passage' + (tempId - 1));
+                                $(this).find("[id^=answer_option]").attr('name', 'answer_options[' + (tempId - 1) + '][]');
+                                $(this).find("[name^=req_label]").attr('for', 'ID' + tempId + '_checkboxitem');
+                                $(this).find("[name^=required]").attr('id', 'ID' + tempId + '_checkboxitem').attr('name', 'required[' + (tempId - 1) + ']');
+                            });
 
-                    $(this).closest(".clonedInput").remove();
+                            $(this).closest(".clonedInput").remove();
+
+                            if (num - 1 === 1)
+                                $('.btnRemoveQuestion').attr('disabled', true);
+                    }
+                    return false;
 
                 });
             });
 
-            $('#btnDel').click(function () {
-
-                if (confirm("Bist du sicher, dass du die Frage löschen möchtest?"))
-                {
-                    var num = $('.clonedInput').length;
-
-                    $('#questions' + num).slideUp('slow', function () {$(this).remove();
-
-                        if (num -1 === 1)
-                            $('#btnDel').attr('disabled', true);
-
-                        $('#btnAdd').attr('disabled', false).prop('value', "Frage hinzufügen");});
-                }
-                return false;
-
-            });
-
-            $('#btnDel').attr('disabled', true);
+            $('.btnRemoveQuestion').attr('disabled', true);
         });
 
     </script>
@@ -448,7 +439,7 @@
                         </div>
 
                         <div class="col-md-1 col-sm-1 col-xs-2">
-                            <i id="button_del_question1" class="btn btn-small btn-danger fa fa-trash btnRemoveQuestion" name="button_del_question"></i>
+                            <input id="button_del_question1" type="button" class="btn btn-small btn-danger fa fa-trash btnRemoveQuestion" name="button_del_question" value="&#xf1f8;">
                         </div>
 
 
@@ -502,8 +493,8 @@
         <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
         <div class="panel col-md-8 col-sm-12 col-xs-12">
             <div class="panel-body">
-        <div id="addDelButtons">
-            <input type="button" id="btnAdd" value="Frage hinzufügen" class="btn btn-success"> <input type="button" id="btnDel" value="letzte Frage löschen" class="btn btn-danger">
+        <div id="addButtons">
+            <input type="button" id="btnAdd" value="Frage hinzufügen" class="btn btn-success">
         </div>
         </div>
         </div>
