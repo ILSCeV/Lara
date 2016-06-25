@@ -422,7 +422,7 @@
                         <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[][]"></textarea></td>
                         <td class="helltab" rowspan="3">
                             <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
-                                <i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <i class="fa fa-trash" style="color:red" aria-hidden="true"></i></a>
                         </td>
                 </table>
             </div>
@@ -491,7 +491,7 @@
                                                     <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[{{$counter-1}}][]">{{ $answer_option->answer_option }}</textarea></td>
                                                     <td class="helltab" rowspan="3">
                                                         <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
-                                                            <i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                            <i class="fa fa-trash" style="color:red" aria-hidden="true"></i></a>
                                                     </td>
                                             </table>
                                         @endforeach
