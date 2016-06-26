@@ -26,6 +26,15 @@
     overflow-x: scroll;
 }
 
+#topPanel{
+    overflow: auto;
+}
+
+#bottomPanel{
+    overflow: auto;
+    overflow: hidden;
+}
+
 .answers::-webkit-scrollbar {
     /*display: none;
     */

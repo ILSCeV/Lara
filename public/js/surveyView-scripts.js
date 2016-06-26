@@ -30,6 +30,14 @@ $('.editButton').click(function() {
     $("i", this).toggleClass("fa-pencil fa-floppy-o");
 });
 
+$('#bottomPanel').on('scroll', function () {
+
+    $('#topPanel').scrollLeft($(this).scrollLeft());
+});
+
+$('#topPanel').on('scroll', function () {
+    $('#bottomPanel').scrollLeft($(this).scrollLeft());
+});
 
 
 

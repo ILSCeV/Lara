@@ -103,7 +103,7 @@ Calculate width of row in answers
             <?php
             $alternatingColor = 0;
             ?>
-            <div class="col-md-10 answers rowNoPadding">
+            <div id="topPanel" class="col-md-10  rowNoPadding">
                 <div id="rightPart" style="width: {{$questionCount}}vw;" class="displayDesktop">
                     <div class="rowNoPadding ">
                         <div class="answerToQuestion">
@@ -228,7 +228,7 @@ Calculate width of row in answers
         <div class="col-md-10 col-md-offset-2 rowNoPadding">
             <div class="panel panel-body">
                 <div class="row rowNoPadding">
-                    <div class="answers rowNoPadding">
+                    <div class="rowNoPadding" id="bottomPanel">
                         <div id="rightPart" style="width: {{$questionCount}}vw;" class="displayDesktop">
                                 <div class="answerToQuestion">
                                     <h5 class="text-center">Auswertung</h5>
