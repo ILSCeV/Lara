@@ -225,6 +225,17 @@ Calculate width of row in answers
         </div>
             </div>
     </div>
+        <div class="panel panel-body">
+            <div class="row rowNoPadding">
+
+                @foreach($evaluation as $eva)
+                    <div class="col-md-4 answerToQuestion">
+                        test
+                    </div>
+                @endforeach
+
+             </div>
+        </div>
     <div class="displayDesktop">
     </div>
 
