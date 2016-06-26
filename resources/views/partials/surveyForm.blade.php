@@ -421,7 +421,7 @@
     @if($survey->deadline === null)
         <div class="form-group">
             {!! Form::label('deadline', 'Aktiv bis:') !!}
-            {!! Form::date('deadline', date('Y-m-d', strtotime("+14 days")), ['class' => 'form-control']) !!}
+            {!! Form::date('deadline', date('Y-m-d'), ['class' => 'form-control']) !!}
         </div>
     @endif
 
