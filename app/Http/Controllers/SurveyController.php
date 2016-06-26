@@ -52,7 +52,7 @@ class SurveyController extends Controller
     {
         //prepare correct date and time format to be used in forms for deadline
         $time = new DateTime();
-        $time = $time->format('d-m-Y H:i:s');
+        $time = $time->format('Y-m-d H:i:s');
 
         //placeholder because createSurveyView needs variable, can set defaults here
         $survey = new Survey();
@@ -278,7 +278,7 @@ class SurveyController extends Controller
             $answer_options = $question->getAnswerOptions;
 
         // prepare correct date and time format to be used in forms for deadline
-        $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
+        $time = strftime("%Y-%m-%d %H:%M:%S", strtotime($survey->deadline));
         
         return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
     }
