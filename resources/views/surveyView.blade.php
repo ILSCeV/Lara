@@ -239,8 +239,8 @@ Calculate width of row in answers
                          @if(empty($eva))
                              Freitext
                          @endif
-                       @foreach($eva as $evacount)
-                            <div>{{$evacount}}</div>
+                       @foreach($eva as $key => $evacount)
+                            <div>{{$key}}: {{$evacount}} Personen</div>
                            @endforeach
                     </div>
                 @endforeach
