@@ -412,12 +412,11 @@
                     'class' => 'form-control'
                     ]) !!}
             </div>
-            @if(isset($time))
-                <div class="form-group">
-                    {!! Form::label('deadline', 'Aktiv bis:') !!}
-                    {!! Form::date('deadline', $time, ['class' => 'form-control']) !!}
-                </div>
-            @endif
+
+            <div class="form-group">
+                {!! Form::label('deadline', 'Aktiv bis:') !!}
+                {!! Form::date('deadline', $time, ['class' => 'form-control']) !!}
+            </div>
 
             <div class="form-group">
                 <div>
