@@ -230,7 +230,6 @@ Calculate width of row in answers
                 <div class="row rowNoPadding">
                     <div class="answers rowNoPadding">
                         <div id="rightPart" style="width: {{$questionCount}}vw;" class="displayDesktop">
-                            <div class="panel panel-body">
                                 <div class="answerToQuestion">
                                     Auswertung
                                 </div>
@@ -244,7 +243,6 @@ Calculate width of row in answers
                                         @endforeach
                                     </div>
                                 @endforeach
-                            </div>
                         </div>
                     </div>
                 </div>
