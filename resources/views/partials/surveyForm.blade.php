@@ -80,7 +80,7 @@
                 newElem.find('#button_answ' + (newNum - 1)).attr('style', 'display:none');
 
                 $("form").submit(function() {
-                        $('.bootstrap-select').find('#field_type' + (newNum -1));
+                    $('.bootstrap-select').find('#field_type' + (newNum -1));
                     if ($('#field_type' + (newNum -1)).val() === '0') {
                         alert("Frage-Typ muss bei Frage " + (newNum) + " ausgewählt sein");
                         return false;
@@ -143,68 +143,68 @@
 
             $(document).ready(function() {
 
-                    $(document).on("click", ".btnRemoveQuestion", function () {
+                $(document).on("click", ".btnRemoveQuestion", function () {
 
-                        if (window.location.pathname === '/survey/create') {
+                    if (window.location.pathname === '/survey/create') {
 
-                                var temp = $(this).closest('.clonedInput');
-                                var tempId = parseInt(temp.attr('id').substring(9, 12)) - 1;
-                                var num = $('.clonedInput').length;
+                        var temp = $(this).closest('.clonedInput');
+                        var tempId = parseInt(temp.attr('id').substring(9, 12)) - 1;
+                        var num = $('.clonedInput').length;
 
-                                temp.nextUntil("br").each(function () {
-                                    $(this).attr('id', "questions" + ++tempId);
-                                    $(this).find("[name^=reference]").attr('id', 'ID' + tempId + '_reference').html('Frage #' + tempId);
-                                    $(this).find("[name^=button_del_question]").attr('id', 'button_del_question' + tempId);
-                                    $(this).find("[name^=quest_label]").attr('id', 'ID' + tempId + 'questions[]').attr('for', 'ID' + tempId + 'questions[]');
-                                    $(this).find("[name^=type]").attr('id', 'hiddenField' + (tempId - 1));
-                                    $(this).find("[name^=type_select]").attr('id', 'field_type' + (tempId - 1)).attr('onchange', 'javascript:check_question_type(' + (tempId - 1) + '); check_question_type2(' + (tempId - 1) + '); setField(' + (tempId - 1) + ');' + 'setField2(' + (tempId - 1) + ');');
-                                    $(this).find("[name^=btn_answ]").attr('id', 'button_answ' + (tempId - 1));
-                                    $(this).find("[name^=btn_answ]").attr('onclick', 'javascript:clone_this(this,' + '"new_passage"' + ',' + (tempId - 1) + ');');
-                                    $(this).find("[name^=answer_options_div]").attr('id', 'answ_opt' + (tempId - 1));
-                                    $(this).find("[name^=cloneTable]").attr('class', 'passage' + (tempId - 1));
-                                    $(this).find("[id^=answer_option]").attr('name', 'answer_options[' + (tempId - 1) + '][]');
-                                    $(this).find("[name^=req_label]").attr('for', 'ID' + tempId + '_checkboxitem');
-                                    $(this).find("[name^=required]").attr('id', 'ID' + tempId + '_checkboxitem').attr('name', 'required[' + (tempId - 1) + ']');
-                                });
+                        temp.nextUntil("br").each(function () {
+                            $(this).attr('id', "questions" + ++tempId);
+                            $(this).find("[name^=reference]").attr('id', 'ID' + tempId + '_reference').html('Frage #' + tempId);
+                            $(this).find("[name^=button_del_question]").attr('id', 'button_del_question' + tempId);
+                            $(this).find("[name^=quest_label]").attr('id', 'ID' + tempId + 'questions[]').attr('for', 'ID' + tempId + 'questions[]');
+                            $(this).find("[name^=type]").attr('id', 'hiddenField' + (tempId - 1));
+                            $(this).find("[name^=type_select]").attr('id', 'field_type' + (tempId - 1)).attr('onchange', 'javascript:check_question_type(' + (tempId - 1) + '); check_question_type2(' + (tempId - 1) + '); setField(' + (tempId - 1) + ');' + 'setField2(' + (tempId - 1) + ');');
+                            $(this).find("[name^=btn_answ]").attr('id', 'button_answ' + (tempId - 1));
+                            $(this).find("[name^=btn_answ]").attr('onclick', 'javascript:clone_this(this,' + '"new_passage"' + ',' + (tempId - 1) + ');');
+                            $(this).find("[name^=answer_options_div]").attr('id', 'answ_opt' + (tempId - 1));
+                            $(this).find("[name^=cloneTable]").attr('class', 'passage' + (tempId - 1));
+                            $(this).find("[id^=answer_option]").attr('name', 'answer_options[' + (tempId - 1) + '][]');
+                            $(this).find("[name^=req_label]").attr('for', 'ID' + tempId + '_checkboxitem');
+                            $(this).find("[name^=required]").attr('id', 'ID' + tempId + '_checkboxitem').attr('name', 'required[' + (tempId - 1) + ']');
+                        });
 
-                                $(this).closest(".clonedInput").remove();
+                        $(this).closest(".clonedInput").remove();
 
-                                if (num - 1 === 1)
-                                    $('.btnRemoveQuestion').attr('disabled', true);
+                        if (num - 1 === 1)
+                            $('.btnRemoveQuestion').attr('disabled', true);
 
-                        }
+                    }
 
-                        else
+                    else
 
-                if (confirm("Bist du sicher, dass du die Frage löschen möchtest?")) {
-                    var temp = $(this).closest('.clonedInput');
-                    var tempId = parseInt(temp.attr('id').substring(9, 12)) - 1;
-                    var num = $('.clonedInput').length;
+                    if (confirm("Bist du sicher, dass du die Frage löschen möchtest?")) {
+                        var temp = $(this).closest('.clonedInput');
+                        var tempId = parseInt(temp.attr('id').substring(9, 12)) - 1;
+                        var num = $('.clonedInput').length;
 
-                    temp.nextUntil("br").each(function () {
-                        $(this).attr('id', "questions" + ++tempId);
-                        $(this).find("[name^=reference]").attr('id', 'ID' + tempId + '_reference').html('Frage #' + tempId);
-                        $(this).find("[name^=button_del_question]").attr('id', 'button_del_question' + tempId);
-                        $(this).find("[name^=quest_label]").attr('id', 'ID' + tempId + 'questions[]').attr('for', 'ID' + tempId + 'questions[]');
-                        $(this).find("[name^=type]").attr('id', 'hiddenField' + (tempId - 1));
-                        $(this).find("[name^=type_select]").attr('id', 'field_type' + (tempId - 1)).attr('onchange', 'javascript:check_question_type(' + (tempId - 1) + '); check_question_type2(' + (tempId - 1) + '); setField(' + (tempId - 1) + ');' + 'setField2(' + (tempId - 1) + ');');
-                        $(this).find("[name^=btn_answ]").attr('id', 'button_answ' + (tempId - 1));
-                        $(this).find("[name^=btn_answ]").attr('onclick', 'javascript:clone_this(this,' + '"new_passage"' + ',' + (tempId - 1) + ');');
-                        $(this).find("[name^=answer_options_div]").attr('id', 'answ_opt' + (tempId - 1));
-                        $(this).find("[name^=cloneTable]").attr('class', 'passage' + (tempId - 1));
-                        $(this).find("[id^=answer_option]").attr('name', 'answer_options[' + (tempId - 1) + '][]');
-                        $(this).find("[name^=req_label]").attr('for', 'ID' + tempId + '_checkboxitem');
-                        $(this).find("[name^=required]").attr('id', 'ID' + tempId + '_checkboxitem').attr('name', 'required[' + (tempId - 1) + ']');
-                    });
+                        temp.nextUntil("br").each(function () {
+                            $(this).attr('id', "questions" + ++tempId);
+                            $(this).find("[name^=reference]").attr('id', 'ID' + tempId + '_reference').html('Frage #' + tempId);
+                            $(this).find("[name^=button_del_question]").attr('id', 'button_del_question' + tempId);
+                            $(this).find("[name^=quest_label]").attr('id', 'ID' + tempId + 'questions[]').attr('for', 'ID' + tempId + 'questions[]');
+                            $(this).find("[name^=type]").attr('id', 'hiddenField' + (tempId - 1));
+                            $(this).find("[name^=type_select]").attr('id', 'field_type' + (tempId - 1)).attr('onchange', 'javascript:check_question_type(' + (tempId - 1) + '); check_question_type2(' + (tempId - 1) + '); setField(' + (tempId - 1) + ');' + 'setField2(' + (tempId - 1) + ');');
+                            $(this).find("[name^=btn_answ]").attr('id', 'button_answ' + (tempId - 1));
+                            $(this).find("[name^=btn_answ]").attr('onclick', 'javascript:clone_this(this,' + '"new_passage"' + ',' + (tempId - 1) + ');');
+                            $(this).find("[name^=answer_options_div]").attr('id', 'answ_opt' + (tempId - 1));
+                            $(this).find("[name^=cloneTable]").attr('class', 'passage' + (tempId - 1));
+                            $(this).find("[id^=answer_option]").attr('name', 'answer_options[' + (tempId - 1) + '][]');
+                            $(this).find("[name^=req_label]").attr('for', 'ID' + tempId + '_checkboxitem');
+                            $(this).find("[name^=required]").attr('id', 'ID' + tempId + '_checkboxitem').attr('name', 'required[' + (tempId - 1) + ']');
+                        });
 
-                    $(this).closest(".clonedInput").remove();
+                        $(this).closest(".clonedInput").remove();
 
-                    if (num - 1 === 1)
-                        $('.btnRemoveQuestion').attr('disabled', true);
-                }
-                        return false;
+                        if (num - 1 === 1)
+                            $('.btnRemoveQuestion').attr('disabled', true);
+                    }
+                    return false;
 
-                    });
+                });
             });
 
             $('.btnRemoveQuestion').attr('disabled', true);
@@ -249,7 +249,7 @@
                 void(0);
 
             if (document.getElementById('button_answ'))
-                    var att = document.getElementById('button_answ').getAttribute('style');
+                var att = document.getElementById('button_answ').getAttribute('style');
             else
                 var att = document.getElementById('button_answ' + number).getAttribute('style');
 
@@ -345,14 +345,14 @@
 
         function setField2(number) {
             if (document.getElementById('field_type' + number))
-                    setField3();
+                setField3();
             else
                 void(0);
 
-                function setField3() {
-                    toWhat = document.getElementById("field_type" + number).value;
-                    document.getElementById("hiddenField" + number).value = toWhat;
-                }
+            function setField3() {
+                toWhat = document.getElementById("field_type" + number).value;
+                document.getElementById("hiddenField" + number).value = toWhat;
+            }
         }
     </script>
 
@@ -384,11 +384,11 @@
             });
         });
 
-    $("form").submit(function () {
-          if ($('#btnAdd') !== '.click')
-              $(window).unbind('beforeunload');
-             });
-         });
+        $("form").submit(function () {
+            if ($('#btnAdd') !== '.click')
+                $(window).unbind('beforeunload');
+        });
+    });
 </script>
 
 <div class="panel-group">
@@ -397,52 +397,52 @@
 
         <h4 id="heading_edit" style="display:none">Umfrage editieren:</h4>
 
-<div class="panel-body">
+        <div class="panel-body">
 
-    <div class="form-group">
-        {!! Form::label('title', 'Titel:') !!}
-        {!! Form::text('title', $survey->title, ['placeholder'=>'z.B. Teilnahme an der Clubfahrt',
-            'required',
-            'class' => 'form-control'
-            ]) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('description', 'Beschreibung:') !!}
-        {!! Form::textarea('description', $survey->description, ['size' => '100x4',
-            'class' => 'form-control'
-            ]) !!}
-    </div>
-    @if(isset($survey->deadline))
-    <div class="form-group">
-        {!! Form::label('deadline', 'Aktiv bis:') !!}
-        {!! Form::date('deadline', date('Y-m-d', strtotime(str_replace('-','/', $survey->deadline))), ['class' => 'form-control']) !!}
-    </div>
-    @endif
-    @if($survey->deadline === null)
-        <div class="form-group">
-            {!! Form::label('deadline', 'Aktiv bis:') !!}
-            {!! Form::date('deadline', date('Y-m-d'), ['class' => 'form-control']) !!}
-        </div>
-    @endif
+            <div class="form-group">
+                {!! Form::label('title', 'Titel:') !!}
+                {!! Form::text('title', $survey->title, ['placeholder'=>'z.B. Teilnahme an der Clubfahrt',
+                    'required',
+                    'class' => 'form-control'
+                    ]) !!}
+            </div>
+            <div class="form-group">
+                {!! Form::label('description', 'Beschreibung:') !!}
+                {!! Form::textarea('description', $survey->description, ['size' => '100x4',
+                    'class' => 'form-control'
+                    ]) !!}
+            </div>
+            @if(isset($survey->deadline))
+                <div class="form-group">
+                    {!! Form::label('deadline', 'Aktiv bis:') !!}
+                    {!! Form::date('deadline', date('Y-m-d', strtotime(str_replace('-','/', $survey->deadline))), ['class' => 'form-control']) !!}
+                </div>
+            @endif
+            @if($survey->deadline === null)
+                <div class="form-group">
+                    {!! Form::label('deadline', 'Aktiv bis:') !!}
+                    {!! Form::date('deadline', date('Y-m-d'), ['class' => 'form-control']) !!}
+                </div>
+            @endif
 
-    <div class="form-group">
-        <div>
-            <label class="label_checkboxitem" for="checkboxitemitem"></label>
-            <label><input type="checkbox" id="required1" value="required1" name="is_private" @if(Session::get('userGroup') != 'clubleitung' OR Session::get('userGroup') != 'admin' OR Session::get('userGroup') != 'marketing') checked disabled @endif class="input_checkboxitem"
-                          @if($survey->is_private) checked @endif> nur für eingeloggte Nutzer sichtbar  </label>
+            <div class="form-group">
+                <div>
+                    <label class="label_checkboxitem" for="checkboxitemitem"></label>
+                    <label><input type="checkbox" id="required1" value="required1" name="is_private" @if(Session::get('userGroup') != 'clubleitung' OR Session::get('userGroup') != 'admin' OR Session::get('userGroup') != 'marketing') checked disabled @endif class="input_checkboxitem"
+                                  @if($survey->is_private) checked @endif> nur für eingeloggte Nutzer sichtbar  </label>
+                </div>
+                <div>
+                    <label class="label_checkboxitem" for="checkboxitemitem"></label>
+                    <label><input type="checkbox" id="required2" value="required2" name="is_anonymous" class="input_checkboxitem"
+                                  @if($survey->is_anonymous) checked @endif> Ergebnisse sind nur für den Umfragenersteller sichtbar </label>
+                </div>
+                <div>
+                    <label class="label_checkboxitem" for="checkboxitemitem"></label>
+                    <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem"
+                                  @if($survey->show_results_after_voting) checked @endif> Ergebnisse sind erst nach dem Ausfüllen sichtbar </label>
+                </div>
+            </div>
         </div>
-        <div>
-            <label class="label_checkboxitem" for="checkboxitemitem"></label>
-            <label><input type="checkbox" id="required2" value="required2" name="is_anonymous" class="input_checkboxitem"
-                          @if($survey->is_anonymous) checked @endif> Ergebnisse sind nur für den Umfragenersteller sichtbar </label>
-        </div>
-        <div>
-            <label class="label_checkboxitem" for="checkboxitemitem"></label>
-            <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem"
-                          @if($survey->show_results_after_voting) checked @endif> Ergebnisse sind erst nach dem Ausfüllen sichtbar </label>
-        </div>
-    </div>
-</div>
     </div>
 
 
@@ -464,165 +464,166 @@
         <div class="questions">
 
             <div class="question_edit">
-            <span hidden>{{$counter = 0}}</span>
-            @if(isset($questions))
-                @foreach($questions as $question)
+                <span hidden>{{$counter = 0}}</span>
+                @if(isset($questions))
+                    @foreach($questions as $question)
 
-                    <div id="{{"questions" . ++$counter }}" class="clonedInput">
-                        <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
-                        <div class="panel col-md-8 col-sm-12 col-xs-12">
-                            <div class="panel-body">
-
-
-                                <div class="col-md-11 col-sm-11 col-xs-10">
-                                    <h4 id="ID{{$counter}}_reference" name="reference" class="heading-reference">Frage #{{$counter}}</h4>
-                                </div>
-
-                                <div class="col-md-1 col-sm-1 col-xs-2">
-                                    <input id="button_del_question{{$counter}}" type="button" class="btn btn-sm btn-danger fa fa-trash btnRemoveQuestion" name="button_del_question" value="&#xf1f8;">
-                                </div>
+                        <div id="{{"questions" . ++$counter }}" class="clonedInput">
+                            <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
+                            <div class="panel col-md-8 col-sm-12 col-xs-12">
+                                <div class="panel-body">
 
 
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <fieldset>
-                                        <label class="questions" for="ID{{$counter}}questions[]" name="quest_label">Frage: &nbsp</label>
-
-                                        <textarea class="form-control" type="text" name="questions[]" id="question" style="max-width: 100%; max-height: 300px">{{ $question->question }}</textarea>
-                                    </fieldset>
-                                </div>
-
-                                <div class="visible-xs col-xs-12">
-                                    <br>
-                                </div>
-
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <fieldset>
-                                        <select class="selectpicker" name="type_select" id="field_type{{$counter-1}}" onchange="javascript:check_question_type({{$counter-1}}); check_question_type2({{$counter-1}}); setField({{$counter-1}}); setField2({{$counter-1}});">
-                                            <option value="1" data-icon="fa fa-file-text-o" @if($question->field_type === 1) selected @endif >Freitext</option>
-                                            <option value="2" data-icon="fa fa-check-square-o" @if($question->field_type === 2) selected @endif >Checkbox</option>
-                                            <option value="3" data-icon="fa fa-caret-square-o-down" @if($question->field_type === 3) selected @endif >Dropdown</option>
-                                        </select>
-                                        <input class="hidden" type="hidden" id="hiddenField{{$counter-1}}" name="type[]" value="nothingYet">
-                                    </fieldset>
-                                </div>
-
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <fieldset class="checkbox entrylist">
-                                        <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
-                                        <label><input type="checkbox" id="required" @if($question->is_required) checked @endif value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
-                                    </fieldset>
-                                </div>
-
-
-
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div class="answ_option" id="answ_opt{{$counter-1}}" name="answer_options_div">
-                                        @foreach($answer_options = $question->getAnswerOptions as $answer_option)
-                                            <table class="passage" id="new_passage" name="cloneTable">
-                                                <tr>
-                                                    <td>Antwortmöglichkeit: &nbsp</td>
-                                                    <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[{{$counter-1}}][]">{{ $answer_option->answer_option }}</textarea></td>
-                                                    <td class="helltab" rowspan="3">
-                                                        <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
-                                                            <i class="fa fa-trash" style="color:red" aria-hidden="true"></i></a>
-                                                    </td>
-                                            </table>
-                                        @endforeach
-                                        <input class="btn btn-success btn-sm" id="button_answ{{$counter-1}}" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', {{$counter-1}});" type="button">
+                                    <div class="col-md-11 col-sm-11 col-xs-10">
+                                        <h4 id="ID{{$counter}}_reference" name="reference" class="heading-reference">Frage #{{$counter}}</h4>
                                     </div>
+
+                                    <div class="col-md-1 col-sm-1 col-xs-2">
+                                        <input id="button_del_question{{$counter}}" type="button" class="btn btn-sm btn-danger fa fa-trash btnRemoveQuestion" name="button_del_question" value="&#xf1f8;">
+                                    </div>
+
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <fieldset>
+                                            <label class="questions" for="ID{{$counter}}questions[]" name="quest_label">Frage: &nbsp</label>
+
+                                            <textarea class="form-control" type="text" name="questions[]" id="question" style="max-width: 100%; max-height: 300px">{{ $question->question }}</textarea>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="visible-xs col-xs-12">
+                                        <br>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <fieldset>
+                                            <select class="selectpicker" name="type_select" id="field_type{{$counter-1}}" onchange="javascript:check_question_type({{$counter-1}}); check_question_type2({{$counter-1}}); setField({{$counter-1}}); setField2({{$counter-1}});">
+                                                <option value="1" data-icon="fa fa-file-text-o" @if($question->field_type === 1) selected @endif >Freitext</option>
+                                                <option value="2" data-icon="fa fa-check-square-o" @if($question->field_type === 2) selected @endif >Checkbox</option>
+                                                <option value="3" data-icon="fa fa-caret-square-o-down" @if($question->field_type === 3) selected @endif >Dropdown</option>
+                                            </select>
+                                            <input class="hidden" type="hidden" id="hiddenField{{$counter-1}}" name="type[]" value="nothingYet">
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <fieldset class="checkbox entrylist">
+                                            <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
+                                            <label><input type="checkbox" id="required" @if($question->is_required) checked @endif value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
+                                        </fieldset>
+                                    </div>
+
+
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="answ_option" id="answ_opt{{$counter-1}}" name="answer_options_div">
+                                            @foreach($answer_options = $question->getAnswerOptions as $answer_option)
+                                                <table class="passage" id="new_passage" name="cloneTable">
+                                                    <tr>
+                                                        <td>Antwortmöglichkeit: &nbsp</td>
+                                                        <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[{{$counter-1}}][]">{{ $answer_option->answer_option }}</textarea></td>
+                                                        <td class="helltab" rowspan="3">
+                                                            <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
+                                                                <i class="fa fa-trash" style="color:red" aria-hidden="true"></i></a>
+                                                        </td>
+                                                </table>
+                                            @endforeach
+                                            <input class="btn btn-success btn-sm" id="button_answ{{$counter-1}}" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', {{$counter-1}});" type="button">
+                                        </div>
+                                    </div>
+
+
                                 </div>
-
-
                             </div>
+
                         </div>
+                    @endforeach
+                @endif
 
-                    </div>
-                @endforeach
-            @endif
-
-            <span hidden>{{$counter2 = 0}}</span>
-           @if(isset($questions))
-            @foreach($questions as $question)
-                <script>
-                        check_question_type({{$counter2}}); check_question_type2({{$counter2}}); setField({{$counter2}}); setField2({{$counter2}});
-                </script>
-                <span hidden>{{++$counter2}}</span>
-            @endforeach
-               @endif
+                <span hidden>{{$counter2 = 0}}</span>
+                @if(isset($questions))
+                    @foreach($questions as $question)
+                        <script>
+                            check_question_type({{$counter2}}); check_question_type2({{$counter2}}); setField({{$counter2}}); setField2({{$counter2}});
+                        </script>
+                        <span hidden>{{++$counter2}}</span>
+                    @endforeach
+                @endif
             </div>
 
             <div class="create_survey">
-            <div id="questions1" class="clonedInput">
-                <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
-                <div class="panel col-md-8 col-sm-12 col-xs-12">
-                    <div class="panel-body">
+                <div id="questions1" class="clonedInput">
+                    <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
+                    <div class="panel col-md-8 col-sm-12 col-xs-12">
+                        <div class="panel-body">
 
 
-                        <div class="col-md-11 col-sm-11 col-xs-10">
-                <h4 id="reference" name="reference" class="heading-reference">Frage #1</h4>
-                        </div>
+                            <div class="col-md-11 col-sm-11 col-xs-10">
+                                <h4 id="reference" name="reference" class="heading-reference">Frage #1</h4>
+                            </div>
 
-                        <div class="col-md-1 col-sm-1 col-xs-2">
-                            <input id="button_del_question1" type="button" class="btn btn-sm btn-danger fa fa-trash btnRemoveQuestion" name="button_del_question" value="&#xf1f8;">
-                        </div>
-
-
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                <fieldset>
-                    <label class="questions" for="question" name="quest_label">Frage: &nbsp</label>
-
-                    <textarea class="form-control" type="text" name="questions[]" id="question" style="max-width: 100%; max-height: 300px"></textarea>
-                </fieldset>
-                        </div>
-
-                        <div class="visible-xs col-xs-12">
-                           <br>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                        <fieldset>
-                            <select class="selectpicker" name="type_select" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0); setField(0); setField2(0);">
-                                <option value="1" data-icon="fa fa-file-text-o" selected>Freitext</option>
-                                <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
-                                <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
-                            </select>
-                            <input class="hidden" type="hidden" id="hiddenField" name="type[]" value="1">
-                        </fieldset>
+                            <div class="col-md-1 col-sm-1 col-xs-2">
+                                <input id="button_del_question1" type="button" class="btn btn-sm btn-danger fa fa-trash btnRemoveQuestion" name="button_del_question" value="&#xf1f8;">
                             </div>
 
 
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                <fieldset class="checkbox entrylist">
-                    <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
-                    <label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
-                </fieldset>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <fieldset>
+                                    <label class="questions" for="question" name="quest_label">Frage: &nbsp</label>
+
+                                    <textarea class="form-control" type="text" name="questions[]" id="question" style="max-width: 100%; max-height: 300px"></textarea>
+                                </fieldset>
+                            </div>
+
+                            <div class="visible-xs col-xs-12">
+                                <br>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <fieldset>
+                                    <select class="selectpicker" name="type_select" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0); setField(0); setField2(0);">
+                                        <option value="1" data-icon="fa fa-file-text-o" selected>Freitext</option>
+                                        <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
+                                        <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
+                                    </select>
+                                    <input class="hidden" type="hidden" id="hiddenField" name="type[]" value="1">
+                                </fieldset>
+                            </div>
+
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <fieldset class="checkbox entrylist">
+                                    <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
+                                    <label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
+                                </fieldset>
                             </div>
 
 
 
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="answ_option" id="answ_opt" name="answer_options_div">
-                                <input class="btn btn-success btn-sm" id="button_answ" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="answ_option" id="answ_opt" name="answer_options_div">
+                                    <input class="btn btn-success btn-sm" id="button_answ" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button">
+                                </div>
                             </div>
+
+
                         </div>
+                    </div>
 
-
-            </div>
-            </div>
-
-            </div>
                 </div>
+            </div>
 
         </div>
         <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
         <div class="panel col-md-8 col-sm-12 col-xs-12">
             <div class="panel-body">
-        <div id="addButtons">
-            <input type="button" id="btnAdd" value="Frage hinzufügen" class="btn btn-success">
-        </div>
-        </div>
+                <div id="addButtons">
+                    <input type="button" id="btnAdd" value="Frage hinzufügen" class="btn btn-success">
+                </div>
+            </div>
         </div>
     </div>
+    
 </div>
 </div>
 </body>
