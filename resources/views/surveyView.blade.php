@@ -231,7 +231,7 @@ Calculate width of row in answers
                     <div class="answers rowNoPadding">
                         <div id="rightPart" style="width: {{$questionCount}}vw;" class="displayDesktop">
                                 <div class="answerToQuestion">
-                                    Auswertung
+                                    <h5 class="text-center">Auswertung</h5>
                                 </div>
                                 @foreach($evaluation as $eva)
                                     <div class="col-md-4 answerToQuestion">
