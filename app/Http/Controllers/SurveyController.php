@@ -15,6 +15,7 @@ use Lara\SurveyAnswer;
 use Lara\SurveyAnswerOption;
 use Lara\Club;
 use Lara\Http\Requests\SurveyRequest;
+use Carbon\Carbon;
 
 /**
  * Class SurveyController
@@ -51,13 +52,14 @@ class SurveyController extends Controller
     public function create()
     {
         //prepare correct date and time format to be used in forms for deadline
-        $time = new DateTime();
-        $time = $time->format('d-m-Y H:i:s');
-
+        $datetime = carbon::now();
+        $datetime->endOfDay();
+        $time = $datetime ->toTimeString();
+        $date = $datetime ->toDateString();
         //placeholder because createSurveyView needs variable, can set defaults here
         $survey = new Survey();
-        
-        return view('createSurveyView', compact('survey','time'));
+        //return var_dump($date,$time);
+        return view('createSurveyView', compact('survey', 'time', 'date'));
     }
 
     /**
@@ -72,7 +74,7 @@ class SurveyController extends Controller
         $survey->title = $request->title;
         //if URL is in the description, convert it to clickable hyperlink
         $survey->description = $this->addLinks($request->description);
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadline));
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadline));//TODO
         $survey->is_anonymous = isset($request->is_anonymous);
         $survey->is_private = isset($request->is_private);
         $survey->show_results_after_voting = isset($request->show_results_after_voting);
