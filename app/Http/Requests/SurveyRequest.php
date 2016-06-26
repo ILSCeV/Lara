@@ -24,11 +24,12 @@ class SurveyRequest extends Request
      */
     public function rules()
     {
-        $today = \Carbon\Carbon::now();
+        $today_date = \Carbon\Carbon::now()->toDateString();
         $rules = [
             'title' => 'string|required|max:255',
             'description' => 'string|max:1500',
-            'deadline' => "required|date_format:d-m-Y H:i:s|after:.$today.",
+            'deadlineDate' => "required|date_format:Y-m-d|after:.$today_date.",
+            'deadlineTime' => "required|date_format:H:i:s",
             'is_private' => 'in:null,1',
             'is_anonymous' => 'in:null,1',
             'show_results_after_voting' => 'in:null,1',
