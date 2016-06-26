@@ -424,17 +424,17 @@
     <div class="form-group">
         <div>
             <label class="label_checkboxitem" for="checkboxitemitem"></label>
-            <label><input type="checkbox" id="required1" value="required1" name="is_private" @if(Session::get('userGroup') != 'clubleitung' OR Session::get('userGroup') != 'admin' OR Session::get('userGroup') != 'marketing') checked="checked" disabled @endif class="input_checkboxitem" @if($survey->is_private === 1) checked="checked" @endif
+            <label><input type="checkbox" id="required1" value="required1" name="is_private" @if(Session::get('userGroup') != 'clubleitung' OR Session::get('userGroup') != 'admin' OR Session::get('userGroup') != 'marketing') checked disabled @endif class="input_checkboxitem"
                           @if($survey->is_private) checked @endif> nur für eingeloggte Nutzer sichtbar  </label>
         </div>
         <div>
             <label class="label_checkboxitem" for="checkboxitemitem"></label>
-            <label><input type="checkbox" id="required2" value="required2" name="is_anonymous" class="input_checkboxitem" @if($survey->is_anonymous === 1) checked="checked" @endif
+            <label><input type="checkbox" id="required2" value="required2" name="is_anonymous" class="input_checkboxitem"
                           @if($survey->is_anonymous) checked @endif> Ergebnisse sind nur für den Umfragenersteller sichtbar </label>
         </div>
         <div>
             <label class="label_checkboxitem" for="checkboxitemitem"></label>
-            <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem" @if($survey->show_results_after_voting === 1) checked="checked" @endif
+            <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem"
                           @if($survey->show_results_after_voting) checked @endif> Ergebnisse sind erst nach dem Ausfüllen sichtbar </label>
         </div>
     </div>
@@ -505,7 +505,7 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <fieldset class="checkbox entrylist">
                                         <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
-                                        <label><input type="checkbox" id="required" @if($question->is_required === 1) checked="checked" @endif value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
+                                        <label><input type="checkbox" id="required" @if($question->is_required) checked @endif value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
                                     </fieldset>
                                 </div>
 
