@@ -236,8 +236,11 @@ Calculate width of row in answers
                          </div>
                 @foreach($evaluation as $eva)
                      <div class="col-md-4 answerToQuestion">
+                         @if(empty($eva))
+                             Freitext
+                         @endif
                        @foreach($eva as $evacount)
-                            {{$evacount}}
+                            <div>{{$evacount}}</div>
                            @endforeach
                     </div>
                 @endforeach
