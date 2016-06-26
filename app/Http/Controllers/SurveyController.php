@@ -74,7 +74,7 @@ class SurveyController extends Controller
         $survey->title = $request->title;
         //if URL is in the description, convert it to clickable hyperlink
         $survey->description = $this->addLinks($request->description);
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadline));//TODO
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate.$request->deadlineTime));
         $survey->is_anonymous = isset($request->is_anonymous);
         $survey->is_private = isset($request->is_private);
         $survey->show_results_after_voting = isset($request->show_results_after_voting);
@@ -281,7 +281,8 @@ class SurveyController extends Controller
 
         // prepare correct date and time format to be used in forms for deadline
         $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-        
+
+
         return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
     }
 
