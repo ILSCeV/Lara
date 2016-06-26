@@ -58,7 +58,6 @@ class SurveyController extends Controller
         $date = $datetime ->toDateString();
         //placeholder because createSurveyView needs variable, can set defaults here
         $survey = new Survey();
-        //return var_dump($date,$time);
         return view('createSurveyView', compact('survey', 'time', 'date'));
     }
 
@@ -280,10 +279,8 @@ class SurveyController extends Controller
             $answer_options = $question->getAnswerOptions;
 
         // prepare correct date and time format to be used in forms for deadline
-        //$datetime = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
         $date = substr(($survey->deadline),0,10 );
         $time = substr(($survey->deadline),11,8);
-        //return var_dump($time);
         return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
     }
 
@@ -304,7 +301,7 @@ class SurveyController extends Controller
         $survey->description = $this->addLinks($request->description);
 
         //format deadline for database
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadline));
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate.$request->deadlineTime));
         $survey->is_anonymous = (bool) $request->is_anonymous;
         $survey->is_private = (bool) $request->is_private;
         $survey->show_results_after_voting = (bool) $request->show_results_after_voting;
