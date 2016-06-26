@@ -226,30 +226,30 @@ Calculate width of row in answers
             </div>
     </div>
         <div class="col-md-10 col-md-offset-2 ">
-        <div class="panel panel-body">
-            <div class="row rowNoPadding">
-                <div class="answers rowNoPadding">
-                 <div id="rightPart" style="width: {{$questionCount}}vw;" class="displayDesktop">
-                     <div class="panel panel-body">
-                         <div class="answerToQuestion">
-                             Auswertung
-                         </div>
-                @foreach($evaluation as $eva)
-                     <div class="col-md-4 answerToQuestion">
-                         @if(empty($eva))
-                             Freitext
-                         @endif
-                       @foreach($eva as $key => $evacount)
-                            <div>{{$key}}: {{$evacount}} Personen</div>
-                           @endforeach
+            <div class="panel panel-body">
+                <div class="row rowNoPadding">
+                    <div class="answers rowNoPadding">
+                        <div id="rightPart" style="width: {{$questionCount}}vw;" class="displayDesktop">
+                            <div class="panel panel-body">
+                                <div class="answerToQuestion">
+                                    Auswertung
+                                </div>
+                                @foreach($evaluation as $eva)
+                                    <div class="col-md-4 answerToQuestion">
+                                        @if(empty($eva))
+                                            Freitext
+                                        @endif
+                                        @foreach($eva as $key => $evacount)
+                                            <div>{{$key}}: {{$evacount}} Personen</div>
+                                        @endforeach
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
-                @endforeach
-                     </div>
-                       </div>
-             </div>
                 </div>
-        </div>
             </div>
+        </div>
     <div class="displayDesktop">
     </div>
 
