@@ -412,10 +412,19 @@
             'class' => 'form-control'
             ]) !!}
     </div>
+    @if(isset($survey->deadline))
     <div class="form-group">
         {!! Form::label('deadline', 'Aktiv bis:') !!}
-        {!! Form::date('deadline', $time, ['class' => 'form-control']) !!}
+        {!! Form::date('deadline', date('Y-m-d', strtotime(str_replace('-','/', $survey->deadline))), ['class' => 'form-control']) !!}
     </div>
+    @endif
+    @if($survey->deadline === null)
+        <div class="form-group">
+            {!! Form::label('deadline', 'Aktiv bis:') !!}
+            {!! Form::date('deadline', date('Y-m-d', strtotime("+14 days")), ['class' => 'form-control']) !!}
+        </div>
+    @endif
+
     {{--<div class="form-group">--}}
     {{--{!! Form::label('in_calendar', 'In Kalender am:') !!}--}}
     {{--{!! Form::date('in_calendar', $date, ['class' => 'form-control']) !!}--}}
