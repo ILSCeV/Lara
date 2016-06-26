@@ -2,9 +2,7 @@
 
 namespace Lara;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Survey extends Model
+class Survey extends BaseSoftDelete
 {
     protected $table ='surveys';
     protected $fillable = array('title', 'description', 'deadline', 'password');

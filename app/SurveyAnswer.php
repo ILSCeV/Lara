@@ -2,9 +2,7 @@
 
 namespace Lara;
 
-use Illuminate\Database\Eloquent\Model;
-
-class SurveyAnswer extends Model
+class SurveyAnswer extends BaseSoftDelete
 {
     protected $table ='survey_answers';
     protected $fillable = array('name', 'order');
@@ -40,13 +38,23 @@ class SurveyAnswer extends Model
     }
 
     /**
-     * Get the corresponding answerCells.
+     * Get the corresponding SurveyAnswerCells.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function getAnswerCells()
     {
         return $this->hasMany('Lara\SurveyAnswerCell');
+    }
+
+    /**
+     * Get the corresponding Revision_SurveryAnswers.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function getRevision_SurveyAnswers()
+    {
+        return $this->hasMany('Lara\Revision_SurveyAnswer', 'object_id', 'id');
     }
 
 }

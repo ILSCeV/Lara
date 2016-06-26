@@ -17,6 +17,7 @@ class CreateSurveyAnswerCellsTable extends Migration
             $table->integer('survey_answer_id')->references('id')->on('survey_answers')->unsigned();
             $table->integer('survey_question_id')->references('id')->on('survey_questions')->unsigned();
             $table->string('answer', 1500);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
