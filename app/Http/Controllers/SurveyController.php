@@ -280,10 +280,11 @@ class SurveyController extends Controller
             $answer_options = $question->getAnswerOptions;
 
         // prepare correct date and time format to be used in forms for deadline
-        $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-
-
-        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
+        //$datetime = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
+        $date = substr(($survey->deadline),0,10 );
+        $time = substr(($survey->deadline),11,8);
+        //return var_dump($time);
+        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
     }
 
     /**
