@@ -92,6 +92,7 @@ Calculate width of row in answers
                     <div class=" rowNoPadding nameToQuestion">
                         <div class="dropdown" style="position: absolute">
                         {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'newName', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                            @if (Session::has("userName"))
                         <ul id="test" class="dropdown-menu dropdown-username" style="position: absolute;">
                             <li id="yourself">
                                 <a href="javascript:void(0);"
@@ -103,6 +104,7 @@ Calculate width of row in answers
                                 </a>
                             </li>
                         </ul>
+                            @endif
                     </div>
                     ​
                 </div>
