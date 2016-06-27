@@ -23,6 +23,19 @@ $(".editRow1").click(function() {
 
 });
 
+//Edit of a Div element
+$("div").click(function () {
+    //Textfield to work with.
+    var editableText = $("<textarea/>");
+    //First save old Text (this for whatever div element)
+    var divText = $(this).text();
+    //Fill it
+    editableText.val(divText);
+    //Now Replace the Div
+    $(this).replaceWith(editableText);
+    editableText.focus();
+})
+
 
 //Replace edit icon with save icon
 $('.editButton').click(function() {
