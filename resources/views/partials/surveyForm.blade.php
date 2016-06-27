@@ -450,6 +450,13 @@
                     </div>
                 </div>
             </div>
+            @if (!empty($survey->password))
+                <div style="color: #ff9800;">
+                    <small>Um das Passwort zu löschen, trage in beide Felder "delete" ein (ohne
+                        Anführungszeichen).
+                    </small>
+                </div>
+            @endif
         </div>
     </div>
 
