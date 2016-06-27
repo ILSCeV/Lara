@@ -372,36 +372,6 @@
         });
     </script>
 
-    <script>
-        @if($survey->password != null)
-
-               $("form").on('submit', function () {
-
-            // For passworded schedules: check if a password field exists and is not empty
-            // We will check correctness on the server side
-            if ($('.password_div').find("[name^=password]").length
-                    && !$('.password_div').find("[name^=password]").val()) {
-                var password = window.prompt('Bitte noch das Passwort für diese Umfrage eingeben:');
-                $('.password_div').find("[name^=password]").val(password);
-
-            } else {
-                var password = $('.password_div').find("[name^=password]").val();
-
-            }
-            if ($('.password_div2').find("[name^=password_confirmation]").length
-                    && !$('.password_div2').find("[name^=password_confirmation]").val()) {
-                var password_conf = window.prompt('Bitte das Passwort wiederholen:');
-                $('.password_div2').find("[name^=password_confirmation]").val(password_conf);
-
-            } else {
-                var password_conf = $('.password_div2').find("[name^=password_confirmation]").val();
-            }
-
-        });
-
-        @endif
-    </script>
-
 </head>
 
 <body>
@@ -466,14 +436,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding password_div">
+                <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
                     <label for="password" class="control-label col-md-5 col-sm-5 col-xs-12">Passwort zum Eintragen:</label>
                     <div class="col-md-7 col-sm-7 col-xs-12">
                         {!! Form::password('password', '' ) !!}
                     </div>
                 </div>
 
-                <div class="form-groupcol-md-12 col-sm-12 col-xs-12 no-padding password_div2">
+                <div class="form-groupcol-md-12 col-sm-12 col-xs-12 no-padding">
                     <label fro="passwordDouble" class="control-label col-md-5 col-sm-5 col-xs-12">Passwort wiederholen:</label>
                     <div class="col-md-7 col-sm-7 col-xs-12">
                         {!! Form::password('password_confirmation', '') !!}
