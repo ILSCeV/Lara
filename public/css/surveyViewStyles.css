@@ -1,6 +1,35 @@
+/* display Mobile / Desktop */
+.displayDesktop{
+    display: block;
+}
+
+.displayMobile{
+    display: none !important;
+    height: 48px;
+}
+
+@media screen and (max-width: 978px) {
+    .displayDesktop{
+        display: none !important;
+    }
+
+    .displayMobile{
+        display: block !important;
+    }
+
+    .displayMobile a{
+        height:auto;
+    }
+
+    .displayMobile .btn-trash{
+        margin-left: 10px;
+    }
+}
+
 /* Description at the top */
 .panel {
     margin: 15px;
+    background-color: transparent;
 }
 
 .panel-title-box {
@@ -14,6 +43,11 @@
 
 
 /* Actual Survey */
+#change-history{
+    background-color: transparent;
+}
+
+
 .table{
     margin: 0;
 }
@@ -76,7 +110,7 @@ td, th{
 }
 
 .table-responsive {
-    width: 100%;
+    width: 85%;
     overflow-x: scroll;
     overflow-y: hidden;
 }
@@ -119,6 +153,10 @@ and also iPads specifically.
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
 
+    .table-responsive {
+        width: 91vw;
+    }
+
     /* Force table to not be like tables anymore */
     #change-history table, #change-history thead, #change-history tbody, #change-history th, #change-history td, #change-history tr {
         display: block;
@@ -137,7 +175,7 @@ only screen and (max-width: 760px),
         /* Behave  like a "row" */
         border: none;
         position: relative;
-        padding-left: 50%;
+        padding-left: 50% !important;
     }
 
     #change-history tr:nth-of-type(even) td {
@@ -169,9 +207,6 @@ only screen and (max-width: 760px),
     #change-history td:nth-of-type(2):before { content: "Club"; }
     #change-history td:nth-of-type(3):before { content: "Frage 1"; }
     #change-history td:nth-of-type(4):before { content: "Frage 2"; }
-    #change-history td:nth-of-type(5):before { content: "Frage 3"; }
-    #change-history td:nth-of-type(6):before { content: "Frage 4"; }
-    #change-history td:nth-of-type(7):before { content: "Frage 5"; }
 
 
     /* change padding of cells, compared to desktop */
@@ -207,29 +242,34 @@ only screen and (max-width: 760px),
     {
         width: auto;
     }
-}
 
+    .tdButtons{
+        position: relative;
+        right: auto !important;
+        width: 40vw;
+        height: auto;
+    }
 
-/* Buttons at the end of table */
-.tdButtons, .thAboveButtons{
-    background-color: #f6f5f3 !important;
-    border-color: #f6f5f3 !important;
-    /*width: calc(100% - 145px);*/
-    /*right: 70px;*/
-    right: calc(10% + 15px);
-    position: absolute;
-    white-space: nowrap;
-    float: right;
-}
-
-.buttonsContainer{
-    margin-right: auto;
+    .btn{
+        float: left;
+        display: inline;
+    }
 }
 
 .tdButtons{
-
+    position:absolute;
+    padding: 0 !important;
+    width:5em;
+    right: 100px;
+    top:auto;
+    float: left;
+    border-right: 0px none black;
+    border-top-width:3px; /*only relevant for first row*/
+    margin-top:-3px; /*compensate for top border*/
 }
+.tdButtons:after{content: '';}
 
 .thAboveButtons{
 
 }
+
