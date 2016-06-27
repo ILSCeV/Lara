@@ -54,13 +54,28 @@ $userCanEditDueToRole
                     <tr>
                         <th>Name</th>
                         <th>Club</th>
-                        <th>Frage 1</th>
-                        <th>Frage 2</th>
-                        <th>Frage 3</th>
-                        <th>Frage 4</th>
-                        <th>Frage 5</th>
+                        @foreach($questions as $question)
+                            <th class="question">
+                                {{$question->question}}
+                                @if($question->is_required == 1)
+                                    *
+                                @endif
+                            </th>
+                        @endforeach
                     </tr>
                     </thead>
+                    @foreach($answers as $key => $answer)
+                        <tr>
+                            <td>name</td>
+                            <td>club</td>
+                        @foreach($answer->getAnswerCells as $cell)
+                            <td class="singleAnswer">
+                                {{$cell->answer}}
+                            </td>
+                        @endforeach
+                                </tr>
+                    @endforeach
+                                    <!--
                     <tbody>
                     <tr>
                         <td>Jan</td>
@@ -90,6 +105,7 @@ $userCanEditDueToRole
                         <td>Table cell</td>
                     </tr>
                     </tbody>
+                    -->
                 </table>
             </div>
         </div>
