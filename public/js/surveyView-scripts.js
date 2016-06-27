@@ -5,7 +5,7 @@
 $(document).ready(function() {
 
     $('form').on( 'submit', function () {
-        // For passworded schedules: check if a password field exists and is not empty
+        // For passworded surveys: check if a password field exists and is not empty
         // We will check correctness on the server side
         if ($('.panel-warning').find("[name^=password]").length
             && !$('.panel-warning').find("[name^=password]").val()) {
