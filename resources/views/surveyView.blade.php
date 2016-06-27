@@ -89,7 +89,19 @@ Calculate width of row in answers
                     Name *
                 </div>
                 <div class=" rowNoPadding nameToQuestion">
-                    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                    {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'newName', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                    <ul id="test" class="dropdown-username" style="position: absolute;">
+                        <li id="yourself">
+                            <a href="javascript:void(0);"
+                               onClick="document.getElementById('newName').value='{{Session::get('userName')}}';">
+                                {{--document.getElementById('club{{ ''. $testid }}').value='{{Session::get('userClub')}}';--}}
+                                {{--document.getElementById('ldapId{{ ''. $testid }}').value='{{Session::get('userId')}}'--}}
+                                {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
+                                <b>Ich mach's!</b>
+                            </a>
+                        </li>
+                    </ul>
+
                 </div>
                 <?php $countNames = 0 ?>
                 @foreach($answers as $answer)

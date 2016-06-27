@@ -31,6 +31,25 @@ $('.editButton').click(function() {
 });
 
 
+///////////////////////////////////
+// AUTOCOMPLETE USERNAMES SURVEY //
+///////////////////////////////////
+
+// open username dropdown on input selection and show only "I'll do it!" button at the beginning
+$( '.surveyAnswer' ).find('input').on( 'focus', function() {
+    // remove all other dropdowns
+    $(document).find('.dropdown-username').hide();
+    // open dropdown for current input
+    if ($(document.activeElement).parent().children('.dropdown-username').show()) {
+    }
+} );
+// hide all dropdowns on ESC keypress
+$(document).keyup(function(e) {
+    if (e.keyCode === 27) {
+        $(document).find('.dropdown-username').hide();
+    }
+});
+
 
 
 
