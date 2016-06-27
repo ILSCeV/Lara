@@ -50,8 +50,7 @@ $userCanEditDueToRole
 
     <!-- /////////////////////////////////////////// Start of desktop View /////////////////////////////////////////// -->
 
-
-    <!--
+<!--
 Calculate width of row in answers
 -->
     <?php
@@ -225,7 +224,54 @@ Calculate width of row in answers
         </div>
             </div>
     </div>
-    <div class="displayDesktop">
+{{---------------------------------------------change-history-----------------------------------------------------}}
+        <br>
+        <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
+        <a id="show-hide-history" class="text-muted hidden-print" href="#">
+            Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
+        </a>
+
+        <div class="panel hide" id="change-history">
+            <div class=table-responsive>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Wer?</th>
+                        <th>Zusammenfassung</th>
+                        <th>betroffene Spalte</th>
+                        <th>alter Wert</th>
+                        <th>neuer Wert</th>
+                        <th>Wann?</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($revisions as $key => $revision)
+                        <tr>
+                            <td>{{$revision['creator']}}</td>
+                            <td>{{$revision['summary']}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{$revision['created_at']}}</td>
+                        </tr>
+                        @foreach($revision['entries'] as $revision_entry)
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>{{$revision_entry['changed_column_name']}}</td>
+                                <td>{{$revision_entry['old_value']}}</td>
+                                <td>{{$revision_entry['new_value']}}</td>
+                                <td></td>
+                            </tr>
+                        @endforeach
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="displayDesktop">
     </div>
 
 

@@ -27,7 +27,7 @@ class Revision
     /**
      * @var string[]
      */
-    private $ignoreArray = ["created_at", "updated_at"];
+    private $ignoreArray = ["created_at", "updated_at", "deleted_at", "survey_question_id", "survey_answer_id", "survey_question_id", "survey_id", "creator_id", "id"];
 
     /**
      * Revision constructor.
@@ -41,21 +41,23 @@ class Revision
 
     /**
      * @param Model $new_model
+     * @param string $summary
      * @return bool
      */
-    public function save(Model $new_model)
+    public function save(Model $new_model, $summary)
     {
         if($new_model->getTable() !== $this->old_model->getTable()) {
             // old and new model dont have the same class -> they are not compareable
             return false;
         }
 //        dd($new_model->toArray(), $this->old_model->toArray(), ($new_model->toArray() == $this->old_model->toArray()));
-//        if($new_model == $this->old_model) {
-//            // no changes -> no entry
-//            return false;
-//        }
+        if($new_model == $this->old_model) {
+            // no changes -> no entry
+            return false;
+        }
 
         $revision = new \Lara\Revision();
+        $revision->summary = $summary;
         $revision->creator_id = Session::get('userId');
         $revision->ip = request()->ip();
         $revision->save();

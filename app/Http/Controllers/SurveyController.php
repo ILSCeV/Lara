@@ -6,6 +6,11 @@ use Config;
 use Illuminate\Http\Request;
 use Hash;
 use Lara\Library\Revision;
+use Lara\Person;
+use Lara\Revision_SurveyAnswer;
+use Lara\Revision_SurveyAnswerCell;
+use Lara\RevisionEntry;
+use Lara\SurveyAnswerCell;
 use Session;
 use Redirect;
 use DateTime;
@@ -231,6 +236,35 @@ class SurveyController extends Controller
         $userId = Session::get('userId');
         $userGroup = Session::get('userGroup');
 
+
+        $revision_ids = [];
+        $answers_with_trashed = SurveyAnswer::withTrashed()->whereSurveyId($survey->id)->get();
+        foreach($answers_with_trashed as $answer) {
+            $revision_relations = Revision_SurveyAnswer::whereObjectId($answer->id)->get();
+            foreach($revision_relations as $revision_relation) {
+                array_push($revision_ids, $revision_relation->revision_id);
+            }
+
+            $answer_cells_with_trashed = SurveyAnswerCell::withTrashed()->whereSurveyAnswerId($answer->id)->get();
+            foreach($answer_cells_with_trashed as $answer_cell) {
+                $revision_relation_cells = Revision_SurveyAnswerCell::whereObjectId($answer_cell->id)->get();
+                foreach($revision_relation_cells as $revision_relation_cell) {
+                    array_push($revision_ids, $revision_relation_cell->revision_id);
+                }
+            }
+        }
+
+        $revision_objects = \Lara\Revision::whereIn("id", $revision_ids)->orderBy('created_at', 'desc')->get();
+        ini_set("xdebug.var_display_max_depth", 10);
+        $revisions = $revision_objects->toArray();
+        foreach($revision_objects as $key => $revision_object) {
+            $revisions[$key]['creator'] = Person::wherePrsnLdapId($revisions[$key]['creator_id'])->get(['prsn_name'])->first()->prsn_name;
+            $revisions[$key]['entries'] = $revision_object->getRevisionEntries->toArray();
+        }
+
+        
+
+
         //check if the role of the user allows edit/delete for all  answers
         ($userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung') ? ($userCanEditDueToRole = true) : ($userCanEditDueToRole = false);
 
@@ -277,7 +311,7 @@ class SurveyController extends Controller
         //todo: make $evaluation[$order][$answer_option->answer_option] a string (casting???)
         
         return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
-            'userGroup', 'userCanEditDueToRole', 'evaluation'));
+            'userGroup', 'userCanEditDueToRole', 'evaluation', 'revisions'));
     }
 
     /**

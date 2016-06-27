@@ -15,6 +15,7 @@ class CreateRevisions extends Migration
         Schema::create('revisions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('creator_id')->references('id')->on('persons')->unsigned()->nullable();
+            $table->string('summary', 255);
             $table->string('ip', 255);
             $table->timestamps();
         });
