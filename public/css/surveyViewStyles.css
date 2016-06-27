@@ -1,3 +1,11 @@
+.evaluationBox {
+    width: 20vw;
+    float: left;
+    background-color: transparent;
+    border-top: 1px solid #eeeeee;
+    overflow-y: hidden;
+}
+
 .panel {
     margin: 15px;
 }

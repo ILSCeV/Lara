@@ -234,7 +234,7 @@ Calculate width of row in answers
                                     <h5 class="text-center">Auswertung</h5>
                                 </div>
                                 @foreach($evaluation as $eva)
-                                    <div class="col-md-4 answerToQuestion">
+                                    <div class="col-md-4 evaluationBox">
                                         @if(empty($eva))
                                             Freitext
                                         @endif
