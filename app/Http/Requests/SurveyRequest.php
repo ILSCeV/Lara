@@ -43,6 +43,16 @@ class SurveyRequest extends Request
             'type' => 'array|required',
             'type.*' => 'in:1,2,3|required',
         ];
+
+        $questions_type = $this->request->get('type');
+        foreach($questions_type as $key => $question_type) {
+            //todo: unset empty answer_options (actual bug) or this validation fails when question #1 is dropdown
+            //todo: write german custom error message below
+            if ($question_type == 3) {
+                $rules['answer_options.'.$key] = 'required';
+            }
+        }
+
         return $rules;
     }
 
