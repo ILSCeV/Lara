@@ -227,9 +227,8 @@ Calculate width of row in answers
     </div>
         <div class="col-md-10 col-md-offset-2 rowNoPadding">
             <div class="panel panel-body">
-                <div class="row rowNoPadding">
-                    <div class="rowNoPadding" id="bottomPanel">
-                        <div id="rightPart" style="width: {{$questionCount}}vw;" class="displayDesktop">
+                <div id="bottomPanel" class="row rowNoPadding">
+                    <div id="rightPart" style="width: {{$questionCount}}vw;" class="displayDesktop">
                                 <div class="answerToQuestion">
                                     <h5 class="text-center">Auswertung</h5>
                                 </div>
@@ -239,12 +238,11 @@ Calculate width of row in answers
                                             Freitext
                                         @endif
                                         @foreach($eva as $key => $evacount)
-                                            <div>{{$key}}: {{$evacount}} Personen</div>
+                                            <div class="text-left">{{$key}}: {{$evacount}} Personen</div>
                                         @endforeach
                                     </div>
                                 @endforeach
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
