@@ -369,10 +369,10 @@ class SurveyController extends Controller
         }
 
         //ignore empty answer options
-        foreach($answer_options_new as $i => $answer_options_new) {
+        foreach($answer_options_new as $i => $answer_option) {
 
             //check if dropdown question and answer options exist
-            if($question_type[$i] == 3 and is_array($answer_options_new[$i])) {
+            if($question_type[$i] == 3 and is_array($answer_option)) {
                 //filter empty answer options and reindex
                 $answer_options_new[$i] = array_values(array_filter($answer_options_new[$i]));
 
