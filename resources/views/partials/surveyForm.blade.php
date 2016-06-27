@@ -373,42 +373,34 @@
     </script>
 
     <script>
-        var test = {{$survey->password}}
-                void(0);
-        var test2 = {{$survey->password}}
-    $(document).ready(function() {
+        @if($survey->password != null)
 
-            if (test == test2) {
+               $("form").on('submit', function () {
 
-                $("form").on('submit' , function() {
+            // For passworded schedules: check if a password field exists and is not empty
+            // We will check correctness on the server side
+            if ($('.password_div').find("[name^=password]").length
+                    && !$('.password_div').find("[name^=password]").val()) {
+                var password = window.prompt('Bitte noch das Passwort für diese Umfrage eingeben:');
+                $('.password_div').find("[name^=password]").val(password);
 
-                    // For passworded schedules: check if a password field exists and is not empty
-                    // We will check correctness on the server side
-                    if ($('.password_div').find("[name^=password]").length
-                            && !$('.password_div').find("[name^=password]").val()){
-                        var password = window.prompt('Bitte noch das Passwort für diese Umfrage eingeben:');
-                        $('.password_div').find("[name^=password]").val(password);
+            } else {
+                var password = $('.password_div').find("[name^=password]").val();
 
-                    } else {
-                        var password = $('.password_div').find("[name^=password]").val();
-
-                    }
-                    if ($('.password_div2').find("[name^=password_confirmation]").length
-                            && !$('.password_div2').find("[name^=password_confirmation]").val()) {
-                        var password_conf = window.prompt('Bitte das Passwort wiederholen:');
-                        $('.password_div2').find("[name^=password_confirmation]").val(password_conf);
-
-                    } else {
-                        var password_conf = $('.password_div2').find("[name^=password_confirmation]").val();
-                    }
-
-                });
             }
-            else return true;
+            if ($('.password_div2').find("[name^=password_confirmation]").length
+                    && !$('.password_div2').find("[name^=password_confirmation]").val()) {
+                var password_conf = window.prompt('Bitte das Passwort wiederholen:');
+                $('.password_div2').find("[name^=password_confirmation]").val(password_conf);
+
+            } else {
+                var password_conf = $('.password_div2').find("[name^=password_confirmation]").val();
+            }
+
         });
 
+        @endif
     </script>
-
 
 </head>
 
@@ -453,7 +445,7 @@
 
             <div class="form-group">
                 {!! Form::label('deadline', 'Aktiv bis:') !!}
-                {!! Form::date('deadline', $time, ['class' => 'form-control']) !!}
+                {!! Form::datetime('deadline', $time, ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">
