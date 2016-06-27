@@ -50,7 +50,7 @@
                 newElem.find('.selectpicker').attr('id', 'field_type' + (newNum - 1));
                 newElem.find('.btn-success').attr('id', 'button_answ' + (newNum - 1));
                 newElem.find('.hidden').attr('id', 'hiddenField' + (newNum - 1));
-                newElem.find('.hidden').attr('value', 'nothingYet');
+                newElem.find('.hidden').attr('value', '1');
 
                 newElem.find('.selectpicker').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ');' + 'check_question_type2('+ (newNum - 1) + ');' + 'setField(' + (newNum-1) + ');' + 'setField2(' + (newNum-1) + ');');
 
@@ -415,7 +415,7 @@
 
             <div class="form-group">
                 {!! Form::label('deadline', 'Aktiv bis:') !!}
-                {!! Form::date('deadline', $time, ['class' => 'form-control']) !!}
+                {!! Form::datetime('deadline', $time, ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">
