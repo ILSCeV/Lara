@@ -66,16 +66,22 @@ $userCanEditDueToRole
                     </thead>
                     @foreach($answers as $key => $answer)
                         <tr>
-                            <td>name</td>
-                            <td>club</td>
-                        @foreach($answer->getAnswerCells as $cell)
-                            <td class="singleAnswer">
-                                {{$cell->answer}}
+                            <td>{{$answer->name}}</td>
+                            <td>
+                                @if($club = $clubs->find($answer->club_id))
+                                    {{$club->clb_title}}
+                                @else
+                                    kein Club
+                                @endif
                             </td>
+                            @foreach($answer->getAnswerCells as $cell)
+                                <td class="singleAnswer">
+                                    {{$cell->answer}}
+                                </td>
+                            @endforeach
+                        </tr>
                         @endforeach
-                                </tr>
-                    @endforeach
-                                    <!--
+                                <!--
                     <tbody>
                     <tr>
                         <td>Jan</td>
