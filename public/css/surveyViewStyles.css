@@ -207,5 +207,29 @@ only screen and (max-width: 760px),
     {
         width: auto;
     }
+}
+
+
+/* Buttons at the end of table */
+.tdButtons, .thAboveButtons{
+    background-color: #f6f5f3 !important;
+    border-color: #f6f5f3 !important;
+    /*width: calc(100% - 145px);*/
+    /*right: 70px;*/
+    right: calc(10% + 15px);
+    position: absolute;
+    white-space: nowrap;
+    float: right;
+}
+
+.buttonsContainer{
+    margin-right: auto;
+}
+
+.tdButtons{
+
+}
+
+.thAboveButtons{
 
 }

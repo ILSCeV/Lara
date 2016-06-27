@@ -62,8 +62,28 @@ $userCanEditDueToRole
                                 @endif
                             </th>
                         @endforeach
+                                <!--<th >
+
+                            <a
+                                    class="editButton btn btn-primary editRow"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a
+                                    class="btn btn-default deleteRow"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    data-method="delete"
+                                    data-token="{{csrf_token()}}"
+                                    rel="nofollow"
+                                    data-confirm="Möchtest Du diese Antwort wirklich löschen?">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </th>-->
                     </tr>
                     </thead>
+                    <tbody>
                     @foreach($answers as $key => $answer)
                         <tr>
                             <td>{{$answer->name}}</td>
@@ -78,40 +98,68 @@ $userCanEditDueToRole
                                 <td class="singleAnswer">
                                     {{$cell->answer}}
                                 </td>
-                            @endforeach
+                                @endforeach
+                                @if($userId == $answer->creator_id OR $userCanEditDueToRole)
+                                        <!--Edid Delete Buttons-->
+                                <td class="tdButtons ">
+                                    <a
+                                            class="editButton btn btn-primary editRow"
+                                            data-toggle="tooltip"
+                                            data-placement="bottom">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="{{$survey->id}}/answer/{{$answer->id}}"
+                                       class="btn btn-default deleteRow"
+                                       data-toggle="tooltip"
+                                       data-placement="bottom"
+                                       data-method="delete"
+                                       data-token="{{csrf_token()}}"
+                                       rel="nofollow"
+                                       data-confirm="Möchtest Du diese Antwort wirklich löschen?">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                                @else
+                                    <td class="emptyNoButtons tdButtons">
+                                    </td>
+                                @endif
                         </tr>
-                        @endforeach
-                                <!--
-                    <tbody>
-                    <tr>
-                        <td>Jan</td>
-                        <td>C</td>
-                        <td>Antwort auf die Frage 1</td>
-                        <td>ja</td>
-                        <td>nein</td>
-                        <td>eine ziemlich lange Antwort mit viel bla bla und etc.</td>
-                        <td>A5</td>
-                    </tr>
-                    <tr>
-                        <td>Lars</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <td>Fridolin</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
+                    @endforeach
                     </tbody>
-                    -->
+                    <!--
+                                        <tbody>
+                                        <tr>
+                                            <td>Jan</td>
+                                            <td>C</td>
+                                            <td>Antwort auf die Frage 1</td>
+                                            <td>ja</td>
+                                            <td>nein</td>
+                                            <td>eine ziemlich lange Antwort mit viel bla bla und etc.</td>
+                                            <td>A5</td>
+                                            <td class="tdButtons">Buttons</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lars</td>
+                                            <td>Table cell</td>
+                                            <td>Table cell</td>
+                                            <td>Table cell</td>
+                                            <td>Table cell</td>
+                                            <td>Table cell</td>
+                                            <td>Table cell</td>
+                                            <td class="tdButtons">Buttons</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fridolin</td>
+                                            <td>Table cell</td>
+                                            <td>Table cell</td>
+                                            <td>Table cell</td>
+                                            <td>Table cell</td>
+                                            <td>Table cell</td>
+                                            <td>Table cell</td>
+                                            <td class="tdButtons">Buttons</td>
+                                        </tr>
+                                        </tbody>
+                        -->
                 </table>
             </div>
         </div>
