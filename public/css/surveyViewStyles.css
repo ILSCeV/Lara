@@ -34,13 +34,13 @@
     overflow-x: scroll;
 }
 
-#topPanel{
-    overflow: auto;
+#topPanel {
+    overflow-x: scroll;
 }
 
-#bottomPanel{
-    overflow: auto;
-    overflow: hidden;
+#bottomPanel {
+    overflow-x: scroll;
+    overflow-x: hidden;
 }
 
 .answers::-webkit-scrollbar {
