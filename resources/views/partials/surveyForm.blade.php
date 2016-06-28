@@ -391,9 +391,22 @@
     });
 </script>
 
-<div class="panel-group">
-    <div class="panel col-md-8 col-sm-12 col-xs-12">
-        <h4 id="heading_create" style="display:none">Neue Umfrage erstellen:</h4>
+<div class="form-group">
+    {!! Form::label('title', 'Umfragentitel:') !!}
+    {!! Form::text('title', $survey->title, ['placeholder'=>'z.B. Teilnahme an der Clubfahrt',
+        'class' => 'form-control'
+        ]) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('description', 'Umfragenbeschreibung:') !!}
+    {!! Form::textarea('description', $survey->description, ['size' => '100x4',
+        'class' => 'form-control'
+        ]) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('deadline', 'Umfrage aktiv bis:') !!}
+    {!! Form:: date('deadlineDate', $date, ['class' => 'form-control'] ) !!}
+    {!! Form:: time('deadlineTime', $time, ['class' => 'form-control'] ) !!}
 
         <h4 id="heading_edit" style="display:none">Umfrage editieren:</h4>
 
