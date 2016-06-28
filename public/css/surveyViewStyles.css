@@ -1,6 +1,6 @@
 /* display Mobile / Desktop */
 .displayDesktop{
-    display: block;
+    display: inline-block;
 }
 
 .displayMobile{
@@ -244,7 +244,7 @@ only screen and (max-width: 760px),
     }
 
     .tdButtons{
-        position: relative;
+        position: static;
         right: auto !important;
         width: 40vw;
         height: auto;
@@ -257,16 +257,20 @@ only screen and (max-width: 760px),
 }
 
 .tdButtons{
-    position:absolute;
+    position: absolute;
     padding: 0 !important;
     width:5em;
-    right: 100px;
     top:auto;
-    float: left;
+    float: right;
     border-right: 0px none black;
     border-top-width:3px; /*only relevant for first row*/
     margin-top:-3px; /*compensate for top border*/
 }
+
+tr .panel{
+    margin-right: auto;
+}
+
 .tdButtons:after{content: '';}
 
 .thAboveButtons{
