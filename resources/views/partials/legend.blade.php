@@ -46,5 +46,5 @@
       <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs visible-sm">
 
       <i class="fa fa-list-alt"></i>
-       - Sonstiges
+       - weitere interne Aufgaben
 </div>

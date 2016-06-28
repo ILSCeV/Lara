@@ -3,7 +3,20 @@
     Reaction to click on edit delete buttons
 */
 $(document).ready(function() {
-    //currently nothing
+
+    $('form').on( 'submit', function () {
+        // For passworded surveys: check if a password field exists and is not empty
+        // We will check correctness on the server side
+        if ($('.panel-warning').find("[name^=password]").length
+            && !$('.panel-warning').find("[name^=password]").val()) {
+            var password = window.prompt('Bitte noch das Passwort für diese Umfrage eingeben:');
+            $('.panel-warning').find("[name^=password]").val(password);
+
+        } else {
+            var password = $('.panel-warning').find("[name^=password]").val();
+        }
+    });
+
 });
 
 //source: http://stackoverflow.com/questions/2441565/how-do-i-make-a-div-element-editable-like-a-textarea-when-i-click-it
@@ -18,9 +31,6 @@ $(".editRow1").click(function() {
     //replace div with textarea
     $(".Name1").replaceWith(editableText);
     //editableText.focus(); (optional)
-
-
-
 });
 
 
@@ -39,6 +49,7 @@ $('#bottomPanel').on('scroll', function () {
 $('#topPanel').on('scroll', function () {
     $('#bottomPanel').scrollLeft($(this).scrollLeft());
 });
+
 
 
 

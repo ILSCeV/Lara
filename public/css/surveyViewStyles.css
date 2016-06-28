@@ -1,13 +1,37 @@
-.evaluationBox {
-    width: 20vw;
-    float: left;
-    background-color: transparent;
-    border-top: 1px solid #eeeeee;
-    overflow-y: hidden;
+/* display Mobile / Desktop */
+.displayDesktop{
+    display: inline-block;
 }
 
+.displayMobile{
+    display: none !important;
+    height: 48px;
+}
+
+@media screen and (max-width: 978px) {
+    .displayDesktop{
+        display: none !important;
+    }
+
+    .displayMobile{
+        display: block !important;
+    }
+
+    .displayMobile a{
+        height:auto;
+    }
+
+    .displayMobile .btn-trash{
+        margin-left: 10px;
+    }
+}
+
+
+
+/* Description at the top */
 .panel {
     margin: 15px;
+    background-color: transparent;
 }
 
 .panel-title-box {
@@ -16,106 +40,308 @@
     padding: 15px;
 }
 
-
-.answerBox {
-    overflow: hidden;
-    position: relative;
-}
-
-.answerBox .inner-container {
-
-}
-
-.answerBox .names {
-    overflow: hidden;
-}
-
-.answers {
-    overflow-x: scroll;
-}
-
-#topPanel {
-    overflow-x: scroll;
-}
-
-#bottomPanel {
-    overflow-x: scroll;
-    overflow-x: hidden;
-}
-
-.answers::-webkit-scrollbar {
-    /*display: none;
-    */
-}
-
-.answers::-webkit-scrollbar {
-    /*display none*/
-}
-
-.rowNoPadding {
-    padding: 0;
-}
-
-.shadow {
-    -webkit-box-shadow: 10px 0 5px -2px #888;
-    box-shadow: 5px 0 5px -2px #888;
-    position: relative;
-    z-index: 10;
-}
-
-.nameToQuestion, .answerToQuestion, .ifTableNotfullPage {
-    height: 10vh;
-    border-top: 1px solid #eeeeee;
-    overflow-y: hidden;
-}
-
-.nameToQuestion, .answerToQuestion {
-    padding-left: 8px;
-}
-
-.answerToQuestion {
-    width: 20vw;
-    float: left;
-    background-color: transparent;
-}
-
-/*
-    text color of Table
-*/
-.displayDesktop, .displayMobile {
-    color: #666666;
-}
-
-
-
-/*
-    Why not implement alternating colors?
-    This would make it much easier for the user to read
-*/
-.color0 {
-    background-color: whitesmoke;
-}
-
-.color1 {
+.panel-body{
     background-color: white;
 }
 
-.line {
+
+
+
+
+/* Actual Survey */
+#change-history{
+    background-color: transparent;
+}
+
+
+.table{
+    margin: 0;
+    background-color: #f6f5f3;
+}
+
+.table > thead > tr > th
+{
+    background-color: white;
+    color: #333;
+}
+
+.table > thead:first-child > tr:first-child > th:first-child
+{
+    position: absolute;
+    display: inline-block;
+    background-color: white;
+}
+
+.table > thead > tr > th:first-child
+{
+    /* top-left corner */
+    width: 150px;
+}
+
+.table > thead > tr > th:nth-child(2)
+{
+    padding-left: 170px !important;
+}
+
+.table > tbody > tr > td:first-child
+{
+    position: absolute;
+    display: inline-block;
+}
+.table > tbody > tr:nth-child(odd) > td{
+    background-color: #f9f9f9;
+}
+
+.table > tbody > tr:nth-child(even) > td{
+    background-color: white;
+}
+
+
+.table > tbody > tr:nth-child(odd) > td:first-child
+{
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table > tbody > tr:nth-child(even) > td:first-child
+{
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table > thead:first-child > tr:first-child > th:nth-child(2)
+{
+    /* what is this? */
+}
+
+.table > tbody > tr > td:nth-child(2)
+{
+    padding-left: 170px !important;
+}
+
+
+td, th{
+    white-space:nowrap;
+}
+
+.table-responsive {
+    width: 90%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+
+/*
+Generic Styling, for Desktops/Laptops
+*/
+#change-history table {
     width: 100%;
-    height: 1px;
-    background-color: black;
+    border-collapse: collapse;
+}
+/* Zebra striping*/
+@media screen and (max-width: 978px) {
+    #change-history tr:nth-of-type(odd) {
+        background: #f9f9f9;
+    }
 }
 
-.editDelete {
-    line-height: 10vh;
+/*
+#change-history th {
+    background: #333;
+    color: white;
+    font-weight: bold;
+}
+*/
+
+#change-history td, #change-history th {
+    padding: 6px;
+    border: 1px solid #eeeeee;
+    text-align: left;
 }
 
-.marginLeft15 {
-    padding-left: 22px;
+/*
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+    #change-history tr:nth-of-type(even){
+        background-color: white;
+    }
+
+
+    .table-responsive {
+        width: 90vw;
+    }
+
+    /* Force table to not be like tables anymore */
+    #change-history table, #change-history thead, #change-history tbody, #change-history th, #change-history td, #change-history tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    #change-history thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    #change-history tr { border: 1px solid #eeeeee; }
+
+    #change-history td {
+        /* Behave  like a "row" */
+        border: none;
+        position: relative;
+        padding-left: 50% !important;
+    }
+
+    #change-history tr:nth-of-type(even) td {
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    #change-history tr:nth-of-type(odd) td {
+        border-bottom: 1px solid #c0c0c0;
+    }
+
+
+
+
+    #change-history td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+    }
+
+
+
+
+    /* change padding of cells, compared to desktop */
+    .table > thead > tr > th:nth-child(2)
+    {
+        padding-left: 50% !important;
+    }
+
+    .table > tbody > tr > td:nth-child(2)
+    {
+        padding-left: 50% !important;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .table{
+        overflow: hidden;
+    }
+
+    td, th{
+        word-wrap: break-word;
+        white-space:normal ;
+    }
+
+    .table > tbody > tr:nth-child(odd) > td:first-child
+    {
+        width: auto;
+    }
+
+    .table > tbody > tr:nth-child(even) > td:first-child
+    {
+        width: auto;
+    }
+
+    .tdButtons{
+        display: inline-block !important;
+        position: static !important;
+        margin: 0px;
+    }
+
+    .tdButtons a:first-child{
+        margin-right: 5px;
+    }
+
+    .btn{
+        float: left;
+        display: inline;
+    }
+}
+
+/* Desktop */
+@media screen and (min-width: 978px) {
+    .tdButtons{
+        position: absolute;
+        padding: 0 !important;
+        width:5em;
+        top:auto;
+        float: right;
+        border-right: 0px none black;
+        border-top-width:3px; /*only relevant for first row*/
+        margin-top:-3px; /*compensate for top border*/
+    }
+}
+
+tr .panel{
+    margin-right: auto;
+}
+
+#panelNoShadow{
+    -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0.05);
+    box-shadow: 0 0px 0px rgba(0,0,0,0.05);
+    border-width: 0 !important;
+    background-color: transparent;
+}
+
+.tdButtons:after{content: '';}
+
+.thAboveButtons{
+
+}
+@media screen and (max-width: 978px) {
+    #noMarginMobile {
+        margin-left: 0;
+    }
+}
+
+.transparent{
+    background-color: transparent !important;
+    border-width: 0px !important;
+    border-color: transparent;
+    color: transparent;
 }
 
 @media screen and (max-width: 978px) {
-    .marginLeft15 {
-        padding-left: 0px;
+    .transparent{
+        height: 0;
+        padding: 0 !important;
     }
+
+    #evaluation{
+        margin-top: 40px;
+        background-color: #F6F5F3;
+    }
+    #whiteBackgroundTrasparent{
+        background-color: #f6f5f3 !important;
+        border-color: #f6f5f3 !important;
+        border-width: 0;
+    }
+}
+
+.background{
+    background-color:  #f6f5f3!important;
+}
+
+#whiteBackground{
+    background-color: white;
+}
+#whiteBackgroundTrasparent {
+    background-color: white;
+    border-color: white !important;
 }

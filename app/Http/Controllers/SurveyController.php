@@ -14,7 +14,8 @@ use Lara\SurveyQuestion;
 use Lara\SurveyAnswer;
 use Lara\SurveyAnswerOption;
 use Lara\Club;
-
+use Lara\Http\Requests\SurveyRequest;
+use Carbon\Carbon;
 
 /**
  * Class SurveyController
@@ -51,75 +52,51 @@ class SurveyController extends Controller
     public function create()
     {
         //prepare correct date and time format to be used in forms for deadline
-        $time = new DateTime();
-        $time = $time->format('d-m-Y H:i:s');
-
+        $datetime = carbon::now();
+        $datetime->endOfDay();
+        $time = $datetime ->toTimeString();
+        $date = $datetime ->toDateString();
         //placeholder because createSurveyView needs variable, can set defaults here
         $survey = new Survey();
-        
-        return view('createSurveyView', compact('survey','time'));
+        return view('createSurveyView', compact('survey', 'time', 'date'));
     }
 
     /**
-     * @param Request $input
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $input)
+    public function store(SurveyRequest $request)
     {
-        if ($input->password != $input->passwordDouble) {
-            Session::put('message', Config::get('messages_de.password-mismatch') );
-            Session::put('msgType', 'danger');
-            return Redirect::back()->withInput();
-        }
-
+        
         $survey = new Survey;
         $survey->creator_id = Session::get('userId');
-        $survey->title = $input->title;
+        $survey->title = $request->title;
         //if URL is in the description, convert it to clickable hyperlink
-        $survey->description = $this->addLinks($input->description);
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
-        $survey->is_anonymous = isset($input->is_anonymous);
-        $survey->is_private = isset($input->is_private);
-        $survey->show_results_after_voting = isset($input->show_results_after_voting);
+        $survey->description = $this->addLinks($request->description);
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate.$request->deadlineTime));
+        $survey->is_anonymous = isset($request->is_anonymous);
+        $survey->is_private = isset($request->is_private);
+        $survey->show_results_after_voting = isset($request->show_results_after_voting);
         
-        if (!empty($input->password)
-            AND !empty($input->passwordDouble)
-            AND $input->password == $input->passwordDouble) {
-            $survey->password = Hash::make($input->password);
+        if (!empty($request->password)
+            AND !empty($request->password_confirmation)
+            AND $request->password == $request->password_confirmation) {
+            $survey->password = Hash::make($request->password);
         }
 
         $survey->save();
 
-        $questions = $input->questions;
-        $answer_options = $input->answer_options;
+        $questions = $request->questions;
+        $answer_options = $request->answer_options;
 
         /*
          * get question type as array
-         * type = 0: no type given from user, delete question
          * 1: text field
          * 2: checkbox
          * 3: dropdown, has answer options!
          */
-        $questions_type = $input->type;
-        $required = $input->required;
-
-        //abort if all questions are empty
-        if(array_unique($questions) === array('')){
-            Session::put('message', 'Es konnten keine Fragen gespeichert werden, 
-                                     weil alle Fragen leer gelassen wurden!');
-            Session::put('msgType', 'danger');
-
-            return Redirect::back()->withInput();
-        }
-
-        //abort if no single field type is given
-        if(empty($questions_type) and array_unique($questions_type) === array('0')){
-            Session::put('message', 'Es konnten keine Fragen gespeichert werden, 
-                                     weil kein einziger Frage-Typ angegeben wurde!');
-            Session::put('msgType', 'danger');
-
-            return Redirect::back()->withInput();
-        }
+        $questions_type = $request->type;
+        $required = $request->required;
 
         //actual bug: answer options array is too long, must delete unnecessary elements
         for($i = count($answer_options)+1; $i >= count($questions); $i--) {
@@ -142,29 +119,9 @@ class SurveyController extends Controller
         }
         ksort($answer_options);
         ksort($required);
-
-        //ignore empty questions
-        for($i = 0; $i < count($questions); $i++) {
-
-            //check if single empty questions exist or no question type is given
-            if (empty($questions[$i]) or $questions_type[$i] == 0) {
-
-                //ignore question
-                unset($questions[$i]);
-                unset($questions_type[$i]);
-                unset($answer_options[$i]);
-                unset($required[$i]);
-
-                //reindex arrays
-                $questions = array_values($questions);
-                $questions_type = array_values($questions_type);
-                $answer_options = array_values($answer_options);
-                $required = array_values($required);
-            }
-        }
         
         //ignore empty answer options
-        for($i = 0; $i < count($answer_options); $i++) {
+        foreach($answer_options as $i => $answer_option) {
 
             //check if dropdown question and answer options exist
             if($questions_type[$i] == 3 and is_array($answer_options[$i])) {
@@ -259,7 +216,7 @@ class SurveyController extends Controller
         $userGroup = Session::get('userGroup');
 
         //check if the role of the user allows edit/delete for all  answers
-        $userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung' ? $userCanEditDueToRole = true : $userCanEditDueToRole = false;
+        ($userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung') ? ($userCanEditDueToRole = true) : ($userCanEditDueToRole = false);
 
 
         //evaluation part
@@ -322,67 +279,59 @@ class SurveyController extends Controller
             $answer_options = $question->getAnswerOptions;
 
         // prepare correct date and time format to be used in forms for deadline
-        $time = strftime("%d-%m-%Y %H:%M:%S", strtotime($survey->deadline));
-        
-        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
+        $date = substr(($survey->deadline),0,10 );
+        $time = substr(($survey->deadline),11,8);
+        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
     }
 
     /**
      * @param int $id
-     * @param Request $input
+     * @param SurveyRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function update($id, Request $input)
+    public function update($id, SurveyRequest $request)
     {
-        /*
-        if ($input->password != $input->passwordDouble) {
-            Session::put('message', Config::get('messages_de.password-mismatch') );
-            Session::put('msgType', 'danger');
-            return Redirect::back()->withInput();
-        }
-        */
         //find survey
         $survey = Survey::findOrFail($id);
 
         //edit existing survey
-        $survey->title = $input->title;
+        $survey->title = $request->title;
         //if URL is in the description, convert it to clickable hyperlink
-        $survey->description = $this->addLinks($input->description);
+        $survey->description = $this->addLinks($request->description);
 
         //format deadline for database
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($input->deadline));
-        $survey->is_anonymous = (bool) $input->is_anonymous;
-        $survey->is_private = (bool) $input->is_private;
-        $survey->show_results_after_voting = (bool) $input->show_results_after_voting;
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate.$request->deadlineTime));
+        $survey->is_anonymous = (bool) $request->is_anonymous;
+        $survey->is_private = (bool) $request->is_private;
+        $survey->show_results_after_voting = (bool) $request->show_results_after_voting;
 
         //delete password if user changes both to delete
-        if ($input->password == "delete" AND $input->passwordDouble == "delete")
+        if ($request->password == "delete" AND $request->password_confirmation == "delete")
         {
             $survey->password = '';
         }
         //set new password
-        elseif (!empty($input->password)
-                AND !empty($input->passwordDouble)
-                AND $input->password == $input->passwordDouble) {
-            $survey->password = Hash::make($input->password);
+        elseif (!empty($request->password)
+                AND !empty($request->password_confirmation)
+                AND $request->password == $request->password_confirmation) {
+            $survey->password = Hash::make($request->password);
         }
 
         $survey->save();
 
         //get questions and answer options as arrays from the input
-        $questions_new = $input->questions;
-        $answer_options_new = $input->answer_options;
+        $questions_new = $request->questions;
+        $answer_options_new = $request->answer_options;
 
-        $required = $input->required;
+        $required = $request->required;
 
         /* get question type as array
-         * type = 0: no type given from user, delete question
          * 1: text field
          * 2: checkbox
          * 3: dropdown, has answer options!
          */
-        $question_type = $input->type;
+        $question_type = $request->type;
 
         //actual bug: answer options array from input is too long, must delete unnecessary elements
         for($i = count($answer_options_new)+1; $i >= count($questions_new); $i--) {
@@ -420,46 +369,11 @@ class SurveyController extends Controller
             $answer_options_db[$i] = array_shift($answer_options_db[$i]);
         }
 
-        //if all questions are empty abort
-        if(array_unique($questions_new) === array('')){
-            Session::put('message', 'Es konnten keine Fragen geändert werden, 
-                                     weil alle Fragen leer gelassen wurden!');
-            Session::put('msgType', 'danger');
-            return Redirect::back()->withInput();
-        }
-
-        //if no single field type is given abort
-        if(empty($question_type) or array_unique($question_type) === array('0')){
-            Session::put('message', 'Es wurden keine Fragen geändert, weil kein einziger Frage-Typ ausgewählt wurde!');
-            Session::put('msgType', 'danger');
-            return Redirect::back()->withInput();
-        }
-
-        //ignore empty questions
-        for($i = 0; $i < count($questions_new); $i++) {
-
-            //check if single empty questions exist or no question type is given
-            if (empty($question) or $question_type[$i] == 0) {
-
-                //ignore question
-                unset($questions_new[$i]);
-                unset($question_type[$i]);
-                unset($answer_options_new[$i]);
-                unset($required[$i]);
-
-                //reindex arrays
-                $questions_new = array_values($questions_new);
-                $question_type = array_values($question_type);
-                $answer_options_new = array_values($answer_options_new);
-                $required = array_values($required);
-            }
-        }
-
         //ignore empty answer options
-        for($i = 0; $i < count($answer_options_new); $i++) {
+        foreach($answer_options_new as $i => $answer_option) {
 
             //check if dropdown question and answer options exist
-            if($question_type[$i] == 3 and is_array($answer_options_new[$i])) {
+            if($question_type[$i] == 3 and is_array($answer_option)) {
                 //filter empty answer options and reindex
                 $answer_options_new[$i] = array_values(array_filter($answer_options_new[$i]));
 
