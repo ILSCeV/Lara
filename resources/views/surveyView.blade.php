@@ -75,8 +75,7 @@ Calculate width of row in answers
         <div class="panel panel-warning">
         @if( $survey->password != '')
             <div class="hidden-print panel-heading">
-                {!! Form::password('password', array('required',
-                                                     'class'=>'col-md-4 col-xs-12 black-text',
+                {!! Form::password('password', array('class'=>'col-md-4 col-xs-12 black-text',
                                                      'id'=>'password' . $survey->id,
                                                      'placeholder'=>'Passwort hier eingeben')) !!}
                 <br>
