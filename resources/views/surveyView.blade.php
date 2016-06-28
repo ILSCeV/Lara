@@ -142,7 +142,7 @@ Calculate width of row in answers
                             <select class="form-control" id="sel1" name="club">
                                 <option>kein Club</option>
                                 @foreach($clubs as $club)
-                                    <option>{{$club->clb_title}}</option>
+                                    <option id="{{$club->id}}">{{$club->clb_title}}</option>
                                 @endforeach
                             </select>
                         </div>
