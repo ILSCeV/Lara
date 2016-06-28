@@ -96,16 +96,23 @@ Calculate width of row in answers
                         <ul id="test" class="dropdown-menu dropdown-username" style="position: absolute;">
                             <li id="yourself">
                                 <a href="javascript:void(0);"
-                                   onClick="document.getElementById('newName').value='{{Session::get('userName')}}';">
-                                    {{--document.getElementById('club{{ ''. $testid }}').value='{{Session::get('userClub')}}';--}}
-                                    {{--document.getElementById('ldapId{{ ''. $testid }}').value='{{Session::get('userId')}}'--}}
+                                   onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
+                                    document.getElementById('club{{ '' }}').value='{{Session::get('userClub')}}';
+                                    document.getElementById('ldapId{{ '' }}').value='{{Session::get('userId')}}'">
                                     {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
                                     <b>Ich mach's!</b>
                                 </a>
                             </li>
                         </ul>
                             @endif
+                            <div>
+                                {!! Form::hidden('ldapId',
+                                    '',
+                                    array('id'=>'ldapId') ) !!}
+                            </div>
                     </div>
+
+
                     ​
                 </div>
                 <?php $countNames = 0 ?>
@@ -138,14 +145,21 @@ Calculate width of row in answers
                         </div>
                     </div>
                     <div class="rowNoPadding">
+                        <div class="clubToQuestion">
                         <div class="answerToQuestion">
-                            <select class="form-control" id="sel1" name="club">
-                                <option>kein Club</option>
-                                @foreach($clubs as $club)
-                                    <option id="{{$club->id}}">{{$club->clb_title}}</option>
-                                @endforeach
-                            </select>
+                            <div class="dropdown" style="position: absolute">
+                                <div class="btn-group col-xs-10 col-md-10 no-padding">
+                                {!! Form::text('club', '',
+                                               array('id'=>'club',
+                                              'class'=>'form-control',
+                                              'placeholder' => 'Club eingeben',
+                                              'autocomplete'=>'off')) !!}
+                                </div>
+                            <ul class="dropdown-menu dropdown-club" style="position: absolute;"></ul>
+                            </div>
                         </div>
+                        </div>
+
                         @foreach($questions as $key => $question)
                             <div class="answerToQuestion">
                                 @if($question->field_type == 1)
