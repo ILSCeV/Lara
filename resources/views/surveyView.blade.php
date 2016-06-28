@@ -15,6 +15,39 @@ $userCanEditDueToRole
 @section('moreStylesheets')
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
     <script src="js/surveyView-scripts.js"></script>
+    <style>
+        /*
+    Label the data
+    */
+        <?php
+        header("Content-Encoding: utf-8");
+    ?>
+        @media screen and (max-width: 978px) {
+            #change-history td:nth-of-type(1):before {
+                content: "Name";
+                float: left;
+            }
+
+            #change-history td:nth-of-type(2):before {
+                 content: "Club";
+                 float: left;
+            }
+            <?php $count = 2; ?>
+        @foreach($questions as $question)
+        <?php $count += 1; ?>
+        #change-history td:nth-of-type({{$count}}):before {
+                content: "{{$question->question}}";
+                float: left;
+                display: inline-block;
+                overflow: hidden;
+            }
+
+            @if($question->is_required == 1)
+                                *
+        @endif
+        @endforeach
+        }
+    </style>
 @stop
 @section('moreScripts')
     <script src="{{ asset('js/surveyView-scripts.js') }}"></script>
@@ -79,7 +112,7 @@ $userCanEditDueToRole
                             @endforeach
                             @if($userId == $answer->creator_id OR $userCanEditDueToRole)
                                     <!--Edid Delete Buttons-->
-                            <td class="tdButtons panel" id="panelNoShadow" >
+                            <td class="tdButtons panel" id="panelNoShadow">
                                 <a href="#"
                                    class="editButton btn btn-primary "
                                    data-toggle="tooltip"
