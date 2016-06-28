@@ -34,8 +34,7 @@ use Illuminate\Support\Facades\Session;
  * an entry in "revision_entries" in which the old and new value of the Model are stored.
  *
  *
- * ToDo:
- * - ignore every column with "id" in it by default
+ * ToDo: ignore every column with "id" in it by default
  *
  *
  * @package Lara\Library
