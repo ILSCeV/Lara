@@ -156,6 +156,12 @@ $userCanEditDueToRole
                             @endif
                         </td>
                     @endforeach
+                    <td class="tdButtons " id="panelNoShadow">
+                        {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;']) !!}
+                        --}}
+                        <button type="submit" class="btn btn-primary btn-margin" style="display: inline-block;"><i class="fa fa-floppy-o"></i></button>
+                        {!! Form::close() !!}
+                    </td>
                 </tr>
                 @foreach($answers as $key => $answer)
                     <tr>
@@ -199,40 +205,6 @@ $userCanEditDueToRole
                     </tr>
                 @endforeach
                 </tbody>
-                <!--
-                                    <tbody>
-                                    <tr>
-                                        <td>Jan</td>
-                                        <td>C</td>
-                                        <td>Antwort auf die Frage 1</td>
-                                        <td>ja</td>
-                                        <td>nein</td>
-                                        <td>eine ziemlich lange Antwort mit viel bla bla und etc.</td>
-                                        <td>A5</td>
-                                        <td class="tdButtons">Buttons</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lars</td>
-                                        <td>Table cell</td>
-                                        <td>Table cell</td>
-                                        <td>Table cell</td>
-                                        <td>Table cell</td>
-                                        <td>Table cell</td>
-                                        <td>Table cell</td>
-                                        <td class="tdButtons">Buttons</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fridolin</td>
-                                        <td>Table cell</td>
-                                        <td>Table cell</td>
-                                        <td>Table cell</td>
-                                        <td>Table cell</td>
-                                        <td>Table cell</td>
-                                        <td>Table cell</td>
-                                        <td class="tdButtons">Buttons</td>
-                                    </tr>
-                                    </tbody>
-                    -->
             </table>
         </div>
     </div>
