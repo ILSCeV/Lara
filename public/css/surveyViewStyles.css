@@ -40,6 +40,10 @@
     padding: 15px;
 }
 
+.panel-body{
+    background-color: white;
+}
+
 
 
 
@@ -156,7 +160,7 @@ only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
 
     .table-responsive {
-        width: 91vw;
+        width: calc(100vw - 85px);
     }
 
     /* Force table to not be like tables anymore */

@@ -29,9 +29,10 @@ $userCanEditDueToRole
             }
 
             #change-history td:nth-of-type(2):before {
-                 content: "Club";
-                 float: left;
+                content: "Club";
+                float: left;
             }
+
             <?php $count = 2; ?>
         @foreach($questions as $question)
         <?php $count += 1; ?>
@@ -44,8 +45,11 @@ $userCanEditDueToRole
 
             @if($question->is_required == 1)
                                 *
+
         @endif
         @endforeach
+
+
         }
     </style>
 @stop
@@ -77,6 +81,21 @@ $userCanEditDueToRole
 
     <br>
     <br>
+
+    {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id]]) !!}
+
+    <div class="panel panel-warning">
+        @if( $survey->password != '')
+            <div class="hidden-print panel-heading">
+                {!! Form::password('password', array('required',
+                                                     'class'=>'col-md-4 col-xs-12 black-text',
+                                                     'id'=>'password' . $survey->id,
+                                                     'placeholder'=>'Passwort hier eingeben')) !!}
+                <br>
+            </div>
+        @endif
+    </div>
+
     <div class="panel" id="panelNoShadow">
         <div id="change-history" class="table-responsive">
             <table class="table table-striped table-bordered table-condensed table-responsive">
@@ -95,6 +114,15 @@ $userCanEditDueToRole
                 </tr>
                 </thead>
                 <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td>Club</td>
+                    @foreach($questions as $question)
+                        <td class="question">
+                            insert here
+                        </td>
+                    @endforeach
+                </tr>
                 @foreach($answers as $key => $answer)
                     <tr>
                         <td>{{$answer->name}}</td>
@@ -119,21 +147,21 @@ $userCanEditDueToRole
                                    data-placement="bottom">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <a
-                                        class="btn btn-default "
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        data-method="delete"
-                                        data-token="{{csrf_token()}}"
-                                        rel="nofollow"
-                                        data-confirm="Möchtest Du diese Antwort wirklich löschen?">
+                                <a href="{{$survey->id}}/answer/{{$answer->id}}"
+                                   class="btn btn-default "
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   data-method="delete"
+                                   data-token="{{csrf_token()}}"
+                                   rel="nofollow"
+                                   data-confirm="Möchtest Du diese Antwort wirklich löschen?">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
                             @else
                                 <td class="emptyNoButtons ">
                                 </td>
-                                @endif
+                            @endif
                     </tr>
                 @endforeach
                 </tbody>
