@@ -249,7 +249,7 @@ Calculate width of row in answers
                         @if($key > 0)
                             @if($revision['created_at'] != $revisions[$key-1]['created_at'])
                                 <tr>
-                                    <td>CreatorTest</td>
+                                    <td>{{$revision['creator_id']}}</td>
                                     <td>{{$revision['summary']}}</td>
                                     <td></td>
                                     <td></td>
@@ -259,7 +259,7 @@ Calculate width of row in answers
                             @endif
                         @else
                             <tr>
-                                <td>CreatorTest</td>
+                                <td>{{$revision['creator_id']}}</td>
                                 <td>{{$revision['summary']}}</td>
                                 <td></td>
                                 <td></td>

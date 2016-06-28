@@ -252,53 +252,17 @@ class SurveyController extends Controller
         $revisions_answer = \Lara\Revision::whereIn("object_id", $answers_with_trashed_ids)->where("object_name", "SurveyAnswer")->get();
         $revisions_cells = \Lara\Revision::whereIn("object_id", $answer_cells_with_trashed_ids)->where("object_name", "SurveyAnswerCell")->get();
         $revision_objects = $revisions_answer->merge($revisions_cells)->sortByDesc("created_at");
-        $revisions[0]['entries'] = null;
+
+        $revisions = [];
         $i = 0;
         foreach($revision_objects as $revision) {
             $revisions[$i] = $revision->toArray();
             $revisions[$i]['entries'] = RevisionEntry::where("revision_id", $revision->id)->get()->toArray();
             $i++;
         }
-
-//        ini_set("xdebug.var_display_max_depth", 10);
-//        var_dump($revisions);
-
-
-
-//        $revision_ids = [];
-//        $answers_with_trashed = SurveyAnswer::withTrashed()->whereSurveyId($survey->id)->get();
-//        foreach($answers_with_trashed as $answer) {
-//            $revision_relations = Revision_SurveyAnswer::whereObjectId($answer->id)->get();
-//            foreach($revision_relations as $revision_relation) {
-//                array_push($revision_ids, $revision_relation->revision_id);
-//            }
-//
-//            $answer_cells_with_trashed = SurveyAnswerCell::withTrashed()->whereSurveyAnswerId($answer->id)->get();
-//            foreach($answer_cells_with_trashed as $answer_cell) {
-//                $revision_relation_cells = Revision_SurveyAnswerCell::whereObjectId($answer_cell->id)->get();
-//                foreach($revision_relation_cells as $revision_relation_cell) {
-//                    array_push($revision_ids, $revision_relation_cell->revision_id);
-//                }
-//            }
-//        }
-//
-//        $revision_objects = \Lara\Revision::whereIn("id", $revision_ids)->orderBy('created_at', 'desc')->get();
-//        ini_set("xdebug.var_display_max_depth", 10);
-//        $revisions = $revision_objects->toArray();
-//        foreach($revision_objects as $key => $revision_object) {
-//            var_dump($revisions[$key]['creator_id']);
-////            not working because not every ldapid has an Person
-////            (!empty($revisions[$key]['creator_id'])) ? $revisions[$key]['creator'] = Person::wherePrsnLdapId($revisions[$key]['creator_id'])->get(['prsn_name'])->first()->prsn_name : $revisions[$key]['creator'] = "Gast";
-//            (!empty($revisions[$key]['creator_id'])) ? $revisions[$key]['creator'] = "ldap_id but not Person-entry" : $revisions[$key]['creator'] = "Gast";
-//            $revisions[$key]['entries'] = $revision_object->getRevisionEntries->toArray();
-//        }
-
         
-
-
         //check if the role of the user allows edit/delete for all  answers
         ($userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung') ? ($userCanEditDueToRole = true) : ($userCanEditDueToRole = false);
-
 
         //evaluation part
 
