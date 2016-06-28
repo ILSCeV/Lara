@@ -36,6 +36,15 @@ $userCanEditDueToRole
             <?php $count = 2; ?>
         @foreach($questions as $question)
         <?php $count += 1; ?>
+         @if($question->is_required == 1)
+        #change-history td:nth-of-type({{$count}}):before {
+                content: "{{$question->question}} *";
+                float: left;
+                display: inline-block;
+                overflow: hidden;
+            }
+
+            @else
         #change-history td:nth-of-type({{$count}}):before {
                 content: "{{$question->question}}";
                 float: left;
@@ -43,10 +52,13 @@ $userCanEditDueToRole
                 overflow: hidden;
             }
 
-            @if($question->is_required == 1)
-                                *
         @endif
         @endforeach
+
+
+
+
+
 
 
         }
@@ -65,7 +77,6 @@ $userCanEditDueToRole
             </h4>
         </div>
         <div class="panel-body">
-
             @if($survey->description != null)
                 Beschreibung: {{$survey->description }}
             @endif
@@ -157,7 +168,8 @@ $userCanEditDueToRole
                     <td class="tdButtons " id="panelNoShadow">
                         {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;']) !!}
                         --}}
-                        <button type="submit" class="btn btn-primary btn-margin" id="noMarginMobile" style="display: inline-block;"><i class="fa fa-floppy-o"></i></button>
+                        <button type="submit" class="btn btn-primary btn-margin" id="noMarginMobile"
+                                style="display: inline-block;"><i class="fa fa-floppy-o"></i></button>
                         {!! Form::close() !!}
                     </td>
                 </tr>
@@ -201,7 +213,32 @@ $userCanEditDueToRole
                                 </td>
                             @endif
                     </tr>
-                @endforeach
+                    @endforeach
+                            <!-- Start of evaluation -->
+
+                    <?php $i = 0; ?>
+                    @foreach($answers as $key => $answer)
+                        @if($i == 0)
+                            <tr>
+                                <td class="transparent background">bg</td>
+                                <td class="transparent background">bg</td>
+                                @foreach($answer->getAnswerCells as $cell)
+                                    <td class="transparent background">bg</td>
+                                @endforeach
+                            </tr>
+                        @endif
+                        @if($i == 0)
+                            <tr id="evaluation">
+                                <td class="" id="whiteBackgroundTrasparent" ></td>
+                                <td class="" id="whiteBackgroundTrasparent"></td>
+                                @foreach($answer->getAnswerCells as $cell)
+                                    <td class="mobileMarginTop" id="whiteBackground">your data</td>
+                                @endforeach
+                            </tr>
+                            @endif
+                            <?php $i += 1; ?>
+                            @endforeach
+                                    <!-- End of evaluation -->
                 </tbody>
             </table>
         </div>

@@ -56,6 +56,7 @@
 
 .table{
     margin: 0;
+    background-color: #f6f5f3;
 }
 
 .table > thead > tr > th
@@ -87,10 +88,17 @@
     position: absolute;
     display: inline-block;
 }
+.table > tbody > tr:nth-child(odd) > td{
+    background-color: #f9f9f9;
+}
+
+.table > tbody > tr:nth-child(even) > td{
+    background-color: white;
+}
+
 
 .table > tbody > tr:nth-child(odd) > td:first-child
 {
-    background-color: #f9f9f9;
     width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -98,7 +106,6 @@
 
 .table > tbody > tr:nth-child(even) > td:first-child
 {
-    background-color: white;
     width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -285,6 +292,7 @@ tr .panel{
     -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0.05);
     box-shadow: 0 0px 0px rgba(0,0,0,0.05);
     border-width: 0 !important;
+    background-color: transparent;
 }
 
 .tdButtons:after{content: '';}
@@ -298,3 +306,38 @@ tr .panel{
     }
 }
 
+.transparent{
+    background-color: transparent !important;
+    border-width: 0px !important;
+    border-color: transparent;
+    color: transparent;
+}
+
+@media screen and (max-width: 978px) {
+    .transparent{
+        height: 0;
+        padding: 0 !important;
+    }
+
+    #evaluation{
+        margin-top: 40px;
+        background-color: #F6F5F3;
+    }
+    #whiteBackgroundTrasparent{
+        background-color: #f6f5f3 !important;
+        border-color: #f6f5f3 !important;
+        border-width: 0;
+    }
+}
+
+.background{
+    background-color:  #f6f5f3!important;
+}
+
+#whiteBackground{
+    background-color: white;
+}
+#whiteBackgroundTrasparent {
+    background-color: white;
+    border-color: white !important;
+}
