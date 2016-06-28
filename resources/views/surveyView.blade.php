@@ -115,11 +115,45 @@ $userCanEditDueToRole
                 </thead>
                 <tbody>
                 <tr>
-                    <td>Name</td>
-                    <td>Club</td>
-                    @foreach($questions as $question)
+                    <td>
+                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'mein Name', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                    </td>
+                    <td>
+                        {!! Form::text('club', null, ['class' => 'form-control', 'placeholder' => 'mein Club', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                    </td>
+                    @foreach($questions as $key => $question)
                         <td class="question">
-                            insert here
+                            @if($question->field_type == 1)
+                                    <!-- Freitext -->
+                            @if(!$question->is_required)
+                                    <!--Answer not required-->
+                            {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+                            @else
+                                    <!--Answer* required-->
+                            {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                            @endif
+                            @elseif($question->field_type == 2)
+                                    <!-- Ja/Nein -->
+                            {{ Form::radio('answers['.$key.']', 1) }} Ja
+                            @if(!$question->is_required)
+                                    <!--Answer not required-->
+                            {{ Form::radio('answers['.$key.']', 0) }} Nein
+                            {{ Form::radio('answers['.$key.']', -1, true)}} keine Angabe
+                            @else
+                                    <!--Answer* required-->
+                            {{ Form::radio('answers['.$key.']', 0, true) }} Nein
+                            @endif
+                            @elseif($question->field_type == 3)
+                                    <!-- Dropdown -->
+                            <select class="form-control" name="answers[{{$key}}]">
+                                @if(!$question->is_required)
+                                    <option>keine Angabe</option>
+                                @endif
+                                @foreach($question->getAnswerOptions as $answerOption)
+                                    <option>{{$answerOption->answer_option}}</option>
+                                @endforeach
+                            </select>
+                            @endif
                         </td>
                     @endforeach
                 </tr>
