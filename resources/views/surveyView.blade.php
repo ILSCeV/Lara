@@ -238,9 +238,9 @@ Calculate width of row in answers
                     <tr>
                         <th>Wer?</th>
                         <th>Zusammenfassung</th>
-                        <th>betroffene Spalte</th>
-                        <th>alter Wert</th>
-                        <th>neuer Wert</th>
+                        <th>Betroffene Spalte</th>
+                        <th>Alter Wert</th>
+                        <th>Neuer Wert</th>
                         <th>Wann?</th>
                     </tr>
                     </thead>
@@ -267,7 +267,6 @@ Calculate width of row in answers
                                 <td>{{$revision['created_at']}}</td>
                             </tr>
                         @endif
-                        @if(is_array($revision['entries']))
                             @foreach($revision['entries'] as $revision_entry)
                                 <tr>
                                     <td></td>
@@ -278,7 +277,6 @@ Calculate width of row in answers
                                     <td></td>
                                 </tr>
                             @endforeach
-                        @endif
                     @endforeach
                     </tbody>
                 </table>
