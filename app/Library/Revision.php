@@ -15,6 +15,29 @@ use Illuminate\Support\Facades\Session;
 
 /**
  * Class Revision
+ *
+ * This class is designed to make generating revisions as easy as possible.
+ * To store the data we need 2 tables, "revisions" and "revision_entries" -> look up the migrations for details.
+ *
+ * Useage:
+ * You have to load the model before applying changes into a new instance of this class, after applying your
+ * changes you call the function "save(...)" with the changed model as paramater and the class will generate
+ * corresponding database entries.
+ *
+ * example:
+ *          $answer = SurveyAnswer::findOrFail($id);
+ *          $revision = new Revision($answer);
+ *          $answer->answer = "Änderung";
+ *          $answer->save();
+ *          $revision->save($answer);
+ * This example will generate an entry in "revisions" with the user data (username, ip, timestamp) and
+ * an entry in "revision_entries" in which the old and new value of the Model are stored.
+ *
+ *
+ * ToDo:
+ * - ignore every column with "id" in it by default
+ *
+ *
  * @package Lara\Library
  */
 class Revision
@@ -25,6 +48,7 @@ class Revision
     private $old_model;
 
     /**
+     * table columns which should not be part of the revisions, for example id's and timestamps
      * @var string[]
      */
     private $ignoreArray = ["created_at", "updated_at", "deleted_at", "survey_question_id", "survey_answer_id", "survey_question_id", "survey_id", "creator_id", "id"];
@@ -62,13 +86,13 @@ class Revision
 
         if ($new_model->wasRecentlyCreated) {     // empty($this->old_model->attributesToArray())
             // new entry
-            $revision->summary = "created new ".$this->parse_classname(get_class($new_model))['classname'];
+            $revision->summary = $this->parse_classname(get_class($new_model))['classname']." erstellt";
         } elseif (!$new_model->exists) {
             // deleted entry
-            $revision->summary = "deleted ".$this->parse_classname(get_class($new_model))['classname'];
+            $revision->summary = "deleted ".$this->parse_classname(get_class($new_model))['classname']."geändert";
         } else {
             // update entry
-            $revision->summary = "updated ".$this->parse_classname(get_class($new_model))['classname'];
+            $revision->summary = "updated ".$this->parse_classname(get_class($new_model))['classname']."gelöscht";
         }
         $revision->save();
 
@@ -92,17 +116,6 @@ class Revision
             }
         }
         return true;
-    }
-
-    /**
-     * @param Model $model
-     * @return string
-     */
-    protected function parse_relation_model_name(Model $model)
-    {
-        $class = $this->parse_classname(get_class($model));
-        $path = "\\".$class['namespace'][0]."\\Revision_".$class['classname'];
-        return $path;
     }
 
     /**
