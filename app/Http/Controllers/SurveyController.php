@@ -252,7 +252,7 @@ class SurveyController extends Controller
         $revisions_answer = \Lara\Revision::whereIn("object_id", $answers_with_trashed_ids)->where("object_name", "SurveyAnswer")->get();
         $revisions_cells = \Lara\Revision::whereIn("object_id", $answer_cells_with_trashed_ids)->where("object_name", "SurveyAnswerCell")->get();
         $revision_objects = $revisions_answer->merge($revisions_cells)->sortByDesc("created_at");
-        $revisions[] = [];
+        $revisions[0]['entries'] = null;
         $i = 0;
         foreach($revision_objects as $revision) {
             $revisions[$i] = $revision->toArray();

@@ -246,24 +246,39 @@ Calculate width of row in answers
                     </thead>
                     <tbody>
                     @foreach($revisions as $key => $revision)
-                        <tr>
-                            <td>CreatorTest</td>
-                            <td>{{$revision['summary']}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{{$revision['created_at']}}</td>
-                        </tr>
-                        @foreach($revision['entries'] as $revision_entry)
+                        @if($key > 0)
+                            @if($revision['created_at'] != $revisions[$key-1]['created_at'])
+                                <tr>
+                                    <td>CreatorTest</td>
+                                    <td>{{$revision['summary']}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{$revision['created_at']}}</td>
+                                </tr>
+                            @endif
+                        @else
                             <tr>
+                                <td>CreatorTest</td>
+                                <td>{{$revision['summary']}}</td>
                                 <td></td>
                                 <td></td>
-                                <td>{{$revision_entry['changed_column_name']}}</td>
-                                <td>{{$revision_entry['old_value']}}</td>
-                                <td>{{$revision_entry['new_value']}}</td>
                                 <td></td>
+                                <td>{{$revision['created_at']}}</td>
                             </tr>
-                        @endforeach
+                        @endif
+                        @if(is_array($revision['entries']))
+                            @foreach($revision['entries'] as $revision_entry)
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{$revision_entry['changed_column_name']}}</td>
+                                    <td>{{$revision_entry['old_value']}}</td>
+                                    <td>{{$revision_entry['new_value']}}</td>
+                                    <td></td>
+                                </tr>
+                            @endforeach
+                        @endif
                     @endforeach
                     </tbody>
                 </table>
