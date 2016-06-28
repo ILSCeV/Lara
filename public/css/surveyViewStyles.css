@@ -74,12 +74,12 @@
 .table > thead > tr > th:first-child
 {
     /* top-left corner */
-    width: 100px;
+    width: 150px;
 }
 
 .table > thead > tr > th:nth-child(2)
 {
-    padding-left: 120px !important;
+    padding-left: 170px !important;
 }
 
 .table > tbody > tr > td:first-child
@@ -91,13 +91,17 @@
 .table > tbody > tr:nth-child(odd) > td:first-child
 {
     background-color: #f9f9f9;
-    width: 100px;
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .table > tbody > tr:nth-child(even) > td:first-child
 {
     background-color: white;
-    width: 100px;
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .table > thead:first-child > tr:first-child > th:nth-child(2)
@@ -107,7 +111,7 @@
 
 .table > tbody > tr > td:nth-child(2)
 {
-    padding-left: 120px !important;
+    padding-left: 170px !important;
 }
 
 
