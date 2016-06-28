@@ -258,7 +258,10 @@ class SurveyController extends Controller
         ini_set("xdebug.var_display_max_depth", 10);
         $revisions = $revision_objects->toArray();
         foreach($revision_objects as $key => $revision_object) {
-            $revisions[$key]['creator'] = Person::wherePrsnLdapId($revisions[$key]['creator_id'])->get(['prsn_name'])->first()->prsn_name;
+            var_dump($revisions[$key]['creator_id']);
+//            not working because not every ldapid has an Person
+//            (!empty($revisions[$key]['creator_id'])) ? $revisions[$key]['creator'] = Person::wherePrsnLdapId($revisions[$key]['creator_id'])->get(['prsn_name'])->first()->prsn_name : $revisions[$key]['creator'] = "Gast";
+            (!empty($revisions[$key]['creator_id'])) ? $revisions[$key]['creator'] = "ldap_id but not Person-entry" : $revisions[$key]['creator'] = "Gast";
             $revisions[$key]['entries'] = $revision_object->getRevisionEntries->toArray();
         }
 
