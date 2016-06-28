@@ -224,7 +224,7 @@ only screen and (max-width: 760px),
 
     td, th{
         word-wrap: break-word;
-        white-space:normal !important;
+        white-space:normal ;
     }
 
     .table > tbody > tr:nth-child(odd) > td:first-child
