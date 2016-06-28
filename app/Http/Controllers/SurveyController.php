@@ -15,6 +15,7 @@ use Lara\SurveyAnswer;
 use Lara\SurveyAnswerOption;
 use Lara\Club;
 use Lara\Http\Requests\SurveyRequest;
+use Carbon\Carbon;
 
 /**
  * Class SurveyController
@@ -51,13 +52,13 @@ class SurveyController extends Controller
     public function create()
     {
         //prepare correct date and time format to be used in forms for deadline
-        $time = new DateTime();
-        $time = $time->format('Y-m-d H:i:s');
-
+        $datetime = carbon::now();
+        $datetime->endOfDay();
+        $time = $datetime ->toTimeString();
+        $date = $datetime ->toDateString();
         //placeholder because createSurveyView needs variable, can set defaults here
         $survey = new Survey();
-        
-        return view('createSurveyView', compact('survey','time'));
+        return view('createSurveyView', compact('survey', 'time', 'date'));
     }
 
     /**
@@ -72,7 +73,7 @@ class SurveyController extends Controller
         $survey->title = $request->title;
         //if URL is in the description, convert it to clickable hyperlink
         $survey->description = $this->addLinks($request->description);
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadline));
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate.$request->deadlineTime));
         $survey->is_anonymous = isset($request->is_anonymous);
         $survey->is_private = isset($request->is_private);
         $survey->show_results_after_voting = isset($request->show_results_after_voting);
@@ -278,9 +279,9 @@ class SurveyController extends Controller
             $answer_options = $question->getAnswerOptions;
 
         // prepare correct date and time format to be used in forms for deadline
-        $time = strftime("%Y-%m-%d %H:%M:%S", strtotime($survey->deadline));
-        
-        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'time'));
+        $date = substr(($survey->deadline),0,10 );
+        $time = substr(($survey->deadline),11,8);
+        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
     }
 
     /**
@@ -300,7 +301,7 @@ class SurveyController extends Controller
         $survey->description = $this->addLinks($request->description);
 
         //format deadline for database
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadline));
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate.$request->deadlineTime));
         $survey->is_anonymous = (bool) $request->is_anonymous;
         $survey->is_private = (bool) $request->is_private;
         $survey->show_results_after_voting = (bool) $request->show_results_after_voting;
@@ -369,10 +370,10 @@ class SurveyController extends Controller
         }
 
         //ignore empty answer options
-        foreach($answer_options_new as $i => $answer_options_new) {
+        foreach($answer_options_new as $i => $answer_option) {
 
             //check if dropdown question and answer options exist
-            if($question_type[$i] == 3 and is_array($answer_options_new[$i])) {
+            if($question_type[$i] == 3 and is_array($answer_option)) {
                 //filter empty answer options and reindex
                 $answer_options_new[$i] = array_values(array_filter($answer_options_new[$i]));
 

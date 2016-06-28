@@ -7,7 +7,7 @@ $clubs
 $userId
 $userGroup
 $userCanEditDueToRole
---!>
+-->
 @extends('layouts.master')
 @section('title')
     {{$survey->title}}
@@ -15,6 +15,54 @@ $userCanEditDueToRole
 @section('moreStylesheets')
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
     <script src="js/surveyView-scripts.js"></script>
+    <style>
+        /*
+    Label the data
+    */
+        <?php
+        header("Content-Encoding: utf-8");
+    ?>
+        @media screen and (max-width: 978px) {
+            #change-history td:nth-of-type(1):before {
+                content: "Name";
+                float: left;
+            }
+
+            #change-history td:nth-of-type(2):before {
+                content: "Club";
+                float: left;
+            }
+
+            <?php $count = 2; ?>
+        @foreach($questions as $question)
+        <?php $count += 1; ?>
+         @if($question->is_required == 1)
+        #change-history td:nth-of-type({{$count}}):before {
+                content: "{{$question->question}} *";
+                float: left;
+                display: inline-block;
+                overflow: hidden;
+            }
+
+            @else
+        #change-history td:nth-of-type({{$count}}):before {
+                content: "{{$question->question}}";
+                float: left;
+                display: inline-block;
+                overflow: hidden;
+            }
+
+        @endif
+        @endforeach
+
+
+
+
+
+
+
+        }
+    </style>
 @stop
 @section('moreScripts')
     <script src="{{ asset('js/surveyView-scripts.js') }}"></script>
@@ -29,15 +77,13 @@ $userCanEditDueToRole
             </h4>
         </div>
         <div class="panel-body">
-            Beschreibung:
-            @if($survey->description == null)
-                keine Beschreibung vorhanden
-            @else
-                {{$survey->description }}
+            @if($survey->description != null)
+                Beschreibung: {{$survey->description }}
             @endif
             <br>
             Die Umfrage läuft noch bis: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} um
-            {{ date("H:i", strtotime($survey->deadline)) }}. Es haben bereits {{count($answers)}} Personen abgestimmt.
+            {{ date("H:i", strtotime($survey->deadline)) }}.
+            <br>Es haben bereits {{count($answers)}} Personen abgestimmt.
         </div>
     </div>
 
@@ -45,219 +91,159 @@ $userCanEditDueToRole
     <br>
     <br>
 
+    {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id]]) !!}
 
-
-
-    <!-- /////////////////////////////////////////// Start of desktop View /////////////////////////////////////////// -->
-
-
-    <!--
-Calculate width of row in answers
--->
-    <?php
-    $tableNot100Percent = false;
-
-    /* columnWidth = width of answerToQuestion */
-    $columnWidth = 20;
-    /* number of columns * width */
-    $questionCount *= $columnWidth;
-    /* Club Column is added as a default + width for edid, save, delete buttons */
-    $questionCount += 2 * $columnWidth;
-    $alternatingColor = 0;
-    ?>
-            <!--table min 100% width of page-->
-    @if($questionCount < 100)
-    <?php $tableNot100Percent = true ?>
-    @endif
-
-    <div class="displayDesktop">
-        {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id]]) !!}
-        <div class="panel panel-warning">
+    <div class="panel panel-warning">
         @if( $survey->password != '')
             <div class="hidden-print panel-heading">
-                {!! Form::password('password', array('required',
-                                                     'class'=>'col-md-4 col-xs-12 black-text',
+                {!! Form::password('password', array('class'=>'col-md-4 col-xs-12 black-text',
                                                      'id'=>'password' . $survey->id,
                                                      'placeholder'=>'Passwort hier eingeben')) !!}
                 <br>
             </div>
         @endif
-            <div class="panel-body">
-        <div class="row rowNoPadding">
-            <div class="col-md-2 rowNoPadding shadow">
-                <div class=" rowNoPadding nameToQuestion">
-                    Name *
-                </div>
+    </div>
 
-                    <div class=" rowNoPadding nameToQuestion">
-                        <div class="dropdown" style="position: absolute">
-                        {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'newName', 'placeholder' => 'Bitte gib deinen Namen ein', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
-                            @if (Session::has("userName"))
-                        <ul id="test" class="dropdown-menu dropdown-username" style="position: absolute;">
-                            <li id="yourself">
-                                <a href="javascript:void(0);"
-                                   onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
-                                    document.getElementById('club{{ '' }}').value='{{Session::get('userClub')}}';
-                                    document.getElementById('ldapId{{ '' }}').value='{{Session::get('userId')}}'">
-                                    {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
-                                    <b>Ich mach's!</b>
-                                </a>
-                            </li>
-                        </ul>
+    <div class="panel" id="panelNoShadow">
+        <div id="change-history" class="table-responsive">
+            <table class="table table-striped table-bordered table-condensed table-responsive">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Club</th>
+                    @foreach($questions as $question)
+                        <th class="question">
+                            {{$question->question}}
+                            @if($question->is_required == 1)
+                                *
                             @endif
-                            <div>
-                                {!! Form::hidden('ldapId',
-                                    '',
-                                    array('id'=>'ldapId') ) !!}
-                            </div>
-                    </div>
-
-
-                    ​
-                </div>
-                <?php $countNames = 0 ?>
-                @foreach($answers as $answer)
-                    <?php $countNames += 1 ?>
-                    <div class="Name{{$countNames}} rowNoPadding nameToQuestion color{{$alternatingColor}}">
-                        {{$answer->name}}
-                    </div>
-                    <?php $alternatingColor == 0 ? $alternatingColor = 1 : $alternatingColor = 0; ?>
-                @endforeach
-            </div>
-            <?php
-            $alternatingColor = 0;
-            ?>
-            <div class="col-md-10 answers rowNoPadding">
-                <div id="rightPart" style="width: {{$questionCount}}vw;" class="displayDesktop">
-                    <div class="rowNoPadding ">
-                        <div class="answerToQuestion">
-                            Club
-                        </div>
-                        @foreach($questions as $question)
-                            <div class="answerToQuestion">
-                                {{$question->question}}
-                                @if($question->is_required == 1)
-                                    *
-                                @endif
-                            </div>
-                        @endforeach
-                        <div class="answerToQuestion ">
-                        </div>
-                    </div>
-                    <div class="rowNoPadding">
-                        <div class="clubToQuestion">
-                        <div class="answerToQuestion">
-                            <div class="dropdown" style="position: absolute">
-                                <div class="btn-group col-xs-10 col-md-10 no-padding">
-                                {!! Form::text('club', '',
-                                               array('id'=>'club',
-                                              'class'=>'form-control',
-                                              'placeholder' => 'Club eingeben',
-                                              'autocomplete'=>'off')) !!}
-                                </div>
-                            <ul class="dropdown-menu dropdown-club" style="position: absolute;"></ul>
-                            </div>
-                        </div>
-                        </div>
-
-                        @foreach($questions as $key => $question)
-                            <div class="answerToQuestion">
-                                @if($question->field_type == 1)
-                                <!-- Freitext -->
-                                    @if(!$question->is_required)
+                        </th>
+                    @endforeach
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'mein Name', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                    </td>
+                    <td>
+                        {!! Form::text('club', null, ['class' => 'form-control', 'placeholder' => 'mein Club', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                    </td>
+                    @foreach($questions as $key => $question)
+                        <td class="question">
+                            @if($question->field_type == 1)
+                                    <!-- Freitext -->
+                            @if(!$question->is_required)
                                     <!--Answer not required-->
-                                        {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
-                                    @else
+                            {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+                            @else
                                     <!--Answer* required-->
-                                        {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
-                                    @endif
-                                @elseif($question->field_type == 2)
-                                <!-- Ja/Nein -->
-                                    {{ Form::radio('answers['.$key.']', 1) }} Ja
-                                    @if(!$question->is_required)
+                            {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                            @endif
+                            @elseif($question->field_type == 2)
+                                    <!-- Ja/Nein -->
+                            {{ Form::radio('answers['.$key.']', 1) }} Ja
+                            @if(!$question->is_required)
                                     <!--Answer not required-->
-                                        {{ Form::radio('answers['.$key.']', 0) }} Nein
-                                        {{ Form::radio('answers['.$key.']', -1, true)}} keine Angabe
-                                    @else
+                            {{ Form::radio('answers['.$key.']', 0) }} Nein
+                            {{ Form::radio('answers['.$key.']', -1, true)}} keine Angabe
+                            @else
                                     <!--Answer* required-->
-                                        {{ Form::radio('answers['.$key.']', 0, true) }} Nein
-                                    @endif
-                                @elseif($question->field_type == 3)
-                                <!-- Dropdown -->
-                                    <select class="form-control" name="answers[{{$key}}]">
-                                    @if(!$question->is_required)
-                                        <option>keine Angabe</option>
-                                    @endif
-                                    @foreach($question->getAnswerOptions as $answerOption)
-                                        <option>{{$answerOption->answer_option}}</option>
-                                    @endforeach
-                                    </select>
-
-
+                            {{ Form::radio('answers['.$key.']', 0, true) }} Nein
+                            @endif
+                            @elseif($question->field_type == 3)
+                                    <!-- Dropdown -->
+                            <select class="form-control" name="answers[{{$key}}]">
+                                @if(!$question->is_required)
+                                    <option>keine Angabe</option>
                                 @endif
-                            </div>
-                            @endforeach
-                                    <!-- Antwort speichern desktop -->
-                            <div class="answerToQuestion ">
-                                {!! Form::submit('Speichern', ['class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;']) !!}
-                                {!! Form::close() !!}
-                            </div>
-                    </div>
-                    @foreach($answers as $key => $answer)
-                        <div class="rowNoPadding">
-                            <div class="answerToQuestion color{{$alternatingColor}}">
-                                @if($club = $clubs->find($answer->club_id))
-                                    {{$club->clb_title}}
-                                @else
-                                    kein Club
-                                @endif
-                            </div>
-                            @foreach($answer->getAnswerCells as $cell)
-                                <div class="answerToQuestion color{{$alternatingColor}} answerRow">
-                                    {{$cell->answer}}
-                                </div>
+                                @foreach($question->getAnswerOptions as $answerOption)
+                                    <option>{{$answerOption->answer_option}}</option>
                                 @endforeach
-                                @if($userId == $answer->creator_id OR $userCanEditDueToRole)
-                                        <!--Edid Delete Buttons-->
-                                <div class="marginLeft15 answerToQuestion color{{$alternatingColor}} editDelete">
-                                    <a
-                                       class="editButton btn btn-primary editRow"
-                                       data-toggle="tooltip"
-                                       data-placement="bottom">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                    <a href="{{$survey->id}}/answer/{{$answer->id}}"
-                                       class="btn btn-default deleteRow"
-                                       data-toggle="tooltip"
-                                       data-placement="bottom"
-                                       data-method="delete"
-                                       data-token="{{csrf_token()}}"
-                                       rel="nofollow"
-                                       data-confirm="Möchtest Du diese Antwort wirklich löschen?">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </div>
-                                @else
-                                    <div class="answerToQuestion ">
-                                    </div>
-                                @endif
-                                <?php $alternatingColor == 0 ? $alternatingColor = 1 : $alternatingColor = 0; ?>
-                        </div>
+                            </select>
+                            @endif
+                        </td>
                     @endforeach
-                </div>
-                @if($tableNot100Percent )
-                    <div class="ifTableNotfullPage">&nbsp;</div>
-                    <div class="ifTableNotfullPage">&nbsp;</div>
-                    @foreach($answers as $answer)
-                        <div class="ifTableNotfullPage">&nbsp;</div>
+                    <td class="tdButtons " id="panelNoShadow">
+                        {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;']) !!}
+                        --}}
+                        <button type="submit" class="btn btn-primary btn-margin" id="noMarginMobile"
+                                style="display: inline-block;"><i class="fa fa-floppy-o"></i></button>
+                        {!! Form::close() !!}
+                    </td>
+                </tr>
+                @foreach($answers as $key => $answer)
+                    <tr>
+                        <td>{{$answer->name}}</td>
+                        <td>
+                            @if($club = $clubs->find($answer->club_id))
+                                {{$club->clb_title}}
+                            @else
+                                kein Club
+                            @endif
+                        </td>
+                        @foreach($answer->getAnswerCells as $cell)
+                            <td class="singleAnswer">
+                                {{$cell->answer}}
+                            </td>
+                            @endforeach
+                            @if($userId == $answer->creator_id OR $userCanEditDueToRole)
+                                    <!--Edid Delete Buttons-->
+                            <td class="tdButtons panel" id="panelNoShadow">
+                                <a href="#"
+                                   class="editButton btn btn-primary "
+                                   data-toggle="tooltip"
+                                   data-placement="bottom">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <a href="{{$survey->id}}/answer/{{$answer->id}}"
+                                   class="btn btn-default deleteRow"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   data-method="delete"
+                                   data-token="{{csrf_token()}}"
+                                   rel="nofollow"
+                                   data-confirm="Möchtest Du diese Antwort wirklich löschen?">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                            @else
+                                <td class="emptyNoButtons ">
+                                </td>
+                            @endif
+                    </tr>
                     @endforeach
-                @endif
-            </div>
+                            <!-- Start of evaluation -->
+
+                    <?php $i = 0; ?>
+                    @foreach($answers as $key => $answer)
+                        @if($i == 0)
+                            <tr>
+                                <td class="transparent background">bg</td>
+                                <td class="transparent background">bg</td>
+                                @foreach($answer->getAnswerCells as $cell)
+                                    <td class="transparent background">bg</td>
+                                @endforeach
+                            </tr>
+                        @endif
+                        @if($i == 0)
+                            <tr id="evaluation">
+                                <td class="" id="whiteBackgroundTrasparent" ></td>
+                                <td class="" id="whiteBackgroundTrasparent"></td>
+                                @foreach($answer->getAnswerCells as $cell)
+                                    <td class="mobileMarginTop" id="whiteBackground">your data</td>
+                                @endforeach
+                            </tr>
+                            @endif
+                            <?php $i += 1; ?>
+                            @endforeach
+                                    <!-- End of evaluation -->
+                </tbody>
+            </table>
         </div>
-            </div>
     </div>
-    <div class="displayDesktop">
-    </div>
+
+
 
 
     <script>

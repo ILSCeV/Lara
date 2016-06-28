@@ -50,7 +50,7 @@
                 newElem.find('.selectpicker').attr('id', 'field_type' + (newNum - 1));
                 newElem.find('.btn-success').attr('id', 'button_answ' + (newNum - 1));
                 newElem.find('.hidden').attr('id', 'hiddenField' + (newNum - 1));
-                newElem.find('.hidden').attr('value', 'nothingYet');
+                newElem.find('.hidden').attr('value', '1');
 
                 newElem.find('.selectpicker').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ');' + 'check_question_type2('+ (newNum - 1) + ');' + 'setField(' + (newNum-1) + ');' + 'setField2(' + (newNum-1) + ');');
 
@@ -394,7 +394,6 @@
 <div class="panel-group">
     <div class="panel col-md-8 col-sm-12 col-xs-12">
         <h4 id="heading_create" style="display:none">Neue Umfrage erstellen:</h4>
-
         <h4 id="heading_edit" style="display:none">Umfrage editieren:</h4>
 
         <div class="panel-body">
@@ -415,7 +414,8 @@
 
             <div class="form-group">
                 {!! Form::label('deadline', 'Aktiv bis:') !!}
-                {!! Form::date('deadline', $time, ['class' => 'form-control']) !!}
+                {!! Form:: date('deadlineDate', $date, ['class' => 'form-control'] ) !!}
+                {!! Form:: time('deadlineTime', $time, ['class' => 'form-control'] ) !!}
             </div>
 
             <div class="form-group">
@@ -435,6 +435,9 @@
                                   @if($survey->show_results_after_voting) checked @endif> Ergebnisse sind erst nach dem Ausfüllen sichtbar </label>
                 </div>
             </div>
+
+            <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
+            
             <div class="form-group">
                 <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
                     <label for="password" class="control-label col-md-5 col-sm-5 col-xs-12">Passwort zum Eintragen:</label>
@@ -450,9 +453,15 @@
                     </div>
                 </div>
             </div>
+            @if (!empty($survey->password))
+                <div style="color: #ff9800;">
+                    <small>Um das Passwort zu löschen, trage in beide Felder "delete" ein (ohne
+                        Anführungszeichen).
+                    </small>
+                </div>
+            @endif
         </div>
     </div>
-
 
     <div id="wrapper">
 
