@@ -218,6 +218,7 @@ class SurveyController extends Controller
         //check if the role of the user allows edit/delete for all  answers
         ($userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung') ? ($userCanEditDueToRole = true) : ($userCanEditDueToRole = false);
 
+        $userStatus = Session::get("userStatus");
 
         //evaluation part
 
@@ -261,7 +262,7 @@ class SurveyController extends Controller
         //todo: make $evaluation[$order][$answer_option->answer_option] a string (casting???)
         
         return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
-            'userGroup', 'userCanEditDueToRole', 'evaluation'));
+            'userGroup', 'userStatus', 'userCanEditDueToRole', 'evaluation'));
     }
 
     /**
