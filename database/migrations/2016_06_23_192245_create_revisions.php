@@ -17,6 +17,9 @@ class CreateRevisions extends Migration
             $table->integer('creator_id')->references('id')->on('persons')->unsigned()->nullable();
             $table->string('summary', 255);
             $table->string('ip', 255);
+            $table->integer('object_id')->unsigned();
+            $table->string('object_name', 255);
+
             $table->timestamps();
         });
     }

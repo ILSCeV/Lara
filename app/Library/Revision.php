@@ -41,32 +41,37 @@ class Revision
 
     /**
      * @param Model $new_model
-     * @param string $summary
      * @return bool
      */
-    public function save(Model $new_model, $summary)
+    public function save(Model $new_model)
     {
         if($new_model->getTable() !== $this->old_model->getTable()) {
             // old and new model dont have the same class -> they are not compareable
             return false;
         }
-//        dd($new_model->toArray(), $this->old_model->toArray(), ($new_model->toArray() == $this->old_model->toArray()));
         if($new_model == $this->old_model) {
             // no changes -> no entry
             return false;
         }
 
         $revision = new \Lara\Revision();
-        $revision->summary = $summary;
         $revision->creator_id = Session::get('userId');
         $revision->ip = request()->ip();
+        $revision->object_id = $new_model->id;
+        $revision->object_name = $this->parse_classname(get_class($new_model))['classname'];
+
+        if ($new_model->wasRecentlyCreated) {     // empty($this->old_model->attributesToArray())
+            // new entry
+            $revision->summary = "created new ".$this->parse_classname(get_class($new_model))['classname'];
+        } elseif (!$new_model->exists) {
+            // deleted entry
+            $revision->summary = "deleted ".$this->parse_classname(get_class($new_model))['classname'];
+        } else {
+            // update entry
+            $revision->summary = "updated ".$this->parse_classname(get_class($new_model))['classname'];
+        }
         $revision->save();
 
-        $relation_model_class_name = $this->parse_relation_model_name($new_model);
-        $relation_model = new $relation_model_class_name;
-        $relation_model->object_id = $new_model->id;
-        $relation_model->revision_id = $revision->id;
-        $relation_model->save();
 
         if ($new_model->wasRecentlyCreated) {     // empty($this->old_model->attributesToArray())
             // new entry
@@ -79,6 +84,7 @@ class Revision
                 $this->save_revision_entry($column_name, $column_value, $revision->id, "delete");
             }
         } else {
+            // update entry
             foreach($new_model->attributesToArray() as $column_name => $column_value) {
                 if($column_value != $this->old_model->attributesToArray()[$column_name]) {
                     $this->save_revision_entry($column_name, $column_value, $revision->id, "update");

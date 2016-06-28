@@ -247,7 +247,7 @@ Calculate width of row in answers
                     <tbody>
                     @foreach($revisions as $key => $revision)
                         <tr>
-                            <td>{{$revision['creator']}}</td>
+                            <td>CreatorTest</td>
                             <td>{{$revision['summary']}}</td>
                             <td></td>
                             <td></td>

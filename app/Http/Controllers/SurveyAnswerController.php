@@ -66,7 +66,7 @@ class SurveyAnswerController extends Controller
         }
         $survey_answer->order = 0; // example, might be better to order bei updated_at?
         $survey_answer->save();
-        $revision_answer->save($survey_answer, "Antwort gespeichert");
+        $revision_answer->save($survey_answer);
 
         $questions = $survey->getQuestions;
 
@@ -97,7 +97,7 @@ class SurveyAnswerController extends Controller
                     break;
             }
             $survey_answer_cell->save();
-            $revision_cell->save($survey_answer_cell, "Teilantwort gespeichert");
+            $revision_cell->save($survey_answer_cell);
         }
         Session::put('message', 'Erfolgreich abgestimmt!');
         Session::put('msgType', 'success');
@@ -129,12 +129,12 @@ class SurveyAnswerController extends Controller
             //delete the AnswerCells
             $revision_cell = new Revision($cell);
             $cell->delete();
-            $revision_cell->save($cell, "Teilantwort gelöscht");
+            $revision_cell->save($cell);
         }
 
         // Now delete the SurveyAnswer itself
         $answer->delete();
-        $revision_answer->save($answer, "Antwort gelöscht");
+        $revision_answer->save($answer);
 
         Session::put('message', 'Erfolgreich gelöscht!' );
         Session::put('msgType', 'success');
