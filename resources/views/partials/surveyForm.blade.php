@@ -435,6 +435,9 @@
                                   @if($survey->show_results_after_voting) checked @endif> Ergebnisse sind erst nach dem Ausfüllen sichtbar </label>
                 </div>
             </div>
+
+            <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
+            
             <div class="form-group">
                 <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
                     <label for="password" class="control-label col-md-5 col-sm-5 col-xs-12">Passwort zum Eintragen:</label>
