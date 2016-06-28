@@ -1,7 +1,7 @@
 {{-- Needs variables: $surveys, $events --}}
 
 @foreach($surveys as $survey)
-    @if(!Session::has('userId'))
+    {{--@if(!Session::has('userId'))--}}
         {{-- show only a placeholder for private events --}}
         @if($survey->evnt_is_private)
             <div class="cal-event dark-grey">
@@ -19,7 +19,7 @@
 		            </div>
                 @endif
         @endif
-	@endif
+	{{--@endif --}}
 @endforeach
 
 @foreach($events as $clubEvent)
