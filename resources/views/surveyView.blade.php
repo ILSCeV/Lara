@@ -134,30 +134,6 @@ $userCanEditDueToRole
                                 <td class="emptyNoButtons ">
                                 </td>
                                 @endif
-                                @if($userId == $answer->creator_id OR $userCanEditDueToRole)
-                                        <!--Edid Delete Buttons
-                            <td class="displayMobile ">
-                                <a href="#"
-                                   class="editButton btn btn-primary displayMobile"
-                                   data-toggle="tooltip"
-                                   data-placement="bottom">
-                                    <i class="fa fa-pencil"></i>
-                                </a>
-                                <a href=""
-                                   class="btn btn-default displayMobile btn-trash"
-                                   data-toggle="tooltip"
-                                   data-placement="bottom"
-                                   data-method="delete"
-                                   data-token="{{csrf_token()}}"
-                                   rel="nofollow"
-                                   data-confirm="Möchtest Du diese Antwort wirklich löschen?">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
-                            @else
-                                        <td class="emptyNoButtons">
-                                        </td>
-                                    @endif -->
                     </tr>
                 @endforeach
                 </tbody>

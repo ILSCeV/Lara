@@ -26,6 +26,8 @@
     }
 }
 
+
+
 /* Description at the top */
 .panel {
     margin: 15px;
@@ -238,10 +240,13 @@ only screen and (max-width: 760px),
     }
 
     .tdButtons{
-        position: static;
-        right: auto !important;
-        width: 40vw;
-        height: auto;
+        display: inline-block !important;
+        position: static !important;
+        margin: 0px;
+    }
+
+    .tdButtons a:first-child{
+        margin-right: 5px;
     }
 
     .btn{
@@ -250,15 +255,18 @@ only screen and (max-width: 760px),
     }
 }
 
-.tdButtons{
-    position: absolute;
-    padding: 0 !important;
-    width:5em;
-    top:auto;
-    float: right;
-    border-right: 0px none black;
-    border-top-width:3px; /*only relevant for first row*/
-    margin-top:-3px; /*compensate for top border*/
+/* Desktop */
+@media screen and (min-width: 978px) {
+    .tdButtons{
+        position: absolute;
+        padding: 0 !important;
+        width:5em;
+        top:auto;
+        float: right;
+        border-right: 0px none black;
+        border-top-width:3px; /*only relevant for first row*/
+        margin-top:-3px; /*compensate for top border*/
+    }
 }
 
 tr .panel{
