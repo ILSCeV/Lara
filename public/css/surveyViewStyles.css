@@ -110,7 +110,7 @@ td, th{
 }
 
 .table-responsive {
-    width: 85%;
+    width: 90%;
     overflow-x: scroll;
     overflow-y: hidden;
 }
@@ -269,6 +269,11 @@ only screen and (max-width: 760px),
 
 tr .panel{
     margin-right: auto;
+}
+
+#panelNoShadow{
+    -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0.05);
+    box-shadow: 0 0px 0px rgba(0,0,0,0.05);
 }
 
 .tdButtons:after{content: '';}

@@ -44,7 +44,7 @@ $userCanEditDueToRole
 
     <br>
     <br>
-    <div class="panel">
+    <div class="panel" id="panelNoShadow">
         <div id="change-history" class="table-responsive">
             <table class="table table-striped table-bordered table-condensed table-responsive">
                 <thead>
@@ -79,7 +79,7 @@ $userCanEditDueToRole
                             @endforeach
                             @if($userId == $answer->creator_id OR $userCanEditDueToRole)
                                     <!--Edid Delete Buttons-->
-                            <td class="tdButtons panel">
+                            <td class="tdButtons panel" id="panelNoShadow" >
                                 <a href="#"
                                    class="editButton btn btn-primary "
                                    data-toggle="tooltip"
