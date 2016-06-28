@@ -106,6 +106,8 @@ $userCanEditDueToRole
 
     <div class="panel" id="panelNoShadow">
         <div id="change-history" class="table-responsive">
+            <div class="clubToQuestion">
+            <div class="nameToQuestion">
             <table class="table table-striped table-bordered table-condensed table-responsive">
                 <thead>
                 <tr>
@@ -123,11 +125,30 @@ $userCanEditDueToRole
                 </thead>
                 <tbody>
                 <tr>
-                    <td>
-                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'mein Name', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                    <td class="dropdown" style="position: absolute; overflow: visible">
+                        {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'newName', 'placeholder' => 'mein Name', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                        <ul class="dropdown-menu dropdown-username" style="position: absolute;">
+                        <li id="yourself">
+                            <a href="javascript:void(0);"
+                               onClick="document.getElementById('newName').value='{{Session::get('userName')}}';"
+                               {{--document.getElementById('club{{ ''. $testid }}').value='{{Session::get('userClub')}}';--}}
+                               {{--document.getElementById('ldapId{{ ''. $testid }}').value='{{Session::get('userId')}}'--}}
+                               onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
+                               document.getElementById('club{{ '' }}').value='{{Session::get('userClub')}}';
+                               document.getElementById('ldapId{{ '' }}').value='{{Session::get('userId')}}'">
+                                {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
+                                <b>Ich mach's!</b>
+                            </a>
+                        </li>
+                        </ul>
                     </td>
                     <td>
-                        {!! Form::text('club', null, ['class' => 'form-control', 'placeholder' => 'mein Club', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                        <div class="dropdown" style="position: absolute; overflow: visible">
+                            <div class="btn-group col-xs-12 col-md-12 no-padding">
+                            {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                            </div>
+                        <ul class="dropdown-menu dropdown-club" style="position: absolute;"></ul>
+                        </div>
                     </td>
                     @foreach($questions as $key => $question)
                         <td class="question">
@@ -240,8 +261,10 @@ $userCanEditDueToRole
                                     <!-- End of evaluation -->
                 </tbody>
             </table>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
 
 
