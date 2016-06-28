@@ -292,4 +292,9 @@ tr .panel{
 .thAboveButtons{
 
 }
+@media screen and (max-width: 978px) {
+    #noMarginMobile {
+        margin-left: 0;
+    }
+}
 

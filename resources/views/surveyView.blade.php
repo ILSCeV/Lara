@@ -45,7 +45,6 @@ $userCanEditDueToRole
 
             @if($question->is_required == 1)
                                 *
-
         @endif
         @endforeach
 
@@ -159,7 +158,7 @@ $userCanEditDueToRole
                     <td class="tdButtons " id="panelNoShadow">
                         {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;']) !!}
                         --}}
-                        <button type="submit" class="btn btn-primary btn-margin" style="display: inline-block;"><i class="fa fa-floppy-o"></i></button>
+                        <button type="submit" class="btn btn-primary btn-margin" id="noMarginMobile" style="display: inline-block;"><i class="fa fa-floppy-o"></i></button>
                         {!! Form::close() !!}
                     </td>
                 </tr>
@@ -188,7 +187,7 @@ $userCanEditDueToRole
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <a href="{{$survey->id}}/answer/{{$answer->id}}"
-                                   class="btn btn-default "
+                                   class="btn btn-default deleteRow"
                                    data-toggle="tooltip"
                                    data-placement="bottom"
                                    data-method="delete"
