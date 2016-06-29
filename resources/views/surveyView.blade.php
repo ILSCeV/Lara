@@ -235,7 +235,13 @@ $userCanEditDueToRole
                 @foreach($answers as $key => $answer)
                     <tr>
                         <td>{{$answer->name}}</td>
-                        <td>{{$answer->club}}</td>
+                        <td>
+                            @if(!empty($answer->club))
+                                {{$answer->club}}
+                            @else
+                                kein Club
+                            @endif
+                        </td>
                         @foreach($answer->getAnswerCells as $cell)
                             <td class="singleAnswer">
                                 {{$cell->answer}}
