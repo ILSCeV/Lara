@@ -165,25 +165,26 @@ $userCanEditDueToRole
                 <tbody>
                 <tr>
                     <td id="dropdown_name" class="dropdown">
-                        {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'newName', 'placeholder' => 'mein Name', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
-                        <ul id="dropdown-menu_name" class="dropdown-menu dropdown-username">
-                        <li id="yourself">
-                            <a href="javascript:void(0);"
-                               onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
-                               {{--document.getElementById('club{{ ''. $testid }}').value='{{Session::get('userClub')}}';--}}
-                               {{--document.getElementById('ldapId{{ ''. $testid }}').value='{{Session::get('userId')}}'--}}
-                               document.getElementById('club{{ '' }}').value='{{Session::get('userClub')}}';
-                               document.getElementById('ldapId{{ '' }}').value='{{Session::get('userId')}}'">
-                                {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
-                                <b>Eigene Antwort</b>
-                            </a>
-                        </li>
-                        </ul>
+                        {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'newName', 'placeholder' => 'mein Name', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                        @if(!empty($userId))
+                            <ul id="dropdown-menu_name" class="dropdown-menu dropdown-username">
+                                <li id="yourself">
+                                    <a href="javascript:void(0);"
+                                       onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
+                                               document.getElementById('club').value='{{Session::get('userClub')}}';
+                                               document.getElementById('ldapId').value='{{Session::get('userId')}}'">
+                                        {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
+                                        <b>Eigene Antwort</b>
+                                    </a>
+                                </li>
+                            </ul>
+                            {!! Form::hidden('ldapId', null, ['id' => 'ldapId']) !!}
+                        @endif
                     </td>
                     <td>
                         <div id="dropdown_club" class="dropdown">
                             <div class="btn-group no-padding">
-                            {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                            {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                             </div>
                         <ul id="dropdown-menu_club" class="dropdown-menu dropdown-club"></ul>
                         </div>
@@ -234,19 +235,13 @@ $userCanEditDueToRole
                 @foreach($answers as $key => $answer)
                     <tr>
                         <td>{{$answer->name}}</td>
-                        <td>
-                            @if($club = $clubs->find($answer->club_id))
-                                {{$club->clb_title}}
-                            @else
-                                kein Club
-                            @endif
-                        </td>
+                        <td>{{$answer->club}}</td>
                         @foreach($answer->getAnswerCells as $cell)
                             <td class="singleAnswer">
                                 {{$cell->answer}}
                             </td>
                             @endforeach
-                            @if($userId == $answer->creator_id OR $userCanEditDueToRole)
+                            @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
                                     <!--Edid Delete Buttons-->
                             <td class="tdButtons panel" id="panelNoShadow">
                                 <a href="#"
