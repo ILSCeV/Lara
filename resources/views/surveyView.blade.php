@@ -104,10 +104,10 @@ $userCanEditDueToRole
         @endif
     </div>
 
+    <div class="clubToQuestion">
+    <div class="nameToQuestion">
     <div class="panel" id="panelNoShadow">
         <div id="change-history" class="table-responsive">
-            <div class="clubToQuestion">
-            <div class="nameToQuestion">
             <table class="table table-striped table-bordered table-condensed table-responsive">
                 <thead>
                 <tr>
@@ -144,7 +144,7 @@ $userCanEditDueToRole
                     </td>
                     <td>
                         <div class="dropdown" style="position: absolute; overflow: visible">
-                            <div class="btn-group col-xs-12 col-md-12 no-padding">
+                            <div class="btn-group no-padding">
                             {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                             </div>
                         <ul class="dropdown-menu dropdown-club" style="position: absolute;"></ul>
