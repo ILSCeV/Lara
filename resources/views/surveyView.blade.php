@@ -16,6 +16,28 @@ $userCanEditDueToRole
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
     <script src="js/surveyView-scripts.js"></script>
     <style>
+
+        #dropdown_name {
+            position: absolute;
+            overflow: visible;
+        }
+
+        #dropdown-menu_name {
+            position: absolute;
+            top: 44px;
+            left: 4%;
+            right: 4%;
+        }
+
+        #dropdown_club {
+            position: absolute;
+            overflow: visible;
+        }
+
+        #dropdown-menu_club {
+            position: absolute;
+        }
+
         /*
     Label the data
     */
@@ -31,6 +53,23 @@ $userCanEditDueToRole
             #change-history td:nth-of-type(2):before {
                 content: "Club";
                 float: left;
+            }
+
+            #dropdown_name {
+                position: absolute;
+                overflow: visible;
+            }
+
+            #dropdown-menu_name {
+                position: absolute;
+                top: 44px;
+                left: 50%;
+                right: 50%;
+            }
+
+            #dropdown_club {
+                position: relative;
+                overflow: visible;
             }
 
             <?php $count = 2; ?>
@@ -54,8 +93,6 @@ $userCanEditDueToRole
 
         @endif
         @endforeach
-
-
 
 
 
@@ -125,9 +162,9 @@ $userCanEditDueToRole
                 </thead>
                 <tbody>
                 <tr>
-                    <td class="dropdown" style="position: absolute; overflow: visible">
+                    <td id="dropdown_name" class="dropdown">
                         {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'newName', 'placeholder' => 'mein Name', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
-                        <ul class="dropdown-menu dropdown-username" style="position: absolute;">
+                        <ul id="dropdown-menu_name" class="dropdown-menu dropdown-username">
                         <li id="yourself">
                             <a href="javascript:void(0);"
                                onClick="document.getElementById('newName').value='{{Session::get('userName')}}';"
@@ -143,11 +180,11 @@ $userCanEditDueToRole
                         </ul>
                     </td>
                     <td>
-                        <div class="dropdown" style="position: absolute; overflow: visible">
+                        <div id="dropdown_club" class="dropdown">
                             <div class="btn-group no-padding">
                             {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                             </div>
-                        <ul class="dropdown-menu dropdown-club" style="position: absolute;"></ul>
+                        <ul id="dropdown-menu_club" class="dropdown-menu dropdown-club"></ul>
                         </div>
                     </td>
                     @foreach($questions as $key => $question)
