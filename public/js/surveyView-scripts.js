@@ -74,7 +74,7 @@ $('.editButton').click(function() {
 // AUTOCOMPLETE USERNAMES SURVEY //
 ///////////////////////////////////
 
-$(document).ready(function() {
+jQuery( document ).ready( function( $ ) {
 // open username dropdown on input selection and show only "I'll do it!" button at the beginning
     $('.nameToQuestion').find('input').on('focus', function () {
         // remove all other dropdowns
@@ -89,7 +89,7 @@ $(document).ready(function() {
             $(document).find('.dropdown-username').hide();
         }
     });
-});
+
 
 
 /////////////////////////
@@ -170,6 +170,8 @@ $( '.clubToQuestion' ).find('input').on( 'input', function() {
         },
     });
 } );
+
+});
 
 
 
