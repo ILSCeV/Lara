@@ -1,16 +1,32 @@
 &nbsp;
-<div class="panel panel-warning">
-<div class="panel panel-heading calendar-public-info white-text">
-		<h4 class="panel-title">
-			<a href="{{ URL::route('survey.show', $survey->id) }}">
-				<i class="fa fa-bar-chart-o white-text"></i>&nbsp;
-				<span class="name">{{ $survey->title }}</span>
-			</a>
-		</h4>
+@if(!Session::has('userId'))
+	{{-- show only a placeholder if not logged in --}}
+    <div class="panel panel-warning">
+        <div class="panel dark-grey white-text">
+			<h4 class="panel-title">
+					<i class="fa fa-bar-chart-o white-text"></i>
+					<span class="name">Interne Umfrage</span>
+			</h4>
 
-	<i class="fa fa-times" aria-hidden="true"></i>
-		{{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->deadline))) }}
-</div>
+			<i class="fa fa-times" aria-hidden="true"></i>
+			{{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->deadline))) }}
+		</div>
+		<div class="panel panel-body no-padding">
+            </div>
+        </div>
+@else
+	<div class="panel panel-warning">
+	<div class="panel panel-heading calendar-public-info white-text">
+			<h4 class="panel-title">
+				<a href="{{ URL::route('survey.show', $survey->id) }}">
+					<i class="fa fa-bar-chart-o white-text"></i>&nbsp;
+					<span class="name">{{ $survey->title }}</span>
+				</a>
+			</h4>
+
+		<i class="fa fa-times" aria-hidden="true"></i>
+			{{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->deadline))) }}
+	</div>
 	<div class="panel panel-body no-padding">
 
 
@@ -23,5 +39,7 @@
 		<small><a href="#" class="hide-event">Ausblenden</a></small>
 	</div>
 	</div>
+@endif
+
 @endif
 </div>
