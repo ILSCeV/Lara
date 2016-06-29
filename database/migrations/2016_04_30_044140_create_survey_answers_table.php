@@ -15,10 +15,12 @@ class CreateSurveyAnswersTable extends Migration
     {
         Schema::create('survey_answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('creator_id')->references('id')->on('persons')->unsigned()->nullable();
+            // not able due to no corresponding users and ldap_id
+//            $table->integer('creator_id')->references('prsn_ldap_id')->on('persons')->unsigned()->nullable();
+            $table->integer('creator_id')->nullable();
             $table->integer('survey_id')->references('id')->on('surveys')->unsigned();
             $table->string('name', 255)->nullable()->default(NULL);
-            $table->integer('club_id')->references('id')->on('clubs')->unsigned()->nullable();
+            $table->string('club')->nullable();
             $table->integer('order')->unsigned();
             $table->softDeletes();
             $table->timestamps();

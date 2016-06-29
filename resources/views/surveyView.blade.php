@@ -16,6 +16,28 @@ $userCanEditDueToRole
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
     <script src="js/surveyView-scripts.js"></script>
     <style>
+
+        #dropdown_name {
+            position: absolute;
+            overflow: visible;
+        }
+
+        #dropdown-menu_name {
+            position: absolute;
+            top: 44px;
+            left: 4%;
+            right: 4%;
+        }
+
+        #dropdown_club {
+            position: absolute;
+            overflow: visible;
+        }
+
+        #dropdown-menu_club {
+            position: absolute;
+        }
+
         /*
     Label the data
     */
@@ -31,6 +53,23 @@ $userCanEditDueToRole
             #survey-answer td:nth-of-type(2):before {
                 content: "Club";
                 float: left;
+            }
+
+            #dropdown_name {
+                position: absolute;
+                overflow: visible;
+            }
+
+            #dropdown-menu_name {
+                position: absolute;
+                top: 44px;
+                left: 50%;
+                right: 50%;
+            }
+
+            #dropdown_club {
+                position: relative;
+                overflow: visible;
             }
 
             <?php $count = 2; ?>
@@ -59,8 +98,6 @@ $userCanEditDueToRole
 
 
 
-
-
         }
     </style>
 @stop
@@ -83,7 +120,9 @@ $userCanEditDueToRole
             <br>
             Die Umfrage läuft noch bis: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} um
             {{ date("H:i", strtotime($survey->deadline)) }}.
-            <br>Es haben bereits {{count($answers)}} Personen abgestimmt.
+            <br>@if(count($answers) === 0) Es hat noch keine Person abgestimmt. @endif
+                @if(count($answers) === 1) Es hat bereits eine Person abgestimmt. @endif
+                @if(count($answers) > 1) Es haben bereits {{count($answers)}} Personen abgestimmt. @endif
         </div>
     </div>
 
@@ -104,6 +143,8 @@ $userCanEditDueToRole
         @endif
     </div>
 
+    <div class="clubToQuestion">
+    <div class="nameToQuestion">
     <div class="panel" id="panelNoShadow">
         <div id="survey-answer" class="table-responsive-custom">
             <table class="table table-striped table-bordered table-condensed table-responsive-custom">
@@ -123,11 +164,31 @@ $userCanEditDueToRole
                 </thead>
                 <tbody>
                 <tr>
-                    <td>
-                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'mein Name', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                    <td id="dropdown_name" class="dropdown">
+                        {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'newName', 'placeholder' => 'mein Name', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                        @if(!empty($userId))
+                            <ul id="dropdown-menu_name" class="dropdown-menu dropdown-username">
+                                <li id="yourself">
+                                    <a href="javascript:void(0);"
+                                       onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
+                                               document.getElementById('club').value='{{Session::get('userClub')}}';
+                                               document.getElementById('ldapId').value='{{Session::get('userId')}}'">
+                                        {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
+                                        <b>Eigene Antwort</b>
+                                    </a>
+                                </li>
+                            </ul>
+                            {!! Form::hidden('ldapId', null, ['id' => 'ldapId']) !!}
+                        @endif
                     </td>
                     <td>
-                        {!! Form::text('club', null, ['class' => 'form-control', 'placeholder' => 'mein Club', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                        {{--autocomplete for clubs is not working right now--}}
+                        <div id="dropdown_club" class="dropdown">
+                            <div class="btn-group no-padding">
+                            {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                            </div>
+                        <ul id="dropdown-menu_club" class="dropdown-menu dropdown-club"></ul>
+                        </div>
                     </td>
                     @foreach($questions as $key => $question)
                         <td class="question">
@@ -176,8 +237,8 @@ $userCanEditDueToRole
                     <tr>
                         <td>{{$answer->name}}</td>
                         <td>
-                            @if($club = $clubs->find($answer->club_id))
-                                {{$club->clb_title}}
+                            @if(!empty($answer->club))
+                                {{$answer->club}}
                             @else
                                 kein Club
                             @endif
@@ -187,7 +248,7 @@ $userCanEditDueToRole
                                 {{$cell->answer}}
                             </td>
                             @endforeach
-                            @if($userId == $answer->creator_id OR $userCanEditDueToRole)
+                            @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
                                     <!--Edid Delete Buttons-->
                             <td class="tdButtons panel" id="panelNoShadow">
                                 <a href="#"
@@ -249,8 +310,10 @@ $userCanEditDueToRole
                                     <!-- End of evaluation -->
                 </tbody>
             </table>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
 {{---------------------------------------------change-history-----------------------------------------------------}}
         <br>

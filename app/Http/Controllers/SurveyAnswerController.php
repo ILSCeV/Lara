@@ -33,7 +33,7 @@ class SurveyAnswerController extends Controller
         // only Ersteller/Admin/Marketing/Clubleitung
         $this->middleware('creator:Lara\SurveyAnswer,answer', ['only' => ['update', 'destroy']]);
         // after deadline, only Ersteller/Admin/Marketing/Clubleitung
-        $this->middleware('deadlineSurvey', ['only' => ['update', 'destroy']]);
+        $this->middleware('deadlineSurvey', ['only' => ['store', 'update', 'destroy']]);
     }
     
     /**
@@ -43,7 +43,6 @@ class SurveyAnswerController extends Controller
      */
     public function store($surveyid, Request $input)
     {
-//        var_dump($input->answers);
         $survey = Survey::findOrFail($surveyid);
 
         //check if survey needs a password and validate hashes
@@ -53,17 +52,14 @@ class SurveyAnswerController extends Controller
             Session::put('msgType', 'danger');
             return Redirect::action('SurveyController@show', array('id' => $survey->id));
         }
-
-        $club = Club::where('clb_title', $input->club)->first();
         
         $survey_answer = new SurveyAnswer();
-        $revision_answer = new Revision($survey_answer);
-        $survey_answer->creator_id = Session::get('userId');
+		$revision_answer = new Revision($survey_answer);
+        // prevent guestentries with ldapId
+        (Session::has('userId')) ? ($survey_answer->creator_id = $input->ldapId) : ($survey_answer->creator_id = null);
         $survey_answer->survey_id = $surveyid;
         $survey_answer->name = $input->name;
-        if(!empty($club)) {
-            $survey_answer->club_id = $club->id;
-        }
+        $survey_answer->club = $input->club;
         $survey_answer->order = 0; // example, might be better to order bei updated_at?
         $survey_answer->save();
         $revision_answer->save($survey_answer);
