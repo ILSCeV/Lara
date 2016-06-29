@@ -1,14 +1,21 @@
 {{-- Needs variables: $surveys, $events --}}
 
 @foreach($surveys as $survey)
-    @if(date("Y-m-d", strtotime($survey->deadline)) === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
-		<div class="cal-event dark-grey calendar-internal-info">
+	@if(date("Y-m-d", strtotime($survey->deadline)) === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
+		@if(!Session::has('userId'))
+			{{-- show only a placeholder if not logged in --}}
+			<div class="cal-event dark-grey">
+				<i class="fa fa-bar-chart-o white-text"></i>
+				<span class="white-text">Interne Umfrage</span>
+			</div>
+		@else
+			<div class="cal-event dark-grey calendar-internal-info">
 			<i class="fa fa-bar-chart-o white-text"></i>
 			<a href="{{ URL::route('survey.show', $survey->id) }}">
 				<span  class="white-text"> {{ $survey->title }} </span>
 			</a>
-		</div>
-
+			</div>
+		@endif
 	@endif
 @endforeach
 
