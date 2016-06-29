@@ -167,10 +167,9 @@ $userCanEditDueToRole
                         <ul id="dropdown-menu_name" class="dropdown-menu dropdown-username">
                         <li id="yourself">
                             <a href="javascript:void(0);"
-                               onClick="document.getElementById('newName').value='{{Session::get('userName')}}';"
+                               onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
                                {{--document.getElementById('club{{ ''. $testid }}').value='{{Session::get('userClub')}}';--}}
                                {{--document.getElementById('ldapId{{ ''. $testid }}').value='{{Session::get('userId')}}'--}}
-                               onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
                                document.getElementById('club{{ '' }}').value='{{Session::get('userClub')}}';
                                document.getElementById('ldapId{{ '' }}').value='{{Session::get('userId')}}'">
                                 {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
