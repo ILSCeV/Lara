@@ -120,7 +120,9 @@ $userCanEditDueToRole
             <br>
             Die Umfrage läuft noch bis: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} um
             {{ date("H:i", strtotime($survey->deadline)) }}.
-            <br>Es haben bereits {{count($answers)}} Personen abgestimmt.
+            <br>@if(count($answers) === 0) Es hat noch keine Person abgestimmt. @endif
+                @if(count($answers) === 1) Es hat bereits eine Person abgestimmt. @endif
+                @if(count($answers) > 1) Es haben bereits {{count($answers)}} Personen abgestimmt. @endif
         </div>
     </div>
 
