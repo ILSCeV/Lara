@@ -102,6 +102,7 @@
 						@else
 							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
 						@endif
+								<div>
 							@include('partials.weekCellProtected')
 						</div>
 
@@ -150,9 +151,13 @@
 
 			@endforeach
 
+			</div>
 		</div>
+	</div>
+
 	@else
 		<br>
+								</div>
 		<div class="panel">
 			<div class="panel-heading">
 				<h5>Keine Veranstaltungen diese Woche</h5>

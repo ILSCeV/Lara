@@ -2,7 +2,7 @@
 @if(!Session::has('userId'))
 	{{-- show only a placeholder if not logged in --}}
     <div class="panel panel-warning">
-        <div class="panel dark-grey white-text">
+        <div class="panel dark-grey white-text" style="padding: 15px 15px 8px 15px;">
 			<h4 class="panel-title">
 					<i class="fa fa-bar-chart-o white-text"></i>
 					<span class="name">Interne Umfrage</span>
