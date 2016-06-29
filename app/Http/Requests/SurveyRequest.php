@@ -30,9 +30,6 @@ class SurveyRequest extends Request
             'description' => 'string|max:1500',
             'deadlineDate' => "required|date_format:Y-m-d|after:.$today_date.",
             'deadlineTime' => "required|date_format:H:i:s",
-            'is_private' => 'in:null,1',
-            'is_anonymous' => 'in:null,1',
-            'show_results_after_voting' => 'in:null,1',
             'password' => 'string|confirmed',
 
             'questions' => 'array|required',

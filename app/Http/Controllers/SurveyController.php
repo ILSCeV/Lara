@@ -349,9 +349,9 @@ class SurveyController extends Controller
 
         //format deadline for database
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate.$request->deadlineTime));
-        $survey->is_anonymous = (bool) $request->is_anonymous;
-        $survey->is_private = (bool) $request->is_private;
-        $survey->show_results_after_voting = (bool) $request->show_results_after_voting;
+        $survey->is_anonymous = isset($request->is_anonymous);
+        $survey->is_private = isset($request->is_private);
+        $survey->show_results_after_voting = isset($request->show_results_after_voting);
 
         //delete password if user changes both to delete
         if ($request->password == "delete" AND $request->password_confirmation == "delete")
