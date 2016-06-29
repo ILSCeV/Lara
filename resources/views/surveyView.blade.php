@@ -230,9 +230,8 @@ $userCanEditDueToRole
                             <tr id="evaluation">
                                 <td class="" id="whiteBackgroundTrasparent" ></td>
                                 <td class="" id="whiteBackgroundTrasparent"></td>
-                                @foreach($answer->getAnswerCells as $cell)
+                                @foreach($evaluation as $eva)
                                     <td class="mobileMarginTop" id="whiteBackground">
-                                        @foreach($evaluation as $eva)
                                             <div class="col-md-4 evaluationBox">
                                                 @if(empty($eva))
                                                     Freitext
@@ -241,7 +240,6 @@ $userCanEditDueToRole
                                                     <div class="text-left">{{$key}}: {{$evacount}} Personen</div>
                                                 @endforeach
                                             </div>
-                                        @endforeach
                                     </td>
                                 @endforeach
                             </tr>
