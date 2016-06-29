@@ -40,15 +40,6 @@ $('.editButton').click(function() {
     $("i", this).toggleClass("fa-pencil fa-floppy-o");
 });
 
-//scrolls both divs with 1 scrollbar at the same time
-$('#bottomPanel').on('scroll', function () {
-
-    $('#topPanel').scrollLeft($(this).scrollLeft());
-});
-
-$('#topPanel').on('scroll', function () {
-    $('#bottomPanel').scrollLeft($(this).scrollLeft());
-});
 
 
 

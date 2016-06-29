@@ -232,12 +232,12 @@ $userCanEditDueToRole
                                 <td class="" id="whiteBackgroundTrasparent"></td>
                                 @foreach($evaluation as $eva)
                                     <td class="mobileMarginTop" id="whiteBackground">
-                                            <div class="col-md-4 evaluationBox">
+                                            <div>
                                                 @if(empty($eva))
                                                     Freitext
                                                 @endif
                                                 @foreach($eva as $key => $evacount)
-                                                    <div class="text-left">{{$key}}: {{$evacount}} Personen</div>
+                                                    <div>{{$key}}: {{$evacount}} Personen</div>
                                                 @endforeach
                                             </div>
                                     </td>
