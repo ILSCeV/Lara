@@ -235,7 +235,10 @@ $userCanEditDueToRole
                 </tr>
                 @foreach($answers as $key => $answer)
                     <tr>
-                        <td>{{$answer->name}}</td>
+                        <td>
+                            @include('partials.surveyAnswerStatus')
+                            {{$answer->name}}
+                        </td>
                         <td>
                             @if(!empty($answer->club))
                                 {{$answer->club}}
