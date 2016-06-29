@@ -173,7 +173,7 @@ $userCanEditDueToRole
                                document.getElementById('club{{ '' }}').value='{{Session::get('userClub')}}';
                                document.getElementById('ldapId{{ '' }}').value='{{Session::get('userId')}}'">
                                 {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
-                                <b>Ich mach's!</b>
+                                <b>Eigene Antwort</b>
                             </a>
                         </li>
                         </ul>
