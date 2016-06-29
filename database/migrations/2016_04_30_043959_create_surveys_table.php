@@ -22,6 +22,7 @@ class CreateSurveysTable extends Migration
             $table->boolean('is_private');
             $table->boolean('is_anonymous');
             $table->boolean('show_results_after_voting');
+            $table->softDeletes();
             $table->timestamps();
 
         });

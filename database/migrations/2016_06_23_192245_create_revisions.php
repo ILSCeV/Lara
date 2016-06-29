@@ -1,10 +1,9 @@
-
 <?php
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSurveyAnswersTable extends Migration
+class CreateRevisions extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +12,14 @@ class CreateSurveyAnswersTable extends Migration
      */
     public function up()
     {
-        Schema::create('survey_answers', function (Blueprint $table) {
+        Schema::create('revisions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('creator_id')->references('id')->on('persons')->unsigned()->nullable();
-            $table->integer('survey_id')->references('id')->on('surveys')->unsigned();
-            $table->string('name', 255)->nullable()->default(NULL);
-            $table->integer('club_id')->references('id')->on('clubs')->unsigned()->nullable();
-            $table->integer('order')->unsigned();
-            $table->softDeletes();
+            $table->string('summary', 255);
+            $table->string('ip', 255);
+            $table->integer('object_id')->unsigned();
+            $table->string('object_name', 255);
+
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateSurveyAnswersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('survey_answers');
+        Schema::drop('revisions');
     }
 }

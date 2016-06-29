@@ -49,7 +49,7 @@
 
 
 /* Actual Survey */
-#change-history{
+#survey-answer{
     background-color: transparent;
 }
 
@@ -136,26 +136,26 @@ td, th{
 /*
 Generic Styling, for Desktops/Laptops
 */
-#change-history table {
+#survey-answer table {
     width: 100%;
     border-collapse: collapse;
 }
 /* Zebra striping*/
 @media screen and (max-width: 978px) {
-    #change-history tr:nth-of-type(odd) {
+    #survey-answer tr:nth-of-type(odd) {
         background: #f9f9f9;
     }
 }
 
 /*
-#change-history th {
+#survey-answer th {
     background: #333;
     color: white;
     font-weight: bold;
 }
 */
 
-#change-history td, #change-history th {
+#survey-answer td, #survey-answer th {
     padding: 6px;
     border: 1px solid #eeeeee;
     text-align: left;
@@ -169,7 +169,7 @@ and also iPads specifically.
 @media
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
-    #change-history tr:nth-of-type(even){
+    #survey-answer tr:nth-of-type(even){
         background-color: white;
     }
 
@@ -179,38 +179,38 @@ only screen and (max-width: 760px),
     }
 
     /* Force table to not be like tables anymore */
-    #change-history table, #change-history thead, #change-history tbody, #change-history th, #change-history td, #change-history tr {
+    #survey-answer table, #survey-answer thead, #survey-answer tbody, #survey-answer th, #survey-answer td, #survey-answer tr {
         display: block;
     }
 
     /* Hide table headers (but not display: none;, for accessibility) */
-    #change-history thead tr {
+    #survey-answer thead tr {
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
 
-    #change-history tr { border: 1px solid #eeeeee; }
+    #survey-answer tr { border: 1px solid #eeeeee; }
 
-    #change-history td {
+    #survey-answer td {
         /* Behave  like a "row" */
         border: none;
         position: relative;
         padding-left: 50% !important;
     }
 
-    #change-history tr:nth-of-type(even) td {
+    #survey-answer tr:nth-of-type(even) td {
         border-bottom: 1px solid #eeeeee;
     }
 
-    #change-history tr:nth-of-type(odd) td {
+    #survey-answer tr:nth-of-type(odd) td {
         border-bottom: 1px solid #c0c0c0;
     }
 
 
 
 
-    #change-history td:before {
+    #survey-answer td:before {
         /* Now like a table header */
         position: absolute;
         /* Top/left values mimic padding */

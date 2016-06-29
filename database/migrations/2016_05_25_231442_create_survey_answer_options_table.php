@@ -16,6 +16,7 @@ class CreateSurveyAnswerOptionsTable extends Migration
             $table->increments('id');
             $table->integer('survey_question_id')->references('id')->on('survey_questions')->unsigned();
             $table->string('answer_option', 1500);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -5,6 +5,10 @@ namespace Lara\Http\Controllers;
 use Config;
 use Illuminate\Http\Request;
 use Hash;
+use Lara\Library\Revision;
+use Lara\Person;
+use Lara\RevisionEntry;
+use Lara\SurveyAnswerCell;
 use Session;
 use Redirect;
 use DateTime;
@@ -69,6 +73,7 @@ class SurveyController extends Controller
     {
         
         $survey = new Survey;
+        $revision_survey = new Revision($survey);
         $survey->creator_id = Session::get('userId');
         $survey->title = $request->title;
         //if URL is in the description, convert it to clickable hyperlink
@@ -85,6 +90,7 @@ class SurveyController extends Controller
         }
 
         $survey->save();
+        $revision_survey->save($survey);
 
         $questions = $request->questions;
         $answer_options = $request->answer_options;
@@ -133,20 +139,24 @@ class SurveyController extends Controller
         //make new question model instance, fill it and save it
         foreach($questions as $order => $question){
             $question_db = new SurveyQuestion();
+            $revision_question = new Revision($question_db);
             $question_db->survey_id = $survey->id;
             $question_db->order = $order;
             $question_db->field_type = $questions_type[$order];
             $question_db->is_required = (bool) $required[$order];
             $question_db->question = $question;
             $question_db->save();
+            $revision_question->save($question_db);
 
             //check if question is dropdown question
              if($questions_type[$order] == 3) {
                  foreach($answer_options[$order] as $answer_option) {
                      $answer_option_db = new SurveyAnswerOption();
+                     $revision_option = new Revision($answer_option_db);
                      $answer_option_db->survey_question_id = $question_db->id;
                      $answer_option_db->answer_option = $answer_option;
                      $answer_option_db->save();
+                     $revision_option->save($answer_option_db);
                  }
              }
         }
@@ -164,6 +174,7 @@ class SurveyController extends Controller
     {
         //find SurveyID
         $survey = Survey::findorFail($id);
+        $revision_survey = new Revision($survey);
 
         //find answers and questions that belong to SurveyID
         $questions = $survey->getQuestions;
@@ -172,21 +183,30 @@ class SurveyController extends Controller
         //find AnswerCells belonging to Answer and delete both
         foreach($answers as $answer) {
             foreach($answer->getAnswerCells as $answerCell) {
+                $revision_cell = new Revision($answerCell);
                 $answerCell->delete();
+                $revision_cell->save($answerCell);
             }
+            $revision_answer = new Revision($answer);
             $answer->delete();
+            $revision_answer->save($answer);
         }
 
         //find AnswerOptions belonging to Questions and delete both
         foreach($questions as $question) {
             foreach($question->getAnswerOptions as $answerOption) {
+                $revision_option = new Revision($answerOption);
                 $answerOption->delete();
+                $revision_option->save($answerOption);
             }
+            $revision_question = new Revision($question);
             $question->delete();
+            $revision_question->save($question);
         }
 
         //finally delete survey
         $survey->delete();
+        $revision_survey->save($survey);
         
         //Successmessage and redirect 
         Session::put('message', 'Umfrage gelöscht!' );
@@ -214,11 +234,36 @@ class SurveyController extends Controller
 
         $userId = Session::get('userId');
         $userGroup = Session::get('userGroup');
+		$userStatus = Session::get("userStatus");
 
+
+        $answers_with_trashed_ids = [];
+        $answers_with_trashed = SurveyAnswer::withTrashed()->where('survey_id', $survey->id)->get();
+        foreach($answers_with_trashed as $answer){
+            $answers_with_trashed_ids[] = $answer->id;
+        }
+
+        $answer_cells_with_trashed_ids = [];
+        $answer_cells_with_trashed = SurveyAnswerCell::withTrashed()->whereIn('survey_answer_id', $answers_with_trashed_ids)->get();
+        foreach($answer_cells_with_trashed as $answer_cell) {
+            $answer_cells_with_trashed_ids[] = $answer_cell->id;
+        }
+
+        $revisions_answer = \Lara\Revision::whereIn("object_id", $answers_with_trashed_ids)->where("object_name", "SurveyAnswer")->get();
+        $revisions_cells = \Lara\Revision::whereIn("object_id", $answer_cells_with_trashed_ids)->where("object_name", "SurveyAnswerCell")->get();
+        $revision_objects = $revisions_answer->merge($revisions_cells)->sortByDesc("created_at");
+
+        $revisions = [];
+        $i = 0;
+        foreach($revision_objects as $revision) {
+            $revisions[$i] = $revision->toArray();
+            $revisions[$i]['entries'] = RevisionEntry::where("revision_id", $revision->id)->get()->toArray();
+            $i++;
+        }
+        
         //check if the role of the user allows edit/delete for all  answers
         ($userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung') ? ($userCanEditDueToRole = true) : ($userCanEditDueToRole = false);
 
-        $userStatus = Session::get("userStatus");
 
         //evaluation part
 
@@ -262,7 +307,7 @@ class SurveyController extends Controller
         //todo: make $evaluation[$order][$answer_option->answer_option] a string (casting???)
         
         return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
-            'userGroup', 'userStatus', 'userCanEditDueToRole', 'evaluation'));
+            'userGroup', 'userStatus', 'userCanEditDueToRole', 'evaluation', 'revisions'));
     }
 
     /**
@@ -295,6 +340,7 @@ class SurveyController extends Controller
     {
         //find survey
         $survey = Survey::findOrFail($id);
+        $revision_survey = new Revision($survey);
 
         //edit existing survey
         $survey->title = $request->title;
@@ -320,6 +366,7 @@ class SurveyController extends Controller
         }
 
         $survey->save();
+        $revision_survey->save($survey);
 
         //get questions and answer options as arrays from the input
         $questions_new = $request->questions;
@@ -406,12 +453,18 @@ class SurveyController extends Controller
                 $question = SurveyQuestion::findOrFail($questions_db[$i]->id);
 
                 foreach($question->getAnswerOptions as $answer_option) {
+                    $revision_option = new Revision($answer_option);
                     $answer_option->delete();
+                    $revision_option->save($answer_option);
                 }
                 foreach($question->getAnswerCells as $answer_cell) {
+                    $revision_cell = new Revision($answer_cell);
                     $answer_cell->delete();
+                    $revision_cell->save($answer_cell);
                 }
+                $revision_question = new Revision($question);
                 $question->delete();
+                $revision_question->save($question);
 
                 //delete questions in the arrays
                 unset($questions_db[$i]);
@@ -432,7 +485,9 @@ class SurveyController extends Controller
             if($questions_db[$i]->field_type == 3 and $question_type[$i] != 3){
                 $answer_options = $questions_db[$i]->getAnswerOptions;
                 foreach($answer_options as $answer_option) {
+                    $revision_option = new Revision($answer_option);
                     $answer_option->delete();
+                    $revision_option->save($answer_option);
                 }
             }
 
@@ -440,10 +495,13 @@ class SurveyController extends Controller
             if($questions_db[$i]->field_type != $question_type[$i]){
                 $answer_cells = $questions_db[$i]->getAnswerCells;
                 foreach($answer_cells as $answer_cell) {
+                    $revision_cell = new Revision($answer_cell);
                     $answer_cell->delete();
+                    $revision_cell->save($answer_cell);
                 }
             }
-
+            
+            $revision_question = new Revision($questions_db[$i]);
             $questions_db[$i]->field_type = $question_type[$i];
             $questions_db[$i]->is_required = (bool) $required[$i];
             $questions_db[$i]->order = $i;
@@ -453,6 +511,7 @@ class SurveyController extends Controller
             $questions_db[$i]->survey_id = $survey->id;
 
             $questions_db[$i]->save();
+            $revision_question->save($questions_db[$i]);
         }
 
         for($i = 0; $i < count($questions_db); $i++) {
@@ -486,9 +545,11 @@ class SurveyController extends Controller
         //answer option arrays should have the same length now
         for($i = 0; $i < count($questions_db); $i++) {
             for($j = 0; $j < count($answer_options_db[$i]); $j++) {
+                $revision_option = new Revision($answer_options_db[$i][$j]);
                 $answer_options_db[$i][$j]->survey_question_id = $questions_db[$i]->id;
                 $answer_options_db[$i][$j]->answer_option = $answer_options_new[$i][$j];
                 $answer_options_db[$i][$j]->save();
+                $revision_option->save($answer_options_db[$i][$j]);
             }
         }
 

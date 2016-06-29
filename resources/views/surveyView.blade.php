@@ -23,12 +23,12 @@ $userCanEditDueToRole
         header("Content-Encoding: utf-8");
     ?>
         @media screen and (max-width: 978px) {
-            #change-history td:nth-of-type(1):before {
+            #survey-answer td:nth-of-type(1):before {
                 content: "Name";
                 float: left;
             }
 
-            #change-history td:nth-of-type(2):before {
+            #survey-answer td:nth-of-type(2):before {
                 content: "Club";
                 float: left;
             }
@@ -37,7 +37,7 @@ $userCanEditDueToRole
         @foreach($questions as $question)
         <?php $count += 1; ?>
          @if($question->is_required == 1)
-        #change-history td:nth-of-type({{$count}}):before {
+        #survey-answer td:nth-of-type({{$count}}):before {
                 content: "{{$question->question}} *";
                 float: left;
                 display: inline-block;
@@ -45,7 +45,7 @@ $userCanEditDueToRole
             }
 
             @else
-        #change-history td:nth-of-type({{$count}}):before {
+        #survey-answer td:nth-of-type({{$count}}):before {
                 content: "{{$question->question}}";
                 float: left;
                 display: inline-block;
@@ -105,7 +105,7 @@ $userCanEditDueToRole
     </div>
 
     <div class="panel" id="panelNoShadow">
-        <div id="change-history" class="table-responsive">
+        <div id="survey-answer" class="table-responsive">
             <table class="table table-striped table-bordered table-condensed table-responsive">
                 <thead>
                 <tr>
@@ -208,7 +208,7 @@ $userCanEditDueToRole
                                 </a>
                             </td>
                             @else
-                                <td class="emptyNoButtons ">
+                                <td class="tdButtons panel" id="panelNoShadow">
                                 </td>
                             @endif
                     </tr>
@@ -251,6 +251,77 @@ $userCanEditDueToRole
             </table>
         </div>
     </div>
+
+{{---------------------------------------------change-history-----------------------------------------------------}}
+        <br>
+        <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
+        <a id="show-hide-history" class="text-muted hidden-print" href="#">
+            Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
+        </a>
+
+        <div class="panel hide" id="change-history">
+            <div class=table-responsive>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Wer?</th>
+                        <th>Zusammenfassung</th>
+                        <th>Betroffene Spalte</th>
+                        <th>Alter Wert</th>
+                        <th>Neuer Wert</th>
+                        <th>Wann?</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($revisions as $key => $revision)
+                        @if($key > 0)
+                            @if($revision['created_at'] != $revisions[$key-1]['created_at'])
+                                <tr>
+                                    <td>
+                                        @if(empty($revision['creator_id']))
+                                            Gast
+                                        @else
+                                            {{$revision['creator_id']}}
+                                        @endif
+                                    </td>
+                                    <td>{{$revision['summary']}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{$revision['created_at']}}</td>
+                                </tr>
+                            @endif
+                        @else
+                            <tr>
+                                <td>
+                                    @if(empty($revision['creator_id']))
+                                        Gast
+                                    @else
+                                        {{$revision['creator_id']}}
+                                    @endif
+                                </td>
+                                <td>{{$revision['summary']}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{$revision['created_at']}}</td>
+                            </tr>
+                        @endif
+                            @foreach($revision['entries'] as $revision_entry)
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{$revision_entry['changed_column_name']}}</td>
+                                    <td>{{$revision_entry['old_value']}}</td>
+                                    <td>{{$revision_entry['new_value']}}</td>
+                                    <td></td>
+                                </tr>
+                            @endforeach
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
 
 
