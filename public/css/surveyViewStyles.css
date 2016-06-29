@@ -126,7 +126,7 @@ td, th{
     white-space:nowrap;
 }
 
-.table-responsive {
+.table-responsive-custom {
     width: 90%;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -174,7 +174,7 @@ only screen and (max-width: 760px),
     }
 
 
-    .table-responsive {
+    .table-responsive-custom {
         width: 90vw;
     }
 

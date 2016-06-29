@@ -105,8 +105,8 @@ $userCanEditDueToRole
     </div>
 
     <div class="panel" id="panelNoShadow">
-        <div id="survey-answer" class="table-responsive">
-            <table class="table table-striped table-bordered table-condensed table-responsive">
+        <div id="survey-answer" class="table-responsive-custom">
+            <table class="table table-striped table-bordered table-condensed table-responsive-custom">
                 <thead>
                 <tr>
                     <th>Name</th>
