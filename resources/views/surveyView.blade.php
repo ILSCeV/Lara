@@ -231,7 +231,18 @@ $userCanEditDueToRole
                                 <td class="" id="whiteBackgroundTrasparent" ></td>
                                 <td class="" id="whiteBackgroundTrasparent"></td>
                                 @foreach($answer->getAnswerCells as $cell)
-                                    <td class="mobileMarginTop" id="whiteBackground">your data</td>
+                                    <td class="mobileMarginTop" id="whiteBackground">
+                                        @foreach($evaluation as $eva)
+                                            <div class="col-md-4 evaluationBox">
+                                                @if(empty($eva))
+                                                    Freitext
+                                                @endif
+                                                @foreach($eva as $key => $evacount)
+                                                    <div class="text-left">{{$key}}: {{$evacount}} Personen</div>
+                                                @endforeach
+                                            </div>
+                                        @endforeach
+                                    </td>
                                 @endforeach
                             </tr>
                             @endif
