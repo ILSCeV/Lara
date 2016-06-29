@@ -182,6 +182,7 @@ $userCanEditDueToRole
                         @endif
                     </td>
                     <td>
+                        // autocomplete for clubs is not working right now
                         <div id="dropdown_club" class="dropdown">
                             <div class="btn-group no-padding">
                             {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}

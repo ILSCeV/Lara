@@ -95,81 +95,81 @@ jQuery( document ).ready( function( $ ) {
 /////////////////////////
 // AUTOCOMPELETE CLUBS //
 /////////////////////////
-
-// open club dropdown on input selection
-$( '.clubToQuestion' ).find('input').on( 'focus', function() {
-    // remove all other dropdowns
-    $(document).find('.dropdown-club').hide();
-    // open dropdown for current input
-    $(document.activeElement).parent().parent().children('.dropdown-club').show();
-} );
-
-// hide all dropdowns on ESC keypress
-$(document).keyup(function(e) {
-    if (e.keyCode === 27) {
-        $(document).find('.dropdown-club').hide();
-    }
-});
-
-$( '.clubToQuestion' ).find('input').on( 'input', function() {
-
-    // do all the work here after AJAX response is received
-    function ajaxCallBackClubs(response) {
-
-        // clear array from previous results, but leave first element with current user's data
-        $(document.activeElement).parent().parent().children('.dropdown-club').contents().remove();
-
-        // format data received
-        response.forEach(function(data) {
-
-            // add found clubs to the array$(document.activeElement).parent().children('.dropdown-club')
-            $(document.activeElement).parent().parent().children('.dropdown-club').append(
-                '<li><a href="javascript:void(0);">'
-                + '<span id="clubTitle">' + data.clb_title + '</span>'
-                + '</a></li>');
-        });
-
-        // process clicks inside the dropdown
-        $(document.activeElement).parent().parent().children('.dropdown-club').children('li').click(function(e){
-
-            var clubTitle = $(this).find('#clubTitle').html();
-            //var currentEntryId = $(this).closest(".scheduleEntry").attr("id");
-
-            // update fields
-            $("input[id=club" + "]").val(clubTitle);
-
-        });
-
-        // reveal newly created dropdown
-        $(document.activeElement).parent().parent().children('.dropdown-club').show();
-
-    }
-
-    // short delay to prevents double sending
-    $(this).delay('250');
-
-    // Request autocompleted names
-    $.ajax({
-        type: $( this ).prop( 'method' ),
-
-        url: "/club/" + $(this).val(),
-
-        data: {
-            // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-            "_token": $(this).find( 'input[name=_token]' ).val(),
-
-            // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
-            "_method": "get"
-        },
-
-        dataType: 'json',
-
-        success: function(response){
-            // external function handles the response
-            ajaxCallBackClubs(response);
-        },
-    });
-} );
+//
+// // open club dropdown on input selection
+// $( '.clubToQuestion' ).find('input').on( 'focus', function() {
+//     // remove all other dropdowns
+//     $(document).find('.dropdown-club').hide();
+//     // open dropdown for current input
+//     $(document.activeElement).parent().parent().children('.dropdown-club').show();
+// } );
+//
+// // hide all dropdowns on ESC keypress
+// $(document).keyup(function(e) {
+//     if (e.keyCode === 27) {
+//         $(document).find('.dropdown-club').hide();
+//     }
+// });
+//
+// $( '.clubToQuestion' ).find('input').on( 'input', function() {
+//
+//     // do all the work here after AJAX response is received
+//     function ajaxCallBackClubs(response) {
+//
+//         // clear array from previous results, but leave first element with current user's data
+//         $(document.activeElement).parent().parent().children('.dropdown-club').contents().remove();
+//
+//         // format data received
+//         response.forEach(function(data) {
+//
+//             // add found clubs to the array$(document.activeElement).parent().children('.dropdown-club')
+//             $(document.activeElement).parent().parent().children('.dropdown-club').append(
+//                 '<li><a href="javascript:void(0);">'
+//                 + '<span id="clubTitle">' + data.clb_title + '</span>'
+//                 + '</a></li>');
+//         });
+//
+//         // process clicks inside the dropdown
+//         $(document.activeElement).parent().parent().children('.dropdown-club').children('li').click(function(e){
+//
+//             var clubTitle = $(this).find('#clubTitle').html();
+//             //var currentEntryId = $(this).closest(".scheduleEntry").attr("id");
+//
+//             // update fields
+//             $("input[id=club" + "]").val(clubTitle);
+//
+//         });
+//
+//         // reveal newly created dropdown
+//         $(document.activeElement).parent().parent().children('.dropdown-club').show();
+//
+//     }
+//
+//     // short delay to prevents double sending
+//     $(this).delay('250');
+//
+//     // Request autocompleted names
+//     $.ajax({
+//         type: $( this ).prop( 'method' ),
+//
+//         url: "/club/" + $(this).val(),
+//
+//         data: {
+//             // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+//             "_token": $(this).find( 'input[name=_token]' ).val(),
+//
+//             // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+//             "_method": "get"
+//         },
+//
+//         dataType: 'json',
+//
+//         success: function(response){
+//             // external function handles the response
+//             ajaxCallBackClubs(response);
+//         },
+//     });
+// } );
 
 });
 
