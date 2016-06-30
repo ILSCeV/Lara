@@ -372,6 +372,12 @@
         });
     </script>
 
+    <style>
+        .dropdown-toggle {
+            text-transform: capitalize;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -469,7 +475,7 @@
             <div id="new_passage"><table class="passage" id="new_passage" name="cloneTable">
                     <tr>
                         <td>Antwortmöglichkeit: &nbsp</td>
-                        <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[][]"></textarea></td>
+                        <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[][]" style="height: 24px"></textarea></td>
                         <td class="helltab" rowspan="3">
                             <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
                                 <i class="fa fa-trash" style="color:red" aria-hidden="true"></i></a>
@@ -504,7 +510,7 @@
                                         <fieldset>
                                             <label class="questions" for="ID{{$counter}}questions[]" name="quest_label">Frage: &nbsp</label>
 
-                                            <textarea class="form-control" type="text" name="questions[]" id="question" style="max-width: 100%; max-height: 300px">{{ $question->question }}</textarea>
+                                            <textarea class="form-control" type="text" name="questions[]" id="question" style="max-width: 100%; max-height: 200px">{{ $question->question }}</textarea>
                                         </fieldset>
                                     </div>
 
@@ -599,7 +605,7 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <fieldset>
                                     <select class="selectpicker" name="type_select" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0); setField(0); setField2(0);">
-                                        <option value="1" data-icon="fa fa-file-text-o" selected>Freitext</option>
+                                        <option value="1" class="capitalize" data-icon="fa fa-file-text-o" selected>Freitext</option>
                                         <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
                                         <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
                                     </select>
