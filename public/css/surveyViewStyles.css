@@ -173,7 +173,7 @@ and also iPads specifically.
 
 
     .table-responsive-custom {
-        width: 90vw;
+        width: 100%;
     }
 
     /* Force table to not be like tables anymore */
