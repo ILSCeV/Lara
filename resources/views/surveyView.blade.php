@@ -193,7 +193,7 @@ $userCanEditDueToRole
                     });
                 });
             </script>
---}}
+--}}    {{$userParticipatedAlready}}
             <table class="table table-striped table-bordered table-condensed table-responsive-custom">
                 <thead>
                 <tr>
@@ -280,6 +280,9 @@ $userCanEditDueToRole
                         {!! Form::close() !!}
                     </td>
                 </tr>
+
+                @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
+                    @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
                 @foreach($answers as $key => $answer)
                     <tr class="row{{$answer->id}}">
                         <td>
@@ -431,6 +434,9 @@ $userCanEditDueToRole
                                 </tr>
                             @endforeach
                     @endforeach
+
+                    @endif
+                    @endif
                     </tbody>
                 </table>
             </div>

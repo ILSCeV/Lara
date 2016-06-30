@@ -235,8 +235,13 @@ class SurveyController extends Controller
         $userId = Session::get('userId');
         $userGroup = Session::get('userGroup');
 		$userStatus = Session::get("userStatus");
-
-
+        $userParticipatedAlready = false;
+        foreach($answers as $answer) {
+            if($answer->creator_id == $userId AND !empty($userId)) {
+                $userParticipatedAlready = true;
+            }
+        }
+        
         $answers_with_trashed_ids = [];
         $answers_with_trashed = SurveyAnswer::withTrashed()->where('survey_id', $survey->id)->get();
         foreach($answers_with_trashed as $answer){
@@ -307,7 +312,7 @@ class SurveyController extends Controller
         //todo: make $evaluation[$order][$answer_option->answer_option] a string (casting???)
         
         return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
-            'userGroup', 'userStatus', 'userCanEditDueToRole', 'evaluation', 'revisions'));
+            'userGroup', 'userStatus', 'userCanEditDueToRole', 'evaluation', 'revisions', 'userParticipatedAlready'));
     }
 
     /**
