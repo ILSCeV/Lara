@@ -154,7 +154,7 @@ $userCanEditDueToRole
     <div class="nameToQuestion">
     <div class="panel" id="panelNoShadow">
         <div id="survey-answer" class="table-responsive-custom">
-
+{{--
             <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
             <script>
                 $(document).ready(function() {
@@ -193,7 +193,7 @@ $userCanEditDueToRole
                     });
                 });
             </script>
-
+--}}
             <table class="table table-striped table-bordered table-condensed table-responsive-custom">
                 <thead>
                 <tr>
