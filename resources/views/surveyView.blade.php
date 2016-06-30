@@ -14,7 +14,7 @@ $userCanEditDueToRole
 @stop
 @section('moreStylesheets')
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
-    <script src="js/surveyView-scripts.js"></script>
+  
     <style>
 
         #dropdown_name {
@@ -154,6 +154,46 @@ $userCanEditDueToRole
     <div class="nameToQuestion">
     <div class="panel" id="panelNoShadow">
         <div id="survey-answer" class="table-responsive-custom">
+
+            <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $(".fa-pencil").click(function () {
+                        var counter = $(this).attr('id');
+
+                        $(document).ready(function() {
+                            $(".row" + counter).find(".singleAnswer").click(function () {
+                                if ($('#' + counter).attr('class') == 'fa fa-floppy-o') {
+                                    var OriginalContent = $(this).text();
+                                    $(this).addClass("cellEditing");
+                                    $(this).html("<input id='input_new' type='text' value='" + OriginalContent.trim() + "' />");
+                                    $(this).children().first().focus();
+                                    $(this).children().first().keypress(function (e) {
+                                        if (e.which == 13) {
+                                            var newContent = $(this).val();
+
+                                            while (newContent == '') {
+                                                newContent = window.prompt('Antworten dürfen nicht leer sein.');
+                                            }
+
+                                            $(this).parent().text(newContent);
+                                            $(this).parent().removeClass("cellEditing");
+                                        }
+                                    });
+                                    $(this).children().first().blur(function () {
+                                        $(this).parent().text(OriginalContent);
+                                        $(this).parent().removeClass("cellEditing");
+                                    });
+                                    $(this).find('input').dblclick(function (e) {
+                                        e.stopPropagation();
+                                    });
+                                }
+                            });
+                        });
+                    });
+                });
+            </script>
+
             <table class="table table-striped table-bordered table-condensed table-responsive-custom">
                 <thead>
                 <tr>
@@ -241,7 +281,7 @@ $userCanEditDueToRole
                     </td>
                 </tr>
                 @foreach($answers as $key => $answer)
-                    <tr>
+                    <tr class="row{{$answer->id}}">
                         <td>{{$answer->name}}</td>
                         <td>
                             @if(!empty($answer->club))
@@ -262,7 +302,7 @@ $userCanEditDueToRole
                                    class="editButton btn btn-primary "
                                    data-toggle="tooltip"
                                    data-placement="bottom">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="fa fa-pencil" id="{{$answer->id}}"></i>
                                 </a>
                                 <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                    class="btn btn-default deleteRow"
