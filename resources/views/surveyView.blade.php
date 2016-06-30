@@ -14,9 +14,7 @@ $userCanEditDueToRole
 @stop
 @section('moreStylesheets')
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
-  
     <style>
-
         #dropdown_name {
             position: absolute;
             overflow: visible;
@@ -38,12 +36,7 @@ $userCanEditDueToRole
             position: absolute;
         }
 
-        /*
-    Label the data
-    */
-        <?php
-        header("Content-Encoding: utf-8");
-    ?>
+        <?php header("Content-Encoding: utf-8"); ?>
         @media screen and (max-width: 978px) {
             #survey-answer td:nth-of-type(1):before {
                 content: "Name";
@@ -72,32 +65,26 @@ $userCanEditDueToRole
                 overflow: visible;
             }
 
-            <?php $count = 2; ?>
+        <?php $count = 2; ?>
         @foreach($questions as $question)
-        <?php $count += 1; ?>
-         @if($question->is_required == 1)
-        #survey-answer td:nth-of-type({{$count}}):before {
-                content: "{{$question->question}} *";
-                float: left;
-                display: inline-block;
-                overflow: hidden;
-            }
+            <?php $count += 1; ?>
+             @if($question->is_required == 1)
+                #survey-answer td:nth-of-type({{$count}}):before {
+                        content: "{{$question->question}} *";
+                        float: left;
+                        display: inline-block;
+                        overflow: hidden;
+                    }
 
-            @else
-        #survey-answer td:nth-of-type({{$count}}):before {
-                content: "{{$question->question}}";
-                float: left;
-                display: inline-block;
-                overflow: hidden;
-            }
-
-        @endif
+                    @else
+                #survey-answer td:nth-of-type({{$count}}):before {
+                        content: "{{$question->question}}";
+                        float: left;
+                        display: inline-block;
+                        overflow: hidden;
+                    }
+            @endif
         @endforeach
-
-
-
-
-
         }
     </style>
 @stop
@@ -105,8 +92,7 @@ $userCanEditDueToRole
     <script src="{{ asset('js/surveyView-scripts.js') }}"></script>
 @stop
 @section('content')
-
-
+    
     <div class="panel no-padding">
         <div class="panel-title-box">
             <h4 class="panel-title">
@@ -133,7 +119,6 @@ $userCanEditDueToRole
         </div>
     </div>
 
-
     <br>
     <br>
 
@@ -151,247 +136,268 @@ $userCanEditDueToRole
     </div>
 
     <div class="clubToQuestion">
-    <div class="nameToQuestion">
-    <div class="panel" id="panelNoShadow">
-        <div id="survey-answer" class="table-responsive-custom">
-{{--
-            <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-            <script>
-                $(document).ready(function() {
-                    $(".fa-pencil").click(function () {
-                        var counter = $(this).attr('id');
-
+        <div class="nameToQuestion">
+            <div class="panel" id="panelNoShadow">
+                <div id="survey-answer" class="table-responsive-custom">
+        {{--
+                    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+                    <script>
                         $(document).ready(function() {
-                            $(".row" + counter).find(".singleAnswer").click(function () {
-                                if ($('#' + counter).attr('class') == 'fa fa-floppy-o') {
-                                    var OriginalContent = $(this).text();
-                                    $(this).addClass("cellEditing");
-                                    $(this).html("<input id='input_new' type='text' value='" + OriginalContent.trim() + "' />");
-                                    $(this).children().first().focus();
-                                    $(this).children().first().keypress(function (e) {
-                                        if (e.which == 13) {
-                                            var newContent = $(this).val();
+                            $(".fa-pencil").click(function () {
+                                var counter = $(this).attr('id');
 
-                                            while (newContent == '') {
-                                                newContent = window.prompt('Antworten dürfen nicht leer sein.');
-                                            }
+                                $(document).ready(function() {
+                                    $(".row" + counter).find(".singleAnswer").click(function () {
+                                        if ($('#' + counter).attr('class') == 'fa fa-floppy-o') {
+                                            var OriginalContent = $(this).text();
+                                            $(this).addClass("cellEditing");
+                                            $(this).html("<input id='input_new' type='text' value='" + OriginalContent.trim() + "' />");
+                                            $(this).children().first().focus();
+                                            $(this).children().first().keypress(function (e) {
+                                                if (e.which == 13) {
+                                                    var newContent = $(this).val();
 
-                                            $(this).parent().text(newContent);
-                                            $(this).parent().removeClass("cellEditing");
+                                                    while (newContent == '') {
+                                                        newContent = window.prompt('Antworten dürfen nicht leer sein.');
+                                                    }
+
+                                                    $(this).parent().text(newContent);
+                                                    $(this).parent().removeClass("cellEditing");
+                                                }
+                                            });
+                                            $(this).children().first().blur(function () {
+                                                $(this).parent().text(OriginalContent);
+                                                $(this).parent().removeClass("cellEditing");
+                                            });
+                                            $(this).find('input').dblclick(function (e) {
+                                                e.stopPropagation();
+                                            });
                                         }
                                     });
-                                    $(this).children().first().blur(function () {
-                                        $(this).parent().text(OriginalContent);
-                                        $(this).parent().removeClass("cellEditing");
-                                    });
-                                    $(this).find('input').dblclick(function (e) {
-                                        e.stopPropagation();
-                                    });
-                                }
+                                });
                             });
                         });
-                    });
-                });
-            </script>
---}}    {{$userParticipatedAlready}}
-            <table class="table table-striped table-bordered table-condensed table-responsive-custom">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Club</th>
-                    @foreach($questions as $question)
-                        <th class="question">
-                            {{$question->question}}
-                            @if($question->is_required == 1)
-                                *
-                            @endif
-                        </th>
-                    @endforeach
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td id="dropdown_name" class="dropdown">
-                        {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'newName', 'placeholder' => 'mein Name', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
-                        @if(!empty($userId))
-                            <ul id="dropdown-menu_name" class="dropdown-menu dropdown-username">
-                                <li id="yourself">
-                                    <a href="javascript:void(0);"
-                                       onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
-                                               document.getElementById('club').value='{{Session::get('userClub')}}';
-                                               document.getElementById('ldapId').value='{{Session::get('userId')}}'">
-                                        {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
-                                        <b>Mich eintragen!</b>
-                                    </a>
-                                </li>
-                            </ul>
-                            {!! Form::hidden('ldapId', null, ['id' => 'ldapId']) !!}
-                        @endif
-                    </td>
-                    <td>
-                        {{--autocomplete for clubs is not working right now--}}
-                        <div id="dropdown_club" class="dropdown">
-                            <div class="btn-group col-md-8 no-padding">
-                            {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
-                            </div>
-                        <ul id="dropdown-menu_club" class="dropdown-menu dropdown-club"></ul>
-                        </div>
-                    </td>
-                    @foreach($questions as $key => $question)
-                        <td class="question" style="vertical-align: middle;">
-                            @if($question->field_type == 1)
-                                    <!-- Freitext -->
-                            @if(!$question->is_required)
-                                    <!--Answer not required-->
-                            {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'autocomplete' => 'off']) !!}
-                            @else
-                                    <!--Answer* required-->
-                            {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
-                            @endif
-                            @elseif($question->field_type == 2)
-                                    <!-- Ja/Nein -->
-                            {{ Form::radio('answers['.$key.']', 1) }} Ja
-                            @if(!$question->is_required)
-                                    <!--Answer not required-->
-                            {{ Form::radio('answers['.$key.']', 0) }} Nein
-                            {{ Form::radio('answers['.$key.']', -1, true)}} keine Angabe
-                            @else
-                                    <!--Answer* required-->
-                            {{ Form::radio('answers['.$key.']', 0, true) }} Nein
-                            @endif
-                            @elseif($question->field_type == 3)
-                                    <!-- Dropdown -->
-                            <select class="form-control" name="answers[{{$key}}]" style="font-size: 13px;">
-                                @if(!$question->is_required)
-                                    <option>keine Angabe</option>
+                    </script>
+        --}}
+                    <table class="table table-striped table-bordered table-condensed table-responsive-custom">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Club</th>
+                            @foreach($questions as $question)
+                                <th class="question">
+                                    {{$question->question}}
+                                    @if($question->is_required == 1)
+                                        *
+                                    @endif
+                                </th>
+                            @endforeach
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td id="dropdown_name" class="dropdown">
+                                {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'newName', 'placeholder' => 'mein Name', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                                @if(!empty($userId))
+                                    <ul id="dropdown-menu_name" class="dropdown-menu dropdown-username">
+                                        <li id="yourself">
+                                            <a href="javascript:void(0);"
+                                               onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
+                                                       document.getElementById('club').value='{{Session::get('userClub')}}';
+                                                       document.getElementById('ldapId').value='{{Session::get('userId')}}'">
+                                                {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
+                                                <b>Mich eintragen!</b>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    {!! Form::hidden('ldapId', null, ['id' => 'ldapId']) !!}
                                 @endif
-                                @foreach($question->getAnswerOptions as $answerOption)
-                                    <option>{{$answerOption->answer_option}}</option>
-                                @endforeach
-                            </select>
-                            @endif
-                        </td>
-                    @endforeach
-                    <td class="tdButtons " id="panelNoShadow">
-                        {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;']) !!}
-                        --}}
-                        <button type="submit" class="btn btn-primary btn-margin" id="noMarginMobile"
-                                style="display: inline-block;"><i class="fa fa-floppy-o"></i></button>
-                        {!! Form::close() !!}
-                    </td>
-                </tr>
-
-                @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
-                    @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
-                @foreach($answers as $key => $answer)
-                    <tr class="row{{$answer->id}}">
-                        <td>
-                            @include('partials.surveyAnswerStatus')
-                            {{$answer->name}}
-                        </td>
-                        <td>
-                            @if(!empty($answer->club))
-                                {{$answer->club}}
-                            @else
-                                kein Club
-                            @endif
-                        </td>
-                        @foreach($answer->getAnswerCells as $cell)
-                            <td class="singleAnswer">
-                                {{$cell->answer}}
                             </td>
-                            @endforeach
-                            @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
-                                    <!--Edid Delete Buttons-->
-                            <td class="tdButtons panel" id="panelNoShadow">
-                                <a href="#"
-                                   class="editButton btn btn-primary "
-                                   data-toggle="tooltip"
-                                   data-placement="bottom">
-                                    <i class="fa fa-pencil" id="{{$answer->id}}"></i>
-                                </a>
-                                <a href="{{$survey->id}}/answer/{{$answer->id}}"
-                                   class="btn btn-default deleteRow"
-                                   data-toggle="tooltip"
-                                   data-placement="bottom"
-                                   data-method="delete"
-                                   data-token="{{csrf_token()}}"
-                                   rel="nofollow"
-                                   data-confirm="Möchtest Du diese Antwort wirklich löschen?">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                            <td>
+                                {{--autocomplete for clubs is not working right now--}}
+                                <div id="dropdown_club" class="dropdown">
+                                    <div class="btn-group col-md-8 no-padding">
+                                        {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                                    </div>
+                                    <ul id="dropdown-menu_club" class="dropdown-menu dropdown-club"></ul>
+                                </div>
                             </td>
-                            @else
-                                <td class="tdButtons panel" id="panelNoShadow">
+                            @foreach($questions as $key => $question)
+                                <td class="question" style="vertical-align: middle;">
+                                    @if($question->field_type == 1)
+                                        <!-- Freitext -->
+                                        @if(!$question->is_required)
+                                            <!--Answer not required-->
+                                            {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'autocomplete' => 'off']) !!}
+                                        @else
+                                            <!--Answer* required-->
+                                            {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                                        @endif
+                                    @elseif($question->field_type == 2)
+                                        <!-- Ja/Nein -->
+                                        {{ Form::radio('answers['.$key.']', 1) }} Ja
+                                        @if(!$question->is_required)
+                                            <!--Answer not required-->
+                                            {{ Form::radio('answers['.$key.']', 0) }} Nein
+                                            {{ Form::radio('answers['.$key.']', -1, true)}} keine Angabe
+                                        @else
+                                            <!--Answer* required-->
+                                            {{ Form::radio('answers['.$key.']', 0, true) }} Nein
+                                        @endif
+                                    @elseif($question->field_type == 3)
+                                        <!-- Dropdown -->
+                                        <select class="form-control" name="answers[{{$key}}]" style="font-size: 13px;">
+                                            @if(!$question->is_required)
+                                                <option>keine Angabe</option>
+                                            @endif
+                                            @foreach($question->getAnswerOptions as $answerOption)
+                                                <option>{{$answerOption->answer_option}}</option>
+                                            @endforeach
+                                        </select>
+                                    @endif
                                 </td>
-                            @endif
-                    </tr>
-                    @endforeach
-                            <!-- Start of evaluation -->
-
-                    <?php $i = 0; ?>
-                    @foreach($answers as $key => $answer)
-                        @if($i == 0)
-                            <tr>
-                                <td class="transparent background">bg</td>
-                                <td class="transparent background">bg</td>
-                                @foreach($answer->getAnswerCells as $cell)
-                                    <td class="transparent background">bg</td>
-                                @endforeach
-                            </tr>
-                        @endif
-                        @if($i == 0)
-                            <tr id="evaluation">
-                                <td class="" id="whiteBackgroundTrasparent" ></td>
-                                <td class="" id="whiteBackgroundTrasparent"></td>
-                                @foreach($evaluation as $eva)
-                                    <td class="mobileMarginTop" id="whiteBackground">
-                                            <div>
-                                                @if(empty($eva))
-                                                    Freitext
-                                                @endif
-                                                @foreach($eva as $key => $evacount)
-                                                    <div>{{$key}}: {{$evacount}} Personen</div>
-                                                @endforeach
-                                            </div>
-                                    </td>
-                                @endforeach
-                            </tr>
-                            @endif
-                            <?php $i += 1; ?>
                             @endforeach
-                                    <!-- End of evaluation -->
-                </tbody>
-            </table>
-                    </div>
+                            <td class="tdButtons " id="panelNoShadow">
+                                {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;']) !!}
+                                --}}
+                                <button type="submit" class="btn btn-primary btn-margin" id="noMarginMobile"
+                                        style="display: inline-block;"><i class="fa fa-floppy-o"></i></button>
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+
+                        @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
+                            @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
+                                @foreach($answers as $key => $answer)
+                                    <tr class="row{{$answer->id}}">
+                                        <td>
+                                            @include('partials.surveyAnswerStatus')
+                                            {{$answer->name}}
+                                        </td>
+                                        <td>
+                                            @if(!empty($answer->club))
+                                                {{$answer->club}}
+                                            @else
+                                                kein Club
+                                            @endif
+                                        </td>
+                                        @foreach($answer->getAnswerCells as $cell)
+                                            <td class="singleAnswer">
+                                                {{$cell->answer}}
+                                            </td>
+                                        @endforeach
+                                        @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
+                                        <!--Edid Delete Buttons-->
+                                            <td class="tdButtons panel" id="panelNoShadow">
+                                                <a href="#"
+                                                   class="editButton btn btn-primary "
+                                                   data-toggle="tooltip"
+                                                   data-placement="bottom">
+                                                    <i class="fa fa-pencil" id="{{$answer->id}}"></i>
+                                                </a>
+                                                <a href="{{$survey->id}}/answer/{{$answer->id}}"
+                                                   class="btn btn-default deleteRow"
+                                                   data-toggle="tooltip"
+                                                   data-placement="bottom"
+                                                   data-method="delete"
+                                                   data-token="{{csrf_token()}}"
+                                                   rel="nofollow"
+                                                   data-confirm="Möchtest Du diese Antwort wirklich löschen?">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        @else
+                                            <td class="tdButtons panel" id="panelNoShadow">
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                                <!-- Start of evaluation -->
+
+                                <?php $i = 0; ?>
+                                @foreach($answers as $key => $answer)
+                                    @if($i == 0)
+                                        <tr>
+                                            <td class="transparent background">bg</td>
+                                            <td class="transparent background">bg</td>
+                                            @foreach($answer->getAnswerCells as $cell)
+                                                <td class="transparent background">bg</td>
+                                            @endforeach
+                                        </tr>
+                                    @endif
+                                    @if($i == 0)
+                                        <tr id="evaluation">
+                                            <td class="" id="whiteBackgroundTrasparent" ></td>
+                                            <td class="" id="whiteBackgroundTrasparent"></td>
+                                            @foreach($evaluation as $eva)
+                                                <td class="mobileMarginTop" id="whiteBackground">
+                                                    <div>
+                                                        @if(empty($eva))
+                                                            Freitext
+                                                        @endif
+                                                        @foreach($eva as $key => $evacount)
+                                                            <div>{{$key}}: {{$evacount}} Personen</div>
+                                                        @endforeach
+                                                    </div>
+                                                </td>
+                                            @endforeach
+                                        </tr>
+                                    @endif
+                                    <?php $i += 1; ?>
+                                @endforeach
+                                <!-- End of evaluation -->
+                            @endif
+                        @endif
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
+
 
 {{---------------------------------------------change-history-----------------------------------------------------}}
-        <br>
-        <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
-        <a id="show-hide-history" class="text-muted hidden-print" href="#">
-            Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
-        </a>
+    @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
+        @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
+            <br>
+            <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
+            <a id="show-hide-history" class="text-muted hidden-print" href="#">
+                Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
+            </a>
 
-        <div class="panel hide" id="change-history">
-            <div class=table-responsive>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Wer?</th>
-                        <th>Zusammenfassung</th>
-                        <th>Betroffene Spalte</th>
-                        <th>Alter Wert</th>
-                        <th>Neuer Wert</th>
-                        <th>Wann?</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($revisions as $key => $revision)
-                        @if($key > 0)
-                            @if($revision['created_at'] != $revisions[$key-1]['created_at'])
+            <div class="panel hide" id="change-history">
+                <div class=table-responsive>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Wer?</th>
+                            <th>Zusammenfassung</th>
+                            <th>Betroffene Spalte</th>
+                            <th>Alter Wert</th>
+                            <th>Neuer Wert</th>
+                            <th>Wann?</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($revisions as $key => $revision)
+                            @if($key > 0)
+                                @if($revision['created_at'] != $revisions[$key-1]['created_at'])
+                                    <tr>
+                                        <td>
+                                            @if(empty($revision['creator_id']))
+                                                Gast
+                                            @else
+                                                {{$revision['creator_id']}}
+                                            @endif
+                                        </td>
+                                        <td>{{$revision['summary']}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{$revision['created_at']}}</td>
+                                    </tr>
+                                @endif
+                            @else
                                 <tr>
                                     <td>
                                         @if(empty($revision['creator_id']))
@@ -407,22 +413,6 @@ $userCanEditDueToRole
                                     <td>{{$revision['created_at']}}</td>
                                 </tr>
                             @endif
-                        @else
-                            <tr>
-                                <td>
-                                    @if(empty($revision['creator_id']))
-                                        Gast
-                                    @else
-                                        {{$revision['creator_id']}}
-                                    @endif
-                                </td>
-                                <td>{{$revision['summary']}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>{{$revision['created_at']}}</td>
-                            </tr>
-                        @endif
                             @foreach($revision['entries'] as $revision_entry)
                                 <tr>
                                     <td></td>
@@ -433,16 +423,14 @@ $userCanEditDueToRole
                                     <td></td>
                                 </tr>
                             @endforeach
-                    @endforeach
+                        @endforeach
 
-                    @endif
-                    @endif
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-
-
+        @endif
+    @endif
 
 
     <script>
