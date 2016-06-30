@@ -372,6 +372,16 @@
         });
     </script>
 
+    <script>
+        $('form').on( 'submit', function () {
+
+            if ($('#required1').attr('disabled'))
+                    $('#required1_hidden').attr('checked', 'true');
+
+        });
+
+    </script>
+
     <style>
         .dropdown-toggle {
             text-transform: capitalize;
@@ -427,17 +437,18 @@
             <div class="form-group">
                 <div>
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
-                    <label><input type="checkbox" id="required1" value="required1" name="is_private" @if(Session::get('userGroup') != 'clubleitung' AND Session::get('userGroup') != 'admin' AND Session::get('userGroup') != 'marketing') checked disabled @endif class="input_checkboxitem"
+                    <label><input type="checkbox" id="required1" value="1" name="is_private" @if(Session::get('userGroup') != 'clubleitung' AND Session::get('userGroup') != 'admin' AND Session::get('userGroup') != 'marketing') checked disabled @endif class="input_checkboxitem"
                                   @if($survey->is_private) checked @endif> nur für eingeloggte Nutzer sichtbar</label>
+                    <input hidden type="checkbox" id="required1_hidden" name="is_private" value="1">
                 </div>
                 <div>
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
-                    <label><input type="checkbox" id="required2" value="required2" name="is_anonymous" class="input_checkboxitem"
+                    <label><input type="checkbox" id="required2" value="2" name="is_anonymous" class="input_checkboxitem"
                                   @if($survey->is_anonymous) checked @endif> Ergebnisse sind nur für den Umfragenersteller sichtbar </label>
                 </div>
                 <div>
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
-                    <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem"
+                    <label><input type="checkbox" id="required3" value="3" name="show_results_after_voting" class="input_checkboxitem"
                                   @if($survey->show_results_after_voting) checked @endif> Ergebnisse sind erst nach dem Ausfüllen sichtbar </label>
                 </div>
             </div>
