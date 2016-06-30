@@ -327,16 +327,19 @@ $userCanEditDueToRole
                                     @endif
                                     @if($i == 0)
                                         <tr id="evaluation">
-                                            <td class="" id="whiteBackgroundTrasparent" ></td>
+                                            <td class="" id="whiteBackgroundTrasparent">
+                                                <h5>Auswertung</h5>
+                                            </td>
                                             <td class="" id="whiteBackgroundTrasparent"></td>
                                             @foreach($evaluation as $eva)
                                                 <td class="mobileMarginTop" id="whiteBackground">
                                                     <div>
-                                                        @if(empty($eva))
-                                                            Freitext
-                                                        @endif
                                                         @foreach($eva as $key => $evacount)
-                                                            <div>{{$key}}: {{$evacount}} Personen</div>
+                                                                @if($evacount == 1)
+                                                            <div>{{$evacount}} Person: {{$key}}</div>
+                                                                @else
+                                                                    <div>{{$evacount}} Personen: {{$key}}</div>
+                                                                @endif
                                                         @endforeach
                                                     </div>
                                                 </td>
