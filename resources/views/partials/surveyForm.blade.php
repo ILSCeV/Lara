@@ -421,8 +421,8 @@
             <div class="form-group">
                 <div>
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
-                    <label><input type="checkbox" id="required1" value="required1" name="is_private" @if(Session::get('userGroup') != 'clubleitung' OR Session::get('userGroup') != 'admin' OR Session::get('userGroup') != 'marketing') checked disabled @endif class="input_checkboxitem"
-                                  @if($survey->is_private) checked @endif> nur für eingeloggte Nutzer sichtbar  </label>
+                    <label><input type="checkbox" id="required1" value="required1" name="is_private" @if(Session::get('userGroup') != 'clubleitung' AND Session::get('userGroup') != 'admin' AND Session::get('userGroup') != 'marketing') checked disabled @endif class="input_checkboxitem"
+                                  @if($survey->is_private) checked @endif> nur für eingeloggte Nutzer sichtbar</label>
                 </div>
                 <div>
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>

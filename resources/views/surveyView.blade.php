@@ -221,7 +221,7 @@ $userCanEditDueToRole
                                                document.getElementById('club').value='{{Session::get('userClub')}}';
                                                document.getElementById('ldapId').value='{{Session::get('userId')}}'">
                                         {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
-                                        <b>Eigene Antwort</b>
+                                        <b>Mich eintragen!</b>
                                     </a>
                                 </li>
                             </ul>
@@ -231,14 +231,14 @@ $userCanEditDueToRole
                     <td>
                         {{--autocomplete for clubs is not working right now--}}
                         <div id="dropdown_club" class="dropdown">
-                            <div class="btn-group no-padding">
+                            <div class="btn-group col-md-8 no-padding">
                             {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                             </div>
                         <ul id="dropdown-menu_club" class="dropdown-menu dropdown-club"></ul>
                         </div>
                     </td>
                     @foreach($questions as $key => $question)
-                        <td class="question">
+                        <td class="question" style="vertical-align: middle;">
                             @if($question->field_type == 1)
                                     <!-- Freitext -->
                             @if(!$question->is_required)
@@ -261,7 +261,7 @@ $userCanEditDueToRole
                             @endif
                             @elseif($question->field_type == 3)
                                     <!-- Dropdown -->
-                            <select class="form-control" name="answers[{{$key}}]">
+                            <select class="form-control" name="answers[{{$key}}]" style="font-size: 13px;">
                                 @if(!$question->is_required)
                                     <option>keine Angabe</option>
                                 @endif
