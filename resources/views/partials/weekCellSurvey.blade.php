@@ -1,6 +1,6 @@
 &nbsp;
 @if(!Session::has('userId') AND $survey->is_private == 0)
-	{{-- show only a placeholder if not logged in --}}
+	{{-- show only a placeholder if not logged in AND survey is private (not public) --}}
     <div class="panel panel-warning">
         <div class="panel dark-grey white-text" style="padding: 15px 15px 8px 15px;">
 			<h4 class="panel-title">

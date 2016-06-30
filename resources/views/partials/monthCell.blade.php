@@ -3,7 +3,7 @@
 @foreach($surveys as $survey)
 	@if(date("Y-m-d", strtotime($survey->deadline)) === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
 		@if(!Session::has('userId') AND $survey->is_private == 0 )
-			{{-- show only a placeholder if not logged in --}}
+			{{-- show only a placeholder if not logged in AND survey is private (not public) --}}
 			<div class="cal-event dark-grey">
 				<i class="fa fa-bar-chart-o white-text"></i>
 				<span class="white-text">Interne Umfrage</span>
