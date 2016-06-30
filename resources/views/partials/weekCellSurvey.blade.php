@@ -1,5 +1,5 @@
 &nbsp;
-@if(!Session::has('userId'))
+@if(!Session::has('userId') AND $survey->is_private == 0)
 	{{-- show only a placeholder if not logged in --}}
     <div class="panel panel-warning">
         <div class="panel dark-grey white-text" style="padding: 15px 15px 8px 15px;">
