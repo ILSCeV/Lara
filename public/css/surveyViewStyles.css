@@ -167,7 +167,7 @@ This query will take effect for any screen smaller than 760px
 and also iPads specifically.
 */
 @media
-only screen and (max-width: 760px),
+only screen and (max-width: 1024px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
     #survey-answer tr:nth-of-type(even){
         background-color: white;
