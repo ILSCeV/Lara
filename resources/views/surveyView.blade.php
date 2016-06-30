@@ -14,7 +14,7 @@ $userCanEditDueToRole
 @stop
 @section('moreStylesheets')
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
-    <script src="js/surveyView-scripts.js"></script>
+  
     <style>
 
         #dropdown_name {
@@ -111,7 +111,14 @@ $userCanEditDueToRole
         <div class="panel-title-box">
             <h4 class="panel-title">
                 {{ $survey->title }}
+                <a href="{{$survey->id}}/edit"
+                   style="float: right"
+                   class="btn btn-default btn-sm"
+                   data-placement="bottom">
+                    <i class="fa fa-pencil-square-o" style="color: black"></i>
+                </a>
             </h4>
+
         </div>
         <div class="panel-body">
             @if($survey->description != null)
@@ -147,6 +154,46 @@ $userCanEditDueToRole
     <div class="nameToQuestion">
     <div class="panel" id="panelNoShadow">
         <div id="survey-answer" class="table-responsive-custom">
+{{--
+            <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $(".fa-pencil").click(function () {
+                        var counter = $(this).attr('id');
+
+                        $(document).ready(function() {
+                            $(".row" + counter).find(".singleAnswer").click(function () {
+                                if ($('#' + counter).attr('class') == 'fa fa-floppy-o') {
+                                    var OriginalContent = $(this).text();
+                                    $(this).addClass("cellEditing");
+                                    $(this).html("<input id='input_new' type='text' value='" + OriginalContent.trim() + "' />");
+                                    $(this).children().first().focus();
+                                    $(this).children().first().keypress(function (e) {
+                                        if (e.which == 13) {
+                                            var newContent = $(this).val();
+
+                                            while (newContent == '') {
+                                                newContent = window.prompt('Antworten dürfen nicht leer sein.');
+                                            }
+
+                                            $(this).parent().text(newContent);
+                                            $(this).parent().removeClass("cellEditing");
+                                        }
+                                    });
+                                    $(this).children().first().blur(function () {
+                                        $(this).parent().text(OriginalContent);
+                                        $(this).parent().removeClass("cellEditing");
+                                    });
+                                    $(this).find('input').dblclick(function (e) {
+                                        e.stopPropagation();
+                                    });
+                                }
+                            });
+                        });
+                    });
+                });
+            </script>
+--}}
             <table class="table table-striped table-bordered table-condensed table-responsive-custom">
                 <thead>
                 <tr>
@@ -174,7 +221,7 @@ $userCanEditDueToRole
                                                document.getElementById('club').value='{{Session::get('userClub')}}';
                                                document.getElementById('ldapId').value='{{Session::get('userId')}}'">
                                         {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
-                                        <b>Eigene Antwort</b>
+                                        <b>Mich eintragen!</b>
                                     </a>
                                 </li>
                             </ul>
@@ -184,22 +231,22 @@ $userCanEditDueToRole
                     <td>
                         {{--autocomplete for clubs is not working right now--}}
                         <div id="dropdown_club" class="dropdown">
-                            <div class="btn-group no-padding">
+                            <div class="btn-group col-md-8 no-padding">
                             {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                             </div>
                         <ul id="dropdown-menu_club" class="dropdown-menu dropdown-club"></ul>
                         </div>
                     </td>
                     @foreach($questions as $key => $question)
-                        <td class="question">
+                        <td class="question" style="vertical-align: middle;">
                             @if($question->field_type == 1)
                                     <!-- Freitext -->
                             @if(!$question->is_required)
                                     <!--Answer not required-->
-                            {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen']) !!}
+                            {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'autocomplete' => 'off']) !!}
                             @else
                                     <!--Answer* required-->
-                            {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                            {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                             @endif
                             @elseif($question->field_type == 2)
                                     <!-- Ja/Nein -->
@@ -214,7 +261,7 @@ $userCanEditDueToRole
                             @endif
                             @elseif($question->field_type == 3)
                                     <!-- Dropdown -->
-                            <select class="form-control" name="answers[{{$key}}]">
+                            <select class="form-control" name="answers[{{$key}}]" style="font-size: 13px;">
                                 @if(!$question->is_required)
                                     <option>keine Angabe</option>
                                 @endif
@@ -234,7 +281,7 @@ $userCanEditDueToRole
                     </td>
                 </tr>
                 @foreach($answers as $key => $answer)
-                    <tr>
+                    <tr class="row{{$answer->id}}">
                         <td>
                             @include('partials.surveyAnswerStatus')
                             {{$answer->name}}
@@ -258,7 +305,7 @@ $userCanEditDueToRole
                                    class="editButton btn btn-primary "
                                    data-toggle="tooltip"
                                    data-placement="bottom">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="fa fa-pencil" id="{{$answer->id}}"></i>
                                 </a>
                                 <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                    class="btn btn-default deleteRow"

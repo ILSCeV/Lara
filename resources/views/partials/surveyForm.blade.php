@@ -372,6 +372,22 @@
         });
     </script>
 
+    <script>
+        $('form').on( 'submit', function () {
+
+            if ($('#required1').attr('disabled'))
+                    $('#required1_hidden').attr('checked', 'true');
+
+        });
+
+    </script>
+
+    <style>
+        .dropdown-toggle {
+            text-transform: capitalize;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -421,17 +437,18 @@
             <div class="form-group">
                 <div>
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
-                    <label><input type="checkbox" id="required1" value="required1" name="is_private" @if(Session::get('userGroup') != 'clubleitung' OR Session::get('userGroup') != 'admin' OR Session::get('userGroup') != 'marketing') checked disabled @endif class="input_checkboxitem"
-                                  @if($survey->is_private) checked @endif> nur für eingeloggte Nutzer sichtbar  </label>
+                    <label><input type="checkbox" id="required1" value="1" name="is_private" @if(Session::get('userGroup') != 'clubleitung' AND Session::get('userGroup') != 'admin' AND Session::get('userGroup') != 'marketing') checked disabled @endif class="input_checkboxitem"
+                                  @if($survey->is_private) checked @endif> nur für eingeloggte Nutzer sichtbar</label>
+                    <input hidden type="checkbox" id="required1_hidden" name="is_private" value="1">
                 </div>
                 <div>
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
-                    <label><input type="checkbox" id="required2" value="required2" name="is_anonymous" class="input_checkboxitem"
+                    <label><input type="checkbox" id="required2" value="2" name="is_anonymous" class="input_checkboxitem"
                                   @if($survey->is_anonymous) checked @endif> Ergebnisse sind nur für den Umfragenersteller sichtbar </label>
                 </div>
                 <div>
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
-                    <label><input type="checkbox" id="required3" value="required3" name="show_results_after_voting" class="input_checkboxitem"
+                    <label><input type="checkbox" id="required3" value="3" name="show_results_after_voting" class="input_checkboxitem"
                                   @if($survey->show_results_after_voting) checked @endif> Ergebnisse sind erst nach dem Ausfüllen sichtbar </label>
                 </div>
             </div>
@@ -469,7 +486,7 @@
             <div id="new_passage"><table class="passage" id="new_passage" name="cloneTable">
                     <tr>
                         <td>Antwortmöglichkeit: &nbsp</td>
-                        <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[][]"></textarea></td>
+                        <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[][]" style="height: 24px"></textarea></td>
                         <td class="helltab" rowspan="3">
                             <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
                                 <i class="fa fa-trash" style="color:red" aria-hidden="true"></i></a>
@@ -504,7 +521,7 @@
                                         <fieldset>
                                             <label class="questions" for="ID{{$counter}}questions[]" name="quest_label">Frage: &nbsp</label>
 
-                                            <textarea class="form-control" type="text" name="questions[]" id="question" style="max-width: 100%; max-height: 300px">{{ $question->question }}</textarea>
+                                            <textarea class="form-control" type="text" name="questions[]" id="question" style="max-width: 100%; max-height: 200px">{{ $question->question }}</textarea>
                                         </fieldset>
                                     </div>
 
@@ -599,7 +616,7 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <fieldset>
                                     <select class="selectpicker" name="type_select" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0); setField(0); setField2(0);">
-                                        <option value="1" data-icon="fa fa-file-text-o" selected>Freitext</option>
+                                        <option value="1" class="capitalize" data-icon="fa fa-file-text-o" selected>Freitext</option>
                                         <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
                                         <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
                                     </select>
