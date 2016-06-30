@@ -33,10 +33,10 @@ class SurveyRequest extends Request
             'password' => 'string|confirmed',
 
             'questions' => 'array|required',
-            'questions.*' => 'string|required|min:3',
+            'questions.*' => 'string|required|min:1',
 
             'answer_options' => 'array',
-            'answer_options.*.*' => 'string|min:3',
+            'answer_options.*.*' => 'string|min:1',
 
             'type' => 'array|required',
             'type.*' => 'in:1,2,3|required',
