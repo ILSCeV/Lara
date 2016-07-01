@@ -158,10 +158,17 @@ $userCanEditDueToRole
                                 $(".row" + counter).find(".singleAnswer").attr('style', 'background-color: #B0C4DE');
 
                                 var i = -3;
-                                $(".row" + counter).find(".singleAnswer").each(function(){
-                                    i++;
+                                var x = 0;
+                                var question_counter = -2;
 
+                                $(".row" + counter).find(".singleAnswer").each(function(){
+
+                                    var field_type = $('#field_type' + question_counter).val();
                                     var OriginalContent = $(this).text();
+
+                                    i++;
+                                    question_counter++;
+
                                     $(this).addClass("cellEditing");
                                     if (i == -2)
                                         $(this).html("<input id='input_new' name='name' type='text' value='" + OriginalContent.trim() + "' />");
@@ -169,10 +176,24 @@ $userCanEditDueToRole
                                     if (i == -1)
                                         $(this).html("<input id='input_new' name='club' type='text' value='" + OriginalContent.trim() + "' />");
 
-                                    if (i > -1)
+                                    if (i > -1 && field_type == 3) {
+                                        $(this).html("<select class='form-control' id='new_dropdown' name='answers[" + i + "]' style='font-size: 13px;' >");
+
+                                        $('#options').find('option').each(function () {
+
+                                            var new_option = document.createElement("option");
+                                            var options = document.createTextNode(document.getElementById('options').options[x].innerHTML);
+                                                new_option.appendChild(options);
+                                            var Ausgabebereich = document.getElementById('new_dropdown');
+                                                Ausgabebereich.appendChild(new_option);
+                                           x++;
+                                        });
+                                    }
+                                    else
                                         $(this).html("<input id='input_new' name='answers[" + i + "]' type='text' value='" + OriginalContent.trim() + "' />");
 
                                 });
+                                $("#new_dropdown").attr('style', 'font-size: 13px;height: 22px;padding: 0px');
                             });
 
                         });
@@ -223,6 +244,8 @@ $userCanEditDueToRole
                                 </div>
                             </td>
                             @foreach($questions as $key => $question)
+                                <input type="hidden" id="field_type{{$question->order}}" value="{{$question->field_type}}" />
+                                <input type="hidden" id="question_order" value="{{$question->order}}" />
                                 <td class="question" style="vertical-align: middle;">
                                     @if($question->field_type == 1)
                                         <!-- Freitext -->
@@ -246,12 +269,12 @@ $userCanEditDueToRole
                                         @endif
                                     @elseif($question->field_type == 3)
                                         <!-- Dropdown -->
-                                        <select class="form-control" name="answers[{{$key}}]" style="font-size: 13px;">
+                                        <select class="form-control" id="options" name="answers[{{$key}}]" style="font-size: 13px;">
                                             @if(!$question->is_required)
                                                 <option>keine Angabe</option>
                                             @endif
                                             @foreach($question->getAnswerOptions as $answerOption)
-                                                <option>{{$answerOption->answer_option}}</option>
+                                                <option id="option">{{$answerOption->answer_option}}</option>
                                             @endforeach
                                         </select>
                                     @endif
