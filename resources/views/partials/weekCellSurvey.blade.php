@@ -18,9 +18,8 @@
 		<div class="panel panel-body no-padding">
             </div>
 	</div>
-@else
-	{{-- session has a valid user now or the survey is public--}}
-	{{-- BUG? sollte ein user keine userid haben also gäste können sie private umfragen sehen? @Alex Fro--}}
+@else {{--meaning Session::has'userId' OR !$survey->is_private == 0--}}
+	{{-- so session has a valid user OR the guest can see this survey because it isn't private--}}
 	<div class="panel panel-warning">
 
 		<div class="panel panel-heading calendar-public-info white-text">
@@ -39,15 +38,16 @@
 	<div class="panel panel-body no-padding">
 
 
+		{{-- gives a session from privileged users the option to hide the event--}}
 @if(Session::has('userGroup')
                AND (Session::get('userGroup') == 'marketing'
                OR Session::get('userGroup') == 'clubleitung'
                OR Session::get('userGroup') == 'admin'))
-			{{-- gives a session from privileged users the option to hide the event--}}
+
 	<hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
-	<div class="padding-right-16 bottom-padding pull-right hidden-print">
-		<small><a href="#" class="hide-event">Ausblenden</a></small>
-	</div>
+		<div class="padding-right-16 bottom-padding pull-right hidden-print">
+			<small><a href="#" class="hide-event">Ausblenden</a></small>
+		</div>
 	</div>
 @endif
 
