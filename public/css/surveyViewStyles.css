@@ -166,16 +166,14 @@ Max width before this PARTICULAR table gets nasty
 This query will take effect for any screen smaller than 760px
 and also iPads specifically.
 */
-@media
-only screen and (max-width: 1024px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
+@media screen and (max-width: 978px) {
     #survey-answer tr:nth-of-type(even){
         background-color: white;
     }
 
 
     .table-responsive-custom {
-        width: 90vw;
+        width: 100%;
     }
 
     /* Force table to not be like tables anymore */
