@@ -36,9 +36,6 @@ $userCanEditDueToRole
             position: absolute;
         }
 
-        #question_row {
-            height: 50px
-        }
 
         <?php header("Content-Encoding: utf-8"); ?>
         @media screen and (max-width: 978px) {
@@ -147,46 +144,38 @@ $userCanEditDueToRole
         <div class="nameToQuestion">
             <div class="panel" id="panelNoShadow">
                 <div id="survey-answer" class="table-responsive-custom">
-        {{--
+
                     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
                     <script>
                         $(document).ready(function() {
-                            $(".fa-pencil").click(function () {
+
+                            $(this).find(".fa-pencil").click(function () {
                                 var counter = $(this).attr('id');
 
-                                $(document).ready(function() {
-                                    $(".row" + counter).find(".singleAnswer").click(function () {
-                                        if ($('#' + counter).attr('class') == 'fa fa-floppy-o') {
-                                            var OriginalContent = $(this).text();
-                                            $(this).addClass("cellEditing");
-                                            $(this).html("<input id='input_new' type='text' value='" + OriginalContent.trim() + "' />");
-                                            $(this).children().first().focus();
-                                            $(this).children().first().keypress(function (e) {
-                                                if (e.which == 13) {
-                                                    var newContent = $(this).val();
+                                $(".row" + counter).find(".singleAnswer").attr('style', 'background-color: #B0C4DE');
 
-                                                    while (newContent == '') {
-                                                        newContent = window.prompt('Antworten dürfen nicht leer sein.');
-                                                    }
+                                var i = -3;
+                                $(".row" + counter).find(".singleAnswer").each(function(){
+                                    i++;
 
-                                                    $(this).parent().text(newContent);
-                                                    $(this).parent().removeClass("cellEditing");
-                                                }
-                                            });
-                                            $(this).children().first().blur(function () {
-                                                $(this).parent().text(OriginalContent);
-                                                $(this).parent().removeClass("cellEditing");
-                                            });
-                                            $(this).find('input').dblclick(function (e) {
-                                                e.stopPropagation();
-                                            });
-                                        }
-                                    });
+                                    var OriginalContent = $(this).text();
+                                    $(this).addClass("cellEditing");
+                                    if (i == -2)
+                                        $(this).html("<input id='input_new' name='name' type='text' value='" + OriginalContent.trim() + "' />");
+
+                                    if (i == -1)
+                                        $(this).html("<input id='input_new' name='club' type='text' value='" + OriginalContent.trim() + "' />");
+
+                                    if (i > -1)
+                                        $(this).html("<input id='input_new' name='answers[" + i + "]' type='text' value='" + OriginalContent.trim() + "' />");
+
                                 });
                             });
+
                         });
+
                     </script>
-        --}}
+
                     <table class="table table-striped table-bordered table-condensed table-responsive-custom">
                         <thead>
                         <tr>
@@ -278,11 +267,11 @@ $userCanEditDueToRole
                             @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
                                 @foreach($answers as $key => $answer)
                                     <tr class="row{{$answer->id}}">
-                                        <td>
+                                        <td class="singleAnswer">
                                             @include('partials.surveyAnswerStatus')
                                             {{$answer->name}}
                                         </td>
-                                        <td>
+                                        <td class="singleAnswer">
                                             @if(!empty($answer->club))
                                                 {{$answer->club}}
                                             @else
@@ -297,12 +286,12 @@ $userCanEditDueToRole
                                         @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
                                         <!--Edid Delete Buttons-->
                                             <td class="tdButtons panel" id="panelNoShadow">
-                                                {{--<a href="#"--}}
-                                                   {{--class="editButton btn btn-primary "--}}
-                                                   {{--data-toggle="tooltip"--}}
-                                                   {{--data-placement="bottom">--}}
-                                                    {{--<i class="fa fa-pencil" id="{{$answer->id}}"></i>--}}
-                                                {{--</a>--}}
+                                                <a href="#"
+                                                   class="editButton btn btn-primary "
+                                                   data-toggle="tooltip"--}}
+                                                   data-placement="bottom">
+                                                    <i class="fa fa-pencil" id="{{$answer->id}}"></i>
+                                               </a>
                                                 <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                                    class="btn btn-default deleteRow"
                                                    data-toggle="tooltip"
