@@ -36,6 +36,9 @@ $userCanEditDueToRole
             position: absolute;
         }
 
+        #question_row {
+            height: 50px
+        }
 
         <?php header("Content-Encoding: utf-8"); ?>
         @media screen and (max-width: 978px) {
