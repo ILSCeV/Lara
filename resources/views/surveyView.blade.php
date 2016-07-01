@@ -158,18 +158,19 @@ $userCanEditDueToRole
                                 $(".row" + counter).find(".singleAnswer").attr('style', 'background-color: #B0C4DE');
 
                                 var i = -3;
-                                var x = 0;
                                 var question_counter = -2;
 
                                 $(".row" + counter).find(".singleAnswer").each(function(){
 
                                     var field_type = $('#field_type' + question_counter).val();
                                     var OriginalContent = $(this).text();
+                                    var x = 0;
 
                                     i++;
                                     question_counter++;
 
-                                    $(this).addClass("cellEditing");
+                                    $(this).addClass("cellEditing").attr('id', 'cellEditing' + i);
+
                                     if (i == -2)
                                         $(this).html("<input id='input_new' name='name' type='text' value='" + OriginalContent.trim() + "' />");
 
@@ -177,23 +178,26 @@ $userCanEditDueToRole
                                         $(this).html("<input id='input_new' name='club' type='text' value='" + OriginalContent.trim() + "' />");
 
                                     if (i > -1 && field_type == 3) {
-                                        $(this).html("<select class='form-control' id='new_dropdown' name='answers[" + i + "]' style='font-size: 13px;' >");
+                                        $(this).html("<select class='form-control' id='new_dropdown"+ i +"' name='answers[" + i + "]' style='font-size: 13px;' >");
 
-                                        $('#options').find('option').each(function () {
+                                        $('#options' + i).find('option').each(function () {
+                                            alert(i);
 
                                             var new_option = document.createElement("option");
-                                            var options = document.createTextNode(document.getElementById('options').options[x].innerHTML);
+                                            var options = document.createTextNode(document.getElementById('options' + i).options[x].innerHTML);
                                                 new_option.appendChild(options);
-                                            var dropdown = document.getElementById('new_dropdown');
+                                            var dropdown = document.getElementById('new_dropdown' + i);
                                                 dropdown.appendChild(new_option);
                                            x++;
+                                            $("#new_dropdown" + i).attr('style', 'font-size: 13px;height: 22px;padding: 0px');
                                         });
                                     }
+                                            
                                     else
                                         $(this).html("<input id='input_new' name='answers[" + i + "]' type='text' value='" + OriginalContent.trim() + "' />");
 
                                 });
-                                $("#new_dropdown").attr('style', 'font-size: 13px;height: 22px;padding: 0px');
+
                             });
 
                         });
@@ -258,18 +262,18 @@ $userCanEditDueToRole
                                         @endif
                                     @elseif($question->field_type == 2)
                                         <!-- Ja/Nein -->
-                                        {{ Form::radio('answers['.$key.']', 1) }} Ja
+                                        {{ Form::radio('answers['.$key.']', 1, '' , ['id' => 'radio0']) }} Ja
                                         @if(!$question->is_required)
                                             <!--Answer not required-->
-                                            {{ Form::radio('answers['.$key.']', 0) }} Nein
-                                            {{ Form::radio('answers['.$key.']', -1, true)}} keine Angabe
+                                            {{ Form::radio('answers['.$key.']', 0, '' , ['id' => 'radio1']) }} Nein
+                                            {{ Form::radio('answers['.$key.']', -1, true, ['id' => 'radio2'])}} keine Angabe
                                         @else
                                             <!--Answer* required-->
-                                            {{ Form::radio('answers['.$key.']', 0, true) }} Nein
+                                            {{ Form::radio('answers['.$key.']', 0, true, ['id' => 'radio0']) }} Nein
                                         @endif
                                     @elseif($question->field_type == 3)
                                         <!-- Dropdown -->
-                                        <select class="form-control" id="options" name="answers[{{$key}}]" style="font-size: 13px;">
+                                        <select class="form-control" id="options{{$question->order}}" name="answers[{{$key}}]" style="font-size: 13px;">
                                             @if(!$question->is_required)
                                                 <option>keine Angabe</option>
                                             @endif
