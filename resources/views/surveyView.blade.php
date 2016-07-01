@@ -289,12 +289,12 @@ $userCanEditDueToRole
                                         @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
                                         <!--Edid Delete Buttons-->
                                             <td class="tdButtons panel" id="panelNoShadow">
-                                                <a href="#"
-                                                   class="editButton btn btn-primary "
-                                                   data-toggle="tooltip"
-                                                   data-placement="bottom">
-                                                    <i class="fa fa-pencil" id="{{$answer->id}}"></i>
-                                                </a>
+                                                {{--<a href="#"--}}
+                                                   {{--class="editButton btn btn-primary "--}}
+                                                   {{--data-toggle="tooltip"--}}
+                                                   {{--data-placement="bottom">--}}
+                                                    {{--<i class="fa fa-pencil" id="{{$answer->id}}"></i>--}}
+                                                {{--</a>--}}
                                                 <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                                    class="btn btn-default deleteRow"
                                                    data-toggle="tooltip"
@@ -328,7 +328,7 @@ $userCanEditDueToRole
                                     @if($i == 0)
                                         <tr id="evaluation">
                                             <td class="" id="EvaluationColor">
-                                                <h5>Auswertung</h5>
+                                                Auswertung
                                             </td>
                                             <td class="" id="EvaluationColor"></td>
                                             @foreach($evaluation as $eva)
