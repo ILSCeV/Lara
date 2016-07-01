@@ -36,6 +36,10 @@ $userCanEditDueToRole
             position: absolute;
         }
 
+        #question_row {
+            height: 50px
+        }
+
         <?php header("Content-Encoding: utf-8"); ?>
         @media screen and (max-width: 978px) {
             #survey-answer td:nth-of-type(1):before {
@@ -63,6 +67,10 @@ $userCanEditDueToRole
             #dropdown_club {
                 position: relative;
                 overflow: visible;
+            }
+
+            #question_row {
+                height: auto
             }
 
         <?php $count = 2; ?>
@@ -195,7 +203,7 @@ $userCanEditDueToRole
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr id="question_row">
                             <td id="dropdown_name" class="dropdown">
                                 {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'newName', 'placeholder' => 'mein Name', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bitte gib deinen Namen ein\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                                 @if(!empty($userId))
