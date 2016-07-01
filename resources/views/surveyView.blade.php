@@ -184,8 +184,8 @@ $userCanEditDueToRole
                                             var new_option = document.createElement("option");
                                             var options = document.createTextNode(document.getElementById('options').options[x].innerHTML);
                                                 new_option.appendChild(options);
-                                            var Ausgabebereich = document.getElementById('new_dropdown');
-                                                Ausgabebereich.appendChild(new_option);
+                                            var dropdown = document.getElementById('new_dropdown');
+                                                dropdown.appendChild(new_option);
                                            x++;
                                         });
                                     }
