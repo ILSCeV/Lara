@@ -327,12 +327,12 @@ $userCanEditDueToRole
                                     @endif
                                     @if($i == 0)
                                         <tr id="evaluation">
-                                            <td class="" id="whiteBackgroundTrasparent">
+                                            <td class="" id="EvaluationColor">
                                                 <h5>Auswertung</h5>
                                             </td>
-                                            <td class="" id="whiteBackgroundTrasparent"></td>
+                                            <td class="" id="EvaluationColor"></td>
                                             @foreach($evaluation as $eva)
-                                                <td class="mobileMarginTop" id="whiteBackground">
+                                                <td class="mobileMarginTop" id="EvaluationColor">
                                                     <div>
                                                         @foreach($eva as $key => $evacount)
                                                                 @if($evacount == 1)
