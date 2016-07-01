@@ -181,7 +181,6 @@ $userCanEditDueToRole
                                         $(this).html("<select class='form-control' id='new_dropdown"+ i +"' name='answers[" + i + "]' style='font-size: 13px;' >");
 
                                         $('#options' + i).find('option').each(function () {
-                                            alert(i);
 
                                             var new_option = document.createElement("option");
                                             var options = document.createTextNode(document.getElementById('options' + i).options[x].innerHTML);
