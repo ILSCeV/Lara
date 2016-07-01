@@ -165,6 +165,8 @@ $userCanEditDueToRole
                                     var field_type = $('#field_type' + question_counter).val();
                                     var OriginalContent = $(this).text();
                                     var x = 0;
+                                    var y = 0;
+                                    var radio_counter = 10;
 
                                     i++;
                                     question_counter++;
@@ -191,14 +193,38 @@ $userCanEditDueToRole
                                             $("#new_dropdown" + i).attr('style', 'font-size: 13px;height: 22px;padding: 0px');
                                         });
                                     }
-                                            
-                                    else
+
+
+                                    else {
                                         $(this).html("<input id='input_new' name='answers[" + i + "]' type='text' value='" + OriginalContent.trim() + "' />");
+                                    }
 
+                                    if (i > -1 && field_type == 2) {
+                                        $(this).html("");
+
+                                        $('input:radio').each(function() {
+
+                                            var new_radio = document.createElement("input");
+                                            new_radio.setAttribute('type', 'radio');
+                                            new_radio.setAttribute('id', 'radio' + radio_counter);
+                                            new_radio.setAttribute('name', 'answers' + counter + '[' + i + ']');
+                                            var radio_text = document.createTextNode(document.getElementById('radio' + y).value);
+
+                                            new_radio.appendChild(radio_text);
+                                            var radio = document.getElementById('cellEditing' + i);
+                                            radio.appendChild(new_radio);
+
+                                            y++;
+                                            radio_counter++;
+
+                                        });
+
+                                        $("input#radio10").after('Ja   ');
+                                        $("input#radio11").after('Nein   ');
+                                        $("input#radio12").after('Keine Angabe');
+                                    }
                                 });
-
                             });
-
                         });
 
                     </script>
