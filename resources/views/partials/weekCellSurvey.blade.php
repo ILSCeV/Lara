@@ -1,20 +1,24 @@
 &nbsp;
 @if(!Session::has('userId') AND $survey->is_private == 0)
-	{{-- show only a placeholder if not logged in AND survey is private (not public) --}}
+	{{-- check current session for user role && and the survey for private status--}}
     <div class="panel panel-warning">
+
+		{{--if so show a grey placeholder for the user--}}
         <div class="panel dark-grey white-text" style="padding: 15px 15px 8px 15px;">
 			<h4 class="panel-title">
 					<i class="fa fa-bar-chart-o white-text"></i>
+					{{--and show him thats a private survey ( =Interne Umfrage in german)--}}
 					<span class="name">Interne Umfrage</span>
 			</h4>
-
 			<i class="fa fa-times" aria-hidden="true"></i>
 			{{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->deadline))) }}
 		</div>
+
 		<div class="panel panel-body no-padding">
             </div>
-        </div>
+	</div>
 @else
+	{{----}}
 	<div class="panel panel-warning">
 	<div class="panel panel-heading calendar-public-info white-text">
 			<h4 class="panel-title">
