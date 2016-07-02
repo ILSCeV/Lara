@@ -150,7 +150,7 @@ $userCanEditDueToRole
 
                     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
                     <script>
-                        $(document).ready(function() {
+                        jQuery( document ).ready( function( $ ) {
 
                             $(this).find(".fa-pencil").click(function () {
                                 var counter = $(this).attr('id');
@@ -221,7 +221,7 @@ $userCanEditDueToRole
 
                                         $("input#radio" + i + "-10").after('Ja   ');
                                         $("input#radio" + i + "-11").after('Nein   ');
-                                        $("input#radio" + i + "-12").after('Keine Angabe');
+                                        $("input#radio" + i + "-12").after('keine Angabe');
                                     }
                                 });
                             });
