@@ -165,7 +165,7 @@ $userCanEditDueToRole
                                     var field_type = $('#field_type' + question_counter).val();
                                     var OriginalContent = $(this).text();
                                     var x = 0;
-                                    var y = 0;
+
                                     var radio_counter = 10;
 
                                     i++;
@@ -201,14 +201,14 @@ $userCanEditDueToRole
 
                                     if (i > -1 && field_type == 2) {
                                         $(this).html("");
-
-                                        $('input:radio').each(function() {
+                                        var y = 0;
+                                        $('.question' + i).find('input:radio').each(function() {
 
                                             var new_radio = document.createElement("input");
                                             new_radio.setAttribute('type', 'radio');
-                                            new_radio.setAttribute('id', 'radio' + radio_counter);
+                                            new_radio.setAttribute('id', 'radio' + i + '-' + radio_counter);
                                             new_radio.setAttribute('name', 'answers' + counter + '[' + i + ']');
-                                            var radio_text = document.createTextNode(document.getElementById('radio' + y).value);
+                                            var radio_text = document.createTextNode(document.getElementById('radio' + i + '-' + y).value);
 
                                             new_radio.appendChild(radio_text);
                                             var radio = document.getElementById('cellEditing' + i);
@@ -219,9 +219,9 @@ $userCanEditDueToRole
 
                                         });
 
-                                        $("input#radio10").after('Ja   ');
-                                        $("input#radio11").after('Nein   ');
-                                        $("input#radio12").after('Keine Angabe');
+                                        $("input#radio" + i + "-10").after('Ja   ');
+                                        $("input#radio" + i + "-11").after('Nein   ');
+                                        $("input#radio" + i + "-12").after('Keine Angabe');
                                     }
                                 });
                             });
@@ -275,7 +275,7 @@ $userCanEditDueToRole
                             @foreach($questions as $key => $question)
                                 <input type="hidden" id="field_type{{$question->order}}" value="{{$question->field_type}}" />
                                 <input type="hidden" id="question_order" value="{{$question->order}}" />
-                                <td class="question" style="vertical-align: middle;">
+                                <td class="question{{$question->order}}" style="vertical-align: middle;">
                                     @if($question->field_type == 1)
                                         <!-- Freitext -->
                                         @if(!$question->is_required)
@@ -287,14 +287,14 @@ $userCanEditDueToRole
                                         @endif
                                     @elseif($question->field_type == 2)
                                         <!-- Ja/Nein -->
-                                        {{ Form::radio('answers['.$key.']', 1, '' , ['id' => 'radio0']) }} Ja
+                                        {{ Form::radio('answers['.$key.']', 1, '' , ['id' => 'radio'.$question->order.'-0']) }} Ja
                                         @if(!$question->is_required)
                                             <!--Answer not required-->
-                                            {{ Form::radio('answers['.$key.']', 0, '' , ['id' => 'radio1']) }} Nein
-                                            {{ Form::radio('answers['.$key.']', -1, true, ['id' => 'radio2'])}} keine Angabe
+                                            {{ Form::radio('answers['.$key.']', 0, '' , ['id' => 'radio'.$question->order.'-1']) }} Nein
+                                            {{ Form::radio('answers['.$key.']', -1, true, ['id' => 'radio'.$question->order.'-2'])}} keine Angabe
                                         @else
                                             <!--Answer* required-->
-                                            {{ Form::radio('answers['.$key.']', 0, true, ['id' => 'radio0']) }} Nein
+                                            {{ Form::radio('answers['.$key.']', 0, true, ['id' => 'radio'.$question->order.'-0']) }} Nein
                                         @endif
                                     @elseif($question->field_type == 3)
                                         <!-- Dropdown -->
