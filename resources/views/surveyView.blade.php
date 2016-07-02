@@ -370,10 +370,10 @@ $userCanEditDueToRole
                                 @foreach($answers as $key => $answer)
                                     @if($i == 0)
                                         <tr>
-                                            <td class="transparent background">bg</td>
-                                            <td class="transparent background">bg</td>
+                                            <td class="transparent background">&nbsp;</td>
+                                            <td class="transparent background">&nbsp;</td>
                                             @foreach($answer->getAnswerCells as $cell)
-                                                <td class="transparent background">bg</td>
+                                                <td class="transparent background">&nbsp;</td>
                                             @endforeach
                                         </tr>
                                     @endif
