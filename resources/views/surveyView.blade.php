@@ -152,78 +152,89 @@ $userCanEditDueToRole
                     <script>
                         jQuery( document ).ready( function( $ ) {
 
+                            var count_clicks = 0;
+
                             $(this).find(".fa-pencil").click(function () {
-                                var counter = $(this).attr('id');
 
-                                $(".row" + counter).find(".singleAnswer").attr('style', 'background-color: #B0C4DE');
+                                count_clicks++;
 
-                                var i = -3;
-                                var question_counter = -2;
+                                if (count_clicks === 1) {
 
-                                $(".row" + counter).find(".singleAnswer").each(function(){
+                                    var counter = $(this).attr('id');
 
-                                    var field_type = $('#field_type' + question_counter).val();
-                                    var OriginalContent = $(this).text();
-                                    var x = 0;
+                                    $(".row" + counter).find(".singleAnswer").attr('style', 'background-color: #B0C4DE');
 
-                                    var radio_counter = 10;
+                                    var i = -3;
+                                    var question_counter = -2;
 
-                                    i++;
-                                    question_counter++;
+                                    $(".row" + counter).find(".singleAnswer").each(function () {
 
-                                    $(this).addClass("cellEditing").attr('id', 'cellEditing' + i);
+                                        var field_type = $('#field_type' + question_counter).val();
+                                        var OriginalContent = $(this).text();
+                                        var x = 0;
 
-                                    if (i == -2)
-                                        $(this).html("<input id='input_new' name='name' type='text' value='" + OriginalContent.trim() + "' />");
+                                        var radio_counter = 10;
 
-                                    if (i == -1)
-                                        $(this).html("<input id='input_new' name='club' type='text' value='" + OriginalContent.trim() + "' />");
+                                        i++;
+                                        question_counter++;
 
-                                    if (i > -1 && field_type == 3) {
-                                        $(this).html("<select class='form-control' id='new_dropdown"+ i +"' name='answers[" + i + "]' style='font-size: 13px;' >");
+                                        $(this).addClass("cellEditing").attr('id', 'cellEditing' + i);
 
-                                        $('#options' + i).find('option').each(function () {
+                                        if (i == -2)
+                                            $(this).html("<input id='input_new' name='name' type='text' value='" + OriginalContent.trim() + "' />");
 
-                                            var new_option = document.createElement("option");
-                                            var options = document.createTextNode(document.getElementById('options' + i).options[x].innerHTML);
+                                        if (i == -1)
+                                            $(this).html("<input id='input_new' name='club' type='text' value='" + OriginalContent.trim() + "' />");
+
+                                        if (i > -1 && field_type == 3) {
+                                            $(this).html("<select class='form-control' id='new_dropdown" + i + "' name='answers[" + i + "]' style='font-size: 13px;' >");
+
+                                            $('#options' + i).find('option').each(function () {
+
+                                                var new_option = document.createElement("option");
+                                                var options = document.createTextNode(document.getElementById('options' + i).options[x].innerHTML);
                                                 new_option.appendChild(options);
-                                            var dropdown = document.getElementById('new_dropdown' + i);
+                                                var dropdown = document.getElementById('new_dropdown' + i);
                                                 dropdown.appendChild(new_option);
-                                           x++;
-                                            $("#new_dropdown" + i).attr('style', 'font-size: 13px;height: 22px;padding: 0px');
-                                        });
-                                    }
+                                                x++;
+                                                $("#new_dropdown" + i).attr('style', 'font-size: 13px;height: 22px;padding: 0px');
+                                            });
+                                        }
 
 
-                                    else {
-                                        $(this).html("<input id='input_new' name='answers[" + i + "]' type='text' value='" + OriginalContent.trim() + "' />");
-                                    }
+                                        else {
+                                            $(this).html("<input id='input_new' name='answers[" + i + "]' type='text' value='" + OriginalContent.trim() + "' />");
+                                        }
 
-                                    if (i > -1 && field_type == 2) {
-                                        $(this).html("");
-                                        var y = 0;
-                                        $('.question' + i).find('input:radio').each(function() {
+                                        if (i > -1 && field_type == 2) {
+                                            $(this).html("");
+                                            var y = 0;
+                                            $('.question' + i).find('input:radio').each(function () {
 
-                                            var new_radio = document.createElement("input");
-                                            new_radio.setAttribute('type', 'radio');
-                                            new_radio.setAttribute('id', 'radio' + i + '-' + radio_counter);
-                                            new_radio.setAttribute('name', 'answers' + counter + '[' + i + ']');
-                                            var radio_text = document.createTextNode(document.getElementById('radio' + i + '-' + y).value);
+                                                var new_radio = document.createElement("input");
+                                                new_radio.setAttribute('type', 'radio');
+                                                new_radio.setAttribute('id', 'radio' + i + '-' + radio_counter);
+                                                new_radio.setAttribute('name', 'answers' + counter + '[' + i + ']');
+                                                var radio_text = document.createTextNode(document.getElementById('radio' + i + '-' + y).value);
 
-                                            new_radio.appendChild(radio_text);
-                                            var radio = document.getElementById('cellEditing' + i);
-                                            radio.appendChild(new_radio);
+                                                new_radio.appendChild(radio_text);
+                                                var radio = document.getElementById('cellEditing' + i);
+                                                radio.appendChild(new_radio);
 
-                                            y++;
-                                            radio_counter++;
+                                                y++;
+                                                radio_counter++;
 
-                                        });
+                                            });
 
-                                        $("input#radio" + i + "-10").after('Ja   ');
-                                        $("input#radio" + i + "-11").after('Nein   ');
-                                        $("input#radio" + i + "-12").after('keine Angabe');
-                                    }
-                                });
+                                            $("input#radio" + i + "-10").after('Ja   ');
+                                            $("input#radio" + i + "-11").after('Nein   ');
+                                            $("input#radio" + i + "-12").after('keine Angabe');
+                                        }
+                                    });
+                                }
+
+                                else
+                                        return true;
                             });
                         });
 
