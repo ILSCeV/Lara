@@ -39,9 +39,9 @@ class SurveyController extends Controller
         $this->middleware('rejectGuests', ['only' => 'create', 'store']);
         // if survey is private, reject guests
         $this->middleware('privateEntry:Lara\Survey,survey', ['except' => ['create', 'store']]);
-        // only Ersteller/Admin/Marketing/Clubleitung
+        // only Ersteller/Admin/Marketing/Clubleitung, privileged user groups only
         $this->middleware('creator:Lara\Survey,survey', ['only' => ['edit', 'update', 'destroy']]);
-        // after deadline, only Ersteller/Admin/Marketing/Clubleitung
+        // after deadline, only Ersteller/Admin/Marketing/Clubleitung, privileged user groups only
         $this->middleware('deadlineSurvey', ['only' => ['edit', 'update', 'destroy']]);
     }
 
@@ -82,7 +82,8 @@ class SurveyController extends Controller
         $survey->is_anonymous = isset($request->is_anonymous);
         $survey->is_private = isset($request->is_private);
         $survey->show_results_after_voting = isset($request->show_results_after_voting);
-        
+
+        //if there is a password make a hash of it and save it
         if (!empty($request->password)
             AND !empty($request->password_confirmation)
             AND $request->password == $request->password_confirmation) {
@@ -232,6 +233,7 @@ class SurveyController extends Controller
         //find all clubs
         $clubs = Club::all();
 
+        //get the information from the current session
         $userId = Session::get('userId');
         $userGroup = Session::get('userGroup');
 		$userStatus = Session::get("userStatus");
@@ -266,11 +268,11 @@ class SurveyController extends Controller
             $i++;
         }
         
-        //check if the role of the user allows edit/delete for all  answers
+        //check if the role of the user allows edit/delete for all answers
         ($userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung') ? ($userCanEditDueToRole = true) : ($userCanEditDueToRole = false);
 
 
-        //evaluation part
+        //evaluation part that shows below the survey
 
         //maybe sort questions by order here
         foreach($questions as $order => $question) {
@@ -370,6 +372,7 @@ class SurveyController extends Controller
             $survey->password = Hash::make($request->password);
         }
 
+        //save the updates
         $survey->save();
         $revision_survey->save($survey);
 
@@ -582,6 +585,7 @@ class SurveyController extends Controller
     }
 
     /**
+     * used to make URL's into hyperlinks
      * @param string $text
      * @return string
      */
