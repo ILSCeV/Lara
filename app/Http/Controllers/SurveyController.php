@@ -285,6 +285,7 @@ class SurveyController extends Controller
                         'Nein' => 0,
                         'keine Angabe' => 0
                     ];
+                    //go over all the cells and get the given answer
                     foreach($question->getAnswerCells as $answerCell) {
                         switch($answerCell->answer) {
                             case 'Ja':
@@ -312,7 +313,8 @@ class SurveyController extends Controller
             }
         }
         //todo: make $evaluation[$order][$answer_option->answer_option] a string (casting???)
-        
+
+        //return all the gathered information to the survey view
         return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
             'userGroup', 'userStatus', 'userCanEditDueToRole', 'evaluation', 'revisions', 'userParticipatedAlready'));
     }
