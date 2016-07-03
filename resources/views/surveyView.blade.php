@@ -256,8 +256,9 @@ $userCanEditDueToRole
                                             </td>
                                         @endforeach
                                         @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
-                                        <!--Edid Delete Buttons-->
+                                        <!--Edit Delete Buttons-->
                                             <td class="tdButtons panel" id="panelNoShadow">
+                                                {{--not working at the moment--}}
                                                 {{--<a href="#"--}}
                                                    {{--class="editButton btn btn-primary "--}}
                                                    {{--data-toggle="tooltip"--}}
@@ -282,6 +283,7 @@ $userCanEditDueToRole
                                     </tr>
                                 @endforeach
                                 <!-- Start of evaluation -->
+                                {{-- shows a statistic of answers of the users who already took part in the survey--}}
 
                                 <?php $i = 0; ?>
                                 @foreach($answers as $key => $answer)
@@ -330,7 +332,10 @@ $userCanEditDueToRole
 
 {{---------------------------------------------change-history-----------------------------------------------------}}
     @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
+        {{--only if the survey is public or if the user is the creator of the survey--}}
         @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
+            {{--only if the results are always visiable or the user has already taken part--}}
+            {{--they can see the change history of the survey--}}
             <br>
             <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
             <a id="show-hide-history" class="text-muted hidden-print" href="#">
@@ -357,6 +362,7 @@ $userCanEditDueToRole
                                     <tr>
                                         <td>
                                             @if(empty($revision['creator_id']))
+                                                {{--empty users will be marked and named guest(Gast)--}}
                                                 Gast
                                             @else
                                                 {{$revision['creator_id']}}
@@ -373,6 +379,7 @@ $userCanEditDueToRole
                                 <tr>
                                     <td>
                                         @if(empty($revision['creator_id']))
+                                            {{--empty users will be marked and named guest(Gast)--}}
                                             Gast
                                         @else
                                             {{$revision['creator_id']}}

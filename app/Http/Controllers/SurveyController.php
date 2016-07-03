@@ -272,7 +272,7 @@ class SurveyController extends Controller
         ($userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung') ? ($userCanEditDueToRole = true) : ($userCanEditDueToRole = false);
 
 
-        //evaluation part that shows below the survey
+        //evaluation part that shows below the survey, a statistic of answers of the users who already took part in the survey
 
         //maybe sort questions by order here
         foreach($questions as $order => $question) {
