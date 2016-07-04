@@ -56,7 +56,13 @@ class SurveyAnswerController extends Controller
         $survey_answer = new SurveyAnswer();
 		$revision_answer = new Revision($survey_answer);
         // prevent guestentries with ldapId
-        (Session::has('userId')) ? ($survey_answer->creator_id = $input->ldapId) : ($survey_answer->creator_id = null);
+        // prevent entries with foreign usernames but valid ldap_id
+        if(Session::has('userId') AND Session::get('userName')  == $input->name) {
+            $survey_answer->creator_id = $input->ldapId;
+        } else {
+            $survey_answer->creator_id = null;
+        }
+
         $survey_answer->survey_id = $surveyid;
         $survey_answer->name = $input->name;
         $survey_answer->club = $input->club;
