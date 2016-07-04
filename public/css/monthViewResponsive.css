@@ -20,24 +20,9 @@
     }
 }
 
-.calendarWeek {
-    text-align: left !important;
-    border-top-width: 0px !important;
-    border-left-width: 0px !important;
-    width: 12.5%;
-    float: left;
-    margin: 0px;
-    text-align: center;
-    line-height: 10vh;
-    height: 10vh;
-    border: solid;
-    border-width: 1px 0px 0px 1px;
-    border-color: #dddddd;
-}
 
 .weekDay {
     text-align: left !important;
-    border-top-width: 0px !important;
     width: 12.5%;
     float: left;
     margin: 0px;
@@ -45,7 +30,7 @@
     line-height: 10vh;
     height: 10vh;
     border: solid;
-    border-width: 1px 0px 0px 1px;
+    border-width: 0px 0px 0px 1px;
     border-color: #dddddd;
 }
 
@@ -147,16 +132,36 @@
   no longer default bootstrap cols,
   because they do not have fitting width
 */
-.custom-md-85 {
-    width: 12.5%;
+.calendarWeek, .custom-md-85{
     float: left;
     margin: 0px;
-    text-align: center;
     line-height: 10vh;
     min-height: 10vh;
     border: solid;
-    border-width: 1px 0px 0px 1px;
     border-color: #dddddd;
+}
+
+.calendarWeek {
+    text-align: center;
+    width: 5%;
+    float: left;
+    margin: 0px;
+    line-height: 10vh;
+    height: 10vh;
+    border: solid;
+    border-width: 1px 0px 0px 0px;
+    border-color: #dddddd;
+}
+
+
+.custom-md-85 {
+    width: 12.5%;
+    text-align: left;
+    border-width: 1px 0px 0px 1px;
+}
+
+.nobordertop{
+    border-top-width: 0px !important;
 }
 
 @media screen and (min-width: 978px) {
@@ -167,7 +172,7 @@
 }
 
 @media screen and (max-width: 978px) {
-    .custom-md-85 {
+    .custom-md-85, .calendarWeek {
         width: 100%;
         border-bottom: solid;
         border-width: 3px;
@@ -177,7 +182,7 @@
         border-right-width: 0px;
     }
 
-    .custom-md-85:empty {
+    .custom-md-85:empty, .calendarWeek:empty {
         display: none;
         height: 0px;
     }
@@ -222,7 +227,6 @@
 }
 @media screen and (max-width: 978px) {
     .onlyOnMobile{
-        display: inline; 
+        display: inline;
     }
 }
-

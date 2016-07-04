@@ -36,7 +36,7 @@
 <div class="row bgWhite">
     <div class="col-md-12 calendarWrapper">
         <div class=" hidden-xs" id="ContentRow">
-            <div class=" calendarWeek">
+            <div class="calendarWeek noBorderTop">
                 KW
             </div>
             <div class="weekDay">
@@ -79,10 +79,10 @@
                         @if(date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)
                         @if ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )
                                 <!--Current Week -->
-                        <div class="custom-md-85 day WeekMarker">
+                        <div class="calendarWeek WeekMarker">
                             @else
                                     <!--Every other week-->
-                            <div class=" custom-md-85 day">
+                            <div class="calendarWeek">
                                 @endif
                                 <a href="{!! Request::getBasePath() !!}/calendar/{!! $date['year'] !!}/KW{{ date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) }}">
                                     <span class="onlyOnMobile">KW</span> {{ date("W", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) }}
