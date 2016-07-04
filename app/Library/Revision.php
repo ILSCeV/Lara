@@ -8,9 +8,11 @@
 
 namespace Lara\Library;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Lara\RevisionEntry;
 use Illuminate\Support\Facades\Session;
+use Lara\RevisionObjectRelation;
 
 
 /**
@@ -50,7 +52,7 @@ class Revision
      * table columns which should not be part of the revisions, for example id's and timestamps
      * @var string[]
      */
-    private $ignoreArray = ["created_at", "updated_at", "deleted_at", "survey_question_id", "survey_answer_id", "survey_question_id", "survey_id", "creator_id", "id"];
+    private $ignoreArray = ["created_at", "updated_at", "deleted_at", "survey_question_id", "survey_answer_id", "survey_question_id", "survey_id", "creator_id", "id", "order"];
 
     /**
      * Revision constructor.
@@ -64,9 +66,10 @@ class Revision
 
     /**
      * @param Model $new_model
+     * @param string $revisionType
      * @return bool
      */
-    public function save(Model $new_model)
+    public function save(Model $new_model, $revisionType = null)
     {
         if($new_model->getTable() !== $this->old_model->getTable()) {
             // old and new model dont have the same class -> they are not compareable
@@ -76,25 +79,39 @@ class Revision
             // no changes -> no entry
             return false;
         }
-
-        $revision = new \Lara\Revision();
+        
+        // workaround for getting all revisions created in this request
+        // determine if there was a recent related Revision created
+        $revision = \Lara\Revision::where("created_at", ">", Carbon::now()->subSecond(2))->where("creator_id", "=", Session::get('userId'))->where('request_uri', "=", request()->getUri())->first();
+        if(empty($revision)){
+            // otherwise create a new one
+            $revision = new \Lara\Revision();
+        }
         $revision->creator_id = Session::get('userId');
         $revision->ip = request()->ip();
-        $revision->object_id = $new_model->id;
-        $revision->object_name = $this->parse_classname(get_class($new_model))['classname'];
-
-        if ($new_model->wasRecentlyCreated) {     // empty($this->old_model->attributesToArray())
-            // new entry
-            $revision->summary = $this->parse_classname(get_class($new_model))['classname']." erstellt";
-        } elseif (!$new_model->exists) {
-            // deleted entry
-            $revision->summary = "deleted ".$this->parse_classname(get_class($new_model))['classname']."geändert";
-        } else {
-            // update entry
-            $revision->summary = "updated ".$this->parse_classname(get_class($new_model))['classname']."gelöscht";
+        $revision->request_uri = request()->getUri();
+        
+        // if there is a revisionType specified a summary will be generated
+        if(!empty($revisionType)) {
+            if ($new_model->wasRecentlyCreated) {
+                // new entry
+                $revision->summary = $revisionType." erstellt";
+            } elseif (!$new_model->exists) {
+                // deleted entry
+                $revision->summary = $revisionType." gelöscht";
+            } else {
+                // update entry
+                $revision->summary = $revisionType." geändert";
+            }
         }
+
         $revision->save();
 
+        $revision_object_relation = new RevisionObjectRelation();
+        $revision_object_relation->revision_id = $revision->id;
+        $revision_object_relation->object_id = $new_model->id;
+        $revision_object_relation->object_name = $this->parse_classname(get_class($new_model))['classname'];
+        $revision_object_relation->save();
 
         if ($new_model->wasRecentlyCreated) {     // empty($this->old_model->attributesToArray())
             // new entry

@@ -241,7 +241,8 @@ class SurveyController extends Controller
                 $userParticipatedAlready = true;
             }
         }
-        
+
+
         $answers_with_trashed_ids = [];
         $answers_with_trashed = SurveyAnswer::withTrashed()->where('survey_id', $survey->id)->get();
         foreach($answers_with_trashed as $answer){
@@ -254,16 +255,42 @@ class SurveyController extends Controller
             $answer_cells_with_trashed_ids[] = $answer_cell->id;
         }
 
-        $revisions_answer = \Lara\Revision::whereIn("object_id", $answers_with_trashed_ids)->where("object_name", "SurveyAnswer")->get();
-        $revisions_cells = \Lara\Revision::whereIn("object_id", $answer_cells_with_trashed_ids)->where("object_name", "SurveyAnswerCell")->get();
-        $revision_objects = $revisions_answer->merge($revisions_cells)->sortByDesc("created_at");
+        $revisions_objects = \Lara\Revision::join("revision_object_relations", "revisions.id", "=", "revision_object_relations.revision_id")
+            ->where("object_name", "=", "SurveyAnswer")
+            ->whereIn("object_id", $answers_with_trashed_ids)
+            ->orWhere(function ($query) use ($answer_cells_with_trashed_ids)
+                {
+                  $query->where("object_name", "=", "SurveyAnswerCell")
+                        ->whereIn("object_id", $answer_cells_with_trashed_ids);
+                })
+            ->distinct()
+            ->orderBy("created_at", "desc")
+            ->get(['creator_id', 'summary', 'created_at', 'revision_id']);
 
-        $revisions = [];
-        $i = 0;
-        foreach($revision_objects as $revision) {
-            $revisions[$i] = $revision->toArray();
-            $revisions[$i]['entries'] = RevisionEntry::where("revision_id", $revision->id)->get()->toArray();
-            $i++;
+        $revisions = $revisions_objects->toArray();
+
+        foreach($revisions as $revision_key => $revision) {
+            $creator = Person::where('prsn_ldap_id', '=', $revision['creator_id'])->get(['prsn_name'])->first();
+            (empty($creator)) ? ($revisions[$revision_key]['creator_name'] = "Gast") : ($revisions[$revision_key]['creator_name'] = $creator->prsn_name);
+            unset($revisions[$revision_key]['creator_id']);
+            $revisions[$revision_key]['revision_entries'] = RevisionEntry::where('revision_id', '=', $revision['revision_id'])->get(['changed_column_name', 'old_value', 'new_value'])->toArray();
+            unset($revisions[$revision_key]['revision_id']);
+            $answer_counter = 0;
+            foreach($revisions[$revision_key]['revision_entries'] as $entry_key => $entry) {
+                // rename the displayed column names to hide database-schema
+                switch($entry['changed_column_name']) {
+                    case "name":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Name";
+                        break;
+                    case "club":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Club";
+                        break;
+                    case "answer":
+                        $answer_counter++;
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Antwort ".$answer_counter;
+                        break;
+                }
+            }
         }
         
         //check if the role of the user allows edit/delete for all  answers
