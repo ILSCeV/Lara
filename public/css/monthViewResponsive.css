@@ -216,3 +216,13 @@
         width: 72%;
     }
 }
+
+.onlyOnMobile{
+    display: none;
+}
+@media screen and (max-width: 978px) {
+    .onlyOnMobile{
+        display: inline; 
+    }
+}
+

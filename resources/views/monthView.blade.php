@@ -85,7 +85,7 @@
                             <div class=" custom-md-85 day">
                                 @endif
                                 <a href="{!! Request::getBasePath() !!}/calendar/{!! $date['year'] !!}/KW{{ date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) }}">
-                                    KW {{ date("W", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) }}
+                                    <span class="onlyOnMobile">KW</span> {{ date("W", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) }}
                                 </a>
                             </div>
                             @endif
