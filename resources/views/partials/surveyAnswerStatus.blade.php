@@ -23,6 +23,12 @@
            {{--data-toggle="tooltip"--}}
            {{--data-placement="top"--}}
            title="ex-Mitglied"></i>
+    @else
+        <i class="fa fa-circle"
+           style="color:lightgrey;"
+           {{--data-toggle="tooltip"--}}
+           {{--data-placement="top"--}}
+           title="Extern"></i>
     @endif
 @else
     <i class="fa fa-circle"
