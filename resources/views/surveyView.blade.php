@@ -339,14 +339,22 @@ $userCanEditDueToRole
                                                 Auswertung
                                             </td>
                                             <td class="" id="EvaluationColor"></td>
-                                            @foreach($evaluation as $eva)
+                                            @foreach($evaluation as $eva_question)
                                                 <td class="mobileMarginTop" id="EvaluationColor">
                                                     <div>
-                                                        @foreach($eva as $key => $evacount)
-                                                                @if($evacount == 1)
-                                                            <div>{{$evacount}} Person: {{$key}}</div>
+                                                        @foreach($eva_question as $answer_option => $counter)
+                                                                @if($counter == 1)
+                                                                    @if($answer_option === 'keine Angabe')
+                                                                        <div>{{$counter}} Person wollte keine Angaben machen.</div>
+                                                                    @else
+                                                                        <div>{{$counter}} Person stimmte für: {{$answer_option}}</div>
+                                                                    @endif
                                                                 @else
-                                                                    <div>{{$evacount}} Personen: {{$key}}</div>
+                                                                    @if($answer_option === 'keine Angabe')
+                                                                        <div>{{$counter}} Personen wollten keine Angaben machen.</div>
+                                                                    @else
+                                                                        <div>{{$counter}} Personen stimmten für: {{$answer_option}}</div>
+                                                                    @endif
                                                                 @endif
                                                         @endforeach
                                                     </div>
