@@ -66,8 +66,26 @@ $(".editRow1").click(function() {
 //Replace edit icon with save icon
 $('.editButton').click(function() {
     $('#display_advance').toggle('1000');
+    $(this).toggleClass("editButton btn btn-primary editButton btn btn-success ");
     $("i", this).toggleClass("fa-pencil fa-floppy-o");
+
+
 });
+
+function change_to_submit(number) {
+
+    if ($('#editButton' + number).attr('type') == 'button') {
+        setTimeout(function(){
+            $('#editButton' + number).attr('type', 'submit');
+        },100);
+    }
+    else {
+        setTimeout(function(){
+            $('#editButton' + number).attr('type', 'button');
+        },100);
+    }
+}
+
 
 
 ///////////////////////////////////

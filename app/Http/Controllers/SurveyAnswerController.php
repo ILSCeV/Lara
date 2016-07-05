@@ -7,10 +7,12 @@ use Hash;
 use Lara\Library\Revision;
 use Session;
 use Redirect;
+use Input;
 
 use Lara\Survey;
 use Lara\SurveyAnswer;
 use Lara\SurveyAnswerCell;
+use Lara\Http\Requests;
 use Lara\Club;
 
 
@@ -105,8 +107,31 @@ class SurveyAnswerController extends Controller
      * @param int $surveyid
      * @param int $id
      */
-    public function update($surveyid, $id)
-    {
+    public function update($surveyid, Request $request)
+    {   
+
+            $name = $request->get('name');
+            $club = $request->get('club');
+      
+
+            if (Session::token() !== Input::get('_token')) {
+                return response()->json('Fehler: die Session ist abgelaufen. Bitte aktualisiere die Seite und logge dich ggf. erneut ein.', 401);
+            }
+        
+
+            $survey_answer = new SurveyAnswer();
+        
+            $survey_answer->survey_id = $surveyid;
+            $survey_answer->name = $name;
+            $survey_answer->club = $club;
+            $survey_answer->order = 0;
+        
+            $survey_answer->save();
+
+
+        return response()->json(["name"                  => $survey_answer->name,
+                                 "club"                  => $survey_answer->club,],
+            200);
 
     }
 

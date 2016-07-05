@@ -130,7 +130,8 @@ $userCanEditDueToRole
     <br>
     <br>
 
-    {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id]]) !!}
+
+     {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id], 'class' => 'store', 'name' => 'store']) !!}
 
     <div class="panel panel-warning">
         @if( $survey->password != '')
@@ -148,24 +149,33 @@ $userCanEditDueToRole
             <div class="panel" id="panelNoShadow">
                 <div id="survey-answer" class="table-responsive-custom">
 
-                    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+                    <input hidden id="get_row" value="">
+                    <script>
+                        function get_answer_row(number) {
+                            $('#get_row').attr('value', number);
+                        }
+                    </script>
+
+                    <script src="{{ asset('/js/jquery-2.1.3.min.js') }}"></script>
                     <script>
                         jQuery( document ).ready( function( $ ) {
+
 
                             var count_clicks = 0;
 
                             $(this).find(".fa-pencil").click(function () {
 
+                                var counter = $(this).attr('id');
                                 count_clicks++;
 
                                 if (count_clicks === 1) {
 
-                                    var counter = $(this).attr('id');
+
 
                                     $(".row" + counter).find(".singleAnswer").attr('style', 'background-color: #B0C4DE');
 
                                     var i = -3;
-                                    var question_counter = -2;
+                                    var question_counter = -3;
 
                                     $(".row" + counter).find(".singleAnswer").each(function () {
 
@@ -178,47 +188,55 @@ $userCanEditDueToRole
                                         i++;
                                         question_counter++;
 
-                                        $(this).addClass("cellEditing").attr('id', 'cellEditing' + i);
 
-                                        if (i == -2)
-                                            $(this).html("<input id='input_new' name='name' type='text' value='" + OriginalContent.trim() + "' />");
+                                        if (i == -2) {
+                                            $(this).addClass("cellEditing" + i).attr('id', 'cellEditing' + i);
+                                            $(this).html("<input id='newName' name='name' type='text' value='" + OriginalContent.trim() + "' />");
+                                        }
 
-                                        if (i == -1)
-                                            $(this).html("<input id='input_new' name='club' type='text' value='" + OriginalContent.trim() + "' />");
+                                        if (i == -1) {
+                                            $(this).addClass("cellEditing" + i).attr('id', 'cellEditing' + i);
+                                            $(this).html("<input id='newClub' name='club' type='text' value='" + OriginalContent.trim() + "' />");
+                                        }
 
                                         if (i > -1 && field_type == 3) {
-                                            $(this).html("<select class='form-control' id='new_dropdown" + i + "' name='answers[" + i + "]' style='font-size: 13px;' >");
+                                            $(this).addClass("cellEditing" + i).attr('id', 'dropdown');
+                                            $(this).html("<select class='form-control' id='" + i + "' name='answers[" + question_counter +"]' style='font-size: 13px;' >");
 
                                             $('#options' + i).find('option').each(function () {
 
                                                 var new_option = document.createElement("option");
                                                 var options = document.createTextNode(document.getElementById('options' + i).options[x].innerHTML);
                                                 new_option.appendChild(options);
-                                                var dropdown = document.getElementById('new_dropdown' + i);
+                                                var dropdown = document.getElementById(""+i);
                                                 dropdown.appendChild(new_option);
                                                 x++;
-                                                $("#new_dropdown" + i).attr('style', 'font-size: 13px;height: 22px;padding: 0px');
+                                                $("#" + i).attr('style', 'font-size: 13px;height: 22px;padding: 0px');
                                             });
                                         }
 
 
-                                        else {
-                                            $(this).html("<input id='input_new' name='answers[" + i + "]' type='text' value='" + OriginalContent.trim() + "' />");
+                                        if (i > -1 && field_type == 1) {
+                                            $(this).addClass("cellEditing" + i).attr('id', 'text');
+                                            $(this).html("<input id='"+i+"' name='answers[" + question_counter +"]' type='text' value='" + OriginalContent.trim() + "' />");
                                         }
 
                                         if (i > -1 && field_type == 2) {
+                                            $(this).addClass("cellEditing" + i).attr('id', 'radio');
                                             $(this).html("");
                                             var y = 0;
                                             $('.question' + i).find('input:radio').each(function () {
 
                                                 var new_radio = document.createElement("input");
                                                 new_radio.setAttribute('type', 'radio');
-                                                new_radio.setAttribute('id', 'radio' + i + '-' + radio_counter);
-                                                new_radio.setAttribute('name', 'answers' + counter + '[' + i + ']');
+                                                new_radio.setAttribute('data-id', 'radio' + i + '-' + radio_counter);
+                                                new_radio.setAttribute('id', '' + i);
+                                                new_radio.setAttribute('name', 'answers[' + question_counter + ']edit');
                                                 var radio_text = document.createTextNode(document.getElementById('radio' + i + '-' + y).value);
 
+                                                new_radio.setAttribute('value', document.getElementById('radio' + i + '-' + y).value);
                                                 new_radio.appendChild(radio_text);
-                                                var radio = document.getElementById('cellEditing' + i);
+                                                var radio = document.getElementById('radio');
                                                 radio.appendChild(new_radio);
 
                                                 y++;
@@ -226,19 +244,129 @@ $userCanEditDueToRole
 
                                             });
 
-                                            $("input#radio" + i + "-10").after('Ja   ');
-                                            $("input#radio" + i + "-11").after('Nein   ');
-                                            $("input#radio" + i + "-12").after('keine Angabe');
+                                            $("input[data-id=radio" + i + "-10]").after("Ja   ");
+                                            $("input[data-id=radio" + i + "-11]").after('Nein   ');
+                                            $("input[data-id=radio" + i + "-12]").after('keine Angabe');
                                         }
+
                                     });
+
                                 }
 
-                                else
-                                        return true;
+                                else {
+
+                                   //  $("form").find('.update').submit();
+
+                                    setTimeout(function(){
+
+                                    var column_counter = -3;
+                                    $('.row' + counter).find("[class^=singleAnswer]").each(function () {
+                                        column_counter++;
+
+                                        if ($(this).attr('id') == 'cellEditing-2') {
+                                            var newContent = $(this).find('input').val();
+                                            $(this).text(newContent);
+                                        }
+
+                                        if ($(this).attr('id') == 'cellEditing-1') {
+                                            var newContent = $(this).find('input').val();
+                                            $(this).text(newContent);
+                                        }
+
+                                        if ($(this).attr('id') == 'text') {
+                                            var newContent = $(this).find('input').val();
+                                            $(this).text(newContent);
+                                        }
+
+                                        if ($(this).attr('id') == 'radio') {
+                                            if ($(this).find('input:checked').val() == 1) {
+                                                var newContent = "Ja";
+                                                $(this).text(newContent);
+                                            }
+
+                                            if ($(this).find('input:checked').val() == 0) {
+                                                var newContent = "Nein";
+                                                $(this).text(newContent);
+                                            }
+
+                                            if ($(this).find('input:checked').val() == -1) {
+                                                var newContent = "keine Angabe";
+                                                $(this).text(newContent);
+                                            }
+                                        }
+
+                                        if ($(this).attr('id') == 'dropdown') {
+                                            var skillsSelect = document.getElementById(""+column_counter);
+                                            var newContent = skillsSelect.options[skillsSelect.selectedIndex].text;
+                                            $(this).text(newContent);
+                                        }
+
+                                        count_clicks = 0;
+
+                                        $(".row" + counter).find(".singleAnswer").attr('style', '');
+
+                                      });
+
+                                    },500);
+                                }
+
+                            });
+
+
+                            $("form").find('.update').on('submit', function () {
+
+                                var counter_ajax = $('#get_row').val();
+
+                                var answer0 = $("#0").val();
+                                var answer1 = $("#1").val();
+                                var answer2 = $("#2").val();
+                                var answer3 = $("#3").val();
+                                var answer4 = $("#4").val();
+
+
+                                $.ajax({
+
+                                    type: $(this).prop('method'),
+                                    url: $(this).prop('action'),
+
+                                    data: JSON.stringify({
+
+                                        // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                                        "_token": $(document).find('input[name=_token]').val(),
+
+
+                                        "name": $('.row' + counter_ajax).find("[name^=name]").val(),
+                                        "club": $('.row' + counter_ajax).find("[name^=club]").val(),
+                                        "ldapId": "Test",
+                                        "answers": [ answer0, answer1, answer2, answer3, answer4 ],
+                                        "_method": "put"
+
+                                    }),
+                                    dataType: 'json',
+
+                                    contentType: 'application/json',
+
+                                    complete: function () {
+
+                                    },
+
+                                    success: function (insertedData) {
+                                     //   console.log(insertedData);
+                                     //   alert(insertedData);
+
+                                    },
+
+                                    error: function (xhr, ajaxOptions, thrownError) {
+                                        alert(JSON.stringify(xhr.responseJSON));
+                                    }
+
+                                });
+                                return false;
                             });
                         });
 
                     </script>
+
 
                     <table class="table table-striped table-bordered table-condensed table-responsive-custom">
                         <thead>
@@ -284,7 +412,7 @@ $userCanEditDueToRole
                                 </div>
                             </td>
                             @foreach($questions as $key => $question)
-                                <input type="hidden" id="field_type{{$question->order}}" value="{{$question->field_type}}" />
+                                <input type="hidden" id="field_type{{$question->order-1}}" value="{{$question->field_type}}" />
                                 <input type="hidden" id="question_order" value="{{$question->order}}" />
                                 <td class="question{{$question->order}}" style="vertical-align: middle;">
                                     @if($question->field_type == 1)
@@ -321,18 +449,18 @@ $userCanEditDueToRole
                                 </td>
                             @endforeach
                             <td class="tdButtons " id="panelNoShadow">
-                                {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;']) !!}
+                                {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;', 'fo]) !!}
                                 --}}
                                 <button type="submit" class="btn btn-primary btn-margin" id="noMarginMobile"
                                         style="display: inline-block;"><i class="fa fa-floppy-o"></i></button>
-                                {!! Form::close() !!}
+                               {!! Form::close() !!}
                             </td>
                         </tr>
-
+                        {!! Form::open(['action' => ['SurveyAnswerController@update', $survey->id, 'id' => $survey->id, ], 'class' => 'update']) !!}
                         @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
                             @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
                                 @foreach($answers as $key => $answer)
-                                    <tr class="row{{$answer->id}}">
+                                    <tr class="row{{$answer->id}}" id="{{$answer->id}}">
                                         <td class="singleAnswer">
                                             @include('partials.surveyAnswerStatus')
                                             {{$answer->name}}
@@ -352,12 +480,15 @@ $userCanEditDueToRole
                                         @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
                                         <!--Edid Delete Buttons-->
                                             <td class="tdButtons panel" id="panelNoShadow">
-                                                <a href="#"
+                                                <button href="#"
                                                    class="editButton btn btn-primary "
-                                                   data-toggle="tooltip"--}}
-                                                   data-placement="bottom">
+                                                   id="editButton{{$answer->id}}"
+                                                   type="button"
+                                                   data-toggle="tooltip"
+                                                   data-placement="bottom"
+                                                   onclick="javascript: change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
                                                     <i class="fa fa-pencil" id="{{$answer->id}}"></i>
-                                               </a>
+                                               </button>
                                                 <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                                    class="btn btn-default deleteRow"
                                                    data-toggle="tooltip"
@@ -368,6 +499,7 @@ $userCanEditDueToRole
                                                    data-confirm="Möchtest Du diese Antwort wirklich löschen?">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
+
                                             </td>
                                         @else
                                             <td class="tdButtons panel" id="panelNoShadow">
@@ -375,6 +507,7 @@ $userCanEditDueToRole
                                         @endif
                                     </tr>
                                 @endforeach
+                                {{ Form::close() }}
                                 <!-- Start of evaluation -->
 
                                 <?php $i = 0; ?>
