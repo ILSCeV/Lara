@@ -282,26 +282,32 @@ class SurveyController extends Controller
                         'Ja' => 0,
                         'Nein' => 0
                     ];
-                    if ($question->is_required === true) {
+                    if ($question->is_required == false) {
                         $evaluation[$order]['keine Angabe'] = 0;
                     };
 
                     foreach($question->getAnswerCells as $answerCell) {
-                        switch($answerCell->answer) {
-                            case 'Ja':
-                                $evaluation[$order]['Ja'] += 1;
-                                break;
-                            case 'Nein':
-                                $evaluation[$order]['Nein'] += 1;
-                                break;
-                            case 'keine Angabe':
-                                $evaluation[$order]['keine Angabe'] += 1;
-                                break;
+                        if ($answerCell->answer === 'Ja') {
+                            $evaluation[$order]['Ja'] += 1;
+                        }
+                        elseif($answerCell->answer === 'Nein') {
+                            $evaluation[$order]['Nein'] += 1;
+                        }
+                        elseif($answerCell->answer === 'keine Angabe' and $question->is_required == false) {
+                            $evaluation[$order]['keine Angabe'] += 1;
                         }
                     }
                     break;
                 case 3:
-                    foreach ($question->getAnswerOptions as $answer_option) {
+                    $answer_options = $question->getAnswerOptions;
+                    $answer_options = (array) $answer_options;
+                    $answer_options = array_shift($answer_options);
+                    if($question->is_required == false) {
+                        $prefer_not_to_say = new SurveyAnswerOption();
+                        $prefer_not_to_say->answer_option = 'keine Angabe';
+                        array_push($answer_options, $prefer_not_to_say);
+                    }
+                    foreach ($answer_options as $answer_option) {
                         $evaluation[$order][$answer_option->answer_option] = 0;
                         foreach($question->getAnswerCells as $answerCell) {
                             if ($answer_option->answer_option === $answerCell->answer) {
@@ -312,7 +318,6 @@ class SurveyController extends Controller
                     break;
             }
         }
-        //todo: make $evaluation[$order][$answer_option->answer_option] a string (casting???)
         
         return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
             'userGroup', 'userStatus', 'userCanEditDueToRole', 'evaluation', 'revisions', 'userParticipatedAlready'));
