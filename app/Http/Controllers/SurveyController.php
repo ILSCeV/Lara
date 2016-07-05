@@ -280,9 +280,12 @@ class SurveyController extends Controller
                 case 2:
                     $evaluation[$order] = [
                         'Ja' => 0,
-                        'Nein' => 0,
-                        'keine Angabe' => 0
+                        'Nein' => 0
                     ];
+                    if ($question->is_required === true) {
+                        $evaluation[$order]['keine Angabe'] = 0;
+                    };
+
                     foreach($question->getAnswerCells as $answerCell) {
                         switch($answerCell->answer) {
                             case 'Ja':
