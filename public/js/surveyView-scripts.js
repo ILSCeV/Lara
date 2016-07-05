@@ -116,6 +116,10 @@ jQuery( document ).ready( function( $ ) {
         }
     });
 
+// hide dropdown if users clicks on dropdown
+    $(document).find('.dropdown-username').click(function () {
+        $(document).find('.dropdown-username').hide();
+    });
 
 
 /////////////////////////
