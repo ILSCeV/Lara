@@ -150,223 +150,6 @@ $userCanEditDueToRole
                 <div id="survey-answer" class="table-responsive-custom">
 
                     <input hidden id="get_row" value="">
-                    <script>
-                        function get_answer_row(number) {
-                            $('#get_row').attr('value', number);
-                        }
-                    </script>
-
-                    <script src="{{ asset('/js/jquery-2.1.3.min.js') }}"></script>
-                    <script>
-                        jQuery( document ).ready( function( $ ) {
-
-
-                            var count_clicks = 0;
-
-                            $(this).find(".fa-pencil").click(function () {
-
-                                var counter = $(this).attr('id');
-                                count_clicks++;
-
-                                if (count_clicks === 1) {
-
-
-
-                                    $(".row" + counter).find(".singleAnswer").attr('style', 'background-color: #B0C4DE');
-
-                                    var i = -3;
-                                    var question_counter = -3;
-
-                                    $(".row" + counter).find(".singleAnswer").each(function () {
-
-                                        var field_type = $('#field_type' + question_counter).val();
-                                        var OriginalContent = $(this).text();
-                                        var x = 0;
-
-                                        var radio_counter = 10;
-
-                                        i++;
-                                        question_counter++;
-
-
-                                        if (i == -2) {
-                                            $(this).addClass("cellEditing" + i).attr('id', 'cellEditing' + i);
-                                            $(this).html("<input id='newName' name='name' type='text' value='" + OriginalContent.trim() + "' />");
-                                        }
-
-                                        if (i == -1) {
-                                            $(this).addClass("cellEditing" + i).attr('id', 'cellEditing' + i);
-                                            $(this).html("<input id='newClub' name='club' type='text' value='" + OriginalContent.trim() + "' />");
-                                        }
-
-                                        if (i > -1 && field_type == 3) {
-                                            $(this).addClass("cellEditing" + i).attr('id', 'dropdown');
-                                            $(this).html("<select class='form-control' id='" + i + "' name='answers[" + question_counter +"]' style='font-size: 13px;' >");
-
-                                            $('#options' + i).find('option').each(function () {
-
-                                                var new_option = document.createElement("option");
-                                                var options = document.createTextNode(document.getElementById('options' + i).options[x].innerHTML);
-                                                new_option.appendChild(options);
-                                                var dropdown = document.getElementById(""+i);
-                                                dropdown.appendChild(new_option);
-                                                x++;
-                                                $("#" + i).attr('style', 'font-size: 13px;height: 22px;padding: 0px');
-                                            });
-                                        }
-
-
-                                        if (i > -1 && field_type == 1) {
-                                            $(this).addClass("cellEditing" + i).attr('id', 'text');
-                                            $(this).html("<input id='"+i+"' name='answers[" + question_counter +"]' type='text' value='" + OriginalContent.trim() + "' />");
-                                        }
-
-                                        if (i > -1 && field_type == 2) {
-                                            $(this).addClass("cellEditing" + i).attr('id', 'radio');
-                                            $(this).html("");
-                                            var y = 0;
-                                            $('.question' + i).find('input:radio').each(function () {
-
-                                                var new_radio = document.createElement("input");
-                                                new_radio.setAttribute('type', 'radio');
-                                                new_radio.setAttribute('data-id', 'radio' + i + '-' + radio_counter);
-                                                new_radio.setAttribute('id', '' + i);
-                                                new_radio.setAttribute('name', 'answers[' + question_counter + ']edit');
-                                                var radio_text = document.createTextNode(document.getElementById('radio' + i + '-' + y).value);
-
-                                                new_radio.setAttribute('value', document.getElementById('radio' + i + '-' + y).value);
-                                                new_radio.appendChild(radio_text);
-                                                var radio = document.getElementById('radio');
-                                                radio.appendChild(new_radio);
-
-                                                y++;
-                                                radio_counter++;
-
-                                            });
-
-                                            $("input[data-id=radio" + i + "-10]").after("Ja   ");
-                                            $("input[data-id=radio" + i + "-11]").after('Nein   ');
-                                            $("input[data-id=radio" + i + "-12]").after('keine Angabe');
-                                        }
-
-                                    });
-
-                                }
-
-                                else {
-
-                                   //  $("form").find('.update').submit();
-
-                                    setTimeout(function(){
-
-                                    var column_counter = -3;
-                                    $('.row' + counter).find("[class^=singleAnswer]").each(function () {
-                                        column_counter++;
-
-                                        if ($(this).attr('id') == 'cellEditing-2') {
-                                            var newContent = $(this).find('input').val();
-                                            $(this).text(newContent);
-                                        }
-
-                                        if ($(this).attr('id') == 'cellEditing-1') {
-                                            var newContent = $(this).find('input').val();
-                                            $(this).text(newContent);
-                                        }
-
-                                        if ($(this).attr('id') == 'text') {
-                                            var newContent = $(this).find('input').val();
-                                            $(this).text(newContent);
-                                        }
-
-                                        if ($(this).attr('id') == 'radio') {
-                                            if ($(this).find('input:checked').val() == 1) {
-                                                var newContent = "Ja";
-                                                $(this).text(newContent);
-                                            }
-
-                                            if ($(this).find('input:checked').val() == 0) {
-                                                var newContent = "Nein";
-                                                $(this).text(newContent);
-                                            }
-
-                                            if ($(this).find('input:checked').val() == -1) {
-                                                var newContent = "keine Angabe";
-                                                $(this).text(newContent);
-                                            }
-                                        }
-
-                                        if ($(this).attr('id') == 'dropdown') {
-                                            var skillsSelect = document.getElementById(""+column_counter);
-                                            var newContent = skillsSelect.options[skillsSelect.selectedIndex].text;
-                                            $(this).text(newContent);
-                                        }
-
-                                        count_clicks = 0;
-
-                                        $(".row" + counter).find(".singleAnswer").attr('style', '');
-
-                                      });
-
-                                    },500);
-                                }
-
-                            });
-
-
-                            $("form").find('.update').on('submit', function () {
-
-                                var counter_ajax = $('#get_row').val();
-
-                                var answer0 = $("#0").val();
-                                var answer1 = $("#1").val();
-                                var answer2 = $("#2").val();
-                                var answer3 = $("#3").val();
-                                var answer4 = $("#4").val();
-
-
-                                $.ajax({
-
-                                    type: $(this).prop('method'),
-                                    url: $(this).prop('action'),
-
-                                    data: JSON.stringify({
-
-                                        // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-                                        "_token": $(document).find('input[name=_token]').val(),
-
-
-                                        "name": $('.row' + counter_ajax).find("[name^=name]").val(),
-                                        "club": $('.row' + counter_ajax).find("[name^=club]").val(),
-                                        "ldapId": "Test",
-                                        "answers": [ answer0, answer1, answer2, answer3, answer4 ],
-                                        "_method": "put"
-
-                                    }),
-                                    dataType: 'json',
-
-                                    contentType: 'application/json',
-
-                                    complete: function () {
-
-                                    },
-
-                                    success: function (insertedData) {
-                                     //   console.log(insertedData);
-                                     //   alert(insertedData);
-
-                                    },
-
-                                    error: function (xhr, ajaxOptions, thrownError) {
-                                        alert(JSON.stringify(xhr.responseJSON));
-                                    }
-
-                                });
-                                return false;
-                            });
-                        });
-
-                    </script>
-
 
                     <table class="table table-striped table-bordered table-condensed table-responsive-custom">
                         <thead>
@@ -480,15 +263,17 @@ $userCanEditDueToRole
                                         @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
                                         <!--Edid Delete Buttons-->
                                             <td class="tdButtons panel" id="panelNoShadow">
-                                                <button href="#"
-                                                   class="editButton btn btn-primary "
+                                                <input href="#"
+                                                   class="editButton btn btn-primary fa fa-pencil"
                                                    id="editButton{{$answer->id}}"
+                                                   value=""
+                                                   style="height: 34px"
                                                    type="button"
                                                    data-toggle="tooltip"
                                                    data-placement="bottom"
-                                                   onclick="javascript: change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
-                                                    <i class="fa fa-pencil" id="{{$answer->id}}"></i>
-                                               </button>
+                                                   onclick="change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
+
+                                               </input>
                                                 <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                                    class="btn btn-default deleteRow"
                                                    data-toggle="tooltip"
