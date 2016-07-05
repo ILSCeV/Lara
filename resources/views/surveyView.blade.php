@@ -379,7 +379,7 @@ $userCanEditDueToRole
 
                 <div class="panel hide" id="change-history">
                     <div class=table-responsive>
-                        <table class="table">
+                        <table class="table table-hover table-condensed">
                             <thead>
                             <tr>
                                 <th>Wer?</th>
