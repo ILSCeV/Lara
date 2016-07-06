@@ -82,6 +82,8 @@ $userCanEditDueToRole
                         float: left;
                         display: inline-block;
                         overflow: hidden;
+                        white-space: normal;
+                        height: 100%;
                     }
 
                     @else
@@ -90,6 +92,8 @@ $userCanEditDueToRole
                         float: left;
                         display: inline-block;
                         overflow: hidden;
+                        white-space: normal;
+                        height: 100%;
                     }
             @endif
         @endforeach
