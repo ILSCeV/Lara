@@ -337,7 +337,7 @@ jQuery( document ).ready( function( $ ) {
                 if (i > -1 && field_type == 2) {
                     var selected_answer_radio = $(this).text().trim();
 
-                    $(this).addClass("cellEditing" + i).attr('id', 'radio');
+                    $(this).addClass("cellEditing" + i).attr('id', 'radio'+i);
                     $(this).html("");
                     var y = 0;
                     $('.question' + i).find('input:radio').each(function () {
@@ -346,12 +346,12 @@ jQuery( document ).ready( function( $ ) {
                         new_radio.setAttribute('type', 'radio');
                         new_radio.setAttribute('data-id', 'radio' + i + '-' + radio_counter);
                         new_radio.setAttribute('id', '' + i);
-                        new_radio.setAttribute('name', 'answers[' + question_counter + ']edit');
+                        new_radio.setAttribute('name', 'answers[' + question_counter + ']');
                         var radio_text = document.createTextNode(document.getElementById('radio' + i + '-' + y).value);
 
                         new_radio.setAttribute('value', document.getElementById('radio' + i + '-' + y).value);
                         new_radio.appendChild(radio_text);
-                        var radio = document.getElementById('radio');
+                        var radio = document.getElementById('radio'+i);
                         radio.appendChild(new_radio);
 
                         y++;
@@ -389,12 +389,24 @@ jQuery( document ).ready( function( $ ) {
     $("form").find('.update').on('submit', function () {
 
         var counter_ajax = $('#get_row').val();
+        var count_answers = 0;
+        var checked_answers = [];
 
-        var answer0 = $("#0").val();
-        var answer1 = $("#1").val();
-        var answer2 = $("#2").val();
-        var answer3 = $("#3").val();
-        var answer4 = $("#4").val();
+        $(".row"+counter_ajax).find(".singleAnswer").not(".cellEditing-1").not(".cellEditing-2").each(function () {
+
+            if ($(this).attr('id') == 'radio'+count_answers) {
+                var answers = $(this).find('input:checked').val();
+                checked_answers.push(answers);
+
+            }
+            if ($(this).attr('id') == 'text' || $(this).attr('id') == 'dropdown') {
+                var answers = $("#"+ count_answers).val();
+                checked_answers.push(answers);
+            }
+
+            count_answers++;
+        });
+
 
 
         $.ajax({
@@ -407,11 +419,10 @@ jQuery( document ).ready( function( $ ) {
                 // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
                 "_token": $(document).find('input[name=_token]').val(),
 
-
                 "name": $('.row' + counter_ajax).find("[name^=name]").val(),
                 "club": $('.row' + counter_ajax).find("[name^=club]").val(),
                 "ldapId": $('.row' + counter_ajax).find("[name^=ldapID_edit]").val(),
-                "answers": [ answer0, answer1, answer2, answer3, answer4 ],
+                "answers": checked_answers,
                 "_method": "put"
 
             }),
@@ -442,7 +453,7 @@ jQuery( document ).ready( function( $ ) {
                         $(this).text(newContent);
                     }
 
-                    if ($(this).attr('id') == 'radio') {
+                    if ($(this).attr('id') == 'radio'+column_counter) {
                         if ($(this).find('input:checked').val() == 1) {
                             var newContent = "Ja";
                             $(this).text(newContent);
@@ -472,7 +483,7 @@ jQuery( document ).ready( function( $ ) {
 
                 });
                 $('.row' + counter).find('td').each(function () {
-                    $("#radio").attr('id', '');
+                    $("#radio"+column_counter).attr('id', '');
                 });
 
                 $('.table').find('input').each(function () {
