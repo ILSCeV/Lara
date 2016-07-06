@@ -220,6 +220,10 @@ jQuery( document ).ready( function( $ ) {
     $(this).find(".fa-pencil").click(function () {
 
         var counter = $(this).attr('id').slice(10, 20);
+
+        // Adding answerid to the update form
+        $(document).find('.update').attr('action', 'http://localhost:8000/survey/3/answer/'+counter);
+
         count_clicks++;
 
         $('.table').find('input').each(function () {
