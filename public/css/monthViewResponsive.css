@@ -191,6 +191,10 @@
 /*
     space for number and space for event
 */
+/*
+    cell10 = a cell width 10%. Used to encapsulate the
+    day number on the left side of the month cell
+*/
 .cell10 {
     width: 10%;
     float: left;
@@ -201,6 +205,10 @@
     height: 10vh;
 }
 
+/*
+    cell90 = a cell with 90% width. Used to encapsulate the
+    event (or white space) of the month cell
+*/
 .cell90 {
     width: 90%;
     float: right;
