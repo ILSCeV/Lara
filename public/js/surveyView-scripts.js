@@ -94,6 +94,33 @@ function change_to_submit(number) {
     }
 }
 
+////////////////////////////////////////
+// AUTOCOMPLETE USERNAMES EDIT ANSWER //
+////////////////////////////////////////
+
+jQuery( document ).ready( function( $ ) {
+
+   // var row_number = $('#get_row').val();
+
+// open username dropdown on input selection and show only "I'll do it!" button at the beginning
+        $("[class^=row]").on('focus', 'input', function () {
+           $('.edit_drop').attr('style', 'display: block');
+           $(document).find('.dropdown-username').hide();
+    });
+
+// hide all dropdowns on ESC keypress
+    $(document).keyup(function (e) {
+        if (e.keyCode === 27) {
+            $(document).find('.edit_drop').hide();
+        }
+    });
+
+// hide dropdown if users clicks on dropdown
+    $("[class^=row]").on('click', 'ul', function () {
+        alert('test');
+        $('.edit_drop').attr('style', 'display: none');
+    });
+});
 
 
 ///////////////////////////////////
@@ -104,7 +131,7 @@ jQuery( document ).ready( function( $ ) {
 // open username dropdown on input selection and show only "I'll do it!" button at the beginning
     $('.nameToQuestion').find('input').on('focus', function () {
         // remove all other dropdowns
-        $(document).find('.dropdown-username').hide();
+        $('.edit_drop').attr('style', 'display: none');
         // open dropdown for current input
         if ($(document.activeElement).parent().children('.dropdown-username').show()) {
         }
@@ -248,11 +275,19 @@ jQuery( document ).ready( function( $ ) {
 
                 i++;
                 question_counter++;
-
+               
 
                 if (i == -2) {
-                    $(this).addClass("cellEditing" + i).attr('id', 'cellEditing' + i);
-                    $(this).html("<input id='newName' name='name' type='text' value='" + OriginalContent.trim() + "' />");
+                    $(this).addClass("cellEditing" + i +" dropdown").attr('id', 'cellEditing' + i);
+                    $(this).html("<input id='newName2' name='name' type='text' value='" + OriginalContent.trim() + "' />" +
+                                    "<ul id='dropdown-menu_name2' class='dropdown-menu edit_drop'>" +
+                                        "<li id='yourself'>" +
+                                            "<a href='"+'javascript:void(0);'+"' onClick='"+ 'document.getElementById("newName2").value=$("#hdnSession_userName").val(); document.getElementById("newClub").value=$("#hdnSession_userClub").val(); document.getElementById("ldapID_edit").value=$("#hdnSession_userID").val();' +"'</a>" +
+                                                "<b>Mich eintragen!</b>" +
+                                            "</a>" +
+                                        "</li>" +
+                                    "</ul>" +
+                    "<input type='hidden' name='ldapID_edit' id='ldapID_edit' value='' >");
                 }
 
                 if (i == -1) {
@@ -375,7 +410,7 @@ jQuery( document ).ready( function( $ ) {
 
                 "name": $('.row' + counter_ajax).find("[name^=name]").val(),
                 "club": $('.row' + counter_ajax).find("[name^=club]").val(),
-                "ldapId": "Test",
+                "ldapId": $('.row' + counter_ajax).find("[name^=ldapID_edit]").val(),
                 "answers": [ answer0, answer1, answer2, answer3, answer4 ],
                 "_method": "put"
 

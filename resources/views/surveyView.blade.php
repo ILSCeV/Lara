@@ -27,6 +27,11 @@ $userCanEditDueToRole
             right: 4%;
         }
 
+        #dropdown-menu_name2 {
+            position: relative;
+            left: -0.5%;
+        }
+
         #dropdown_club {
             position: absolute;
             overflow: visible;
@@ -150,6 +155,9 @@ $userCanEditDueToRole
                 <div id="survey-answer" class="table-responsive-custom">
 
                     <input hidden id="get_row" value="">
+                    <input type="hidden" id="hdnSession_userName" value="{{Session::get('userName')}}">
+                    <input type="hidden" id="hdnSession_userClub" value="{{Session::get('userClub')}}">
+                    <input type="hidden" id="hdnSession_userID" value="{{Session::get('userId')}}">
 
                     <table class="table table-striped table-bordered table-condensed table-responsive-custom">
                         <thead>
