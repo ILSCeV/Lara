@@ -20,7 +20,7 @@
 					{{-- provide a URL to the survey --}}
 					<a href="{{ URL::route('survey.show', $survey->id) }}">
 						{{-- instead of private survey show the actual titel of the survey --}}
-						<span  class="white-text"> {{ $survey->title }} </span>
+						<span  class="white-text"> &nbsp;{{ $survey->title }} </span>
 					</a>
 			</div>
 		@endif
@@ -61,7 +61,7 @@
 
 				@include("partials.event-marker", $clubEvent)
 				<a href="{{ URL::route('event.show', $clubEvent->id) }}">
-				    {{ $clubEvent->evnt_title }}
+					{{ $clubEvent->evnt_title }}
 				</a>
                     </div>
             @endif
@@ -101,7 +101,7 @@
             @endif
             @include("partials.event-marker", $clubEvent)
              <a href="{{ URL::route('event.show', $clubEvent->id) }}">
-                 {{ $clubEvent->evnt_title }}
+				 &nbsp; {{ $clubEvent->evnt_title }}
              </a>
              </div>
         @endif
