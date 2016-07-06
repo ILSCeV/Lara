@@ -105,12 +105,17 @@ $userCanEditDueToRole
         <div class="panel-title-box">
             <h4 class="panel-title">
                 {{ $survey->title }}
-                <a href="{{$survey->id}}/edit"
-                   style="float: right"
-                   class="btn btn-default btn-sm"
-                   data-placement="bottom">
-                    <i class="fa fa-pencil-square-o" style="color: black"></i>
-                </a>
+                @if($userId == $survey->creator_id OR
+                    $userGroup == "admin" OR
+                    $userGroup == "marketing" OR
+                    $userGroup == "clubleitung")
+                    <a href="{{$survey->id}}/edit"
+                       style="float: right"
+                       class="btn btn-default btn-sm"
+                       data-placement="bottom">
+                        <i class="fa fa-pencil-square-o" style="color: black"></i>
+                    </a>
+                @endif
             </h4>
 
         </div>
