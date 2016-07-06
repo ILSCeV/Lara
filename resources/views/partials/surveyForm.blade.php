@@ -25,121 +25,138 @@
             $("form").submit(function () {
                 if ($('#btnAdd') !== '.click')
                     $(window).unbind('beforeunload');
+
+                if ($("[data-id=clonedInput_edit]").attr('style') == 'display: none') {
+                    $("[data-id=clonedInput_edit]").remove();
+                }
             });
         };
 
         $(function () {
             var count_questions = 1;
+            var count_clicks = 0;
             $('#btnAdd').click(function () {
-                count_questions++;
-                var num     = $('.clonedInput').length,
-                        newNum  = new Number(num + 1),
-                        newElem = $('#questions' + num).clone().attr('id', 'questions' + newNum).fadeIn('slow');
 
-                newElem.find('.heading-reference').attr('id', 'ID' + newNum + '_reference').html('Frage #' + newNum);
+                count_clicks++;
+
+                if (window.location.pathname === '/survey/create' || count_clicks > 1) {
+
+                    count_questions++;
+
+                    var num = $('.clonedInput').length,
+                            newNum = new Number(num + 1),
+                            newElem = $('#questions' + num).clone().attr('id', 'questions' + newNum).fadeIn('slow');
+
+                    newElem.find('.heading-reference').attr('id', 'ID' + newNum + '_reference').html('Frage #' + newNum);
+
+                    newElem.find('.questions').attr('for', 'ID' + newNum + 'questions[]');
+                    newElem.find('.questions').attr('id', 'ID' + newNum + 'questions[]');
+                    newElem.find('#question').val('');
 
 
-                newElem.find('.questions').attr('for', 'ID' + newNum + 'questions[]');
-                newElem.find('.questions').attr('id', 'ID' + newNum + 'questions[]');
-                newElem.find('#question').val('');
+                    newElem.find('.label_checkboxitem').attr('for', 'ID' + newNum + '_checkboxitem');
+                    newElem.find('.input_checkboxitem').attr('id', 'ID' + newNum + '_checkboxitem').val([]);
 
+                    newElem.find('.selectpicker').attr('id', 'field_type' + (newNum - 1));
+                    newElem.find('.btn-success').attr('id', 'button_answ' + (newNum - 1));
+                    newElem.find('.hidden').attr('id', 'hiddenField' + (newNum - 1));
+                    newElem.find('.hidden').attr('value', '1');
 
-                newElem.find('.label_checkboxitem').attr('for', 'ID' + newNum + '_checkboxitem');
-                newElem.find('.input_checkboxitem').attr('id', 'ID' + newNum + '_checkboxitem').val([]);
+                    newElem.find('.selectpicker').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ');' + 'check_question_type2(' + (newNum - 1) + ');' + 'setField(' + (newNum - 1) + ');' + 'setField2(' + (newNum - 1) + ');');
 
-                newElem.find('.selectpicker').attr('id', 'field_type' + (newNum - 1));
-                newElem.find('.btn-success').attr('id', 'button_answ' + (newNum - 1));
-                newElem.find('.hidden').attr('id', 'hiddenField' + (newNum - 1));
-                newElem.find('.hidden').attr('value', '1');
+                    newElem.find('.answ_option').attr('id', 'answ_opt' + (newNum - 1));
+                    newElem.find('.btn-success').attr('onclick', 'javascript:clone_this(this, "new_passage",' + (newNum - 1) + ');');
 
-                newElem.find('.selectpicker').attr('onchange', 'javascript:check_question_type(' + (newNum - 1) + ');' + 'check_question_type2('+ (newNum - 1) + ');' + 'setField(' + (newNum-1) + ');' + 'setField2(' + (newNum-1) + ');');
+                    newElem.find('.answer_option').val('');
+                    newElem.find('.btnRemove').attr('id', 'button_del_question' + newNum);
 
-                newElem.find('.answ_option').attr('id', 'answ_opt' + (newNum - 1));
-                newElem.find('.btn-success').attr('onclick', 'javascript:clone_this(this, "new_passage",' + (newNum - 1) + ');');
+                    newElem.find('.passage' + newNum).slice(1).remove();
+                    newElem.find('.passage' + (newNum - 1)).remove();
+                    newElem.find('.passage' + (newNum - 2)).remove();
 
-                newElem.find('.answer_option').val('');
-                newElem.find('.btnRemove').attr('id', 'button_del_question' + newNum);
+                    $('.del').attr('class', 'not_del');
 
-                newElem.find('.passage' + newNum).slice(1).remove();
-                newElem.find('.passage' + (newNum - 1)).remove();
-                newElem.find('.passage' + (newNum-2)).remove();
+                    $('#questions' + num).after(newElem);
+                    $('#ID' + newNum + '_title').focus();
 
-                $('.del').attr('class', 'not_del');
+                    newElem.find('.bootstrap-select').attr('class', '.bootstrap-select del');
 
-                $('#questions' + num).after(newElem);
-                $('#ID' + newNum + '_title').focus();
+                    $('.del').find('.dropdown-toggle').remove();
 
-                newElem.find('.bootstrap-select').attr('class', '.bootstrap-select del');
+                    $('.selectpicker').selectpicker('refresh');
 
-                $('.del').find('.dropdown-toggle').remove();
+                    newElem.find('.input_checkboxitem').attr('name', 'required[' + (newNum - 1) + ']');
 
-                $('.selectpicker').selectpicker('refresh');
-
-                newElem.find('.input_checkboxitem').attr('name', 'required[' + (newNum - 1) + ']');
-
-                newElem.find('#button_answ' + (newNum - 1)).attr('style', 'display:none');
-
-                $("form").submit(function() {
-                    $('.bootstrap-select').find('#field_type' + (newNum -1));
-                    if ($('#field_type' + (newNum -1)).val() === '0') {
-                        alert("Frage-Typ muss bei Frage " + (newNum) + " ausgewählt sein");
-                        return false;
-                    }
-                });
-
-                $(document).ready(function () {
-                    $('.questions' || '.input_checkboxitem' || '.selectpicker').change(function () {
-                        $(window).bind('beforeunload', function () {
-                            return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
-                        });
-                    });
-
-                    var x = false;
-                    var z = 0;
-                    var field_type_not_selected = 0;
-                    var field_type_selected = 0;
+                    newElem.find('#button_answ' + (newNum - 1)).attr('style', 'display:none');
 
                     $("form").submit(function () {
-                        x = false;
-                        z = 0;
-                        field_type_not_selected = 0;
-                        field_type_selected = 0;
-                        if ($('#field_type').val() !== '' && $('#field_type' + (count_questions - 1)).val() !== '0') {
-                            x = true;
+                        $('.bootstrap-select').find('#field_type' + (newNum - 1));
+                        if ($('#field_type' + (newNum - 1)).val() === '0') {
+                            alert("Frage-Typ muss bei Frage " + (newNum) + " ausgewählt sein");
+                            return false;
+                        }
+                    });
 
-                            check_unbind2();
-                            for (i = 0; i < (count_questions - 2); i++) {
-                                z++;
-                                if ($('#field_type' + z).val() === '0')
-                                    field_type_not_selected++;
-                                else
-                                    field_type_selected++;
+                    $(document).ready(function () {
+                        $('.questions' || '.input_checkboxitem' || '.selectpicker').change(function () {
+                            $(window).bind('beforeunload', function () {
+                                return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
+                            });
+                        });
+
+                        var x = false;
+                        var z = 0;
+                        var field_type_not_selected = 0;
+                        var field_type_selected = 0;
+
+                        $("form").submit(function () {
+                            x = false;
+                            z = 0;
+                            field_type_not_selected = 0;
+                            field_type_selected = 0;
+                            if ($('#field_type').val() !== '' && $('#field_type' + (count_questions - 1)).val() !== '0') {
+                                x = true;
+
+                                check_unbind2();
+                                for (i = 0; i < (count_questions - 2); i++) {
+                                    z++;
+                                    if ($('#field_type' + z).val() === '0')
+                                        field_type_not_selected++;
+                                    else
+                                        field_type_selected++;
+                                }
+                            }
+                            if (z >= (count_questions - 2) && (field_type_not_selected + field_type_selected) === z)
+                                check_unbind();
+
+                        });
+                        function check_unbind() {
+
+                            if (x === true && field_type_not_selected === 0 && count_questions >= '3' && field_type_selected > 0) {
+                                $(window).unbind('beforeunload');
                             }
                         }
-                        if (z >= (count_questions - 2) && (field_type_not_selected + field_type_selected) === z)
-                            check_unbind();
 
+                        function check_unbind2() {
+                            if (x === true && count_questions === 2) {
+                                $(window).unbind('beforeunload');
+                            }
+                        }
                     });
-                    function check_unbind() {
 
-                        if (x === true && field_type_not_selected === 0 && count_questions >= '3' && field_type_selected > 0) {
-                            $(window).unbind('beforeunload');
-                        }
-                    }
+                    $('.btnRemoveQuestion').attr('disabled', false);
 
-                    function check_unbind2() {
-                        if (x === true && count_questions === 2) {
-                            $(window).unbind('beforeunload');
-                        }
-                    }
-                });
+                    $('.btnRemoveQuestion').click(function () {
+                        newNum--;
+                    });
+                }
 
-                $('.btnRemoveQuestion').attr('disabled', false);
+                else {
+                    $(document).find('.clonedInput').attr('style', 'display: block');
+                }
 
-                $('.btnRemoveQuestion').click(function () {
-                    newNum--;
-                });
             });
+
 
             $(document).ready(function() {
 
@@ -578,6 +595,66 @@
 
                         </div>
                     @endforeach
+
+                        <div id="{{"questions" . ++$counter }}" class="clonedInput" data-id="clonedInput_edit" style="display: none">
+                            <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
+                            <div class="panel col-md-8 col-sm-12 col-xs-12">
+                                <div class="panel-body">
+
+
+                                    <div class="col-md-11 col-sm-11 col-xs-10">
+                                        <h4 id="reference" name="reference" class="heading-reference">Frage #{{$counter}}</h4>
+                                    </div>
+
+                                    <div class="col-md-1 col-sm-1 col-xs-2">
+                                        <input id="button_del_question1" type="button" class="btn btn-sm btn-danger fa fa-trash btnRemoveQuestion" name="button_del_question" value="&#xf1f8;">
+                                    </div>
+
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <fieldset>
+                                            <label class="questions" for="question" name="quest_label">Frage: &nbsp</label>
+
+                                            <textarea class="form-control" type="text" name="questions[]" id="question" style="max-width: 100%; max-height: 300px"></textarea>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="visible-xs col-xs-12">
+                                        <br>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <fieldset>
+                                            <select class="selectpicker" name="type_select" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0); setField(0); setField2(0);">
+                                                <option value="1" class="capitalize" data-icon="fa fa-file-text-o" selected>Freitext</option>
+                                                <option value="2" data-icon="fa fa-check-square-o">Checkbox</option>
+                                                <option value="3" data-icon="fa fa-caret-square-o-down">Dropdown</option>
+                                            </select>
+                                            <input class="hidden" type="hidden" id="hiddenField" name="type[]" value="1">
+                                        </fieldset>
+                                    </div>
+
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <fieldset class="checkbox entrylist">
+                                            <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
+                                            <label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
+                                        </fieldset>
+                                    </div>
+
+
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="answ_option" id="answ_opt" name="answer_options_div">
+                                            <input class="btn btn-success btn-sm" id="button_answ" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
                 @endif
 
                 <span hidden>{{$counter2 = 0}}</span>
