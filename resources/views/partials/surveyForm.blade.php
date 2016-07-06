@@ -37,6 +37,8 @@
             var count_clicks = 0;
             $('#btnAdd').click(function () {
 
+                $('#questions' + count_questions).attr('style', 'display: block');
+
                 count_clicks++;
 
                 if (window.location.pathname === '/survey/create' || count_clicks > 1) {
