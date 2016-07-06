@@ -68,19 +68,26 @@
             
             <div class="form-group">
                 <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-                    <label for="password" class="control-label col-md-5 col-sm-5 col-xs-12">Passwort zum Eintragen:</label>
-                    <div class="col-md-7 col-sm-7 col-xs-12">
+                    <label for="password" class="control-label col-md-4 col-sm-5 col-xs-12" style="padding-left: 0;">Passwort zum Eintragen:</label>
+                    <div class="col-md-4 col-sm-7 col-xs-12" style="padding-left: 0;">
                         {!! Form::password('password', '' ) !!}
                     </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12"></div>
                 </div>
 
                 <div class="form-groupcol-md-12 col-sm-12 col-xs-12 no-padding">
-                    <label fro="passwordDouble" class="control-label col-md-5 col-sm-5 col-xs-12">Passwort wiederholen:</label>
-                    <div class="col-md-7 col-sm-7 col-xs-12">
+                    <label for="passwordDouble" class="control-label col-md-4 col-sm-5 col-xs-12" style="padding-left: 0";>Passwort wiederholen:</label>
+                    <div class="col-md-4 col-sm-7 col-xs-12" style="padding-left: 0;">
                         {!! Form::password('password_confirmation', '') !!}
                     </div>
+                    <div class="col-md-4 col-sm-2 col-xs-12"></div>
                 </div>
             </div>
+
+            <div id="password_note" style="display: none;">
+                <small>(Das Setzen eines Passworts ist optional)</small>
+            </div>
+
             @if (!empty($survey->password))
                 <div style="color: #ff9800;">
                     <small>Um das Passwort zu löschen, trage in beide Felder "delete" ein (ohne
@@ -91,13 +98,13 @@
         </div>
     </div>
 
-    <div id="wrapper">
+
 
         <div style="visibility:hidden; display:none">
             <div id="new_passage"><table class="passage" id="new_passage" name="cloneTable">
                     <tr>
                         <td>Antwortmöglichkeit: &nbsp</td>
-                        <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[][]" style="height: 24px"></textarea></td>
+                        <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[][]" style="height: 22px;margin-top: 5px;margin-bottom: 5px;"></textarea></td>
                         <td class="helltab" rowspan="3">
                             <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
                                 <i class="fa fa-trash" style="color:red" aria-hidden="true"></i></a>
@@ -105,6 +112,7 @@
                 </table>
             </div>
         </div>
+
 
         <div class="questions">
 
@@ -119,7 +127,7 @@
                                 <div class="panel-body">
 
 
-                                    <div class="col-md-11 col-sm-11 col-xs-10">
+                                    <div class="col-md-11 col-sm-11 col-xs-10" id="test" style="padding-left: 0;">
                                         <h4 id="ID{{$counter}}_reference" name="reference" class="heading-reference">Frage #{{$counter}}</h4>
                                     </div>
 
@@ -128,7 +136,7 @@
                                     </div>
 
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 1px;">
                                         <fieldset>
                                             <label class="questions" for="ID{{$counter}}questions[]" name="quest_label">Frage: &nbsp</label>
 
@@ -140,7 +148,7 @@
                                         <br>
                                     </div>
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 28px;">
                                         <fieldset>
                                             <select class="selectpicker" name="type_select" id="field_type{{$counter-1}}" onchange="javascript:check_question_type({{$counter-1}}); check_question_type2({{$counter-1}}); setField({{$counter-1}}); setField2({{$counter-1}});">
                                                 <option value="1" data-icon="fa fa-file-text-o" @if($question->field_type === 1) selected @endif >Freitext</option>
@@ -151,7 +159,7 @@
                                         </fieldset>
                                     </div>
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 5px;">
                                         <fieldset class="checkbox entrylist">
                                             <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
                                             <label><input type="checkbox" id="required" @if($question->is_required) checked @endif value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
@@ -160,20 +168,20 @@
 
 
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0;">
                                         <div class="answ_option" id="answ_opt{{$counter-1}}" name="answer_options_div">
                                             @foreach($answer_options = $question->getAnswerOptions as $answer_option)
                                                 <table class="passage" id="new_passage" name="cloneTable">
                                                     <tr>
                                                         <td>Antwortmöglichkeit: &nbsp</td>
-                                                        <td><textarea id="answer_option" class="form-control answer_option" type="text" name="answer_options[{{$counter-1}}][]">{{ $answer_option->answer_option }}</textarea></td>
+                                                        <td><textarea id="answer_option" class="form-control answer_option" style="height: 22px;margin-top: 5px;margin-bottom: 5px;" type="text" name="answer_options[{{$counter-1}}][]">{{ $answer_option->answer_option }}</textarea></td>
                                                         <td class="helltab" rowspan="3">
                                                             <a href="#" id="delete_button" onclick="javascript:remove_this(this); return false;">
                                                                 <i class="fa fa-trash" style="color:red" aria-hidden="true"></i></a>
                                                         </td>
                                                 </table>
                                             @endforeach
-                                            <input class="btn btn-success btn-sm" id="button_answ{{$counter-1}}" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', {{$counter-1}});" type="button">
+                                            <input class="btn btn-success btn-sm" id="button_answ{{$counter-1}}" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none; margin-top: 10px;"  onclick="javascript:clone_this(this, 'new_passage', {{$counter-1}});" type="button">
                                         </div>
                                     </div>
 
@@ -190,7 +198,7 @@
                                 <div class="panel-body">
 
 
-                                    <div class="col-md-11 col-sm-11 col-xs-10">
+                                    <div class="col-md-11 col-sm-11 col-xs-10" style="padding-left: 0;">
                                         <h4 id="reference" name="reference" class="heading-reference">Frage #{{$counter}}</h4>
                                     </div>
 
@@ -199,7 +207,7 @@
                                     </div>
 
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 1px;">
                                         <fieldset>
                                             <label class="questions" for="question" name="quest_label">Frage: &nbsp</label>
 
@@ -211,7 +219,7 @@
                                         <br>
                                     </div>
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 28px;">
                                         <fieldset>
                                             <select class="selectpicker" name="type_select" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0); setField(0); setField2(0);">
                                                 <option value="1" class="capitalize" data-icon="fa fa-file-text-o" selected>Freitext</option>
@@ -223,7 +231,7 @@
                                     </div>
 
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 5px;">
                                         <fieldset class="checkbox entrylist">
                                             <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
                                             <label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
@@ -232,9 +240,9 @@
 
 
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0;">
                                         <div class="answ_option" id="answ_opt" name="answer_options_div">
-                                            <input class="btn btn-success btn-sm" id="button_answ" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button">
+                                            <input class="btn btn-success btn-sm" id="button_answ" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none; margin-top: 10px;"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button">
                                         </div>
                                     </div>
 
@@ -263,7 +271,7 @@
                         <div class="panel-body">
 
 
-                            <div class="col-md-11 col-sm-11 col-xs-10">
+                            <div class="col-md-11 col-sm-11 col-xs-10" style="padding-left: 0;">
                                 <h4 id="reference" name="reference" class="heading-reference">Frage #1</h4>
                             </div>
 
@@ -272,7 +280,7 @@
                             </div>
 
 
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 1px;">
                                 <fieldset>
                                     <label class="questions" for="question" name="quest_label">Frage: &nbsp</label>
 
@@ -284,7 +292,7 @@
                                 <br>
                             </div>
 
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 28px;">
                                 <fieldset>
                                     <select class="selectpicker" name="type_select" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0); setField(0); setField2(0);">
                                         <option value="1" class="capitalize" data-icon="fa fa-file-text-o" selected>Freitext</option>
@@ -296,7 +304,7 @@
                             </div>
 
 
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 5px;">
                                 <fieldset class="checkbox entrylist">
                                     <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
                                     <label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
@@ -305,9 +313,9 @@
 
 
 
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0;">
                                 <div class="answ_option" id="answ_opt" name="answer_options_div">
-                                    <input class="btn btn-success btn-sm" id="button_answ" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button">
+                                    <input class="btn btn-success btn-sm" id="button_answ" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none; margin-top: 10px;"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button">
                                 </div>
                             </div>
 

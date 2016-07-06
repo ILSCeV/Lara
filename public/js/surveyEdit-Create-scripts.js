@@ -274,7 +274,7 @@ function check_question_type(number) {
 
     if ($('#field_type').val() === "3")
         $('#button_answ').fadeTo('slow', 1)&
-        $('#button_answ').attr('style', 'visibility:visible');
+        $('#button_answ').attr('style', 'visibility:visible; margin-top: 10px');
     else
         void(0);
 
@@ -293,7 +293,7 @@ function check_question_type(number) {
 
     if ($('#field_type' + number).val() === "3")
         $('#button_answ' + number).fadeTo('slow', 1) &
-        $('#button_answ' + number).attr('style', 'visibility:visible');
+        $('#button_answ' + number).attr('style', 'visibility:visible; margin-top: 10px');
 
     if (document.getElementById('button_answ' + number))
         var att2 = document.getElementById('button_answ' + number).getAttribute('style');
@@ -395,6 +395,7 @@ $(function () {
     if (window.location.pathname === '/survey/create') {
         $('#heading_create').attr('style', '');
         $('.question_edit').remove();
+        $(document).find('#password_note').attr('style', 'color: #BDBDBD; display: block;');
     }
     else {
         $('#heading_edit').attr('style', '');
