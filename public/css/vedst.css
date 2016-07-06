@@ -150,6 +150,7 @@ input[type=number],
     line-height: normal;
     justify-content: center;
     align-items: center;
+    word-break: break-all;
 
     padding: 0 5% 0 5%;
 
