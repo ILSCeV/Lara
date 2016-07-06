@@ -11,6 +11,15 @@
     box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
+@media screen and (max-width: 978px) {
+    .calendarWrapper{
+        overflow: visible;
+        background-color: transparent;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+}
+
 .height10vh {
     height: 10vh;
 }
@@ -48,13 +57,18 @@
     }
 }
 
-.WeekMarker {
+.WeekMarker, .WeekMarkerRow {
     background-color: #efefef !important;
 }
+
 
 @media screen and (max-width: 978px) {
     .WeekMarker {
         background-color: #a1a1a1 !important;
+    }
+
+    .WeekMarkerRow{
+        background-color: #F6F5F3 !important;
     }
 }
 
