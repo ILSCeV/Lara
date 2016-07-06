@@ -222,7 +222,7 @@ jQuery( document ).ready( function( $ ) {
         var counter = $(this).attr('id').slice(10, 20);
 
         // Adding answerid to the update form
-        $(document).find('.update').attr('action', 'http://localhost:8000/survey/3/answer/'+counter);
+        $(document).find('.update').attr('action', window.location.href+'/answer/'+counter);
 
         count_clicks++;
 
