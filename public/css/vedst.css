@@ -135,6 +135,9 @@ input[type=number],
 /**
  * Month view
  */
+.padleft {
+    padding-left: 4px;
+}
 
 .cal-event {
     width: 100%;
