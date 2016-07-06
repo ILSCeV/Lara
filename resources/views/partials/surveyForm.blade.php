@@ -366,7 +366,13 @@
             else {
                 $('#heading_edit').attr('style', '');
                 $('.create_survey').remove();
-                $('.btnRemoveQuestion').attr('disabled', false);
+                if ($('#ID2_reference').attr('name') == "reference") {
+                    $('.btnRemoveQuestion').attr('disabled', false);
+                }
+                else {
+                    $('.btnRemoveQuestion').attr('disabled', true);
+                }
+
             }
 
         });
