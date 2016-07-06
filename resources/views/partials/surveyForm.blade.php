@@ -68,6 +68,7 @@
                     newElem.find('.btn-success').attr('onclick', 'javascript:clone_this(this, "new_passage",' + (newNum - 1) + ');');
 
                     newElem.find('.answer_option').val('');
+                    newElem.find("[class^=passage]").remove();
                     newElem.find('.btnRemove').attr('id', 'button_del_question' + newNum);
 
                     newElem.find('.passage' + newNum).slice(1).remove();
