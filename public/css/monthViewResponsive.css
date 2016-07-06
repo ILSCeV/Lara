@@ -49,7 +49,7 @@
 }
 
 .WeekMarker {
-    background-color: #efefef;
+    background-color: #efefef !important;
 }
 
 @media screen and (max-width: 978px) {
