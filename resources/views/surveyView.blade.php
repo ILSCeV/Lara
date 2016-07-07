@@ -197,7 +197,7 @@ $userCanEditDueToRole
                                 {{--autocomplete for clubs is not working right now--}}
                                 <div id="dropdown_club" class="dropdown">
                                     <div class="btn-group col-md-8 no-padding">
-                                        {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'autocomplete' => 'off', 'required' => true, 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                                        {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                                     </div>
                                     <ul id="dropdown-menu_club" class="dropdown-menu dropdown-club"></ul>
                                 </div>
@@ -242,8 +242,8 @@ $userCanEditDueToRole
                             <td class="tdButtons " id="panelNoShadow">
                                 {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;', 'fo]) !!}
                                 --}}
-                                <button type="submit" class="btn btn-primary btn-margin" id="noMarginMobile"
-                                        style="display: inline-block;"><i class="fa fa-floppy-o"></i></button>
+                                <input type="submit" class="btn btn-primary btn-margin fa fa-floppy-o" id="noMarginMobile" value=""
+                                        style="display: inline-block; height: 34px;">
                                {!! Form::close() !!}
                             </td>
                         </tr>

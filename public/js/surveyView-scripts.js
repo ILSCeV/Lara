@@ -256,6 +256,7 @@ jQuery( document ).ready( function( $ ) {
         $('.table').find('input').each(function () {
             $(".editButton").not('#editButton' + counter).attr('disabled', 'disabled');
         });
+            $(document).find(".btn-margin").attr('disabled', 'disabled');
 
         if (count_clicks === 1) {
 
@@ -489,6 +490,7 @@ jQuery( document ).ready( function( $ ) {
                 $('.table').find('input').each(function () {
                     $(".editButton").not('#editButton' + counter).prop('disabled', false);
                 });
+                    $(".btn-margin").prop('disabled', false);
 
             },
 
