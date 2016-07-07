@@ -117,7 +117,6 @@ jQuery( document ).ready( function( $ ) {
 
 // hide dropdown if users clicks on dropdown
     $("[class^=row]").on('click', 'ul', function () {
-        alert('test');
         $('.edit_drop').attr('style', 'display: none');
     });
 });
