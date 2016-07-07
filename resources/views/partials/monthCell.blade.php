@@ -2,7 +2,7 @@
 
 @foreach($surveys as $survey) {{-- going over all surveys see weekCellSurvey for a single survey--}}
 	@if(date("Y-m-d", strtotime($survey->deadline)) === date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])))
-		@if(!Session::has('userId') AND $survey->is_private == 0 )
+		@if(!Session::has('userId') AND $survey->is_private)
 			{{-- check current session for user role && and the survey for private status--}}
 			{{-- no userId means this a guest account, so he gets blocked here--}}
 
