@@ -121,9 +121,7 @@ class SurveyAnswerController extends Controller
         //check if survey needs a password and validate hashes
         if ($survey->password !== ''
             && !Hash::check( $input->password, $survey->password ) ) {
-            Session::put('message', 'Fehler: das angegebene Passwort ist falsch, keine Änderungen wurden gespeichert. Bitte versuche es erneut oder frage ein anderes Mitglied oder CL.');
-            Session::put('msgType', 'danger');
-            return Redirect::action('SurveyController@show', array('id' => $survey->id));
+            return response()->json('Fehler: das eingegebene Passwort war leider falsch.', 401);
         }
 
         $survey_answer = SurveyAnswer::findOrFail($answerid);
@@ -174,9 +172,6 @@ class SurveyAnswerController extends Controller
                                     "club" => $input->club
                                 ],
                                 200);
-
-
-
     }
 
     /**
