@@ -76,8 +76,7 @@ class SurveyController extends Controller
         $revision_survey = new Revision($survey);
         $survey->creator_id = Session::get('userId');
         $survey->title = $request->title;
-        //if URL is in the description, convert it to clickable hyperlink
-        $survey->description = $this->addLinks($request->description);
+        $survey->description = $request->description;
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate.$request->deadlineTime));
         $survey->is_anonymous = isset($request->is_anonymous);
         $survey->is_private = isset($request->is_private);
@@ -321,6 +320,9 @@ class SurveyController extends Controller
             }
         }
 
+        //if URL is in the description, convert it to clickable hyperlink
+        $survey->description = $this->addLinks($survey->description);
+
         //return all the gathered information to the survey view
         return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
             'userGroup', 'userStatus', 'userCanEditDueToRole', 'evaluation', 'revisions', 'userParticipatedAlready'));
@@ -360,8 +362,7 @@ class SurveyController extends Controller
 
         //edit existing survey
         $survey->title = $request->title;
-        //if URL is in the description, convert it to clickable hyperlink
-        $survey->description = $this->addLinks($request->description);
+        $survey->description = $request->description;
 
         //format deadline for database
         $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate.$request->deadlineTime));
