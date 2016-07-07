@@ -388,7 +388,7 @@ jQuery( document ).ready( function( $ ) {
 
     $("form").find('.update').on('submit', function () {
 
-        var password = $('#password').val();
+        var password = $("[name^=password]").val();
         var counter_ajax = $('#get_row').val();
         var count_answers = 0;
         var checked_answers = [];
