@@ -43,7 +43,7 @@
     line-height: 10vh;
     height: 10vh;
     border: solid;
-    border-width: 0px 0px 0px 1px;
+    border-width: 0px 0px 0px 2px;
     border-color: #dddddd;
 }
 
@@ -123,7 +123,7 @@
     line-height: 10vh;
     height: 10vh;
     border: solid;
-    border-width: 1px 0px 0px 0px;
+    border-width: 2px 0px 0px 0px;
     border-color: #dddddd;
 }
 
@@ -153,7 +153,7 @@
 .custom-md-85 {
     width: 13.714%;
     text-align: left;
-    border-width: 1px 0px 0px 1px;
+    border-width: 2px 0px 0px 2px;
 }
 
 .nobordertop{

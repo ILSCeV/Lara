@@ -195,7 +195,7 @@ $userCanEditDueToRole
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Club</th>
+                            <th>mein Club</th>
                             @foreach($questions as $question)
                                 <th class="question">
                                     {{$question->question}}
