@@ -77,6 +77,7 @@ $userCanEditDueToRole
         @foreach($questions as $question)
             <?php $count += 1; ?>
              @if($question->is_required == 1)
+              {{--if a question is set to required show a * if the user didn't fill it in--}}
                 #survey-answer td:nth-of-type({{$count}}):before {
                         content: "{{$question->question}} *";
                         float: left;
@@ -100,7 +101,7 @@ $userCanEditDueToRole
         }
     </style>
 @stop
-@section('moreScripts')
+@section('moreScripts'){{--collection of used java script functions to clean up the code--}}
     <script src="{{ asset('js/surveyView-scripts.js') }}"></script>
 @stop
 @section('content')
@@ -151,46 +152,6 @@ $userCanEditDueToRole
         <div class="nameToQuestion">
             <div class="panel" id="panelNoShadow">
                 <div id="survey-answer" class="table-responsive-custom">
-        {{--
-                    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-                    <script>
-                        $(document).ready(function() {
-                            $(".fa-pencil").click(function () {
-                                var counter = $(this).attr('id');
-
-                                $(document).ready(function() {
-                                    $(".row" + counter).find(".singleAnswer").click(function () {
-                                        if ($('#' + counter).attr('class') == 'fa fa-floppy-o') {
-                                            var OriginalContent = $(this).text();
-                                            $(this).addClass("cellEditing");
-                                            $(this).html("<input id='input_new' type='text' value='" + OriginalContent.trim() + "' />");
-                                            $(this).children().first().focus();
-                                            $(this).children().first().keypress(function (e) {
-                                                if (e.which == 13) {
-                                                    var newContent = $(this).val();
-
-                                                    while (newContent == '') {
-                                                        newContent = window.prompt('Antworten dürfen nicht leer sein.');
-                                                    }
-
-                                                    $(this).parent().text(newContent);
-                                                    $(this).parent().removeClass("cellEditing");
-                                                }
-                                            });
-                                            $(this).children().first().blur(function () {
-                                                $(this).parent().text(OriginalContent);
-                                                $(this).parent().removeClass("cellEditing");
-                                            });
-                                            $(this).find('input').dblclick(function (e) {
-                                                e.stopPropagation();
-                                            });
-                                        }
-                                    });
-                                });
-                            });
-                        });
-                    </script>
-        --}}
                     <table class="table table-striped table-bordered table-condensed table-responsive-custom">
                         <thead>
                         <tr>
@@ -299,8 +260,9 @@ $userCanEditDueToRole
                                             </td>
                                         @endforeach
                                         @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
-                                        <!--Edid Delete Buttons-->
+                                        <!--Edit Delete Buttons-->
                                             <td class="tdButtons panel" id="panelNoShadow">
+                                                {{--not working at the moment--}}
                                                 {{--<a href="#"--}}
                                                    {{--class="editButton btn btn-primary "--}}
                                                    {{--data-toggle="tooltip"--}}
@@ -325,6 +287,7 @@ $userCanEditDueToRole
                                     </tr>
                                 @endforeach
                                 <!-- Start of evaluation -->
+                                {{-- shows a statistic of answers of the users who already took part in the survey--}}
 
                                 <?php $i = 0; ?>
                                 @foreach($answers as $key => $answer)
@@ -381,7 +344,10 @@ $userCanEditDueToRole
 
 {{---------------------------------------------change-history-----------------------------------------------------}}
     @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
+        {{--only if the survey is public or if the user is the creator of the survey--}}
         @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
+            {{--only if the results are always visiable or the user has already taken part--}}
+            {{--they can see the change history of the survey--}}
             <br>
             <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
             <a id="show-hide-history" class="text-muted hidden-print" href="#">
@@ -408,6 +374,7 @@ $userCanEditDueToRole
                                     <tr>
                                         <td>
                                             @if(empty($revision['creator_id']))
+                                                {{--empty users will be marked and named guest(Gast)--}}
                                                 Gast
                                             @else
                                                 {{$revision['creator_id']}}
@@ -424,6 +391,7 @@ $userCanEditDueToRole
                                 <tr>
                                     <td>
                                         @if(empty($revision['creator_id']))
+                                            {{--empty users will be marked and named guest(Gast)--}}
                                             Gast
                                         @else
                                             {{$revision['creator_id']}}
