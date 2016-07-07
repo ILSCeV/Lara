@@ -126,7 +126,7 @@ $userCanEditDueToRole
         </div>
         <div class="panel-body">
             @if($survey->description != null)
-                Beschreibung: {{$survey->description }}
+                Beschreibung: {!! $survey->description !!}
             @endif
             <br>
             Die Umfrage läuft noch bis: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} um

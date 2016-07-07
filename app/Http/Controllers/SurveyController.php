@@ -320,7 +320,9 @@ class SurveyController extends Controller
             }
         }
 
-        //if URL is in the description, convert it to clickable hyperlink
+        //ignore html tags in the description
+        $survey->description = htmlspecialchars($survey->description, ENT_NOQUOTES);
+        //if URL is in the description, convert it to clickable hyperlink (<a> tag)
         $survey->description = $this->addLinks($survey->description);
 
         //return all the gathered information to the survey view
