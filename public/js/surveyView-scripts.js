@@ -435,6 +435,10 @@ jQuery( document ).ready( function( $ ) {
 
             complete: function () {
 
+            },
+
+            success: function () {
+
                 var counter = $('#get_row').val();
 
                 var column_counter = -3;
@@ -492,11 +496,7 @@ jQuery( document ).ready( function( $ ) {
                 $('.table').find('input').each(function () {
                     $(".editButton").not('#editButton' + counter).prop('disabled', false);
                 });
-                    $(".btn-margin").prop('disabled', false);
-
-            },
-
-            success: function (insertedData) {
+                $(".btn-margin").prop('disabled', false);
 
             },
 
