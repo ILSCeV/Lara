@@ -291,10 +291,12 @@ $userCanEditDueToRole
                                         @endif
                                     </tr>
                                 @endforeach
+
                                 <!-- Start of evaluation -->
                                 {{-- shows a statistic of answers of the users who already took part in the survey--}}
 
                                 <?php $i = 0; ?>
+                                    @if(!empty(array_filter($evaluation)))
                                 @foreach($answers as $key => $answer)
                                     @if($i == 0)
                                         <tr>
@@ -304,8 +306,6 @@ $userCanEditDueToRole
                                                 <td class="transparent background">bg</td>
                                             @endforeach
                                         </tr>
-                                    @endif
-                                    @if($i == 0)
                                         <tr id="evaluation">
                                             <td class="" id="EvaluationColor">
                                                 Auswertung
@@ -336,6 +336,7 @@ $userCanEditDueToRole
                                     @endif
                                     <?php $i += 1; ?>
                                 @endforeach
+                                            @endif
                                 <!-- End of evaluation -->
                             @endif
                         @endif
