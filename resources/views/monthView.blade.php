@@ -40,25 +40,25 @@
             <div class="calendarWeek noBorderTop">
                 KW
             </div>
-            <div class="weekDay">
+            <div class="weekDay padleft">
                 Mo
             </div>
-            <div class="weekDay">
+            <div class="weekDay padleft">
                 Di
             </div>
-            <div class="weekDay">
+            <div class="weekDay padleft">
                 Mi
             </div>
-            <div class="weekDay">
+            <div class="weekDay padleft">
                 Do
             </div>
-            <div class="weekDay">
+            <div class="weekDay padleft">
                 Fr
             </div>
-            <div class="weekDay">
+            <div class="weekDay padleft">
                 Sa
             </div>
-            <div class="weekDay">
+            <div class="weekDay padleft">
                 So
             </div>
         </div>
@@ -106,7 +106,7 @@
                                                     <!--All regular days in this month, white-->
                                             <div class="thisMonth custom-md-85">
                                                 @endif
-                                                <div class="cell10">
+                                                <div class="cell10 padleft">
                                                     @if(Session::has('userGroup'))
                                                         <a href="{{ Request::getBasePath() }}/
 			event/
