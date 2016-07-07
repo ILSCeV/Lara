@@ -4,6 +4,20 @@
 
 .calendarWrapper {
     overflow: hidden;
+    background-color: white;
+    padding: 0;
+    margin: 0 15px 0 15px;
+    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+@media screen and (max-width: 978px) {
+    .calendarWrapper{
+        overflow: visible;
+        background-color: transparent;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
 }
 
 .height10vh {
@@ -43,13 +57,18 @@
     }
 }
 
-.WeekMarker {
-    background-color: #efefef;
+.WeekMarker, .WeekMarkerRow {
+    background-color: #efefef !important;
 }
+
 
 @media screen and (max-width: 978px) {
     .WeekMarker {
         background-color: #a1a1a1 !important;
+    }
+
+    .WeekMarkerRow{
+        background-color: #F6F5F3 !important;
     }
 }
 
@@ -191,6 +210,10 @@
 /*
     space for number and space for event
 */
+/*
+    cell10 = a cell width 10%. Used to encapsulate the
+    day number on the left side of the month cell
+*/
 .cell10 {
     width: 10%;
     float: left;
@@ -201,6 +224,10 @@
     height: 10vh;
 }
 
+/*
+    cell90 = a cell with 90% width. Used to encapsulate the
+    event (or white space) of the month cell
+*/
 .cell90 {
     width: 90%;
     float: right;
