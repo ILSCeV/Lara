@@ -173,6 +173,15 @@ jQuery( document ).ready( function( $ ) {
 
 });
 
+$(document).ready(function() {
+
+    window.onresize = resize_evaluation_heading();
+    function resize_evaluation_heading() {
+        var height_evaluation = $('#evaluation').height();
+
+        $(document).find('.evaluation_heading').attr('style', 'height:'+height_evaluation+'px;');
+    }
+});
 
 
 

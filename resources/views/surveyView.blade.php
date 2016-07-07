@@ -307,7 +307,7 @@ $userCanEditDueToRole
                                             @endforeach
                                         </tr>
                                         <tr id="evaluation">
-                                            <td class="" id="EvaluationColor">
+                                            <td class="evaluation_heading" id="EvaluationColor">
                                                 Auswertung
                                             </td>
                                             <td class="" id="EvaluationColor"></td>
