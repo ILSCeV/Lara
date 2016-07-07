@@ -389,6 +389,7 @@ jQuery( document ).ready( function( $ ) {
 
     $("form").find('.update').on('submit', function () {
 
+        var password = $('#password').val();
         var counter_ajax = $('#get_row').val();
         var count_answers = 0;
         var checked_answers = [];
@@ -424,6 +425,7 @@ jQuery( document ).ready( function( $ ) {
                 "club": $('.row' + counter_ajax).find("[name^=club]").val(),
                 "ldapId": $('.row' + counter_ajax).find("[name^=ldapID_edit]").val(),
                 "answers": checked_answers,
+                "password": password,
                 "_method": "put"
 
             }),
