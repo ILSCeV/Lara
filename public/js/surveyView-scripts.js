@@ -66,18 +66,9 @@ $(".editRow1").click(function() {
 //Replace edit icon with save icon
 $('.editButton').click(function() {
     $('#display_advance').toggle('1000');
-    $(this).toggleClass("editButton btn btn-primary fa-pencil editButton btn btn-success fa-floppy-o ");
-    
-    if($(this).val() == '')
-    {
-        $(this).val('');
-    }
-    else if($(this).val() == '')
-    {
-        $(this).val('')
-    }
-
-
+    $(this).addClass("editButton btn btn-success fa-floppy-o");
+    $(this).removeClass("btn-primary fa-pencil");
+    $(this).val('');
 });
 
 function change_to_submit(number) {
@@ -433,7 +424,19 @@ jQuery( document ).ready( function( $ ) {
 
             contentType: 'application/json',
 
+            beforeSend: function() {
+
+                $('#editButton' + counter_ajax).addClass("fa fa-spinner fa-spin");
+
+            },
+
             complete: function () {
+
+                $('#editButton' + counter_ajax).val('');
+
+                $('#editButton' + counter_ajax).removeClass("editButton btn btn-success fa-floppy-o");
+
+                $('#editButton' + counter_ajax).addClass("editButton btn btn-primary fa-pencil");
 
             },
 
@@ -498,10 +501,73 @@ jQuery( document ).ready( function( $ ) {
                 });
                 $(".btn-margin").prop('disabled', false);
 
+                $('#editButton' + counter_ajax).removeClass("fa-spinner fa-spin");
+
             },
 
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert(JSON.stringify(xhr.responseJSON));
+            error: function () {
+                alert('Die vorgenommenen Änderungen konnten nicht gespeichert werden.');
+
+                var answer_number = $('#get_row').val();
+
+                var column_counter = -3;
+                $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
+                    column_counter++;
+
+                    if ($(this).attr('id') == 'cellEditing-2') {
+                        var newContent = $(this).find('input').val();
+                        $(this).text(newContent);
+                    }
+
+                    if ($(this).attr('id') == 'cellEditing-1') {
+                        var newContent = $(this).find('input').val();
+                        $(this).text(newContent);
+                    }
+
+                    if ($(this).attr('id') == 'text') {
+                        var newContent = $(this).find('input').val();
+                        $(this).text(newContent);
+                    }
+
+                    if ($(this).attr('id') == 'radio'+column_counter + '-' + counter_ajax) {
+                        if ($(this).find('input:checked').val() == 1) {
+                            var newContent = "Ja";
+                            $(this).text(newContent);
+                        }
+
+                        if ($(this).find('input:checked').val() == 0) {
+                            var newContent = "Nein";
+                            $(this).text(newContent);
+                        }
+
+                        if ($(this).find('input:checked').val() == -1) {
+                            var newContent = "keine Angabe";
+                            $(this).text(newContent);
+                        }
+                    }
+
+                    if ($(this).attr('id') == 'dropdown') {
+                        var skillsSelect = document.getElementById(""+column_counter);
+                        var newContent = skillsSelect.options[skillsSelect.selectedIndex].text;
+                        $(this).text(newContent);
+                    }
+
+                    count_clicks = 0;
+
+                    $(".row" + answer_number).find(".singleAnswer").attr('style', '');
+
+
+                });
+                $('.row' + answer_number).find('td').each(function () {
+                    $("#radio"+column_counter + '-' + counter_ajax).attr('id', '');
+                });
+
+                $('.table').find('input').each(function () {
+                    $(".editButton").not('#editButton' + answer_number).prop('disabled', false);
+                });
+                $(".btn-margin").prop('disabled', false);
+
+                $('#editButton' + counter_ajax).removeClass("fa-spinner fa-spin");
             }
 
         });

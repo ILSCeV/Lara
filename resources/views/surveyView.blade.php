@@ -281,7 +281,6 @@ $userCanEditDueToRole
                                                    data-placement="bottom"
                                                    onclick="change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
 
-                                               </input>
                                                 <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                                    class="btn btn-default deleteRow"
                                                    data-toggle="tooltip"
