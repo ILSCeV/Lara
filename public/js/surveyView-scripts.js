@@ -246,27 +246,27 @@ jQuery( document ).ready( function( $ ) {
 
     $(this).find(".fa-pencil").click(function () {
 
-        var counter = $(this).attr('id').slice(10, 20);
+        var answer_number = $(this).attr('id').slice(10, 20);
 
         // Adding answerid to the update form
-        $(document).find('.update').attr('action', window.location.href+'/answer/'+counter);
+        $(document).find('.update').attr('action', window.location.href+'/answer/'+answer_number);
 
         count_clicks++;
 
         $('.table').find('input').each(function () {
-            $(".editButton").not('#editButton' + counter).attr('disabled', 'disabled');
+            $(".editButton").not('#editButton' + answer_number).attr('disabled', 'disabled');
         });
             $(document).find(".btn-margin").attr('disabled', 'disabled');
 
         if (count_clicks === 1) {
 
 
-            $(".row" + counter).find(".singleAnswer").attr('style', 'background-color: #B0C4DE');
+            $(".row" + answer_number).find(".singleAnswer").attr('style', 'background-color: #B0C4DE');
 
             var i = -3;
             var question_counter = -3;
 
-            $(".row" + counter).find(".singleAnswer").each(function () {
+            $(".row" + answer_number).find(".singleAnswer").each(function () {
 
                 var field_type = $('#field_type' + question_counter).val();
                 var OriginalContent = $(this).text();
@@ -338,7 +338,7 @@ jQuery( document ).ready( function( $ ) {
                 if (i > -1 && field_type == 2) {
                     var selected_answer_radio = $(this).text().trim();
 
-                    $(this).addClass("cellEditing" + i).attr('id', 'radio'+i);
+                    $(this).addClass("cellEditing" + i).attr('id', 'radio'+i+ '-' + answer_number);
                     $(this).html("");
                     var y = 0;
                     $('.question' + i).find('input:radio').each(function () {
@@ -352,7 +352,7 @@ jQuery( document ).ready( function( $ ) {
 
                         new_radio.setAttribute('value', document.getElementById('radio' + i + '-' + y).value);
                         new_radio.appendChild(radio_text);
-                        var radio = document.getElementById('radio'+i);
+                        var radio = document.getElementById('radio'+i+ '-' + answer_number);
                         radio.appendChild(new_radio);
 
                         y++;
@@ -396,7 +396,7 @@ jQuery( document ).ready( function( $ ) {
 
         $(".row"+counter_ajax).find(".singleAnswer").not(".cellEditing-1").not(".cellEditing-2").each(function () {
 
-            if ($(this).attr('id') == 'radio'+count_answers) {
+            if ($(this).attr('id') == 'radio' +count_answers + '-' + counter_ajax) {
                 var answers = $(this).find('input:checked').val();
                 checked_answers.push(answers);
 
@@ -439,10 +439,10 @@ jQuery( document ).ready( function( $ ) {
 
             success: function () {
 
-                var counter = $('#get_row').val();
+                var answer_number = $('#get_row').val();
 
                 var column_counter = -3;
-                $('.row' + counter).find("[class^=singleAnswer]").each(function () {
+                $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
                     column_counter++;
 
                     if ($(this).attr('id') == 'cellEditing-2') {
@@ -460,7 +460,7 @@ jQuery( document ).ready( function( $ ) {
                         $(this).text(newContent);
                     }
 
-                    if ($(this).attr('id') == 'radio'+column_counter) {
+                    if ($(this).attr('id') == 'radio'+column_counter + '-' + counter_ajax) {
                         if ($(this).find('input:checked').val() == 1) {
                             var newContent = "Ja";
                             $(this).text(newContent);
@@ -485,16 +485,16 @@ jQuery( document ).ready( function( $ ) {
 
                     count_clicks = 0;
 
-                    $(".row" + counter).find(".singleAnswer").attr('style', '');
+                    $(".row" + answer_number).find(".singleAnswer").attr('style', '');
 
 
                 });
-                $('.row' + counter).find('td').each(function () {
-                    $("#radio"+column_counter).attr('id', '');
+                $('.row' + answer_number).find('td').each(function () {
+                    $("#radio"+column_counter + '-' + counter_ajax).attr('id', '');
                 });
 
                 $('.table').find('input').each(function () {
-                    $(".editButton").not('#editButton' + counter).prop('disabled', false);
+                    $(".editButton").not('#editButton' + answer_number).prop('disabled', false);
                 });
                 $(".btn-margin").prop('disabled', false);
 
