@@ -347,7 +347,7 @@ jQuery( document ).ready( function( $ ) {
                         new_radio.setAttribute('type', 'radio');
                         new_radio.setAttribute('data-id', 'radio' + i + '-' + radio_counter);
                         new_radio.setAttribute('id', '' + i);
-                        new_radio.setAttribute('name', 'answers[' + question_counter + ']');
+                        new_radio.setAttribute('name', 'answers[' + question_counter + ']-edit');
                         var radio_text = document.createTextNode(document.getElementById('radio' + i + '-' + y).value);
 
                         new_radio.setAttribute('value', document.getElementById('radio' + i + '-' + y).value);
