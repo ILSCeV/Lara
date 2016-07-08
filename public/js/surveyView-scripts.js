@@ -234,12 +234,19 @@ jQuery( document ).ready( function( $ ) {
 
     var count_clicks = 0;
 
+    // Array with saved user status icon
+    var userStatusIcon = [];
+
     // Array for saving current content
     var oldContent = [];
 
     $(this).find(".fa-pencil").click(function () {
 
         var answer_number = $(this).attr('id').slice(10, 20);
+
+        // Pushing user status icon to array for accessibility in ajax error handling
+        var get_userStatusIcon = $(".row" + answer_number).find("[name^=status-icon]").attr('title');
+        userStatusIcon.push(get_userStatusIcon);
 
         // Adding answerid to the update form
         $(document).find('.update').attr('action', window.location.href+'/answer/'+answer_number);
@@ -473,7 +480,7 @@ jQuery( document ).ready( function( $ ) {
 
             },
 
-            success: function () {
+            success: function (data) {
 
                 var answer_number = $('#get_row').val();
 
@@ -484,8 +491,7 @@ jQuery( document ).ready( function( $ ) {
 
                     if ($(this).attr('id') == 'cellEditing-2') {
                         var newContent = $(this).find('input').val();
-                        $(this).html("<i id='userStatus' class='' style='color: forestgreen;' title='Aktiv' ></i> " + newContent);
-                      //  $(this).text(newContent);
+                        $(this).html("<i id='userStatus' ></i> " + newContent);
                     }
 
                     if ($(this).attr('id') == 'cellEditing-1') {
@@ -522,11 +528,11 @@ jQuery( document ).ready( function( $ ) {
                     }
 
                     count_clicks = 0;
-/*
-                    $("#userStatus").attr("style", data["userStatus"]["style"]);
-                    $("#userStatus").attr("data-original-title", data["userStatus"]["title"]);
-                    $("#userStatus").removeClass().addClass(data["userStatus"]["status"]).removeAttr("id");
-                    */
+
+                    $("#userStatus").attr("style", data["user_status"]["style"]);
+                    $("#userStatus").attr("data-original-title", data["user_status"]["title"]);
+                    $("#userStatus").removeClass().addClass(data["user_status"]["status"]).removeAttr("id");
+
 
                     $(".row" + answer_number).find(".singleAnswer").attr('style', '');
 
@@ -546,12 +552,39 @@ jQuery( document ).ready( function( $ ) {
             },
 
             error: function () {
-                alert('Die vorgenommenen Änderungen konnten nicht gespeichert werden.');
+                alert('Die vorgenommenen Änderungen konnten nicht gespeichert werden. Der Eintrag wurde zurückgesetzt.');
 
                 var answer_number = $('#get_row').val();
                 var column_counter = 0;
 
                 $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
+
+                    if (column_counter == 0) {
+                        var newContent = oldContent[column_counter];
+
+                        if (userStatusIcon[0] == "Kandidat") {
+                            $(this).html("<i class='fa fa-adjust' name='status-icon' style='color:yellowgreen;' title='Kandidat'></i> " + newContent);
+                        }
+
+                        if (userStatusIcon[0] == "Veteran") {
+                            $(this).html("<i class='fa fa-star' name='status-icon' style='color:gold;' title='Veteran'></i> " + newContent);
+                        }
+
+                        if (userStatusIcon[0] == "Aktiv") {
+                            $(this).html("<i id='userStatus' class='fa fa-circle' name='status-icon' style='color:forestgreen;' ></i> " + newContent);
+                        }
+
+                        if (userStatusIcon[0] == "ex-Mitglied") {
+                            $(this).html("<i class='fa fa-star-o' name='status-icon' style='color:gold;' title='ex-Mitglied'></i> " + newContent);
+                        }
+
+                        if (userStatusIcon[0] == "Extern") {
+                            $(this).html("<i class='fa fa-circle' name='status-icon' style='color:lightgrey;' title='Extern'></i> " + newContent);
+                        }
+
+                    }
+
+                    else
 
                     $(this).text(oldContent[column_counter]);
                     column_counter++;

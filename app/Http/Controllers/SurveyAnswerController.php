@@ -171,6 +171,7 @@ class SurveyAnswerController extends Controller
         $creator = $survey_answer->getPerson;
         (!empty($creator)) ? ($user_status = $creator->prsn_status) : ($user_status = null);
 
+        $user_status = $this->updateStatus($user_status);
         return response()->json(["user_status" => $user_status
         ],
             200);
