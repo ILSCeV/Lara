@@ -68,9 +68,11 @@
             
             <div class="form-group">
                 <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-                    <div id="password_note" style="display: none;">
+                    @if (empty($survey->password))
+                    <div id="password_note" style="color: #BDBDBD;">
                         <small>(Das Setzen eines Passworts ist optional)</small>
                     </div>
+                    @endif
                     <label for="password" class="control-label col-md-4 col-sm-5 col-xs-12" style="padding-left: 0;">Passwort zum Eintragen:</label>
                     <div class="col-md-4 col-sm-7 col-xs-12" style="padding-left: 0;">
                         {!! Form::password('password', '' ) !!}
