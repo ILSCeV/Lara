@@ -395,11 +395,12 @@ $(function () {
     if (window.location.pathname === '/survey/create') {
         $('#heading_create').attr('style', '');
         $('.question_edit').remove();
-        $(document).find('#password_note').attr('style', 'color: #BDBDBD; display: block;');
     }
+
     else {
         $('#heading_edit').attr('style', '');
         $('.create_survey').remove();
+      //  $(document).find('#password_note').attr('style', 'color: #BDBDBD; display: block;');
         if ($('#ID2_reference').attr('name') == "reference") {
             $('.btnRemoveQuestion').attr('disabled', false);
         }
