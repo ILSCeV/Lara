@@ -561,8 +561,8 @@ jQuery( document ).ready( function( $ ) {
 
             },
 
-            error: function () {
-                alert('Die vorgenommenen Änderungen konnten nicht gespeichert werden. Der Eintrag wurde zurückgesetzt.');
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(JSON.stringify(xhr.responseJSON));
 
                 var answer_number = $('#get_row').val();
                 var column_counter = 0;
