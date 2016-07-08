@@ -272,6 +272,8 @@ $userCanEditDueToRole
                                             </td>
                                         @endforeach
                                         @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
+                                            <?php $timestamp = time(); gmdate("Y-m-d h:i", $timestamp);?>
+                                            @if($survey->deadline >= gmdate("Y-m-d h:i", $timestamp) OR $userId ==  $userCanEditDueToRole)
                                         <!--Edid Delete Buttons-->
                                             <td class="tdButtons panel" id="panelNoShadow">
                                                 <input href="#"
@@ -300,6 +302,7 @@ $userCanEditDueToRole
                                         @else
                                             <td class="tdButtons panel" id="panelNoShadow">
                                             </td>
+                                                @endif
                                         @endif
                                     </tr>
                                 @endforeach
