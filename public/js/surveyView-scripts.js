@@ -235,6 +235,9 @@ jQuery( document ).ready( function( $ ) {
 
     var count_clicks = 0;
 
+    // Array for saving current content
+    var oldContent = [];
+
     $(this).find(".fa-pencil").click(function () {
 
         var answer_number = $(this).attr('id').slice(10, 20);
@@ -367,6 +370,36 @@ jQuery( document ).ready( function( $ ) {
 
                 }
 
+                // Pushing old content into array "oldContent"
+                if ($(this).attr('id') == 'cellEditing-2') {
+                    var answers = $("#newName2").val();
+                    oldContent.push(answers);
+                }
+
+                if ($(this).attr('id') == 'cellEditing-1') {
+                    var answers = $("#newClub").val();
+                    oldContent.push(answers);
+                }
+
+                if ($(this).attr('id') == 'radio' + question_counter + '-' + answer_number) {
+                    if ($(this).find('input:checked').after().val() == 1) {
+                        var answers = "Ja";
+                    }
+                    if ($(this).find('input:checked').after().val() == 0) {
+                        var answers = "Nein";
+                    }
+                    if ($(this).find('input:checked').after().val() == -1) {
+                        var answers = "keine Angabe";
+                    }
+
+                    oldContent.push(answers);
+                }
+
+                if ($(this).attr('id') == 'text' || $(this).attr('id') == 'dropdown') {
+                    var answers = $("#"+ question_counter).val();
+                    oldContent.push(answers);
+                }
+
             });
 
         }
@@ -401,7 +434,6 @@ jQuery( document ).ready( function( $ ) {
         });
 
 
-
         $.ajax({
 
             type: $(this).prop('method'),
@@ -424,9 +456,11 @@ jQuery( document ).ready( function( $ ) {
 
             contentType: 'application/json',
 
-            beforeSend: function() {
+            beforeSend: function () {
 
-                $('#editButton' + counter_ajax).addClass("fa fa-spinner fa-spin");
+                $('#editButton' + counter_ajax).removeClass("fa-floppy-o");
+                $('#editButton' + counter_ajax).attr('value', '');
+                $('#spinner' + counter_ajax).removeClass("hidden");
 
             },
 
@@ -448,9 +482,11 @@ jQuery( document ).ready( function( $ ) {
                 $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
                     column_counter++;
 
+
                     if ($(this).attr('id') == 'cellEditing-2') {
                         var newContent = $(this).find('input').val();
-                        $(this).text(newContent);
+                        $(this).html("<i id='userStatus' class='' style='color: forestgreen;' title='Aktiv' ></i> " + newContent);
+                      //  $(this).text(newContent);
                     }
 
                     if ($(this).attr('id') == 'cellEditing-1') {
@@ -463,7 +499,7 @@ jQuery( document ).ready( function( $ ) {
                         $(this).text(newContent);
                     }
 
-                    if ($(this).attr('id') == 'radio'+column_counter + '-' + counter_ajax) {
+                    if ($(this).attr('id') == 'radio' + column_counter + '-' + counter_ajax) {
                         if ($(this).find('input:checked').val() == 1) {
                             var newContent = "Ja";
                             $(this).text(newContent);
@@ -481,19 +517,24 @@ jQuery( document ).ready( function( $ ) {
                     }
 
                     if ($(this).attr('id') == 'dropdown') {
-                        var skillsSelect = document.getElementById(""+column_counter);
+                        var skillsSelect = document.getElementById("" + column_counter);
                         var newContent = skillsSelect.options[skillsSelect.selectedIndex].text;
                         $(this).text(newContent);
                     }
 
                     count_clicks = 0;
+/*
+                    $("#userStatus").attr("style", data["userStatus"]["style"]);
+                    $("#userStatus").attr("data-original-title", data["userStatus"]["title"]);
+                    $("#userStatus").removeClass().addClass(data["userStatus"]["status"]).removeAttr("id");
+                    */
 
                     $(".row" + answer_number).find(".singleAnswer").attr('style', '');
 
 
                 });
                 $('.row' + answer_number).find('td').each(function () {
-                    $("#radio"+column_counter + '-' + counter_ajax).attr('id', '');
+                    $("#radio" + column_counter + '-' + counter_ajax).attr('id', '');
                 });
 
                 $('.table').find('input').each(function () {
@@ -501,7 +542,7 @@ jQuery( document ).ready( function( $ ) {
                 });
                 $(".btn-margin").prop('disabled', false);
 
-                $('#editButton' + counter_ajax).removeClass("fa-spinner fa-spin");
+                $('#spinner' + counter_ajax).addClass('hidden');
 
             },
 
@@ -509,57 +550,22 @@ jQuery( document ).ready( function( $ ) {
                 alert('Die vorgenommenen Änderungen konnten nicht gespeichert werden.');
 
                 var answer_number = $('#get_row').val();
+                var column_counter = 0;
 
-                var column_counter = -3;
                 $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
+
+                    $(this).text(oldContent[column_counter]);
                     column_counter++;
 
-                    if ($(this).attr('id') == 'cellEditing-2') {
-                        var newContent = $(this).find('input').val();
-                        $(this).text(newContent);
-                    }
-
-                    if ($(this).attr('id') == 'cellEditing-1') {
-                        var newContent = $(this).find('input').val();
-                        $(this).text(newContent);
-                    }
-
-                    if ($(this).attr('id') == 'text') {
-                        var newContent = $(this).find('input').val();
-                        $(this).text(newContent);
-                    }
-
-                    if ($(this).attr('id') == 'radio'+column_counter + '-' + counter_ajax) {
-                        if ($(this).find('input:checked').val() == 1) {
-                            var newContent = "Ja";
-                            $(this).text(newContent);
-                        }
-
-                        if ($(this).find('input:checked').val() == 0) {
-                            var newContent = "Nein";
-                            $(this).text(newContent);
-                        }
-
-                        if ($(this).find('input:checked').val() == -1) {
-                            var newContent = "keine Angabe";
-                            $(this).text(newContent);
-                        }
-                    }
-
-                    if ($(this).attr('id') == 'dropdown') {
-                        var skillsSelect = document.getElementById(""+column_counter);
-                        var newContent = skillsSelect.options[skillsSelect.selectedIndex].text;
-                        $(this).text(newContent);
-                    }
+                });
 
                     count_clicks = 0;
 
                     $(".row" + answer_number).find(".singleAnswer").attr('style', '');
 
 
-                });
                 $('.row' + answer_number).find('td').each(function () {
-                    $("#radio"+column_counter + '-' + counter_ajax).attr('id', '');
+                    $("#radio" + column_counter + '-' + counter_ajax).attr('id', '');
                 });
 
                 $('.table').find('input').each(function () {
@@ -567,7 +573,7 @@ jQuery( document ).ready( function( $ ) {
                 });
                 $(".btn-margin").prop('disabled', false);
 
-                $('#editButton' + counter_ajax).removeClass("fa-spinner fa-spin");
+                $('#spinner' + counter_ajax).addClass('hidden');
             }
 
         });

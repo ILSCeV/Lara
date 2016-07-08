@@ -158,6 +158,7 @@ $userCanEditDueToRole
                     <input type="hidden" id="hdnSession_userName" value="{{Session::get('userName')}}">
                     <input type="hidden" id="hdnSession_userClub" value="{{Session::get('userClub')}}">
                     <input type="hidden" id="hdnSession_userID" value="{{Session::get('userId')}}">
+                    <input type="hidden" id="hdnSession_oldContent" name="hidden_oldContent[]" value="">
 
                     <table class="table table-striped table-bordered table-condensed table-responsive-custom">
                         <thead>
@@ -275,11 +276,12 @@ $userCanEditDueToRole
                                                    class="editButton btn btn-primary fa fa-pencil"
                                                    id="editButton{{$answer->id}}"
                                                    value=""
-                                                   style="height: 34px"
+                                                   style="height: 34px; width: 43px;"
                                                    type="button"
                                                    data-toggle="tooltip"
                                                    data-placement="bottom"
                                                    onclick="change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
+                                                <i id="spinner{{$answer->id}}" class="fa fa-spinner fa-spin fa-2x hidden" style="position: absolute; left: 8px; bottom: 3px;"></i>
 
                                                 <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                                    class="btn btn-default deleteRow"
