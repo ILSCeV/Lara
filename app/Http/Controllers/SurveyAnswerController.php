@@ -168,8 +168,10 @@ class SurveyAnswerController extends Controller
             $revision_cell->save($survey_answer_cell);
         }
 
-        return response()->json([   "name" => $input->name,
-                                    "club" => $input->club
+        $creator = $survey_answer->getPerson;
+        (!empty($creator)) ? ($user_status = $creator->prsn_status) : ($user_status = null);
+
+        return response()->json([   "user_status" => $user_status
                                 ],
                                 200);
     }
