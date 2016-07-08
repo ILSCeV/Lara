@@ -248,8 +248,18 @@ jQuery( document ).ready( function( $ ) {
         var get_userStatusIcon = $(".row" + answer_number).find("[name^=status-icon]").attr('title');
         userStatusIcon.push(get_userStatusIcon);
 
-        // Adding answerid to the update form
-        $(document).find('.update').attr('action', window.location.href+'/answer/'+answer_number);
+
+        var check_url = window.location.href;
+
+        // Adding answerid to the update form and checking if url is correct
+        if (check_url.match('3/') || check_url.match('3#')) {
+            var window_loc = window.location.href;
+            var window_loc_cut = window_loc.substr(0, window_loc.length-1);
+            $(document).find('.update').attr('action', window_loc_cut+'/answer/'+answer_number);
+        }
+        else {
+            $(document).find('.update').attr('action', window.location.href+'/answer/'+answer_number);
+        }
 
         count_clicks++;
 
