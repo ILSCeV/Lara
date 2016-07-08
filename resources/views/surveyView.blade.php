@@ -272,37 +272,35 @@ $userCanEditDueToRole
                                             </td>
                                         @endforeach
                                         @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
-                                            <?php $timestamp = time(); gmdate("Y-m-d h:i", $timestamp);?>
-                                            @if($survey->deadline >= gmdate("Y-m-d h:i", $timestamp) OR $userId ==  $userCanEditDueToRole)
-                                        <!--Edid Delete Buttons-->
-                                            <td class="tdButtons panel" id="panelNoShadow">
-                                                <input href="#"
-                                                   class="editButton btn btn-primary fa fa-pencil"
-                                                   id="editButton{{$answer->id}}"
-                                                   value=""
-                                                   style="height: 34px; width: 43px;"
-                                                   type="button"
-                                                   data-toggle="tooltip"
-                                                   data-placement="bottom"
-                                                   onclick="change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
-                                                <i id="spinner{{$answer->id}}" class="fa fa-spinner fa-spin fa-2x hidden" style="position: absolute; left: 8px; bottom: 3px;"></i>
+                                            @if($survey->deadline >= date("Y-m-d H:i:s") OR $userCanEditDueToRole)
+                                            <!--Edid Delete Buttons-->
+                                                <td class="tdButtons panel" id="panelNoShadow">
+                                                    <input href="#"
+                                                       class="editButton btn btn-primary fa fa-pencil"
+                                                       id="editButton{{$answer->id}}"
+                                                       value=""
+                                                       style="height: 34px; width: 43px;"
+                                                       type="button"
+                                                       data-toggle="tooltip"
+                                                       data-placement="bottom"
+                                                       onclick="change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
+                                                    <i id="spinner{{$answer->id}}" class="fa fa-spinner fa-spin fa-2x hidden" style="position: absolute; left: 8px; bottom: 3px;"></i>
 
-                                                <a href="{{$survey->id}}/answer/{{$answer->id}}"
-                                                   class="btn btn-default deleteRow"
-                                                   data-toggle="tooltip"
-                                                   data-placement="bottom"
-                                                   data-method="delete"
-                                                   data-token="{{csrf_token()}}"
-                                                   rel="nofollow"
-                                                   data-confirm="Möchtest Du diese Antwort wirklich löschen?">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-
-                                            </td>
+                                                    <a href="{{$survey->id}}/answer/{{$answer->id}}"
+                                                       class="btn btn-default deleteRow"
+                                                       data-toggle="tooltip"
+                                                       data-placement="bottom"
+                                                       data-method="delete"
+                                                       data-token="{{csrf_token()}}"
+                                                       rel="nofollow"
+                                                       data-confirm="Möchtest Du diese Antwort wirklich löschen?">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            @endif
                                         @else
                                             <td class="tdButtons panel" id="panelNoShadow">
                                             </td>
-                                                @endif
                                         @endif
                                     </tr>
                                 @endforeach
