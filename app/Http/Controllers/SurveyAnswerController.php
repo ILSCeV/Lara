@@ -171,9 +171,9 @@ class SurveyAnswerController extends Controller
         $creator = $survey_answer->getPerson;
         (!empty($creator)) ? ($user_status = $creator->prsn_status) : ($user_status = null);
 
-        return response()->json([   "user_status" => $user_status
-                                ],
-                                200);
+        return response()->json(["user_status" => $user_status
+        ],
+            200);
     }
 
     /**
@@ -203,4 +203,37 @@ class SurveyAnswerController extends Controller
 
         return Redirect::action('SurveyController@show', array('id' => $surveyid));
     }
+
+    /*
+     *  -------------------- END OF REST-CONTROLLER --------------------
+     */
+
+
+    /**
+     * returns the the style (colored dot) for the corresponding status
+     * used in ajax requests
+     * @param string $user_status
+     * @return array
+     */
+    private function updateStatus($user_status)
+    {
+        switch ($user_status) {
+            case 'candidate':
+                $user_status_style = ["status" => "fa fa-adjust", "style" => "color:yellowgreen;", "title" => "Kandidat"];
+                break;
+            case 'veteran':
+                $user_status_style = ["status" => "fa fa-star", "style" => "color:gold;", "title" => "Veteran"];
+                break;
+            case 'member':
+                $user_status_style = ["status" => "fa fa-circle", "style" => "color:forestgreen;", "title" => "Aktiv"];
+                break;
+            case 'resigned':
+                $user_status_style = ["status" => "fa fa-star-o", "style" => "color:gold;", "title" => "ex-Mitglied"];
+                break;
+            default:
+                $user_status_style = ["status" => "fa fa-circle", "style" => "color:lightgrey;", "title" => "Extern"];
+        }
+        return $user_status_style;
+    }
 }
+
