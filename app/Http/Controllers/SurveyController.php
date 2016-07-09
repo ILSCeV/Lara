@@ -90,7 +90,7 @@ class SurveyController extends Controller
         }
 
         $survey->save();
-        $revision_survey->save($survey);
+        $revision_survey->save($survey, "Umfrage");
 
         $questions = $request->questions;
         $answer_options = $request->answer_options;
@@ -152,11 +152,9 @@ class SurveyController extends Controller
              if($questions_type[$order] == 3) {
                  foreach($answer_options[$order] as $answer_option) {
                      $answer_option_db = new SurveyAnswerOption();
-                     $revision_option = new Revision($answer_option_db);
                      $answer_option_db->survey_question_id = $question_db->id;
                      $answer_option_db->answer_option = $answer_option;
                      $answer_option_db->save();
-                     $revision_option->save($answer_option_db);
                  }
              }
         }
@@ -195,9 +193,7 @@ class SurveyController extends Controller
         //find AnswerOptions belonging to Questions and delete both
         foreach($questions as $question) {
             foreach($question->getAnswerOptions as $answerOption) {
-                $revision_option = new Revision($answerOption);
                 $answerOption->delete();
-                $revision_option->save($answerOption);
             }
             $revision_question = new Revision($question);
             $question->delete();
@@ -206,7 +202,7 @@ class SurveyController extends Controller
 
         //finally delete survey
         $survey->delete();
-        $revision_survey->save($survey);
+        $revision_survey->save($survey, "Umfrage");
         
         //Successmessage and redirect 
         Session::put('message', 'Umfrage gelöscht!' );
@@ -242,7 +238,8 @@ class SurveyController extends Controller
                 $userParticipatedAlready = true;
             }
         }
-        
+
+
         $answers_with_trashed_ids = [];
         $answers_with_trashed = SurveyAnswer::withTrashed()->where('survey_id', $survey->id)->get();
         foreach($answers_with_trashed as $answer){
@@ -255,16 +252,83 @@ class SurveyController extends Controller
             $answer_cells_with_trashed_ids[] = $answer_cell->id;
         }
 
-        $revisions_answer = \Lara\Revision::whereIn("object_id", $answers_with_trashed_ids)->where("object_name", "SurveyAnswer")->get();
-        $revisions_cells = \Lara\Revision::whereIn("object_id", $answer_cells_with_trashed_ids)->where("object_name", "SurveyAnswerCell")->get();
-        $revision_objects = $revisions_answer->merge($revisions_cells)->sortByDesc("created_at");
+        $revisions_objects = \Lara\Revision::join("revision_object_relations", "revisions.id", "=", "revision_object_relations.revision_id")
+            ->where("object_name", "=", "SurveyAnswer")
+//            ->whereIn("object_id", $answers_with_trashed_ids)
+//            ->orWhere(function ($query) use ($answer_cells_with_trashed_ids)
+//                {
+//                  $query->where("object_name", "=", "SurveyAnswerCell")
+//                        ->whereIn("object_id", $answer_cells_with_trashed_ids);
+//                })
+            ->orWhere(function ($query) use ($survey)
+            {
+                $query->where("object_name", "=", "Survey")
+                    ->where("object_id", "=", $survey->id);
+            })
+            ->distinct()
+            ->orderBy("created_at", "desc")
+            ->get(['creator_id', 'summary', 'created_at', 'revision_id']);
 
-        $revisions = [];
-        $i = 0;
-        foreach($revision_objects as $revision) {
-            $revisions[$i] = $revision->toArray();
-            $revisions[$i]['entries'] = RevisionEntry::where("revision_id", $revision->id)->get()->toArray();
-            $i++;
+        $revisions = $revisions_objects->toArray();
+
+        foreach($revisions as $revision_key => $revision) {
+            $creator = Person::where('prsn_ldap_id', '=', $revision['creator_id'])->get(['prsn_name'])->first();
+            (empty($creator)) ? ($revisions[$revision_key]['creator_name'] = "Gast") : ($revisions[$revision_key]['creator_name'] = $creator->prsn_name);
+            unset($revisions[$revision_key]['creator_id']);
+            $revisions[$revision_key]['revision_entries'] = RevisionEntry::where('revision_id', '=', $revision['revision_id'])->get(['changed_column_name', 'old_value', 'new_value'])->toArray();
+            unset($revisions[$revision_key]['revision_id']);
+
+            foreach($revisions[$revision_key]['revision_entries'] as $entry_key => $entry) {
+                // rename the displayed column names to hide database-schema
+                switch($entry['changed_column_name']) {
+                    case "name":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Name";
+                        break;
+                    case "club":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Club";
+                        break;
+                    case "answer":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Antwort";
+                        break;
+                    case "title":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Titel";
+                        break;
+                    case "description":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Beschreibung";
+                        break;
+                    case "deadline":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Deadline";
+                        break;
+                    case "is_anonymous":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Ergebnisse sind nur für den Umfragenersteller sichtbar?";
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['old_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['old_value']);
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
+                        break;
+                    case "show_results_after_voting":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Ergebnisse sind erst nach dem Ausfüllen sichtbar?";
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['old_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['old_value']);
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
+                        break;
+                    case "is_private":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "nur für eingeloggte Nutzer sichtbar?";
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['old_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['old_value']);
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
+                        break;
+                    case "question":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Frage";
+                        break;
+                    case "field_type":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Fragetyp";
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['old_value'] = $this->getFieldTypeName($revisions[$revision_key]['revision_entries'][$entry_key]['old_value']);
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->getFieldTypeName($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
+                        break;
+                    case "is_required":
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Pflichtfrage?";
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['old_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['old_value']);
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
+                        break;
+                }
+            }
         }
         
         //check if the role of the user allows edit/delete for all answers
@@ -386,7 +450,7 @@ class SurveyController extends Controller
 
         //save the updates
         $survey->save();
-        $revision_survey->save($survey);
+        $revision_survey->save($survey, "Umfrage");
 
         //get questions and answer options as arrays from the input
         $questions_new = $request->questions;
@@ -473,9 +537,7 @@ class SurveyController extends Controller
                 $question = SurveyQuestion::findOrFail($questions_db[$i]->id);
 
                 foreach($question->getAnswerOptions as $answer_option) {
-                    $revision_option = new Revision($answer_option);
                     $answer_option->delete();
-                    $revision_option->save($answer_option);
                 }
                 foreach($question->getAnswerCells as $answer_cell) {
                     $revision_cell = new Revision($answer_cell);
@@ -505,9 +567,7 @@ class SurveyController extends Controller
             if($questions_db[$i]->field_type == 3 and $question_type[$i] != 3){
                 $answer_options = $questions_db[$i]->getAnswerOptions;
                 foreach($answer_options as $answer_option) {
-                    $revision_option = new Revision($answer_option);
                     $answer_option->delete();
-                    $revision_option->save($answer_option);
                 }
             }
 
@@ -627,6 +687,34 @@ class SurveyController extends Controller
             '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
             $text);
         return $text;
+    }
+
+    private function getFieldTypeName($value)
+    {
+        switch($value){
+            case 1:
+                return "Freitext";
+            case 2:
+                return "Checkbox";
+            case 3:
+                return "Dropdown";
+            case null:
+                return null;
+        }
+        return "unbekannter Feldtyp";
+    }
+
+    private function booleanIntoText($boolean)
+    {
+        switch ($boolean){
+            case null:
+                return null;
+            case 0:
+                return "Nein";
+            case 1:
+                return "Ja";
+        }
+        return "Fehler";
     }
 
 }

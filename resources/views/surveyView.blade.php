@@ -369,84 +369,57 @@ $userCanEditDueToRole
 
 
 {{---------------------------------------------change-history-----------------------------------------------------}}
-    @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
-        {{--only if the survey is public or if the user is the creator of the survey--}}
-        @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
-            {{--only if the results are always visiable or the user has already taken part--}}
+    @if(!empty($userId))
+        @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
+    	{{--only if the survey is public or if the user is the creator of the survey--}}
+            @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
+			{{--only if the results are always visiable or the user has already taken part--}}
             {{--they can see the change history of the survey--}}
-            <br>
-            <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
-            <a id="show-hide-history" class="text-muted hidden-print" href="#">
-                Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
-            </a>
+                <br>
+                <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
+                <a id="show-hide-history" class="text-muted hidden-print" href="#">
+                    Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
+                </a>
 
-            <div class="panel hide" id="change-history">
-                <div class=table-responsive>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Wer?</th>
-                            <th>Zusammenfassung</th>
-                            <th>Betroffene Spalte</th>
-                            <th>Alter Wert</th>
-                            <th>Neuer Wert</th>
-                            <th>Wann?</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($revisions as $key => $revision)
-                            @if($key > 0)
-                                @if($revision['created_at'] != $revisions[$key-1]['created_at'])
-                                    <tr>
-                                        <td>
-                                            @if(empty($revision['creator_id']))
-                                                {{--empty users will be marked and named guest(Gast)--}}
-                                                Gast
-                                            @else
-                                                {{$revision['creator_id']}}
-                                            @endif
-                                        </td>
-                                        <td>{{$revision['summary']}}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{$revision['created_at']}}</td>
-                                    </tr>
-                                @endif
-                            @else
-                                <tr>
-                                    <td>
-                                        @if(empty($revision['creator_id']))
-                                            {{--empty users will be marked and named guest(Gast)--}}
-                                            Gast
-                                        @else
-                                            {{$revision['creator_id']}}
-                                        @endif
-                                    </td>
-                                    <td>{{$revision['summary']}}</td>
+                <div class="panel hide" id="change-history">
+                    <div class=table-responsive>
+                        <table class="table table-hover table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Wer?</th>
+                                <th>Zusammenfassung</th>
+                                <th>Betroffene Spalte</th>
+                                <th>Alter Wert</th>
+                                <th>Neuer Wert</th>
+                                <th>Wann?</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($revisions as $key_revision => $revision)
+                            <tr id="tr-header-{{$key_revision}}" onclick="toggle({{$key_revision}}, {{count($revision['revision_entries'])}})">
+                                <td>{{$revision['creator_name']}}</td>
+                                <td>{{$revision['summary']}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{$revision['created_at']}}</td>
+                            </tr>
+                                @foreach($revision['revision_entries'] as $key_entry => $entry)
+                                <tr id="tr-data-{{$key_revision}}{{$key_entry}}" style="display:none">
                                     <td></td>
                                     <td></td>
-                                    <td></td>
-                                    <td>{{$revision['created_at']}}</td>
-                                </tr>
-                            @endif
-                            @foreach($revision['entries'] as $revision_entry)
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>{{$revision_entry['changed_column_name']}}</td>
-                                    <td>{{$revision_entry['old_value']}}</td>
-                                    <td>{{$revision_entry['new_value']}}</td>
+                                    <td>{{$entry['changed_column_name']}}</td>
+                                    <td>{{$entry['old_value']}}</td>
+                                    <td>{{$entry['new_value']}}</td>
                                     <td></td>
                                 </tr>
+                                @endforeach
                             @endforeach
-                        @endforeach
-
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            @endif
         @endif
     @endif
-
 @stop
