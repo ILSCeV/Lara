@@ -17,6 +17,8 @@ $(document).ready(function() {
         }
     });
 
+    window.onresize = resize_evaluation_heading();
+    resize_evaluation_heading(); 
 });
 
 //Replace edit icon with save icon
@@ -176,15 +178,13 @@ jQuery( document ).ready( function( $ ) {
 
 });
 
-$(document).ready(function() {
+//give first column in evaluation specific height
+function resize_evaluation_heading() {
+    var height_evaluation = $('#evaluation').height();
 
-    window.onresize = resize_evaluation_heading();
-    function resize_evaluation_heading() {
-        var height_evaluation = $('#evaluation').height();
+    $(document).find('.evaluation_heading').attr('style', 'height:'+height_evaluation+'px;');
+}
 
-        $(document).find('.evaluation_heading').attr('style', 'height:'+height_evaluation+'px;');
-    }
-});
 
 /////////////////////
 // EDITING ANSWERS //
