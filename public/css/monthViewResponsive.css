@@ -277,4 +277,12 @@
         min-height: 5vh;
         height: inherit;
     }
+
+    .height10vh{
+        min-height: 10vh;
+    }
+
+    .noheightmobile{
+        height:10vh;
+    }
 }
