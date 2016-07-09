@@ -127,7 +127,7 @@ td, th{
 }
 
 .table-responsive-custom {
-    width: 90%;
+    width: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
 }
@@ -274,7 +274,8 @@ and also iPads specifically.
 
 /* Desktop */
 @media screen and (min-width: 978px) {
-    .tdButtons{
+    /* to use this class again, write tdButtons*/
+    .tdButtonsNotUsed    {
         position: absolute;
         padding: 0 !important;
         width:5em;

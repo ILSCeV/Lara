@@ -250,7 +250,7 @@ $userCanEditDueToRole
                             <td class="tdButtons " id="panelNoShadow">
                                 {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;', 'fo]) !!}
                                 --}}
-                                <input type="submit" class="btn btn-primary btn-margin fa fa-floppy-o" id="noMarginMobile" value=""
+                                <input type="submit" class="btn btn-primary fa fa-floppy-o" id="noMarginMobile" value=""
                                         style="display: inline-block; height: 34px;">
                                {!! Form::close() !!}
                             </td>
