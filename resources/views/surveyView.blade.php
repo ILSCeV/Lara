@@ -180,6 +180,7 @@ $userCanEditDueToRole
                                     @endif
                                 </th>
                             @endforeach
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -247,7 +248,7 @@ $userCanEditDueToRole
                                     @endif
                                 </td>
                             @endforeach
-                            <td class="tdButtons " id="panelNoShadow">
+                            <td class="tdButtons " id="">
                                 {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;', 'fo]) !!}
                                 --}}
                                 <input type="submit" class="btn btn-primary fa fa-floppy-o" id="noMarginMobile" value=""
@@ -272,6 +273,8 @@ $userCanEditDueToRole
                                             @endif
                                         </td>
                                         @foreach($answer->getAnswerCells as $cell)
+
+
                                             <td class="singleAnswer">
                                                 {{$cell->answer}}
                                             </td>
@@ -279,7 +282,7 @@ $userCanEditDueToRole
                                         @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
                                             @if($survey->deadline >= date("Y-m-d H:i:s") OR $userCanEditDueToRole)
                                             <!--Edid Delete Buttons-->
-                                                <td class="tdButtons panel" id="panelNoShadow">
+                                                <td class="tdButtons " >
                                                     <input href="#"
                                                        class="editButton btn btn-primary fa fa-pencil"
                                                        id="editButton{{$answer->id}}"
@@ -351,6 +354,7 @@ $userCanEditDueToRole
                                                     </div>
                                                 </td>
                                             @endforeach
+                                            <td id="EvaluationColor"></td>
                                         </tr>
                                     @endif
                                     <?php $i += 1; ?>

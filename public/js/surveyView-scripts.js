@@ -1,10 +1,10 @@
 /*
-    Scripts for surveyView
-    Reaction to click on edit delete buttons
-*/
-$(document).ready(function() {
+ Scripts for surveyView
+ Reaction to click on edit delete buttons
+ */
+$(document).ready(function () {
 
-    $('form').on( 'submit', function () {
+    $('form').on('submit', function () {
         // For passworded surveys: check if a password field exists and is not empty
         // We will check correctness on the server side
         if ($('.panel-warning').find("[name^=password]").length
@@ -18,11 +18,11 @@ $(document).ready(function() {
     });
 
     window.onresize = resize_evaluation_heading();
-    resize_evaluation_heading(); 
+    resize_evaluation_heading();
 });
 
 //Replace edit icon with save icon
-$('.editButton').click(function() {
+$('.editButton').click(function () {
     $('#display_advance').toggle('1000');
     $(this).addClass("editButton btn btn-success fa-floppy-o");
     $(this).removeClass("btn-primary fa-pencil");
@@ -32,14 +32,14 @@ $('.editButton').click(function() {
 function change_to_submit(number) {
 
     if ($('#editButton' + number).attr('type') == 'button') {
-        setTimeout(function(){
+        setTimeout(function () {
             $('#editButton' + number).attr('type', 'submit');
-        },100);
+        }, 100);
     }
     else {
-        setTimeout(function(){
+        setTimeout(function () {
             $('#editButton' + number).attr('type', 'button');
-        },100);
+        }, 100);
     }
 }
 
@@ -47,14 +47,14 @@ function change_to_submit(number) {
 // AUTOCOMPLETE USERNAMES EDIT ANSWER //
 ////////////////////////////////////////
 
-jQuery( document ).ready( function( $ ) {
+jQuery(document).ready(function ($) {
 
-   // var row_number = $('#get_row').val();
+    // var row_number = $('#get_row').val();
 
 // open username dropdown on input selection and show only "I'll do it!" button at the beginning
-        $("[class^=row]").on('focus', 'input', function () {
-           $('.edit_drop').attr('style', 'display: block');
-           $(document).find('.dropdown-username').hide();
+    $("[class^=row]").on('focus', 'input', function () {
+        $('.edit_drop').attr('style', 'display: block');
+        $(document).find('.dropdown-username').hide();
     });
 
 // hide all dropdowns on ESC keypress
@@ -75,7 +75,7 @@ jQuery( document ).ready( function( $ ) {
 // AUTOCOMPLETE USERNAMES SURVEY //
 ///////////////////////////////////
 
-jQuery( document ).ready( function( $ ) {
+jQuery(document).ready(function ($) {
 // open username dropdown on input selection and show only "I'll do it!" button at the beginning
     $('.nameToQuestion').find('input').on('focus', function () {
         // remove all other dropdowns
@@ -180,413 +180,416 @@ jQuery( document ).ready( function( $ ) {
 
 //give first column in evaluation specific height
 function resize_evaluation_heading() {
-    var height_evaluation = $('#evaluation').height();
+    if ($(window).width() > 978) {
+        {
+            var height_evaluation = $('#evaluation').height();
 
-    $(document).find('.evaluation_heading').attr('style', 'height:'+height_evaluation+'px;');
+            $(document).find('.evaluation_heading').attr('style', 'height:' + height_evaluation + 'px;');
+        }
+    }
 }
-
 
 /////////////////////
 // EDITING ANSWERS //
 /////////////////////
 
-function get_answer_row(number) {
-    $('#get_row').attr('value', number);
-}
+    function get_answer_row(number) {
+        $('#get_row').attr('value', number);
+    }
 
-jQuery( document ).ready( function( $ ) {
-
-
-    var count_clicks = 0;
-
-    // Array with saved user status icon
-    var userStatusIcon = [];
-
-    // Array for saving current content
-    var oldContent = [];
-
-    $(this).find(".fa-pencil").click(function () {
-
-        var answer_number = $(this).attr('id').slice(10, 20);
-
-        // Pushing user status icon to array for accessibility in ajax error handling
-        var get_userStatusIcon = $(".row" + answer_number).find("[name^=status-icon]").attr('title');
-        userStatusIcon.push(get_userStatusIcon);
+    jQuery(document).ready(function ($) {
 
 
-        var check_url = window.location.href;
+        var count_clicks = 0;
 
-        // Adding answerid to the update form and checking if url is correct
-        if (check_url.match('3/') || check_url.match('3#')) {
-            var window_loc = window.location.href;
-            var window_loc_cut = window_loc.substr(0, window_loc.length-1);
-            $(document).find('.update').attr('action', window_loc_cut+'/answer/'+answer_number);
-        }
-        else {
-            $(document).find('.update').attr('action', window.location.href+'/answer/'+answer_number);
-        }
+        // Array with saved user status icon
+        var userStatusIcon = [];
 
-        count_clicks++;
+        // Array for saving current content
+        var oldContent = [];
 
-        $('.table').find('input').each(function () {
-            $(".editButton").not('#editButton' + answer_number).attr('disabled', 'disabled');
-        });
+        $(this).find(".fa-pencil").click(function () {
+
+            var answer_number = $(this).attr('id').slice(10, 20);
+
+            // Pushing user status icon to array for accessibility in ajax error handling
+            var get_userStatusIcon = $(".row" + answer_number).find("[name^=status-icon]").attr('title');
+            userStatusIcon.push(get_userStatusIcon);
+
+
+            var check_url = window.location.href;
+
+            // Adding answerid to the update form and checking if url is correct
+            if (check_url.match('3/') || check_url.match('3#')) {
+                var window_loc = window.location.href;
+                var window_loc_cut = window_loc.substr(0, window_loc.length - 1);
+                $(document).find('.update').attr('action', window_loc_cut + '/answer/' + answer_number);
+            }
+            else {
+                $(document).find('.update').attr('action', window.location.href + '/answer/' + answer_number);
+            }
+
+            count_clicks++;
+
+            $('.table').find('input').each(function () {
+                $(".editButton").not('#editButton' + answer_number).attr('disabled', 'disabled');
+            });
             $(document).find(".btn-margin").attr('disabled', 'disabled');
 
-        if (count_clicks === 1) {
+            if (count_clicks === 1) {
 
 
-            $(".row" + answer_number).find(".singleAnswer").attr('style', 'background-color: #B0C4DE');
+                $(".row" + answer_number).find(".singleAnswer").attr('style', 'background-color: #B0C4DE');
 
-            var i = -3;
-            var question_counter = -3;
+                var i = -3;
+                var question_counter = -3;
 
-            $(".row" + answer_number).find(".singleAnswer").each(function () {
+                $(".row" + answer_number).find(".singleAnswer").each(function () {
 
-                var field_type = $('#field_type' + question_counter).val();
-                var OriginalContent = $(this).text();
-                var x = 0;
+                    var field_type = $('#field_type' + question_counter).val();
+                    var OriginalContent = $(this).text();
+                    var x = 0;
 
-                var radio_counter = 10;
+                    var radio_counter = 10;
 
-                i++;
-                question_counter++;
-               
+                    i++;
+                    question_counter++;
 
-                if (i == -2) {
-                    $(this).addClass("cellEditing" + i +" dropdown").attr('id', 'cellEditing' + i);
-                    $(this).html("<input id='newName2' name='name' type='text' value='" + OriginalContent.trim() + "' />" +
-                                    "<ul id='dropdown-menu_name2' class='dropdown-menu edit_drop'>" +
-                                        "<li id='yourself'>" +
-                                            "<a href='"+'javascript:void(0);'+"' onClick='"+ 'document.getElementById("newName2").value=$("#hdnSession_userName").val(); document.getElementById("newClub").value=$("#hdnSession_userClub").val(); document.getElementById("ldapID_edit").value=$("#hdnSession_userID").val();' +"'</a>" +
-                                                "<b>Mich eintragen!</b>" +
-                                            "</a>" +
-                                        "</li>" +
-                                    "</ul>" +
-                    "<input type='hidden' name='ldapID_edit' id='ldapID_edit' value='' >");
-                }
 
-                if (i == -1) {
-                    $(this).addClass("cellEditing" + i).attr('id', 'cellEditing' + i);
-                    $(this).html("<input id='newClub' name='club' type='text' value='" + OriginalContent.trim() + "' />");
-                }
+                    if (i == -2) {
+                        $(this).addClass("cellEditing" + i + " dropdown").attr('id', 'cellEditing' + i);
+                        $(this).html("<input id='newName2' name='name' type='text' value='" + OriginalContent.trim() + "' />" +
+                            "<ul id='dropdown-menu_name2' class='dropdown-menu edit_drop'>" +
+                            "<li id='yourself'>" +
+                            "<a href='" + 'javascript:void(0);' + "' onClick='" + 'document.getElementById("newName2").value=$("#hdnSession_userName").val(); document.getElementById("newClub").value=$("#hdnSession_userClub").val(); document.getElementById("ldapID_edit").value=$("#hdnSession_userID").val();' + "'</a>" +
+                            "<b>Mich eintragen!</b>" +
+                            "</a>" +
+                            "</li>" +
+                            "</ul>" +
+                            "<input type='hidden' name='ldapID_edit' id='ldapID_edit' value='' >");
+                    }
 
-                if (i > -1 && field_type == 3) {
-                    var selected_answer_dropdown = $(this).text().trim();
+                    if (i == -1) {
+                        $(this).addClass("cellEditing" + i).attr('id', 'cellEditing' + i);
+                        $(this).html("<input id='newClub' name='club' type='text' value='" + OriginalContent.trim() + "' />");
+                    }
 
-                    $(this).addClass("cellEditing" + i).attr('id', 'dropdown');
-                    $(this).html("<select class='form-control' id='" + i + "' name='answers[" + question_counter +"]' style='font-size: 13px;' >");
+                    if (i > -1 && field_type == 3) {
+                        var selected_answer_dropdown = $(this).text().trim();
 
-                    $('#options' + i).find('option').each(function () {
+                        $(this).addClass("cellEditing" + i).attr('id', 'dropdown');
+                        $(this).html("<select class='form-control' id='" + i + "' name='answers[" + question_counter + "]' style='font-size: 13px;' >");
 
-                        var new_option = document.createElement("option");
-                        var options = document.createTextNode(document.getElementById('options' + i).options[x].innerHTML);
-                        new_option.appendChild(options);
-                        var dropdown = document.getElementById(""+i);
-                        dropdown.appendChild(new_option);
-                        x++;
-                        $("#" + i).attr('style', 'font-size: 13px;height: 22px;padding: 0px');
-                    });
+                        $('#options' + i).find('option').each(function () {
 
-                    //Get select object
-                    var objSelect = document.getElementById(""+i);
+                            var new_option = document.createElement("option");
+                            var options = document.createTextNode(document.getElementById('options' + i).options[x].innerHTML);
+                            new_option.appendChild(options);
+                            var dropdown = document.getElementById("" + i);
+                            dropdown.appendChild(new_option);
+                            x++;
+                            $("#" + i).attr('style', 'font-size: 13px;height: 22px;padding: 0px');
+                        });
 
-                    //Set selected
-                    setSelectedValue(objSelect, selected_answer_dropdown);
+                        //Get select object
+                        var objSelect = document.getElementById("" + i);
 
-                    function setSelectedValue(selectObj, valueToSet) {
-                        for (var i = 0; i < selectObj.options.length; i++) {
-                            if (selectObj.options[i].text== valueToSet) {
-                                selectObj.options[i].selected = true;
-                                return;
+                        //Set selected
+                        setSelectedValue(objSelect, selected_answer_dropdown);
+
+                        function setSelectedValue(selectObj, valueToSet) {
+                            for (var i = 0; i < selectObj.options.length; i++) {
+                                if (selectObj.options[i].text == valueToSet) {
+                                    selectObj.options[i].selected = true;
+                                    return;
+                                }
                             }
                         }
                     }
-                }
 
 
-                if (i > -1 && field_type == 1) {
-                    $(this).addClass("cellEditing" + i).attr('id', 'text');
-                    $(this).html("<input id='"+i+"' name='answers[" + question_counter +"]' type='text' value='" + OriginalContent.trim() + "' />");
-                }
-
-                if (i > -1 && field_type == 2) {
-                    var selected_answer_radio = $(this).text().trim();
-
-                    $(this).addClass("cellEditing" + i).attr('id', 'radio'+i+ '-' + answer_number);
-                    $(this).html("");
-                    var y = 0;
-                    $('.question' + i).find('input:radio').each(function () {
-
-                        var new_radio = document.createElement("input");
-                        new_radio.setAttribute('type', 'radio');
-                        new_radio.setAttribute('data-id', 'radio' + i + '-' + radio_counter);
-                        new_radio.setAttribute('id', '' + i);
-                        new_radio.setAttribute('name', 'answers[' + question_counter + ']-edit');
-                        var radio_text = document.createTextNode(document.getElementById('radio' + i + '-' + y).value);
-
-                        new_radio.setAttribute('value', document.getElementById('radio' + i + '-' + y).value);
-                        new_radio.appendChild(radio_text);
-                        var radio = document.getElementById('radio'+i+ '-' + answer_number);
-                        radio.appendChild(new_radio);
-
-                        y++;
-                        radio_counter++;
-
-                    });
-
-                    $("input[data-id=radio" + i + "-10]").after("Ja   ");
-                    $("input[data-id=radio" + i + "-11]").after('Nein   ');
-                    $("input[data-id=radio" + i + "-12]").after('keine Angabe');
-
-                    if (selected_answer_radio == "Ja") {
-                        $("input[data-id=radio" + i + "-10]").prop("checked", true);
-                    }
-                    if (selected_answer_radio == "Nein") {
-                        $("input[data-id=radio" + i + "-11]").prop("checked", true);
-                    }
-                    if (selected_answer_radio == "keine Angabe") {
-                        $("input[data-id=radio" + i + "-12]").prop("checked", true);
+                    if (i > -1 && field_type == 1) {
+                        $(this).addClass("cellEditing" + i).attr('id', 'text');
+                        $(this).html("<input id='" + i + "' name='answers[" + question_counter + "]' type='text' value='" + OriginalContent.trim() + "' />");
                     }
 
-                }
+                    if (i > -1 && field_type == 2) {
+                        var selected_answer_radio = $(this).text().trim();
 
-                // Pushing old content into array "oldContent"
-                if ($(this).attr('id') == 'cellEditing-2') {
-                    var answers = $("#newName2").val();
-                    oldContent.push(answers);
-                }
+                        $(this).addClass("cellEditing" + i).attr('id', 'radio' + i + '-' + answer_number);
+                        $(this).html("");
+                        var y = 0;
+                        $('.question' + i).find('input:radio').each(function () {
 
-                if ($(this).attr('id') == 'cellEditing-1') {
-                    var answers = $("#newClub").val();
-                    oldContent.push(answers);
-                }
+                            var new_radio = document.createElement("input");
+                            new_radio.setAttribute('type', 'radio');
+                            new_radio.setAttribute('data-id', 'radio' + i + '-' + radio_counter);
+                            new_radio.setAttribute('id', '' + i);
+                            new_radio.setAttribute('name', 'answers[' + question_counter + ']-edit');
+                            var radio_text = document.createTextNode(document.getElementById('radio' + i + '-' + y).value);
 
-                if ($(this).attr('id') == 'radio' + question_counter + '-' + answer_number) {
-                    if ($(this).find('input:checked').after().val() == 1) {
-                        var answers = "Ja";
+                            new_radio.setAttribute('value', document.getElementById('radio' + i + '-' + y).value);
+                            new_radio.appendChild(radio_text);
+                            var radio = document.getElementById('radio' + i + '-' + answer_number);
+                            radio.appendChild(new_radio);
+
+                            y++;
+                            radio_counter++;
+
+                        });
+
+                        $("input[data-id=radio" + i + "-10]").after("Ja   ");
+                        $("input[data-id=radio" + i + "-11]").after('Nein   ');
+                        $("input[data-id=radio" + i + "-12]").after('keine Angabe');
+
+                        if (selected_answer_radio == "Ja") {
+                            $("input[data-id=radio" + i + "-10]").prop("checked", true);
+                        }
+                        if (selected_answer_radio == "Nein") {
+                            $("input[data-id=radio" + i + "-11]").prop("checked", true);
+                        }
+                        if (selected_answer_radio == "keine Angabe") {
+                            $("input[data-id=radio" + i + "-12]").prop("checked", true);
+                        }
+
                     }
-                    if ($(this).find('input:checked').after().val() == 0) {
-                        var answers = "Nein";
-                    }
-                    if ($(this).find('input:checked').after().val() == -1) {
-                        var answers = "keine Angabe";
-                    }
 
-                    oldContent.push(answers);
-                }
-
-                if ($(this).attr('id') == 'text' || $(this).attr('id') == 'dropdown') {
-                    var answers = $("#"+ question_counter).val();
-                    oldContent.push(answers);
-                }
-
-            });
-
-        }
-
-        else {
-            return true;
-        }
-
-    });
-
-
-    $("form").find('.update').on('submit', function () {
-
-        var password = $("[name^=password]").val();
-        var counter_ajax = $('#get_row').val();
-        var count_answers = 0;
-        var checked_answers = [];
-
-        $(".row"+counter_ajax).find(".singleAnswer").not(".cellEditing-1").not(".cellEditing-2").each(function () {
-
-            if ($(this).attr('id') == 'radio' +count_answers + '-' + counter_ajax) {
-                var answers = $(this).find('input:checked').val();
-                checked_answers.push(answers);
-
-            }
-            if ($(this).attr('id') == 'text' || $(this).attr('id') == 'dropdown') {
-                var answers = $("#"+ count_answers).val();
-                checked_answers.push(answers);
-            }
-
-            count_answers++;
-        });
-
-
-        $.ajax({
-
-            type: $(this).prop('method'),
-            url: $(this).prop('action'),
-
-            data: JSON.stringify({
-
-                // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-                "_token": $(document).find('input[name=_token]').val(),
-
-                "name": $('.row' + counter_ajax).find("[name^=name]").val(),
-                "club": $('.row' + counter_ajax).find("[name^=club]").val(),
-                "ldapId": $('.row' + counter_ajax).find("[name^=ldapID_edit]").val(),
-                "answers": checked_answers,
-                "password": password,
-                "_method": "put"
-
-            }),
-            dataType: 'json',
-
-            contentType: 'application/json',
-
-            beforeSend: function () {
-
-                $('#editButton' + counter_ajax).removeClass("fa-floppy-o");
-                $('#editButton' + counter_ajax).attr('value', '');
-                $('#spinner' + counter_ajax).removeClass("hidden");
-
-            },
-
-            complete: function () {
-
-                $('#editButton' + counter_ajax).val('');
-
-                $('#editButton' + counter_ajax).removeClass("editButton btn btn-success fa-floppy-o");
-
-                $('#editButton' + counter_ajax).addClass("editButton btn btn-primary fa-pencil");
-
-            },
-
-            success: function (data) {
-
-                var answer_number = $('#get_row').val();
-
-                var column_counter = -3;
-                $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
-                    column_counter++;
-
-
+                    // Pushing old content into array "oldContent"
                     if ($(this).attr('id') == 'cellEditing-2') {
-                        var newContent = $(this).find('input').val();
-                        $(this).html("<i id='userStatus' ></i> " + newContent);
+                        var answers = $("#newName2").val();
+                        oldContent.push(answers);
                     }
 
                     if ($(this).attr('id') == 'cellEditing-1') {
-                        var newContent = $(this).find('input').val();
-                        $(this).text(newContent);
+                        var answers = $("#newClub").val();
+                        oldContent.push(answers);
                     }
 
-                    if ($(this).attr('id') == 'text') {
-                        var newContent = $(this).find('input').val();
-                        $(this).text(newContent);
+                    if ($(this).attr('id') == 'radio' + question_counter + '-' + answer_number) {
+                        if ($(this).find('input:checked').after().val() == 1) {
+                            var answers = "Ja";
+                        }
+                        if ($(this).find('input:checked').after().val() == 0) {
+                            var answers = "Nein";
+                        }
+                        if ($(this).find('input:checked').after().val() == -1) {
+                            var answers = "keine Angabe";
+                        }
+
+                        oldContent.push(answers);
                     }
 
-                    if ($(this).attr('id') == 'radio' + column_counter + '-' + counter_ajax) {
-                        if ($(this).find('input:checked').val() == 1) {
-                            var newContent = "Ja";
-                            $(this).text(newContent);
-                        }
-
-                        if ($(this).find('input:checked').val() == 0) {
-                            var newContent = "Nein";
-                            $(this).text(newContent);
-                        }
-
-                        if ($(this).find('input:checked').val() == -1) {
-                            var newContent = "keine Angabe";
-                            $(this).text(newContent);
-                        }
+                    if ($(this).attr('id') == 'text' || $(this).attr('id') == 'dropdown') {
+                        var answers = $("#" + question_counter).val();
+                        oldContent.push(answers);
                     }
 
-                    if ($(this).attr('id') == 'dropdown') {
-                        var skillsSelect = document.getElementById("" + column_counter);
-                        var newContent = skillsSelect.options[skillsSelect.selectedIndex].text;
-                        $(this).text(newContent);
-                    }
-
-                    count_clicks = 0;
-
-                    $("#userStatus").attr("style", data["user_status"]["style"]);
-                    $("#userStatus").attr("data-original-title", data["user_status"]["title"]);
-                    $("#userStatus").removeClass().addClass(data["user_status"]["status"]).removeAttr("id");
-
-
-                    $(".row" + answer_number).find(".singleAnswer").attr('style', '');
-
-
-                });
-                $('.row' + answer_number).find('td').each(function () {
-                    $("#radio" + column_counter + '-' + counter_ajax).attr('id', '');
                 });
 
-                $('.table').find('input').each(function () {
-                    $(".editButton").not('#editButton' + answer_number).prop('disabled', false);
-                });
-                $(".btn-margin").prop('disabled', false);
+            }
 
-                $('#spinner' + counter_ajax).addClass('hidden');
-
-            },
-
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert(JSON.stringify(xhr.responseJSON));
-
-                var answer_number = $('#get_row').val();
-                var column_counter = 0;
-
-                $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
-
-                    if (column_counter == 0) {
-                        var newContent = oldContent[column_counter];
-
-                        if (userStatusIcon[0] == "Kandidat") {
-                            $(this).html("<i class='fa fa-adjust' name='status-icon' style='color:yellowgreen;' title='Kandidat'></i> " + newContent);
-                        }
-
-                        if (userStatusIcon[0] == "Veteran") {
-                            $(this).html("<i class='fa fa-star' name='status-icon' style='color:gold;' title='Veteran'></i> " + newContent);
-                        }
-
-                        if (userStatusIcon[0] == "Aktiv") {
-                            $(this).html("<i id='userStatus' class='fa fa-circle' name='status-icon' style='color:forestgreen;' ></i> " + newContent);
-                        }
-
-                        if (userStatusIcon[0] == "ex-Mitglied") {
-                            $(this).html("<i class='fa fa-star-o' name='status-icon' style='color:gold;' title='ex-Mitglied'></i> " + newContent);
-                        }
-
-                        if (userStatusIcon[0] == "Extern") {
-                            $(this).html("<i class='fa fa-circle' name='status-icon' style='color:lightgrey;' title='Extern'></i> " + newContent);
-                        }
-
-                    }
-
-                    else
-
-                    $(this).text(oldContent[column_counter]);
-                    column_counter++;
-
-                });
-
-                    count_clicks = 0;
-
-                    $(".row" + answer_number).find(".singleAnswer").attr('style', '');
-
-
-                $('.row' + answer_number).find('td').each(function () {
-                    $("#radio" + column_counter + '-' + counter_ajax).attr('id', '');
-                });
-
-                $('.table').find('input').each(function () {
-                    $(".editButton").not('#editButton' + answer_number).prop('disabled', false);
-                });
-                $(".btn-margin").prop('disabled', false);
-
-                $('#spinner' + counter_ajax).addClass('hidden');
+            else {
+                return true;
             }
 
         });
-        return false;
+
+
+        $("form").find('.update').on('submit', function () {
+
+            var password = $("[name^=password]").val();
+            var counter_ajax = $('#get_row').val();
+            var count_answers = 0;
+            var checked_answers = [];
+
+            $(".row" + counter_ajax).find(".singleAnswer").not(".cellEditing-1").not(".cellEditing-2").each(function () {
+
+                if ($(this).attr('id') == 'radio' + count_answers + '-' + counter_ajax) {
+                    var answers = $(this).find('input:checked').val();
+                    checked_answers.push(answers);
+
+                }
+                if ($(this).attr('id') == 'text' || $(this).attr('id') == 'dropdown') {
+                    var answers = $("#" + count_answers).val();
+                    checked_answers.push(answers);
+                }
+
+                count_answers++;
+            });
+
+
+            $.ajax({
+
+                type: $(this).prop('method'),
+                url: $(this).prop('action'),
+
+                data: JSON.stringify({
+
+                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                    "_token": $(document).find('input[name=_token]').val(),
+
+                    "name": $('.row' + counter_ajax).find("[name^=name]").val(),
+                    "club": $('.row' + counter_ajax).find("[name^=club]").val(),
+                    "ldapId": $('.row' + counter_ajax).find("[name^=ldapID_edit]").val(),
+                    "answers": checked_answers,
+                    "password": password,
+                    "_method": "put"
+
+                }),
+                dataType: 'json',
+
+                contentType: 'application/json',
+
+                beforeSend: function () {
+
+                    $('#editButton' + counter_ajax).removeClass("fa-floppy-o");
+                    $('#editButton' + counter_ajax).attr('value', '');
+                    $('#spinner' + counter_ajax).removeClass("hidden");
+
+                },
+
+                complete: function () {
+
+                    $('#editButton' + counter_ajax).val('');
+
+                    $('#editButton' + counter_ajax).removeClass("editButton btn btn-success fa-floppy-o");
+
+                    $('#editButton' + counter_ajax).addClass("editButton btn btn-primary fa-pencil");
+
+                },
+
+                success: function (data) {
+
+                    var answer_number = $('#get_row').val();
+
+                    var column_counter = -3;
+                    $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
+                        column_counter++;
+
+
+                        if ($(this).attr('id') == 'cellEditing-2') {
+                            var newContent = $(this).find('input').val();
+                            $(this).html("<i id='userStatus' ></i> " + newContent);
+                        }
+
+                        if ($(this).attr('id') == 'cellEditing-1') {
+                            var newContent = $(this).find('input').val();
+                            $(this).text(newContent);
+                        }
+
+                        if ($(this).attr('id') == 'text') {
+                            var newContent = $(this).find('input').val();
+                            $(this).text(newContent);
+                        }
+
+                        if ($(this).attr('id') == 'radio' + column_counter + '-' + counter_ajax) {
+                            if ($(this).find('input:checked').val() == 1) {
+                                var newContent = "Ja";
+                                $(this).text(newContent);
+                            }
+
+                            if ($(this).find('input:checked').val() == 0) {
+                                var newContent = "Nein";
+                                $(this).text(newContent);
+                            }
+
+                            if ($(this).find('input:checked').val() == -1) {
+                                var newContent = "keine Angabe";
+                                $(this).text(newContent);
+                            }
+                        }
+
+                        if ($(this).attr('id') == 'dropdown') {
+                            var skillsSelect = document.getElementById("" + column_counter);
+                            var newContent = skillsSelect.options[skillsSelect.selectedIndex].text;
+                            $(this).text(newContent);
+                        }
+
+                        count_clicks = 0;
+
+                        $("#userStatus").attr("style", data["user_status"]["style"]);
+                        $("#userStatus").attr("data-original-title", data["user_status"]["title"]);
+                        $("#userStatus").removeClass().addClass(data["user_status"]["status"]).removeAttr("id");
+
+
+                        $(".row" + answer_number).find(".singleAnswer").attr('style', '');
+
+
+                    });
+                    $('.row' + answer_number).find('td').each(function () {
+                        $("#radio" + column_counter + '-' + counter_ajax).attr('id', '');
+                    });
+
+                    $('.table').find('input').each(function () {
+                        $(".editButton").not('#editButton' + answer_number).prop('disabled', false);
+                    });
+                    $(".btn-margin").prop('disabled', false);
+
+                    $('#spinner' + counter_ajax).addClass('hidden');
+
+                },
+
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(JSON.stringify(xhr.responseJSON));
+
+                    var answer_number = $('#get_row').val();
+                    var column_counter = 0;
+
+                    $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
+
+                        if (column_counter == 0) {
+                            var newContent = oldContent[column_counter];
+
+                            if (userStatusIcon[0] == "Kandidat") {
+                                $(this).html("<i class='fa fa-adjust' name='status-icon' style='color:yellowgreen;' title='Kandidat'></i> " + newContent);
+                            }
+
+                            if (userStatusIcon[0] == "Veteran") {
+                                $(this).html("<i class='fa fa-star' name='status-icon' style='color:gold;' title='Veteran'></i> " + newContent);
+                            }
+
+                            if (userStatusIcon[0] == "Aktiv") {
+                                $(this).html("<i id='userStatus' class='fa fa-circle' name='status-icon' style='color:forestgreen;' ></i> " + newContent);
+                            }
+
+                            if (userStatusIcon[0] == "ex-Mitglied") {
+                                $(this).html("<i class='fa fa-star-o' name='status-icon' style='color:gold;' title='ex-Mitglied'></i> " + newContent);
+                            }
+
+                            if (userStatusIcon[0] == "Extern") {
+                                $(this).html("<i class='fa fa-circle' name='status-icon' style='color:lightgrey;' title='Extern'></i> " + newContent);
+                            }
+
+                        }
+
+                        else
+
+                            $(this).text(oldContent[column_counter]);
+                        column_counter++;
+
+                    });
+
+                    count_clicks = 0;
+
+                    $(".row" + answer_number).find(".singleAnswer").attr('style', '');
+
+
+                    $('.row' + answer_number).find('td').each(function () {
+                        $("#radio" + column_counter + '-' + counter_ajax).attr('id', '');
+                    });
+
+                    $('.table').find('input').each(function () {
+                        $(".editButton").not('#editButton' + answer_number).prop('disabled', false);
+                    });
+                    $(".btn-margin").prop('disabled', false);
+
+                    $('#spinner' + counter_ajax).addClass('hidden');
+                }
+
+            });
+            return false;
+        });
     });
-});
 
 
 
