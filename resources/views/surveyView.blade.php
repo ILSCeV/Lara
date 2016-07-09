@@ -391,8 +391,8 @@ $userCanEditDueToRole
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($revisions as $key => $revision)
-                            <tr>
+                            @foreach($revisions as $key_revision => $revision)
+                            <tr id="tr-header-{{$key_revision}}" onclick="toggle({{$key_revision}}, {{count($revision['revision_entries'])}})">
                                 <td>{{$revision['creator_name']}}</td>
                                 <td>{{$revision['summary']}}</td>
                                 <td></td>
@@ -400,8 +400,8 @@ $userCanEditDueToRole
                                 <td></td>
                                 <td>{{$revision['created_at']}}</td>
                             </tr>
-                                @foreach($revision['revision_entries'] as $entry)
-                                <tr>
+                                @foreach($revision['revision_entries'] as $key_entry => $entry)
+                                <tr id="tr-data-{{$key_revision}}{{$key_entry}}" style="display:none">
                                     <td></td>
                                     <td></td>
                                     <td>{{$entry['changed_column_name']}}</td>

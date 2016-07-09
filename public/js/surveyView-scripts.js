@@ -173,6 +173,21 @@ jQuery( document ).ready( function( $ ) {
 
 });
 
+function toggle(row, rowCount) {
+    myHead = document.getElementById("tr-header-"+row);
+
+    for (i=0;i<=rowCount;i++) {
+        currentTr = document.getElementById("tr-data-"+row+i);
+        if(currentTr.style.display == "") {
+            // fold
+            currentTr.style.display = "none";
+        } else {
+            // unfold
+            currentTr.style.display = "";
+        }
+    }
+}
+
 
 
 
