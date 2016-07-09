@@ -575,16 +575,15 @@ class SurveyController extends Controller
 
         //look up for answers that have no answer cells for new questions
         foreach($survey->getAnswers as $answer) {
-
             $answer_cells = $answer->getAnswerCells;
-            $questions = $survey->getQuestions;
-            
-            if (count($questions) > count($answer_cells)) {
-                for ($i = count($questions); $i > count($answer_cells); $i--) {
 
-                    //no answer cell set for the answer, generate a default one and save it
+            //check if answer has answer cells for every question
+            if (count($questions_db) > count($answer_cells)) {
+                for ($i = count($questions_db)-1; $i >= count($answer_cells); $i--) {
+
+                    //no answer cell set for the answer and question, generate a default one and save it
                     $answer_cell = new SurveyAnswerCell();
-                    //$answer_cell->survey_question_id = $questions[$i]->id;
+                    $answer_cell->survey_question_id = $questions_db[$i]->id;
                     $answer_cell->survey_answer_id = $answer->id;
                     $answer_cell->answer = '';
                     $answer_cell->save();
