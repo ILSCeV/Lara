@@ -130,6 +130,10 @@ class SurveyAnswerController extends Controller
             return response()->json('Fehler: das eingegebene Passwort war leider falsch.', 401);
         }
 
+        if ($input->error[0] == "required_missing") {
+            return response()->json('Fehler: Es wurden nicht alle Pflichtfragen beantwortet.', 401);
+        }
+
         $survey_answer = SurveyAnswer::findOrFail($answerid);
         $revision_answer = new Revision($survey_answer);
         // prevent guestentries with ldapId

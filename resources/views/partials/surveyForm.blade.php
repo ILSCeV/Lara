@@ -164,7 +164,7 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 5px;">
                                         <fieldset class="checkbox entrylist">
                                             <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
-                                            <label><input type="checkbox" id="required" @if($question->is_required) checked @endif value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
+                                            <label><input type="checkbox" id="required" @if($question->is_required) checked @endif value="required" name="required[{{$counter-1}}]" class="input_checkboxitem"> erforderlich</label>
                                         </fieldset>
                                     </div>
 
@@ -236,7 +236,7 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 5px;">
                                         <fieldset class="checkbox entrylist">
                                             <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
-                                            <label><input type="checkbox" id="required" value="required" name="required[0]" class="input_checkboxitem"> erforderlich</label>
+                                            <label><input type="checkbox" id="required" value="required" name="required[{{$counter-1}}]" class="input_checkboxitem"> erforderlich</label>
                                         </fieldset>
                                     </div>
 
@@ -244,7 +244,7 @@
 
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0;">
                                         <div class="answ_option" id="answ_opt" name="answer_options_div">
-                                            <input class="btn btn-success btn-sm" id="button_answ" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none; margin-top: 10px;"  onclick="javascript:clone_this(this, 'new_passage', 0);" type="button">
+                                            <input class="btn btn-success btn-sm" id="button_answ" name="btn_answ" value="Antwortmöglichkeit hinzufügen" style="display:none; margin-top: 10px;"  onclick="javascript:clone_this(this, 'new_passage', {{$counter-1}});" type="button">
                                         </div>
                                     </div>
 
