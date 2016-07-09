@@ -165,7 +165,7 @@ input[type=number],
     word-break: break-word;
 }
 
-.past-event {
+.past-eventOrSurvey, .past-event {
   opacity:0.5;
 }
 
