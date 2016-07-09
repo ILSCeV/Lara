@@ -262,6 +262,11 @@
 
 /* Mind the extra big screens! */
 @media screen and (min-height: 1050px) {
+    .weekDay{
+        height:5vh;
+        line-height: 5vh;
+    }
+
     .calendarWeek{
         line-height: 5vh;
         height: 5vh;
@@ -279,10 +284,10 @@
     }
 
     .height10vh{
-        min-height: 10vh;
+        min-height: 5vh;
     }
 
     .noheightmobile{
-        height:10vh;
+        height:5vh;
     }
 }
