@@ -252,8 +252,29 @@
 .onlyOnMobile{
     display: none;
 }
+
 @media screen and (max-width: 978px) {
     .onlyOnMobile{
         display: inline;
+    }
+}
+
+
+/* Mind the extra big screens! */
+@media screen and (min-height: 1050px) {
+    .calendarWeek{
+        line-height: 5vh;
+        height: 5vh;
+        min-height: 5vh;
+    }
+
+    .cell10{
+        line-height:5vh;
+        height:5vh;
+    }
+
+    .calendarRow{
+        min-height: 5vh;
+        height: inherit;
     }
 }

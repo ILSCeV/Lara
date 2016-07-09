@@ -141,7 +141,6 @@ input[type=number],
 
 .cal-event {
     width: 100%;
-    min-height: 8vh;
     margin-top: 0.5vh;
     margin-bottom: 0.5vh;
     vertical-align: middle;
@@ -155,7 +154,7 @@ input[type=number],
     align-items: center;
     word-break: break-all;
 
-    padding: 0 5% 0 5%;
+    padding: 5%;
 
     overflow: visible;
     text-overflow: clip;
