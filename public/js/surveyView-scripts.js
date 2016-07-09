@@ -183,8 +183,8 @@ function resize_evaluation_heading() {
     if ($(window).width() > 978) {
         {
             var height_evaluation = $('#evaluation').height();
-
-            $(document).find('.evaluation_heading').attr('style', 'height:' + height_evaluation + 'px;');
+            //$(document).find('.evaluation_heading').style.height = height_evaluation + "px";
+                $(document).find('.evaluation_heading').attr('style', 'height:' + height_evaluation + 'px;');
         }
     }
 }

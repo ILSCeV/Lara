@@ -82,6 +82,14 @@
 .table > tbody > tr > td:first-child {
     position: absolute;
     display: inline-block;
+    z-index: 10;
+    height: 48px;
+}
+
+@media screen and (max-width: 978px) {
+    .table > tbody > tr > td:first-child {
+        height: auto;
+    }
 }
 
 .table > tbody > tr:nth-child(odd) > td {
