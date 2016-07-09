@@ -276,8 +276,7 @@ class SurveyController extends Controller
             unset($revisions[$revision_key]['creator_id']);
             $revisions[$revision_key]['revision_entries'] = RevisionEntry::where('revision_id', '=', $revision['revision_id'])->get(['changed_column_name', 'old_value', 'new_value'])->toArray();
             unset($revisions[$revision_key]['revision_id']);
-            $answer_counter = 0;
-            $question_counter = 0;
+
             foreach($revisions[$revision_key]['revision_entries'] as $entry_key => $entry) {
                 // rename the displayed column names to hide database-schema
                 switch($entry['changed_column_name']) {
@@ -288,8 +287,7 @@ class SurveyController extends Controller
                         $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Club";
                         break;
                     case "answer":
-                        $answer_counter++;
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = $answer_counter.". Antwort";
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Antwort";
                         break;
                     case "title":
                         $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Titel";
@@ -316,18 +314,15 @@ class SurveyController extends Controller
                         $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
                         break;
                     case "question":
-                        $question_counter++;
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = ceil($question_counter/3).". Frage";
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Frage";
                         break;
                     case "field_type":
-                        $question_counter++;
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = ceil($question_counter/3).". Fragetyp";
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Fragetyp";
                         $revisions[$revision_key]['revision_entries'][$entry_key]['old_value'] = $this->getFieldTypeName($revisions[$revision_key]['revision_entries'][$entry_key]['old_value']);
                         $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->getFieldTypeName($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
                         break;
                     case "is_required":
-                        $question_counter++;
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = ceil($question_counter/3).". Pflichtfrage?";
+                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Pflichtfrage?";
                         $revisions[$revision_key]['revision_entries'][$entry_key]['old_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['old_value']);
                         $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
                         break;
