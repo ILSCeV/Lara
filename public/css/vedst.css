@@ -166,7 +166,7 @@ input[type=number],
 }
 
 .past-eventOrSurvey, .past-event {
-  opacity:0.5;
+  opacity:0.3;
 }
 
 .today-marker {

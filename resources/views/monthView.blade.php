@@ -33,6 +33,7 @@
     @include('partials.filter')
 </div>
 <br><br>
+
 <!--Mont Table-->
 <div class="row bgWhite">
     <div class="col-md-12 calendarWrapper">
