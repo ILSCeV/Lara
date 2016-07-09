@@ -164,8 +164,8 @@ input[type=number],
     word-break: break-word;
 }
 
-.past-event {
-  opacity:0.5;
+.past-eventOrSurvey, .past-event {
+  opacity:0.3;
 }
 
 .today-marker {
