@@ -213,6 +213,7 @@ $userCanEditDueToRole
                             @foreach($questions as $key => $question)
                                 <input type="hidden" id="field_type{{$question->order-1}}" value="{{$question->field_type}}" />
                                 <input type="hidden" id="question_order" value="{{$question->order}}" />
+                                <input type="hidden" id="question_required{{$question->order}}" value="{{$question->is_required}}" />
                                 <td class="question{{$question->order}}" style="vertical-align: middle;">
                                     @if($question->field_type == 1)
                                         <!-- Freitext -->
@@ -232,7 +233,7 @@ $userCanEditDueToRole
                                             {{ Form::radio('answers['.$key.']', -1, true, ['id' => 'radio'.$question->order.'-2'])}} keine Angabe
                                         @else
                                             <!--Answer* required-->
-                                            {{ Form::radio('answers['.$key.']', 0, true, ['id' => 'radio'.$question->order.'-0']) }} Nein
+                                            {{ Form::radio('answers['.$key.']', 0, true, ['id' => 'radio'.$question->order.'-1']) }} Nein
                                         @endif
                                     @elseif($question->field_type == 3)
                                         <!-- Dropdown -->

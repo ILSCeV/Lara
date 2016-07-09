@@ -251,7 +251,8 @@ jQuery( document ).ready( function( $ ) {
 
                 i++;
                 question_counter++;
-               
+
+                var is_required = $('#question_required' + question_counter).val();
 
                 if (i == -2) {
                     $(this).addClass("cellEditing" + i +" dropdown").attr('id', 'cellEditing' + i);
@@ -306,8 +307,13 @@ jQuery( document ).ready( function( $ ) {
 
 
                 if (i > -1 && field_type == 1) {
+
                     $(this).addClass("cellEditing" + i).attr('id', 'text');
                     $(this).html("<input id='"+i+"' name='answers[" + question_counter +"]' type='text' value='" + OriginalContent.trim() + "' />");
+
+                    if (is_required == 1) {
+                        $(this).attr('data-id', 'required');
+                    }
                 }
 
                 if (i > -1 && field_type == 2) {
@@ -398,8 +404,14 @@ jQuery( document ).ready( function( $ ) {
         var counter_ajax = $('#get_row').val();
         var count_answers = 0;
         var checked_answers = [];
+        var req_error = [];
 
         $(".row"+counter_ajax).find(".singleAnswer").not(".cellEditing-1").not(".cellEditing-2").each(function () {
+
+            if ($(this).attr('id') == 'text' && $(this).attr('data-id') == 'required' && $("#"+ count_answers).val() == "") {
+                var error = "required_missing";
+                req_error.push(error);
+            }
 
             if ($(this).attr('id') == 'radio' +count_answers + '-' + counter_ajax) {
                 var answers = $(this).find('input:checked').val();
@@ -414,6 +426,7 @@ jQuery( document ).ready( function( $ ) {
             count_answers++;
         });
 
+        req_error.push("no_required_missing");
 
         $.ajax({
 
@@ -430,6 +443,7 @@ jQuery( document ).ready( function( $ ) {
                 "ldapId": $('.row' + counter_ajax).find("[name^=ldapID_edit]").val(),
                 "answers": checked_answers,
                 "password": password,
+                "error": req_error,
                 "_method": "put"
 
             }),
@@ -524,6 +538,8 @@ jQuery( document ).ready( function( $ ) {
 
                 $('#spinner' + counter_ajax).addClass('hidden');
 
+                oldContent = [];
+
             },
 
             error: function (xhr, ajaxOptions, thrownError) {
@@ -581,6 +597,8 @@ jQuery( document ).ready( function( $ ) {
                 $(".btn-margin").prop('disabled', false);
 
                 $('#spinner' + counter_ajax).addClass('hidden');
+
+                oldContent = [];
             }
 
         });
