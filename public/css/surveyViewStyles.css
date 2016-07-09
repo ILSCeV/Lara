@@ -1,32 +1,30 @@
 /* display Mobile / Desktop */
-.displayDesktop{
+.displayDesktop {
     display: inline-block;
 }
 
-.displayMobile{
+.displayMobile {
     display: none !important;
     height: 48px;
 }
 
 @media screen and (max-width: 978px) {
-    .displayDesktop{
+    .displayDesktop {
         display: none !important;
     }
 
-    .displayMobile{
+    .displayMobile {
         display: block !important;
     }
 
-    .displayMobile a{
-        height:auto;
+    .displayMobile a {
+        height: auto;
     }
 
-    .displayMobile .btn-trash{
+    .displayMobile .btn-trash {
         margin-left: 10px;
     }
 }
-
-
 
 /* Description at the top */
 .panel {
@@ -40,91 +38,82 @@
     padding: 15px;
 }
 
-.panel-body{
+.panel-body {
     background-color: white;
 }
 
-
-
-
-
 /* Actual Survey */
-#survey-answer{
+#survey-answer {
     background-color: transparent;
 }
 
-
-.table
-{
+.table {
     margin: 0;
     background-color: #f6f5f3;
 }
 
-.table > thead > tr > th
-{
+.table > thead > tr > th {
     background-color: white;
     color: #333;
 }
 
-.table > thead:first-child > tr:first-child > th:first-child
-{
+@media screen and (max-width: 978px) {
+    .emtpyCell {
+        display: none !important;
+        height: 0px !important
+    }
+}
+
+.table > thead:first-child > tr:first-child > th:first-child {
     position: absolute;
     display: inline-block;
     background-color: white;
 }
 
-.table > thead > tr > th:first-child
-{
+.table > thead > tr > th:first-child {
     /* top-left corner */
     width: 150px;
 }
 
-.table > thead > tr > th:nth-child(2)
-{
+.table > thead > tr > th:nth-child(2) {
     padding-left: 170px !important;
 }
 
-.table > tbody > tr > td:first-child
-{
+.table > tbody > tr > td:first-child {
     position: absolute;
     display: inline-block;
 }
-.table > tbody > tr:nth-child(odd) > td{
+
+.table > tbody > tr:nth-child(odd) > td {
     background-color: #f9f9f9;
 }
 
-.table > tbody > tr:nth-child(even) > td{
+.table > tbody > tr:nth-child(even) > td {
     background-color: white;
 }
 
-
-.table > tbody > tr:nth-child(odd) > td:first-child
-{
+.table > tbody > tr:nth-child(odd) > td:first-child {
     width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.table > tbody > tr:nth-child(even) > td:first-child
-{
+.table > tbody > tr:nth-child(even) > td:first-child {
     width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.table > thead:first-child > tr:first-child > th:nth-child(2)
-{
+.table > thead:first-child > tr:first-child > th:nth-child(2) {
     /* what is this? */
 }
 
-.table > tbody > tr > td:nth-child(2)
-{
+.table > tbody > tr > td:nth-child(2) {
     padding-left: 170px !important;
 }
 
-
-td, th{
-    white-space:nowrap;
+td, th {
+    white-space: nowrap;
 }
 
 .table-responsive-custom {
@@ -133,7 +122,6 @@ td, th{
     overflow-y: hidden;
 }
 
-
 /*
 Generic Styling, for Desktops/Laptops
 */
@@ -141,6 +129,7 @@ Generic Styling, for Desktops/Laptops
     width: 100%;
     border-collapse: collapse;
 }
+
 /* Zebra striping*/
 @media screen and (max-width: 978px) {
     #survey-answer tr:nth-of-type(odd) {
@@ -168,10 +157,9 @@ This query will take effect for any screen smaller than 760px
 and also iPads specifically.
 */
 @media screen and (max-width: 978px) {
-    #survey-answer tr:nth-of-type(even){
+    #survey-answer tr:nth-of-type(even) {
         background-color: white;
     }
-
 
     .table-responsive-custom {
         width: 100%;
@@ -189,7 +177,9 @@ and also iPads specifically.
         left: -9999px;
     }
 
-    #survey-answer tr { border: 1px solid #eeeeee; }
+    #survey-answer tr {
+        border: 1px solid #eeeeee;
+    }
 
     #survey-answer td {
         /* Behave  like a "row" */
@@ -206,9 +196,6 @@ and also iPads specifically.
         border-bottom: 1px solid #c0c0c0;
     }
 
-
-
-
     #survey-answer td:before {
         /* Now like a table header */
         position: absolute;
@@ -220,17 +207,12 @@ and also iPads specifically.
         white-space: nowrap;
     }
 
-
-
-
     /* change padding of cells, compared to desktop */
-    .table > thead > tr > th:nth-child(2)
-    {
+    .table > thead > tr > th:nth-child(2) {
         padding-left: 50% !important;
     }
 
-    .table > tbody > tr > td:nth-child(2)
-    {
+    .table > tbody > tr > td:nth-child(2) {
         padding-left: 50% !important;
     }
 
@@ -238,36 +220,34 @@ and also iPads specifically.
         display: none;
     }
 
-    .table{
+    .table {
         overflow: hidden;
     }
 
-    td, th{
+    td, th {
         word-wrap: break-word;
-        white-space:normal ;
+        white-space: normal;
     }
 
-    .table > tbody > tr:nth-child(odd) > td:first-child
-    {
+    .table > tbody > tr:nth-child(odd) > td:first-child {
         width: auto;
     }
 
-    .table > tbody > tr:nth-child(even) > td:first-child
-    {
+    .table > tbody > tr:nth-child(even) > td:first-child {
         width: auto;
     }
 
-    .tdButtons{
+    .tdButtons {
         display: inline-block !important;
         position: static !important;
         margin: 0px;
     }
 
-    .tdButtons a:first-child{
+    .tdButtons a:first-child {
         margin-right: 5px;
     }
 
-    .btn{
+    .btn {
         float: left;
         display: inline;
     }
@@ -276,41 +256,44 @@ and also iPads specifically.
 /* Desktop */
 @media screen and (min-width: 978px) {
     /* to use this class again, write tdButtons*/
-    .tdButtonsNotUsed    {
+    .tdButtonsNotUsed {
         position: absolute;
         padding: 0 !important;
-        width:5em;
-        top:auto;
+        width: 5em;
+        top: auto;
         float: right;
         border-right: 0px none black;
-        border-top-width:3px; /*only relevant for first row*/
-        margin-top:-3px; /*compensate for top border*/
+        border-top-width: 3px; /*only relevant for first row*/
+        margin-top: -3px; /*compensate for top border*/
     }
 }
 
-tr .panel{
+tr .panel {
     margin-right: auto;
 }
 
-#panelNoShadow{
-    -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0.05);
-    box-shadow: 0 0px 0px rgba(0,0,0,0.05);
+#panelNoShadow {
+    -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.05);
     border-width: 0 !important;
     background-color: transparent;
 }
 
-.tdButtons:after{content: '';}
+.tdButtons:after {
+    content: '';
+}
 
-.thAboveButtons{
+.thAboveButtons {
 
 }
+
 @media screen and (max-width: 978px) {
     #noMarginMobile {
         margin-left: 0;
     }
 }
 
-.transparent{
+.transparent {
     background-color: transparent !important;
     border-width: 0px !important;
     border-color: transparent;
@@ -318,32 +301,42 @@ tr .panel{
 }
 
 @media screen and (max-width: 978px) {
-    .transparent{
+    .transparent {
         height: 0;
         padding: 0 !important;
     }
 
-    #evaluation{
+    #evaluation {
         margin-top: 40px;
         background-color: #F6F5F3;
     }
-    #whiteBackgroundTrasparent{
+
+    #whiteBackgroundTrasparent {
         background-color: #f6f5f3 !important;
         border-color: #f6f5f3 !important;
         border-width: 0;
     }
 }
 
-.background{
-    background-color:  #f6f5f3!important;
+.background {
+    background-color: #f6f5f3 !important;
 }
-#EvaluationColor{
+
+#EvaluationColor {
     background-color: lemonchiffon;
 }
-#whiteBackground{
+
+#whiteBackground {
     background-color: white;
 }
+
 #whiteBackgroundTrasparent {
     background-color: white;
     border-color: white !important;
+}
+
+@media screen and (max-width: 978px) {
+    .evaluation_heading {
+        height: auto;
+    }
 }

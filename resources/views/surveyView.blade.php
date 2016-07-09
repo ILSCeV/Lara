@@ -273,9 +273,11 @@ $userCanEditDueToRole
                                             @endif
                                         </td>
                                         @foreach($answer->getAnswerCells as $cell)
-
-
+                                            @if($cell->answer == null || $cell->answer == "")
+                                                <td class="singleAnswer emtpyCell">
+                                            @else
                                             <td class="singleAnswer">
+                                            @endif
                                                 {{$cell->answer}}
                                             </td>
                                         @endforeach
@@ -322,8 +324,8 @@ $userCanEditDueToRole
                                 @foreach($answers as $key => $answer)
                                     @if($i == 0)
                                         <tr>
-                                            <td class="transparent background">&nbsp;</td>
-                                            <td class="transparent background">&nbsp;</td>
+                                            <td class="transparent background emtpyCell">&nbsp;</td>
+                                            <td class="transparent background emtpyCell">&nbsp;</td>
                                             @foreach($answer->getAnswerCells as $cell)
                                                 <td class="transparent background">&nbsp;</td>
                                             @endforeach
@@ -332,9 +334,13 @@ $userCanEditDueToRole
                                             <td class="evaluation_heading" id="EvaluationColor">
                                                 Auswertung
                                             </td>
-                                            <td class="" id="EvaluationColor"></td>
+                                            <td class="emtpyCell    " id="EvaluationColor"></td>
                                             @foreach($evaluation as $eva_question)
-                                                <td class="mobileMarginTop" id="EvaluationColor">
+                                                @if($eva_question == null)
+                                                    <td class="mobileMarginTop emtpyCell" id="EvaluationColor">
+                                                @else
+                                                    <td class="mobileMarginTop" id="EvaluationColor">
+                                                @endif
                                                     <div>
                                                         @foreach($eva_question as $answer_option => $counter)
                                                                 @if($counter == 1)
@@ -354,7 +360,7 @@ $userCanEditDueToRole
                                                     </div>
                                                 </td>
                                             @endforeach
-                                            <td id="EvaluationColor"></td>
+                                            <td class="emtpyCell" id="EvaluationColor" ></td>
                                         </tr>
                                     @endif
                                     <?php $i += 1; ?>
