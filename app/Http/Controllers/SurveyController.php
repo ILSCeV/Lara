@@ -204,7 +204,7 @@ class SurveyController extends Controller
         $survey->delete();
         $revision_survey->save($survey, "Umfrage");
         
-        //Successmessage and redirect 
+        //success message and redirect 
         Session::put('message', 'Umfrage gelöscht!' );
         Session::put('msgType', 'success');
 
