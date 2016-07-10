@@ -19,7 +19,7 @@
             </div>
 	</div>
 @else {{--meaning Session::has'userId' OR !$survey->is_private == 0--}}
-	{{-- so session has a valid user OR the guest can see this survey because it isn't private--}}
+	  {{-- so session has a valid user OR the guest can see this survey because it isn't private--}}
 	<div class="panel panel-warning">
 
 		<div class="panel panel-heading calendar-public-info white-text">
@@ -36,7 +36,6 @@
 		</div>
 
 	<div class="panel panel-body no-padding">
-
 
 		{{-- gives a session from privileged users the option to hide the event--}}
 @if(Session::has('userGroup')
