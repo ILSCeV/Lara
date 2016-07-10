@@ -254,12 +254,6 @@ class SurveyController extends Controller
 
         $revisions_objects = \Lara\Revision::join("revision_object_relations", "revisions.id", "=", "revision_object_relations.revision_id")
             ->where("object_name", "=", "SurveyAnswer")
-//            ->whereIn("object_id", $answers_with_trashed_ids)
-//            ->orWhere(function ($query) use ($answer_cells_with_trashed_ids)
-//                {
-//                  $query->where("object_name", "=", "SurveyAnswerCell")
-//                        ->whereIn("object_id", $answer_cells_with_trashed_ids);
-//                })
             ->orWhere(function ($query) use ($survey)
             {
                 $query->where("object_name", "=", "Survey")
@@ -342,6 +336,7 @@ class SurveyController extends Controller
             switch($question->field_type) {
                 case 1: $evaluation[$order] = [];
                     break; //nothing to do here except pushing an element to the array that stands for the question
+
                 case 2:
                     $evaluation[$order] = [
                         'Ja' => 0,
@@ -350,7 +345,7 @@ class SurveyController extends Controller
                     if ($question->is_required == false) {
                         $evaluation[$order]['keine Angabe'] = 0;
                     };
-
+                    //checkbox options with yes,no and no entry
                     foreach($question->getAnswerCells as $answerCell) {
                         if ($answerCell->answer === 'Ja') {
                             $evaluation[$order]['Ja'] += 1;
@@ -363,6 +358,7 @@ class SurveyController extends Controller
                         }
                     }
                     break;
+
                 case 3:
                     $answer_options = $question->getAnswerOptions;
                     $answer_options = (array) $answer_options;
@@ -376,6 +372,7 @@ class SurveyController extends Controller
                         $evaluation[$order][$answer_option->answer_option] = 0;
                         foreach($question->getAnswerCells as $answerCell) {
                             if ($answer_option->answer_option === $answerCell->answer) {
+                                //count up the actual question
                                 $evaluation[$order][$answer_option->answer_option] += 1;
                             }
                         }
