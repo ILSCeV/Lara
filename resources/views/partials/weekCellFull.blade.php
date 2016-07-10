@@ -1,31 +1,37 @@
 <div class="panel panel-warning">
+		<?php $classString = "panel panel-heading";?>
+		{{--Check if the event is still going on--}}
+		@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
+			{{-- The event is already over --}}
+			<?php $classString .= " past-event";?>
+		@endif
 
 	@if($clubEvent->evnt_is_private)
 		@if     ($clubEvent->evnt_type == 1)
-			<div class="panel panel-heading calendar-internal-info white-text">
+			<div class="{{ $classString }} calendar-internal-info white-text">
 		@elseif ($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9)
-			<div class="panel panel-heading calendar-internal-task white-text">
+			<div class="{{ $classString }} calendar-internal-task white-text">
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
-			<div class="panel panel-heading calendar-internal-marketing white-text">
+			<div class="{{ $classString }} calendar-internal-marketing white-text">
 		@elseif ($clubEvent->getPlace->id == 1)
-			<div class="panel panel-heading calendar-internal-event-bc-club white-text">
+			<div class="{{ $classString }} calendar-internal-event-bc-club white-text">
 		@elseif ($clubEvent->getPlace->id == 2)
-			<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
+			<div class="{{ $classString }} calendar-internal-event-bc-cafe white-text">
 		@else
 			{{-- DEFAULT --}}
 			<div class="cal-event dark-grey">
 		@endif
 	@else
 		@if     ($clubEvent->evnt_type == 1)
-			<div class="panel panel-heading calendar-public-info white-text">
+			<div class="{{ $classString }} calendar-public-info white-text">
 		@elseif ($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9)
-			<div class="panel panel-heading calendar-public-task white-text">
+			<div class="{{ $classString }} calendar-public-task white-text">
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
-			<div class="panel panel-heading calendar-public-marketing white-text">
+			<div class="{{ $classString }} calendar-public-marketing white-text">
 		@elseif ($clubEvent->getPlace->id == 1)
-			<div class="panel panel-heading calendar-public-event-bc-club white-text">
+			<div class="{{ $classString }} calendar-public-event-bc-club white-text">
 		@elseif ($clubEvent->getPlace->id == 2)
-			<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
+			<div class="{{ $classString }} calendar-public-event-bc-cafe white-text">
 		@else
 			{{-- DEFAULT --}}
 			<div class="cal-event dark-grey">
@@ -52,7 +58,7 @@
 
 		{{-- Show password input if schedule needs one --}}
 		@if( $clubEvent->getSchedule->schdl_password != '')
-		    <div class="panel panel-heading hidden-print">
+		    <div class="{{ $classString }} hidden-print">
 		        {!! Form::password('password' . $clubEvent->getSchedule->id, array('required', 
 		                                             'class'=>'col-md-12 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
