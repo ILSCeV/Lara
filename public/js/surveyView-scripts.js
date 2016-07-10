@@ -357,7 +357,7 @@ jQuery( document ).ready( function( $ ) {
 
                 }
 
-                // Pushing old content into array "oldContent"
+                // Pushing old content into array "oldContent" so it does not get lost
                 if ($(this).attr('id') == 'cellEditing-2') {
                     var answers = $("#newName2").val();
                     oldContent.push(answers);
@@ -435,7 +435,7 @@ jQuery( document ).ready( function( $ ) {
 
             data: JSON.stringify({
 
-                // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each request
                 "_token": $(document).find('input[name=_token]').val(),
 
                 "name": $('.row' + counter_ajax).find("[name^=name]").val(),
@@ -468,7 +468,8 @@ jQuery( document ).ready( function( $ ) {
                 $('#editButton' + counter_ajax).addClass("editButton btn btn-primary fa-pencil");
 
             },
-
+            
+            //updates the content of the cells with the new content if it has been edited
             success: function (data) {
 
                 var answer_number = $('#get_row').val();
@@ -541,7 +542,8 @@ jQuery( document ).ready( function( $ ) {
                 oldContent = [];
 
             },
-
+            
+            //sets the color circles for the members depending on their rank
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(JSON.stringify(xhr.responseJSON));
 
