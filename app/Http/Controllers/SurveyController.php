@@ -71,7 +71,7 @@ class SurveyController extends Controller
      */
     public function store(SurveyRequest $request)
     {
-        
+
         $survey = new Survey;
         $revision_survey = new Revision($survey);
         $survey->creator_id = Session::get('userId');
@@ -158,7 +158,7 @@ class SurveyController extends Controller
                  }
              }
         }
-
+        //redirect and show
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
 
@@ -675,7 +675,7 @@ class SurveyController extends Controller
     }
 
     /**
-     * used to make URL's into hyperlinks
+     * used to make URL's into hyperlinks using a <a </a> tag
      * @param string $text
      * @return string
      */
@@ -689,6 +689,7 @@ class SurveyController extends Controller
         return $text;
     }
 
+    // used to get the type of a question
     private function getFieldTypeName($value)
     {
         switch($value){
@@ -704,6 +705,7 @@ class SurveyController extends Controller
         return "unbekannter Feldtyp";
     }
 
+    //changes 0 to false and 1 to true
     private function booleanIntoText($boolean)
     {
         switch ($boolean){
