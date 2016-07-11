@@ -54,69 +54,69 @@
 }
 
 
-.table{
+.table-responsive-custom{
     margin: 0;
     background-color: #f6f5f3;
 }
 
-.table > thead > tr > th
+.table-responsive-custom > thead > tr > th
 {
     background-color: white;
     color: #333;
 }
 
-.table > thead:first-child > tr:first-child > th:first-child
+.table-responsive-custom > thead:first-child > tr:first-child > th:first-child
 {
     position: absolute;
     display: inline-block;
     background-color: white;
 }
 
-.table > thead > tr > th:first-child
+.table-responsive-custom > thead > tr > th:first-child
 {
     /* top-left corner */
     width: 150px;
 }
 
-.table > thead > tr > th:nth-child(2)
+.table-responsive-custom > thead > tr > th:nth-child(2)
 {
     padding-left: 170px !important;
 }
 
-.table > tbody > tr > td:first-child
+.table-responsive-custom > tbody > tr > td:first-child
 {
     position: absolute;
     display: inline-block;
 }
-.table > tbody > tr:nth-child(odd) > td{
+.table-responsive-custom > tbody > tr:nth-child(odd) > td{
     background-color: #f9f9f9;
 }
 
-.table > tbody > tr:nth-child(even) > td{
+.table-responsive-custom > tbody > tr:nth-child(even) > td{
     background-color: white;
 }
 
 
-.table > tbody > tr:nth-child(odd) > td:first-child
+.table-responsive-custom > tbody > tr:nth-child(odd) > td:first-child
 {
     width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.table > tbody > tr:nth-child(even) > td:first-child
+.table-responsive-custom > tbody > tr:nth-child(even) > td:first-child
 {
     width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.table > thead:first-child > tr:first-child > th:nth-child(2)
+.table-responsive-custom > thead:first-child > tr:first-child > th:nth-child(2)
 {
     /* what is this? */
 }
 
-.table > tbody > tr > td:nth-child(2)
+.table-responsive-custom > tbody > tr > td:nth-child(2)
 {
     padding-left: 170px !important;
 }
@@ -223,12 +223,12 @@ and also iPads specifically.
 
 
     /* change padding of cells, compared to desktop */
-    .table > thead > tr > th:nth-child(2)
+    .table-responsive-custom > thead > tr > th:nth-child(2)
     {
         padding-left: 50% !important;
     }
 
-    .table > tbody > tr > td:nth-child(2)
+    .table-responsive-custom > tbody > tr > td:nth-child(2)
     {
         padding-left: 50% !important;
     }
@@ -237,7 +237,7 @@ and also iPads specifically.
         display: none;
     }
 
-    .table{
+    .table-responsive-custom{
         overflow: hidden;
     }
 
@@ -246,12 +246,12 @@ and also iPads specifically.
         white-space:normal ;
     }
 
-    .table > tbody > tr:nth-child(odd) > td:first-child
+    .table-responsive-custom > tbody > tr:nth-child(odd) > td:first-child
     {
         width: auto;
     }
 
-    .table > tbody > tr:nth-child(even) > td:first-child
+    .table-responsive-custom > tbody > tr:nth-child(even) > td:first-child
     {
         width: auto;
     }
