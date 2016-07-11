@@ -180,6 +180,7 @@ $userCanEditDueToRole
                                     @endif
                                 </th>
                             @endforeach
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -248,10 +249,10 @@ $userCanEditDueToRole
                                     @endif
                                 </td>
                             @endforeach
-                            <td class="tdButtons " id="panelNoShadow">
+                            <td class="tdButtons " id="">
                                 {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;', 'fo]) !!}
                                 --}}
-                                <input type="submit" class="btn btn-primary btn-margin fa fa-floppy-o" id="noMarginMobile" value=""
+                                <input type="submit" class="btn btn-primary fa fa-floppy-o" id="noMarginMobile" value=""
                                         style="display: inline-block; height: 34px;">
                                {!! Form::close() !!}
                             </td>
@@ -273,14 +274,18 @@ $userCanEditDueToRole
                                             @endif
                                         </td>
                                         @foreach($answer->getAnswerCells as $cell)
+                                            @if($cell->answer == null || $cell->answer == "")
+                                                <td class="singleAnswer emtpyCell">
+                                            @else
                                             <td class="singleAnswer">
+                                            @endif
                                                 {{$cell->answer}}
                                             </td>
                                         @endforeach
                                         @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
                                             @if($survey->deadline >= date("Y-m-d H:i:s") OR $userCanEditDueToRole)
                                             <!--Edid Delete Buttons-->
-                                                <td class="tdButtons panel" id="panelNoShadow">
+                                                <td class="tdButtons " >
                                                     <input href="#"
                                                        class="editButton btn btn-primary fa fa-pencil"
                                                        id="editButton{{$answer->id}}"
@@ -320,8 +325,8 @@ $userCanEditDueToRole
                                 @foreach($answers as $key => $answer)
                                     @if($i == 0)
                                         <tr>
-                                            <td class="transparent background">&nbsp;</td>
-                                            <td class="transparent background">&nbsp;</td>
+                                            <td class="transparent background emtpyCell">&nbsp;</td>
+                                            <td class="transparent background emtpyCell">&nbsp;</td>
                                             @foreach($answer->getAnswerCells as $cell)
                                                 <td class="transparent background">&nbsp;</td>
                                             @endforeach
@@ -330,9 +335,13 @@ $userCanEditDueToRole
                                             <td class="evaluation_heading" id="EvaluationColor">
                                                 Auswertung
                                             </td>
-                                            <td class="" id="EvaluationColor"></td>
+                                            <td class="emtpyCell    " id="EvaluationColor"></td>
                                             @foreach($evaluation as $eva_question)
-                                                <td class="mobileMarginTop" id="EvaluationColor">
+                                                @if($eva_question == null)
+                                                    <td class="mobileMarginTop emtpyCell" id="EvaluationColor">
+                                                @else
+                                                    <td class="mobileMarginTop" id="EvaluationColor">
+                                                @endif
                                                     <div>
                                                         @foreach($eva_question as $answer_option => $counter)
                                                                 @if($counter == 1)
@@ -352,6 +361,7 @@ $userCanEditDueToRole
                                                     </div>
                                                 </td>
                                             @endforeach
+                                            <td class="emtpyCell" id="EvaluationColor" ></td>
                                         </tr>
                                     @endif
                                     <?php $i += 1; ?>
