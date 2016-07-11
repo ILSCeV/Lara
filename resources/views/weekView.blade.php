@@ -52,7 +52,7 @@
 
 	<br class="visible-xs">
 
-	<div class="containerPadding12Mobile">
+	<div class="containerPadding12Mobile" >
 	{{-- weekdays --}}
 	@if (count($events)>0)
 		<div class="isotope">
@@ -199,7 +199,6 @@
 	@endif
 	</div>
                             </div>
-
 
 
 {{-- Legend --}}
