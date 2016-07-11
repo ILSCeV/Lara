@@ -608,8 +608,16 @@ jQuery( document ).ready( function( $ ) {
 
 // handles expandable table-rows (for exampled in surveyView change-history)
 function toggle(row, rowCount) {
-    myHead = document.getElementById("tr-header-"+row);
-
+    // change arrow icon
+    arrowIcon = document.getElementById("arrow-icon"+row);
+    if(arrowIcon.className == "fa fa-caret-right"){
+        // if table is fold
+        arrowIcon.className = "fa fa-sort-desc";
+    } else {
+        // if table is unfold
+        arrowIcon.className = "fa fa-caret-right";
+    }
+    // display columns
     for (i=0;i<=rowCount;i++) {
         currentTr = document.getElementById("tr-data-"+row+i);
         if(currentTr.style.display == "") {
