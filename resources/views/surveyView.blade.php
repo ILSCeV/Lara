@@ -18,6 +18,7 @@ $userCanEditDueToRole
         #dropdown_name {
             position: absolute;
             overflow: visible;
+            z-index: 11;
         }
 
         #dropdown-menu_name {
@@ -28,8 +29,15 @@ $userCanEditDueToRole
         }
 
         #dropdown-menu_name2 {
-            position: relative;
-            left: -0.5%;
+            position: absolute;
+            left: inherit;
+            top: 30px;
+        }
+
+        #cellEditing-2 {
+            position: absolute;
+            overflow: visible;
+            z-index: 11;
         }
 
         #dropdown_club {
@@ -252,7 +260,7 @@ $userCanEditDueToRole
                             <td class="tdButtons " id="">
                                 {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;', 'fo]) !!}
                                 --}}
-                                <input type="submit" class="btn btn-primary fa fa-floppy-o" id="noMarginMobile" value=""
+                                <input type="submit" class="btn btn-primary fa fa-floppy-o answer_button" id="noMarginMobile" value=""
                                         style="display: inline-block; height: 34px;">
                                {!! Form::close() !!}
                             </td>
