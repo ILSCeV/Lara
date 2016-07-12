@@ -69,15 +69,15 @@
         @for($i = 1; $i <= $date['daysOfMonth'] + ($date['startDay'] - 1) + (7 - $date['endDay']); $i++)
                 <!--define row-->
         @if($i == 1)
-            <div class="calendarRow clearfix group noHeightMobile">
+            <div class="calendarRow clearfix group noHeightMobile hidden-xs">
                 <!--This is an empty row-->
                 <!--Without this row, the first real calendar row would disapear-->
             </div>
-            <div class="calendarRow clearfix group height10vh">
+            <div class="calendarRow clearfix group height10vh hidden-xs">
                 @elseif((date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)  && (date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W")))
                     <div class="calendarRow clearfix group WeekMarkerRow" >
                 @elseif( $i == 8 || $i == 15 || $i == 22 || $i == 29 || $i == 36)
-                    <div class="calendarRow clearfix group">
+                    <div class="calendarRow clearfix group ">
                         @endif
                                 <!--End define row at bottom-->
                         <!-- Weeks on left side -->
