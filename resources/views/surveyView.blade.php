@@ -303,7 +303,7 @@ $userCanEditDueToRole
                                                        data-toggle="tooltip"
                                                        data-placement="bottom"
                                                        onclick="change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
-                                                    <i id="spinner{{$answer->id}}" class="fa fa-spinner fa-spin fa-2x hidden" style="position: relative; left: -38px; bottom: -6px;"></i>
+                                                    <i id="spinner{{$answer->id}}" class="fa fa-spinner fa-spin fa-2x hidden"></i>
 
                                                     <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                                        class="btn btn-default deleteRow"
