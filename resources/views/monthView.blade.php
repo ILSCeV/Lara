@@ -73,7 +73,7 @@
                 <!--This is an empty row-->
                 <!--Without this row, the first real calendar row would disapear-->
             </div>
-            <div class="calendarRow clearfix group height10vh hidden-xs">
+            <div class="calendarRow clearfix group height10vh ">
                 @elseif((date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)  && (date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W")))
                     <div class="calendarRow clearfix group WeekMarkerRow" >
                 @elseif( $i == 8 || $i == 15 || $i == 22 || $i == 29 || $i == 36)
