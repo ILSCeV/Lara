@@ -32,7 +32,8 @@
 <div class="col-xs-12 col-md-4 pull-right">
     @include('partials.filter')
 </div>
-<br><br>
+<br class="hidden-xs">
+<br class="hidden-xs">
 
 <!--Mont Table-->
 <div class="row bgWhite">
