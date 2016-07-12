@@ -18,7 +18,7 @@ $userCanEditDueToRole
         #dropdown_name {
             position: absolute;
             overflow: visible;
-            z-index: 11;
+            z-index: 12;
         }
 
         #dropdown-menu_name {
