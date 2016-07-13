@@ -348,3 +348,15 @@ tr .panel {
         height: auto;
     }
 }
+
+.fa-spinner {
+    position: relative;
+    left: -38px;
+    bottom: -6px;"
+}
+
+@media screen and (max-width: 978px) {
+    .fa-spinner {
+        left: -77px;
+    }
+}

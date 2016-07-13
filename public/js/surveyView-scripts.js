@@ -228,10 +228,12 @@ jQuery( document ).ready( function( $ ) {
 
         count_clicks++;
 
+
         $('.table').find('input').each(function () {
             $(".editButton").not('#editButton' + answer_number).attr('disabled', 'disabled');
         });
-            $(document).find(".btn-margin").attr('disabled', 'disabled');
+
+        $(".tdButtons ").find(".answer_button").attr('disabled', 'disabled');
 
         if (count_clicks === 1) {
 
@@ -534,7 +536,7 @@ jQuery( document ).ready( function( $ ) {
                 $('.table').find('input').each(function () {
                     $(".editButton").not('#editButton' + answer_number).prop('disabled', false);
                 });
-                $(".btn-margin").prop('disabled', false);
+                $(".answer_button").prop('disabled', false);
 
                 $('#spinner' + counter_ajax).addClass('hidden');
 
@@ -594,7 +596,7 @@ jQuery( document ).ready( function( $ ) {
                 $('.table').find('input').each(function () {
                     $(".editButton").not('#editButton' + answer_number).prop('disabled', false);
                 });
-                $(".btn-margin").prop('disabled', false);
+                $(".answer_button").prop('disabled', false);
 
                 $('#spinner' + counter_ajax).addClass('hidden');
 
