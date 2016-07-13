@@ -4,7 +4,20 @@
 */
 $(document).ready(function() {
 
-    $('form').on( 'submit', function () {
+    $('form').find('.update').on('submit', function () {
+        // For passworded surveys: check if a password field exists and is not empty
+        // We will check correctness on the server side
+        if ($('.panel-warning').find("[name^=password]").length
+            && !$('.panel-warning').find("[name^=password]").val()) {
+            var password = window.prompt('Bitte noch das Passwort für diese Umfrage eingeben:');
+            $('.panel-warning').find("[name^=password]").val(password);
+
+        } else {
+            var password = $('.panel-warning').find("[name^=password]").val();
+        }
+    });
+
+    $('.store').on('submit', function () {
         // For passworded surveys: check if a password field exists and is not empty
         // We will check correctness on the server side
         if ($('.panel-warning').find("[name^=password]").length
