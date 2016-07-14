@@ -38,7 +38,7 @@
  	<footer class="container footer" id="footer">
         <hr class="hidden-print">
         <span class="col-xs-12 col-sm-4 col-md-4 text-dark-grey" style="text-align: center;">
-            <small>Etwas funktioniert nicht? Schreibe <a href="mailto:maxim.drachinskiy@bc-studentenclub.de">Maxim</a> eine Mail.</small>
+            <small>{{ trans('mainLang.not working') }}<a href="mailto:maxim.drachinskiy@bc-studentenclub.de">Maxim</a>{{ trans('mainLang.mail') }}</small>
         </span>
         <span class="col-xs-6 col-sm-4 col-md-4 text-dark-grey" style="text-align: center;">
             @if(File::exists("gitrevision.txt"))
@@ -51,6 +51,21 @@
             <small>Mehr Infos? Besuche die <a href="http://github.com/4D44H/lara-vedst">Projektseite auf GitHub</a>.
             </small>
         </span>
+        <!-- Button for switching language -->
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {{ Config::get('languages')[App::getLocale()] }}
+            </a>
+            <ul class="dropdown-menu">
+                @foreach (Config::get('languages') as $lang => $language)
+                    @if ($lang != App::getLocale())
+                        <li>
+                            <a href="{{ route('lang.switch', $lang) }}">{{$language}}</a>
+                        </li>
+                    @endif
+                @endforeach
+            </ul>
+        </li>
         <br class="visible-xs visible-sm">
         <br>
         <br>
