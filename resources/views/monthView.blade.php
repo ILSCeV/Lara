@@ -147,6 +147,11 @@
                                         @endfor
                                     </div>
                         </div>
+                                    {{-- Legend --}}
+                                    @include("partials.legend")
+
+                                    {{-- filter hack --}}
+                                    <span id="own-filter-marker" hidden>&nbsp;</span>
                         @stop
                     </div>
             </div>
