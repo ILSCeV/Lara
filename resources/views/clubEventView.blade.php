@@ -44,35 +44,35 @@
 				<table class="table table-hover">
 					<tr>
 						<td width="20%" class="left-padding-16">
-							<i>Typ:</i>
+							<i>{{ trans('mainLang.type') }}</i>
 						</td>
 						<td>
 							@if( $clubEvent->evnt_type == 0)
-								normales Programm
+								{{ trans('mainLang.normal program') }}
 							@elseif( $clubEvent->evnt_type == 1)
-								Information
+								{{ trans('mainLang.information') }}
 							@elseif( $clubEvent->evnt_type == 2)
-								Spezial
+								{{ trans('mainLang.special') }}
 							@elseif( $clubEvent->evnt_type == 3)
-								Live Band / Live DJ / Lesung
+								{{ trans('mainLang.LiveBandDJ') }}
 							@elseif( $clubEvent->evnt_type == 4)
-								interne Veranstaltung
+								{{ trans('mainLang.internal event') }}
 							@elseif( $clubEvent->evnt_type == 5)
-								Nutzung
+								{{ trans('mainLang.utilization') }}
 							@elseif( $clubEvent->evnt_type == 6)
-								Fluten
+								{{ trans('mainLang.flooding') }}
 							@elseif( $clubEvent->evnt_type == 7)
-								Flyer / Plakatieren
+								{{ trans('mainLang.flyers placard') }}
 							@elseif( $clubEvent->evnt_type == 8)
-								Vorverkauf
+								{{ trans('mainLang.preSale') }}
 							@elseif( $clubEvent->evnt_type == 9)
-								Sonstiges
+								{{ trans('mainLang.others') }}
 							@endif
 						</td>
 					</tr>
 					<tr>
 						<td width="20%" class="left-padding-16">
-							<i>Beginn:</i>
+							<i>{{ trans('mainLang.begin') }}:</i>
 						</td>
 						<td>
 							{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start)) }} um
@@ -81,7 +81,7 @@
 					</tr>
 					<tr>
 						<td width="20%" class="left-padding-16">
-							<i>Ende:</i>
+							<i>{{ trans('mainLang.end') }}:</i>
 						</td>
 						<td>
 							{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_end)) }} um
@@ -90,7 +90,7 @@
 					</tr>
 					<tr>
 						<td width="20%" class="left-padding-16">
-							<i>DV-Zeit:</i>
+							<i>{{ trans('mainLang.DV-Time') }}:</i>
 						</td>
 						<td>
 							{{ date("H:i", strtotime($clubEvent->getSchedule->schdl_time_preparation_start)) }}
@@ -98,12 +98,12 @@
 					</tr>
 					<tr>
 						<td width="20%" class="left-padding-16">
-							<i>Verein:</i>
+							<i>{{ trans('mainLang.club') }}:</i>
 						</td>
 						<td>
 							{{ $clubEvent->getPlace->plc_title }}
 							&nbsp;&nbsp;<br class="visible-xs">
-							<i>(wird angezeigt für: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
+							<i>({{ trans('mainLang.show for') }}: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
 						</td>
 					</tr>
 				</table>
@@ -119,7 +119,7 @@
 						   class="btn btn-primary"
 						   data-toggle="tooltip"
 	                       data-placement="bottom"
-	                       title="Veranstaltung ändern">
+	                       title="{{ trans('mainLang.changeEvent') }}">
 						   <i class="fa fa-pencil"></i>
 						</a>
 						&nbsp;&nbsp;
@@ -127,11 +127,11 @@
 						   class="btn btn-default"
 						   data-toggle="tooltip"
 	                       data-placement="bottom"
-	                       title="Veranstaltung löschen"
+	                       title="{{ trans('mainLang.deleteEvent') }}"
 						   data-method="delete"
 						   data-token="{{csrf_token()}}"
 						   rel="nofollow"
-						   data-confirm="Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!">
+						   data-confirm="{{ trans('mainLang.confirmDeleteEvent') }}">
 						   <i class="fa fa-trash"></i>
 						</a>
 					</span>
@@ -146,11 +146,11 @@
 			@if( $clubEvent->evnt_public_info != '')
 			<div class="panel">
 				<div class="panel-body more-info">
-					<h5 class="panel-title">Zusatzinfos:</h5>
+					<h5 class="panel-title">{{ trans('mainLang.additionalInfo') }}:</h5>
 					{!! nl2br(e($clubEvent->evnt_public_info)) !!}
 				</div>
-				<button type="button" class="moreless-more-info btn btn-primary btn-margin" data-dismiss="alert">mehr anzeigen</button>
-				<button type="button" class="moreless-less-info btn btn-primary btn-margin" data-dismiss="alert">weniger anzeigen</button>
+				<button type="button" class="moreless-more-info btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showMore') }}</button>
+				<button type="button" class="moreless-less-info btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showLess') }}</button>
 			</div>
 			@endif
 
@@ -158,11 +158,11 @@
 				@if($clubEvent->evnt_private_details != '')
 				<div class="panel hidden-print">
 					<div class="panel-body more-details">
-						<h5 class="panel-title">Weitere Details:</h5>
+						<h5 class="panel-title">{{ trans('mainLang.moreDetails') }}:</h5>
 						{!! nl2br(e($clubEvent->evnt_private_details)) !!}
 					</div>
-					<button type="button" class="moreless-more-details btn btn-primary btn-margin" data-dismiss="alert">mehr anzeigen</button>
-					<button type="button" class="moreless-less-details btn btn-primary btn-margin" data-dismiss="alert">weniger anzeigen</button>
+					<button type="button" class="moreless-more-details btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showMore') }}</button>
+					<button type="button" class="moreless-less-details btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showLess') }}</button>
 				</div>
 				@endif
 			@endif
@@ -172,7 +172,7 @@
 
 	<br>
                         <div class="panelEventView">
-	&nbsp;&nbsp;<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">Zeiten ausblenden</button>
+	&nbsp;&nbsp;<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">{{ trans('mainLang.hideTimes') }}</button>
 
 
 	<div class="panel panel-warning">
