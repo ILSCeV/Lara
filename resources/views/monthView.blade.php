@@ -8,6 +8,7 @@
 @stop
 @section('content')
         <!-- prev/next month -->
+<div class="col-xs-12 col-md-12">
 <div class="col-xs-12 col-md-5 btn-group">
     <a class="btn btn-default hidden-print"
        href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
@@ -34,12 +35,13 @@
 </div>
 <br class="hidden-xs">
 <br class="hidden-xs">
+</div>
 
 <!--Mont Table-->
-<div class="row bgWhite">
+<div class="col-xs-12 row bgWhite">
     <div class="col-md-12 calendarWrapper">
         <div class=" hidden-xs" id="ContentRow">
-            <div class="calendarWeek noBorderTop">
+            <div class="calendarWeek noBorderTop" style="border-top: 0px">
                 KW
             </div>
             <div class="weekDay padleft">
@@ -146,14 +148,21 @@
 
                                         @endfor
                                     </div>
-                        </div>
-                                    {{-- Legend --}}
-                                    @include("partials.legend")
 
-                                    {{-- filter hack --}}
-                                    <span id="own-filter-marker" hidden>&nbsp;</span>
-                        @stop
+                        </div>
+
                     </div>
+
             </div>
     </div>
 </div>
+</div>
+
+        <div class="col-md-12 col-xs-12">
+        {{-- Legend --}}
+        @include("partials.legend")
+
+        {{-- filter hack --}}
+        <span id="own-filter-marker" hidden>&nbsp;</span>
+        </div>
+@stop
