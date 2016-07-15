@@ -18,7 +18,6 @@ return [
     | in lara/resources/lang add a new folder + file in this style
     |
     |
-    |
     */
 
     // /app
@@ -29,7 +28,7 @@ return [
     'not working' => 'Something is not working? Write ',
     'mail'     => ' a mail.',
     'more infos' => 'More informations? Visit the ',
-    'projectsite' => 'projectsite on GitHub',
+    'projectsite' => ' projectsite on GitHub',
 
     //-----------------------------------------------------------------------------------------------------
     // resources/views
@@ -133,7 +132,7 @@ return [
     'createNewSurvey' => 'Create new Survey',
     //-----------------------------------------------------------------------------------------------------------
     // resources/views/editSurveyView.blade.php
-    'editSurvey' => 'edit Survey',
+    'editSurvey' => 'Edit Survey',
     'confirmDeleteSurvey1' => 'Are you sure you want the survey ', //placeholder variable after this
     'confirmDeleteSurvey2' => ' deleted?',
     //-----------------------------------------------------------------------------------------------------------
