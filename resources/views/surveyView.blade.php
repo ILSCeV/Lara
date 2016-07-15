@@ -136,14 +136,14 @@ $userCanEditDueToRole
         </div>
         <div class="panel-body">
             @if($survey->description != null)
-                Beschreibung: {!! $survey->description !!}
+                {{ trans('mainLang.description') }}: {!! $survey->description !!}
             @endif
             <br>
-            Die Umfrage läuft noch bis: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} um
+                {{ trans('mainLang.surveyDeadlineTo') }}: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} {{ trans('mainLang.um') }}
             {{ date("H:i", strtotime($survey->deadline)) }}.
-            <br>@if(count($answers) === 0) Es hat noch keine Person abgestimmt. @endif
-                @if(count($answers) === 1) Es hat bereits eine Person abgestimmt. @endif
-                @if(count($answers) > 1) Es haben bereits {{count($answers)}} Personen abgestimmt. @endif
+            <br>@if(count($answers) === 0) {{ trans('mainLang.noPersonAnswered') }} @endif
+                @if(count($answers) === 1) {{ trans('mainLang.onePersonAnswered') }} @endif
+                @if(count($answers) > 1) {{ trans('mainLang.fewPersonAnswered1') }} {{count($answers)}} {{ trans('mainLang.fewPersonAnswered2') }} @endif
         </div>
     </div>
 
@@ -178,8 +178,8 @@ $userCanEditDueToRole
                     <table class="table table-striped table-bordered table-condensed table-responsive-custom">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>mein Club</th>
+                            <th>{{ trans('mainLang.name') }}</th>
+                            <th>{{ trans('mainLang.myClub') }}</th>
                             @foreach($questions as $question)
                                 <th class="question">
                                     {{$question->question}}
@@ -203,7 +203,7 @@ $userCanEditDueToRole
                                                        document.getElementById('club').value='{{Session::get('userClub')}}';
                                                        document.getElementById('ldapId').value='{{Session::get('userId')}}'">
                                                 {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
-                                                <b>Mich eintragen!</b>
+                                                <b>{{ trans('mainLang.addMe') }}</b>
                                             </a>
                                         </li>
                                     </ul>
@@ -235,20 +235,20 @@ $userCanEditDueToRole
                                         @endif
                                     @elseif($question->field_type == 2)
                                         <!-- Ja/Nein -->
-                                        {{ Form::radio('answers['.$key.']', 1, '' , ['id' => 'radio'.$question->order.'-0']) }} Ja
+                                        {{ Form::radio('answers['.$key.']', 1, '' , ['id' => 'radio'.$question->order.'-0']) }} {{ trans('mainLang.yes') }}
                                         @if(!$question->is_required)
                                             <!--Answer not required-->
-                                            {{ Form::radio('answers['.$key.']', 0, '' , ['id' => 'radio'.$question->order.'-1']) }} Nein
-                                            {{ Form::radio('answers['.$key.']', -1, true, ['id' => 'radio'.$question->order.'-2'])}} keine Angabe
+                                            {{ Form::radio('answers['.$key.']', 0, '' , ['id' => 'radio'.$question->order.'-1']) }} {{ trans('mainLang.no') }}
+                                            {{ Form::radio('answers['.$key.']', -1, true, ['id' => 'radio'.$question->order.'-2'])}} {{ trans('mainLang.noInformation') }}
                                         @else
                                             <!--Answer* required-->
-                                            {{ Form::radio('answers['.$key.']', 0, true, ['id' => 'radio'.$question->order.'-1']) }} Nein
+                                            {{ Form::radio('answers['.$key.']', 0, true, ['id' => 'radio'.$question->order.'-1']) }} {{ trans('mainLang.no') }}
                                         @endif
                                     @elseif($question->field_type == 3)
                                         <!-- Dropdown -->
                                         <select class="form-control" id="options{{$question->order}}" name="answers[{{$key}}]" style="font-size: 13px;">
                                             @if(!$question->is_required)
-                                                <option>keine Angabe</option>
+                                                <option>{{ trans('mainLang.noInformation') }}</option>
                                             @endif
                                             @foreach($question->getAnswerOptions as $answerOption)
                                                 <option id="option">{{$answerOption->answer_option}}</option>
@@ -278,7 +278,7 @@ $userCanEditDueToRole
                                             @if(!empty($answer->club))
                                                 {{$answer->club}}
                                             @else
-                                                kein Club
+                                                {{ trans('mainLang.noClub') }}
                                             @endif
                                         </td>
                                         @foreach($answer->getAnswerCells as $cell)
@@ -312,7 +312,7 @@ $userCanEditDueToRole
                                                        data-method="delete"
                                                        data-token="{{csrf_token()}}"
                                                        rel="nofollow"
-                                                       data-confirm="Möchtest Du diese Antwort wirklich löschen?">
+                                                       data-confirm="{{ trans('mainLang.confirmDeleteAnswer') }}">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </td>
@@ -341,7 +341,7 @@ $userCanEditDueToRole
                                         </tr>
                                         <tr id="evaluation">
                                             <td class="evaluation_heading" id="EvaluationColor">
-                                                Auswertung
+                                                {{ trans('mainLang.evaluation') }}
                                             </td>
                                             <td class="emtpyCell    " id="EvaluationColor"></td>
                                             @foreach($evaluation as $eva_question)
@@ -354,15 +354,15 @@ $userCanEditDueToRole
                                                         @foreach($eva_question as $answer_option => $counter)
                                                                 @if($counter == 1)
                                                                     @if($answer_option === 'keine Angabe')
-                                                                        <div>{{$counter}} Person wollte keine Angaben machen.</div>
+                                                                        <div>{{$counter}} {{ trans('mainLang.personDidNotAnswer') }}</div>
                                                                     @else
-                                                                        <div>{{$counter}} Person stimmte für: {{$answer_option}}</div>
+                                                                        <div>{{$counter}} {{ trans('mainLang.personAnswered') }}: {{$answer_option}}</div>
                                                                     @endif
                                                                 @else
                                                                     @if($answer_option === 'keine Angabe')
-                                                                        <div>{{$counter}} Personen wollten keine Angaben machen.</div>
+                                                                        <div>{{$counter}} {{ trans('mainLang.personsDidNotAnswer') }}</div>
                                                                     @else
-                                                                        <div>{{$counter}} Personen stimmten für: {{$answer_option}}</div>
+                                                                        <div>{{$counter}} {{ trans('mainLang.personsAnswered') }}: {{$answer_option}}</div>
                                                                     @endif
                                                                 @endif
                                                         @endforeach
@@ -396,7 +396,7 @@ $userCanEditDueToRole
                 <br>
                 <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
                 <a id="show-hide-history" class="text-muted hidden-print" href="#">
-                    Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
+                    {{ trans('mainLang.listChanges') }} &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
                 </a>
 
                 <div class="panel hide" id="change-history">
@@ -404,12 +404,12 @@ $userCanEditDueToRole
                         <table class="table table-hover table-condensed">
                             <thead>
                             <tr>
-                                <th>Wer?</th>
-                                <th>Zusammenfassung</th>
-                                <th>Betroffene Spalte</th>
-                                <th>Alter Wert</th>
-                                <th>Neuer Wert</th>
-                                <th>Wann?</th>
+                                <th>{{ trans('mainLang.who') }}?</th>
+                                <th>{{ trans('mainLang.summary') }}</th>
+                                <th>{{ trans('mainLang.affectedColumn') }}</th>
+                                <th>{{ trans('mainLang.oldValue') }}</th>
+                                <th>{{ trans('mainLang.newValue') }}</th>
+                                <th>{{ trans('mainLang.when') }}?</th>
                             </tr>
                             </thead>
                             <tbody>

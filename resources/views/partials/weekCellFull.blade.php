@@ -136,7 +136,7 @@
 		        OR Session::get('userGroup') == 'admin'))
 		        <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 				<div class="padding-right-16 bottom-padding pull-right hidden-print">
-					<small><a href="#" class="hide-event">Ausblenden</a></small>
+					<small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
 				</div>
 			@endif
 

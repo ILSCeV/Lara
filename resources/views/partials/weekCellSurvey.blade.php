@@ -9,7 +9,7 @@
 			<h4 class="panel-title">
 					<i class="fa fa-bar-chart-o white-text"></i>
 					{{--and show him thats a private survey(=Interne Umfrage in german) only for users--}}
-					<span class="name">Interne Umfrage</span>
+					<span class="name">{{ trans('mainLang.internalSurvey') }}</span>
 			</h4>
 			<i class="fa fa-times" aria-hidden="true"></i>
 			{{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->deadline))) }}
@@ -46,7 +46,7 @@
 
 	<hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 		<div class="padding-right-16 bottom-padding pull-right hidden-print">
-			<small><a href="#" class="hide-event">Ausblenden</a></small>
+			<small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
 		</div>
 	</div>
 @endif

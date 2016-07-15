@@ -44,7 +44,7 @@
 				<table class="table table-hover">
 					<tr>
 						<td width="20%" class="left-padding-16">
-							<i>{{ trans('mainLang.type') }}</i>
+							<i>{{ trans('mainLang.type') }}:</i>
 						</td>
 						<td>
 							@if( $clubEvent->evnt_type == 0)
@@ -103,7 +103,7 @@
 						<td>
 							{{ $clubEvent->getPlace->plc_title }}
 							&nbsp;&nbsp;<br class="visible-xs">
-							<i>({{ trans('mainLang.show for') }}: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
+							<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
 						</td>
 					</tr>
 				</table>
@@ -297,29 +297,29 @@
 		{{-- REVISIONS --}}
 		<span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 		<a id="show-hide-history" class="text-muted hidden-print" href="#">
-			Liste der Änderungen &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
+			{{ trans('mainLang.listChanges') }} &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
 		</a>
 
 		<div class="panel hide" id="change-history">
 			<table class="table table-hover table-condensed">
 				<thead>
 					<th class="col-xs-2 col-md-2">
-						Dienst
+						{{ trans('mainLang.work') }}
 					</th>
 					<th class="col-xs-2 col-md-2">
-						Was wurde geändert?
+						{{ trans('mainLang.whatChanged') }}
 					</th>
 					<th class="col-xs-2 col-md-2">
-						Alter Eintrag
+						{{ trans('mainLang.oldEntry') }}
 					</th>
 					<th class="col-xs-2 col-md-2">
-						Neuer Eintrag
+						{{ trans('mainLang.newEntry') }}
 					</th>
 					<th class="col-xs-2 col-md-2">
-						Wer ist schuld?
+						{{ trans('mainLang.whoBlame') }}
 					</th>
 					<th class="col-xs-2 col-md-2">
-						Wann war das?
+						{{ trans('mainLang.whenWasIt') }}
 					</th>
 				</thead>
 				<tbody>

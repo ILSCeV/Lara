@@ -23,6 +23,15 @@ return [
     'club' => 'Club',
     'show for' => 'will be showed for',
 
-    'changeEvent' => 'Change Event'
+    'changeEvent' => 'Change Event',
+
+    'whenWasIt' => 'When was it?',
+
+    'changeEventJob' => 'Change Event/Job',
+
+    'addMe' => 'Add me!',
+    'yes' => 'YES',
+    'no' => 'NO',
+    'noInformation' => 'no Entry',
 
 ];

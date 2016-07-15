@@ -25,7 +25,7 @@ $myDate = $myDate->subDay()->format('Y-m-d H-m-s');
         <div class="cal-event {{$classString}}  dark-grey">
             <i class="fa fa-bar-chart-o white-text"></i>
             {{--and show him thats a private survey(=Interne Umfrage in german) only for users--}}
-            <span class="white-text">Interne Umfrage</span>
+            <span class="white-text">{{ trans('mainLang.internalSurvey') }}</span>
         </div>
 
     @else {{--meaning Session::has'userId' OR !$survey->is_private == 0--}}
@@ -72,7 +72,7 @@ $myDate = $myDate->subDay()->format('Y-m-d H-m-s');
                             @if($clubEvent->evnt_is_private)
                                 <div class="cal-event {{$classString}} dark-grey">
                                     <i class="fa fa-eye-slash white-text"></i>
-                                    <span class="white-text">Internes Event</span>
+                                    <span class="white-text">{{ trans('mainLang.internEventP') }}</span>
                                 </div>
                                 {{-- show everything for public events --}}
                             @else

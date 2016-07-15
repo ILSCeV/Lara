@@ -2,7 +2,7 @@
 
 @section('title')
         @if(count($events)==0)
-                Für {{ $date }} sind keine Veranstaltungen geplant
+                {{ trans('mainLang.for') }} {{ $date }} {{ trans('mainLang.noEventsPlanned') }}
         @else
                 {{ $date }}
         @endif
@@ -14,11 +14,11 @@
         @if(count($events)==0)
                 <div class="panel">
                         <div class="panel-heading">
-                                <h5>Keine Veranstaltungen am {{ $date }}</h5>
+                                <h5>{{ trans('mainLang.noEventsOn') }} {{ $date }}</h5>
                         </div>
                 </div>
         @else
-                <h3> Veranstaltungen für {{ $date }}</h3>
+                <h3> {{ trans('mainLang.EventsFor') }} {{ $date }}</h3>
                 
                 <center>{!! $events->render() !!}</center>
 

@@ -17,9 +17,9 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-            <li><a href="{{ asset('/calendar/month') }}">Monat</a></li>
+            <li><a href="{{ asset('/calendar/month') }}">{{ trans('mainLang.month') }}</a></li>
 
-            <li><a href="{{ asset('/calendar/week') }}">Woche</a></li>
+            <li><a href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
             
             {{-- show logs tab for club management or admins only --}}
             @if(Session::get('userGroup') == 'clubleitung' OR Session::get('userGroup') == 'admin')
@@ -41,9 +41,9 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ asset('/management/places') }}">Clubs verwalten</a></li>
-                <li><a href="{{ asset('/management/jobtypes') }}">Diensttypen verwalten</a></li>
-                <li><a href="{{ asset('/management/templates') }}">Vorlagen verwalten</a></li>
+                <li><a href="{{ asset('/management/places') }}">{{ trans('mainLang.manageClub') }}</a></li>
+                <li><a href="{{ asset('/management/jobtypes') }}">{{ trans('mainLang.manageJobType') }}</a></li>
+                <li><a href="{{ asset('/management/templates') }}">{{ trans('mainLang.manageTemplate') }}</a></li>
               </ul>
             </li>
             @endif
@@ -64,9 +64,8 @@
                                     <span class="test">+</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ URL::route('event.create') }}">Neue Veranstaltung/Aufgabe
-                                            hinzufügen</a></li>
-                                    <li><a href="{{ URL::route('survey.create') }}">Neue Umfrage hinzufügen</a></li>
+                                    <li><a href="{{ URL::route('event.create') }}">{{ trans('mainLang.createAndAddNewEvent') }}</a></li>
+                                    <li><a href="{{ URL::route('survey.create') }}">{{ trans('mainLang.createAndAddNewSurvey') }}</a></li>
                                 </ul>
                             </div>
                         @endif
@@ -84,25 +83,25 @@
                                        style="color:yellowgreen;"
                                        data-toggle="tooltip" 
                                        data-placement="bottom" 
-                                       title="Kandidat"></i>
+                                       title="{{ trans('mainLang.candidate') }}"></i>
                                 @elseif ( Session::get('userStatus') === 'veteran' ) 
                                     <i class="fa fa-star" 
                                        style="color:gold;"
                                        data-toggle="tooltip" 
                                        data-placement="bottom" 
-                                       title="Veteran"></i>
+                                       title="{{ trans('mainLang.veteran') }}"></i>
                                 @elseif ( Session::get('userStatus') === 'resigned' ) 
                                     <i class="fa fa-star-o" 
                                        style="color:gold;"
                                        data-toggle="tooltip" 
                                        data-placement="bottom" 
-                                       title="ex-Mitglied"></i>
+                                       title="{{ trans('mainLang.ex-member') }}"></i>
                                 @elseif ( Session::get('userStatus') === 'member')
                                     <i class="fa fa-circle"
                                        style="color:forestgreen;"
                                        data-toggle="tooltip" 
                                        data-placement="bottom" 
-                                       title="Aktiv"></i>
+                                       title="{{ trans('mainLang.active') }}"></i>
                                 @endif
                                 &nbsp;
                                 <strong>

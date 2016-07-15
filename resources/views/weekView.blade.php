@@ -160,7 +160,7 @@
 								</div>
 		<div class="panel">
 			<div class="panel-heading">
-				<h5>Keine Veranstaltungen diese Woche</h5>
+				<h5>{{ trans('mainLang.noEventsThisWeek') }}</h5>
 			</div>
 		</div>
 	@endif
@@ -193,7 +193,7 @@
 			<br>
 			<div class="panel">
 				<div class="panel-heading">
-					<h5>Keine Umfragen diese Woche</h5>
+					<h5>{{ trans('mainLang.noSurveysThisWeek') }}</h5>
 				</div>
 			</div>
 	@endif

@@ -7,7 +7,9 @@ return [
     |--------------------------------------------------------------------------
     |
     | Main language lines sorted by files
-    |
+    | Lines are used multiple times, when they are similar in different views.
+    | That means that new lines in this file only appear, when they appeared 
+    | for the first time while locating the files.
     */
 
     // /app
@@ -22,30 +24,36 @@ return [
     'more infos' => 'Mehr Infos? Besuche die ',
     'projectsite' => 'Projektseite auf GitHub',
     
-    // /resources/views/partials
-    
+
+    //-----------------------------------------------------------------------------------------------------
     // resources/views
     // resources/views/clubEventView.blade.php
-    //
-    'type' => 'Typ:',
-    'normal program' => 'normales Programm',
+    //Event types ------------------------------------
+    'type' => 'Typ',
+    'normal program' => 'normales Programm', //wrong version, later noticed TODO fix in /views
+    'normalProgramm' => 'normales Programm',
     'information' => 'Information',
     'special' => 'Spezial',
-    'LiveBandDJ' => 'Live Band / Live DJ / Lesung',
-    'internal event' => 'interne Veranstaltung',
+    'LiveBandDJ' => 'Live Band / Live DJ / Lesung',     
+    'internal event' => 'interne Veranstaltung',        // TODO fix the space in the keystring
+    'internalEvent' => 'interne Veranstaltung',
     'utilization' => 'Nutzung',
     'flooding' => 'Fluten',
-    'flyers placard' => 'Flyer / Plakatieren',
+    'flyers placard' => 'Flyer / Plakatieren',          // TODO fix the space in the keystring
+    'flyersPlacard' => 'Flyer / Plakatieren',
+    'marketingFlyersPlacard' => 'Marketing / Flyer / Plakate', //used in legend.blade.php
     'preSale' => 'Vorverkauf',
     'others' => 'Sonstiges',
-
+    //----------------------------------------------
     'begin' => 'Beginn',
     'end' => 'Ende',
     
     'DV-Time' => 'DV-Zeit',
     'club' => 'Verein',
+    'internalEventP' => 'Interne Veranstaltung', // Placeholder string
+    'internEventP' => 'Internes Event', //Placeholder string for example used in monthCell.blade.php
     //
-    'show for' => 'wird angezeigt für',
+    'willShowFor' => 'wird angezeigt für',
     //
     'changeEvent' => 'Veranstaltung ändern',
     'deleteEvent' => 'Veranstaltung löschen',
@@ -56,12 +64,215 @@ return [
     //Button
     'showMore' => 'mehr anzeigen',
     'showLess' => 'weniger anzeigen',
-
+    //
     'hideTimes' => 'Zeiten ausblenden',
+    //
+    'addComment' => 'Kommentar hier hinzufügen',  //not used Line ClubEventView ~270 Placeholder message and similar
+    //List of Changes
+    'listChanges' => 'Liste der Änderungen',
 
-    'addComment' => 'Kommentar hier hinzufügen',  //not used Line ClubEventView ~270 Placeholder message
+    'work' => 'Dienst',
+    'whatChanged' => 'Was wurde geändert?',
+    'oldEntry' => 'Alter Eintrag',
+    'newEntry' => 'Neuer Eintrag',
+    'whoBlame' => 'Wer ist schuld?',
+    'whenWasIt' => 'Wann war das?',
+
+    //-------------------------------------------------------------------------------------------------------
+    // resources/views/createClubEventView.blade.php
+    'createNewVEvent' => 'Neue Veranstaltung erstellen',
+    'createNewEvent' => 'Neues Event erstellen',
+    'template' => 'Vorlage',
+    'templateNewSaveQ' => 'Als neue Vorlage speichern?',
+    'title' => 'Titel',
+    'subTitle' => 'Subtitel',
+    
+    'showExtern' => 'Für Externe sichtbar machen?',
+
+    'survey' => 'Umfrage',
+
+    //blockString line~168
+    'showForLoggedInMember' => 'Diese Öffnung wird nur für eingeloggte Mitglieder sichtbar sein!',
+    'showForExternOrChangeType' => 'Um sie für Externe sichtbar zu machen oder den Typ zu ändern,',
+    'askTheCLOrMM' => 'frage die Clubleitung oder die Marketingverantwortlichen.',
+
+    'section' => 'Sektion',
+    'showFor' => 'Zeige für',
+    //password
+    'passwordEntry' => 'Passwort zum Eintragen',
+    'passwordRepeat' => 'Passwort wiederholen',
+    'passwordDeleteMessage' => 'Um das Passwort zu löschen trage in beide Felder "delete" ein (ohne Anführungszeichen).',
+
+    'moreInfos' => 'Weitere Infos',
+    'public' => 'öffentlich',
+    'details' => 'Details',
+    'showOnlyIntern' => 'nur intern sichtbar',
+    
+    'backWithoutChange' => 'Ohne Änderung zurück',
+    //---------------------------------------------------------------------------------------------------------
+    // resources/views/editClubEventView.blade.php
+    'changeEventJob' => 'Veranstaltung/Aufgabe ändern',
+    //Lines for editing only with permission
+    'noNotThisWay' => 'Ne, das geht so nicht...',
+    'onlyThe' => 'Nur die',
+    'clubManagement' => 'Clubleitung',
+    'orThe' => 'oder die',
+    'marketingManager' => 'Marketingverantwortlichen',
+    'canChangeEventJob' => 'dürfen diese Veranstaltung/Aufgabe ändern.',
+    
+    'only' => 'Nur',
+    'commaThe' => ', die ', //line number ~332
+    //-----------------------------------------------------------------------------------------------------------
+    // resources/views/createSurveyView.blade.php
+    'createNewSurvey' => 'Neue Umfrage erstellen',
+    //-----------------------------------------------------------------------------------------------------------
+    // resources/views/editSurveyView.blade.php
+    'editSurvey' => 'Umfrage editieren',
+    'confirmDeleteSurvey1' => 'Möchtest du die Umfrage ',
+    'confirmDeleteSurvey2' => ' wirklich löschen?',
+    //-----------------------------------------------------------------------------------------------------------
+    // resources/views/surveyView.blade.php
+    'description' => 'Beschreibung',
+    'surveyDeadlineTo' => 'Die Umfrage läuft noch bis',
+    'um' => 'um', //better translation needed 
+    //result messages; can be changed with pluralization
+    'noPersonAnswered' => 'Es hat noch keine Person abgestimmt.',
+    'onePersonAnswered' => 'Es hat bereits eine Person abgestimmt.',
+    'fewPersonAnswered1' => 'Es haben bereits',
+    'fewPersonAnswered2' => 'Personen abgestimmt.',
+    //tableau (head)
+    'name' => 'Name',
+    'myClub' => 'mein Club',
+
+    'addMe' => 'Mich eintragen!',
+    //Answers
+    'yes' => 'Ja',
+    'no' => 'Nein',
+    'noInformation' => 'keine Angabe',
+    
+    'noClub' => 'kein Club',
+    
+    'confirmDeleteAnswer' => 'Möchtest Du diese Antwort wirklich löschen?',
+    //evaluation; can be changed with pluralization
+    'evaluation' => 'Auswertung',
+    'personDidNotAnswer' => 'Person wollte keine Angaben machen.',
+    'personsDidNotAnswer' => 'Personen wollten keine Angaben machen.',
+    'personAnswered' => 'Person stimmte für',
+    'personsAnswered' => 'Personen stimmten für',
+    //List of Changes
+    'who' => 'Wer',
+    'summary' => 'Zusammenfassung',
+    'affectedColumn' => 'Betroffene Spalte',
+    'oldValue' => 'Alter Wert',
+    'newValue' => 'Neuer Wert',
+    'when' => 'Wann',
+    //-----------------------------------------------------------------------------------------------------------
+    // resources/views/monthView.blade.php
+    //short weekdays + CW
+    'Cw' => 'KW',
+    'Mo' => 'Mo',
+    'Tu' => 'Di',
+    'We' => 'Mi',
+    'Th' => 'Do',
+    'Fr' => 'Fr',
+    'Sa' => 'Sa',
+    'Su' => 'So',
+    //-----------------------------------------------------------------------------------------------------------
+    // resources/views/createSurveyView.blade.php
+    'noEventsThisWeek' => 'Keine Veranstaltungen diese Woche',
+    'noSurveysThisWeek' => 'Keine Umfragen diese Woche',
+    //-----------------------------------------------------------------------------------------------------------
+    // resources/views/listView.blade.php
+    'for' => 'Für',
+    'noEventsPlanned' => 'sind keine Veranstaltungen geplant',
+    'noEventsOn' => 'Keine Veranstaltungen am',
+    'EventsFor' => 'Veranstaltungen für',
+    //-----------------------------------------------------------------------------------------------------------
+    // resources/views/log.blade.php
+    // not translated - international view
+    //-----------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials
+    // /resources/views/partials/clubEventByIdSmall.blade.php
+    'noResults' => 'Keine Treffer',
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials/editSchedule.blade.php
+    'adjustRoster' => 'Dienstplan anpassen',
+    'serviceTypeEnter' => 'Diensttyp hier eingeben',
+    'weight' => 'Gewicht',
+    'statisticalEvaluation' => 'Statistische Wertung',
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials/filter.blade.php
+    'allSections' => 'Alle Sektionen',
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials/legend.blade.php
+        //handled in the event type part in the /resources/views/clubEventView.blade.php part
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials/monthCell.blade.php
+    'internalSurvey' => 'Interne Umfrage',
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials/navigation.blade.php
+    'month' => 'Monat',
+    'week' => 'Woche',
+    //not translated the term 'logs'
+    'manageClub' => 'Clubs verwalten',
+    'manageJobType' => 'Diensttypen verwalten', // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
+    'manageTemplate' => 'Vorlagen verwalten',
+    //create button text
+    'createAndAddNewEvent' => 'Neue Veranstaltung/Aufgabe hinzufügen',
+    'createAndAddNewSurvey' => 'Neue Umfrage hinzufügen',
+    //Member types
+    'candidate' => 'Kandidat',
+    'veteran' => 'Veteran',
+    'ex-member' => 'ex-Mitglied',
+    'active' => 'Aktiv',
+    'external' => 'Extern',
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials/scheduleEntryName.blade.php
+    'IDoIt' => 'Ich mache es!', //Ich mach's!
+    // /resources/views/partials/scheduleEntryStatus.blade.php
+    'jobFree' => 'Dienst frei',
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials/surveyAnswerStatus.blade.php
+        //no new strings
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials/surveyForm.blade.php
+    'showOnlyForLoggedInMember' => 'nur für eingeloggte Nutzer sichtbar',
+    'showResultsOnlyForCreator' => 'Ergebnisse sind nur für den Umfragenersteller sichtbar',
+    'showResultsAfterFillOut' => 'Ergebnisse sind erst nach dem Ausfüllen sichtbar',
+    
+    'passwordSetOptional' => 'Das Setzen eines Passworts ist optional',
+    //Answer and Question options
+    'answerOption' => 'Antwortmöglichkeit',
+    'question' => 'Frage',
+    //Questionoptions
+    'freetText' => 'Freitext', //TODO Line ~299 Freitext throws buggy string with trans(), maybe because of Javascript
+    'checkbox' => 'Checkbox',
+    'dropdown' => 'Dropdown',
+    
+    'required' => 'erforderlich',
+    'addAnswerOption' => 'Antwortmöglichkeit hinzufügen',
+    'addQuestion' => 'Frage hinzufügen',
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials/weekCellFull.blade.php
+    'hide' => 'Ausblenden',
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials/weekCellHidden.blade.php
+    'moreDetailsAfterLogInMessage1' => 'Weitere Details sind für Mitglieder',
+    'moreDetailsAfterLogInMessage2' => 'nach dem Einloggen zugänglich.',
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials/weekCellProtected.blade.php
+        //no new strings
+    //-----------------------------------------------------------------------------------------------------------
+    // /resources/views/partials/weekCellSurvey.blade.php
+        //no new strings
+    //-----------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------
+    // /public/js
+    //TODO translate Javascript, tricky, " " can throw error messages 
+
     
     //
-    
-
 ];
