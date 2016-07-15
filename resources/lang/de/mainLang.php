@@ -253,7 +253,7 @@ return [
     'answerOption' => 'Antwortmöglichkeit',
     'question' => 'Frage',
     //Questionoptions
-    'freetText' => 'Freitext', //TODO Line ~299 Freitext throws buggy string with trans(), maybe because of Javascript
+    'freeText' => 'Freitext',
     'checkbox' => 'Checkbox',
     'dropdown' => 'Dropdown',
     

@@ -296,7 +296,7 @@
                             <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 28px;">
                                 <fieldset>
                                     <select class="selectpicker" name="type_select" id="field_type" onchange="javascript:check_question_type(0); check_question_type2(0); setField(0); setField2(0);">
-                                        <option value="1" class="capitalize" data-icon="fa fa-file-text-o" selected>Freitext</option>
+                                        <option value="1" class="capitalize" data-icon="fa fa-file-text-o" selected>{{ trans('mainLang.freeText') }}</option>
                                         <option value="2" data-icon="fa fa-check-square-o">{{ trans('mainLang.checkbox') }}</option>
                                         <option value="3" data-icon="fa fa-caret-square-o-down">{{ trans('mainLang.dropdown') }}</option>
                                     </select>

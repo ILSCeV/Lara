@@ -252,7 +252,7 @@ return [
     'answerOption' => 'Answer option',
     'question' => 'Question',
     //Questionoptions
-    'freetText' => 'Free Text', //TODO Line ~299 Freitext throws buggy string with trans(), maybe because of Javascript
+    'freeText' => 'Free Text', //TODO Line ~299 Freitext throws buggy string with trans(), maybe because of Javascript
     'checkbox' => 'Checkbox',
     'dropdown' => 'Dropdown',
 
