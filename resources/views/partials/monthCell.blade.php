@@ -74,7 +74,7 @@ $myDate = $myDate->subDay()->format('Y-m-d H-m-s');
                                     <i class="fa fa-eye-slash white-text"></i>
                                     <span class="white-text">Internes Event</span>
                                 </div>
-                                {{-- show everything for public events --}}
+                            {{-- show everything for public events --}}
                             @else
                                 @if     ($clubEvent->evnt_type == 1)
                                     <div class="cal-event {{$classString}} calendar-public-info">

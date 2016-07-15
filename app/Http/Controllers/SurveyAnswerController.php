@@ -32,9 +32,9 @@ class SurveyAnswerController extends Controller
     {
         // if survey is private, reject guests
         $this->middleware('privateEntry:Lara\Survey,survey');
-        // only Ersteller/Admin/Marketing/Clubleitung
+        // only Ersteller/Admin/Marketing/Clubleitung, privileged user groups only
         $this->middleware('creator:Lara\SurveyAnswer,answer', ['only' => ['update', 'destroy']]);
-        // after deadline, only Ersteller/Admin/Marketing/Clubleitung
+        // after deadline, only Ersteller/Admin/Marketing/Clubleitung, privileged user groups only
         $this->middleware('deadlineSurvey', ['only' => ['store', 'update', 'destroy']]);
     }
     
@@ -68,7 +68,7 @@ class SurveyAnswerController extends Controller
         $survey_answer->survey_id = $surveyid;
         $survey_answer->name = $input->name;
         $survey_answer->club = $input->club;
-        $survey_answer->order = 0; // example, might be better to order bei updated_at?
+        $survey_answer->order = 0; // example, might be better to order by updated_at?
         $survey_answer->save();
         $revision_answer->save($survey_answer, "Antwort");
 
@@ -130,6 +130,7 @@ class SurveyAnswerController extends Controller
             return response()->json('Fehler: das eingegebene Passwort war leider falsch.', 401);
         }
 
+        //give a reminder to fill out required fields
         if ($input->error[0] == "required_missing") {
             return response()->json('Fehler: Es wurden nicht alle Pflichtfragen beantwortet.', 401);
         }
@@ -141,7 +142,7 @@ class SurveyAnswerController extends Controller
         $survey_answer->survey_id = $surveyid;
         $survey_answer->name = $input->name;
         $survey_answer->club = $input->club;
-        $survey_answer->order = 0; // example, might be better to order bei updated_at?
+        $survey_answer->order = 0; // example, might be better to order by updated_at?
         $survey_answer->save();
         $revision_answer->save($survey_answer);
 

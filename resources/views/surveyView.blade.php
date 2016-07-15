@@ -53,8 +53,12 @@ $userCanEditDueToRole
             height: 50px
         }
 
-        <?php header("Content-Encoding: utf-8"); ?>
         @media screen and (max-width: 978px) {
+            {{-- we use the before element in our table implementation of the view, this can cause a bug that will cut of parts of the before element.
+                 if it is too long while the table element is too short(gets sized over the table element)
+                 to fix in a clean way you need to get the height of both elements and compare them for every cell and resize them depending on the difference
+                 another good source on how to change pseudo elements(like the before element) is here: https://pankajparashar.com/posts/modify-pseudo-elements-css/
+            --}}
             #survey-answer td:nth-of-type(1):before {
                 content: "Name";
                 float: left;
@@ -202,7 +206,6 @@ $userCanEditDueToRole
                                                onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
                                                        document.getElementById('club').value='{{Session::get('userClub')}}';
                                                        document.getElementById('ldapId').value='{{Session::get('userId')}}'">
-                                                {{--document.getElementById('btn-submit-changes{{ ''. $testid }}').click();">--}}
                                                 <b>Mich eintragen!</b>
                                             </a>
                                         </li>
@@ -257,9 +260,7 @@ $userCanEditDueToRole
                                     @endif
                                 </td>
                             @endforeach
-                            <td class="tdButtons " id="">
-                                {{--{!! Form::submit('<i class="fa fa-pencil"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-margin', 'style' => 'display: inline-block;', 'fo]) !!}
-                                --}}
+                            <td class="tdButtons " id="panelNoShadow">
                                 <input type="submit" class="btn btn-primary fa fa-floppy-o answer_button" id="noMarginMobile" value=""
                                         style="display: inline-block; height: 34px;">
                                {!! Form::close() !!}

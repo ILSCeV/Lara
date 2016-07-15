@@ -81,7 +81,7 @@
                 @elseif( $i == 8 || $i == 15 || $i == 22 || $i == 29 || $i == 36)
                     <div class="calendarRow clearfix group ">
                         @endif
-                                <!--End define row at bottom-->
+                        <!--End define row at bottom-->
                         <!-- Weeks on left side -->
                         @if(date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)
                         @if ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )
@@ -134,7 +134,6 @@
                                             @else
                                                     <!--Days not in this month, no color-->
                                             <div class="otherMonth custom-md-85 empty">
-                                                <!-- date("j", strtotime($i-$date['startDay']." day", $date['startStamp'])) -->
                                             </div>
                                             @endif
                                                     <!-- if sunday then end this line -->

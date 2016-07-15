@@ -204,12 +204,10 @@ class SurveyController extends Controller
         $survey->delete();
         $revision_survey->save($survey, "Umfrage");
         
-        //Successmessage and redirect 
         Session::put('message', 'Umfrage gelöscht!' );
         Session::put('msgType', 'success');
 
         return Redirect::action('MonthController@currentMonth');
-        //;
     }
 
     /**
@@ -254,12 +252,6 @@ class SurveyController extends Controller
 
         $revisions_objects = \Lara\Revision::join("revision_object_relations", "revisions.id", "=", "revision_object_relations.revision_id")
             ->where("object_name", "=", "SurveyAnswer")
-//            ->whereIn("object_id", $answers_with_trashed_ids)
-//            ->orWhere(function ($query) use ($answer_cells_with_trashed_ids)
-//                {
-//                  $query->where("object_name", "=", "SurveyAnswerCell")
-//                        ->whereIn("object_id", $answer_cells_with_trashed_ids);
-//                })
             ->orWhere(function ($query) use ($survey)
             {
                 $query->where("object_name", "=", "Survey")
@@ -350,7 +342,7 @@ class SurveyController extends Controller
                     if ($question->is_required == false) {
                         $evaluation[$order]['keine Angabe'] = 0;
                     };
-
+                    //checkbox options with yes,no and no entry
                     foreach($question->getAnswerCells as $answerCell) {
                         if ($answerCell->answer === 'Ja') {
                             $evaluation[$order]['Ja'] += 1;
@@ -675,7 +667,7 @@ class SurveyController extends Controller
     }
 
     /**
-     * used to make URL's into hyperlinks
+     * used to make URL's into hyperlinks using a <a> tag
      * @param string $text
      * @return string
      */
@@ -689,6 +681,11 @@ class SurveyController extends Controller
         return $text;
     }
 
+    /**
+     * used to get the type of a question
+     * @param $value
+     * @return null|string
+     */
     private function getFieldTypeName($value)
     {
         switch($value){
@@ -703,7 +700,12 @@ class SurveyController extends Controller
         }
         return "unbekannter Feldtyp";
     }
-
+    
+    /**
+     * changes 0 to false and 1 to true
+     * @param $boolean
+     * @return null|string
+     */
     private function booleanIntoText($boolean)
     {
         switch ($boolean){
