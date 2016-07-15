@@ -266,15 +266,15 @@
 							{{-- Set default values to the club the user is a member in.
 							 	 This saves time retyping event start/end times, etc. --}}
 							@if(Session::get('userClub') == 'bc-Club')
-								{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!} 
-									um {!! Form::input('time', 'beginTime', '21:00') !!}
+								{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
+								{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', '21:00') !!}
 							@elseif(Session::get('userClub') == 'bc-Café')
-								{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!} 
-									um {!! Form::input('time', 'beginTime', '12:00') !!}
+								{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
+								{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', '12:00') !!}
 							@endif
 						@else
-							{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!} 
-									um {!! Form::input('time', 'beginTime', $timeStart) !!}
+							{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
+							{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', $timeStart) !!}
 						@endif
 					</div>
 			    </div>
@@ -286,15 +286,15 @@
 							{{-- Set default values to the club the user is a member in.
 							 	 This saves time retyping event start/end times, etc. --}}
 							@if(Session::get('userClub') == 'bc-Club')
-								{!! Form::input('date', 'endDate', date("Y-m-d", strtotime("+1 day", strtotime($date)))) !!} 
-									um {!! Form::input('time', 'endTime', '01:00') !!}
+								{!! Form::input('date', 'endDate', date("Y-m-d", strtotime("+1 day", strtotime($date)))) !!}
+								{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', '01:00') !!}
 							@elseif(Session::get('userClub') == 'bc-Café')
-								{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($date))) !!} 
-									um {!! Form::input('time', 'endTime', '17:00') !!}
+								{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($date))) !!}
+								{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', '17:00') !!}
 							@endif
 						@else
-							{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($date))) !!} 
-									um {!! Form::input('time', 'endTime', $timeEnd) !!}
+							{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($date))) !!}
+							{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $timeEnd) !!}
 						@endif
 					</div>
 			    </div>

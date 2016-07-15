@@ -233,7 +233,7 @@ AND (Session::get('userGroup') == 'marketing'
 					<label for="beginDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.begin') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						{!! Form::input('date', 'beginDate', $event->evnt_date_start) !!} 
-						<span class="visible-xs"><br></span>um {!! Form::input('time', 'beginTime', $event->evnt_time_start) !!}
+						<span class="visible-xs"><br></span>{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', $event->evnt_time_start) !!}
 					</div>
 			    </div>
 
@@ -241,7 +241,7 @@ AND (Session::get('userGroup') == 'marketing'
 					<label for="endDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.end') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						{!! Form::input('date', 'endDate', $event->evnt_date_end) !!} 
-						<span class="visible-xs"><br></span>um {!! Form::input('time', 'endTime', $event->evnt_time_end) !!}
+						<span class="visible-xs"><br></span>{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $event->evnt_time_end) !!}
 					</div>
 			    </div>
 

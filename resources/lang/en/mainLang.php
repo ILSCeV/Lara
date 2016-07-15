@@ -36,13 +36,13 @@ return [
     // resources/views/clubEventView.blade.php
     //Event types ------------------------------------
     'type' => 'Type',
-    'normal program' => 'normal Programm', //wrong version, later noticed TODO fix in /views
-    'normalProgramm' => 'normal Programm',
+    'normal program' => 'Normal Programm', //wrong version, later noticed TODO fix in /views
+    'normalProgramm' => 'Normal Programm',
     'information' => 'Information',
     'special' => 'Special',
     'LiveBandDJ' => 'Live Band / Live DJ / Lesson',
-    'internal event' => 'internal Event',        // TODO fix the space in the keystring
-    'internalEvent' => 'internal Event',
+    'internal event' => 'Internal Event',        // TODO fix the space in the keystring
+    'internalEvent' => 'Internal Event',
     'utilization' => 'Utilization',
     'flooding' => 'Flooding',
     'flyers placard' => 'Flyer / Placard',          // TODO fix the space in the keystring
@@ -140,7 +140,7 @@ return [
     // resources/views/surveyView.blade.php
     'description' => 'Description',
     'surveyDeadlineTo' => 'The Survey runs until',
-    'um' => 'at', //better translation needed
+    'um' => 'at', //better translation needed TODO change key to "at" and change trans() in views
     //result messages; can be changed with pluralization
     'noPersonAnswered' => 'No person has voted yet',
     'onePersonAnswered' => 'One person already answered',
@@ -148,7 +148,7 @@ return [
     'fewPersonAnswered2' => 'persons answered.',
     //tableau (head)
     'name' => 'Name',
-    'myClub' => 'my Club',
+    'myClub' => 'My Club',
 
     'addMe' => 'Add Me!',
     //Answers
@@ -179,7 +179,7 @@ return [
     'Mo' => 'Mo',
     'Tu' => 'Tu',
     'We' => 'We',
-    'Th' => 'TH',
+    'Th' => 'Th',
     'Fr' => 'Fr',
     'Sa' => 'Sa',
     'Su' => 'Su',
