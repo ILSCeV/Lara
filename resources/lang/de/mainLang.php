@@ -10,21 +10,27 @@ return [
     | Lines are used multiple times, when they are similar in different views.
     | That means that new lines in this file only appear, when they appeared 
     | for the first time while locating the files.
+    |
+    | -Structure,etc. can be changed, but remember to change all trans() and strings accordingly
+    |
+    | You want to add a new language? Steps:
+    | in config/language.php add it in the following form: 'de' => 'Deutsch',
+    | in lara/resources/lang add a new folder + file in this style
+    |
+    |
+    |
     */
 
     // /app
-    
     // /resources/views
     // /resources/views/errors
-    
-
+    //-----------------------------------------------------------------------------------------------------
     // /resources/views/layouts/master.blade.php
     'not working' => 'Etwas funktioniert nicht? Schreibe ',
     'mail'     => ' eine Mail.',
     'more infos' => 'Mehr Infos? Besuche die ',
     'projectsite' => 'Projektseite auf GitHub',
     
-
     //-----------------------------------------------------------------------------------------------------
     // resources/views
     // resources/views/clubEventView.blade.php
