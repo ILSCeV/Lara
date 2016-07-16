@@ -48,7 +48,7 @@
 						</td>
 						<td>
 							@if( $clubEvent->evnt_type == 0)
-								{{ trans('mainLang.normal program') }}
+								{{ trans('mainLang.normalProgramm') }}
 							@elseif( $clubEvent->evnt_type == 1)
 								{{ trans('mainLang.information') }}
 							@elseif( $clubEvent->evnt_type == 2)
@@ -56,13 +56,13 @@
 							@elseif( $clubEvent->evnt_type == 3)
 								{{ trans('mainLang.LiveBandDJ') }}
 							@elseif( $clubEvent->evnt_type == 4)
-								{{ trans('mainLang.internal event') }}
+								{{ trans('mainLang.internalEvent') }}
 							@elseif( $clubEvent->evnt_type == 5)
 								{{ trans('mainLang.utilization') }}
 							@elseif( $clubEvent->evnt_type == 6)
 								{{ trans('mainLang.flooding') }}
 							@elseif( $clubEvent->evnt_type == 7)
-								{{ trans('mainLang.flyers placard') }}
+								{{ trans('mainLang.flyersPlacard') }}
 							@elseif( $clubEvent->evnt_type == 8)
 								{{ trans('mainLang.preSale') }}
 							@elseif( $clubEvent->evnt_type == 9)

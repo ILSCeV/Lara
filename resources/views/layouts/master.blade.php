@@ -38,7 +38,7 @@
  	<footer class="container footer" id="footer">
         <hr class="hidden-print">
         <span class="col-xs-12 col-sm-4 col-md-4 text-dark-grey" style="text-align: center;">
-            <small>{{ trans('mainLang.not working') }}<a href="mailto:maxim.drachinskiy@bc-studentenclub.de">Maxim</a>{{ trans('mainLang.mail') }}</small>
+            <small><a href="mailto:maxim.drachinskiy@bc-studentenclub.de"> {{ trans('mainLang.notWorkingMail',['Name' => 'Maxim']) }} </a></small>
         </span>
         <span class="col-xs-6 col-sm-4 col-md-4 text-dark-grey" style="text-align: center;">
             @if(File::exists("gitrevision.txt"))

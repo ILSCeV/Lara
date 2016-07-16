@@ -67,7 +67,7 @@ AND (Session::get('userGroup') == 'marketing'
 				     	<label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.type') }}:</label>
 				     	<div class="col-md-10 col-sm-10 col-xs-10">
 				            {!! Form::radio('evnt_type', "0", $event->evnt_type == 0 ? array("checked") : "") !!}
-							{{ trans('mainLang.normal program') }}
+							{{ trans('mainLang.normalProgramm') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "2", $event->evnt_type == 2 ? array("checked") : "") !!}
 							{{ trans('mainLang.special') }}
@@ -79,13 +79,13 @@ AND (Session::get('userGroup') == 'marketing'
 							{{ trans('mainLang.utilization') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "4", $event->evnt_type == 4 ? array("checked") : "") !!}
-							{{ trans('mainLang.internal event') }}
+							{{ trans('mainLang.internalEvent') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "6", $event->evnt_type == 6 ? array("checked") : "") !!}
 							{{ trans('mainLang.flooding') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "7", $event->evnt_type == 7 ? array("checked") : "") !!}
-							{{ trans('mainLang.flyers placard') }}
+							{{ trans('mainLang.flyersPlacard') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "8", $event->evnt_type == 8 ? array("checked") : "") !!}
 							{{ trans('mainLang.preSale') }}
@@ -115,7 +115,7 @@ AND (Session::get('userGroup') == 'marketing'
 				            @else 
 				            	&nbsp;<i class="fa fa-times-circle"></i>&nbsp;&nbsp;
 				            @endif
-								{{ trans('mainLang.normal program') }}
+								{{ trans('mainLang.normalProgramm') }}
 				            <br>
 				            @if ($event->evnt_type == 2)
 				            	{!! Form::radio('evnt_type', "2", $event->evnt_type == 2 ? array("checked") : "") !!}
@@ -139,7 +139,7 @@ AND (Session::get('userGroup') == 'marketing'
 								{{ trans('mainLang.utilization') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "4", $event->evnt_type == 4 ? array("checked") : "") !!}
-								{{ trans('mainLang.internal event') }}
+								{{ trans('mainLang.internalEvent') }}
 				            <br>
 				            @if ($event->evnt_type == 6)
 				            	{!! Form::radio('evnt_type', "6", $event->evnt_type == 6 ? array("checked") : "") !!}
@@ -153,7 +153,7 @@ AND (Session::get('userGroup') == 'marketing'
 				            @else 
 				            	&nbsp;<i class="fa fa-times-circle"></i>&nbsp;&nbsp;
 				            @endif
-								{{ trans('mainLang.flyers placard') }}
+								{{ trans('mainLang.flyersPlacard') }}
 				            <br>
 				            @if ($event->evnt_type == 8)
 				            	{!! Form::radio('evnt_type', "8", $event->evnt_type == 8 ? array("checked") : "") !!}

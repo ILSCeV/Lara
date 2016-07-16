@@ -26,8 +26,8 @@ return [
     // /resources/views/errors
     //-----------------------------------------------------------------------------------------------------
     // /resources/views/layouts/master.blade.php
-    'not working' => 'Etwas funktioniert nicht? Schreibe ',
-    'mail'     => ' eine Mail.',
+    'notWorkingMail' => 'Etwas funktioniert nicht? Schreibe :Name eine Mail',
+    'mail'     => ' eine Mail.', //not used
     'more infos' => 'Mehr Infos? Besuche die ',
     'projectsite' => 'Projektseite auf GitHub',
     
@@ -36,16 +36,13 @@ return [
     // resources/views/clubEventView.blade.php
     //Event types ------------------------------------
     'type' => 'Typ',
-    'normal program' => 'normales Programm', //wrong version, later noticed TODO fix in /views
     'normalProgramm' => 'normales Programm',
     'information' => 'Information',
     'special' => 'Spezial',
-    'LiveBandDJ' => 'Live Band / Live DJ / Lesung',     
-    'internal event' => 'interne Veranstaltung',        // TODO fix the space in the keystring
+    'LiveBandDJ' => 'Live Band / Live DJ / Lesung',
     'internalEvent' => 'interne Veranstaltung',
     'utilization' => 'Nutzung',
     'flooding' => 'Fluten',
-    'flyers placard' => 'Flyer / Plakatieren',          // TODO fix the space in the keystring
     'flyersPlacard' => 'Flyer / Plakatieren',
     'marketingFlyersPlacard' => 'Marketing / Flyer / Plakate', //used in legend.blade.php
     'preSale' => 'Vorverkauf',
@@ -277,8 +274,36 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------------------------------
     // /public/js
-    //TODO translate Javascript, tricky, " " can throw error messages 
-
+    //Maybe To do translate Javascript, tricky, " " can throw error messages
+    //-----------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------
+    //placeholder strings (e.g. used in buttons or text fields)
+    /*
+    | instead of { trans('message.key' }} use  Lang::get('message.key') in the view
+    */
+    //ClubEvent
+    'addCommentHere' => 'Kommentar hier einfügen',
+    'enterPasswordHere' => 'Passwort hier einfügen',
+    'placeholderTitleWineEvening' => 'z.B. Weinabend', //'placeholderTitleWineEvening'
+    'placeholderSubTitleWineEvening' => 'z.B. Das Leben ist zu kurz, um schlechten Wein zu trinken', //'placeholderSubTitleWineEvening'
+    'placeholderPublicInfo'=> 'z.B. Karten nur im Vorverkauf',
+    'placeholderPrivateDetails' => 'z.B. DJ-Tisch wird gebraucht',
+    //Survey
+    'addAnswerHere' => 'Antwort hier hinzufügen',
+    'createSurvey' => 'Umfrage erstellen', //Button text
+    //Partials
+    //Navigation
+    'clubNumber' => 'Clubnummer',
+    'password' => 'Passwort',
+    'logIn' => 'Anmelden',
+    'logOut' => 'Abmelden',
+    //ScheduleEntryName
+    '=FREI=' => '=FREI=', //not used yet
+    //surveyForm
+    'placeholderSurveyTitle' => 'Titel:',
+    'placeholderTitleSurvey' => 'z.B. Teilnahme an der Clubfahrt',
+    'placeholderDescription' => 'Beschreibung:',
+    'placeholderActiveUntil' => 'Aktiv Bis:',
     
     //
 ];

@@ -85,7 +85,7 @@
 				     	<label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">Typ:</label>
 				     	<div class="col-md-10 col-sm-10 col-xs-10">
 				            {!! Form::radio('evnt_type', "0", array("checked")) !!}
-							{{ trans('mainLang.normal program') }}
+							{{ trans('mainLang.normalProgramm') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "2", $type == 2 ? array("checked") : "") !!}
 							{{ trans('mainLang.special') }}
@@ -97,13 +97,13 @@
 							{{ trans('mainLang.utilization') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "4", $type == 4 ? array("checked") : "") !!}
-							{{ trans('mainLang.internal event') }}
+							{{ trans('mainLang.internalEvent') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "6", $type == 6 ? array("checked") : "") !!}
 							{{ trans('mainLang.flooding') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "7", $type == 7 ? array("checked") : "") !!}
-							{{ trans('mainLang.flyers placard') }}
+							{{ trans('mainLang.flyersPlacard') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "8", $type == 8 ? array("checked") : "") !!}
 							{{ trans('mainLang.preSale') }}
@@ -127,7 +127,7 @@
 				     	<label for="evnt_type" class="control-label col-md-2 col-sm-2 col-xs-2">Typ:</label>
 				     	<div class="col-md-10 col-sm-10 col-xs-10">
 				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
-							{{ trans('mainLang.normal program') }}
+							{{ trans('mainLang.normalProgramm') }}
 				            <br>
 				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.special') }}
@@ -139,13 +139,13 @@
 							{{ trans('mainLang.utilization') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "4", array("checked")) !!}
-							{{ trans('mainLang.internal event') }}
+							{{ trans('mainLang.internalEvent') }}
 				            <br>
 				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.flooding') }}
 				            <br>
 				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
-							{{ trans('mainLang.flyers placard') }}
+							{{ trans('mainLang.flyersPlacard') }}
 				            <br>
 				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.preSale') }}
