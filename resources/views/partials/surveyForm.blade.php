@@ -26,21 +26,21 @@
         <div class="panel-body">
 
             <div class="form-group">
-                {!! Form::label('title', 'Titel:') !!}
-                {!! Form::text('title', $survey->title, ['placeholder'=>'z.B. Teilnahme an der Clubfahrt',
+                {!! Form::label('title', Lang::get('mainLang.placeholderSurveyTitle')) !!}
+                {!! Form::text('title', $survey->title, ['placeholder'=>Lang::get('mainLang.placeholderTitleSurvey'),
                     'required',
                     'class' => 'form-control'
                     ]) !!}
             </div>
             <div class="form-group">
-                {!! Form::label('description', 'Beschreibung:') !!}
+                {!! Form::label('description', Lang::get('mainLang.placeholderDescription')) !!}
                 {!! Form::textarea('description', $survey->description, ['size' => '100x4',
                     'class' => 'form-control'
                     ]) !!}
             </div>
 
             <div class="form-group">
-                {!! Form::label('deadline', 'Aktiv bis:') !!}
+                {!! Form::label('deadline', Lang::get('mainLang.placeholderActiveUntil')) !!}
                 {!! Form:: date('deadlineDate', $date, ['class' => 'form-control'] ) !!}
                 {!! Form:: time('deadlineTime', $time, ['class' => 'form-control'] ) !!}
             </div>

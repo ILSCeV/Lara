@@ -55,12 +55,12 @@
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 			      	<label for="title" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.title') }}:</label>
 		      		@if(is_null($title))
-			      		{!! Form::text( 'title', '', array('placeholder'=>'z.B. Weinabend',
+			      		{!! Form::text( 'title', '', array('placeholder'=>Lang::get('mainLang.placeholderTitleWineEvening'),
 			      										   'style'=>'cursor: auto',
 			      										   'class'=>'col-md-9 col-sm-9 col-xs-8',
 			      										   'required') ) !!}
 			      	@else
-			      		{!! Form::text( 'title', $title, array('placeholder'=>'z.B. Weinabend',
+			      		{!! Form::text( 'title', $title, array('placeholder'=>Lang::get('mainLang.placeholderTitleWineEvening'),
 		      										   'style'=>'cursor: auto',
 		      										   'class'=>'col-md-9 col-sm-9 col-xs-8',
 		      										   'required') ) !!}
@@ -70,11 +70,11 @@
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 					<label for="subtitle" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.subTitle') }}:</label>
 					@if(is_null($subtitle))
-						{!! Form::text('subtitle', '', array('placeholder'=>'z.B. Das Leben ist zu kurz, um schlechten Wein zu trinken', 
+						{!! Form::text('subtitle', '', array('placeholder'=>Lang::get('mainLang.placeholderSubTitleWineEvening'),
 															 'class'=>'col-md-9 col-sm-9 col-xs-8',
 			      										     'style'=>'cursor: auto') ) !!}
 			      	@else
-			      		{!! Form::text('subtitle', $subtitle, array('placeholder'=>'z.B. Das Leben ist zu kurz, um schlechten Wein zu trinken', 
+			      		{!! Form::text('subtitle', $subtitle, array('placeholder'=>Lang::get('mainLang.placeholderSubTitleWineEvening'),
 															 'class'=>'col-md-9 col-sm-9 col-xs-8',
 			      										     'style'=>'cursor: auto') ) !!}
 			      	@endif
@@ -336,11 +336,11 @@
 							@if(is_null($info))
 								{!! Form::textarea('publicInfo', '', array('class'=>'form-control', 
 																		  'rows'=>'8',
-																		  'placeholder'=>'z.B. Karten nur im Vorverkauf') ) !!}
+																		  'placeholder'=>Lang::get('mainLang.placeholderPublicInfo')) ) !!}
 							@else
 								{!! Form::textarea('publicInfo', $info, array('class'=>'form-control', 
 																	  'rows'=>'8',
-																	  'placeholder'=>'z.B. Karten nur im Vorverkauf') ) !!}
+																	  'placeholder'=>Lang::get('mainLang.placeholderPublicInfo')) ) !!}
 							@endif
 						</div>
 					</div>	
@@ -357,11 +357,11 @@
 							@if(is_null($details))
 								{!! Form::textarea('privateDetails', '', array('class'=>'form-control', 
 																			  'rows'=>'5', 
-																			  'placeholder'=>'z.B. DJ-Tisch wird gebraucht') ) !!}
+																			  'placeholder'=>Lang::get('mainLang.placeholderPrivateDetails')) ) !!}
 							@else
 								{!! Form::textarea('privateDetails', $details, array('class'=>'form-control', 
 																		  'rows'=>'5', 
-																		  'placeholder'=>'z.B. DJ-Tisch wird gebraucht') ) !!}
+																		  'placeholder'=>Lang::get('mainLang.placeholderPrivateDetails')) ) !!}
 							@endif
 						</div>
 				    </div>

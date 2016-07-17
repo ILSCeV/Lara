@@ -124,7 +124,7 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <br class="visible-xs"> 
                                 <br class="visible-xs">
-                                {!! Form::submit('Abmelden', array('class'=>'btn btn-default btn-sm')) !!}
+                                {!! Form::submit(Lang::get('mainLang.logOut'), array('class'=>'btn btn-default btn-sm')) !!} {{-- Logout button --}}
                             </div>
                         {!! Form::close() !!}
                     </li>
@@ -137,17 +137,17 @@
                                             'class'=>'form-horizontal navbar-right')) !!}
                             
                             <div class="navbar-form form-horizontal">
-                                {!! Form::text('username', Input::old('username'),  array('placeholder'=>'Clubnummer', 
+                                {!! Form::text('username', Input::old('username'),  array('placeholder'=>Lang::get('mainLang.clubNumber'),
                                                                                          'class'=>'form-control',
                                                                                          'autocomplete'=>'on',
-                                                                                         'style'=>'cursor: auto')) !!}
+                                                                                         'style'=>'cursor: auto')) !!} {{-- username/clubnumber field --}}
                                 <br class="visible-xs">
-                                {!! Form::password('password', array('placeholder'=>'Passwort',
+                                {!! Form::password('password', array('placeholder'=>Lang::get('mainLang.password'),
                                                                     'class'=>'form-control',
                                                                     'autocomplete'=>'off', 
-                                                                    'style'=>'cursor: auto')) !!}
+                                                                    'style'=>'cursor: auto')) !!} {{-- password field --}}
                                 <br class="visible-xs">
-                                {!! Form::submit('Anmelden', array('class'=>' btn btn-primary btn-sm')) !!}
+                                {!! Form::submit(Lang::get('mainLang.logIn'), array('class'=>' btn btn-primary btn-sm')) !!} {{-- Login button --}}
                                 <br class="visible-xs">
                             </div>
                         {!! Form::close() !!}

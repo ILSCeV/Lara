@@ -48,7 +48,7 @@ AND (Session::get('userGroup') == 'marketing'
 		      		{!! Form::text('title', 
 		      						$event->evnt_title, 
 		      						array('class'=>'col-md-9 col-sm-9 col-xs-8', 
-  										  'placeholder'=>'z.B. Weinabend',
+  										  'placeholder'=>Lang::get('mainLang.placeholderTitleWineEvening'),
   										  'style'=>'cursor: auto',
   										  'required') ) !!}
 			    </div>
@@ -58,7 +58,7 @@ AND (Session::get('userGroup') == 'marketing'
 					{!! Form::text('subtitle', 
 									$event->evnt_subtitle, 
 									array('class'=>'col-md-9 col-sm-9 col-xs-8', 
-  										  'placeholder'=>'z.B. Das Leben ist zu kurz, um schlechten Wein zu trinken', 
+  										  'placeholder'=>Lang::get('mainLang.placeholderSubTitleWineEvening'),
   										  'style'=>'cursor: auto') ) !!}
 			    </div>
 			    
@@ -285,7 +285,7 @@ AND (Session::get('userGroup') == 'marketing'
 						<div class="col-md-12">
 							{!! Form::textarea('publicInfo', $event->evnt_public_info, array('class'=>'form-control', 
 																	  'rows'=>'8',
-																	  'placeholder'=>'z.B. Karten nur im Vorverkauf') ) !!}
+																	  'placeholder'=>Lang::get('mainLang.placeholderPublicInfo')) ) !!}
 						</div>
 					</div>	
 				</div>
@@ -300,7 +300,7 @@ AND (Session::get('userGroup') == 'marketing'
 						<div class="col-md-12">
 							{!! Form::textarea('privateDetails', $event->evnt_private_details, array('class'=>'form-control', 
 																		  'rows'=>'5', 
-																		  'placeholder'=>'z.B. DJ-Tisch wird gebraucht') ) !!}
+																		  'placeholder'=>Lang::get('mainLang.placeholderPrivateDetails')) ) !!}
 						</div>
 				    </div>
 				</div>

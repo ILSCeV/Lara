@@ -181,7 +181,7 @@
 			    {!! Form::password('password', array('required',
 			                                         'class'=>'col-md-4 col-sm-4 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
-			                                         'placeholder'=>'Passwort hier eingeben')) !!}
+			                                         'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
 			    <br />
 			</div>
 
@@ -267,7 +267,7 @@
 
 						    {!! Form::text('comment' . $entry->id,
 					                   $entry->entry_user_comment,
-					                   array('placeholder'=>'Kommentar hier hinzufügen',
+					                   array('placeholder'=>Lang::get('mainLang.addCommentHere'),
 					                         'id'=>'comment' . $entry->id,
 			                     			 'name'=>'comment' . $entry->id,
 					                         'class'=>'col-md-11 col-sm-11 col-xs-10 no-padding no-margin')) 

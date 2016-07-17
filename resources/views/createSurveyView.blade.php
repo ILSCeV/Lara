@@ -14,7 +14,7 @@
 
     &nbsp;
             <div class="form-group">
-                {!! Form::submit("Umfrage erstellen", ['class'=>'btn btn-primary']) !!}
+                {!! Form::submit(Lang::get('mainLang.createSurvey'), ['class'=>'btn btn-primary']) !!}
                 &nbsp;&nbsp;&nbsp;&nbsp;<br class="visible-xs">
                 <br class="visible-xs">
                 <a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>

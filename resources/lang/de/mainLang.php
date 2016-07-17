@@ -277,8 +277,10 @@ return [
     // /public/js/vedst-script.js
     'errorMessageForgotFilter' => 'Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.',
     'errorMessageEnterPasswordForShiftPlan' => 'Bitte noch das Passwort für diesen Dienstplan eingeben:',
-        //ToDo Time Message
-        //ToDo Weekday Text
+    'showTimes' => 'Zeiten einblenden',
+        //'hideTimes' already exists
+    'weekMoSu' => 'Woche: Montag - Sonntag',
+    'weekWeTu' => 'Woche: Mittwoch - Dienstag',
     //-----------------------------------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------------------------------
     //Controller
@@ -325,7 +327,7 @@ return [
     'placeholderSurveyTitle' => 'Titel:',
     'placeholderTitleSurvey' => 'z.B. Teilnahme an der Clubfahrt',
     'placeholderDescription' => 'Beschreibung:',
-    'placeholderActiveUntil' => 'Aktiv Bis:',
+    'placeholderActiveUntil' => 'Aktiv bis:',
     
     //
 ];

@@ -158,7 +158,7 @@ $userCanEditDueToRole
             <div class="hidden-print panel-heading">
                 {!! Form::password('password', array('class'=>'col-md-4 col-xs-12 black-text',
                                                      'id'=>'password' . $survey->id,
-                                                     'placeholder'=>'Passwort hier eingeben')) !!}
+                                                     'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
                 <br>
             </div>
         @endif
@@ -228,10 +228,10 @@ $userCanEditDueToRole
                                         <!-- Freitext -->
                                         @if(!$question->is_required)
                                             <!--Answer not required-->
-                                            {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'autocomplete' => 'off']) !!}
+                                            {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => Lang::get('mainLang.addAnswerHere'), 'autocomplete' => 'off']) !!}
                                         @else
                                             <!--Answer* required-->
-                                            {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => 'Antwort hier hinzufügen', 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                                            {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => Lang::get('mainLang.addAnswerHere'), 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                                         @endif
                                     @elseif($question->field_type == 2)
                                         <!-- Ja/Nein -->
