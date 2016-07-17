@@ -272,9 +272,31 @@ return [
         //no new strings
     //-----------------------------------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------------------------------
-    //-----------------------------------------------------------------------------------------------------------
     // /public/js
     //Maybe To do translate Javascript, tricky, " " can throw error messages
+    // /public/js/vedst-script.js
+    'errorMessageForgotFilter' => 'Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.',
+    'errorMessageEnterPasswordForShiftPlan' => 'Bitte noch das Passwort für diesen Dienstplan eingeben:',
+        //ToDo Time Message
+        //ToDo Weekday Text
+    //-----------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------
+    //Controller
+    //ScheduleEntryController
+    //action description
+    'addedComment'=> 'Kommentar hinzugefügt',
+    'deletedComment' => 'Kommentar gelöscht',
+    'changedComment' => 'Kommentar geändert',
+
+    'errorMessageAbortDeletion' => 'Fehler: Löschvorgang abgebrochen - der Dienstplaneintrag existiert nicht.',
+
+    //SurveyController
+    'messageSurveyDeleted' => 'Umfrage gelöscht!',
+
+    //SurveyAnswerController
+    'messageSuccessfulVoted' => 'Erfolgreich abgestimmt!',
+    'messageSuccessfulDeleted' => 'Erfolgreich gelöscht!',
+
     //-----------------------------------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------------------------------
     //placeholder strings (e.g. used in buttons or text fields)
@@ -282,8 +304,8 @@ return [
     | instead of { trans('message.key' }} use  Lang::get('message.key') in the view
     */
     //ClubEvent
-    'addCommentHere' => 'Kommentar hier einfügen',
-    'enterPasswordHere' => 'Passwort hier einfügen',
+    'addCommentHere' => 'Kommentar hier hinzufügen',
+    'enterPasswordHere' => 'Passwort hier eingeben',
     'placeholderTitleWineEvening' => 'z.B. Weinabend', //'placeholderTitleWineEvening'
     'placeholderSubTitleWineEvening' => 'z.B. Das Leben ist zu kurz, um schlechten Wein zu trinken', //'placeholderSubTitleWineEvening'
     'placeholderPublicInfo'=> 'z.B. Karten nur im Vorverkauf',

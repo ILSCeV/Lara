@@ -55,8 +55,8 @@ return [
 
     'DV-Time' => 'DV-Time',
     'club' => 'Club',
-    'internalEventP' => 'internal Event', // Placeholder string
-    'internEventP' => 'internal Event', //Placeholder string for example used in monthCell.blade.php
+    'internalEventP' => 'Internal Event', // Placeholder string
+    'internEventP' => 'Internal Event', //Placeholder string for example used in monthCell.blade.php
     //
     'willShowFor' => 'will be showed for',
     //
