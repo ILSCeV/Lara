@@ -48,7 +48,7 @@
             @endif
         </span>
         <span class="col-xs-6 col-sm-4 col-md-4 text-dark-grey" style="text-align: center;">
-            <small>{{ trans('mainLang.more infos') }} <a href="http://github.com/4D44H/lara-vedst">{{ trans('mainLang.projectsite') }}</a>.
+            <small><a href="http://github.com/4D44H/lara-vedst">{{ trans('mainLang.moreInfosProjectsite') }}</a>.
             </small>
         </span>
         <!-- Button for switching language -->

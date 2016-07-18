@@ -44,8 +44,8 @@
 		<div class="col-xs-12 col-md-6 hidden-print">
 			@include('partials.filter')
 			<br class="hidden-xs">
-			<button class="btn btn-xs hidden-print" type="button" id="show-hide-time">Zeiten einblenden</button>
-			<button class="btn btn-xs hidden-print" type="button" id="change-week-view">Woche: Montag - Sonntag</button>
+			<button class="btn btn-xs hidden-print" type="button" id="show-hide-time">{{ trans('mainLang.showTimes') }}</button> {{-- show time button Ger.: Zeiten einblenden --}}
+			<button class="btn btn-xs hidden-print" type="button" id="change-week-view">{{ trans('mainLang.weekMoSu') }}</button> {{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag--}}
 			<br class="visible-xs hidden-print">
 		</div>
 	</div>

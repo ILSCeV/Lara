@@ -28,8 +28,9 @@ return [
     // /resources/views/layouts/master.blade.php
     'notWorkingMail' => 'Etwas funktioniert nicht? Schreibe :Name eine Mail',
     'mail'     => ' eine Mail.', //not used
-    'more infos' => 'Mehr Infos? Besuche die ',
-    'projectsite' => 'Projektseite auf GitHub',
+    //'moreInfos' => 'Mehr Infos? Besuche die ',
+    //'projectsite' => 'Projektseite auf GitHub',
+    'moreInfosProjectsite' => 'Mehr Infos? Besuche die Projektseite auf GitHub',
     
     //-----------------------------------------------------------------------------------------------------
     // resources/views
@@ -272,7 +273,7 @@ return [
         //no new strings
     //-----------------------------------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------------------------------
-    // /public/js
+    // /public/js ToDo add these strings
     //Maybe To do translate Javascript, tricky, " " can throw error messages
     // /public/js/vedst-script.js
     'errorMessageForgotFilter' => 'Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.',
@@ -283,7 +284,7 @@ return [
     'weekWeTu' => 'Woche: Mittwoch - Dienstag',
     //-----------------------------------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------------------------------
-    //Controller
+    //Controller  ToDo add these strings
     //ScheduleEntryController
     //action description
     'addedComment'=> 'Kommentar hinzugefügt',
