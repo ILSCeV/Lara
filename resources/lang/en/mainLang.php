@@ -25,26 +25,24 @@ return [
     // /resources/views/errors
     //-----------------------------------------------------------------------------------------------------
     // /resources/views/layouts/master.blade.php
-    'not working' => 'Something is not working? Write ',
-    'mail'     => ' a mail.',
-    'more infos' => 'More informations? Visit the ',
-    'projectsite' => ' projectsite on GitHub',
+    'notWorkingMail' => 'Something is not working? Write :Name a mail.',
+    'mail'     => ' a Mail.', //not used
+    //'moreInfos' => 'More informations? Visit the ',
+    //'projectsite' => 'projectsite on GitHub',
+    'moreInfosProjectsite' => 'More informations? Visit the projectsite on GitHub',
 
     //-----------------------------------------------------------------------------------------------------
     // resources/views
     // resources/views/clubEventView.blade.php
     //Event types ------------------------------------
     'type' => 'Type',
-    'normal program' => 'Normal Programm', //wrong version, later noticed TODO fix in /views
     'normalProgramm' => 'Normal Programm',
     'information' => 'Information',
     'special' => 'Special',
     'LiveBandDJ' => 'Live Band / Live DJ / Lesson',
-    'internal event' => 'Internal Event',        // TODO fix the space in the keystring
     'internalEvent' => 'Internal Event',
     'utilization' => 'Utilization',
     'flooding' => 'Flooding',
-    'flyers placard' => 'Flyer / Placard',          // TODO fix the space in the keystring
     'flyersPlacard' => 'Flyer / Placard',
     'marketingFlyersPlacard' => 'Marketing / Flyer / Posters', //used in legend.blade.php
     'preSale' => 'Pre Sale',
@@ -274,11 +272,62 @@ return [
     //no new strings
     //-----------------------------------------------------------------------------------------------------------
     //-----------------------------------------------------------------------------------------------------------
+    // /public/js ToDo add these strings
+    //Maybe To do translate Javascript, tricky, " " can throw error messages
+    // /public/js/vedst-script.js
+    'errorMessageForgotFilter' => 'Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.',
+    'errorMessageEnterPasswordForShiftPlan' => 'Bitte noch das Passwort für diesen Dienstplan eingeben:',
+    'showTimes' => 'show times',
+    //'hideTimes' already exists
+    'weekMoSu' => 'Week: Monday - Sunday',
+    'weekWeTu' => 'Week: Wednesday - Tuesday',
     //-----------------------------------------------------------------------------------------------------------
-    // /public/js
-    //TODO translate Javascript, tricky, " " can throw error messages
+    //-----------------------------------------------------------------------------------------------------------
+    //Controller  ToDo add these strings
+    //ScheduleEntryController
+    //action description
+    'addedComment'=> 'Kommentar hinzugefügt',
+    'deletedComment' => 'Kommentar gelöscht',
+    'changedComment' => 'Kommentar geändert',
 
+    'errorMessageAbortDeletion' => 'Fehler: Löschvorgang abgebrochen - der Dienstplaneintrag existiert nicht.',
+
+    //SurveyController
+    'messageSurveyDeleted' => 'Umfrage gelöscht!',
+
+    //SurveyAnswerController
+    'messageSuccessfulVoted' => 'Erfolgreich abgestimmt!',
+    'messageSuccessfulDeleted' => 'Erfolgreich gelöscht!',
+
+    //-----------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------
+    //placeholder strings (e.g. used in buttons or text fields)
+    /*
+    | instead of { trans('message.key' }} use  Lang::get('message.key') in the view
+    */
+    //ClubEvent
+    'addCommentHere' => 'add comment here',
+    'enterPasswordHere' => 'enter password here',
+    'placeholderTitleWineEvening' => 'e.g. Wine evening', //'placeholderTitleWineEvening'
+    'placeholderSubTitleWineEvening' => 'e.g. Life is too short to drink bad wine', //'placeholderSubTitleWineEvening'
+    'placeholderPublicInfo'=> 'e.g. Tickets only in presale',
+    'placeholderPrivateDetails' => 'e.g. DJ-table is needed',
+    //Survey
+    'addAnswerHere' => 'add answer here',
+    'createSurvey' => 'create survey', //Button text
+    //Partials
+    //Navigation
+    'clubNumber' => 'Clubnumber',
+    'password' => 'Password',
+    'logIn' => 'Login',
+    'logOut' => 'Logout',
+    //ScheduleEntryName
+    '=FREI=' => '=FREI=', //not used yet
+    //surveyForm
+    'placeholderSurveyTitle' => 'Title:',
+    'placeholderTitleSurvey' => 'e.g. Participation in the Club trip',
+    'placeholderDescription' => 'Description:',
+    'placeholderActiveUntil' => 'Active until:',
 
     //
-
 ];

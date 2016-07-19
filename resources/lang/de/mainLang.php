@@ -18,7 +18,6 @@ return [
     | in lara/resources/lang add a new folder + file in this style
     |
     |
-    |
     */
 
     // /app
