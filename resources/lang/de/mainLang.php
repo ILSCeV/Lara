@@ -131,8 +131,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     // resources/views/editSurveyView.blade.php
     'editSurvey' => 'Umfrage editieren',
-    'confirmDeleteSurvey1' => 'Möchtest du die Umfrage ',
-    'confirmDeleteSurvey2' => ' wirklich löschen?',
+    'confirmDeleteSurvey' => 'Möchtest du die Umfrage ":title" wirklich löschen?',
     //-----------------------------------------------------------------------------------------------------------
     // resources/views/surveyView.blade.php
     'description' => 'Beschreibung',
@@ -262,8 +261,9 @@ return [
     'hide' => 'Ausblenden',
     //-----------------------------------------------------------------------------------------------------------
     // /resources/views/partials/weekCellHidden.blade.php
-    'moreDetailsAfterLogInMessage1' => 'Weitere Details sind für Mitglieder',
-    'moreDetailsAfterLogInMessage2' => 'nach dem Einloggen zugänglich.',
+    'moreDetailsAfterLogInMessage' => 'Weitere Details sind für Mitglieder nach dem Einloggen zugänglich.',
+    //'moreDetailsAfterLogInMessage2' => 'nach dem Einloggen zugänglich.', //Merged with line above but there is now way to break the line (format is still ok) ToDo find a solution
+
     //-----------------------------------------------------------------------------------------------------------
     // /resources/views/partials/weekCellProtected.blade.php
         //no new strings

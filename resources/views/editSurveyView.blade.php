@@ -14,7 +14,7 @@
 
     &nbsp;
     <div class="form-group">
-        {!! Form::submit("Umfrage ändern", ['class'=>'btn btn-primary']) !!}
+        {!! Form::submit(Lang::get('mainLang.editSurvey'), ['class'=>'btn btn-primary']) !!}
         &nbsp;&nbsp;&nbsp;&nbsp;
         <br class="visible-xs">
         <a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
@@ -26,7 +26,7 @@
            data-method="delete"
            data-token="{{csrf_token()}}"
            rel="nofollow"
-           data-confirm='{{ trans('mainLang.confirmDeleteSurvey1') }} "{{$survey->title}}" {{ trans('mainLang.confirmDeleteSurvey2') }}'>
+           data-confirm='{{ trans('mainLang.confirmDeleteSurvey',['title' => $survey->title]) }}'>
             <i class="fa fa-trash"></i>
         </a>
     </div>

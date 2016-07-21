@@ -131,8 +131,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     // resources/views/editSurveyView.blade.php
     'editSurvey' => 'Edit Survey',
-    'confirmDeleteSurvey1' => 'Are you sure you want the survey ', //placeholder variable after this
-    'confirmDeleteSurvey2' => ' deleted?',
+    'confirmDeleteSurvey' => 'Are you sure you want the survey ":title" deleted?',
     //-----------------------------------------------------------------------------------------------------------
     // resources/views/surveyView.blade.php
     'description' => 'Description',
@@ -262,8 +261,9 @@ return [
     'hide' => 'Hide',
     //-----------------------------------------------------------------------------------------------------------
     // /resources/views/partials/weekCellHidden.blade.php
-    'moreDetailsAfterLogInMessage1' => 'More details are for members',
-    'moreDetailsAfterLogInMessage2' => 'after logging in.',
+    'moreDetailsAfterLogInMessage' => 'More details are for members after logging in. :break',
+    //'moreDetailsAfterLogInMessage2' => 'after logging in.', //Merged with line above but there is now way to break the line (format is still ok) ToDo find a solution for breaking lines
+
     //-----------------------------------------------------------------------------------------------------------
     // /resources/views/partials/weekCellProtected.blade.php
     //no new strings

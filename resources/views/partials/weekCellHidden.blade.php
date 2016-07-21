@@ -16,8 +16,8 @@
 		<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->getPlace->plc_title }}
 	</div>
 	<div class="panel-body">
-		{{ trans('mainLang.moreDetailsAfterLogInMessage1') }} <br />
-		{{ trans('mainLang.moreDetailsAfterLogInMessage2') }}
+		{{ trans('mainLang.moreDetailsAfterLogInMessage') }} {{-- <br /> --}}
+        {{-- {{ trans('mainLang.moreDetailsAfterLogInMessage2') }}  --}}
 	</div>
 </div>
 	  
