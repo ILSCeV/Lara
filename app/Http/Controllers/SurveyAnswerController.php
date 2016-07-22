@@ -70,7 +70,7 @@ class SurveyAnswerController extends Controller
         $survey_answer->club = $input->club;
         $survey_answer->order = 0; // example, might be better to order by updated_at?
         $survey_answer->save();
-        $revision_answer->save($survey_answer, "Antwort");
+        $revision_answer->save($survey_answer, "Antwort erstellt");
 
         $questions = $survey->getQuestions;
 
@@ -144,7 +144,7 @@ class SurveyAnswerController extends Controller
         $survey_answer->club = $input->club;
         $survey_answer->order = 0; // example, might be better to order by updated_at?
         $survey_answer->save();
-        $revision_answer->save($survey_answer);
+        $revision_answer->save($survey_answer, "Antwort geändert");
 
         $questions = $survey->getQuestions;
         $answer_cells = $survey_answer->getAnswerCells;
@@ -208,7 +208,7 @@ class SurveyAnswerController extends Controller
 
         // Now delete the SurveyAnswer itself
         $answer->delete();
-        $revision_answer->save($answer, "Antwort");
+        $revision_answer->save($answer, "Antwort gelöscht");
 
         Session::put('message', 'Erfolgreich gelöscht!' );
         Session::put('msgType', 'success');

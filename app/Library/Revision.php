@@ -66,10 +66,10 @@ class Revision
 
     /**
      * @param Model $new_model
-     * @param string $revisionType
+     * @param string $summary
      * @return bool
      */
-    public function save(Model $new_model, $revisionType = null)
+    public function save(Model $new_model, $summary = null)
     {
         if($new_model->getTable() !== $this->old_model->getTable()) {
             // old and new model dont have the same class -> they are not compareable
@@ -91,18 +91,9 @@ class Revision
         $revision->ip = request()->ip();
         $revision->request_uri = request()->getUri();
         
-        // if there is a revisionType specified a summary will be generated
-        if(!empty($revisionType)) {
-            if ($new_model->wasRecentlyCreated) {
-                // new entry
-                $revision->summary = $revisionType." erstellt";
-            } elseif (!$new_model->exists) {
-                // deleted entry
-                $revision->summary = $revisionType." gelöscht";
-            } else {
-                // update entry
-                $revision->summary = $revisionType." geändert";
-            }
+        // if there is a summary specified a summary-entry will be generated
+        if(!empty($summary)) {
+                $revision->summary = $summary;
         }
 
         $revision->save();

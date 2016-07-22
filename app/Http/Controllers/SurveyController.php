@@ -66,7 +66,7 @@ class SurveyController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param SurveyRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(SurveyRequest $request)
@@ -90,7 +90,7 @@ class SurveyController extends Controller
         }
 
         $survey->save();
-        $revision_survey->save($survey, "Umfrage");
+        $revision_survey->save($survey, "Umfrage erstellt");
 
         $questions = $request->questions;
         $answer_options = $request->answer_options;
@@ -202,7 +202,7 @@ class SurveyController extends Controller
 
         //finally delete survey
         $survey->delete();
-        $revision_survey->save($survey, "Umfrage");
+        $revision_survey->save($survey, "Umfrage gelöscht");
         
         Session::put('message', 'Umfrage gelöscht!' );
         Session::put('msgType', 'success');
@@ -442,7 +442,7 @@ class SurveyController extends Controller
 
         //save the updates
         $survey->save();
-        $revision_survey->save($survey, "Umfrage");
+        $revision_survey->save($survey, "Umfrage geändert");
 
         //get questions and answer options as arrays from the input
         $questions_new = $request->questions;
