@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Umfrage editieren
+    {{ trans('mainLang.editSurvey') }}
 @stop
 
 @section('content')
@@ -14,10 +14,10 @@
 
     &nbsp;
     <div class="form-group">
-        {!! Form::submit("Umfrage ändern", ['class'=>'btn btn-primary']) !!}
+        {!! Form::submit(Lang::get('mainLang.editSurvey'), ['class'=>'btn btn-primary']) !!}
         &nbsp;&nbsp;&nbsp;&nbsp;
         <br class="visible-xs">
-        <a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
+        <a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
         &nbsp;
         <a href="/survey/{{$survey->id}}"
            class="btn btn-default"
@@ -26,7 +26,7 @@
            data-method="delete"
            data-token="{{csrf_token()}}"
            rel="nofollow"
-           data-confirm='Möchtest du die Umfrage "{{$survey->title}}" wirklich löschen?'>
+           data-confirm='{{ trans('mainLang.confirmDeleteSurvey',['title' => $survey->title]) }}'>
             <i class="fa fa-trash"></i>
         </a>
     </div>

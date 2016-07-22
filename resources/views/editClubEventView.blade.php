@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-	Veranstaltung/Aufgabe ändern
+	{{ trans('mainLang.changeEventJob') }}
 @stop
 
 @section('content')
@@ -18,7 +18,7 @@ AND (Session::get('userGroup') == 'marketing'
 		<div class="panel col-md-6 col-sm-12 col-xs-12">
 
 			<div class="panel-heading">
-				<h4 class="panel-title">Veranstaltung/Aufgabe ändern:</h4>
+				<h4 class="panel-title">{{ trans('mainLang.changeEventJob') }}:</h4>
 			</div>
 
 			<br>
@@ -44,63 +44,63 @@ AND (Session::get('userGroup') == 'marketing'
 			
 			<div class="panel-body no-padding">
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-			      	<label for="title" class="col-md-2 col-sm-2 col-xs-3">Titel:</label>
+			      	<label for="title" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.title') }}:</label>
 		      		{!! Form::text('title', 
 		      						$event->evnt_title, 
 		      						array('class'=>'col-md-9 col-sm-9 col-xs-8', 
-  										  'placeholder'=>'z.B. Weinabend',
+  										  'placeholder'=>Lang::get('mainLang.placeholderTitleWineEvening'),
   										  'style'=>'cursor: auto',
   										  'required') ) !!}
 			    </div>
 
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
-					<label for="subtitle" class="col-md-2 col-sm-2 col-xs-3">Subtitel:</label>
+					<label for="subtitle" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.subTitle') }}:</label>
 					{!! Form::text('subtitle', 
 									$event->evnt_subtitle, 
 									array('class'=>'col-md-9 col-sm-9 col-xs-8', 
-  										  'placeholder'=>'z.B. Das Leben ist zu kurz, um schlechten Wein zu trinken', 
+  										  'placeholder'=>Lang::get('mainLang.placeholderSubTitleWineEvening'),
   										  'style'=>'cursor: auto') ) !!}
 			    </div>
 			    
 			    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung'  OR Session::get('userGroup') == 'admin')
 				    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
-				     	<label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">Typ:</label>
+				     	<label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.type') }}:</label>
 				     	<div class="col-md-10 col-sm-10 col-xs-10">
 				            {!! Form::radio('evnt_type', "0", $event->evnt_type == 0 ? array("checked") : "") !!}
-				            	normales Programm
+							{{ trans('mainLang.normalProgramm') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "2", $event->evnt_type == 2 ? array("checked") : "") !!}
-				            	Spezial
+							{{ trans('mainLang.special') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "3", $event->evnt_type == 3 ? array("checked") : "") !!}
-				            	Live Band / Live DJ / Lesung 
+							{{ trans('mainLang.LiveBandDJ') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "5", $event->evnt_type == 5 ? array("checked") : "") !!}
-				            	Nutzung
+							{{ trans('mainLang.utilization') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "4", $event->evnt_type == 4 ? array("checked") : "") !!}
-				            	interne Veranstaltung
+							{{ trans('mainLang.internalEvent') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "6", $event->evnt_type == 6 ? array("checked") : "") !!}
-				            	Fluten
+							{{ trans('mainLang.flooding') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "7", $event->evnt_type == 7 ? array("checked") : "") !!}
-				            	Flyer / Plakatieren
+							{{ trans('mainLang.flyersPlacard') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "8", $event->evnt_type == 8 ? array("checked") : "") !!}
-				            	Vorverkauf
+							{{ trans('mainLang.preSale') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "9", $event->evnt_type == 9 ? array("checked") : "") !!}
-				            	Sonstiges
+							{{ trans('mainLang.others') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "1", $event->evnt_type == 1 ? array("checked") : "") !!}
-				            	Information
+							{{ trans('mainLang.information') }}
 				            <br>
 
 				            <br>
 				            <div>
 								{!! Form::checkbox('isPrivate', '1', ($event->evnt_is_private + 1)%2) !!}
-									Für Externe sichtbar machen?
+								{{ trans('mainLang.showExtern') }}
 							</div>
 				            <br>
 							
@@ -108,79 +108,79 @@ AND (Session::get('userGroup') == 'marketing'
 				    </div>
 				@else
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
-				     	<label for="evnt_type" class="control-label col-md-2 col-sm-2 col-xs-2">Typ:</label>
+				     	<label for="evnt_type" class="control-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.type') }}:</label>
 				     	<div class="col-md-10 col-sm-10 col-xs-10">
 				            @if ($event->evnt_type == 0)
 				            	{!! Form::radio('evnt_type', "0", $event->evnt_type == 0 ? array("checked") : "") !!}
 				            @else 
 				            	&nbsp;<i class="fa fa-times-circle"></i>&nbsp;&nbsp;
-				            @endif       
-				            	normales Programm
+				            @endif
+								{{ trans('mainLang.normalProgramm') }}
 				            <br>
 				            @if ($event->evnt_type == 2)
 				            	{!! Form::radio('evnt_type', "2", $event->evnt_type == 2 ? array("checked") : "") !!}
 				            @else 
 				            	&nbsp;<i class="fa fa-times-circle"></i>&nbsp;&nbsp;
 				            @endif
-				            	Spezial
+								{{ trans('mainLang.special') }}
 				            <br>
 				            @if ($event->evnt_type == 3)
 				            	{!! Form::radio('evnt_type', "3", $event->evnt_type == 3 ? array("checked") : "") !!}
 				            @else 
 				            	&nbsp;<i class="fa fa-times-circle"></i>&nbsp;&nbsp;
 				            @endif
-				            	Live Band / Live DJ / Lesung 
+								{{ trans('mainLang.LiveBandDJ') }}
 				            <br>
 				            @if ($event->evnt_type == 5)
 				            	{!! Form::radio('evnt_type', "5", $event->evnt_type == 5 ? array("checked") : "") !!}
 				            @else 
 				            	&nbsp;<i class="fa fa-times-circle"></i>&nbsp;&nbsp;
 				            @endif
-				            	Nutzung
+								{{ trans('mainLang.utilization') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "4", $event->evnt_type == 4 ? array("checked") : "") !!}
-				            	interne Veranstaltung
+								{{ trans('mainLang.internalEvent') }}
 				            <br>
 				            @if ($event->evnt_type == 6)
 				            	{!! Form::radio('evnt_type', "6", $event->evnt_type == 6 ? array("checked") : "") !!}
 				            @else 
 				            	&nbsp;<i class="fa fa-times-circle"></i>&nbsp;&nbsp;
 				            @endif
-				            	Fluten
+								{{ trans('mainLang.flooding') }}
 				            <br>
 				            @if ($event->evnt_type == 7)
 				            	{!! Form::radio('evnt_type', "7", $event->evnt_type == 7 ? array("checked") : "") !!}
 				            @else 
 				            	&nbsp;<i class="fa fa-times-circle"></i>&nbsp;&nbsp;
 				            @endif
-				            	Flyer / Plakatieren
+								{{ trans('mainLang.flyersPlacard') }}
 				            <br>
 				            @if ($event->evnt_type == 8)
 				            	{!! Form::radio('evnt_type', "8", $event->evnt_type == 8 ? array("checked") : "") !!}
 				            @else 
 				            	&nbsp;<i class="fa fa-times-circle"></i>&nbsp;&nbsp;
 				            @endif
-				            	Vorverkauf
+								{{ trans('mainLang.preSale') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "9", $event->evnt_type == 9 ? array("checked") : "") !!}
-				            	Sonstiges
+								{{ trans('mainLang.others') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "1", $event->evnt_type == 1 ? array("checked") : "") !!}
-				            	Information
+								{{ trans('mainLang.information') }}
 				            <br>
 
 				            <br>
 				            <div>
 				            	@if ($event->evnt_is_private == 0)
 				            		{!! Form::checkbox('isPrivate', '1', ($event->evnt_is_private + 1)%2) !!}
-									Für Externe sichtbar machen?
+									{{ trans('mainLang.showExtern') }}
 				            	@else
 					            	{!! Form::checkbox('isPrivate', '1', ($event->evnt_is_private + 1)%2, array('hidden')) !!}
 									<span style="color: red;">
 										<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-										Diese Öffnung wird nur für eingeloggte Mitglieder sichtbar sein!<br>
-										Um sie für Externe sichtbar zu machen oder den Typ zu ändern, <br>
-										frage die Clubleitung oder die Marketingverantwortlichen.
+										{{ trans('mainLang.showForLoggedInMember') }}<br>
+										{{ trans('mainLang.showForExternOrChangeType') }} <br>
+										{{ trans('mainLang.askTheCLOrMM') }}
 									</span>
 				            	@endif
 				            </div>
@@ -190,7 +190,7 @@ AND (Session::get('userGroup') == 'marketing'
 				@endif
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="place" class="control-label col-md-2 col-sm-2 col-xs-12">Sektion: &nbsp;</label>
+					<label for="place" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
 					<span class="col-md-10 col-sm-10 col-xs-12">
 						{!! Form::text('place', $places[$event->plc_id], array('id'=>'place') ) !!}   	
 					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
@@ -208,7 +208,7 @@ AND (Session::get('userGroup') == 'marketing'
 			   	</div>
 
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
-					<label for="filter" class="control-label col-md-2 col-sm-2 col-xs-12">Zeige für: &nbsp;</label>
+					<label for="filter" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.showFor') }}: &nbsp;</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						<div id="filter">
 							{!! Form::checkbox('filterShowToClub2', '1', 
@@ -223,25 +223,25 @@ AND (Session::get('userGroup') == 'marketing'
 			   	</div>
 
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
-					<label for="preparationTime" class="control-label col-md-2 col-sm-2 col-xs-4">DV-Zeit:</label>
+					<label for="preparationTime" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.DV-Time') }}:</label>
 					<div class="col-md-3 col-sm-3 col-xs-3">
 						{!! Form::input('time', 'preparationTime', $event->getSchedule->schdl_time_preparation_start) !!}
 					</div>
 			    </div>
 			    
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
-					<label for="beginDate" class="control-label col-md-2 col-sm-2 col-xs-12">Beginn:</label>
+					<label for="beginDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.begin') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						{!! Form::input('date', 'beginDate', $event->evnt_date_start) !!} 
-						<span class="visible-xs"><br></span>um {!! Form::input('time', 'beginTime', $event->evnt_time_start) !!}
+						<span class="visible-xs"><br></span>{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', $event->evnt_time_start) !!}
 					</div>
 			    </div>
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="endDate" class="control-label col-md-2 col-sm-2 col-xs-12">Ende:</label>
+					<label for="endDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.end') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						{!! Form::input('date', 'endDate', $event->evnt_date_end) !!} 
-						<span class="visible-xs"><br></span>um {!! Form::input('time', 'endTime', $event->evnt_time_end) !!}
+						<span class="visible-xs"><br></span>{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $event->evnt_time_end) !!}
 					</div>
 			    </div>
 
@@ -250,21 +250,21 @@ AND (Session::get('userGroup') == 'marketing'
 			    </div>
 
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-			    	<label for="password" class="control-label col-md-5 col-sm-5 col-xs-12">Passwort zum Eintragen:</label>
+			    	<label for="password" class="control-label col-md-5 col-sm-5 col-xs-12">{{ trans('mainLang.passwordEntry') }}:</label>
 			    	<div class="col-md-7 col-sm-7 col-xs-12">
 			    		{!! Form::password('password', '' ) !!}
 			    	</div>
 			    </div>
 
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-			    	<label fro="passwordDouble" class="control-label col-md-5 col-sm-5 col-xs-12">Passwort wiederholen:</label>
+			    	<label fro="passwordDouble" class="control-label col-md-5 col-sm-5 col-xs-12">{{ trans('mainLang.passwordRepeat') }}:</label>
 			    	<div class="col-md-7 col-sm-7 col-xs-12">
 			    		{!! Form::password('passwordDouble', '') !!}
 			    	</div>
 			    </div>
 
 			    <div style="color: #ff9800;">
-			    	<small>Um das Passwort zu löschen trage in beide Felder "delete" ein (ohne Anführungszeichen). </small>
+			    	<small>{{ trans('mainLang.passwordDeleteMessage') }} </small>
 			    </div>
 
 			    <div class="col-md-12 col-sm-12 col-xs-12">
@@ -278,14 +278,14 @@ AND (Session::get('userGroup') == 'marketing'
 			<br class="visible-xs visible-sm">
 			<div class="panel">
 				<div class="panel-heading">
-					<h4 class="panel-title">Weitere Infos:</h4>(öffentlich)
+					<h4 class="panel-title">{{ trans('mainLang.moreInfos') }} :</h4>({{ trans('mainLang.public') }} )
 				</div>
 				<div class="panel-body">				
 				    <div class="form-group">	
 						<div class="col-md-12">
 							{!! Form::textarea('publicInfo', $event->evnt_public_info, array('class'=>'form-control', 
 																	  'rows'=>'8',
-																	  'placeholder'=>'z.B. Karten nur im Vorverkauf') ) !!}
+																	  'placeholder'=>Lang::get('mainLang.placeholderPublicInfo')) ) !!}
 						</div>
 					</div>	
 				</div>
@@ -293,14 +293,14 @@ AND (Session::get('userGroup') == 'marketing'
 			<br>
 			<div class="panel">
 				<div class="panel-heading">
-					<h4 class="panel-title">Details:</h4>(nur intern sichtbar)
+					<h4 class="panel-title">{{ trans('mainLang.details') }} :</h4>({{ trans('mainLang.showOnlyIntern') }} )
 				</div>
 				<div class="panel-body">
 				    <div class="form-group">
 						<div class="col-md-12">
 							{!! Form::textarea('privateDetails', $event->evnt_private_details, array('class'=>'form-control', 
 																		  'rows'=>'5', 
-																		  'placeholder'=>'z.B. DJ-Tisch wird gebraucht') ) !!}
+																		  'placeholder'=>Lang::get('mainLang.placeholderPrivateDetails')) ) !!}
 						</div>
 				    </div>
 				</div>
@@ -315,7 +315,7 @@ AND (Session::get('userGroup') == 'marketing'
 	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<br class="visible-xs"><br class="visible-xs">
-	<a href="javascript:history.back()" class="btn btn-default">Ohne Änderung zurück</a>
+	<a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }} </a>
 	
 	{!! Form::close() !!}
 
@@ -323,13 +323,13 @@ AND (Session::get('userGroup') == 'marketing'
 
 	<div class="panel panel-warning">
 		<div class="panel panel-heading">
-			<h4 class="white-text">Ne, das geht so nicht...</h4>
+			<h4 class="white-text">{{ trans('mainLang.noNotThisWay') }}</h4>
 		</div>
 		<div class="panel panel-body">
 			@if ($creator_name == "")
-				<h6>Nur die <b>Clubleitung</b> oder die <b>Marketingverantwortlichen</b> dürfen diese Veranstaltung/Aufgabe ändern.</h6>
+				<h6>{{ trans('mainLang.onlyThe') }} <b>{{ trans('mainLang.clubManagement') }}</b> {{ trans('mainLang.orThe') }} <b>{{ trans('mainLang.marketingManager') }}</b> {{ trans('mainLang.canChangeEventJob') }}</h6>
 			@else
-				<h6>Nur <b>{!! $creator_name !!}</b>, die <b>Clubleitung</b> oder die <b>Marketingverantwortlichen</b> dürfen diese Veranstaltung/Aufgabe ändern.</h6>
+				<h6>{{ trans('mainLang.only') }} <b>{!! $creator_name !!}</b>{{ trans('mainLang.commaThe') }} <b>{{ trans('mainLang.clubManagement') }}</b> {{ trans('mainLang.orThe') }} <b>{{ trans('mainLang.marketingManager') }}</b> {{ trans('mainLang.canChangeEventJob') }}</h6>
 			@endif
 		</div>
 	</div>

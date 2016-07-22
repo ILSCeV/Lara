@@ -29,7 +29,7 @@
                         document.getElementById('club{{ ''. $entry->id }}').value='{{Session::get('userClub')}}';
                         document.getElementById('ldapId{{ ''. $entry->id }}').value='{{Session::get('userId')}}'
                             document.getElementById('btn-submit-changes{{ ''. $entry->id }}').click();">
-                <b>Ich mach's!</b>
+                <b>{{ trans('mainLang.IDoIt') }}</b>
             </a>
         </li>
     </ul>

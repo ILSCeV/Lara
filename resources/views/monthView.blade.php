@@ -42,28 +42,28 @@
     <div class="col-md-12 calendarWrapper">
         <div class=" hidden-xs" id="ContentRow">
             <div class="calendarWeek noBorderTop" style="border-top: 0px">
-                KW
+                {{ trans('mainLang.Cw') }}
             </div>
             <div class="weekDay padleft">
-                Mo
+                {{ trans('mainLang.Mo') }}
             </div>
             <div class="weekDay padleft">
-                Di
+                {{ trans('mainLang.Tu') }}
             </div>
             <div class="weekDay padleft">
-                Mi
+                {{ trans('mainLang.We') }}
             </div>
             <div class="weekDay padleft">
-                Do
+                {{ trans('mainLang.Th') }}
             </div>
             <div class="weekDay padleft">
-                Fr
+                {{ trans('mainLang.Fr') }}
             </div>
             <div class="weekDay padleft">
-                Sa
+                {{ trans('mainLang.Sa') }}
             </div>
             <div class="weekDay padleft">
-                So
+                {{ trans('mainLang.Su') }}
             </div>
         </div>
         <!--Print Weeks on left side-->
@@ -92,7 +92,7 @@
                             <div class="calendarWeek">
                                 @endif
                                 <a href="{!! Request::getBasePath() !!}/calendar/{!! $date['year'] !!}/KW{{ date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) }}">
-                                    <span class="onlyOnMobile">KW</span> {{ date("W", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) }}
+                                    <span class="onlyOnMobile">{{ trans('mainLang.Cw') }}</span> {{ date("W", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) }}
                                 </a>
                             </div>
                             @endif

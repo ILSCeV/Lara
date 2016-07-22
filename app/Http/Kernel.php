@@ -27,6 +27,7 @@ class Kernel extends HttpKernel
             \Lara\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
+            \Lara\Http\Middleware\Language::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Lara\Http\Middleware\VerifyCsrfToken::class,
         ],

@@ -58,7 +58,7 @@
 		        {!! Form::password('password' . $clubEvent->getSchedule->id, array('required',
 		                                             'class'=>'col-md-12 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
-		                                             'placeholder'=>'Passwort hier eingeben')) !!}
+		                                             'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
 		        <br/>
 		    </div>
 		@endif
@@ -111,7 +111,7 @@
 						 see vedst-scripts "Show/hide comments" function --}}
 					{!! Form::text('comment' . $entry->id,
 					               $entry->entry_user_comment,
-					               array('placeholder'=>'Kommentar hier hinzufügen',
+					               array('placeholder'=>Lang::get('mainLang.addCommentHere'),
 					                     'id'=>'comment' . $entry->id,
 					                     'name'=>'comment' . $entry->id,
 					                     'class'=>'col-xs-10 col-md-10 hidden-print hide col-md-offset-1 col-xs-offset-1 word-break' ))
@@ -136,7 +136,7 @@
 		        OR Session::get('userGroup') == 'admin'))
 		        <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 				<div class="padding-right-16 bottom-padding pull-right hidden-print">
-					<small><a href="#" class="hide-event">Ausblenden</a></small>
+					<small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
 				</div>
 			@endif
 

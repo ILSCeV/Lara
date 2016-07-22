@@ -1,6 +1,6 @@
 <div class="panel">
 	<div class="panel-heading">
-		<h4 class="panel-title">Dienstplan anpassen:</h4>
+		<h4 class="panel-title">{{ trans('mainLang.adjustRoster') }}:</h4>
 	</div>
 	<div class="panel-body" id="main">
 
@@ -17,7 +17,7 @@
 				           		   class="input" 
 				           		   id={{ "jobType" . $counter }}
 				           		   value="{{ $entry->getJobType->jbtyp_title }}"
-				           		   placeholder="Diensttyp hier eingeben"/>
+				           		   placeholder="{{ trans('mainLang.serviceTypeEnter') }}"/>
 
 							<span id="dropdown">
 								<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
@@ -60,7 +60,7 @@
 		            		   required />
 
 
-		            	&nbsp;<br class="visible-xs">Gewicht:&nbsp;
+		            	&nbsp;<br class="visible-xs">{{ trans('mainLang.weight') }}:&nbsp;
 		            	<input type="number" 
 		            		   class="input" 
 		            		   name={{ "jbtyp_statistical_weight" . $counter }} 
@@ -85,7 +85,7 @@
 		           		   class="input" 
 		           		   id={{ "jobType" . $counter }}
 		           		   value=""
-		           		   placeholder="Diensttyp hier eingeben"/>
+		           		   placeholder="{{ trans('mainLang.serviceTypeEnter') }}"/>
 
 					<span id="dropdown">
 						<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
@@ -128,13 +128,13 @@
 	        		   id={{ "timeEnd" . $counter }}
 	        		   value="01:00" required />
 
-				&nbsp;<br class="visible-xs">Gewicht:&nbsp;
+				&nbsp;<br class="visible-xs">{{ trans('mainLang.weight') }}:&nbsp;
 	        	<input type="number" 
 	        		   class="input" 
 	        		   name={{ "jbtyp_statistical_weight" . $counter }} 
 	        		   id={{ "jbtyp_statistical_weight" . $counter }}
 	        		   value="1"
-	        		   placeholder="Statistische Wertung" required />
+	        		   placeholder="{{ trans('mainLang.statisticalEvaluation') }}" required />
 
 	        	<input type="button" value="+" class="btn btn-small btn-success btnAdd" /> 
 	        	&nbsp;&nbsp;
