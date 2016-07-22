@@ -45,11 +45,6 @@ class SurveyController extends Controller
         $this->middleware('deadlineSurvey', ['only' => ['edit', 'update', 'destroy']]);
     }
 
-    public function index()
-    {
-
-    }
-
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

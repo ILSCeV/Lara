@@ -68,7 +68,6 @@ class SurveyAnswerController extends Controller
         $survey_answer->survey_id = $surveyid;
         $survey_answer->name = $input->name;
         $survey_answer->club = $input->club;
-        $survey_answer->order = 0; // example, might be better to order by updated_at?
         $survey_answer->save();
         $revision_answer->save($survey_answer, "Antwort erstellt");
 
@@ -142,7 +141,6 @@ class SurveyAnswerController extends Controller
         $survey_answer->survey_id = $surveyid;
         $survey_answer->name = $input->name;
         $survey_answer->club = $input->club;
-        $survey_answer->order = 0; // example, might be better to order by updated_at?
         $survey_answer->save();
         $revision_answer->save($survey_answer, "Antwort geändert");
 

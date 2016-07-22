@@ -21,7 +21,6 @@ class CreateSurveyAnswersTable extends Migration
             $table->integer('survey_id')->references('id')->on('surveys')->unsigned();
             $table->string('name', 255)->nullable()->default(NULL);
             $table->string('club')->nullable();
-            $table->integer('order')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });
