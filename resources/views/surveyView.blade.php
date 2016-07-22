@@ -401,8 +401,7 @@ $userCanEditDueToRole
                 </a>
 
                 <div class="panel hide" id="change-history">
-                    <div class=table-responsive>
-                        <table class="table table-hover table-condensed">
+                        <table class="table table-responsive table-hover table-condensed">
                             <thead>
                             <tr>
                                 <th>Wer?</th>
@@ -418,7 +417,7 @@ $userCanEditDueToRole
                             <tr id="tr-header-{{$key_revision}}" onclick="toggle({{$key_revision}}, {{count($revision['revision_entries'])}})">
                                 <td>{{$revision['creator_name']}}</td>
                                 <td>{{$revision['summary']}}</td>
-                                <td></td>
+                                <td><i id="arrow-icon{{$key_revision}}" class="fa fa-caret-right"></i></td>
                                 <td></td>
                                 <td></td>
                                 <td>{{$revision['created_at']}}</td>
@@ -436,7 +435,6 @@ $userCanEditDueToRole
                             @endforeach
                             </tbody>
                         </table>
-                    </div>
                 </div>
             @endif
         @endif
