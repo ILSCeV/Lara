@@ -2,7 +2,7 @@
 
 ## About
 **Lara** ("**Ve**rwaltung **d**es **St**udentenclubs") is a planning tool that combines a calender with personnel scheduling, developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all Ilmenauer Studentenclub e.V. sections.
-It started as a softwareproject at [TU Ilmenau](http://tu-ilmenau.de) in WS2014/2015 and is currently being developed further as a personal project.
+It started as a softwareproject at [TU Ilmenau](http://tu-ilmenau.de) in WS2014/2015, extended in another softwareproject in SS2016 and is currently being developed further as a personal project.
 
 ## This is a development version
 **Lara is a work in progress - and a beautiful mess sometimes.**
@@ -11,8 +11,9 @@ Some bugs are still alive.
 Use at your own risk.
 
 
-## Current project status as of 27.05.2016
-* Switched to [version 2.0](https://github.com/4D44H/lara-vedst/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Lara+2.0+update%22)
+## Current project status as of 28.07.2016
+* Merged results of softwareproject 2016 into master
+* Next: bugfixes and push to production, est. end of August 2016.
 * Tasks in progress - see issues @ [2.1-milestone](https://github.com/4D44H/lara-vedst/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Lara+2.1+update%22)
 * Further development - see issues @ [Maybe/Later](https://github.com/4D44H/lara-vedst/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Maybe+%2F+Later%22)
 
@@ -22,9 +23,9 @@ For a detailed list of open requirements and change-requests visit [Issues](http
  
  
 ## Requirements and installation instructions
+- [Installation in a virtual machine for development (Vagrant - Windows, Linux, OSX)](https://github.com/4D44H/lara-vedst/wiki/Installation-in-a-virtual-machine-(Windows,-Linux,-OSX))
 - [Installing Lara 2.0 on XAMPP on Windows](https://github.com/4D44H/lara-vedst/wiki/Installation-on-Windows)
 - [Installing Lara 2.0 on a CentOS production server](https://github.com/4D44H/lara-vedst/wiki/Installation-on-Linux)
-- [Installation in a virtual machine (Vagrant - Windows, Linux, OSX)](https://github.com/4D44H/lara-vedst/wiki/Installation-in-a-virtual-machine-(Windows,-Linux,-OSX))
 - [What's new in Lara 2.0 compared to version 1.5](https://github.com/4D44H/lara-vedst/wiki/Changes-introduced-in-Lara-2.0-compared-to-Lara-1.5)
 - [Upgrading from Lara 1.5 to Lara 2.0](https://github.com/4D44H/lara-vedst/wiki/Upgrading-from-Lara-1.5-to-Lara-2.0)
 
