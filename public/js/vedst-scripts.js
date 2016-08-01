@@ -9,6 +9,15 @@ $(document).ready(function() {
         $('#footer').css('margin-top', (docHeight - footerTop) + 'px');
     }
 });
+var getIdOfClub = function(club){
+    switch(club) {
+        case "bc-Club":
+            return 2;
+        case "bc-Café":
+            return 3;
+    }
+    return -1;
+};
 
 $(document).ready(function() {
     // if set, internal events will trigger selection of all clubs
@@ -27,9 +36,21 @@ $(document).ready(function() {
         '9'  // other
     ];
     $("[name='evnt_type']").click(function(){
-        if (autoSelectAllClubs) {
-            if (internalEventValues.indexOf($(this).attr('value')) !== -1) {
-                $("#filter").find("input[type=checkbox]").attr('checked', true);
+        var isInternalEvent = internalEventValues.indexOf($(this).prop('value')) !== -1;
+        if (isInternalEvent) {
+            if (autoSelectAllClubs) {
+                $("#filter").find("input[type=checkbox]").prop('checked', true);
+            }
+        }
+        else {
+            // reset all checkboxes
+            $("#filter").find("input[type=checkbox]").prop('checked', false);
+            var clubName = $(document).find("#place").val();
+            var clubId = getIdOfClub(clubName);
+
+            if (clubId !== -1) {
+                var showToClubCheckbox = $(document).find("[name=filterShowToClub" + clubId + "]");
+                showToClubCheckbox.prop('checked', true);
             }
         }
     });
