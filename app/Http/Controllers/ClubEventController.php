@@ -226,6 +226,14 @@ class ClubEventController extends Controller
             return Redirect::action('MonthController@showMonth', array('year' => date('Y'), 
                                                                    'month' => date('m')));
         }
+
+        //ignore html tags in the info boxes
+        $clubEvent->evnt_public_info = htmlspecialchars($clubEvent->evnt_public_info, ENT_NOQUOTES);
+        $clubEvent->evnt_private_details = htmlspecialchars($clubEvent->evnt_private_details, ENT_NOQUOTES);
+
+        //if URL is in one of the info boxes, convert it to clickable hyperlink (<a> tag)
+        $clubEvent->evnt_public_info = $this->addLinks($clubEvent->evnt_public_info);
+        $clubEvent->evnt_private_details = $this->addLinks($clubEvent->evnt_private_details);
     
         $schedule = Schedule::findOrFail($clubEvent->getSchedule->id);
 
@@ -492,6 +500,21 @@ class ClubEventController extends Controller
         $event->evnt_show_to_club = json_encode($filter, true);
         
         return $event;
+    }
+
+    /**
+     * used to make URL's into hyperlinks using a <a> tag
+     * @param string $text
+     * @return string
+     */
+    private function addLinks($text) {
+        $text = preg_replace('$(https?://[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
+            ' <a href="$1" target="_blank">$1</a> ',
+            $text);
+        $text = preg_replace('$(www\.[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
+            '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
+            $text);
+        return $text;
     }
 
 }
