@@ -9,6 +9,13 @@ $(document).ready(function() {
         $('#footer').css('margin-top', (docHeight - footerTop) + 'px');
     }
 });
+$("#button-create-submit").add("#button-edit-submit").click(function() {
+    var beginDate = new Date($("[name='beginDate']").prop("value") + " " + $("[name='beginTime']").prop("value"));
+    var endDate = new Date($("[name='endDate']").prop("value") + " " + $("[name='endTime']").prop("value"));
+    if (beginDate.getTime() > endDate.getTime()) {
+        alert("Die Startzeit liegt vor der Endzeit!");
+    }
+});
 var getIdOfClub = function(club){
     switch(club) {
         case "bc-Club":
