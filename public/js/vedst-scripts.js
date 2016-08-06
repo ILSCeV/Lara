@@ -540,10 +540,18 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.scheduleEntry' ).find("input[id^='userName']").on( 'input', function() {
-        // Show save icon on form change
-        $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]').removeClass('hide');
-        $(this).parents('.scheduleEntry').find("[name^=status-icon]").addClass('hide');
+    $( '.scheduleEntry' ).find("input[id^='userName']").input(function() {
+        // show only current button
+        $('[name^=btn-submit-change]')
+            .addClass('hide')
+            .removeClass('btn-primary');
+        $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]')
+            .removeClass('hide')
+            .addClass('btn-primary');
+
+        // hide only current icon
+        $('[name^=status-icon]').removeClass('hide');
+        $(this).parents('.scheduleEntry').find('[name^=status-icon]').addClass('hide');
 
         // do all the work here after AJAX response is received
         function ajaxCallBackUsernames(response) { 
