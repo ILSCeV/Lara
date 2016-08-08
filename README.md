@@ -23,7 +23,7 @@ For a detailed list of open requirements and change-requests visit [Issues](http
  
  
 ## Requirements and installation instructions
-- [Installation in a virtual machine for development (Vagrant - Windows, Linux, OSX)](https://github.com/4D44H/lara-vedst/wiki/Installation-in-a-virtual-machine-(Windows,-Linux,-OSX))
+- [Installation in a virtual machine for development (Vagrant - Windows, Linux, OSX)](https://github.com/ILSCeV/homestead-lara-vedst)
 - [Installing Lara 2.0 on XAMPP on Windows](https://github.com/4D44H/lara-vedst/wiki/Installation-on-Windows)
 - [Installing Lara 2.0 on a CentOS production server](https://github.com/4D44H/lara-vedst/wiki/Installation-on-Linux)
 - [What's new in Lara 2.0 compared to version 1.5](https://github.com/4D44H/lara-vedst/wiki/Changes-introduced-in-Lara-2.0-compared-to-Lara-1.5)
