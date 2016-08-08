@@ -19,7 +19,11 @@ Use at your own risk.
 
 
 ## Contributing
-For a detailed list of open requirements and change-requests visit [Issues](https://github.com/4D44H/lara-vedst/issues) and/or contact [Maxim](https://github.com/4D44H) if you want to help.
+We always welcome any help in any form :)
+
+If you want to contribute, please read this short overview first: [Contributing](https://github.com/ILSCeV/lara-vedst/wiki/Contributing)
+
+For a detailed list of open requirements and change-requests visit [Issues](https://github.com/4D44H/lara-vedst/issues) and/or contact [Maxim](https://github.com/4D44H).
  
  
 ## Requirements and installation instructions
