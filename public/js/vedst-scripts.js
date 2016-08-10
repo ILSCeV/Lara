@@ -14,6 +14,7 @@ $("#button-create-submit").add("#button-edit-submit").click(function() {
     var endDate = new Date($("[name='endDate']").prop("value") + " " + $("[name='endTime']").prop("value"));
     if (beginDate.getTime() > endDate.getTime()) {
         alert("Die Startzeit liegt vor der Endzeit!");
+        return false;
     }
 });
 var getIdOfClub = function(club){
