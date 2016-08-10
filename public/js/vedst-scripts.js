@@ -540,7 +540,7 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.scheduleEntry' ).find("input[id^='userName']").input(function() {
+    $( '.scheduleEntry' ).find("input[id^='userName']").on('input', function() {
         // show only current button
         $('[name^=btn-submit-change]')
             .addClass('hide')
@@ -796,7 +796,8 @@ jQuery( document ).ready( function( $ ) {
                 // yellow = "other user updated before you, here's the new data"
 
                 // Update the fields according to server response
-                $("input[id=userName" + data["entryId"] + "]").val(data["userName"]).attr("placeholder", "=FREI=");
+                var $userNameInput = $("input[id=userName" + data["entryId"] + "]");
+                $userNameInput.val(data["userName"]).attr("placeholder", "=FREI=");
                 $("input[id=ldapId"   + data["entryId"] + "]").val(data["ldapId"]);
                 $("input[id=timestamp"+ data["entryId"] + "]").val(data["timestamp"]);
                 $("input[id=club"     + data["entryId"] + "]").val(data["userClub"]).attr("placeholder", "-");
@@ -815,6 +816,15 @@ jQuery( document ).ready( function( $ ) {
                 } else {
                     $("input[id=comment"  + data["entryId"] + "]").parent().children("span").children("i").removeClass().addClass("fa fa-comment");
                 };
+
+                var $colorDiv = $userNameInput.parent().prev().find("div");
+                var isShiftEmpty = data["userName"] !== "";
+                if(isShiftEmpty) {
+                    $colorDiv.removeClass("red").addClass("green");
+                }
+                else {
+                    $colorDiv.removeClass("green").addClass("red");
+                }
 
                 // UPDATE STATUS ICON
                 // switch to normal user status icon and clear "spinner"-markup
