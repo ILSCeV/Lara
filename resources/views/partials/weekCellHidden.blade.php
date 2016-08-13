@@ -1,5 +1,11 @@
 <div class="panel panel-default">
-	<div class="panel panel-heading">
+	{{--Check if the event is still going on--}}
+		@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
+			{{-- The event is already over --}}
+				<div class="panel panel-heading past-event">
+		@else
+			<div class="panel panel-heading">
+		@endif
 
 		<h4 class="panel-title">
 			<i class="fa fa-eye-slash">&nbsp;&nbsp;</i><span class="name">{{ trans('mainLang.internalEventP') }}</span>
