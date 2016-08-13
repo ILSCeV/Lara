@@ -9,6 +9,14 @@ $(document).ready(function() {
         $('#footer').css('margin-top', (docHeight - footerTop) + 'px');
     }
 });
+$("#button-create-submit").add("#button-edit-submit").click(function() {
+    var beginDate = new Date($("[name='beginDate']").prop("value") + " " + $("[name='beginTime']").prop("value"));
+    var endDate = new Date($("[name='endDate']").prop("value") + " " + $("[name='endTime']").prop("value"));
+    if (beginDate.getTime() > endDate.getTime()) {
+        alert("Die Startzeit liegt vor der Endzeit!");
+        return false;
+    }
+});
 var getIdOfClub = function(club){
     switch(club) {
         case "bc-Club":
@@ -533,10 +541,18 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.scheduleEntry' ).find("input[id^='userName']").on( 'input', function() {
-        // Show save icon on form change
-        $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]').removeClass('hide');
-        $(this).parents('.scheduleEntry').find("[name^=status-icon]").addClass('hide');
+    $( '.scheduleEntry' ).find("input[id^='userName']").on('input', function() {
+        // show only current button
+        $('[name^=btn-submit-change]')
+            .addClass('hide')
+            .removeClass('btn-primary');
+        $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]')
+            .removeClass('hide')
+            .addClass('btn-primary');
+
+        // hide only current icon
+        $('[name^=status-icon]').removeClass('hide');
+        $(this).parents('.scheduleEntry').find('[name^=status-icon]').addClass('hide');
 
         // do all the work here after AJAX response is received
         function ajaxCallBackUsernames(response) { 
@@ -781,7 +797,8 @@ jQuery( document ).ready( function( $ ) {
                 // yellow = "other user updated before you, here's the new data"
 
                 // Update the fields according to server response
-                $("input[id=userName" + data["entryId"] + "]").val(data["userName"]).attr("placeholder", "=FREI=");
+                var $userNameInput = $("input[id=userName" + data["entryId"] + "]");
+                $userNameInput.val(data["userName"]).attr("placeholder", "=FREI=");
                 $("input[id=ldapId"   + data["entryId"] + "]").val(data["ldapId"]);
                 $("input[id=timestamp"+ data["entryId"] + "]").val(data["timestamp"]);
                 $("input[id=club"     + data["entryId"] + "]").val(data["userClub"]).attr("placeholder", "-");
@@ -800,6 +817,15 @@ jQuery( document ).ready( function( $ ) {
                 } else {
                     $("input[id=comment"  + data["entryId"] + "]").parent().children("span").children("i").removeClass().addClass("fa fa-comment");
                 };
+
+                var $colorDiv = $userNameInput.parent().prev().find("div");
+                var isShiftEmpty = data["userName"] !== "";
+                if(isShiftEmpty) {
+                    $colorDiv.removeClass("red").addClass("green");
+                }
+                else {
+                    $colorDiv.removeClass("green").addClass("red");
+                }
 
                 // UPDATE STATUS ICON
                 // switch to normal user status icon and clear "spinner"-markup
