@@ -147,7 +147,7 @@
 			<div class="panel">
 				<div class="panel-body more-info">
 					<h5 class="panel-title">{{ trans('mainLang.additionalInfo') }}:</h5>
-					{!! nl2br(e($clubEvent->evnt_public_info)) !!}
+					{!! nl2br($clubEvent->evnt_public_info) !!}
 				</div>
 				<button type="button" class="moreless-more-info btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showMore') }}</button>
 				<button type="button" class="moreless-less-info btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showLess') }}</button>
@@ -159,7 +159,7 @@
 				<div class="panel hidden-print">
 					<div class="panel-body more-details">
 						<h5 class="panel-title">{{ trans('mainLang.moreDetails') }}:</h5>
-						{!! nl2br(e($clubEvent->evnt_private_details)) !!}
+						{!! nl2br($clubEvent->evnt_private_details) !!}
 					</div>
 					<button type="button" class="moreless-more-details btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showMore') }}</button>
 					<button type="button" class="moreless-less-details btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showLess') }}</button>
