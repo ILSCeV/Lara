@@ -32,3 +32,14 @@ gulp.task('default', function() {
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/js/bin'));
 });
+
+gulp.task('release', function() {
+    var tsResult = gulp.src('typescript/*.ts')
+        .pipe(ts({
+            noImplicitAny: true,
+            target: 'ES5',
+        }));
+    return tsResult.js
+        .pipe(concat('bundle.js'))
+        .pipe(gulp.dest('public/js/bin'));
+});
