@@ -75,6 +75,7 @@
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('/js/vedst-scripts.js') }}"></script>
+        <script src="{{ asset('/js/bin/bundle.js') }}"></script>
     <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>
 	@yield('moreScripts')
   </body>

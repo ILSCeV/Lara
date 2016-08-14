@@ -9,60 +9,6 @@ $(document).ready(function() {
         $('#footer').css('margin-top', (docHeight - footerTop) + 'px');
     }
 });
-$("#button-create-submit").add("#button-edit-submit").click(function() {
-    var beginDate = new Date($("[name='beginDate']").prop("value") + " " + $("[name='beginTime']").prop("value"));
-    var endDate = new Date($("[name='endDate']").prop("value") + " " + $("[name='endTime']").prop("value"));
-    if (beginDate.getTime() > endDate.getTime()) {
-        alert("Die Startzeit liegt vor der Endzeit!");
-        return false;
-    }
-});
-var getIdOfClub = function(club){
-    switch(club) {
-        case "bc-Club":
-            return 2;
-        case "bc-Café":
-            return 3;
-    }
-    return -1;
-};
-
-$(document).ready(function() {
-    // if set, internal events will trigger selection of all clubs
-    // if user sets the club manually, we want to keep his selection
-    var autoSelectAllClubs = true;
-    $("#filter").find("input[type=checkbox]").click(function() {
-        autoSelectAllClubs = false;
-    });
-
-    // values of events that should trigger the selection of all clubs
-    var internalEventValues = [
-        '1', // Info
-        '4', // Internal event
-        '5', // private party
-        '6', // cleaning
-        '9'  // other
-    ];
-    $("[name='evnt_type']").click(function(){
-        var isInternalEvent = internalEventValues.indexOf($(this).prop('value')) !== -1;
-        if (isInternalEvent) {
-            if (autoSelectAllClubs) {
-                $("#filter").find("input[type=checkbox]").prop('checked', true);
-            }
-        }
-        else {
-            // reset all checkboxes
-            $("#filter").find("input[type=checkbox]").prop('checked', false);
-            var clubName = $(document).find("#place").val();
-            var clubId = getIdOfClub(clubName);
-
-            if (clubId !== -1) {
-                var showToClubCheckbox = $(document).find("[name=filterShowToClub" + clubId + "]");
-                showToClubCheckbox.prop('checked', true);
-            }
-        }
-    });
-});
 
 // On event create/edit - check that at leaast one checkbox is checked, otherwise event won't be shown at all.
 $("#button-edit-submit").click(function(){
@@ -71,6 +17,7 @@ $("#button-edit-submit").click(function(){
         alert('Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.');
         return false;
     }
+
 });
 $("#button-create-submit").click(function(){
     if($('#filter-checkboxes').find('input[type=checkbox]:checked').length == 0)
