@@ -19,6 +19,7 @@ var gulp = require('gulp');
 var ts = require('gulp-typescript');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
 
 gulp.task('default', function() {
     var tsResult = gulp.src('typescript/*.ts')
@@ -41,5 +42,6 @@ gulp.task('release', function() {
         }));
     return tsResult.js
         .pipe(concat('bundle.js'))
+        .pipe(uglify())
         .pipe(gulp.dest('public/js/bin'));
 });
