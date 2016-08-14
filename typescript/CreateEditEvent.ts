@@ -10,16 +10,30 @@ let internalEventValues = [
     "9"  // other
 ];
 
+$("#button-create-submit").add("#button-edit-submit").click(function () {
+    let beginDate = new Date($("[name='beginDate']").prop("value") + " " + $("[name='beginTime']").prop("value"));
+    let endDate = new Date($("[name='endDate']").prop("value") + " " + $("[name='endTime']").prop("value"));
+    if (beginDate.getTime() > endDate.getTime()) {
+        showErrorModal("Die Startzeit liegt vor der Endzeit!");
+        return false;
+    }
+    if ($("#filter-checkboxes").find("input[type=checkbox]:checked").length === 0) {
+        showErrorModal("Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.");
+        return false;
+    }
+});
 $(() => {
     // if set, internal events will trigger selection of all clubs
     // if user sets the club manually, we want to keep his selection
     let autoSelectAllClubs = true;
     let allClubCheckBoxes = $("#filter").find("input[type=checkbox]");
-    allClubCheckBoxes.click(() => { autoSelectAllClubs = false; });
+    allClubCheckBoxes.click(() => {
+        autoSelectAllClubs = false;
+    });
 
     // important to use function() (anonymous function) here an not an arrow function
-    // using a lambda will change the "this" inside the
-    $("[name='evnt_type']").click(function() {
+    // using an arrow function will change the "this" inside
+    $("[name='evnt_type']").click(function () {
         let prop = $(this).val();
         let isInternalEvent = internalEventValues.indexOf(prop) !== -1;
         if (isInternalEvent) {

@@ -10,23 +10,6 @@ $(document).ready(function() {
     }
 });
 
-// On event create/edit - check that at leaast one checkbox is checked, otherwise event won't be shown at all.
-$("#button-edit-submit").click(function(){
-    if($('#filter-checkboxes').find('input[type=checkbox]:checked').length == 0)
-    {
-        alert('Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.');
-        return false;
-    }
-
-});
-$("#button-create-submit").click(function(){
-    if($('#filter-checkboxes').find('input[type=checkbox]:checked').length == 0)
-    {
-        alert('Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.');
-        return false;
-    }
-});
-
 // Automatically close messages after 4 seconds (4000 milliseconds). M.
 window.setTimeout(function() {
     $(".message").fadeTo(1000, 0).slideUp(500, function(){

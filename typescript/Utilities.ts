@@ -16,3 +16,8 @@ function getIdOfClub (club: string): Club {
     }
     return Club.None;
 }
+
+function showErrorModal(message: string) {
+    $("#errorModal").modal("show");
+    $("#errorModal").find(".modal-body").html(message);
+}
