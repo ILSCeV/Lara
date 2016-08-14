@@ -1,23 +1,14 @@
 ///<reference path="../typings/index.d.ts"/>
+///<reference path="Utilities.ts"/>
 
-enum Club {
-    NONE,
-    BC_CLUB = 2,
-    BC_CAFE,
-    BD_CLUB,
-    BH_CLUB,
-    BI_CLUB
-}
-
-function getIdOfClub (club: string): Club {
-    switch (club) {
-        case "bc-Club":
-            return Club.BC_CLUB;
-        case "bc-Café":
-            return Club.BC_CAFE;
-    }
-    return Club.NONE;
-}
+// values of events that should trigger the selection of all clubs
+let internalEventValues = [
+    "1", // Info
+    "4", // Internal event
+    "5", // private party
+    "6", // cleaning
+    "9"  // other
+];
 
 $(() => {
     // if set, internal events will trigger selection of all clubs
@@ -26,14 +17,6 @@ $(() => {
     let allClubCheckBoxes = $("#filter").find("input[type=checkbox]");
     allClubCheckBoxes.click(() => { autoSelectAllClubs = false; });
 
-    // values of events that should trigger the selection of all clubs
-    let internalEventValues = [
-        "1", // Info
-        "4", // Internal event
-        "5", // private party
-        "6", // cleaning
-        "9"  // other
-    ];
     // important to use function() (anonymous function) here an not an arrow function
     // using a lambda will change the "this" inside the
     $("[name='evnt_type']").click(function() {
