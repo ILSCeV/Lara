@@ -11,14 +11,19 @@ let internalEventValues = [
 ];
 
 $("#button-create-submit").add("#button-edit-submit").click(function () {
+    let errors = new Array<string>();
+
     let beginDate = new Date($("[name='beginDate']").prop("value") + " " + $("[name='beginTime']").prop("value"));
     let endDate = new Date($("[name='endDate']").prop("value") + " " + $("[name='endTime']").prop("value"));
     if (beginDate.getTime() > endDate.getTime()) {
-        showErrorModal("Die Startzeit liegt vor der Endzeit!");
-        return false;
+        errors.push("Die Startzeit liegt vor der Endzeit!");
     }
     if ($("#filter-checkboxes").find("input[type=checkbox]:checked").length === 0) {
-        showErrorModal("Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.");
+        errors.push("Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.");
+    }
+
+    if (errors.length > 0) {
+        showErrorModal(errors.map(err => "<p>" + err + "</p>").join("\n"));
         return false;
     }
 });
