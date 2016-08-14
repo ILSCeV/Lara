@@ -70,6 +70,23 @@
         <br>
         <br>
 	</footer>
+        {{-- Error Modal --}}
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{{ trans('mainLang.error') }}</h4>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <script src="{{ asset('/js/jquery-2.1.3.min.js') }}"></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>

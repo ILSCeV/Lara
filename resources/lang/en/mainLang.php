@@ -89,7 +89,8 @@ return [
     'templateNewSaveQ' => 'Save as new template?',
     'title' => 'Title',
     'subTitle' => 'Subtitle',
-
+    'error' => 'Error',
+    
     'showExtern' => 'Show for external?',
 
     'survey' => 'Survey',

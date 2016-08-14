@@ -89,6 +89,7 @@ return [
     'templateNewSaveQ' => 'Als neue Vorlage speichern?',
     'title' => 'Titel',
     'subTitle' => 'Subtitel',
+    'error' => 'Fehler',
     
     'showExtern' => 'Für Externe sichtbar machen?',
 
