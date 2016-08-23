@@ -1,19 +1,6 @@
 /**
  *  Bootstrap overrides
  */
-@media (max-width: 768px) {
-    .testleft {
-        float: left;
-        width: 100%;
-    }
-}
-
-.plusSymbol{
-    font-weight: bold;
-    font-size: 20px;
-    line-height: normal;
-}
-
 .containerPadding15Mobile {
     margin: 18px;
 }
@@ -148,14 +135,9 @@ input[type=number],
     -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
-    text-align: center;
     line-height: normal;
-    justify-content: center;
-    align-items: center;
     word-break: break-all;
-
     padding: 5%;
-
     overflow: visible;
     text-overflow: clip;
     display: flex;
@@ -374,7 +356,7 @@ input[type=number],
 
     .element-item{
         width: 100%;
-        padding: 0px 15px 0 15px;
+        padding: 0px 0px 15px 0px;
         margin: 0;
     }
 }
@@ -390,7 +372,7 @@ input[type=number],
  * Row margins
  */
 .row {
-    margin: 0px !important;
+    margin: 8px !important;
     padding: 0 -15px 0 -15px;
 }
 

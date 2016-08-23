@@ -53,153 +53,157 @@
 	<br class="visible-xs">
 
 	<div class="containerPadding12Mobile" >
-	{{-- weekdays --}}
-	@if (count($events)>0)
-		<div class="isotope">
-			{{-- hack: empty day at the beginning,
-				 prevents isotope collapsing to a single column if the very first element is hidden
-				 by creating an invisible block and putting it out of the way via negative margin --}}
-			<div class="grid-sizer" style="margin-bottom: -34px;"></div>
-			{{-- end of hack --}}
+		{{-- weekdays --}}
+		@if (count($events)>0)
+			<div class="isotope">
+				{{-- hack: empty day at the beginning,
+					 prevents isotope collapsing to a single column if the very first element is hidden
+					 by creating an invisible block and putting it out of the way via negative margin --}}
+				<div class="grid-sizer" style="margin-bottom: -34px;"></div>
+				{{-- end of hack --}}
 
-			@foreach($events as $clubEvent)
-				{{-- Filter: we add a css class later below if a club is mentioned in filter data --}}
+				@foreach($events as $clubEvent)
+					{{-- Filter: we add a css class later below if a club is mentioned in filter data --}}
 
-				{{-- guests see private events as placeholders only, so check if user is logged in --}}
-				@if(!Session::has('userId'))
+					{{-- guests see private events as placeholders only, so check if user is logged in --}}
+					@if(!Session::has('userId'))
 
-					{{-- show only a placeholder for private events --}}
-					@if($clubEvent->evnt_is_private)
-						{{-- we compare the current week number with the week the event happens in
-							 to catch and hide any events on mondays and tuesdays (day < 3) next week
-							 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
-						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
-						@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
-							  === date("W", strtotime("next Week".$weekStart))
+						{{-- show only a placeholder for private events --}}
+						@if($clubEvent->evnt_is_private)
+							{{-- we compare the current week number with the week the event happens in
+								 to catch and hide any events on mondays and tuesdays (day < 3) next week
+								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
+							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
 							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
-						@else
-							<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
-						@endif
-							@include('partials.weekCellHidden')
-						</div>
+								<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
+							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
+								  === date("W", strtotime("next Week".$weekStart))
+								  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+								<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
+							@else
+								<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
+							@endif
+								@include('partials.weekCellHidden')
+							</div>
 
-					{{-- show public events, but protect members' entries from being changed by guests --}}
+						{{-- show public events, but protect members' entries from being changed by guests --}}
+						@else
+
+							{{-- we compare the current week number with the week the event happens in
+								 to catch and hide any events on mondays and tuesdays (day < 3) next week
+								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
+							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
+							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+								<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
+							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
+								  === date("W", strtotime("next Week".$weekStart))
+								  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+								<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
+							@else
+								<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
+							@endif
+									<div>
+								@include('partials.weekCellProtected')
+							</div>
+
+						@endif
+
+					{{-- show everything for members --}}
 					@else
 
-						{{-- we compare the current week number with the week the event happens in
-							 to catch and hide any events on mondays and tuesdays (day < 3) next week
-							 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
-						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
-						@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
-							  === date("W", strtotime("next Week".$weekStart))
+						{{-- members see both private and public events, but still need to manage color scheme --}}
+						@if($clubEvent->evnt_is_private)
+
+							{{-- we compare the current week number with the week the event happens in
+								 to catch and hide any events on mondays and tuesdays (day < 3) next week
+								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
+							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
 							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
+								<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
+							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
+								  === date("W", strtotime("next Week".$weekStart))
+								  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+								<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
+							@else
+								<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
+							@endif
+
 						@else
-							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
+
+							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
+							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+								<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
+							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
+								  === date("W", strtotime("next Week".$weekStart))
+								  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
+								<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
+							@else
+								<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
+							@endif
+
 						@endif
-								<div>
-							@include('partials.weekCellProtected')
+
+							@include('partials.weekCellFull')
+
 						</div>
 
 					@endif
+				@endforeach
 
-				{{-- show everything for members --}}
-				@else
-
-					{{-- members see both private and public events, but still need to manage color scheme --}}
-					@if($clubEvent->evnt_is_private)
-
-						{{-- we compare the current week number with the week the event happens in
-							 to catch and hide any events on mondays and tuesdays (day < 3) next week
-							 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
-						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
-						@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
-							  === date("W", strtotime("next Week".$weekStart))
-							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
+				@if(count($surveys)>0)
+					@foreach($surveys as $survey)
+						@if ( date('W', strtotime($survey->deadline)) === $date['week']
+			             AND  date('N', strtotime($survey->deadline)) < 3 )
+							<div class="element-item bc-Club bc-Café week-mo-so ">
+						@elseif ( date("W", strtotime($survey->deadline) ) === date("W", strtotime("next Week".$weekStart))
+			             AND      date('N', strtotime($survey->deadline)) < 3 )
+							<div class="element-item bc-Club bc-Café week-mi-di hide">
 						@else
-							<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
+							<div class="element-item bc-Club bc-Café">
 						@endif
-
-					@else
-
-						@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-						  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
-						@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
-							  === date("W", strtotime("next Week".$weekStart))
-							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
-						@else
-							<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
-						@endif
-
-					@endif
-
-						@include('partials.weekCellFull')
-
-					</div>
-
+							@include('partials.weekCellSurvey')
+						</div>
+					@endforeach
 				@endif
 
-			@endforeach
-
-			</div>
-		</div>
-	</div>
-
-	@else
-		<br>
-								</div>
-		<div class="panel">
-			<div class="panel-heading">
-				<h5>{{ trans('mainLang.noEventsThisWeek') }}</h5>
-			</div>
-		</div>
-	@endif
-
-
-
-	@if(count($surveys)>0)
-		@foreach($surveys as $survey)
-		<div>
-		@if ( date('W', strtotime($survey->deadline)) === $date['week']
-             AND date('N', strtotime($survey->deadline)) < 3 )
-				<div class="element-item week-mo-so">
-			@elseif ( date("W", strtotime($survey->deadline) )
-                      === date("W", strtotime("next Week".$weekStart))
-                    AND date('N', strtotime($survey->deadline)) < 3 )
-					<div class="element-item week-mi-di hide">
-					@else
-						<div class="element-item">
-	@endif
-
-		@include('partials.weekCellSurvey')
-						</div>
-					</div>
 				</div>
-	</div>
-		@endforeach
-
+			</div>
+		</div>
 
 		@else
 			<br>
-			<div class="panel">
+			</div>
+			<div class="panel" style="margin: 16px;">
 				<div class="panel-heading">
-					<h5>{{ trans('mainLang.noSurveysThisWeek') }}</h5>
+					<h5>{{ trans('mainLang.noEventsThisWeek') }}</h5>
 				</div>
 			</div>
-	@endif
-	</div>
-                            </div>
 
+			<div class="isotope" style="margin: 6px;">
+				{{-- hack: empty day at the beginning,
+					 prevents isotope collapsing to a single column if the very first element is hidden
+					 by creating an invisible block and putting it out of the way via negative margin --}}
+				<div class="grid-sizer" style="margin-bottom: -34px;"></div>
+				{{-- end of hack --}}
+				@if(count($surveys)>0)
+					@foreach($surveys as $survey)
+						@if ( date('W', strtotime($survey->deadline)) === $date['week']
+			             AND  date('N', strtotime($survey->deadline)) < 3 )
+							<div class="element-item bc-Club bc-Café week-mo-so ">
+						@elseif ( date("W", strtotime($survey->deadline) ) === date("W", strtotime("next Week".$weekStart))
+			             AND      date('N', strtotime($survey->deadline)) < 3 )
+							<div class="element-item bc-Club bc-Café week-mi-di hide">
+						@else
+							<div class="element-item bc-Club bc-Café">
+						@endif
+							@include('partials.weekCellSurvey')
+						</div>
+					@endforeach
+				@endif
+			</div>
+
+		@endif
+	</div>
 
 {{-- Legend --}}
 @include("partials.legend")

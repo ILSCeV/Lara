@@ -54,13 +54,28 @@
             <div class="col-xs-10 col-sm-12 col-md-12 no-margin no-padding">
                 @if(Session::has('userId'))
 
-                    {{-- CREATE BUTTON --}}
-                    <li style="padding-top:5px" class="btn-group testleft">
+{{-- LANGUAGE SWITCHER --}}
+                    <li style="padding-top:5px" class="btn-group">
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-globe" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @foreach (Config::get('languages') as $lang => $language)
+                                <li>
+                                    <a href="{{ route('lang.switch', $lang) }}">{{$language}}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                    &nbsp;&nbsp;
+
+
+{{-- CREATE BUTTON --}}
+                    <li style="padding-top:5px" class="btn-group">
                         @if(Session::has('userGroup'))
                             {{-- small [+] button--}}
                             <div style="padding-top:2px" class="btn-group">
-                                <a class="btn btn-primary dropdown-toggle plusSymbol" data-toggle="dropdown"
-                                   href="#">
+                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
                                     <span class="test">+</span>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -71,7 +86,7 @@
                         @endif
                     </li>
 
-                    {{-- LOGIN FORM --}}
+{{-- LOGIN FORM --}}
                     <li style="padding-top: 5px;" class="btn-group testleft ">
                         {!! Form::open(array('url' => 'logout', 
                                             'method' => 'POST', 

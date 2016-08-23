@@ -1,4 +1,3 @@
-&nbsp;
 @if(!Session::has('userId') AND $survey->is_private == 0)
 	{{-- check current session for user role && and the survey for private status--}}
 	{{-- no userId means this a guest account, so he gets blocked here--}}

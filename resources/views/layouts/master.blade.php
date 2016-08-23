@@ -51,48 +51,34 @@
             <small><a href="http://github.com/4D44H/lara-vedst">{{ trans('mainLang.moreInfosProjectsite') }}</a>.
             </small>
         </span>
-        <!-- Button for switching language -->
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                {{ Config::get('languages')[App::getLocale()] }}
-            </a>
-            <ul class="dropdown-menu">
-                @foreach (Config::get('languages') as $lang => $language)
-                    @if ($lang != App::getLocale())
-                        <li>
-                            <a href="{{ route('lang.switch', $lang) }}">{{$language}}</a>
-                        </li>
-                    @endif
-                @endforeach
-            </ul>
-        </li>
         <br class="visible-xs visible-sm">
         <br>
         <br>
 	</footer>
-        {{-- Error Modal --}}
-        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">{{ trans('mainLang.error') }}</h4>
-                    </div>
-                    <div class="modal-body">
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+    {{-- Error Modal --}}
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{ trans('mainLang.error') }}</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
+    </div>
 
     <script src="{{ asset('/js/jquery-2.1.3.min.js') }}"></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('/js/vedst-scripts.js') }}"></script>
-        <script src="{{ asset('/js/bin/bundle.js') }}"></script>
+    <script src="{{ asset('/js/bin/bundle.js') }}"></script>
     <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>
 	@yield('moreScripts')
   </body>
