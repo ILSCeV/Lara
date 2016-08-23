@@ -173,13 +173,13 @@ return [
     // resources/views/monthView.blade.php
     //short weekdays + CW
     'Cw' => 'KW',
-    'Mo' => 'Mo',
-    'Tu' => 'Di',
-    'We' => 'Mi',
-    'Th' => 'Do',
-    'Fr' => 'Fr',
-    'Sa' => 'Sa',
-    'Su' => 'So',
+    'Mo' => 'Montag',
+    'Tu' => 'Dienstag',
+    'We' => 'Mittwoch',
+    'Th' => 'Donnerstag',
+    'Fr' => 'Freitag',
+    'Sa' => 'Samstag',
+    'Su' => 'Sonntag',
     //-----------------------------------------------------------------------------------------------------------
     // resources/views/createSurveyView.blade.php
     'noEventsThisWeek' => 'Keine Veranstaltungen diese Woche',

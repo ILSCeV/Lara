@@ -172,14 +172,14 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     // resources/views/monthView.blade.php
     //short weekdays + CW
-    'Cw' => 'KW',
-    'Mo' => 'Mo',
-    'Tu' => 'Tu',
-    'We' => 'We',
-    'Th' => 'Th',
-    'Fr' => 'Fr',
-    'Sa' => 'Sa',
-    'Su' => 'Su',
+    'Cw' => 'Week',
+    'Mo' => 'Monday',
+    'Tu' => 'Tuesday',
+    'We' => 'Wednesday',
+    'Th' => 'Thursday',
+    'Fr' => 'Friday',
+    'Sa' => 'Saturday',
+    'Su' => 'Sunday',
     //-----------------------------------------------------------------------------------------------------------
     // resources/views/createSurveyView.blade.php
     'noEventsThisWeek' => 'No Events this week',

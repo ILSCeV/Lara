@@ -88,8 +88,13 @@ Route::get('club/{query?}', 'ClubController@index');
 // additional route to store a SurveyAnswer
 Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');
 
-//Language
-Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
+// Language
+Route::get('lang/{lang}', ['as'=>'lang.switch', function($lang){
+	if (array_key_exists($lang, Config::get('languages'))) {
+            Session::set('applocale', $lang);
+        }
+    return Redirect::back();
+}]);
 
 // RESTful RESOURCES
 Route::resource('entry', 	'ScheduleEntryController', 	['except' => ['index', 'create', 'store', 'edit', 'destroy']]);

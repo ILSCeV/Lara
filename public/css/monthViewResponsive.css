@@ -17,6 +17,7 @@
         background-color: transparent;
         -webkit-box-shadow: none;
         box-shadow: none;
+        margin: 0 0 0 0;
     }
 }
 
@@ -108,6 +109,7 @@
   because they do not have fitting width
 */
 .calendarWeek, .custom-md-85{
+    text-align: center;
     float: left;
     margin: 0px;
     line-height: 10vh;
@@ -117,7 +119,6 @@
 }
 
 .calendarWeek {
-    text-align: center;
     width: 4%;
     float: left;
     margin: 0px;
@@ -233,8 +234,7 @@
     width: 90%;
     float: right;
     position: relative;
-    padding-right: 5%;
-    padding-left: 5%;
+    padding: 5%;
 }
 
 @media screen and (max-width: 978px) {
