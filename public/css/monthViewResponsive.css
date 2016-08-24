@@ -41,8 +41,8 @@
     width: 13.714%;
     float: left;
     margin: 0px;
-    line-height: 10vh;
-    height: 10vh;
+    line-height: 5vh;
+    height: 5vh;
     border: solid;
     border-width: 0px 0px 0px 2px;
     border-color: #dddddd;
@@ -90,7 +90,7 @@
 .calendarRow {
     height: auto;
     display: block;
-    min-height: 10vh;
+    min-height: 5vh;
     position: relative;
     background-color: transparent;
     overflow: hidden;
@@ -110,10 +110,11 @@
 */
 .calendarWeek, .custom-md-85{
     text-align: center;
+    vertical-align: center;
     float: left;
     margin: 0px;
-    line-height: 10vh;
-    min-height: 10vh;
+    padding: 8px 0px 0px 4px;
+    min-height: 5vh;
     border: solid;
     border-color: #dddddd;
 }
@@ -122,8 +123,8 @@
     width: 4%;
     float: left;
     margin: 0px;
-    line-height: 10vh;
-    height: 10vh;
+    line-height: 3vh;
+    height: 5vh;
     border: solid;
     border-width: 2px 0px 0px 0px;
     border-color: #dddddd;
@@ -191,7 +192,7 @@
     .calendarWeek {
         margin-top: 10vh !important;
         background-color: #cccccc;
-        border-radius: 30px 30px 0 0;
+        border-radius: 15px 15px 0 0;
         font-weight: bold;
         display: block;
     }
@@ -222,8 +223,6 @@
     position: relative;
     margin: 0px;
     text-align: center;
-    line-height: 10vh;
-    height: 10vh;
 }
 
 /*
@@ -234,13 +233,12 @@
     width: 90%;
     float: right;
     position: relative;
-    padding: 5%;
+    padding: 0 8px 8px 16px;
 }
 
 @media screen and (max-width: 978px) {
     .cell90 {
-        padding-right: 10%;
-        padding-left: 0%;
+        padding: 8px 16px 16px 8px;
     }
 }
 

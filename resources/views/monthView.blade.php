@@ -11,7 +11,7 @@
 @section('content')
     <!-- prev/next month -->
     <div class="col-xs-12 col-md-12">
-        <div class="col-xs-12 col-md-5 btn-group">
+        <div class="col-xs-12 col-md-5 btn-group no-padding">
             <a class="btn btn-default hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
                                 strtotime("previous month", $date['startStamp'])) }}">
@@ -22,8 +22,7 @@
                 {{ $date['monthName'] . " " . $date['year'] }}
             </span>
             <a class="btn btn-default hidden-print"
-               href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
-                                strtotime("next month", $date['startStamp'])) }}">
+               href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m", strtotime("next month", $date['startStamp'])) }}">
                 &gt;&gt;
             </a>
         </div>
@@ -100,7 +99,7 @@
                 <div class="calendarWeek">
                     @endif
                     <a href="{!! Request::getBasePath() !!}/calendar/{!! $date['year'] !!}/KW{{ date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) }}">
-                        <span class="onlyOnMobile">{{ trans('mainLang.Cw') }}</span> {{ date("W", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) }}
+                        <span class="onlyOnMobile">{{ trans('mainLang.Cw') }}</span> {{ date("W", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) }}.
                     </a>
                 </div>
             @endif
@@ -132,7 +131,7 @@
                             @endif
 
                             <?php $simpleDate++; ?>
-                            <small class="visible-xs visible-md" style="line-height: 1.0;">
+                            <small class="visible-xs visible-md visible-sm">
                                 {{{ strftime("%a", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}}
                             </small>
 {{-- HERE --}}

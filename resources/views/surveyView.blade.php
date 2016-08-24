@@ -126,6 +126,8 @@ $userCanEditDueToRole
     <div class="panel no-padding">
         <div class="panel-title-box">
             <h4 class="panel-title">
+                <i class="fa fa-bar-chart-o white-text"></i>
+                &nbsp;&nbsp;
                 {{ $survey->title }}
                 @if($userId == $survey->creator_id OR $userCanEditDueToRole)
                     <a href="{{$survey->id}}/edit"
