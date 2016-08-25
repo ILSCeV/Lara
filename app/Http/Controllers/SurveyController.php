@@ -246,11 +246,11 @@ class SurveyController extends Controller
         }
 
         $revisions_objects = \Lara\Revision::join("revision_object_relations", "revisions.id", "=", "revision_object_relations.revision_id")
-            ->where("object_name", "=", "SurveyAnswer")
+            ->where("revision_object_relations.object_name", "=", "SurveyAnswer")
             ->orWhere(function ($query) use ($survey)
             {
-                $query->where("object_name", "=", "Survey")
-                    ->where("object_id", "=", $survey->id);
+                $query->where("revision_object_relations.object_name", "=", "Survey")
+                    ->where("revision_object_relations.object_id", "=", $survey->id);
             })
             ->distinct()
             ->orderBy("created_at", "desc")
