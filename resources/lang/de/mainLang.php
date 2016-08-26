@@ -284,7 +284,12 @@ return [
     
     // /resources/views/partials/scheduleEntryStatus.blade.php
     'jobFree'               => 'Dienst frei',
-    
+
+    // /resources/views/partials/statisticsLeaderboards.blade.php
+    'totalShifts'           => 'Anzahl Schichten',
+    'leaderBoards'          => 'Bestenliste',
+
+    // /resources/views/partials/personalStatistics.blade.php
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/surveyAnswerStatus.blade.php

@@ -66,4 +66,8 @@ class ClubEvent extends Model
 	public function getSchedule() {
 		return $this->hasOne('Lara\Schedule', 'evnt_id', 'id');
 	}
+
+	public function shifts() {
+		return $this->hasManyThrough('Lara\ScheduleEntry', 'Lara\Schedule', 'evnt_id', 'schdl_id', 'id');
+	}
 }
