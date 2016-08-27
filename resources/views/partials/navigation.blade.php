@@ -47,7 +47,9 @@
               </ul>
             </li>
             @endif
-            <li><a href="{{ asset('/statistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
+            @if(Session::has('userId'))
+                <li><a href="{{ asset('/statistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
+            @endif
         </ul>
 
 
