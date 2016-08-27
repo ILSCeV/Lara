@@ -1,23 +1,3 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script src="{{ asset('/js/jquery-2.1.3.min.js') }}"></script>
-    <script src="{{ asset('js/surveyEdit-Create-scripts.js') }}"></script>
-
-    <style>
-        .dropdown-toggle {
-            text-transform: capitalize;
-        }
-    </style>
-
-</head>
-
-
-<body>
-
 <div class="panel-group">
     <div class="panel col-md-8 col-sm-12 col-xs-12">
         <h4 id="heading_create" style="display:none">{{ trans('mainLang.createNewSurvey') }}:</h4>
@@ -349,5 +329,3 @@
     </div>
 </div>
 </div>
-</body>
-</html>

@@ -444,3 +444,15 @@ input[type=number],
 .paddingTop{
     padding-top: 6px;
 }
+
+/* my event */
+.cal-month-my-event {
+    border: 3px solid yellow;
+    border-radius: 5px;
+}
+
+.my-shift {
+    margin: 0px !important;
+    background-color: yellow;
+    padding: 8px !important;
+}
