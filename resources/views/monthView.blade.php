@@ -117,14 +117,8 @@
                 @endif
                         <div class="cell10 padleft">
                             @if(Session::has('userGroup'))
-                                <a href="{{ Request::getBasePath() }}/
-                                            event/
-                                            {{ $date['year']}}/
-                                            {{ $date['month'] }}/
-                                            {{ strftime("%d", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}/
-                                            0/
-                                            create">
-                                            {{$simpleDate}}
+                                <a href="{{ Request::getBasePath() }}/event/{{ $date['year']}}/{{ $date['month'] }}/{{ strftime("%d", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}/0/create">
+                                    {{$simpleDate}}
                                 </a>
                             @else
                                 {{$simpleDate}}
