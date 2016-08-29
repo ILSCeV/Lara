@@ -1,6 +1,13 @@
 <div>
+    <ul class="nav nav-tabs">
+        @foreach($clubInfos->keys() as $title)
+            <li class=><a aria-expanded="{{Session::get('userClub') == $title? 'true' : 'false'}}" href="#{{$title}}" data-toggle="tab">{{$title}}</a></li>
+        @endforeach
+    </ul>
+    <div id="myTabContent" class="tab-content">
         @foreach($clubInfos as $title => $clubInfo)
-            <h3> Info für {{$title}}</h3>
+            <div class="tab-pane fade in {{Session::get('userClub') == $title? 'active': ''}}" id="{{$title}}">
+                <h3> Info für {{$title}}</h3>
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -27,5 +34,7 @@
                     @endforeach
                     </tbody>
                 </table>
+            </div>
         @endforeach
+    </div>
 </div>

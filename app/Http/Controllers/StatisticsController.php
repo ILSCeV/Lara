@@ -22,7 +22,7 @@ class StatisticsController extends Controller
 
         $events = ClubEvent::where('evnt_date_start', '>=', $from)
             ->where('evnt_date_end', '<=', $till)
-            ->get();
+            ->get()->take(20);
 
         $shifts = $events
             ->flatMap(function (ClubEvent $event) {
@@ -39,7 +39,7 @@ class StatisticsController extends Controller
                 return $info->make($person, $shifts);
             });
             $maxShifts = $infosForClub->pluck('totalShifts')->sort()->last();
-            
+
             // avoid division by zero
             $maxShifts = max($maxShifts, 1);
             $infosForClub = $infosForClub->sortBy('user.prsn_name')
