@@ -7,23 +7,21 @@ class StatisticsInformation
 {
 
     public $totalShifts = 0;
-    public $userName = "";
-    public $userId = "";
-    public $userClub = "";
+    public $user;
+    public $userClub = null;
+    public $isActive = false;
+    public $shiftsPercent = 0;
 
-    public function make(Person $person, $begin, $end)
+    public function make(Person $person, $shifts)
     {
-        $events = ClubEvent::where('evnt_date_start', '>=', $begin)
-            ->where('evnt_date_end', '<=', $end)
-            ->get();
-        $shifts = $events
-            ->flatMap(function (ClubEvent $event) use($person) {
-                return $event->shifts()->where('prsn_id', '=', $person->id)->get();
-            });
+        // use a flatMap, because shifts returns an array, so with a normal map we would have an array of arrays
+        $usersShifts = $shifts->where('prsn_id', $person->id);
 
-        $this->totalShifts = $shifts->count();
-        $this->userName = $person->prsn_name;
-        $this->userId = $person->prsn_ldap_id;
-        $this->userClub = $person->getClub()->get()->first()->clb_title;
+        $this->totalShifts = $usersShifts->count();
+
+        $this->user = $person;
+        $this->userClub = $person->getClub()->get()->first();
+        
+        return $this;
     }
 }

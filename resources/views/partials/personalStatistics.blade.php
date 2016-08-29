@@ -1,3 +1,3 @@
 <div class="centered">
-    Not yet implemented!
+    <h2> Statistics for {{$userInfo}}</h2>
 </div>

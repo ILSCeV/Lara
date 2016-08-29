@@ -12,13 +12,13 @@
         </thead>
         <tbody>
         {{-- Only show Top 10 Shifts --}}
-        @foreach($infos->take(10) as $info)
+        @foreach($infos->sortByDesc('totalShifts')->take(10) as $info)
             <tr>
                 <td>
-                    {{$info->userName }}
+                    {{$info->user->prsn_name }}
                 </td>
                 <td>
-                    {{$info->userClub }}
+                    {{$info->userClub->clb_title }}
                 </td>
                 <td>
                     {{$info->totalShifts}}

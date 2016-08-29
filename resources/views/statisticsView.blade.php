@@ -10,7 +10,16 @@
         </div>
 
         <div class="panel col-xs-12 col-sm-12 col-md-6 no-padding-xs">
-            @include('partials.statisticsLeaderboards')
+            <div>
+                @include('partials.statisticsLeaderboards')
+            </div>
+            <div>
+                @include('partials.clubStatistics')
+            </div>
         </div>
     </div>
+
+    <script>
+        var statisticInformation = {!! json_encode($infos) !!};
+    </script>
 @stop

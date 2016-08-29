@@ -379,6 +379,7 @@ class ClubEventController extends Controller
         // Get all the data
         $event = ClubEvent::find($id);  
         
+        
         // Check if event exists
         if ( is_null($event) ) {
             Session::put('message', Config::get('messages_de.event-doesnt-exist') );
