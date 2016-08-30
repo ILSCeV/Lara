@@ -7,6 +7,3 @@
 ///<reference path="StatisticsView.ts"/>
 ///<reference path="Utilities.ts"/>
 
-interface JQuery {
-    public isotope(args: any);
-}

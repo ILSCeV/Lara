@@ -22,7 +22,17 @@ class StatisticsController extends Controller
 
         $events = ClubEvent::where('evnt_date_start', '>=', $from)
             ->where('evnt_date_end', '<=', $till)
-            ->get()->take(20);
+            ->get()
+            ->filter(function ($event) {
+                $externalEventTypes = collect([
+                    0, // normales Programm
+                    2, // special
+                    3, // live band / DJ
+                    6, // flooding
+                    7, // flyers
+                ]);
+                return $externalEventTypes->contains($event->evnt_type);
+            });
 
         $shifts = $events
             ->flatMap(function (ClubEvent $event) {
