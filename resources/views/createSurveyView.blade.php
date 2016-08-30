@@ -4,6 +4,14 @@
     {{ trans('mainLang.createNewSurvey') }}
 @stop
 
+@section('moreStylesheets')
+    <style>
+        .dropdown-toggle {
+            text-transform: capitalize;
+        }
+    </style>
+@stop
+
 @section('content')
     <div class="row">
         {!! Form::open(array('action' => 'SurveyController@store')) !!}
@@ -16,4 +24,9 @@
             </div>
         {!! Form::close() !!}
     </div>
+@stop
+
+@section('moreScripts')
+
+    <script src="{{ asset('js/surveyEdit-Create-scripts.js') }}"></script>
 @stop
