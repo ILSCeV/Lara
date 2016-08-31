@@ -66,4 +66,22 @@ class ClubEvent extends Model
 	public function getSchedule() {
 		return $this->hasOne('Lara\Schedule', 'evnt_id', 'id');
 	}
+
+    /**
+     * Check if the signed in user has a shift in the current event
+     * Looks up in table ScheduleEntry for entries, which has the same scheduleId like id of ClubEvent instance.
+     * This funtion is only used for highlighting the event in month view if the signed in user has a shift in it.
+     *
+     * @return Boolean
+     */
+    public function hasShift($scheduleId,$userId) {
+
+        $entries = ScheduleEntry::where('schdl_id', '=', $scheduleId)->with('getPerson')->get();
+        foreach($entries as $entry) {
+            if ( isset($entry->getPerson->prsn_ldap_id) AND $entry->getPerson->prsn_ldap_id ==  $userId){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -73,7 +73,8 @@
 
 			{{-- Show schedule entries --}}
 			@foreach($entries = $clubEvent->getSchedule->getEntries as $entry)
-			    <div class="row">
+				{{-- highlight with my-shift class if the signed in user is the person to do the entry --}}
+			    <div class="row {!! ( isset($entry->getPerson->prsn_ldap_id) AND Session::has('userId') AND $entry->getPerson->prsn_ldap_id == Session::get('userId')) ? "my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
 			                                'id' => $entry->id,
 			                                'method' => 'put',
