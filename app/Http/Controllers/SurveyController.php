@@ -247,6 +247,7 @@ class SurveyController extends Controller
 
         $revisions_objects = \Lara\Revision::join("revision_object_relations", "revisions.id", "=", "revision_object_relations.revision_id")
             ->where("object_name", "=", "SurveyAnswer")
+            ->whereIn("object_id", $answers_with_trashed_ids)
             ->orWhere(function ($query) use ($survey)
             {
                 $query->where("object_name", "=", "Survey")
