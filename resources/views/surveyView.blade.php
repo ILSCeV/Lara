@@ -393,9 +393,21 @@ $userCanEditDueToRole
     @if(!empty($userId))
         @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
     	{{--only if the survey is public or if the user is the creator of the survey--}}
+
+
+
+
+
+
+
+
+{{-- CUT revisions out - needs bugfixing, switch off for now.
             @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
 			{{--only if the results are always visiable or the user has already taken part--}}
             {{--they can see the change history of the survey--}}
+
+{{-- CUT
+
                 <br>
                 <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
                 <a id="show-hide-history" class="text-muted hidden-print" href="#">
@@ -438,7 +450,13 @@ $userCanEditDueToRole
                             </tbody>
                         </table>
                 </div>
+
+ 
             @endif
+
+// end of CUT
+--}}
+
         @endif
     @endif
 @stop
