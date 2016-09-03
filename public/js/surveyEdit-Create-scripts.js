@@ -419,3 +419,15 @@ $('form').on( 'submit', function () {
         $('#required1_hidden').attr('checked', 'true');
 
 });
+
+$(function () {
+    // -1 for the cloned input hidden div
+    var amountOfQuestions =  $('div[id^=questions]').length - 1;
+    for(var i = 0; i < amountOfQuestions; i++) {
+        check_question_type(i);
+        check_question_type2(i);
+        setField(i);
+        setField2(i);
+    }
+
+});
