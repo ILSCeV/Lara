@@ -82,11 +82,15 @@ class Revision
         
         // workaround for getting all revisions created in this request
         // determine if there was a recent related Revision created
-        $revision = \Lara\Revision::where("created_at", ">", Carbon::now()->subSecond(2))->where("creator_id", "=", Session::get('userId'))->where('request_uri', "=", request()->getUri())->first();
+        $revision = \Lara\Revision::where( "created_at", ">", Carbon::now()->subSecond(2) )
+                                  ->where( "creator_id", "=", Session::get('userId') )
+                                  ->where( 'request_uri', "=", request()->getUri() )
+                                  ->first();
         if(empty($revision)){
             // otherwise create a new one
             $revision = new \Lara\Revision();
         }
+
         $revision->creator_id = Session::get('userId');
         $revision->ip = request()->ip();
         $revision->request_uri = request()->getUri();
