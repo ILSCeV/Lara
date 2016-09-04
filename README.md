@@ -24,5 +24,6 @@ Lara VedSt is based on:
 - [Font Awesome 4.5.0](http://fortawesome.github.io/Font-Awesome) 
 - [Isotope 2.2.0](http://isotope.metafizzy.co/)
 - [Typescript 1.8](http://www.typescriptlang.org/)
+- [Bootbox.js 4.4.0](http://bootboxjs.com/)
 
 (All licensed under [MIT License](http://opensource.org/licenses/MIT) or [GNU GPL v.3](http://opensource.org/licenses/GPL-3.0)).
