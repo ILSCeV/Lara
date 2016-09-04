@@ -855,15 +855,14 @@ Examples :
         },
 
         verifyConfirm: function(link) {
-            var confirm = new $.Deferred()
-
-            var userResponse = window.confirm(link.data('confirm'))
-
-            if (userResponse) {
-                confirm.resolve(link)
-            } else {
-                confirm.reject(link)
-            }
+            var confirm = new $.Deferred();
+            bootbox.confirm(link.data('confirm'), function(result){
+                if (result) {
+                    confirm.resolve(link)
+                } else {
+                    confirm.reject(link)
+                }
+            });
 
             return confirm.promise()
         },
