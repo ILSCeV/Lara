@@ -9,11 +9,14 @@ $(document).ready(function() {
         // We will check correctness on the server side
         if ($('.panel-warning').find("[name^=password]").length
             && !$('.panel-warning').find("[name^=password]").val()) {
-            var password = window.prompt('Bitte noch das Passwort für diese Umfrage eingeben:');
-            $('.panel-warning').find("[name^=password]").val(password);
-
-        } else {
-            var password = $('.panel-warning').find("[name^=password]").val();
+            var that = this;
+            bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
+                if (password) {
+                    $('.panel-warning').find("[name^=password]").val(password);
+                    $(that).submit();
+                }
+            });
+            return false;
         }
     });
 
@@ -22,11 +25,14 @@ $(document).ready(function() {
         // We will check correctness on the server side
         if ($('.panel-warning').find("[name^=password]").length
             && !$('.panel-warning').find("[name^=password]").val()) {
-            var password = window.prompt('Bitte noch das Passwort für diese Umfrage eingeben:');
-            $('.panel-warning').find("[name^=password]").val(password);
-
-        } else {
-            var password = $('.panel-warning').find("[name^=password]").val();
+            var that = this;
+            bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
+                if (password) {
+                    $('.panel-warning').find("[name^=password]").val(password);
+                    $(that).submit();
+                }
+            });
+            return false;
         }
     });
 
@@ -560,7 +566,7 @@ jQuery( document ).ready( function( $ ) {
             
             //sets the color circles for the members depending on their rank
             error: function (xhr, ajaxOptions, thrownError) {
-                alert(JSON.stringify(xhr.responseJSON));
+                bootbox.alert(JSON.stringify(xhr.responseJSON));
 
                 var answer_number = $('#get_row').val();
                 var column_counter = 0;
