@@ -9,8 +9,12 @@ $(document).ready(function() {
         // We will check correctness on the server side
         if ($('.panel-warning').find("[name^=password]").length
             && !$('.panel-warning').find("[name^=password]").val()) {
+            var that = this;
             bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
-                $('.panel-warning').find("[name^=password]").val(password);
+                if (password) {
+                    $('.panel-warning').find("[name^=password]").val(password);
+                    $(that).submit();
+                }
             });
             return false;
         }
@@ -21,8 +25,12 @@ $(document).ready(function() {
         // We will check correctness on the server side
         if ($('.panel-warning').find("[name^=password]").length
             && !$('.panel-warning').find("[name^=password]").val()) {
+            var that = this;
             bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
-                $('.panel-warning').find("[name^=password]").val(password);
+                if (password) {
+                    $('.panel-warning').find("[name^=password]").val(password);
+                    $(that).submit();
+                }
             });
             return false;
         }
