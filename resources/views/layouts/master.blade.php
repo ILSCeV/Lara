@@ -80,6 +80,7 @@
     <script src="{{ asset('/js/vedst-scripts.js') }}"></script>
     <script src="{{ asset('/js/bin/bundle.js') }}"></script>
     <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>
+        <script src="{{ asset('/js/bootbox.min.js') }}"></script>
 	@yield('moreScripts')
   </body>
 </html>
