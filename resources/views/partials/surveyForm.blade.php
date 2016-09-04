@@ -233,16 +233,6 @@
 
                         </div>
                 @endif
-
-                <span hidden>{{$counter2 = 0}}</span>
-                @if(isset($questions))
-                    @foreach($questions as $question)
-                        <script>
-                            check_question_type({{$counter2}}); check_question_type2({{$counter2}}); setField({{$counter2}}); setField2({{$counter2}});
-                        </script>
-                        <span hidden>{{++$counter2}}</span>
-                    @endforeach
-                @endif
             </div>
 
             <div class="create_survey">
