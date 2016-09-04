@@ -261,7 +261,7 @@ class SurveyController extends Controller
 
         foreach($revisions as $revision_key => $revision) {
             $creator = Person::where('prsn_ldap_id', '=', $revision['creator_id'])->get(['prsn_name'])->first();
-            (empty($creator)) ? ($revisions[$revision_key]['creator_name'] = "Gast") : ($revisions[$revision_key]['creator_name'] = $creator->prsn_name);
+            (empty($creator) || is_null($revision['creator_id'])) ? ($revisions[$revision_key]['creator_name'] = "Gast") : ($revisions[$revision_key]['creator_name'] = $creator->prsn_name);
             unset($revisions[$revision_key]['creator_id']);
             $revisions[$revision_key]['revision_entries'] = RevisionEntry::where('revision_id', '=', $revision['revision_id'])->get(['changed_column_name', 'old_value', 'new_value'])->toArray();
             unset($revisions[$revision_key]['revision_id']);
