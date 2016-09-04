@@ -834,11 +834,11 @@ Examples :
         },
 
         handleMethod: function(e) {
-            e.preventDefault()
+            e.preventDefault();
 
-            var link = $(this)
-            var httpMethod = link.data('method').toUpperCase()
-            var form
+            var link = $(this);
+            var httpMethod = link.data('method').toUpperCase();
+            var form;
 
             // If the data-method attribute is not PUT or DELETE,
             // then we don't know what to do. Just ignore.
@@ -849,7 +849,7 @@ Examples :
             Laravel
                 .verifyConfirm(link)
                 .done(function () {
-                    form = Laravel.createForm(link)
+                    form = Laravel.createForm(link);
                     form.submit()
                 })
         },
@@ -858,13 +858,13 @@ Examples :
             var confirm = new $.Deferred();
             bootbox.confirm(link.data('confirm'), function(result){
                 if (result) {
-                    confirm.resolve(link)
+                    confirm.resolve(link);
                 } else {
-                    confirm.reject(link)
+                    confirm.reject(link);
                 }
             });
 
-            return confirm.promise()
+            return confirm.promise();
         },
 
         createForm: function(link) {
