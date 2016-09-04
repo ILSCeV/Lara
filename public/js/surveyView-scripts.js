@@ -12,6 +12,7 @@ $(document).ready(function() {
             bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
                 $('.panel-warning').find("[name^=password]").val(password);
             });
+            return false;
         }
     });
 
@@ -23,6 +24,7 @@ $(document).ready(function() {
             bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
                 $('.panel-warning').find("[name^=password]").val(password);
             });
+            return false;
         }
     });
 
