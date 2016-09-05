@@ -19,3 +19,27 @@ $factory->define(Lara\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(Lara\Person::class, function (Faker\Generator $faker) {
+    return [
+        'prsn_name' => $faker->name(),
+        'prsn_ldap_id' => $faker->numberBetween(4000, 8000),
+        'prsn_status' => $faker->randomElement(['member', 'veteran', 'candidate']),
+        'clb_id' => $faker->randomElement([2,3])
+    ];
+});
+
+
+$factory->define(Lara\Survey::class, function (Faker\Generator $faker) {
+    return [
+        'creator_id' => factory(Lara\Person::class)->create()->id,
+        'title' => $faker->sentence(2),
+        'description' => $faker->paragraphs(4, true),
+        'description' => $faker->paragraphs(4, true),
+        'deadline' => $faker->dateTimeBetween('now', '+10 days'),
+        'password' => '',
+        'is_private' => false,
+        'is_anonymous' => false,
+        'show_results_after_voting' => false
+    ];
+});
