@@ -192,8 +192,16 @@ class SurveyAnswerController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($surveyid, $id)
+    public function destroy($surveyid, $id, Request $input)
     {
+
+        $survey = Survey::findOrFail($surveyid);
+        if ($survey->password !== ''
+            && !Hash::check( $input->password, $survey->password ) ) {
+            Session::put('message', 'Fehler: das eingegebene Passwort war leider falsch.');
+            Session::put('msgType', 'error');
+            return Redirect::action('SurveyController@show', array('id' => $surveyid));
+        }
         $answer = SurveyAnswer::findOrFail($id);
         $revision_answer = new Revision($answer);
 
