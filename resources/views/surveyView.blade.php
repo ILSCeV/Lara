@@ -295,7 +295,7 @@ $userCanEditDueToRole
                                         @endforeach
                                         @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
                                             @if($survey->deadline >= date("Y-m-d H:i:s") OR $userCanEditDueToRole)
-                                            <!--Edid Delete Buttons-->
+                                            <!--Edit Delete Buttons-->
                                                 <td class="tdButtons " >
                                                     <input href="#"
                                                        class="editButton btn btn-primary fa fa-pencil"

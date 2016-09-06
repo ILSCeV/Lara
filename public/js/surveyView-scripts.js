@@ -2,33 +2,20 @@
     Scripts for surveyView
     Reaction to click on edit delete buttons
 */
+function getPasswordField() {
+    return $('.panel-warning').find("[name^=password]");
+}
 $(document).ready(function() {
-
-    $('form').find('.update').on('submit', function () {
-        // For passworded surveys: check if a password field exists and is not empty
-        // We will check correctness on the server side
-        if ($('.panel-warning').find("[name^=password]").length
-            && !$('.panel-warning').find("[name^=password]").val()) {
-            var that = this;
-            bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
-                if (password) {
-                    $('.panel-warning').find("[name^=password]").val(password);
-                    $(that).submit();
-                }
-            });
-            return false;
-        }
-    });
 
     $('.store').on('submit', function () {
         // For passworded surveys: check if a password field exists and is not empty
         // We will check correctness on the server side
-        if ($('.panel-warning').find("[name^=password]").length
-            && !$('.panel-warning').find("[name^=password]").val()) {
+        var passwordField = getPasswordField();
+        if (passwordField.length && !passwordField.val()) {
             var that = this;
             bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
                 if (password) {
-                    $('.panel-warning').find("[name^=password]").val(password);
+                    passwordField.val(password);
                     $(that).submit();
                 }
             });
@@ -214,7 +201,231 @@ function get_answer_row(number) {
 }
 
 jQuery( document ).ready( function( $ ) {
+    function submitChanges() {
+        var password = getPasswordField().val();
+        var counter_ajax = $('#get_row').val();
+        var count_answers = 0;
+        var checked_answers = [];
+        var req_error = [];
 
+        $(".row"+counter_ajax).find(".singleAnswer").not(".cellEditing-1").not(".cellEditing-2").each(function () {
+
+            if ($(this).attr('id') == 'text' && $(this).attr('data-id') == 'required' && $("#"+ count_answers).val() == "") {
+                var error = "required_missing";
+                req_error.push(error);
+            }
+
+            if ($(this).attr('id') == 'radio' +count_answers + '-' + counter_ajax) {
+                var answers = $(this).find('input:checked').val();
+                checked_answers.push(answers);
+
+            }
+            if ($(this).attr('id') == 'text' || $(this).attr('id') == 'dropdown') {
+                var answers = $("#"+ count_answers).val();
+                checked_answers.push(answers);
+            }
+
+            count_answers++;
+        });
+
+        req_error.push("no_required_missing");
+
+        $.ajax({
+
+            type: $(this).prop('method'),
+            url: $(this).prop('action'),
+
+            data: JSON.stringify({
+
+                // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each request
+                "_token": $(document).find('input[name=_token]').val(),
+
+                "name": $('.row' + counter_ajax).find("[name^=name]").val(),
+                "club": $('.row' + counter_ajax).find("[name^=club]").val(),
+                "ldapId": $('.row' + counter_ajax).find("[name^=ldapID_edit]").val(),
+                "answers": checked_answers,
+                "password": password,
+                "error": req_error,
+                "_method": "put"
+
+            }),
+            dataType: 'json',
+
+            contentType: 'application/json',
+
+            beforeSend: function () {
+
+                $('#editButton' + counter_ajax).removeClass("fa-floppy-o");
+                $('#editButton' + counter_ajax).attr('value', '');
+                $('#spinner' + counter_ajax).removeClass("hidden");
+
+            },
+
+            complete: function () {
+
+                $('#editButton' + counter_ajax).val('');
+
+                $('#editButton' + counter_ajax).removeClass("editButton btn btn-success fa-floppy-o");
+
+                $('#editButton' + counter_ajax).addClass("editButton btn btn-primary fa-pencil");
+
+            },
+
+            //updates the content of the cells with the new content if it has been edited
+            success: function (data) {
+
+                var answer_number = $('#get_row').val();
+
+                var column_counter = -3;
+                $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
+                    column_counter++;
+
+
+                    if ($(this).attr('id') == 'cellEditing-2') {
+                        var newContent = $(this).find('input').val();
+                        $(this).html("<i id='userStatus' ></i> " + newContent);
+                    }
+
+                    if ($(this).attr('id') == 'cellEditing-1') {
+                        var newContent = $(this).find('input').val();
+                        $(this).text(newContent);
+                    }
+
+                    if ($(this).attr('id') == 'text') {
+                        var newContent = $(this).find('input').val();
+                        $(this).text(newContent);
+                    }
+
+                    if ($(this).attr('id') == 'radio' + column_counter + '-' + counter_ajax) {
+                        if ($(this).find('input:checked').val() == 1) {
+                            var newContent = "Ja";
+                            $(this).text(newContent);
+                        }
+
+                        if ($(this).find('input:checked').val() == 0) {
+                            var newContent = "Nein";
+                            $(this).text(newContent);
+                        }
+
+                        if ($(this).find('input:checked').val() == -1) {
+                            var newContent = "keine Angabe";
+                            $(this).text(newContent);
+                        }
+                    }
+
+                    if ($(this).attr('id') == 'dropdown') {
+                        var skillsSelect = document.getElementById("" + column_counter);
+                        var newContent = skillsSelect.options[skillsSelect.selectedIndex].text;
+                        $(this).text(newContent);
+                    }
+
+                    count_clicks = 0;
+
+                    $("#userStatus").attr("style", data["user_status"]["style"]);
+                    $("#userStatus").attr("data-original-title", data["user_status"]["title"]);
+                    $("#userStatus").removeClass().addClass(data["user_status"]["status"]).removeAttr("id");
+
+
+                    $(".row" + answer_number).find(".singleAnswer").attr('style', '');
+
+
+                });
+                $('.row' + answer_number).find('td').each(function () {
+                    $("#radio" + column_counter + '-' + counter_ajax).attr('id', '');
+                });
+
+                $('.table').find('input').each(function () {
+                    $(".editButton").not('#editButton' + answer_number).prop('disabled', false);
+                });
+                $(".answer_button").prop('disabled', false);
+
+                $('#spinner' + counter_ajax).addClass('hidden');
+
+                oldContent = [];
+
+            },
+
+            //sets the color circles for the members depending on their rank
+            error: function (xhr, ajaxOptions, thrownError) {
+                bootbox.alert(JSON.stringify(xhr.responseJSON));
+
+                var answer_number = $('#get_row').val();
+                var column_counter = 0;
+
+                $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
+
+                    if (column_counter == 0) {
+                        var newContent = oldContent[column_counter];
+
+                        if (userStatusIcon[0] == "Kandidat") {
+                            $(this).html("<i class='fa fa-adjust' name='status-icon' style='color:yellowgreen;' title='Kandidat'></i> " + newContent);
+                        }
+
+                        if (userStatusIcon[0] == "Veteran") {
+                            $(this).html("<i class='fa fa-star' name='status-icon' style='color:gold;' title='Veteran'></i> " + newContent);
+                        }
+
+                        if (userStatusIcon[0] == "Aktiv") {
+                            $(this).html("<i id='userStatus' class='fa fa-circle' name='status-icon' style='color:forestgreen;' ></i> " + newContent);
+                        }
+
+                        if (userStatusIcon[0] == "ex-Mitglied") {
+                            $(this).html("<i class='fa fa-star-o' name='status-icon' style='color:gold;' title='ex-Mitglied'></i> " + newContent);
+                        }
+
+                        if (userStatusIcon[0] == "Extern") {
+                            $(this).html("<i class='fa fa-circle' name='status-icon' style='color:lightgrey;' title='Extern'></i> " + newContent);
+                        }
+
+                    }
+
+                    else
+
+                        $(this).text(oldContent[column_counter]);
+                    column_counter++;
+
+                });
+
+                count_clicks = 0;
+
+                $(".row" + answer_number).find(".singleAnswer").attr('style', '');
+
+
+                $('.row' + answer_number).find('td').each(function () {
+                    $("#radio" + column_counter + '-' + counter_ajax).attr('id', '');
+                });
+
+                $('.table').find('input').each(function () {
+                    $(".editButton").not('#editButton' + answer_number).prop('disabled', false);
+                });
+                $(".answer_button").prop('disabled', false);
+
+                $('#spinner' + counter_ajax).addClass('hidden');
+
+                oldContent = [];
+            }
+
+        });
+        return false;
+    };
+
+    $('form').find('.update').on('submit', function () {
+        // For passworded surveys: check if a password field exists and is not empty
+        // We will check correctness on the server side
+        var that = this;
+        var $passwordField = getPasswordField();
+        if ($passwordField.length && !$passwordField.val()) {
+            bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
+                if (password) {
+                    $passwordField.val(password);
+                    submitChanges.call(that);
+                }
+            });
+            return false;
+        }
+        submitChanges.call(that);
+        return false;
+    });
 
     var count_clicks = 0;
 
@@ -419,214 +630,6 @@ jQuery( document ).ready( function( $ ) {
     });
 
 
-    $("form").find('.update').on('submit', function () {
-
-        var password = $("[name^=password]").val();
-        var counter_ajax = $('#get_row').val();
-        var count_answers = 0;
-        var checked_answers = [];
-        var req_error = [];
-
-        $(".row"+counter_ajax).find(".singleAnswer").not(".cellEditing-1").not(".cellEditing-2").each(function () {
-
-            if ($(this).attr('id') == 'text' && $(this).attr('data-id') == 'required' && $("#"+ count_answers).val() == "") {
-                var error = "required_missing";
-                req_error.push(error);
-            }
-
-            if ($(this).attr('id') == 'radio' +count_answers + '-' + counter_ajax) {
-                var answers = $(this).find('input:checked').val();
-                checked_answers.push(answers);
-
-            }
-            if ($(this).attr('id') == 'text' || $(this).attr('id') == 'dropdown') {
-                var answers = $("#"+ count_answers).val();
-                checked_answers.push(answers);
-            }
-
-            count_answers++;
-        });
-
-        req_error.push("no_required_missing");
-
-        $.ajax({
-
-            type: $(this).prop('method'),
-            url: $(this).prop('action'),
-
-            data: JSON.stringify({
-
-                // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each request
-                "_token": $(document).find('input[name=_token]').val(),
-
-                "name": $('.row' + counter_ajax).find("[name^=name]").val(),
-                "club": $('.row' + counter_ajax).find("[name^=club]").val(),
-                "ldapId": $('.row' + counter_ajax).find("[name^=ldapID_edit]").val(),
-                "answers": checked_answers,
-                "password": password,
-                "error": req_error,
-                "_method": "put"
-
-            }),
-            dataType: 'json',
-
-            contentType: 'application/json',
-
-            beforeSend: function () {
-
-                $('#editButton' + counter_ajax).removeClass("fa-floppy-o");
-                $('#editButton' + counter_ajax).attr('value', '');
-                $('#spinner' + counter_ajax).removeClass("hidden");
-
-            },
-
-            complete: function () {
-
-                $('#editButton' + counter_ajax).val('');
-
-                $('#editButton' + counter_ajax).removeClass("editButton btn btn-success fa-floppy-o");
-
-                $('#editButton' + counter_ajax).addClass("editButton btn btn-primary fa-pencil");
-
-            },
-            
-            //updates the content of the cells with the new content if it has been edited
-            success: function (data) {
-
-                var answer_number = $('#get_row').val();
-
-                var column_counter = -3;
-                $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
-                    column_counter++;
-
-
-                    if ($(this).attr('id') == 'cellEditing-2') {
-                        var newContent = $(this).find('input').val();
-                        $(this).html("<i id='userStatus' ></i> " + newContent);
-                    }
-
-                    if ($(this).attr('id') == 'cellEditing-1') {
-                        var newContent = $(this).find('input').val();
-                        $(this).text(newContent);
-                    }
-
-                    if ($(this).attr('id') == 'text') {
-                        var newContent = $(this).find('input').val();
-                        $(this).text(newContent);
-                    }
-
-                    if ($(this).attr('id') == 'radio' + column_counter + '-' + counter_ajax) {
-                        if ($(this).find('input:checked').val() == 1) {
-                            var newContent = "Ja";
-                            $(this).text(newContent);
-                        }
-
-                        if ($(this).find('input:checked').val() == 0) {
-                            var newContent = "Nein";
-                            $(this).text(newContent);
-                        }
-
-                        if ($(this).find('input:checked').val() == -1) {
-                            var newContent = "keine Angabe";
-                            $(this).text(newContent);
-                        }
-                    }
-
-                    if ($(this).attr('id') == 'dropdown') {
-                        var skillsSelect = document.getElementById("" + column_counter);
-                        var newContent = skillsSelect.options[skillsSelect.selectedIndex].text;
-                        $(this).text(newContent);
-                    }
-
-                    count_clicks = 0;
-
-                    $("#userStatus").attr("style", data["user_status"]["style"]);
-                    $("#userStatus").attr("data-original-title", data["user_status"]["title"]);
-                    $("#userStatus").removeClass().addClass(data["user_status"]["status"]).removeAttr("id");
-
-
-                    $(".row" + answer_number).find(".singleAnswer").attr('style', '');
-
-
-                });
-                $('.row' + answer_number).find('td').each(function () {
-                    $("#radio" + column_counter + '-' + counter_ajax).attr('id', '');
-                });
-
-                $('.table').find('input').each(function () {
-                    $(".editButton").not('#editButton' + answer_number).prop('disabled', false);
-                });
-                $(".answer_button").prop('disabled', false);
-
-                $('#spinner' + counter_ajax).addClass('hidden');
-
-                oldContent = [];
-
-            },
-            
-            //sets the color circles for the members depending on their rank
-            error: function (xhr, ajaxOptions, thrownError) {
-                bootbox.alert(JSON.stringify(xhr.responseJSON));
-
-                var answer_number = $('#get_row').val();
-                var column_counter = 0;
-
-                $('.row' + answer_number).find("[class^=singleAnswer]").each(function () {
-
-                    if (column_counter == 0) {
-                        var newContent = oldContent[column_counter];
-
-                        if (userStatusIcon[0] == "Kandidat") {
-                            $(this).html("<i class='fa fa-adjust' name='status-icon' style='color:yellowgreen;' title='Kandidat'></i> " + newContent);
-                        }
-
-                        if (userStatusIcon[0] == "Veteran") {
-                            $(this).html("<i class='fa fa-star' name='status-icon' style='color:gold;' title='Veteran'></i> " + newContent);
-                        }
-
-                        if (userStatusIcon[0] == "Aktiv") {
-                            $(this).html("<i id='userStatus' class='fa fa-circle' name='status-icon' style='color:forestgreen;' ></i> " + newContent);
-                        }
-
-                        if (userStatusIcon[0] == "ex-Mitglied") {
-                            $(this).html("<i class='fa fa-star-o' name='status-icon' style='color:gold;' title='ex-Mitglied'></i> " + newContent);
-                        }
-
-                        if (userStatusIcon[0] == "Extern") {
-                            $(this).html("<i class='fa fa-circle' name='status-icon' style='color:lightgrey;' title='Extern'></i> " + newContent);
-                        }
-
-                    }
-
-                    else
-
-                    $(this).text(oldContent[column_counter]);
-                    column_counter++;
-
-                });
-
-                    count_clicks = 0;
-
-                    $(".row" + answer_number).find(".singleAnswer").attr('style', '');
-
-
-                $('.row' + answer_number).find('td').each(function () {
-                    $("#radio" + column_counter + '-' + counter_ajax).attr('id', '');
-                });
-
-                $('.table').find('input').each(function () {
-                    $(".editButton").not('#editButton' + answer_number).prop('disabled', false);
-                });
-                $(".answer_button").prop('disabled', false);
-
-                $('#spinner' + counter_ajax).addClass('hidden');
-
-                oldContent = [];
-            }
-
-        });
-        return false;
-    });
 });
 
 // handles expandable table-rows (for exampled in surveyView change-history)
