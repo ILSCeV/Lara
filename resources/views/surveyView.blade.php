@@ -120,6 +120,7 @@ $userCanEditDueToRole
 @stop
 @section('moreScripts'){{--collection of used java script functions to clean up the code--}}
     <script src="{{ asset('js/surveyView-scripts.js') }}"></script>
+<script src="{{ asset('js/es6-promise.min.js') }}"></script>
 @stop
 @section('content')
     
@@ -295,7 +296,7 @@ $userCanEditDueToRole
                                         @endforeach
                                         @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
                                             @if($survey->deadline >= date("Y-m-d H:i:s") OR $userCanEditDueToRole)
-                                            <!--Edid Delete Buttons-->
+                                            <!--Edit Delete Buttons-->
                                                 <td class="tdButtons " >
                                                     <input href="#"
                                                        class="editButton btn btn-primary fa fa-pencil"
@@ -312,7 +313,6 @@ $userCanEditDueToRole
                                                        class="btn btn-default deleteRow"
                                                        data-toggle="tooltip"
                                                        data-placement="bottom"
-                                                       data-method="delete"
                                                        data-token="{{csrf_token()}}"
                                                        rel="nofollow"
                                                        data-confirm="{{ trans('mainLang.confirmDeleteAnswer') }}">
