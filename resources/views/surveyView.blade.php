@@ -313,7 +313,6 @@ $userCanEditDueToRole
                                                        class="btn btn-default deleteRow"
                                                        data-toggle="tooltip"
                                                        data-placement="bottom"
-                                                       data-method="delete"
                                                        data-token="{{csrf_token()}}"
                                                        rel="nofollow"
                                                        data-confirm="{{ trans('mainLang.confirmDeleteAnswer') }}">

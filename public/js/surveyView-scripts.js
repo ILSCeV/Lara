@@ -5,24 +5,102 @@
 function getPasswordField() {
     return $('.panel-warning').find("[name^=password]");
 }
+
+function promptForPassword() {
+    return new Promise(function(resolve, reject) {
+        bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
+            if (password) {
+                resolve(password);
+            }
+            else {
+                reject(password);
+            }
+
+        });
+    });
+}
 $(document).ready(function() {
 
     $('.store').on('submit', function () {
         // For passworded surveys: check if a password field exists and is not empty
         // We will check correctness on the server side
+
+        var that = this;
         var passwordField = getPasswordField();
         if (passwordField.length && !passwordField.val()) {
-            var that = this;
-            bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
-                if (password) {
-                    passwordField.val(password);
-                    $(that).submit();
-                }
+            promptForPassword().then(function(password) {
+                passwordField.val(password);
+                $(that).submit();
+            }, function() {
+                bootbox.alert("Ohne Passwort wird das nichts!");
             });
             return false;
         }
     });
+});
 
+
+function confirmDeletion() {
+    return new Promise(function (resolve, reject) {
+        bootbox.confirm("Wirklich löschen?", function (result) {
+            if (result) {
+                resolve();
+            }
+            else {
+                reject();
+            }
+        });
+    });
+}
+$(".deleteRow").click(function () {
+    var link = $(this);
+    var passwordField = getPasswordField();
+    var doDeletion = function() {
+        var form =
+            $('<form>', {
+                'method': 'POST',
+                'action': link.attr('href')
+            });
+
+        var token =
+            $('<input>', {
+                'type': 'hidden',
+                'name': '_token',
+                'value': link.data('token')
+            });
+
+        var hiddenInput =
+            $('<input>', {
+                'name': '_method',
+                'type': 'hidden',
+                'value': 'delete'
+            });
+
+        var passwordInput = $('<input>', {
+            'name': 'password',
+            'type': 'hidden',
+            'value': passwordField.val()
+        });
+
+        form.append(token, hiddenInput, passwordInput)
+            .appendTo('body');
+        form.submit();
+    };
+    if (passwordField.length && !passwordField.val()) {
+        promptForPassword().then(function(password) {
+            passwordField.val(password);
+            return confirmDeletion();
+        }, function() {
+            bootbox.alert("Ohne Passwort wird das nichts!");
+            return new Promise(function (resolve, reject) {
+                reject();
+            });
+        }).then(doDeletion);
+    }
+    else {
+        confirmDeletion().then(doDeletion());
+    }
+    return false;
 });
 
 //Replace edit icon with save icon
