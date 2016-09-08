@@ -120,6 +120,7 @@ $userCanEditDueToRole
 @stop
 @section('moreScripts'){{--collection of used java script functions to clean up the code--}}
     <script src="{{ asset('js/surveyView-scripts.js') }}"></script>
+<script src="{{ asset('js/es6-promise.min.js') }}"></script>
 @stop
 @section('content')
     
