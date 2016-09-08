@@ -31,7 +31,7 @@ class SurveyAnswerController extends Controller
     public function __construct()
     {
         // if survey is private, reject guests
-        $this->middleware('privateEntry:Lara\Survey,survey');
+        $this->middleware('PrivateEntry:Lara\Survey,survey');
         // only Ersteller/Admin/Marketing/Clubleitung, privileged user groups only
         $this->middleware('creator:Lara\SurveyAnswer,answer', ['only' => ['update', 'destroy']]);
         // after deadline, only Ersteller/Admin/Marketing/Clubleitung, privileged user groups only
