@@ -2,6 +2,7 @@
 
 class LaraTestCase extends TestCase
 {
+    use \Illuminate\Foundation\Testing\DatabaseTransactions;
     function actingAsLara(Lara\Person $person, $userGroup = 'bc-Club', $userClub = 'bc-Club', $userStatus = 'member') {
         Session::put('userId', $person->prsn_ldap_id);
         Session::put('userName', $person->prsn_name);
@@ -15,7 +16,7 @@ class LaraTestCase extends TestCase
         $this->assertPageLoaded($uri = $this->prepareUrlForRequest($uri));
 
         $this->assertNotEquals(
-            $uri, $this->currentUri, "Did not land on expected page [{$uri}].\n"
+            $uri, $this->currentUri, "Did land on unexpected page [{$uri}].\n"
         );
 
         return $this;

@@ -38,4 +38,33 @@ class SurveyCreationTest extends LaraTestCase
             ->seePageIsNot('/survey/create');
     }
 
+    /** @test */
+    function it_requires_a_title_for_creation()
+    {
+
+        $user = factory(\Lara\Person::class)->create();
+        $this->actingAsLara($user)
+            ->visit('/survey/create')
+            ->type('', 'title')
+            ->press('button-create-survey')
+            ->seePageIs('survey/create');
+    }
+
+    /** @test */
+    function it_will_submit_if_title_description_and_a_question_is_filled()
+    {
+        $user = factory(\Lara\Person::class)->create();
+        $this->actingAsLara($user)
+            ->visit('/survey/create')
+            ->type('My title', 'title')
+            ->type('A lengthy description', 'description')
+            ->see(trans('mainLang.question'))
+            ->storeInput('questions[0]' , 'My question' ,true)
+            ->press('button-create-survey')
+            ->seePageIsNot('survey/create');
+    }
+
+
+
+
 }

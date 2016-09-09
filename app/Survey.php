@@ -37,6 +37,11 @@ class Survey extends BaseSoftDelete
         return $this->hasMany('Lara\SurveyQuestion');
     }
 
+    public function questions()
+    {
+        return $this->hasMany('Lara\SurveyQuestion');
+    }
+
 
     /**
      * Get the corresponding Answers.
