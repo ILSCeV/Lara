@@ -53,6 +53,13 @@ $factory->define(Lara\SurveyAnswer::class, function(Faker\Generator $faker){
     ];
 });
 
+$factory->define(Lara\SurveyAnswerOption::class, function(Faker\Generator $faker){
+    return [
+        'survey_question_id' => factory(Lara\SurveyQuestion::class)->create()->id,
+        'answer_option' => $faker->sentence(),
+    ];
+});
+
 $factory->define(Lara\SurveyAnswerCell::class, function(Faker\Generator $faker){
     return [
         'survey_answer_id' => factory(Lara\SurveyAnswer::class)->create()->id,
@@ -67,6 +74,6 @@ $factory->define(Lara\SurveyQuestion::class, function(Faker\Generator $faker){
         'order' => $faker->numberBetween(0, 5),
         'field_type' => $faker->numberBetween(1,3),
         'question' => $faker->sentence,
-        'is_required' => $faker->boolean(50)
+        'is_required' => 0
     ];
 });

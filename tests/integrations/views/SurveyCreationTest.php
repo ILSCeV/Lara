@@ -51,6 +51,17 @@ class SurveyCreationTest extends LaraTestCase
     }
 
     /** @test */
+    function it_will_not_submit_if_title_description_and_no_question_is_filled()
+    {
+        $user = factory(\Lara\Person::class)->create();
+        $this->actingAsLara($user)
+            ->visit('/survey/create')
+            ->type('My title', 'title')
+            ->type('A lengthy description', 'description')
+            ->press('button-create-survey')
+            ->seePageIs('survey/create');
+    }
+
     function it_will_submit_if_title_description_and_a_question_is_filled()
     {
         $user = factory(\Lara\Person::class)->create();

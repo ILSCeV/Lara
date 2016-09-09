@@ -237,7 +237,7 @@ $userCanEditDueToRole
                                             {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => Lang::get('mainLang.addAnswerHere'), 'autocomplete' => 'off']) !!}
                                         @else
                                             <!--Answer* required-->
-                                            {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => Lang::get('mainLang.addAnswerHere'), 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                                            {!! Form::text('answers['.$key.']', null, ['required', 'rows' => 2, 'class' => 'form-control', 'placeholder' => Lang::get('mainLang.addAnswerHere'), 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                                         @endif
                                     @elseif($question->field_type == 2)
                                         <!-- Ja/Nein -->
@@ -314,6 +314,7 @@ $userCanEditDueToRole
                                                        data-toggle="tooltip"
                                                        data-placement="bottom"
                                                        data-token="{{csrf_token()}}"
+                                                       name="deleteRow"
                                                        rel="nofollow"
                                                        data-confirm="{{ trans('mainLang.confirmDeleteAnswer') }}">
                                                         <i class="fa fa-trash"></i>
