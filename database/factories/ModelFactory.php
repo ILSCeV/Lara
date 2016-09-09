@@ -32,7 +32,7 @@ $factory->define(Lara\Person::class, function (Faker\Generator $faker) {
 
 $factory->define(Lara\Survey::class, function (Faker\Generator $faker) {
     return [
-        'creator_id' => factory(Lara\Person::class)->create()->id,
+        'creator_id' => factory(Lara\Person::class)->create()->prsn_ldap_id,
         'title' => $faker->sentence(2),
         'description' => $faker->paragraphs(4, true),
         'description' => $faker->paragraphs(4, true),
@@ -41,5 +41,32 @@ $factory->define(Lara\Survey::class, function (Faker\Generator $faker) {
         'is_private' => false,
         'is_anonymous' => false,
         'show_results_after_voting' => false
+    ];
+});
+
+$factory->define(Lara\SurveyAnswer::class, function(Faker\Generator $faker){
+    return [
+        'creator_id' => factory(Lara\Person::class)->create()->prsn_ldap_id,
+        'survey_id' => factory(Lara\Survey::class)->create()->id,
+        'name' => $faker->firstName,
+        'club' => $faker->word
+    ];
+});
+
+$factory->define(Lara\SurveyAnswerCell::class, function(Faker\Generator $faker){
+    return [
+        'survey_answer_id' => factory(Lara\SurveyAnswer::class)->create()->id,
+        'survey_question_id' => factory(Lara\SurveyQuestion::class)->create()->id,
+        'answer' => $faker->sentence,
+    ];
+});
+
+$factory->define(Lara\SurveyQuestion::class, function(Faker\Generator $faker){
+    return [
+        'survey_id' => factory(Lara\Survey::class)->create()->id,
+        'order' => $faker->numberBetween(0, 5),
+        'field_type' => $faker->numberBetween(1,3),
+        'question' => $faker->sentence,
+        'is_required' => $faker->boolean(50)
     ];
 });
