@@ -37,5 +37,33 @@ class SurveyQuestion extends BaseSoftDelete
         return $this->hasMany('Lara\SurveyAnswerCell');
     }
 
+    /**
+     * Get the corresponding survey.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function survey()
+    {
+        return $this->belongsTo('Lara\Survey');
+    }
 
+    /**
+     * Get the corresponding answerOptions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function options()
+    {
+        return $this->hasMany('Lara\SurveyAnswerOption');
+    }
+
+    /**
+     * Get the corresponding answerCells.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cells()
+    {
+        return $this->hasMany('Lara\SurveyAnswerCell');
+    }
 }

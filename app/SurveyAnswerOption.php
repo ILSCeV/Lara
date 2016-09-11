@@ -16,4 +16,14 @@ class SurveyAnswerOption extends BaseSoftDelete
     {
         return $this->belongsTo('Lara\SurveyQuestion');
     }
+
+    /**
+     * Get the corresponding question.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function question()
+    {
+        return $this->belongsTo('Lara\SurveyQuestion');
+    }
 }
