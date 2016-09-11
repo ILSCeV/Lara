@@ -1,4 +1,6 @@
-var elixir = require('laravel-elixir');
+const elixir = require('laravel-elixir');
+
+require('laravel-elixir-vue');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,37 +13,7 @@ var elixir = require('laravel-elixir');
  |
  */
 
-elixir(function(mix) {
-    mix.sass('app.scss');
-});
-
-var gulp = require('gulp');
-var ts = require('gulp-typescript');
-var concat = require('gulp-concat');
-var sourcemaps = require('gulp-sourcemaps');
-var uglify = require('gulp-uglify');
-
-gulp.task('default', function() {
-    var tsResult = gulp.src('typescript/*.ts')
-        .pipe(sourcemaps.init())
-        .pipe(ts({
-            noImplicitAny: true,
-            target: 'ES5',
-        }));
-    return tsResult.js
-        .pipe(concat('bundle.js'))
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest('public/js/bin'));
-});
-
-gulp.task('release', function() {
-    var tsResult = gulp.src('typescript/*.ts')
-        .pipe(ts({
-            noImplicitAny: true,
-            target: 'ES5',
-        }));
-    return tsResult.js
-        .pipe(concat('bundle.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('public/js/bin'));
+elixir(mix => {
+    mix.sass('app.scss')
+       .webpack('app.js');
 });
