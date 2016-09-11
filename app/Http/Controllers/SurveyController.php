@@ -392,9 +392,11 @@ class SurveyController extends Controller
         $survey = Survey::findOrFail($id);
 
         //find questions and answer options
-        $questions = $survey->getQuestions;
+        $questions = $survey->questions;
         foreach($questions as $question)
+        {
             $answer_options = $question->getAnswerOptions;
+        }
 
         // prepare correct date and time format to be used in forms for deadline
         $date = substr(($survey->deadline),0,10 );
