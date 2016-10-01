@@ -5,9 +5,9 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
-        "laravelcollective/html": "5.2.*",
+        "php": ">=5.6.4",
+        "laravel/framework": "5.3.*",
+        "laravelcollective/html": "5.3.*",
         "rap2hpoutre/laravel-log-viewer": "^0.5.3",
         "barryvdh/laravel-ide-helper": "^2.1",
         "doctrine/dbal": "^2.5"
@@ -15,11 +15,13 @@
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~4.0",
+        "phpunit/phpunit": "~5.0",
+        "symfony/css-selector": "3.1.*",
+        "symfony/dom-crawler": "3.1.*",
+        "orangehill/iseed": "dev-master"
         "phpspec/phpspec": "~2.1",
         "orangehill/iseed": "dev-master",
         "laracasts/integrated": "^0.15.6"
-
     },
     "autoload": {
         "classmap": [
@@ -38,7 +40,7 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "php -r \"copy('.env.example', '.env');\""
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
             "php artisan key:generate"
@@ -50,8 +52,8 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan clear-compiled",
-          	"php artisan ide-helper:generate",
-          	"php artisan optimize"
+            "php artisan ide-helper:generate",
+            "php artisan optimize"
         ]
     },
     "config": {
