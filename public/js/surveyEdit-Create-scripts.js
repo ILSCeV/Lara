@@ -1,5 +1,24 @@
-// Binds window if user has made input
-$(document).ready(function() {
+var questionIdCounter = 0;
+
+// Initialize State for questions and answers
+$(function() {
+    $('.selectpicker').each(updateQuestionDisplay);
+
+    var $questions = $('.questions');
+    $questions.find('select').each(function() {
+        updateQuestionDisplay(this);
+    });
+    $questions.children().each(function () {
+        updateAnswerOptionsIndices(this);
+    });
+    setQuestionNumberDisplayed();
+    setDeleteQuestionButtonStatus();
+
+    // Changes dropdown style for mobile view
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+        $('.selectpicker').selectpicker('mobile');
+    }
+
     $('.form-group').change(function() {
         $(window).bind('beforeunload', function() {
             return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
@@ -7,68 +26,67 @@ $(document).ready(function() {
     });
 
     $("form").submit(function () {
-        if ($('#btnAdd') !== '.click')
+        if ($('#btnAdd') !== '.click') {
             $(window).unbind('beforeunload');
+        }
     });
-});
 
-
-// Changes dropdown style for mobile view
-$(function () {
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-        $('.selectpicker').selectpicker('mobile');
-    }
-});
-
-
-// Checks if user has made input -> if yes, a popup appears if user wants to leave the site
-window.onload = function () {
-    $('.questions' || '.input_checkboxitem' || '.selectpicker').change(function () {
+    // Checks if user has made input -> if yes, a popup appears if user wants to leave the site
+    $('.questions').add('.input_checkboxitem').add('.selectpicker').change(function () {
         $(window).bind('beforeunload', function () {
             return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
         });
     });
 
-    $("form").submit(function () {
-        if ($('#btnAdd') !== '.click')
-            $(window).unbind('beforeunload');
-
-        if ($("[data-id=clonedInput_edit]").attr('style') == 'display: none') {
-            $("[data-id=clonedInput_edit]").remove();
-        }
-    });
-};
+    questionIdCounter = getLastQuestionId();
+});
 
 function questionAmountChanged() {
-    updateAllQuestionNumbers();
     setDeleteQuestionButtonStatus();
 }
 
 function setDeleteQuestionButtonStatus() {
     var amountOfQuestions = $('.questions').children().length;
-    if (amountOfQuestions > 1) {
-        $('.btnRemoveQuestion').attr('disabled', false);
-    }
-    else {
-        $('.btnRemoveQuestion').attr('disabled', true);
-    }
+    $('.btnRemoveQuestion').prop('disabled', amountOfQuestions === 1);
 }
 
 $('#btnAdd').click(function () {
+    questionIdCounter++;
     var $questions = $('.questions');
     var $lastQuestion = $questions.children().last();
-    var $clone = $lastQuestion.clone();
-    var $selectClone = $clone.find('select').clone();
-    $clone.find('.bootstrap-select').remove();
-    $clone.find('fieldset').prepend($selectClone);
-    $selectClone.selectpicker();
-    $selectClone.change(function() {
-        updateQuestionDisplay(this);
-    });
+    var $clone = $lastQuestion.clone(true, true);
+
     $questions.append($clone);
+
+    var $answerOptions = $clone.find('.answ_option').find('.input-group');
+    // reset first option
+    $answerOptions.first()
+        .find('input')
+        .val('')
+        .prop('name', 'answerOption[' + questionIdCounter + '][0]');
+    // delete all other options
+    $answerOptions.slice(1).remove();
+    $clone.find('[name^=questionText]')
+        .val('')
+        .prop('name', 'questionText[' + questionIdCounter + ']');
+    $clone.find('select')
+        .val(1)
+        .change()
+        .prop('name', 'type_select['+ questionIdCounter +']');
+    $clone.find('[name^=required]')
+        .prop('checked', false)
+        .prop('name', 'required[' + questionIdCounter + ']');
+    setQuestionNumberDisplayed();
     questionAmountChanged();
+
+    //prevent submit
+    return false;
 });
+
 $('.btnRemoveQuestion').click(function() {
+    $(this).closest('[name=question]').remove();
+    setQuestionNumberDisplayed();
+    setDeleteQuestionButtonStatus();
 });
 
 function updateQuestionDisplay (select) {
@@ -87,36 +105,32 @@ function updateQuestionDisplay (select) {
             $answerOptionsDiv.show();
             break;
     }
-};
-$('.selectpicker').change(function() {
-    updateQuestionDisplay(this);
-});
+}
+
+function updateAnswerOptionsIndices(question) {
+    $(question).find('.answ_option').find('.input-group').find('input').each(function(index, input) {
+        var oldName = $(input).prop('name');
+        if (oldName) {
+            // only update second index! Note the first \] in the regexp
+            // first index belongs to question, second to answer option
+            var newName = oldName.replace(/\]\[[0-9]+\]/, '][' + index + ']');
+            $(input).prop('name', newName);
+        }
+    });
+}
 
 function addNewAnswerOption(button) {
-    var $clone = $(button).prev().clone().insertBefore(button);
-    $clone.find('input').attr('value', ' ');
+    var $clone = $(button).prev().clone(true, true).insertBefore(button);
+    $clone.find('input').val('');
+    updateAnswerOptionsIndices($(button).closest('[name^=question]'));
 }
 
 // Deleting answer options
 function removeAnswerOption(answer) {
-    $(answer).closest('.input-group').remove();
-}
-
-function displayQuestionAccordingToType(selectElement){
-    var $typeSelect = $(selectElement);
-    var $question = $typeSelect.closest('[name^=question]');
-    var $answerOptionsDiv = $question.find('.answ_option');
-    var type = parseInt($typeSelect.find('option:selected').val());
-    switch (type) {
-        case 1:
-            $answerOptionsDiv.hide();
-            break;
-        case 2:
-            $answerOptionsDiv.hide();
-            break;
-        case 3:
-            $answerOptionsDiv.show();
-            break;
+    var question = $(answer).closest('[name^=question]');
+    if ($(question).find('.answ_option').children('div').length > 1) {
+        $(answer).closest('.input-group').remove();
+        updateAnswerOptionsIndices(question);
     }
 }
 
@@ -126,28 +140,14 @@ function updateQuestionNumber(index, topDiv){
     $heading.text(currentText.replace(/#.*/, '#' + (index + 1)));
 }
 
-function updateAllQuestionNumbers() {
+function setQuestionNumberDisplayed() {
     $('div').filter('.questions').children().each(updateQuestionNumber);
 }
 
-$(function() {
-    $('.selectpicker').each(displayQuestionAccordingToType);
-});
-
-// Checks question type -> has to be selected
-$("form").submit(function() {
-
-    if ($('#field_type').val() === '0') {
-        bootbox.alert("Frage-Typ muss bei Frage 1 ausgewählt sein");
-        return false;
-    }
-});
-
-
-// Sets a hidden input field to true for standard users (survey -> is private)
-$('form').on('submit', function () {
-    if ($('#required1').attr('disabled')) {
-        $('#required1_hidden').attr('checked', 'true');
-    }
-});
-
+function getLastQuestionId() {
+    return parseInt(/questionText\[([0-9]*)\]/g.exec($('.questions').children()
+        .last()
+        .find('[name^=questionText]')
+        .prop('name')
+    )[1]);
+}

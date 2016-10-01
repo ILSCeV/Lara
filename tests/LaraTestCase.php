@@ -3,6 +3,7 @@
 class LaraTestCase extends TestCase
 {
     use \Illuminate\Foundation\Testing\DatabaseTransactions;
+
     function actingAsLara(Lara\Person $person, $userGroup = 'bc-Club', $userClub = 'bc-Club', $userStatus = 'member') {
         Session::put('userId', $person->prsn_ldap_id);
         Session::put('userName', $person->prsn_name);

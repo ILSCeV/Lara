@@ -2,17 +2,17 @@
 
 use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class SurveyViewTest extends Selenium
 {
     protected $baseUrl = 'http://localhost';
-    use Laravel, CreatesSurveys, DatabaseTransactions;
+    use Laravel;
+    use CreatesSurveys;
+    use SeleniumLogin;
 
     /** @test */
     function it_can_visit_the_homepage()
     {
-
         $this->visit('/');
     }
 
@@ -33,12 +33,6 @@ class SurveyViewTest extends Selenium
             ->submitForm('');
     }
 
-    function logIn()
-    {
-        return $this->visit('/')
-            ->submitForm('Anmelden')
-            ->waitForElement('logout');
-    }
 
     /** @test */
     function it_can_access_a_public_survey()

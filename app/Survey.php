@@ -86,7 +86,6 @@ class Survey extends BaseSoftDelete
      */
     public function answers()
     {
-
         return $this->hasMany('Lara\SurveyAnswer');
     }
 }

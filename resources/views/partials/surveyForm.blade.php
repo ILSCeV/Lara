@@ -88,31 +88,28 @@
         </div>
     </div>
 
-
-    <div style="visibility:hidden; display:none">
-        <div id="new_passage">
-            <table class="passage" id="new_passage" name="cloneTable">
-                <tr>
-                    <td>{{ trans('mainLang.answerOption') }}: &nbsp</td>
-                    <td><textarea id="answer_option" class="form-control answer_option" type="text"
-                                  name="answer_options[][]"
-                                  style="height: 22px;margin-top: 5px;margin-bottom: 5px;"></textarea></td>
-                    <td class="helltab" rowspan="3">
-                        <a href="#" id="delete_button" onclick="javascript:removeAnswerOption(this); return false;">
-                            <i class="fa fa-trash" style="color:red" aria-hidden="true"></i></a>
-                    </td>
-            </table>
-        </div>
-    </div>
-
     <div class="questions">
         @include('partials.surveyQuestionsEdit')
     </div>
     <div class="panel col-md-8 col-sm-12 col-xs-12"></div>
     <div class="panel col-md-8 col-sm-12 col-xs-12">
         <div class="panel-body">
-            <div id="addButtons">
+            <div class="formGroup" id="addButtons">
                 <input type="button" id="btnAdd" value="{{ trans('mainLang.addQuestion') }}" class="btn btn-success">
+                {!! Form::submit(Lang::get('mainLang.editSurvey'), ['class'=>'btn btn-primary']) !!}
+                <br class="visible-xs">
+                <a href="javascript:history.back()"
+                   class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
+                <a href="/survey/{{$survey->id}}"
+                   class="btn btn-default"
+                   data-toggle="tooltip"
+                   data-placement="bottom"
+                   data-method="delete"
+                   data-token="{{csrf_token()}}"
+                   rel="nofollow"
+                   data-confirm='{{ trans('mainLang.confirmDeleteSurvey',['title' => $survey->title]) }}'>
+                    <i class="fa fa-trash"></i>
+                </a>
             </div>
         </div>
     </div>

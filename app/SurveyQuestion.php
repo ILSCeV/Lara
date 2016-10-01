@@ -66,4 +66,26 @@ class SurveyQuestion extends BaseSoftDelete
     {
         return $this->hasMany('Lara\SurveyAnswerCell');
     }
+
+    public static function make(Survey $survey, $order, $fieldType, $required, $text, $options)
+    {
+        $question = new SurveyQuestion();
+        $revision_question = new \Lara\Library\Revision($question);
+        $question->survey_id = $survey->id;
+        $question->order = $order;
+        $question->field_type = $fieldType;
+        $question->is_required = (bool)$required;
+        $question->question = $text;
+        $question->save();
+        $revision_question->save($question);
+
+        //check if question is dropdown question
+        if ($fieldType === 3) {
+            foreach ($options as $answerText) {
+                SurveyAnswerOption::make($question, $answerText);
+            }
+        }
+
+        return $question;
+    }
 }

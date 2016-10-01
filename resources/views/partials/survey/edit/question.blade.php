@@ -15,7 +15,7 @@
                 <fieldset>
                     <label name="quest_label">{{ trans('mainLang.question') }}: &nbsp</label>
 
-                    <textarea class="form-control" type="text" name="questions[]"
+                    <textarea class="form-control" type="text" name="questionText[{{$id}}]"
                               style="max-width: 100%; max-height: 200px">{{ $question->question }}</textarea>
                 </fieldset>
             </div>
@@ -26,7 +26,7 @@
 
             <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 28px;">
                 <fieldset>
-                    <select class="selectpicker" name="type_select">
+                    <select class="form-control" name="type_select[{{$id}}]" onChange="javascript:updateQuestionDisplay(this)">
                         <option value="1" data-icon="fa fa-file-text-o"
                                 @if($question->field_type === 1) selected @endif >{{ trans('mainLang.freeText') }}</option>
                         <option value="2" data-icon="fa fa-check-square-o"
@@ -41,7 +41,7 @@
             <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 5px;">
                 <fieldset class="checkbox entrylist">
                     <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
-                    <label><input type="checkbox" name="required" @if($question->is_required) checked
+                    <label><input type="checkbox" name="required[{{$id}}]" @if($question->is_required) checked
                                   @endif value="required"
                                   class="input_checkboxitem"> {{ trans('mainLang.required') }}</label>
                 </fieldset>

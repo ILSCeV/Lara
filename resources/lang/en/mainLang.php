@@ -400,5 +400,6 @@ return [
     'placeholderDescription'        => 'Description:',
     'placeholderActiveUntil'        => 'Active until:',
 
-    //
+    //Misc
+    'guest'                         => 'Guest',
 ];

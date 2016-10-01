@@ -48,11 +48,11 @@ class SurveyViewTest extends LaraTestCase {
     {
         $this->makeSurvey(['password' => Hash::make("password")])
             ->visitSurvey()
-            ->type('My Name', 'name')
-            ->type('My Club', 'club')
+            ->type('My Passworded Name', 'name')
+            ->type('My Passworded Club', 'club')
             ->press('noMarginMobile')
-            ->notSeeInDatabase('survey_answers', ['name' => 'My Name'])
-            ->notSeeInDatabase('survey_answers', ['club' => 'My Club']);
+            ->notSeeInDatabase('survey_answers', ['name' => 'My Passworded Name'])
+            ->notSeeInDatabase('survey_answers', ['club' => 'My Passworded Club']);
     }
 
     /** @test */
