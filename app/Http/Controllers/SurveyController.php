@@ -57,7 +57,8 @@ class SurveyController extends Controller
         $date = $datetime->toDateString();
         //placeholder because createSurveyView needs variable, can set defaults here
         $survey = new Survey();
-        return view('createSurveyView', compact('survey', 'time', 'date'));
+        $isEdit = false;
+        return view('createSurveyView', compact('survey', 'time', 'date', 'isEdit'));
     }
 
     /**
@@ -95,7 +96,7 @@ class SurveyController extends Controller
         foreach ($questionsParameters as $order => list($question, $type, $isRequired, $options)) {
             SurveyQuestion::make($survey, $order, $question, $type, $isRequired, $options);
         }
-        
+
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
 
@@ -252,9 +253,10 @@ class SurveyController extends Controller
         //maybe sort questions by order here
         foreach($questions as $order => $question) {
             switch($question->field_type) {
-                case 1: $evaluation[$order] = [];
+                case QuestionType::FullText:
+                    $evaluation[$order] = [];
                     break; //nothing to do here except pushing an element to the array that stands for the question
-                case 2:
+                case QuestionType::YesNo:
                     $evaluation[$order] = [
                         'Ja' => 0,
                         'Nein' => 0
@@ -275,7 +277,7 @@ class SurveyController extends Controller
                         }
                     }
                     break;
-                case 3:
+                case QuestionType::Custom:
                     $answer_options = $question->getAnswerOptions;
                     $answer_options = (array) $answer_options;
                     $answer_options = array_shift($answer_options);
@@ -325,7 +327,8 @@ class SurveyController extends Controller
         // prepare correct date and time format to be used in forms for deadline
         $date = substr(($survey->deadline), 0, 10);
         $time = substr(($survey->deadline), 11, 8);
-        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
+        $isEdit = true;
+        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time', 'isEdit'));
     }
 
     /**
@@ -444,7 +447,7 @@ class SurveyController extends Controller
             $questionToModify->order = $index;
             $questionToModify->field_type = $types[$index];
             $questionToModify->is_required = $required[$index];
-            $questionToModify->question = $question;
+            $questionToModify->question = $newQuestions[$index];
 
             if ($types[$index] === 3) {
                 $oldOptions = collect($oldAnswerOptions->get($index));
@@ -480,6 +483,7 @@ class SurveyController extends Controller
             $questionToModify->save();
             $questionRevision->save($questionToModify);
         }
+
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
 

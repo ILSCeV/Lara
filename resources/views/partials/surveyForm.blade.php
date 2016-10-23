@@ -96,20 +96,25 @@
         <div class="panel-body">
             <div class="formGroup" id="addButtons">
                 <input type="button" id="btnAdd" value="{{ trans('mainLang.addQuestion') }}" class="btn btn-success">
-                {!! Form::submit(Lang::get('mainLang.editSurvey'), ['class'=>'btn btn-primary']) !!}
-                <br class="visible-xs">
-                <a href="javascript:history.back()"
-                   class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
-                <a href="/survey/{{$survey->id}}"
-                   class="btn btn-default"
-                   data-toggle="tooltip"
-                   data-placement="bottom"
-                   data-method="delete"
-                   data-token="{{csrf_token()}}"
-                   rel="nofollow"
-                   data-confirm='{{ trans('mainLang.confirmDeleteSurvey',['title' => $survey->title]) }}'>
-                    <i class="fa fa-trash"></i>
-                </a>
+                @if ($isEdit)
+                    {!! Form::submit(Lang::get('mainLang.editSurvey'), ['class'=>'btn btn-primary']) !!}
+                    <br class="visible-xs">
+                    <a href="javascript:history.back()"
+                       class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
+                    <a href="/survey/{{$survey->id}}"
+                       class="btn btn-default"
+                       data-toggle="tooltip"
+                       data-placement="bottom"
+                       data-method="delete"
+                       data-token="{{csrf_token()}}"
+                       rel="nofollow"
+                       data-confirm='{{ trans('mainLang.confirmDeleteSurvey',['title' => $survey->title]) }}'>
+                        <i class="fa fa-trash"></i>
+                    </a>
+                @else
+                        {!! Form::submit(Lang::get('mainLang.createSurvey'), ['class'=>'btn btn-primary', 'id' => 'button-create-survey']) !!}
+                        <a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
+                @endif
             </div>
         </div>
     </div>
