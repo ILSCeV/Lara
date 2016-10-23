@@ -3,7 +3,7 @@
 
 trait CreatesSurveys
 {
-    protected $surveys;
+    protected $survey;
     protected $questions;
     /**
      * @param array $params

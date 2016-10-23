@@ -5,6 +5,7 @@ namespace Lara\Http\Controllers;
 use Illuminate\Http\Request;
 use Hash;
 use Lara\Library\Revision;
+use Lara\QuestionType;
 use Session;
 use Redirect;
 use Input;
@@ -80,10 +81,10 @@ class SurveyAnswerController extends Controller
             $survey_answer_cell->survey_question_id = $question->id;
             $survey_answer_cell->survey_answer_id = $survey_answer->id;
             switch($question->field_type) {
-                case 1: //Freitext
+                case QuestionType::FullText :
                     $survey_answer_cell->answer = $input->answers[$key];
                     break;
-                case 2: //Checkbox (Ja/Nein)
+                case QuestionType::YesNo :
                     if ($input->answers[$key] == -1) {
                         $survey_answer_cell->answer = "keine Angabe";
                     } elseif ($input->answers[$key] == 0) {
@@ -92,7 +93,7 @@ class SurveyAnswerController extends Controller
                         $survey_answer_cell->answer = "Ja";
                     }
                     break;
-                case 3: //Dropdown
+                case QuestionType::Custom :
                     if ($input->answers[$key] == -1) {
                         $survey_answer_cell->answer = "keine Angabe";
                     } else {

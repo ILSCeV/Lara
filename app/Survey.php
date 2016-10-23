@@ -2,6 +2,9 @@
 
 namespace Lara;
 
+use Illuminate\Support\Facades\Session;
+use Lara\Http\Requests\SurveyRequest;
+
 class Survey extends BaseSoftDelete
 {
     protected $table = 'surveys';
@@ -87,5 +90,24 @@ class Survey extends BaseSoftDelete
     public function answers()
     {
         return $this->hasMany('Lara\SurveyAnswer');
+    }
+
+    public function makeFromRequest(SurveyRequest $request)
+    {
+        $this->creator_id = Session::get('userId');
+        $this->title = $request->title;
+        $this->description = $request->description;
+        $this->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate . $request->deadlineTime));
+        $this->is_anonymous = isset($request->is_anonymous);
+        $this->is_private = isset($request->is_private);
+        $this->show_results_after_voting = isset($request->show_results_after_voting);
+
+        //if there is a password make a hash of it and save it
+        if (!empty($request->password)
+            && !empty($request->password_confirmation)
+            && $request->password == $request->password_confirmation
+        ) {
+            $this->password = Hash::make($request->password);
+        }
     }
 }

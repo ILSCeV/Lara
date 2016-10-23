@@ -14,6 +14,7 @@ use Redirect;
 use DateTime;
 
 use Lara\Survey;
+use Lara\QuestionType;
 use Lara\SurveyQuestion;
 use Lara\SurveyAnswer;
 use Lara\SurveyAnswerOption;
@@ -67,21 +68,7 @@ class SurveyController extends Controller
     {
         $survey = new Survey;
         $revision_survey = new Revision($survey);
-        $survey->creator_id = Session::get('userId');
-        $survey->title = $request->title;
-        $survey->description = $request->description;
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate . $request->deadlineTime));
-        $survey->is_anonymous = isset($request->is_anonymous);
-        $survey->is_private = isset($request->is_private);
-        $survey->show_results_after_voting = isset($request->show_results_after_voting);
-
-        //if there is a password make a hash of it and save it
-        if (!empty($request->password)
-            && !empty($request->password_confirmation)
-            && $request->password == $request->password_confirmation
-        ) {
-            $survey->password = Hash::make($request->password);
-        }
+        $survey->makeFromRequest($request);
 
         $survey->save();
         $revision_survey->save($survey, "Umfrage erstellt");
@@ -89,21 +76,26 @@ class SurveyController extends Controller
         // values will reindex the array with consecutive integers, removing holes
         // (e.g. if a user deletes a question somewhere in the middle)
         $questions = collect($request->questionText)->values();
-        $answerOptions = $request->answerOption;
+        $answerOptions = collect($request->answerOption)->values();
 
         // convert textInput to int for better processing
-        $fieldTypes = array_map(function ($asString) {
-            return intval($asString);
-        }, $request->type_select);
-        $required = $request->required;
+        $types = collect($request->type_select)
+            ->map(function ($type) {
+                return intval($type);
+            })
+            ->values();
+
+        $required = $request->required? collect($request->required)->values(): $questions->map(function() {
+            return false;
+        });
 
         //make new question model instance, fill it and save it
 
-        foreach ($questions as $order => $text) {
-            SurveyQuestion::make($survey, $order, $fieldTypes[$order], $required[$order], $text,
-                $answerOptions[$order]);
+        $questionsParameters = $questions->zip($types, $required, $answerOptions);
+        foreach ($questionsParameters as $order => list($question, $type, $isRequired, $options)) {
+            SurveyQuestion::make($survey, $order, $question, $type, $isRequired, $options);
         }
-
+        
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
     }
 
@@ -118,16 +110,13 @@ class SurveyController extends Controller
         //find SurveyID
         $survey = Survey::findorFail($id);
 
-        //find answers and questions that belong to SurveyID
         foreach ($survey->answers as $answer) {
-            //find AnswerCells belonging to Answer and delete both
             foreach ($answer->cells as $cell) {
                 Revision::deleteWithRevision($cell);
             }
             Revision::deleteWithRevision($answer);
         }
 
-        //find AnswerOptions belonging to Questions and delete both
         foreach ($survey->questions as $question) {
             foreach ($question->options as $answerOption) {
                 Revision::deleteWithRevision($answerOption);
@@ -135,7 +124,6 @@ class SurveyController extends Controller
             Revision::deleteWithRevision($question);
         }
 
-        //finally delete survey
         Revision::deleteWithRevision($survey);
 
         Session::put('message', 'Umfrage gelöscht!');
@@ -176,7 +164,7 @@ class SurveyController extends Controller
                 return $answer->id;
             });
 
-        $revisions_objects = \Lara\Revision::join("revision_object_relations", "revisions.id", "=",
+        $revisions = \Lara\Revision::join("revision_object_relations", "revisions.id", "=",
             "revision_object_relations.revision_id")
             ->where("revision_object_relations.object_name", "=", "SurveyAnswer")
             ->whereIn("revision_object_relations.object_id", $answers_with_trashed_ids)
@@ -186,9 +174,7 @@ class SurveyController extends Controller
             })
             ->distinct()
             ->orderBy("created_at", "desc")
-            ->get(['creator_id', 'summary', 'created_at', 'revision_id']);
-
-        $revisions = $revisions_objects->toArray();
+            ->get(['creator_id', 'summary', 'created_at', 'revision_id'])->toArray();
 
         foreach ($revisions as &$revision) {
             $creator = Person::where('prsn_ldap_id', '=', $revision['creator_id'])
@@ -243,8 +229,8 @@ class SurveyController extends Controller
                         break;
                     case "field_type":
                         $entry['changed_column_name'] = "Fragetyp";
-                        $entry['old_value'] = $this->getFieldTypeName($entry['old_value']);
-                        $entry['new_value'] = $this->getFieldTypeName($entry['new_value']);
+                        $entry['old_value'] = QuestionType::asText($entry['old_value']);
+                        $entry['new_value'] = QuestionType::asText($entry['new_value']);
                         break;
                     case "is_required":
                         $entry['changed_column_name'] = "Pflichtfrage?";
@@ -263,37 +249,53 @@ class SurveyController extends Controller
 
         //evaluation part that shows below the survey, a statistic of answers of the users who already took part in the survey
 
-        $evaluation = $questions->map(function (SurveyQuestion $question) {
-            switch ($question->field_type) {
-                case 1:
-                    return [];
+        //maybe sort questions by order here
+        foreach($questions as $order => $question) {
+            switch($question->field_type) {
+                case 1: $evaluation[$order] = [];
+                    break; //nothing to do here except pushing an element to the array that stands for the question
                 case 2:
-                    $cells = $question->cells;
-                    return collect([
-                        'Ja' => $cells->where('answer', 'Ja')->count(),
-                        'Nein' => $cells->where('answer', 'Nein')->count(),
-                        'Keine Angabe' => $cells->where('answer', 'Keine Angabe')->count()
-                    ])->reject(function ($count, $option) use ($question) {
-                        return $question->is_required && $option === 'Keine Angabe';
-                    })->toArray();
-                case 3:
-                    $options = $question->options;
+                    $evaluation[$order] = [
+                        'Ja' => 0,
+                        'Nein' => 0
+                    ];
                     if ($question->is_required == false) {
+                        $evaluation[$order]['keine Angabe'] = 0;
+                    };
+                    //checkbox options with yes,no and no entry
+                    foreach($question->getAnswerCells as $answerCell) {
+                        if ($answerCell->answer === 'Ja') {
+                            $evaluation[$order]['Ja'] += 1;
+                        }
+                        else if($answerCell->answer === 'Nein') {
+                            $evaluation[$order]['Nein'] += 1;
+                        }
+                        else if($answerCell->answer === 'keine Angabe' and $question->is_required == false) {
+                            $evaluation[$order]['keine Angabe'] += 1;
+                        }
+                    }
+                    break;
+                case 3:
+                    $answer_options = $question->getAnswerOptions;
+                    $answer_options = (array) $answer_options;
+                    $answer_options = array_shift($answer_options);
+                    if($question->is_required == false) {
                         $prefer_not_to_say = new SurveyAnswerOption();
                         $prefer_not_to_say->answer_option = 'keine Angabe';
-                        $options->push($prefer_not_to_say);
+                        array_push($answer_options, $prefer_not_to_say);
                     }
-
-                    return $options->mapWithKeys(function ($option) use ($question) {
-                        return [
-                            $option->answer_option =>
-                                $question->cells
-                                    ->where('answer', 'option.answer_option')
-                                    ->count()
-                        ];
-                    })->toArray();
+                    foreach ($answer_options as $answer_option) {
+                        $evaluation[$order][$answer_option->answer_option] = 0;
+                        foreach($question->getAnswerCells as $answerCell) {
+                            if ($answer_option->answer_option === $answerCell->answer) {
+                                $evaluation[$order][$answer_option->answer_option] += 1;
+                            }
+                        }
+                    }
+                    break;
             }
-        })->toArray();
+        }
+
 
         //ignore html tags in the description
         $survey->description = htmlspecialchars($survey->description, ENT_NOQUOTES);
@@ -424,7 +426,7 @@ class SurveyController extends Controller
         $modifiedQuestions = $oldQuestionTexts->diff($nonModifiedQuestions)->diffKeys($deletedQuestions);
 
         foreach ($newlyCreatedQuestions as $index => $question) {
-            SurveyQuestion::make($survey, $index, $types[$index], $required[$index], $question,
+            SurveyQuestion::make($survey, $index, $question, $types[$index], $required[$index],
                 $newAnswerOptions[$index]);
         }
 
@@ -499,26 +501,6 @@ class SurveyController extends Controller
         return preg_replace('$(www\.[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
             '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
             $text);
-    }
-
-    /**
-     * used to get the type of a question
-     * @param $value
-     * @return null|string
-     */
-    private function getFieldTypeName($value)
-    {
-        switch ($value) {
-            case 1:
-                return "Freitext";
-            case 2:
-                return "Checkbox";
-            case 3:
-                return "Dropdown";
-            case null:
-                return null;
-        }
-        return "unbekannter Feldtyp";
     }
 
     /**
