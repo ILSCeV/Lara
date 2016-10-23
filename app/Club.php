@@ -20,4 +20,10 @@ class Club extends Model
 	 * @var array
 	 */
 	protected $fillable = array('clb_title');
+
+    public function persons()
+    {
+        return $this->hasMany('Lara\Person');
+    }
+
 }

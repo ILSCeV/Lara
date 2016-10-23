@@ -9,11 +9,13 @@ use Lara\Library\Revision;
 use Lara\Person;
 use Lara\RevisionEntry;
 use Lara\SurveyAnswerCell;
+use Lara\Utilities;
 use Session;
 use Redirect;
 use DateTime;
 
 use Lara\Survey;
+use Lara\QuestionType;
 use Lara\SurveyQuestion;
 use Lara\SurveyAnswer;
 use Lara\SurveyAnswerOption;
@@ -51,13 +53,13 @@ class SurveyController extends Controller
     public function create()
     {
         //prepare correct date and time format to be used in forms for deadline
-        $datetime = carbon::now();
-        $datetime->endOfDay();
-        $time = $datetime ->toTimeString();
-        $date = $datetime ->toDateString();
+        $datetime = carbon::now()->endOfDay();
+        $time = $datetime->toTimeString();
+        $date = $datetime->toDateString();
         //placeholder because createSurveyView needs variable, can set defaults here
         $survey = new Survey();
-        return view('createSurveyView', compact('survey', 'time', 'date'));
+        $isEdit = false;
+        return view('createSurveyView', compact('survey', 'time', 'date', 'isEdit'));
     }
 
     /**
@@ -66,92 +68,34 @@ class SurveyController extends Controller
      */
     public function store(SurveyRequest $request)
     {
-        
         $survey = new Survey;
         $revision_survey = new Revision($survey);
-        $survey->creator_id = Session::get('userId');
-        $survey->title = $request->title;
-        $survey->description = $request->description;
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate.$request->deadlineTime));
-        $survey->is_anonymous = isset($request->is_anonymous);
-        $survey->is_private = isset($request->is_private);
-        $survey->show_results_after_voting = isset($request->show_results_after_voting);
-
-        //if there is a password make a hash of it and save it
-        if (!empty($request->password)
-            AND !empty($request->password_confirmation)
-            AND $request->password == $request->password_confirmation) {
-            $survey->password = Hash::make($request->password);
-        }
+        $survey->makeFromRequest($request);
 
         $survey->save();
         $revision_survey->save($survey, "Umfrage erstellt");
 
-        $questions = $request->questions;
-        $answer_options = $request->answer_options;
+        // values will reindex the array with consecutive integers, removing holes
+        // (e.g. if a user deletes a question somewhere in the middle)
+        $questions = collect($request->questionText)->values();
+        $answerOptions = collect($request->answerOption)->values();
 
-        /*
-         * get question type as array
-         * 1: text field
-         * 2: checkbox
-         * 3: dropdown, has answer options!
-         */
-        $questions_type = $request->type;
-        $required = $request->required;
+        // convert textInput to int for better processing
+        $types = collect($request->type_select)
+            ->map(function ($type) {
+                return intval($type);
+            })
+            ->values();
 
-        //actual bug: answer options array is too long, must delete unnecessary elements
-        for($i = count($answer_options)+1; $i >= count($questions); $i--) {
-            unset($answer_options[$i]);
-        }
+        $required = $request->required ? collect($request->required)->values() : $questions->map(function () {
+            return false;
+        });
 
-        /*
-         * array for the answer options doesn't have an entry for questions without answer options
-         * better we fill missing keys, so we can iterate through it later
-         * same problem with required array
-         */
-
-        for($i = 0; $i < count($questions); $i++) {
-            if(array_key_exists($i, $answer_options) === False) {
-                $answer_options_new[$i] = '';
-            }
-            if(empty($required) or array_key_exists($i, $required) === False) {
-                $required[$i] = null;
-            }
-        }
-        ksort($answer_options);
-        ksort($required);
-        
-        //ignore empty answer options
-        foreach($answer_options as $i => $answer_option) {
-
-            //check if dropdown question and answer options exist
-            if($questions_type[$i] == 3 and is_array($answer_options[$i])) {
-                //filter empty answer options and reindex
-                $answer_options[$i] = array_values(array_filter($answer_options[$i]));
-            }
-        }
-        
         //make new question model instance, fill it and save it
-        foreach($questions as $order => $question){
-            $question_db = new SurveyQuestion();
-            $revision_question = new Revision($question_db);
-            $question_db->survey_id = $survey->id;
-            $question_db->order = $order;
-            $question_db->field_type = $questions_type[$order];
-            $question_db->is_required = (bool) $required[$order];
-            $question_db->question = $question;
-            $question_db->save();
-            $revision_question->save($question_db);
 
-            //check if question is dropdown question
-             if($questions_type[$order] == 3) {
-                 foreach($answer_options[$order] as $answer_option) {
-                     $answer_option_db = new SurveyAnswerOption();
-                     $answer_option_db->survey_question_id = $question_db->id;
-                     $answer_option_db->answer_option = $answer_option;
-                     $answer_option_db->save();
-                 }
-             }
+        $questionsParameters = $questions->zip($types, $required, $answerOptions);
+        foreach ($questionsParameters as $order => list($question, $type, $isRequired, $options)) {
+            SurveyQuestion::make($survey, $order, $question, $type, $isRequired, $options);
         }
 
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
@@ -167,39 +111,24 @@ class SurveyController extends Controller
     {
         //find SurveyID
         $survey = Survey::findorFail($id);
-        $revision_survey = new Revision($survey);
 
-        //find answers and questions that belong to SurveyID
-        $questions = $survey->getQuestions;
-        $answers = $survey->getAnswers;
-
-        //find AnswerCells belonging to Answer and delete both
-        foreach($answers as $answer) {
-            foreach($answer->getAnswerCells as $answerCell) {
-                $revision_cell = new Revision($answerCell);
-                $answerCell->delete();
-                $revision_cell->save($answerCell);
+        foreach ($survey->answers as $answer) {
+            foreach ($answer->cells as $cell) {
+                Revision::deleteWithRevision($cell);
             }
-            $revision_answer = new Revision($answer);
-            $answer->delete();
-            $revision_answer->save($answer);
+            Revision::deleteWithRevision($answer);
         }
 
-        //find AnswerOptions belonging to Questions and delete both
-        foreach($questions as $question) {
-            foreach($question->getAnswerOptions as $answerOption) {
-                $answerOption->delete();
+        foreach ($survey->questions as $question) {
+            foreach ($question->options as $answerOption) {
+                Revision::deleteWithRevision($answerOption);
             }
-            $revision_question = new Revision($question);
-            $question->delete();
-            $revision_question->save($question);
+            Revision::deleteWithRevision($question);
         }
 
-        //finally delete survey
-        $survey->delete();
-        $revision_survey->save($survey, "Umfrage gelöscht");
-        
-        Session::put('message', 'Umfrage gelöscht!' );
+        Revision::deleteWithRevision($survey);
+
+        Session::put('message', 'Umfrage gelöscht!');
         Session::put('msgType', 'success');
 
         return Redirect::action('MonthController@currentMonth');
@@ -214,123 +143,122 @@ class SurveyController extends Controller
         //find survey
         $survey = Survey::findOrFail($id);
         //find questions
-        $questions = $survey->getQuestions;
+        $questions = $survey->questions;
         $questionCount = count($questions);
         //find answers
-        $answers = $survey->getAnswers;
+        $answers = $survey->answers;
         //find all clubs
         $clubs = Club::all();
 
         //get the information from the current session
         $userId = Session::get('userId');
-        $userGroup = Session::get('userGroup');
-		$userStatus = Session::get("userStatus");
-        $userParticipatedAlready = false;
-        foreach($answers as $answer) {
-            if($answer->creator_id == $userId AND !empty($userId)) {
-                $userParticipatedAlready = true;
-            }
-        }
+        $userStatus = Session::get("userStatus");
 
+        $userParticipatedAlready = $survey->answers
+            ->contains(function ($answer) use ($userId) {
+                return $answer && $answer->creator_id === $userId && !empty($userId);
+            });
 
-        $answers_with_trashed_ids = [];
-        $answers_with_trashed = SurveyAnswer::withTrashed()->where('survey_id', $survey->id)->get();
-        foreach($answers_with_trashed as $answer){
-            $answers_with_trashed_ids[] = $answer->id;
-        }
+        $answers_with_trashed_ids = SurveyAnswer::withTrashed()
+            ->where('survey_id', $survey->id)
+            ->get()
+            ->map(function ($answer) {
+                return $answer->id;
+            });
 
-        $answer_cells_with_trashed_ids = [];
-        $answer_cells_with_trashed = SurveyAnswerCell::withTrashed()->whereIn('survey_answer_id', $answers_with_trashed_ids)->get();
-        foreach($answer_cells_with_trashed as $answer_cell) {
-            $answer_cells_with_trashed_ids[] = $answer_cell->id;
-        }
-
-        $revisions_objects = \Lara\Revision::join("revision_object_relations", "revisions.id", "=", "revision_object_relations.revision_id")
+        $revisions = \Lara\Revision::join("revision_object_relations", "revisions.id", "=",
+            "revision_object_relations.revision_id")
             ->where("revision_object_relations.object_name", "=", "SurveyAnswer")
             ->whereIn("revision_object_relations.object_id", $answers_with_trashed_ids)
-            ->orWhere(function ($query) use ($survey)
-            {
+            ->orWhere(function ($query) use ($survey) {
                 $query->where("revision_object_relations.object_name", "=", "Survey")
                     ->where("revision_object_relations.object_id", "=", $survey->id);
             })
             ->distinct()
             ->orderBy("created_at", "desc")
-            ->get(['creator_id', 'summary', 'created_at', 'revision_id']);
+            ->get(['creator_id', 'summary', 'created_at', 'revision_id'])->toArray();
 
-        $revisions = $revisions_objects->toArray();
+        foreach ($revisions as &$revision) {
+            $creator = Person::where('prsn_ldap_id', '=', $revision['creator_id'])
+                ->get(['prsn_name'])
+                ->first();
+            $isGuest = empty($creator) || is_null($revision['creator_id']);
+            $revision['creator_name'] = $isGuest ? trans('guest') : $creator->prsn_name;
+            unset($revision['creator_id']);
+            $revision['revision_entries'] = RevisionEntry::where('revision_id', '=', $revision['revision_id'])
+                ->get(['changed_column_name', 'old_value', 'new_value'])
+                ->toArray();
+            unset($revision['revision_id']);
 
-        foreach($revisions as $revision_key => $revision) {
-            $creator = Person::where('prsn_ldap_id', '=', $revision['creator_id'])->get(['prsn_name'])->first();
-            (empty($creator) || is_null($revision['creator_id'])) ? ($revisions[$revision_key]['creator_name'] = "Gast") : ($revisions[$revision_key]['creator_name'] = $creator->prsn_name);
-            unset($revisions[$revision_key]['creator_id']);
-            $revisions[$revision_key]['revision_entries'] = RevisionEntry::where('revision_id', '=', $revision['revision_id'])->get(['changed_column_name', 'old_value', 'new_value'])->toArray();
-            unset($revisions[$revision_key]['revision_id']);
-
-            foreach($revisions[$revision_key]['revision_entries'] as $entry_key => $entry) {
+            foreach ($revision['revision_entries'] as &$entry) {
                 // rename the displayed column names to hide database-schema
-                switch($entry['changed_column_name']) {
+                switch ($entry['changed_column_name']) {
                     case "name":
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Name";
+                        $entry['changed_column_name'] = "Name";
                         break;
                     case "club":
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Club";
+                        $entry['changed_column_name'] = "Club";
                         break;
                     case "answer":
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Antwort";
+                        $entry['changed_column_name'] = "Antwort";
                         break;
                     case "title":
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Titel";
+                        $entry['changed_column_name'] = "Titel";
                         break;
                     case "description":
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Beschreibung";
+                        $entry['changed_column_name'] = "Beschreibung";
                         break;
                     case "deadline":
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Deadline";
+                        $entry['changed_column_name'] = "Deadline";
                         break;
                     case "is_anonymous":
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Ergebnisse sind nur für den Umfragenersteller sichtbar?";
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['old_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['old_value']);
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
+                        $entry['changed_column_name'] = "Ergebnisse sind nur für den Umfragenersteller sichtbar?";
+                        $entry['old_value'] = $this->booleanIntoText($entry['old_value']);
+                        $entry['new_value'] = $this->booleanIntoText($entry['new_value']);
                         break;
                     case "show_results_after_voting":
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Ergebnisse sind erst nach dem Ausfüllen sichtbar?";
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['old_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['old_value']);
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
+                        $entry['changed_column_name'] = "Ergebnisse sind erst nach dem Ausfüllen sichtbar?";
+                        $entry['old_value'] = $this->booleanIntoText($entry['old_value']);
+                        $entry['new_value'] = $this->booleanIntoText($entry['new_value']);
                         break;
                     case "is_private":
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "nur für eingeloggte Nutzer sichtbar?";
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['old_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['old_value']);
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
+                        $entry['changed_column_name'] = "nur für eingeloggte Nutzer sichtbar?";
+                        $entry['old_value'] = $this->booleanIntoText($entry['old_value']);
+                        $entry['new_value'] = $this->booleanIntoText($entry['new_value']);
                         break;
                     case "question":
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Frage";
+                        $entry['changed_column_name'] = "Frage";
                         break;
                     case "field_type":
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Fragetyp";
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['old_value'] = $this->getFieldTypeName($revisions[$revision_key]['revision_entries'][$entry_key]['old_value']);
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->getFieldTypeName($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
+                        $entry['changed_column_name'] = "Fragetyp";
+                        $entry['old_value'] = QuestionType::asText($entry['old_value']);
+                        $entry['new_value'] = QuestionType::asText($entry['new_value']);
                         break;
                     case "is_required":
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['changed_column_name'] = "Pflichtfrage?";
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['old_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['old_value']);
-                        $revisions[$revision_key]['revision_entries'][$entry_key]['new_value'] = $this->booleanIntoText($revisions[$revision_key]['revision_entries'][$entry_key]['new_value']);
+                        $entry['changed_column_name'] = "Pflichtfrage?";
+                        $entry['old_value'] = $this->booleanIntoText($entry['old_value']);
+                        $entry['new_value'] = $this->booleanIntoText($entry['new_value']);
                         break;
                 }
             }
+            unset($entry);
         }
-        
-        //check if the role of the user allows edit/delete for all answers
-        ($userGroup == 'admin' OR $userGroup == 'marketing' OR $userGroup == 'clubleitung') ? ($userCanEditDueToRole = true) : ($userCanEditDueToRole = false);
+        unset($revision);
 
+        //check if the role of the user allows edit/delete for all answers
+        $userGroup = Session::get('userGroup');
+        $userCanEditDueToRole = collect(['admin', 'marketing', 'clubleitung'])->contains($userGroup);
 
         //evaluation part that shows below the survey, a statistic of answers of the users who already took part in the survey
 
         //maybe sort questions by order here
-        foreach($questions as $order => $question) {
-            switch($question->field_type) {
-                case 1: $evaluation[$order] = [];
+        foreach ($questions as $order => $question) {
+
+            switch ($question->field_type) {
+                case QuestionType::FullText:
+                    $evaluation[$order] = [];
                     break; //nothing to do here except pushing an element to the array that stands for the question
-                case 2:
+                case QuestionType::YesNo:
                     $evaluation[$order] = [
                         'Ja' => 0,
                         'Nein' => 0
@@ -339,30 +267,32 @@ class SurveyController extends Controller
                         $evaluation[$order]['keine Angabe'] = 0;
                     };
                     //checkbox options with yes,no and no entry
-                    foreach($question->getAnswerCells as $answerCell) {
+                    foreach ($question->getAnswerCells as $answerCell) {
                         if ($answerCell->answer === 'Ja') {
                             $evaluation[$order]['Ja'] += 1;
-                        }
-                        elseif($answerCell->answer === 'Nein') {
-                            $evaluation[$order]['Nein'] += 1;
-                        }
-                        elseif($answerCell->answer === 'keine Angabe' and $question->is_required == false) {
-                            $evaluation[$order]['keine Angabe'] += 1;
+                        } else {
+                            if ($answerCell->answer === 'Nein') {
+                                $evaluation[$order]['Nein'] += 1;
+                            } else {
+                                if ($answerCell->answer === 'keine Angabe' and $question->is_required == false) {
+                                    $evaluation[$order]['keine Angabe'] += 1;
+                                }
+                            }
                         }
                     }
                     break;
-                case 3:
+                case QuestionType::Custom:
                     $answer_options = $question->getAnswerOptions;
-                    $answer_options = (array) $answer_options;
+                    $answer_options = (array)$answer_options;
                     $answer_options = array_shift($answer_options);
-                    if($question->is_required == false) {
+                    if ($question->is_required == false) {
                         $prefer_not_to_say = new SurveyAnswerOption();
                         $prefer_not_to_say->answer_option = 'keine Angabe';
                         array_push($answer_options, $prefer_not_to_say);
                     }
                     foreach ($answer_options as $answer_option) {
                         $evaluation[$order][$answer_option->answer_option] = 0;
-                        foreach($question->getAnswerCells as $answerCell) {
+                        foreach ($question->getAnswerCells as $answerCell) {
                             if ($answer_option->answer_option === $answerCell->answer) {
                                 $evaluation[$order][$answer_option->answer_option] += 1;
                             }
@@ -375,7 +305,7 @@ class SurveyController extends Controller
         //ignore html tags in the description
         $survey->description = htmlspecialchars($survey->description, ENT_NOQUOTES);
         //if URL is in the description, convert it to clickable hyperlink (<a> tag)
-        $survey->description = $this->addLinks($survey->description);
+        $survey->description = Utilities::surroundLinksWithTags($survey->description);
 
         //return all the gathered information to the survey view
         return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
@@ -392,14 +322,16 @@ class SurveyController extends Controller
         $survey = Survey::findOrFail($id);
 
         //find questions and answer options
-        $questions = $survey->getQuestions;
-        foreach($questions as $question)
+        $questions = $survey->questions;
+        foreach ($questions as $question) {
             $answer_options = $question->getAnswerOptions;
+        }
 
         // prepare correct date and time format to be used in forms for deadline
-        $date = substr(($survey->deadline),0,10 );
-        $time = substr(($survey->deadline),11,8);
-        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time'));
+        $date = substr(($survey->deadline), 0, 10);
+        $time = substr(($survey->deadline), 11, 8);
+        $isEdit = true;
+        return view('editSurveyView', compact('survey', 'questions', 'answer_options', 'date', 'time', 'isEdit'));
     }
 
     /**
@@ -419,21 +351,22 @@ class SurveyController extends Controller
         $survey->description = $request->description;
 
         //format deadline for database
-        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate.$request->deadlineTime));
+        $survey->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate . $request->deadlineTime));
         $survey->is_anonymous = isset($request->is_anonymous) ? "1" : "0";
         $survey->is_private = isset($request->is_private) ? "1" : "0";
         $survey->show_results_after_voting = isset($request->show_results_after_voting) ? "1" : "0";
-       
+
         //delete password if user changes both to delete
-        if ($request->password == "delete" AND $request->password_confirmation == "delete")
-        {
+        $deletePassword = $request->password == "delete" && $request->password_confirmation == "delete";
+        $requestContainsPassword = !empty($request->password)
+            && !empty($request->password_confirmation)
+            && $request->password == $request->password_confirmation;
+        if ($deletePassword) {
             $survey->password = '';
-        }
-        //set new password
-        elseif (!empty($request->password)
-                AND !empty($request->password_confirmation)
-                AND $request->password == $request->password_confirmation) {
-            $survey->password = Hash::make($request->password);
+        } else {
+            if ($requestContainsPassword) {
+                $survey->password = Hash::make($request->password);
+            }
         }
 
         //save the updates
@@ -441,202 +374,125 @@ class SurveyController extends Controller
         $revision_survey->save($survey, "Umfrage geändert");
 
         //get questions and answer options as arrays from the input
-        $questions_new = $request->questions;
-        $answer_options_new = $request->answer_options;
+        $newQuestions = collect($request->questionText);
+        $newAnswerOptions = $request->answerOption;
 
-        $required = $request->required;
+        $required = $newQuestions->map(function ($question, $index) use ($request) {
+            if (isset($request->required) && isset($request->required[$index])) {
+                return $request->required[$index] ? 1 : 0;
+            }
+            return 0;
+        });
+
 
         /* get question type as array
          * 1: text field
          * 2: checkbox
          * 3: dropdown, has answer options!
          */
-        $question_type = $request->type;
+        $types = collect($request->type_select)->map(function ($asString) {
+            return intval($asString);
+        });
 
-        //actual bug: answer options array from input is too long, must delete unnecessary elements
-        for($i = count($answer_options_new)+1; $i >= count($questions_new); $i--) {
-            unset($answer_options_new[$i]);
-        }
+        $oldQuestions = $survey->questions;
+        $oldAnswerOptions = $oldQuestions->map(function ($question) {
+            return $question->options;
+        });
 
-        /*
-         * array for the answer options doesn't have an entry for questions without answer options
-         * better we fill missing keys, so we can iterate through it later
-         * same problem with required array
-         */
-        for($i = 0; $i < count($questions_new); $i++) {
-            if(array_key_exists($i, $answer_options_new) === False) {
-                $answer_options_new[$i] = '';
+        $oldQuestionTexts = $oldQuestions->pluck('question');
+
+        $newlyCreatedQuestions = $newQuestions->diffKeys($oldQuestionTexts);
+        $deletedQuestions = $oldQuestionTexts->diffKeys($newQuestions);
+        $nonModifiedQuestions = $newQuestions->filter(function ($text, $order) use (
+            $oldQuestions,
+            $types,
+            $required,
+            $newAnswerOptions,
+            $oldAnswerOptions
+        ) {
+            $isSameText = $oldQuestions->get($order)->question === $text;
+            if (!$isSameText) {
+                return false;
             }
-            if(empty($required) or array_key_exists($i, $required) === False) {
-                $required[$i] = null;
+            $isSameType = $oldQuestions->get($order)->field_type === $types[$order];
+            if (!$isSameType) {
+                return false;
             }
-        }
-        ksort($answer_options_new);
-        ksort($required);
-
-        //get questions and answer options from database
-        $questions_db = $survey->getQuestions;
-        $answer_options_db = [];
-        foreach($questions_db as $question) {
-            $answer_options_db[] = $question->getAnswerOptions;
-        }
-
-        //make old questions and answer options to arrays with objects as elements
-        $questions_db = (array) $questions_db;
-        $questions_db = array_shift($questions_db);
-        for($i = 0; $i < count($answer_options_db); $i++) {
-            $answer_options_db[$i] = (array) $answer_options_db[$i];
-            $answer_options_db[$i] = array_shift($answer_options_db[$i]);
-        }
-
-        //ignore empty answer options
-        foreach($answer_options_new as $i => $answer_option) {
-
-            //check if dropdown question and answer options exist
-            if($question_type[$i] == 3 and is_array($answer_option)) {
-                //filter empty answer options and reindex
-                $answer_options_new[$i] = array_values(array_filter($answer_options_new[$i]));
-
+            $isSameRequired = $oldQuestions->get($order)->is_required === $required[$order];
+            if (!$isSameRequired) {
+                return false;
             }
-        }
 
-        //sort database question array by order
-        usort($questions_db, array($this, "cmp"));
-
-        //make question arrays have the same length
-        if(count($questions_new) > count($questions_db)) {
-
-            //more questions in input than in database
-            //make new empty questions and push them to the database array
-            for($i=count($questions_new); $i >= count($questions_db) ; $i--) {
-                array_push($questions_db, new SurveyQuestion());
-
-                //also push to the array for the database answer options
-                //to make sure questions and answer option arrays have the same length
-                array_push($answer_options_db, []);
+            if ($types[$order] !== 3) {
+                return true;
             }
+            $oldOptions = collect($oldAnswerOptions->get($order));
+            $newOptions = collect($newAnswerOptions[$order]);
+
+            $noCreatedOptions = $newOptions->intersect($oldOptions)->count() === $newOptions->count();
+            $noDeletedOptions = $oldOptions->intersect($newOptions)->count() === $oldOptions->count();
+            $noModifiedOptions = $newOptions->diff($oldOptions)->count() === $newOptions->count();
+
+            $areOptionsUnchanged = $noDeletedOptions && $noCreatedOptions && $noModifiedOptions;
+
+            return $areOptionsUnchanged;
+        });
+        $modifiedQuestions = $oldQuestionTexts->diff($nonModifiedQuestions)->diffKeys($deletedQuestions);
+
+        foreach ($newlyCreatedQuestions as $index => $question) {
+            SurveyQuestion::make($survey, $index, $question, $types[$index], $required[$index],
+                $newAnswerOptions[$index]);
         }
 
-        if(count($questions_db) > count($questions_new)) {
+        foreach ($deletedQuestions as $index => $question) {
+            $trashedQuestion = $oldQuestions->get($index);
+            $trashedQuestion->options->each(Revision::deleteWithRevision);
+            $trashedQuestion->cells->each(Revision::deleteWithRevision);
+            Revision::deleteWithRevision($trashedQuestion);
+        }
 
-            //less questions in input than in database
-            //delete unnecessary questions and answer options in database
-            for($i=count($questions_db)-1; $i >= count($questions_new) ; $i--) {
-                $question = SurveyQuestion::findOrFail($questions_db[$i]->id);
+        foreach ($modifiedQuestions as $index => $question) {
+            $questionToModify = $oldQuestions->get($index);
+            $questionRevision = new Revision($questionToModify);
 
-                foreach($question->getAnswerOptions as $answer_option) {
-                    $answer_option->delete();
+            $questionToModify->order = $index;
+            $questionToModify->field_type = $types[$index];
+            $questionToModify->is_required = $required[$index];
+            $questionToModify->question = $newQuestions[$index];
+
+            if ($types[$index] === 3) {
+                $oldOptions = collect($oldAnswerOptions->get($index));
+                $newOptions = collect($newAnswerOptions[$index]);
+
+                $optionTexts = $oldOptions->map(function ($option) {
+                    return $option->answer_option;
+                });
+                $deletedOptions = $optionTexts->diffKeys($newOptions);
+                $newlyCreatedOptions = $newOptions->diffKeys($optionTexts);
+                $unmodifiedOptions = $optionTexts->filter(function ($option, $optionIndex) use ($newOptions) {
+                    return $newOptions[$optionIndex] === $option;
+                });
+                $modifiedOptions = $optionTexts->diff($unmodifiedOptions);
+
+                foreach ($deletedOptions as $optionIndex => $option) {
+                    Revision::deleteWithRevision($oldAnswerOptions->get(index)->get($optionIndex));
                 }
-                foreach($question->getAnswerCells as $answer_cell) {
-                    $revision_cell = new Revision($answer_cell);
-                    $answer_cell->delete();
-                    $revision_cell->save($answer_cell);
+                foreach ($newlyCreatedOptions as $optionIndex => $option) {
+                    SurveyAnswerOption::make($questionToModify, $option);
                 }
-                $revision_question = new Revision($question);
-                $question->delete();
-                $revision_question->save($question);
+                foreach ($modifiedOptions as $optionIndex => $option) {
+                    $oldOption = $oldAnswerOptions->get($index)->get($optionIndex);
 
-                //delete questions in the arrays
-                unset($questions_db[$i]);
-                unset($answer_options_db[$i]);
+                    $optionRevision = new Revision($oldOption);
+                    $oldOption->answer_option = $newOptions[$optionIndex];
 
-                //reindexing
-                $questions_db = array_values($questions_db);
-                $answer_options_db = array_values($answer_options_db);
-
-                //deleting the element in required and question type array is not necessary
-            }
-        }
-
-        //question arrays should have the same length now so we can update questions
-        for($i = 0; $i < count($questions_db); $i++) {
-
-            //delete answer options if question type gets changed to something else than dropdown
-            if($questions_db[$i]->field_type == 3 and $question_type[$i] != 3){
-                $answer_options = $questions_db[$i]->getAnswerOptions;
-                foreach($answer_options as $answer_option) {
-                    $answer_option->delete();
+                    $oldOption->save();
+                    $optionRevision->save($oldOption);
                 }
             }
 
-            //delete answer cells if question type gets changed
-            if($questions_db[$i]->field_type != $question_type[$i]){
-                $answer_cells = $questions_db[$i]->getAnswerCells;
-                foreach($answer_cells as $answer_cell) {
-                    $revision_cell = new Revision($answer_cell);
-                    $answer_cell->delete();
-                    $revision_cell->save($answer_cell);
-                }
-            }
-            
-            $revision_question = new Revision($questions_db[$i]);
-            $questions_db[$i]->field_type = $question_type[$i];
-            $questions_db[$i]->is_required = (bool) $required[$i];
-            $questions_db[$i]->order = $i;
-            $questions_db[$i]->question = $questions_new[$i];
-
-            //survey_id has to be filled in case of new questions
-            $questions_db[$i]->survey_id = $survey->id;
-
-            $questions_db[$i]->save();
-            $revision_question->save($questions_db[$i]);
-        }
-
-        for($i = 0; $i < count($questions_db); $i++) {
-
-            if ($questions_db[$i]->field_type == 3 and
-             count($answer_options_new[$i]) > count($answer_options_db[$i])) {
-
-                    //more answer options in input than in database
-                    //make new empty answer options and push them to the database array
-                    for($j = count($answer_options_new[$i]); $j >= count($answer_options_db[$i]); $j--) {
-                        array_push($answer_options_db[$i], new SurveyAnswerOption());
-                    }
-             }
-
-            if ($questions_db[$i]->field_type == 3 and
-                count($answer_options_new[$i]) < count($answer_options_db[$i])) {
-
-                //less answer options in input than in database
-                //delete unnecessary answer options in database
-                for($j = count($answer_options_db[$i])-1; $j >= count($answer_options_new[$i]); $j--) {
-                    $answer_option = SurveyAnswerOption::findOrFail($answer_options_db[$i][$j]->id);
-                    $answer_option->delete();
-
-                    //also delete element in answer option array and reindex array keys
-                    unset($answer_options_db[$i][$j]);
-                    $answer_options_db[$i] = array_values(($answer_options_db[$i]));
-                }
-            }
-        }
-
-        //answer option arrays should have the same length now
-        for($i = 0; $i < count($questions_db); $i++) {
-            for($j = 0; $j < count($answer_options_db[$i]); $j++) {
-                $revision_option = new Revision($answer_options_db[$i][$j]);
-                $answer_options_db[$i][$j]->survey_question_id = $questions_db[$i]->id;
-                $answer_options_db[$i][$j]->answer_option = $answer_options_new[$i][$j];
-                $answer_options_db[$i][$j]->save();
-                $revision_option->save($answer_options_db[$i][$j]);
-            }
-        }
-
-        //look up for answers that have no answer cells for new questions
-        foreach($survey->getAnswers as $answer) {
-            $answer_cells = $answer->getAnswerCells;
-
-            //check if answer has answer cells for every question
-            if (count($questions_db) > count($answer_cells)) {
-                for ($i = count($questions_db)-1; $i >= count($answer_cells); $i--) {
-
-                    //no answer cell set for the answer and question, generate a default one and save it
-                    $answer_cell = new SurveyAnswerCell();
-                    $answer_cell->survey_question_id = $questions_db[$i]->id;
-                    $answer_cell->survey_answer_id = $answer->id;
-                    $answer_cell->answer = '';
-                    $answer_cell->save();
-                }
-            }
+            $questionToModify->save();
+            $questionRevision->save($questionToModify);
         }
 
         return Redirect::action('SurveyController@show', array('id' => $survey->id));
@@ -648,63 +504,13 @@ class SurveyController extends Controller
      */
 
     /**
-     * @param $a
-     * @param $b
-     * @return int
-     *
-     * compares to elements which have an "order" attribute
-     */
-    private function cmp($a, $b)
-    {
-        if ($a->order == $b->order) {
-            return 0;
-        }
-        return ($a->order < $b->order) ? -1 : 1;
-    }
-
-    /**
-     * used to make URL's into hyperlinks using a <a> tag
-     * @param string $text
-     * @return string
-     */
-    private function addLinks($text) {
-        $text = preg_replace('$(https?://[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
-            ' <a href="$1" target="_blank">$1</a> ',
-            $text);
-        $text = preg_replace('$(www\.[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
-            '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
-            $text);
-        return $text;
-    }
-
-    /**
-     * used to get the type of a question
-     * @param $value
-     * @return null|string
-     */
-    private function getFieldTypeName($value)
-    {
-        switch($value){
-            case 1:
-                return "Freitext";
-            case 2:
-                return "Checkbox";
-            case 3:
-                return "Dropdown";
-            case null:
-                return null;
-        }
-        return "unbekannter Feldtyp";
-    }
-    
-    /**
      * changes 0 to false and 1 to true
      * @param $boolean
      * @return null|string
      */
     private function booleanIntoText($boolean)
     {
-        switch ($boolean){
+        switch ($boolean) {
             case null:
                 return null;
             case 0:

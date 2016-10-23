@@ -139,7 +139,7 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <br class="visible-xs"> 
                                 <br class="visible-xs">
-                                {!! Form::submit(Lang::get('mainLang.logOut'), array('class'=>'btn btn-default btn-sm')) !!} {{-- Logout button --}}
+                                {!! Form::submit(Lang::get('mainLang.logOut'), array('class'=>'btn btn-default btn-sm', 'name' => 'logout')) !!} {{-- Logout button --}}
                             </div>
                         {!! Form::close() !!}
                     </li>

@@ -16,9 +16,12 @@
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.0",
-        "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*",
-        "orangehill/iseed": "dev-master"
+        "symfony/css-selector": "2.5.*",
+        "symfony/dom-crawler": "2.5.*",
+        "orangehill/iseed": "dev-master",
+        "phpspec/phpspec": "~2.1",
+        "orangehill/iseed": "dev-master",
+        "laracasts/integrated": "^0.15.6"
     },
     "autoload": {
         "classmap": [
@@ -31,7 +34,8 @@
     "autoload-dev": {
         "classmap": [
             "tests/TestCase.php",
-            "tests/LaraTestCase.php"
+            "tests/LaraTestCase.php",
+            "tests/traits/"
         ]
     },
     "scripts": {
