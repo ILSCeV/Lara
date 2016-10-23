@@ -9,6 +9,7 @@ use Lara\Library\Revision;
 use Lara\Person;
 use Lara\RevisionEntry;
 use Lara\SurveyAnswerCell;
+use Lara\Utilities;
 use Session;
 use Redirect;
 use DateTime;
@@ -86,7 +87,7 @@ class SurveyController extends Controller
             })
             ->values();
 
-        $required = $request->required? collect($request->required)->values(): $questions->map(function() {
+        $required = $request->required ? collect($request->required)->values() : $questions->map(function () {
             return false;
         });
 
@@ -251,8 +252,9 @@ class SurveyController extends Controller
         //evaluation part that shows below the survey, a statistic of answers of the users who already took part in the survey
 
         //maybe sort questions by order here
-        foreach($questions as $order => $question) {
-            switch($question->field_type) {
+        foreach ($questions as $order => $question) {
+
+            switch ($question->field_type) {
                 case QuestionType::FullText:
                     $evaluation[$order] = [];
                     break; //nothing to do here except pushing an element to the array that stands for the question
@@ -265,30 +267,32 @@ class SurveyController extends Controller
                         $evaluation[$order]['keine Angabe'] = 0;
                     };
                     //checkbox options with yes,no and no entry
-                    foreach($question->getAnswerCells as $answerCell) {
+                    foreach ($question->getAnswerCells as $answerCell) {
                         if ($answerCell->answer === 'Ja') {
                             $evaluation[$order]['Ja'] += 1;
-                        }
-                        else if($answerCell->answer === 'Nein') {
-                            $evaluation[$order]['Nein'] += 1;
-                        }
-                        else if($answerCell->answer === 'keine Angabe' and $question->is_required == false) {
-                            $evaluation[$order]['keine Angabe'] += 1;
+                        } else {
+                            if ($answerCell->answer === 'Nein') {
+                                $evaluation[$order]['Nein'] += 1;
+                            } else {
+                                if ($answerCell->answer === 'keine Angabe' and $question->is_required == false) {
+                                    $evaluation[$order]['keine Angabe'] += 1;
+                                }
+                            }
                         }
                     }
                     break;
                 case QuestionType::Custom:
                     $answer_options = $question->getAnswerOptions;
-                    $answer_options = (array) $answer_options;
+                    $answer_options = (array)$answer_options;
                     $answer_options = array_shift($answer_options);
-                    if($question->is_required == false) {
+                    if ($question->is_required == false) {
                         $prefer_not_to_say = new SurveyAnswerOption();
                         $prefer_not_to_say->answer_option = 'keine Angabe';
                         array_push($answer_options, $prefer_not_to_say);
                     }
                     foreach ($answer_options as $answer_option) {
                         $evaluation[$order][$answer_option->answer_option] = 0;
-                        foreach($question->getAnswerCells as $answerCell) {
+                        foreach ($question->getAnswerCells as $answerCell) {
                             if ($answer_option->answer_option === $answerCell->answer) {
                                 $evaluation[$order][$answer_option->answer_option] += 1;
                             }
@@ -298,11 +302,10 @@ class SurveyController extends Controller
             }
         }
 
-
         //ignore html tags in the description
         $survey->description = htmlspecialchars($survey->description, ENT_NOQUOTES);
         //if URL is in the description, convert it to clickable hyperlink (<a> tag)
-        $survey->description = $this->addLinks($survey->description);
+        $survey->description = Utilities::surroundLinksWithTags($survey->description);
 
         //return all the gathered information to the survey view
         return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
@@ -360,8 +363,10 @@ class SurveyController extends Controller
             && $request->password == $request->password_confirmation;
         if ($deletePassword) {
             $survey->password = '';
-        } else if ($requestContainsPassword) {
-            $survey->password = Hash::make($request->password);
+        } else {
+            if ($requestContainsPassword) {
+                $survey->password = Hash::make($request->password);
+            }
         }
 
         //save the updates
@@ -372,9 +377,9 @@ class SurveyController extends Controller
         $newQuestions = collect($request->questionText);
         $newAnswerOptions = $request->answerOption;
 
-        $required = $newQuestions->map(function($question, $index) use($request) {
-            if(isset($request->required) && isset($request->required[$index])) {
-                return $request->required[$index]? 1 : 0;
+        $required = $newQuestions->map(function ($question, $index) use ($request) {
+            if (isset($request->required) && isset($request->required[$index])) {
+                return $request->required[$index] ? 1 : 0;
             }
             return 0;
         });
@@ -398,7 +403,13 @@ class SurveyController extends Controller
 
         $newlyCreatedQuestions = $newQuestions->diffKeys($oldQuestionTexts);
         $deletedQuestions = $oldQuestionTexts->diffKeys($newQuestions);
-        $nonModifiedQuestions = $newQuestions->filter(function ($text, $order) use ($oldQuestions, $types, $required, $newAnswerOptions, $oldAnswerOptions) {
+        $nonModifiedQuestions = $newQuestions->filter(function ($text, $order) use (
+            $oldQuestions,
+            $types,
+            $required,
+            $newAnswerOptions,
+            $oldAnswerOptions
+        ) {
             $isSameText = $oldQuestions->get($order)->question === $text;
             if (!$isSameText) {
                 return false;
@@ -458,18 +469,18 @@ class SurveyController extends Controller
                 });
                 $deletedOptions = $optionTexts->diffKeys($newOptions);
                 $newlyCreatedOptions = $newOptions->diffKeys($optionTexts);
-                $unmodifiedOptions = $optionTexts->filter(function($option, $optionIndex) use($newOptions) {
+                $unmodifiedOptions = $optionTexts->filter(function ($option, $optionIndex) use ($newOptions) {
                     return $newOptions[$optionIndex] === $option;
                 });
                 $modifiedOptions = $optionTexts->diff($unmodifiedOptions);
 
-                foreach($deletedOptions as $optionIndex => $option) {
+                foreach ($deletedOptions as $optionIndex => $option) {
                     Revision::deleteWithRevision($oldAnswerOptions->get(index)->get($optionIndex));
                 }
-                foreach($newlyCreatedOptions as $optionIndex => $option) {
+                foreach ($newlyCreatedOptions as $optionIndex => $option) {
                     SurveyAnswerOption::make($questionToModify, $option);
                 }
-                foreach($modifiedOptions as $optionIndex => $option) {
+                foreach ($modifiedOptions as $optionIndex => $option) {
                     $oldOption = $oldAnswerOptions->get($index)->get($optionIndex);
 
                     $optionRevision = new Revision($oldOption);
@@ -491,21 +502,6 @@ class SurveyController extends Controller
     /*
      *  -------------------- END OF REST-CONTROLLER --------------------
      */
-
-    /**
-     * used to make URL's into hyperlinks using a <a> tag
-     * @param string $text
-     * @return string
-     */
-    private function addLinks($text)
-    {
-        $text = preg_replace('$(https?://[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
-            ' <a href="$1" target="_blank">$1</a> ',
-            $text);
-        return preg_replace('$(www\.[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
-            '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
-            $text);
-    }
 
     /**
      * changes 0 to false and 1 to true
