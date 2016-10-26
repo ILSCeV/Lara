@@ -22,7 +22,7 @@ $("#button-create-submit").add("#button-edit-submit").click(function () {
     }
 
     if (errors.length > 0) {
-        showErrorModal(errors.map(err => "<p>" + err + "</p>").join("\n"));
+        bootbox.alert(errors.map(err => "<p>" + err + "</p>").join("\n"))
         return false;
     }
 });

@@ -158,6 +158,17 @@ class LoginController extends Controller {
             }   
         }
 
+// BLACKLIST - following IDs will not be able to login
+    // 1708 = public account for using bc-wiki
+    if (Input::get('username') === "1708" ) {          
+                Session::put('message', 'Ne ne ne, nicht mit dieser Clubnummer, sie ist ja nur fur bc-Wiki zu benutzen ;)');
+                Session::put('msgType', 'danger');
+
+                Log::warning('bc-Wiki login used (1708), access denied.');
+                
+                return Redirect::back();                
+            
+        }
 
 // CONNECTING TO LDAP SERVER
 

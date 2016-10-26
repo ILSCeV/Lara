@@ -24,16 +24,18 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \Lara\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
-            \Lara\Http\Middleware\Language::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Lara\Http\Middleware\EncryptCookies::class,
+            \Lara\Http\Middleware\Language::class,
             \Lara\Http\Middleware\VerifyCsrfToken::class,
         ],
 
         'api' => [
             'throttle:60,1',
+            'bindings',
         ],
     ];
 
@@ -45,15 +47,19 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Lara\Http\Middleware\Authenticate::class,
+        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
+        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Lara\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
         //custom middleware
         'creator' => \Lara\Http\Middleware\Creator::class,
-        'privateEntry' => \Lara\Http\Middleware\PrivateEntry::class,         // _ is used because "Private" would be a taken word in php: "private function ..."
+
+        // _ is used because "Private" would be a taken word in php: "private function ..."
+        'privateEntry' => \Lara\Http\Middleware\PrivateEntry::class,    
+             
         'deadlineSurvey' => \Lara\Http\Middleware\DeadlineSurvey::class,
         'rejectGuests' => \Lara\Http\Middleware\RejectGuests::class,
 

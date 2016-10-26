@@ -55,6 +55,11 @@
             <?php $classString = ""; ?>
         @endif
 
+        {{-- highlight with cal-month-my-event class if the signed in user has an entry in this event --}}
+        @if((Session::has('userId') AND $clubEvent->hasShift($clubEvent->getSchedule->id, Session::get('userId'))))
+            <?php $classString .= " cal-month-my-event"; ?>
+        @endif
+
         {{-- Filter --}}
         @if ( empty($clubEvent->evnt_show_to_club) )
             {{-- Workaround for older events: if filter is empty - use event club data instead --}}

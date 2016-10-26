@@ -90,39 +90,39 @@ $userCanEditDueToRole
                 height: auto
             }
 
-        <?php $count = 2; ?>
-        @foreach($questions as $question)
-            <?php $count += 1; ?>
+        @foreach($questions->values() as $index => $question)
              @if($question->is_required == 1)
               {{--if a question is set to required show a * if the user didn't fill it in--}}
-                #survey-answer td:nth-of-type({{$count}}):before {
-                        content: "{{$question->question}} *";
-                        float: left;
-                        display: inline-block;
-                        overflow: hidden;
-                        white-space: normal;
-                        height: 100%;
-                    }
+                #survey-answer td:nth-of-type({{$index + 3}}):before {
+                content: "{{$question->question}} *";
+                float: left;
+                display: inline-block;
+                overflow: hidden;
+                white-space: normal;
+                height: 100%;
+            }
 
-                    @else
-                #survey-answer td:nth-of-type({{$count}}):before {
-                        content: "{{$question->question}}";
-                        float: left;
-                        display: inline-block;
-                        overflow: hidden;
-                        white-space: normal;
-                        height: 100%;
-                    }
-            @endif
-        @endforeach
+            @else
+                #survey-answer td:nth-of-type({{$index + 3}}):before {
+                content: "{{$question->question}}";
+                float: left;
+                display: inline-block;
+                overflow: hidden;
+                white-space: normal;
+                height: 100%;
+            }
+
+        @endif
+    @endforeach
         }
     </style>
 @stop
 @section('moreScripts'){{--collection of used java script functions to clean up the code--}}
-    <script src="{{ asset('js/surveyView-scripts.js') }}"></script>
+<script src="{{ asset('js/surveyView-scripts.js') }}"></script>
+<script src="{{ asset('js/es6-promise.min.js') }}"></script>
 @stop
 @section('content')
-    
+
     <div class="panel no-padding">
         <div class="panel-title-box">
             <h4 class="panel-title">
@@ -145,11 +145,12 @@ $userCanEditDueToRole
                 {{ trans('mainLang.description') }}: {!! $survey->description !!}
             @endif
             <br>
-                {{ trans('mainLang.surveyDeadlineTo') }}: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} {{ trans('mainLang.um') }}
+            {{ trans('mainLang.surveyDeadlineTo') }}
+            : {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} {{ trans('mainLang.um') }}
             {{ date("H:i", strtotime($survey->deadline)) }}.
             <br>@if(count($answers) === 0) {{ trans('mainLang.noPersonAnswered') }} @endif
-                @if(count($answers) === 1) {{ trans('mainLang.onePersonAnswered') }} @endif
-                @if(count($answers) > 1) {{ trans('mainLang.fewPersonAnswered1') }} {{count($answers)}} {{ trans('mainLang.fewPersonAnswered2') }} @endif
+            @if(count($answers) === 1) {{ trans('mainLang.onePersonAnswered') }} @endif
+            @if(count($answers) > 1) {{ trans('mainLang.fewPersonAnswered1') }} {{count($answers)}} {{ trans('mainLang.fewPersonAnswered2') }} @endif
         </div>
     </div>
 
@@ -157,7 +158,7 @@ $userCanEditDueToRole
     <br>
 
 
-     {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id], 'class' => 'store', 'name' => 'store']) !!}
+    {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id], 'class' => 'store', 'name' => 'store']) !!}
 
     <div class="panel panel-warning">
         @if( $survey->password != '')
@@ -225,33 +226,36 @@ $userCanEditDueToRole
                                 </div>
                             </td>
                             @foreach($questions as $key => $question)
-                                <input type="hidden" id="field_type{{$question->order-1}}" value="{{$question->field_type}}" />
-                                <input type="hidden" id="question_order" value="{{$question->order}}" />
-                                <input type="hidden" id="question_required{{$question->order}}" value="{{$question->is_required}}" />
+                                <input type="hidden" id="field_type{{$question->order-1}}"
+                                       value="{{$question->field_type}}"/>
+                                <input type="hidden" id="question_order" value="{{$question->order}}"/>
+                                <input type="hidden" id="question_required{{$question->order}}"
+                                       value="{{$question->is_required}}"/>
                                 <td class="question{{$question->order}}" style="vertical-align: middle;">
-                                    @if($question->field_type == 1)
-                                        <!-- Freitext -->
-                                        @if(!$question->is_required)
-                                            <!--Answer not required-->
-                                            {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => Lang::get('mainLang.addAnswerHere'), 'autocomplete' => 'off']) !!}
-                                        @else
-                                            <!--Answer* required-->
-                                            {!! Form::text('answers['.$key.']', null, ['required' => 'true', 'rows' => 2, 'class' => 'form-control', 'placeholder' => Lang::get('mainLang.addAnswerHere'), 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
-                                        @endif
-                                    @elseif($question->field_type == 2)
-                                        <!-- Ja/Nein -->
-                                        {{ Form::radio('answers['.$key.']', 1, '' , ['id' => 'radio'.$question->order.'-0']) }} {{ trans('mainLang.yes') }}
-                                        @if(!$question->is_required)
-                                            <!--Answer not required-->
-                                            {{ Form::radio('answers['.$key.']', 0, '' , ['id' => 'radio'.$question->order.'-1']) }} {{ trans('mainLang.no') }}
-                                            {{ Form::radio('answers['.$key.']', -1, true, ['id' => 'radio'.$question->order.'-2'])}} {{ trans('mainLang.noInformation') }}
-                                        @else
-                                            <!--Answer* required-->
-                                            {{ Form::radio('answers['.$key.']', 0, true, ['id' => 'radio'.$question->order.'-1']) }} {{ trans('mainLang.no') }}
-                                        @endif
-                                    @elseif($question->field_type == 3)
-                                        <!-- Dropdown -->
-                                        <select class="form-control" id="options{{$question->order}}" name="answers[{{$key}}]" style="font-size: 13px;">
+                                @if($question->field_type == 1)
+                                    <!-- Freitext -->
+                                    @if(!$question->is_required)
+                                        <!--Answer not required-->
+                                        {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => Lang::get('mainLang.addAnswerHere'), 'autocomplete' => 'off']) !!}
+                                    @else
+                                        <!--Answer* required-->
+                                        {!! Form::text('answers['.$key.']', null, ['required', 'rows' => 2, 'class' => 'form-control', 'placeholder' => Lang::get('mainLang.addAnswerHere'), 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
+                                    @endif
+                                @elseif($question->field_type == 2)
+                                    <!-- Ja/Nein -->
+                                    {{ Form::radio('answers['.$key.']', 1, '' , ['id' => 'radio'.$question->order.'-0']) }} {{ trans('mainLang.yes') }}
+                                    @if(!$question->is_required)
+                                        <!--Answer not required-->
+                                        {{ Form::radio('answers['.$key.']', 0, '' , ['id' => 'radio'.$question->order.'-1']) }} {{ trans('mainLang.no') }}
+                                        {{ Form::radio('answers['.$key.']', -1, true, ['id' => 'radio'.$question->order.'-2'])}} {{ trans('mainLang.noInformation') }}
+                                    @else
+                                        <!--Answer* required-->
+                                        {{ Form::radio('answers['.$key.']', 0, true, ['id' => 'radio'.$question->order.'-1']) }} {{ trans('mainLang.no') }}
+                                    @endif
+                                @elseif($question->field_type == 3)
+                                    <!-- Dropdown -->
+                                        <select class="form-control" id="options{{$question->order}}"
+                                                name="answers[{{$key}}]" style="font-size: 13px;">
                                             @if(!$question->is_required)
                                                 <option>{{ trans('mainLang.noInformation') }}</option>
                                             @endif
@@ -263,9 +267,10 @@ $userCanEditDueToRole
                                 </td>
                             @endforeach
                             <td class="tdButtons " id="panelNoShadow">
-                                <input type="submit" class="btn btn-primary fa fa-floppy-o answer_button" id="noMarginMobile" value=""
-                                        style="display: inline-block; height: 34px;">
-                               {!! Form::close() !!}
+                                <input type="submit" class="btn btn-primary fa fa-floppy-o answer_button"
+                                       id="noMarginMobile" value=""
+                                       style="display: inline-block; height: 34px;">
+                                {!! Form::close() !!}
                             </td>
                         </tr>
                         {!! Form::open(['action' => ['SurveyAnswerController@update', $survey->id,  'id' => '' ], 'class' => 'update']) !!}
@@ -288,97 +293,47 @@ $userCanEditDueToRole
                                             @if($cell->answer == null || $cell->answer == "")
                                                 <td class="singleAnswer emtpyCell">
                                             @else
-                                            <td class="singleAnswer">
-                                            @endif
-                                                {{$cell->answer}}
-                                            </td>
-                                        @endforeach
-                                        @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
-                                            @if($survey->deadline >= date("Y-m-d H:i:s") OR $userCanEditDueToRole)
-                                            <!--Edid Delete Buttons-->
-                                                <td class="tdButtons " >
-                                                    <input href="#"
-                                                       class="editButton btn btn-primary fa fa-pencil"
-                                                       id="editButton{{$answer->id}}"
-                                                       value=""
-                                                       style="height: 34px; width: 43px;"
-                                                       type="button"
-                                                       data-toggle="tooltip"
-                                                       data-placement="bottom"
-                                                       onclick="change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
-                                                    <i id="spinner{{$answer->id}}" class="fa fa-spinner fa-spin fa-2x hidden"></i>
-
-                                                    <a href="{{$survey->id}}/answer/{{$answer->id}}"
-                                                       class="btn btn-default deleteRow"
-                                                       data-toggle="tooltip"
-                                                       data-placement="bottom"
-                                                       data-method="delete"
-                                                       data-token="{{csrf_token()}}"
-                                                       rel="nofollow"
-                                                       data-confirm="{{ trans('mainLang.confirmDeleteAnswer') }}">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
+                                                <td class="singleAnswer">
+                                                    @endif
+                                                    {{$cell->answer}}
                                                 </td>
-                                            @endif
-                                        @else
-                                            <td class="tdButtons panel" id="panelNoShadow">
-                                            </td>
-                                        @endif
+                                                @endforeach
+                                                @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
+                                                    @if($survey->deadline >= date("Y-m-d H:i:s") OR $userCanEditDueToRole)
+                                                    <!--Edit Delete Buttons-->
+                                                        <td class="tdButtons ">
+                                                            <input href="#"
+                                                                   class="editButton btn btn-primary fa fa-pencil"
+                                                                   id="editButton{{$answer->id}}"
+                                                                   value=""
+                                                                   style="height: 34px; width: 43px;"
+                                                                   type="button"
+                                                                   data-toggle="tooltip"
+                                                                   data-placement="bottom"
+                                                                   onclick="change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
+                                                            <i id="spinner{{$answer->id}}"
+                                                               class="fa fa-spinner fa-spin fa-2x hidden"></i>
+
+                                                            <a href="{{$survey->id}}/answer/{{$answer->id}}"
+                                                               class="btn btn-default deleteRow"
+                                                               data-toggle="tooltip"
+                                                               data-placement="bottom"
+                                                               data-token="{{csrf_token()}}"
+                                                               name="deleteRow"
+                                                               rel="nofollow"
+                                                               data-confirm="{{ trans('mainLang.confirmDeleteAnswer') }}">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    @endif
+                                                @else
+                                                    <td class="tdButtons panel" id="panelNoShadow">
+                                                    </td>
+                                                @endif
                                     </tr>
                                 @endforeach
-
                                 {{ Form::close() }}
-                                <!-- Start of evaluation -->
-                                {{-- shows a statistic of answers of the users who already took part in the survey--}}
-
-                                <?php $i = 0; ?>
-                                    @if(!empty(array_filter($evaluation)))
-                                @foreach($answers as $key => $answer)
-                                    @if($i == 0)
-                                        <tr>
-                                            <td class="transparent background emtpyCell">&nbsp;</td>
-                                            <td class="transparent background emtpyCell">&nbsp;</td>
-                                            @foreach($answer->getAnswerCells as $cell)
-                                                <td class="transparent background">&nbsp;</td>
-                                            @endforeach
-                                        </tr>
-                                        <tr id="evaluation">
-                                            <td class="evaluation_heading" id="EvaluationColor">
-                                                {{ trans('mainLang.evaluation') }}
-                                            </td>
-                                            <td class="emtpyCell    " id="EvaluationColor"></td>
-                                            @foreach($evaluation as $eva_question)
-                                                @if($eva_question == null)
-                                                    <td class="mobileMarginTop emtpyCell" id="EvaluationColor">
-                                                @else
-                                                    <td class="mobileMarginTop" id="EvaluationColor">
-                                                @endif
-                                                    <div>
-                                                        @foreach($eva_question as $answer_option => $counter)
-                                                                @if($counter == 1)
-                                                                    @if($answer_option === 'keine Angabe')
-                                                                        <div>{{$counter}} {{ trans('mainLang.personDidNotAnswer') }}</div>
-                                                                    @else
-                                                                        <div>{{$counter}} {{ trans('mainLang.personAnswered') }}: {{$answer_option}}</div>
-                                                                    @endif
-                                                                @else
-                                                                    @if($answer_option === 'keine Angabe')
-                                                                        <div>{{$counter}} {{ trans('mainLang.personsDidNotAnswer') }}</div>
-                                                                    @else
-                                                                        <div>{{$counter}} {{ trans('mainLang.personsAnswered') }}: {{$answer_option}}</div>
-                                                                    @endif
-                                                                @endif
-                                                        @endforeach
-                                                    </div>
-                                                </td>
-                                            @endforeach
-                                            <td class="emtpyCell" id="EvaluationColor" ></td>
-                                        </tr>
-                                    @endif
-                                    <?php $i += 1; ?>
-                                @endforeach
-                                            @endif
-                                <!-- End of evaluation -->
+                                @include('partials.survey.view.evaluation')
                             @endif
                         @endif
                         </tbody>
@@ -389,13 +344,13 @@ $userCanEditDueToRole
     </div>
 
 
-{{---------------------------------------------change-history-----------------------------------------------------}}
+    {{---------------------------------------------change-history-----------------------------------------------------}}
     @if(!empty($userId))
         @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
-    	{{--only if the survey is public or if the user is the creator of the survey--}}
+            {{--only if the survey is public or if the user is the creator of the survey--}}
             @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
-			{{--only if the results are always visiable or the user has already taken part--}}
-            {{--they can see the change history of the survey--}}
+                {{--only if the results are always visiable or the user has already taken part--}}
+                {{--they can see the change history of the survey--}}
                 <br>
                 <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
                 <a id="show-hide-history" class="text-muted hidden-print" href="#">
@@ -403,20 +358,21 @@ $userCanEditDueToRole
                 </a>
 
                 <div class="panel hide" id="change-history">
-                        <table class="table table-responsive table-hover table-condensed">
-                            <thead>
-                            <tr>
-                                <th>{{ trans('mainLang.who') }}?</th>
-                                <th>{{ trans('mainLang.summary') }}</th>
-                                <th>{{ trans('mainLang.affectedColumn') }}</th>
-                                <th>{{ trans('mainLang.oldValue') }}</th>
-                                <th>{{ trans('mainLang.newValue') }}</th>
-                                <th>{{ trans('mainLang.when') }}?</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($revisions as $key_revision => $revision)
-                            <tr id="tr-header-{{$key_revision}}" onclick="toggle({{$key_revision}}, {{count($revision['revision_entries'])}})">
+                    <table class="table table-responsive table-hover table-condensed">
+                        <thead>
+                        <tr>
+                            <th>{{ trans('mainLang.who') }}?</th>
+                            <th>{{ trans('mainLang.summary') }}</th>
+                            <th>{{ trans('mainLang.affectedColumn') }}</th>
+                            <th>{{ trans('mainLang.oldValue') }}</th>
+                            <th>{{ trans('mainLang.newValue') }}</th>
+                            <th>{{ trans('mainLang.when') }}?</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($revisions as $key_revision => $revision)
+                            <tr id="tr-header-{{$key_revision}}"
+                                onclick="toggle({{$key_revision}}, {{count($revision['revision_entries'])}})">
                                 <td>{{$revision['creator_name']}}</td>
                                 <td>{{$revision['summary']}}</td>
                                 <td><i id="arrow-icon{{$key_revision}}" class="fa fa-caret-right"></i></td>
@@ -424,7 +380,7 @@ $userCanEditDueToRole
                                 <td></td>
                                 <td>{{$revision['created_at']}}</td>
                             </tr>
-                                @foreach($revision['revision_entries'] as $key_entry => $entry)
+                            @foreach($revision['revision_entries'] as $key_entry => $entry)
                                 <tr id="tr-data-{{$key_revision}}{{$key_entry}}" style="display:none">
                                     <td></td>
                                     <td></td>
@@ -433,10 +389,10 @@ $userCanEditDueToRole
                                     <td>{{$entry['new_value']}}</td>
                                     <td></td>
                                 </tr>
-                                @endforeach
                             @endforeach
-                            </tbody>
-                        </table>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             @endif
         @endif

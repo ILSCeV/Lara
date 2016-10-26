@@ -5,6 +5,7 @@ namespace Lara\Http\Controllers;
 use Illuminate\Http\Request;
 use Hash;
 use Lara\Library\Revision;
+use Lara\QuestionType;
 use Session;
 use Redirect;
 use Input;
@@ -59,9 +60,10 @@ class SurveyAnswerController extends Controller
 		$revision_answer = new Revision($survey_answer);
         // prevent guestentries with ldapId
         // prevent entries with foreign usernames but valid ldap_id
-        if(Session::has('userId') AND Session::get('userName')  == $input->name) {
+        if(Session::has('userId') && Session::get('userName')  === $input->name) {
             $survey_answer->creator_id = $input->ldapId;
-        } else {
+        }
+        else {
             $survey_answer->creator_id = null;
         }
 
@@ -79,11 +81,11 @@ class SurveyAnswerController extends Controller
             $survey_answer_cell->survey_question_id = $question->id;
             $survey_answer_cell->survey_answer_id = $survey_answer->id;
             switch($question->field_type) {
-                case 1: //Freitext
+                case QuestionType::FullText :
                     $survey_answer_cell->answer = $input->answers[$key];
                     break;
-                case 2: //Checkbox (Ja/Nein)
-                    if($input->answers[$key] == -1) {
+                case QuestionType::YesNo :
+                    if ($input->answers[$key] == -1) {
                         $survey_answer_cell->answer = "keine Angabe";
                     } elseif ($input->answers[$key] == 0) {
                         $survey_answer_cell->answer = "Nein";
@@ -91,8 +93,8 @@ class SurveyAnswerController extends Controller
                         $survey_answer_cell->answer = "Ja";
                     }
                     break;
-                case 3: //Dropdown
-                    if($input->answers[$key] == -1) {
+                case QuestionType::Custom :
+                    if ($input->answers[$key] == -1) {
                         $survey_answer_cell->answer = "keine Angabe";
                     } else {
                         $survey_answer_cell->answer = $input->answers[$key];
@@ -192,8 +194,16 @@ class SurveyAnswerController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($surveyid, $id)
+    public function destroy($surveyid, $id, Request $input)
     {
+
+        $survey = Survey::findOrFail($surveyid);
+        if ($survey->password !== ''
+            && !Hash::check( $input->password, $survey->password ) ) {
+            Session::put('message', 'Fehler: das eingegebene Passwort war leider falsch.');
+            Session::put('msgType', 'error');
+            return Redirect::action('SurveyController@show', array('id' => $surveyid));
+        }
         $answer = SurveyAnswer::findOrFail($id);
         $revision_answer = new Revision($answer);
 

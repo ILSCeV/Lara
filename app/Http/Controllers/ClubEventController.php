@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
 
+use Lara\Utilities;
 use Session;
 use Cache;
 use DateTime;
@@ -217,9 +218,7 @@ class ClubEventController extends Controller
         $clubEvent = ClubEvent::with('getPlace')
                               ->findOrFail($id);
         
-        if(!Session::has('userId') 
-        AND $clubEvent->evnt_is_private==1)
-            
+        if(!Session::has('userId') && $clubEvent->evnt_is_private==1)
         {
             Session::put('message', Config::get('messages_de.access-denied'));
             Session::put('msgType', 'danger');
@@ -232,8 +231,8 @@ class ClubEventController extends Controller
         $clubEvent->evnt_private_details = htmlspecialchars($clubEvent->evnt_private_details, ENT_NOQUOTES);
 
         //if URL is in one of the info boxes, convert it to clickable hyperlink (<a> tag)
-        $clubEvent->evnt_public_info = $this->addLinks($clubEvent->evnt_public_info);
-        $clubEvent->evnt_private_details = $this->addLinks($clubEvent->evnt_private_details);
+        $clubEvent->evnt_public_info = Utilities::surroundLinksWithTags($clubEvent->evnt_public_info);
+        $clubEvent->evnt_private_details = Utilities::surroundLinksWithTags($clubEvent->evnt_private_details);
     
         $schedule = Schedule::findOrFail($clubEvent->getSchedule->id);
 
@@ -502,22 +501,6 @@ class ClubEventController extends Controller
         
         return $event;
     }
-
-    /**
-     * used to make URL's into hyperlinks using a <a> tag
-     * @param string $text
-     * @return string
-     */
-    private function addLinks($text) {
-        $text = preg_replace('$(https?://[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
-            ' <a href="$1" target="_blank">$1</a> ',
-            $text);
-        $text = preg_replace('$(www\.[a-z0-9_./?=&#-]+)(?![^<>]*>)$i',
-            '<a target="_blank" href="http://$1"  target="_blank">$1</a> ',
-            $text);
-        return $text;
-    }
-
 }
 
 
