@@ -2,6 +2,9 @@
 
 namespace Lara\Http\Controllers;
 
+use DateTime;
+use DatePeriod;
+use DateInterval;
 use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
 
@@ -39,7 +42,17 @@ class MonthController extends Controller {
 	*/
 	public function showMonth($year, $month) {
 		// Create a string of the start of the month
-        $monthStart = $year.$month.'01'; 
+        $monthStart = $year.$month.'01';
+
+        $firstDay = new DateTime($monthStart);
+        if ($firstDay->format('w') !== '1') {
+            $firstDay->modify('previous Monday');
+        }
+
+        $lastDay = new DateTime($year . $month . $firstDay->format('t'));
+        if ($lastDay->format('w' !== 0)) {
+            $lastDay->modify('next Sunday');
+        }
 
         // String of end of month
 		$monthEnd = $year.$month.'31';  
@@ -57,29 +70,34 @@ class MonthController extends Controller {
 		$startDay = date("N", $startStamp);
 		
 		// Int for the lst day
-		$endDay = date("N", mktime(0,0,0,date("n",$usedTime),$daysOfMonth,date("Y",$usedTime))); 
+		$endDay = date("N", mktime(0,0,0,date("n",$usedTime),$daysOfMonth,date("Y",$usedTime)));
 
-		$date=array(  'year' => $year, 
-		              'month' => $month,
-					  'daysOfMonth' => $daysOfMonth, 	// Change to generated datetime from time input
-					  'startDay' =>$startDay,
-					  'endDay'=>$endDay,
-					  'startStamp'=>$startStamp,
-					  'usedTime'=>$usedTime,
-					  'monthName'=>date("F", $usedTime) );
+        $date = array(
+            'year' => $year,
+            'month' => $month,
+            'daysOfMonth' => $daysOfMonth,    // Change to generated datetime from time input
+            'startDay' => $startDay,
+            'endDay' => $endDay,
+            'startStamp' => $startStamp,
+            'usedTime' => $usedTime,
+            'monthName' => date("F", $usedTime),
+            'firstDay' => $firstDay,
+            'lastDay' => $lastDay
+        );
 
-		$events = ClubEvent::where('evnt_date_start','>=',$monthStart)
-						   ->where('evnt_date_start','<=',$monthEnd)
+		$events = ClubEvent::where('evnt_date_start','>=', $firstDay->format("Y-m-d"))
+						   ->where('evnt_date_start','<=', $lastDay->format("Y-m-d"))
 						   ->orderBy('evnt_date_start')
 						   ->orderBy('evnt_time_start')
 						   ->get();
 
-		$surveys = Survey::where('deadline','>=',$monthStart)
-							->where('deadline','<=',$monthEnd)
+		$surveys = Survey::where('deadline','>=', $firstDay->format("Y-m-d"))
+							->where('deadline','<=', $lastDay->format("Y-m-d"))
 							->orderBy('deadline')
 							->get();
 
-		return View::make('monthView', compact('events', 'date', 'surveys'));
+        $mondays = new DatePeriod($firstDay, new DateInterval('P1W'), $lastDay->modify('+1 day'));
+		return View::make('monthView', compact('events', 'date', 'surveys', 'firstDay', 'lastDay', 'mondays'));
 	}
 }
 

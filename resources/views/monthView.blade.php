@@ -70,84 +70,40 @@
             </div>
         </div>
 
+        <div class="calendarRow clearfix group noHeightMobile hidden-xs">
+            <!--This is an empty row-->
+            <!--Without this row, the first real calendar row would disapear-->
+        </div>
         <!--Print Weeks on left side-->
-        <?php $simpleDate = 1; ?>
-        @for($i = 1; $i <= $date['daysOfMonth'] + ($date['startDay'] - 1) + (7 - $date['endDay']); $i++)
-            <!--define row-->
-            @if($i == 1)
-                <div class="calendarRow clearfix group noHeightMobile hidden-xs">
-                    <!--This is an empty row-->
-                    <!--Without this row, the first real calendar row would disapear-->
-                </div>
-                <div class="calendarRow clearfix group height10vh ">
-            @elseif((date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)  
-                 && (date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W")))
+        @foreach($mondays as $weekStart)
+            <?php $weekEnd = new DateTime($weekStart->format('Y-m-d')); $weekEnd->modify('+1 week') ?>
+            @if ($weekStart->format('W') === date('W'))
+                {{-- Current week --}}
                 <div class="calendarRow clearfix group WeekMarkerRow" >
-            
-            @elseif( $i == 8 || $i == 15 || $i == 22 || $i == 29 || $i == 36)
-                <div class="calendarRow clearfix group">
-            @endif
-                       
-            <!--End define row at bottom-->
-            <!-- Weeks on left side -->
-            @if (date("N", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) == 1)
-            @if ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )
-                <!--Current Week -->
-                <div class="calendarWeek WeekMarker">
-            @else
-                <!--Every other week-->
-                <div class="calendarWeek">
-                    @endif
-                    <a href="{!! Request::getBasePath() !!}/calendar/{!! $date['year'] !!}/KW{{ date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) }}">
-                        <span class="onlyOnMobile">{{ trans('mainLang.Cw') }}</span> {{ date("W", strtotime($i - $date['startDay'] . " day", $date['startStamp'])) }}.
-                    </a>
-                </div>
-            @endif
-
-            @if($i - $date['startDay'] >= 0 AND $i-$date['startDay'] < $date['daysOfMonth'])
-                @if(date("Y-m-d", strtotime($i - $date['startDay']." day", $date['startStamp'])) === date( "Y-m-d" ) )
-                    <div class="thisMonth today-marker-today custom-md-85">
-                    <!--The actual date of today marked in dark gray-->
-                @elseif ( date('W', strtotime($i - $date['startDay'] . ' day', $date['startStamp'])) === date("W") )
-                    <!--The current week marked in light gray-->
-                    <div class="thisMonth today-marker custom-md-85">
-                @else
-                    <!--All regular days in this month, white-->
-                    <div class="thisMonth custom-md-85">
-                @endif
-                        <div class="cell10 padleft">
-                            @if(Session::has('userGroup'))
-                                <a href="{{ Request::getBasePath() }}/event/{{ $date['year']}}/{{ $date['month'] }}/{{ strftime("%d", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}/0/create">
-                                    {{$simpleDate}}
-                                </a>
-                            @else
-                                {{$simpleDate}}
-                            @endif
-
-                            <?php $simpleDate++; ?>
-                            <small class="visible-xs visible-md visible-sm">
-                                {{{ strftime("%a", strtotime($i - $date['startDay']." day", $date['startStamp'])) }}}
-                            </small>
-{{-- HERE --}}
-                        </div>
-
-                        <div class="cell90">
-                            @include( 'partials.monthCell', $date)
-                        </div>
+                    <div class="calendarWeek WeekMarker">
+                        <a href="{!! Request::getBasePath() !!}/calendar/{{$weekStart->format('Y\/\K\WW')}}">
+                            <span class="onlyOnMobile">{{ trans('mainLang.Cw') }}</span> {{$weekStart->format('W')}}.
+                        </a>
                     </div>
+                    @foreach(new DatePeriod($weekStart, new DateInterval('P1D'), $weekEnd) as $weekDay)
+                        @include('partials.weekRow')
+                    @endforeach
+                </div>
             @else
-                <!--Days not in this month, no color-->
-                <div class="otherMonth custom-md-85 empty"></div>
-            @endif
-            
-            <!-- if sunday then end this line -->
-            @if(date("N",date("j", strtotime($i-$date['startDay']." day", $date['startStamp']))) == 7)
-            @endif
-
-            @if($i == 7 || $i == 14 || $i == 21 || $i == 28 || $i == 35 || $i == 42)
+                {{-- Not current week --}}
+                <div class="calendarRow clearfix group">
+                    <div class="calendarWeek ">
+                        <a href="{!! Request::getBasePath() !!}/calendar/{{$weekStart->format('Y\/\K\WW')}}">
+                            <span class="onlyOnMobile">{{ trans('mainLang.Cw') }}</span> {{$weekStart->format('W')}}.
+                        </a>
+                    </div>
+                    @foreach(new DatePeriod($weekStart, new DateInterval('P1D'), $weekEnd) as $weekDay)
+                        @include('partials.weekRow')
+                    @endforeach
                 </div>
             @endif
-        @endfor
+        @endforeach
+
     </div>
 
     <div class="col-md-12 col-xs-12">
