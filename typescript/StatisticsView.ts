@@ -5,39 +5,23 @@ function getRowName(a: string) {
 }
 
 function getRowShifts(a: string) {
-    let text = $(a).children("td").eq(1).text();
-    return parseInt(text);
+    return $(a).children("td").eq(1).text();
 }
 
 //inspired by http://stackoverflow.com/questions/3160277/jquery-table-sort
-$("[data-sort='name']").click(function () {
-    this.ascending = !this.ascending;
+$(".fa-sort").click(function () {
+    let isAscending = $(this).hasClass('fa-sort-asc');
+    let rowCatcher = $(this).parent().data('sort') === 'name' ? getRowName : getRowShifts;
     let $table = $(this).parents("table");
     let rows = $table
         .find("tbody")
         .find("tr")
         .toArray()
-        .sort((a, b) => getRowName(a).localeCompare(getRowName(b)));
-    if (this.ascending) {
+        .sort((a, b) => rowCatcher(a).localeCompare(rowCatcher(b), undefined, {'numeric': true}));
+    if (!isAscending) {
         rows.reverse();
     }
-    rows.forEach(function (row) {
-        $table.append($(row));
-    });
-});
-
-$("[data-sort='shifts']").click(function () {
-    this.ascending = !this.ascending;
-    let $table = $(this).parents("table");
-    let rows = $table
-        .find("tbody")
-        .find("tr")
-        .toArray()
-        .sort((a, b) => getRowShifts(a) - getRowShifts(b));
-    if (this.ascending) {
-        rows.reverse();
-    }
-    rows.forEach(function (row) {
-        $table.append($(row));
-    });
+    rows.forEach(row => $table.append($(row)));
+    $(this).parents('table').find('.fa-sort').removeClass('fa-sort-asc').removeClass('fa-sort-desc');
+    $(this).addClass(isAscending ? 'fa-sort-desc' : 'fa-sort-asc');
 });

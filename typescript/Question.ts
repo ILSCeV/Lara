@@ -2,7 +2,7 @@
 
 class Question {
 
-    private questionDiv;
+    private questionDiv: JQuery;
 
     constructor(element: string) {
         this.questionDiv = $(element).closest('[name^=question]');

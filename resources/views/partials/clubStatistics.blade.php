@@ -11,17 +11,15 @@
                 <table class="table table-hover" >
                     <thead>
                     <tr>
-                        <td data-sort="name">{{trans('mainLang.name')}}</td>
-                        <td data-sort="shifts">{{trans('mainLang.totalShifts')}}</td>
-                        <td data-sort="shifts">
-
-                        </td>
+                        <td data-sort="name">{{trans('mainLang.name')}} <i class="fa fa-sort fa-pull-right"></i></td>
+                        <td data-sort="shifts">{{trans('mainLang.totalShifts')}}<i class="fa fa-sort fa-pull-right"></i></td>
+                        <td data-sort="shifts"> </td>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($clubInfo as $info)
                         <tr>
-                            <td>{{$info->user->prsn_name }}</td>
+                            <td>@include('partials.personStatusMarker', ['person' => $info->user]){{$info->user->prsn_name }}</td>
                             <td>{{$info->totalShifts}}</td>
                             <td width="50%">
                                 <div class="progress">

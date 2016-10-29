@@ -1,3 +1,3 @@
 <div class="centered">
-    <h2> Statistics for {{$userInfo}}</h2>
+    <h2> Statistics for {{$userInfo->user->name()}}</h2>
 </div>

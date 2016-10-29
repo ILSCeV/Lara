@@ -33,4 +33,9 @@ class Person extends Model
     public function getClub() {
         return $this->belongsTo('Lara\Club', 'clb_id', 'id');
     }
+
+    public function name()
+    {
+        return $this->prsn_name;
+    }
 }
