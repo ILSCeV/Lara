@@ -9,9 +9,6 @@
             <div>
                 @include('partials.statisticsLeaderboards')
             </div>
-            <div>
-                @include('partials.personalStatistics')
-            </div>
         </div>
 
         <div class="panel col-xs-12 col-sm-12 col-md-6 no-padding-xs">
@@ -20,8 +17,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        var statisticInformation = {!! json_encode($infos) !!};
-    </script>
 @stop

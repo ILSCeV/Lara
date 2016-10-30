@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use Lara\Club;
 use Lara\ClubEvent;
+use Lara\ScheduleEntry;
 use View;
 use Lara\Person;
 use Session;
@@ -28,30 +29,24 @@ class StatisticsController extends Controller
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next month');
 
-        $externalEventTypes = collect([
-            0, // normales Programm
+        $rewardableEventTypes = collect([
+            0, // usual opening
             2, // special
             3, // live band / DJ
             6, // flooding
             7, // flyers
         ]);
-        $events = ClubEvent::where('evnt_date_start', '>=', $from->format('Y-m-d'))
-            ->where('evnt_date_end', '<=', $till->format('Y-m-d'))
-            ->whereIn('evnt_type', $externalEventTypes)
-            ->get();
+        $shifts = ScheduleEntry::whereHas('schedule.event', function ($query) use ($from, $till, $rewardableEventTypes) {
+            $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')])
+                ->whereIn('evnt_type', $rewardableEventTypes);
+        })->get();
+        $clubs = Club::activeClubs()->with('activePersons')->get();
 
-        $shifts = $events
-            ->flatMap(function (ClubEvent $event) {
-                return $event->shifts()->get();
-            });
         // array with key: clb_title and values: array of infos for user of the club
-        $clubs = Club::all();
-
         $clubInfos = $clubs->flatMap(function($club) use($shifts) {
-            $clubMembers = $club->hasMany('Lara\Person', 'clb_id')->where('prsn_status', '=', 'member')->get();
-            $infosForClub = $clubMembers->map(function($person) use($shifts)  {
+            $infosForClub = $club->activePersons->map(function($person) use($shifts, $club)  {
                 $info = new StatisticsInformation();
-                return $info->make($person, $shifts);
+                return $info->make($person, $shifts, $club);
             });
             $maxShifts = $infosForClub->pluck('totalShifts')->sort()->last();
 

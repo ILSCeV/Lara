@@ -1,7 +1,7 @@
 <div>
     <ul class="nav nav-tabs">
         @foreach($clubInfos->keys() as $title)
-            <li class=><a aria-expanded="{{Session::get('userClub') == $title? 'true' : 'false'}}" href="#{{$title}}" data-toggle="tab">{{$title}}</a></li>
+            <li class="{{Session::get('userClub') == $title? 'active': ''}}"><a aria-expanded="{{Session::get('userClub') == $title? 'true' : 'false'}}" href="#{{$title}}" data-toggle="tab">{{$title}}</a></li>
         @endforeach
     </ul>
     <div id="myTabContent" class="tab-content">
@@ -11,7 +11,7 @@
                 <table class="table table-hover" >
                     <thead>
                     <tr>
-                        <td data-sort="name">{{trans('mainLang.name')}} <i class="fa fa-sort fa-pull-right"></i></td>
+                        <td data-sort="name">{{trans('mainLang.name')}} <i class="fa fa-sort-desc fa-pull-right"></i></td>
                         <td data-sort="shifts">{{trans('mainLang.totalShifts')}}<i class="fa fa-sort fa-pull-right"></i></td>
                         <td data-sort="shifts"> </td>
                     </tr>
