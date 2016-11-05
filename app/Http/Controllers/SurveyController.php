@@ -410,6 +410,9 @@ class SurveyController extends Controller
             $newAnswerOptions,
             $oldAnswerOptions
         ) {
+            if ($order >= $oldQuestions->count()) {
+                return false;
+            }
             $isSameText = $oldQuestions->get($order)->question === $text;
             if (!$isSameText) {
                 return false;
