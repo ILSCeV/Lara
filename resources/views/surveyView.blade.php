@@ -90,11 +90,11 @@ $userCanEditDueToRole
                 height: auto
             }
 
-        @foreach($questions->values() as $index => $question)
-             @if($question->is_required == 1)
+            @foreach($questions->values() as $index => $question)
               {{--if a question is set to required show a * if the user didn't fill it in--}}
+               {{-- Offset of 3 for the first two columns in the table and a switch from 0-indexed to 1-indexed array --}}
                 #survey-answer td:nth-of-type({{$index + 3}}):before {
-                content: "{{$question->question}} *";
+                content: "{{$question->question . $question->is_required ? '*' : ''}} ";
                 float: left;
                 display: inline-block;
                 overflow: hidden;
@@ -102,19 +102,8 @@ $userCanEditDueToRole
                 height: 100%;
             }
 
-            @else
-                #survey-answer td:nth-of-type({{$index + 3}}):before {
-                content: "{{$question->question}}";
-                float: left;
-                display: inline-block;
-                overflow: hidden;
-                white-space: normal;
-                height: 100%;
+        @endforeach
             }
-
-        @endif
-    @endforeach
-        }
     </style>
 @stop
 @section('moreScripts'){{--collection of used java script functions to clean up the code--}}

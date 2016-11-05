@@ -92,6 +92,11 @@ class Survey extends BaseSoftDelete
         return $this->hasMany('Lara\SurveyAnswer');
     }
 
+    /**
+     * Create a survey model (but don't store it yet) from a SurveyRequest.
+     * The request contains all the necessary information for the request.
+     * @param SurveyRequest $request
+     */
     public function makeFromRequest(SurveyRequest $request)
     {
         $this->creator_id = Session::get('userId');
