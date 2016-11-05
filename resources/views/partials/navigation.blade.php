@@ -47,12 +47,17 @@
               </ul>
             </li>
             @endif
-        </ul> 
+            @if(Session::has('userId'))
+                <li><a href="{{ asset('/statistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
+            @endif
+        </ul>
 
-        <ul class="nav navbar-nav navbar-right">      
+
+        <ul class="nav navbar-nav navbar-right">
             <span class="col-xs-1 visible-xs">&nbsp;</span>
             <div class="col-xs-10 col-sm-12 col-md-12 no-margin no-padding">
                 @if(Session::has('userId'))
+
 
 {{-- LANGUAGE SWITCHER --}}
                     <li style="padding-top:5px" class="btn-group">

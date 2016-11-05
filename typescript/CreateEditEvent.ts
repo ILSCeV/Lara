@@ -1,5 +1,4 @@
-///<reference path="../typings/index.d.ts"/>
-///<reference path="Utilities.ts"/>
+///<reference path="_references.ts"/>
 
 // values of events that should trigger the selection of all clubs
 let internalEventValues = [

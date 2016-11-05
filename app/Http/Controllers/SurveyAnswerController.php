@@ -81,10 +81,10 @@ class SurveyAnswerController extends Controller
             $survey_answer_cell->survey_question_id = $question->id;
             $survey_answer_cell->survey_answer_id = $survey_answer->id;
             switch($question->field_type) {
-                case QuestionType::FullText :
+                case QuestionType::Text :
                     $survey_answer_cell->answer = $input->answers[$key];
                     break;
-                case QuestionType::YesNo :
+                case QuestionType::Checkbox :
                     if ($input->answers[$key] == -1) {
                         $survey_answer_cell->answer = "keine Angabe";
                     } elseif ($input->answers[$key] == 0) {
@@ -93,7 +93,7 @@ class SurveyAnswerController extends Controller
                         $survey_answer_cell->answer = "Ja";
                     }
                     break;
-                case QuestionType::Custom :
+                case QuestionType::Dropdown :
                     if ($input->answers[$key] == -1) {
                         $survey_answer_cell->answer = "keine Angabe";
                     } else {

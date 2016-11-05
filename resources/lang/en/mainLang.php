@@ -284,7 +284,18 @@ return [
     
     // /resources/views/partials/scheduleEntryStatus.blade.php
     'jobFree'               => 'Shift free',
-    
+
+    //-----------------------------------------------------------------------------------------------------------
+
+    // /resources/views/partials/statisticsLeaderboards.blade.php
+    'totalShifts'           => 'Total shifts', 
+    'leaderBoards'          => 'Shift Leaderboards',
+
+    // /resources/views/partials/clubStatistics.blade.php
+    'infoFor'               => 'Information for',
+
+    // /resources/views/partials/personalStatistics.blade.php
+
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/surveyAnswerStatus.blade.php

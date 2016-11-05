@@ -1,22 +1,10 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| This file is where you may define all of the routes that are handled
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
-|
+/* 
 |--------------------------------------------------------------------------
 | Default Laravel routes for reference
 |--------------------------------------------------------------------------
 | 
-| Route::get('/', function () {
-|     return view('welcome');
-|  });
-|
 | Route::get('/', 'WelcomeController@index');
 | 
 | Route::get('home', 'HomeController@index');
@@ -119,9 +107,9 @@ Route::resource('survey.answer', 'SurveyAnswerController', ['only' => ['show', '
 
 
 // STATISTICS
-Route::get('/statistics/{year?}/{month?}',						'StatisticsController@showStatistics');
-
+Route::get('/statistics',						'StatisticsController@showStatistics');
 /*
+
 Route::post('/statistics', 						['as'   => 'statisticsChangeDate',
 											     'uses' => 'StatisticsController@showStatistics']);
 */
