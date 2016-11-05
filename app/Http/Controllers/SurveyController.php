@@ -247,7 +247,7 @@ class SurveyController extends Controller
 
         //check if the role of the user allows edit/delete for all answers
         $userGroup = Session::get('userGroup');
-        $userCanEditDueToRole = collect(['admin', 'marketing', 'clubleitung'])->contains($userGroup);
+        $userCanEditDueToRole = collect(['admin', 'clubleitung'])->contains($userGroup);
 
         //evaluation part that shows below the survey, a statistic of answers of the users who already took part in the survey
 
