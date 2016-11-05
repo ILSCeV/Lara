@@ -2,6 +2,7 @@
 
 namespace Lara;
 
+use Session;
 use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
@@ -34,8 +35,16 @@ class Person extends Model
         return $this->belongsTo('Lara\Club', 'clb_id', 'id');
     }
 
+    public function club() {
+        return $this->belongsTo('Lara\Club', 'clb_id', 'id');
+    }
+
     public function name()
     {
         return $this->prsn_name;
+    }
+
+    public function isLoggedInUser() {
+        return $this->prsn_ldap_id == Session::get('userId');
     }
 }

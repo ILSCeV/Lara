@@ -255,10 +255,10 @@ class SurveyController extends Controller
         foreach ($questions as $order => $question) {
 
             switch ($question->field_type) {
-                case QuestionType::FullText:
+                case QuestionType::Text:
                     $evaluation[$order] = [];
                     break; //nothing to do here except pushing an element to the array that stands for the question
-                case QuestionType::YesNo:
+                case QuestionType::Checkbox:
                     $evaluation[$order] = [
                         'Ja' => 0,
                         'Nein' => 0
@@ -281,7 +281,7 @@ class SurveyController extends Controller
                         }
                     }
                     break;
-                case QuestionType::Custom:
+                case QuestionType::Dropdown:
                     $answer_options = $question->getAnswerOptions;
                     $answer_options = (array)$answer_options;
                     $answer_options = array_shift($answer_options);

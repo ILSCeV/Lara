@@ -64,7 +64,7 @@ class StatisticsController extends Controller
         $infos = $clubInfos->flatten();
         
         $userInfo = $infos->where('user.prsn_ldap_id', $userId)->first();
-        return View::make('statisticsView', compact('infos', 'userInfo', 'clubInfos', 'userId'));
+        return View::make('statisticsView', compact('infos', 'userInfo', 'clubInfos', 'userId', 'year', 'month'));
 
     }
 }

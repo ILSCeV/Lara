@@ -6,8 +6,7 @@
     </ul>
     <div id="myTabContent" class="tab-content">
         @foreach($clubInfos as $title => $clubInfo)
-            <div class="tab-pane fade in {{Session::get('userClub') == $title? 'active': ''}}" id="{{$title}}">
-                <h3> Info für {{$title}}</h3>
+            <div class="tab-pane fade in {{Session::get('userClub') === $title? 'active': ''}}" id="{{$title}}">
                 <table class="table table-hover" >
                     <thead>
                     <tr>
@@ -18,11 +17,11 @@
                     </thead>
                     <tbody>
                     @foreach($clubInfo as $info)
-                        <tr>
+                        <tr class="{{$info->user->isLoggedInUser() ? 'my-shift' : ''}}">
                             <td>@include('partials.personStatusMarker', ['person' => $info->user]){{$info->user->prsn_name }}</td>
                             <td>{{$info->totalShifts}}</td>
                             <td width="50%">
-                                <div class="progress">
+                                <div class="progress centered">
                                     <div class="progress-bar" style="width: {{$info->shiftsPercent}}%;"></div>
                                 </div>
                             </td>

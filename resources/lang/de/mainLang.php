@@ -289,6 +289,9 @@ return [
     'totalShifts'           => 'Anzahl Schichten',
     'leaderBoards'          => 'Bestenliste',
 
+    // /resources/views/partials/clubStatistics.blade.php
+    'infoFor'               => 'Informationen für',
+
     // /resources/views/partials/personalStatistics.blade.php
     //-----------------------------------------------------------------------------------------------------------
     

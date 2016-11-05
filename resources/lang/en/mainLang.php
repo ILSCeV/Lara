@@ -289,7 +289,10 @@ return [
 
     // /resources/views/partials/statisticsLeaderboards.blade.php
     'totalShifts'           => 'Total shifts', 
-    'leaderBoards'          => 'Shift Leaderboards', 
+    'leaderBoards'          => 'Shift Leaderboards',
+
+    // /resources/views/partials/clubStatistics.blade.php
+    'infoFor'               => 'Information for',
 
     // /resources/views/partials/personalStatistics.blade.php
 

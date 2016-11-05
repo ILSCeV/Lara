@@ -2,29 +2,19 @@
     <h2>
         {{ trans('mainLang.leaderBoards') }}
     </h2>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <td>{{trans('mainLang.name')}}</td>
-                <td>{{trans('mainLang.club')}}</td>
-                <td>{{trans('mainLang.totalShifts')}}</td>
-            </tr>
-        </thead>
-        <tbody>
-        {{-- Only show Top 10 Shifts --}}
-        @foreach($infos->sortByDesc('totalShifts')->take(10) as $info)
-            <tr>
-                <td>
-                    {{$info->user->prsn_name }}
-                </td>
-                <td>
-                    {{$info->userClub->clb_title }}
-                </td>
-                <td>
-                    {{$info->totalShifts}}
-                </td>
-            </tr>
+    <ul class="nav nav-tabs">
+        <li><a aria-expanded="true" href="#allLeaderboards"
+               data-toggle="tab">All</a></li>
+        @foreach($clubInfos->keys() as $title)
+            <li class="{{Session::get('userClub') == $title? 'active': ''}}"><a
+                        aria-expanded="{{Session::get('userClub') == $title? 'active': ''}}" href="#{{$title}}Leaderboards"
+                        data-toggle="tab">{{$title}}</a></li>
         @endforeach
-        </tbody>
-    </table>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        @include('partials.statistics.leaderboardsOfClub', ['infos' => $infos, 'showClubName' => true, 'name' => 'all'])
+        @foreach($clubInfos as $title => $clubInfo)
+            @include('partials.statistics.leaderboardsOfClub', ['infos' => $clubInfo, 'showClubName' => false, 'name' => $title])
+        @endforeach
+    </div>
 </div>

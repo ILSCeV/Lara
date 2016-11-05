@@ -9,7 +9,7 @@ function getRowShifts(a: string) {
 }
 
 //inspired by http://stackoverflow.com/questions/3160277/jquery-table-sort
-$(".fa-sort").click(function () {
+$(".fa-sort, .fa-sort-desc, .fa-sort-asc").click(function () {
     let isAscending = $(this).hasClass('fa-sort-asc');
     let rowCatcher = $(this).parent().data('sort') === 'name' ? getRowName : getRowShifts;
     let $table = $(this).parents("table");
@@ -22,6 +22,11 @@ $(".fa-sort").click(function () {
         rows.reverse();
     }
     rows.forEach(row => $table.append($(row)));
-    $(this).parents('table').find('.fa-sort').removeClass('fa-sort-asc').removeClass('fa-sort-desc');
-    $(this).addClass(isAscending ? 'fa-sort-desc' : 'fa-sort-asc');
+    $(this).parents('table')
+        .find('.fa-sort, .fa-sort-desc, .fa-sort-asc')
+        .removeClass('fa-sort-asc')
+        .removeClass('fa-sort-desc')
+        .addClass('fa-sort');
+    $(this).removeClass('fa-sort')
+        .addClass(isAscending ? 'fa-sort-desc' : 'fa-sort-asc');
 });
