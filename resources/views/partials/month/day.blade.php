@@ -18,10 +18,11 @@
                 {{$weekDay->format('d')}}
             @endif
             <small class="visible-xs visible-md visible-sm">
+                {{-- Display day of the month--}}
                 {{ strftime("%a", $weekDay->getTimestamp()) }}
             </small>
         </div>
         <div class="cell90">
-            @include( 'partials.monthCellRevised')
+            @include( 'partials.month.monthCell')
         </div>
     </div>

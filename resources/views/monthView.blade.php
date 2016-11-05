@@ -76,6 +76,7 @@
         </div>
         <!--Print Weeks on left side-->
         @foreach($mondays as $weekStart)
+            {{-- Add one week to the week start to get the next monday --}}
             <?php $weekEnd = new DateTime($weekStart->format('Y-m-d')); $weekEnd->modify('+1 week') ?>
             @if ($weekStart->format('W') === date('W'))
                 {{-- Current week --}}
@@ -85,8 +86,9 @@
                             <span class="onlyOnMobile">{{ trans('mainLang.Cw') }}</span> {{$weekStart->format('W')}}.
                         </a>
                     </div>
+                    {{-- Foreach on DatePeriod excludes the last day, so we iterate over Monday to Sunday--}}
                     @foreach(new DatePeriod($weekStart, new DateInterval('P1D'), $weekEnd) as $weekDay)
-                        @include('partials.weekRow')
+                        @include('partials.month.day')
                     @endforeach
                 </div>
             @else
@@ -98,7 +100,7 @@
                         </a>
                     </div>
                     @foreach(new DatePeriod($weekStart, new DateInterval('P1D'), $weekEnd) as $weekDay)
-                        @include('partials.weekRow')
+                        @include('partials.month.day')
                     @endforeach
                 </div>
             @endif

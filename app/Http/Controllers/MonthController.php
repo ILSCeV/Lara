@@ -41,27 +41,23 @@ class MonthController extends Controller {
 	* @return view monthView
 	*/
 	public function showMonth($year, $month) {
-		// Create a string of the start of the month
-        $monthStart = $year.$month.'01';
-
-        $firstDay = new DateTime($monthStart);
+	    // create a DateTime object represeting the first monday in the timespan we want to display
+        $firstDay = new DateTime($year.$month.'01');
         if ($firstDay->format('w') !== '1') {
             $firstDay->modify('previous Monday');
         }
 
+        // create a DateTime object representing the last sunday in the timespan we want to display
         $lastDay = new DateTime($year . $month . $firstDay->format('t'));
         if ($lastDay->format('w' !== 0)) {
             $lastDay->modify('next Sunday');
         }
 
-        // String of end of month
-		$monthEnd = $year.$month.'31';  
-	    
 	    // Create timestamp of the first day of selected month. Time 12:12:12 used only as dummy time
-	    $usedTime=mktime(12,12,12,$month,1,$year);  
+        $usedTime = mktime(12, 12, 12, $month, 1, $year);
 	    
 	    // Create a int with the number of days of the month (28...31)
-	    $daysOfMonth=date("t",$usedTime);  
+        $daysOfMonth = date("t", $usedTime);
 
 		// Create a timestamp with start of month
 		$startStamp = mktime(0,0,0,date("n",$usedTime),1,date("Y",$usedTime)); 
@@ -75,7 +71,6 @@ class MonthController extends Controller {
         $date = array(
             'year' => $year,
             'month' => $month,
-            'daysOfMonth' => $daysOfMonth,    // Change to generated datetime from time input
             'startDay' => $startDay,
             'endDay' => $endDay,
             'startStamp' => $startStamp,
