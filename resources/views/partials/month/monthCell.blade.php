@@ -56,7 +56,7 @@ $myDate = $myDate->subDay()->format('Y-m-d H-m-s');
         @endif
 
         {{-- highlight with cal-month-my-event class if the signed in user has an entry in this event --}}
-        @if((Session::has('userId') AND $clubEvent->hasShift($clubEvent->getSchedule->id, Session::get('userId'))))
+        @if((Session::has('userId') && $clubEvent->hasShift($clubEvent->getSchedule->id, Session::get('userId'))))
             <?php $classString .= " cal-month-my-event"; ?>
         @endif
 
