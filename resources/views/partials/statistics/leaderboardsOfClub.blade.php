@@ -14,7 +14,7 @@
         @foreach($infos->sortByDesc('totalShifts')->take(10) as $info)
             <tr class=" {{$info->user->isLoggedInUser() ? 'my-shift' : ''}}">
                 <td>
-                    {{$info->user->prsn_name }}
+                    @include('partials.personStatusMarker', ['person' => $info->user]){{$info->user->prsn_name }}
                 </td>
                 @if ($showClubName)
                     <td>

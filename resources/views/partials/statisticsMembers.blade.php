@@ -23,13 +23,13 @@
                 <table class="table table-hover" >
                     <thead>
                         <tr>
-                            <td data-sort="name" class="col-md-2 col-sm-3 col-xs-3">
+                            <td data-sort="name" class="col-md-2 col-sm-3 col-xs-4">
                                 {{trans('mainLang.name')}} <i class="fa fa-sort-desc fa-pull-right"></i>
                             </td>
                             <td data-sort="shifts" class="col-md-2 col-sm-3 col-xs-3">
                                 {{trans('mainLang.totalShifts')}}<i class="fa fa-sort fa-pull-right"></i>
                             </td>
-                            <td data-sort="shifts" class="col-md-8 col-sm-3 col-xs-3">
+                            <td data-sort="shifts" class="col-md-8 col-sm-6 col-xs-5">
                                 &nbsp;
                             </td>
                         </tr>

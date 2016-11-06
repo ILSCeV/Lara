@@ -44,6 +44,7 @@
 
         {{-- Leaderboard --}}
         <div class="col-md-5 col-sm-5 col-xs-12 no-padding-xs">
+            <br class="visible-xs">
             @include('partials.statisticsLeaderboards')
         </div>
 
