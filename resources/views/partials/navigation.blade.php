@@ -30,8 +30,7 @@
               <li><a href="{{ asset('/logs') }}">Logs</a></li>
             @endif
 
-            {{-- remove next "FALSE AND" to show button --}}
-            @if   (FALSE AND Session::has('userGroup')
+            @if   (Session::has('userGroup')
               AND (Session::get('userGroup') == 'marketing'
               OR   Session::get('userGroup') == 'clubleitung'
               OR   Session::get('userGroup') == 'admin'))
@@ -45,9 +44,7 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ asset('/management/places') }}">{{ trans('mainLang.manageClub') }}</a></li>
-                <li><a href="{{ asset('/management/jobtypes') }}">{{ trans('mainLang.manageJobType') }}</a></li>
-                <li><a href="{{ asset('/management/templates') }}">{{ trans('mainLang.manageTemplate') }}</a></li>
+                <li><a href="{{ asset('/manage/jobtypes') }}">{{ trans('mainLang.manageJobType') }}</a></li>
               </ul>
             </li>
             @endif

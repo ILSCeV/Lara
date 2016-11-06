@@ -109,6 +109,7 @@ Route::get('lang/{lang}', ['as'=>'lang.switch', function($lang){
 }]);
 
 // RESTful RESOURCES
+Route::resource('jobtype', 	'JobtypeController', 		['only'   => ['index', 'destroy']]);
 Route::resource('entry', 	'ScheduleEntryController', 	['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('schedule', 'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('event', 	'ClubEventController', 		['except' => ['index']]);
@@ -120,21 +121,3 @@ Route::resource('survey.answer', 'SurveyAnswerController', ['only' => ['show', '
 
 // STATISTICS
 Route::get('/statistics/{year?}/{month?}',						'StatisticsController@showStatistics');
-
-/*
-Route::post('/statistics', 						['as'   => 'statisticsChangeDate',
-											     'uses' => 'StatisticsController@showStatistics']);
-*/
-/*
-// MANAGEMENT
-Route::get('/management/jobtypes',				'ManagementController@showJobTypes');
-Route::get('/management/places',				'ManagementController@showPlaces');
-Route::get('/management/templates',				'ManagementController@showTemplates');
-
-Route::post('/management/jobtypes', 			['as'   => 'updateJobTypes',
-												 'uses' => 'ManagementController@updateJobTypes']);
-Route::post('/management/places', 				['as'   => 'updatePlaces',
-												 'uses' => 'ManagementController@updatePlaces']);
-Route::post('/management/templates', 			['as'   => 'updateTemplates',
-												 'uses' => 'ManagementController@updateTemplates']);
-*/

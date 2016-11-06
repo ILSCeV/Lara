@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
+use Lara\Jobtype;
+use Session;
+use Log;
+use Redirect;
 
 class JobtypeController extends Controller
 {
@@ -16,7 +20,8 @@ class JobtypeController extends Controller
      */
     public function index()
     {
-        //
+        $jobtypes = Jobtype::orderBy('jbtyp_title', 'ASC')->paginate(25);
+        return view('manageJobtypesView', ['jobtypes' => $jobtypes]);
     }
 
     /**
@@ -82,6 +87,39 @@ class JobtypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Get all the data
+        $jobtype = Jobtype::findOrFail($id);
+        
+        // Check if jobtype exists
+        if ( is_null($jobtype) ) {
+            Session::put('message', "does not exist");
+            Session::put('msgType', 'danger');
+            return Redirect::back();
+        }
+
+        // Check credentials: you can only delete, if you have rights for marketing or management 
+        if(!Session::has('userId') 
+            OR (Session::get('userGroup') != 'marketing'
+                AND Session::get('userGroup') != 'clubleitung'
+                AND Session::get('userGroup') != 'admin'))
+        {
+            Session::put('message', 'Du darfst das nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
+            Session::put('msgType', 'danger');
+            return Redirect::back();
+        }
+
+        // Log the action while we still have the data
+        Log::info('Jobtype deleted: ' . Session::get('userName') . ' (' . Session::get('userId') . ', ' 
+                 . Session::get('userGroup') . ') deleted Jobtype "' . $jobtype->jbtyp_title .  '".');
+        
+        // HERE FIND ALL PLACES AND DO CLEAN REFERENCES!
+
+        // Now delete the jobtype
+        Jobtype::destroy($id);
+
+        // show current month afterwards
+        Session::put('message', 'Diensttyp wurde erfolgreich gelöscht.');
+        Session::put('msgType', 'success');
+        return Redirect::back();
     }
 }
