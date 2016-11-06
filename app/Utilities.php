@@ -12,7 +12,8 @@ class Utilities
         return preg_replace_callback($urlMatching,
             function ($match) {
                 $link = $match[0];
-                if ($match[1] !== 'http://' && $match[1] !== 'https://') {
+                // if the protocol is missing, we have to add it. Assume http in this case
+                if ($match[2] !== 'http://' && $match[2] !== 'https://') {
                     $link = 'http://' . $link;
                 }
                 return sprintf('<a href="%s" target="_blank"> %s </a>', $link, $match[0]);
