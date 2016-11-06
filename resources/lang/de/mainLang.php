@@ -237,7 +237,7 @@ return [
     'adjustRoster'          => 'Dienstplan anpassen',
     'serviceTypeEnter'      => 'Diensttyp hier eingeben',
     'weight'                => 'Gewicht (für Statistik)',
-    'statisticalEvaluation' => 'Statistische Wertung',
+    'statisticalEvaluation' => 'Statistik',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -286,11 +286,11 @@ return [
     'jobFree'               => 'Dienst frei',
 
     // /resources/views/partials/statisticsLeaderboards.blade.php
-    'totalShifts'           => 'Anzahl Schichten',
+    'totalShifts'           => 'Dienste',
     'leaderBoards'          => 'Bestenliste',
 
     // /resources/views/partials/clubStatistics.blade.php
-    'infoFor'               => 'Informationen für',
+    'infoFor'               => 'Mitgliederstatistik',
 
     // /resources/views/partials/personalStatistics.blade.php
     //-----------------------------------------------------------------------------------------------------------

@@ -20,6 +20,10 @@
             <li><a href="{{ asset('/calendar/month') }}">{{ trans('mainLang.month') }}</a></li>
 
             <li><a href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
+
+            @if(Session::has('userId'))
+                <li><a href="{{ asset('/statistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
+            @endif
             
             {{-- show logs tab for club management or admins only --}}
             @if(Session::get('userGroup') == 'clubleitung' OR Session::get('userGroup') == 'admin')
@@ -46,9 +50,6 @@
                 <li><a href="{{ asset('/management/templates') }}">{{ trans('mainLang.manageTemplate') }}</a></li>
               </ul>
             </li>
-            @endif
-            @if(Session::has('userId'))
-                <li><a href="{{ asset('/statistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
             @endif
         </ul>
 

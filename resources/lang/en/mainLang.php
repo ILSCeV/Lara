@@ -236,7 +236,7 @@ return [
     'adjustRoster'          => 'Adjust schedule',
     'serviceTypeEnter'      => 'Enter shift type here',
     'weight'                => 'Statistical weight',
-    'statisticalEvaluation' => 'Statistical Evaluation',
+    'statisticalEvaluation' => 'Statistics',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -288,11 +288,11 @@ return [
     //-----------------------------------------------------------------------------------------------------------
 
     // /resources/views/partials/statisticsLeaderboards.blade.php
-    'totalShifts'           => 'Total shifts', 
-    'leaderBoards'          => 'Shift Leaderboards',
+    'totalShifts'           => 'Shifts', 
+    'leaderBoards'          => 'Leaderboard',
 
     // /resources/views/partials/clubStatistics.blade.php
-    'infoFor'               => 'Information for',
+    'infoFor'               => 'Member statistics',
 
     // /resources/views/partials/personalStatistics.blade.php
 

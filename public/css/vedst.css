@@ -404,6 +404,10 @@ input[type=number],
     padding-bottom: 8px !important;
 }
 
+.all-sides-padding-16 {
+    padding: 16px !important;
+}
+
 .left-padding-8 {
     padding-left: 8px !important;
 }
