@@ -1,3 +1,4 @@
+///<reference path="_references.ts"/>
 enum Club {
     None,
     BcClub = 2,

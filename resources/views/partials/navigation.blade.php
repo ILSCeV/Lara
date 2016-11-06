@@ -20,6 +20,10 @@
             <li><a href="{{ asset('/calendar/month') }}">{{ trans('mainLang.month') }}</a></li>
 
             <li><a href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
+
+            @if(Session::has('userId'))
+                <li><a href="{{ asset('/statistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
+            @endif
             
             {{-- show logs tab for club management or admins only --}}
             @if(Session::get('userGroup') == 'clubleitung' OR Session::get('userGroup') == 'admin')
@@ -47,12 +51,14 @@
               </ul>
             </li>
             @endif
-        </ul> 
+        </ul>
 
-        <ul class="nav navbar-nav navbar-right">      
+
+        <ul class="nav navbar-nav navbar-right">
             <span class="col-xs-1 visible-xs">&nbsp;</span>
             <div class="col-xs-10 col-sm-12 col-md-12 no-margin no-padding">
                 @if(Session::has('userId'))
+
 
 {{-- LANGUAGE SWITCHER --}}
                     <li style="padding-top:5px" class="btn-group">
@@ -139,7 +145,7 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <br class="visible-xs"> 
                                 <br class="visible-xs">
-                                {!! Form::submit(Lang::get('mainLang.logOut'), array('class'=>'btn btn-default btn-sm')) !!} {{-- Logout button --}}
+                                {!! Form::submit(Lang::get('mainLang.logOut'), array('class'=>'btn btn-default btn-sm', 'name' => 'logout')) !!} {{-- Logout button --}}
                             </div>
                         {!! Form::close() !!}
                     </li>

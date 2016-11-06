@@ -106,9 +106,9 @@ Route::resource('survey',	'SurveyController',			['except' => ['index']]);
 Route::resource('survey.answer', 'SurveyAnswerController', ['only' => ['show', 'store', 'update', 'destroy']]); //show only for testing purposes
 
 
-/*
 // STATISTICS
 Route::get('/statistics',						'StatisticsController@showStatistics');
+/*
 
 Route::post('/statistics', 						['as'   => 'statisticsChangeDate',
 											     'uses' => 'StatisticsController@showStatistics']);

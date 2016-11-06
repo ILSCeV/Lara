@@ -84,4 +84,8 @@ class ClubEvent extends Model
         }
         return false;
     }
+
+	public function shifts() {
+		return $this->hasManyThrough('Lara\ScheduleEntry', 'Lara\Schedule', 'evnt_id', 'schdl_id', 'id');
+	}
 }

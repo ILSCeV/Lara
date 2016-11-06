@@ -32,22 +32,20 @@ class SurveyRequest extends Request
             'deadlineTime' => "required|date_format:H:i:s",
             'password' => 'string|confirmed',
 
-            'questions' => 'array|required',
-            'questions.*' => 'string|required|min:1',
+            'questionText' => 'array|required',
+            'questionText.*' => 'string|required|min:1',
 
-            'answer_options' => 'array',
-            'answer_options.*.*' => 'string|min:1',
+            'answerOption' => 'array',
+            'answerOption.*.*' => 'string|min:1',
 
-            'type' => 'array|required',
-            'type.*' => 'in:1,2,3|required',
+            'type_select' => 'array|required',
+            'type_select.*' => 'in:1,2,3|required',
         ];
 
-        $questions_type = $this->request->get('type');
+        $questions_type = $this->request->get('type_select');
         foreach($questions_type as $key => $question_type) {
-            //todo: unset empty answer_options (actual bug) or this validation fails when question #1 is dropdown
-            //todo: write german custom error message below
-            if ($question_type == 3) {
-                $rules['answer_options.'.$key] = 'required';
+            if ($question_type === 3) {
+                $rules['answerOption.' . $key] = 'required';
             }
         }
 
@@ -58,15 +56,15 @@ class SurveyRequest extends Request
     {
         $messages = [];
 
-        foreach($this->request->get('questions') as $key => $val) {
-            $messages['questions.'.$key.'.string'] = 'Die Frage #'.($key+1).'muss eine Zeichenkette sein.';
-            $messages['questions.'.$key.'.min'] = 'Die Frage #'.($key+1).' muss mindestens :min Zeichen enthalten.';
-            $messages['questions.'.$key.'.required'] = 'Die Frage #'.($key+1).' wurde leer gelassen. Bitte fülle sie aus oder lösche sie!';
+        foreach($this->request->get('questionText') as $key => $val) {
+            $messages['questionText.'.$key.'.string'] = 'Die Frage #'.($key+1).'muss eine Zeichenkette sein.';
+            $messages['questionText.'.$key.'.min'] = 'Die Frage #'.($key+1).' muss mindestens :min Zeichen enthalten.';
+            $messages['questionText.'.$key.'.required'] = 'Die Frage #'.($key+1).' wurde leer gelassen. Bitte fülle sie aus oder lösche sie!';
         }
 
-        foreach($this->request->get('type') as $key => $val) {
-            $messages['type.'.$key.'.in'] = 'Für die Frage #'.($key+1).' wurde ein fehlerhafter Fragetyp ausgewählt!';
-            $messages['type.'.$key.'.required'] = 'Für die Frage #'.($key+1).' wurde kein Fragetyp ausgewählt!';
+        foreach($this->request->get('type_select') as $key => $val) {
+            $messages['type_select.'.$key.'.in'] = 'Für die Frage #'.($key+1).' wurde ein fehlerhafter Fragetyp ausgewählt!';
+            $messages['type_select.'.$key.'.required'] = 'Für die Frage #'.($key+1).' wurde kein Fragetyp ausgewählt!';
         }
 
         return $messages;

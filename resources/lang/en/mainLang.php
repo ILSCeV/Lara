@@ -236,7 +236,7 @@ return [
     'adjustRoster'          => 'Adjust schedule',
     'serviceTypeEnter'      => 'Enter shift type here',
     'weight'                => 'Statistical weight',
-    'statisticalEvaluation' => 'Statistical Evaluation',
+    'statisticalEvaluation' => 'Statistics',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -284,7 +284,18 @@ return [
     
     // /resources/views/partials/scheduleEntryStatus.blade.php
     'jobFree'               => 'Shift free',
-    
+
+    //-----------------------------------------------------------------------------------------------------------
+
+    // /resources/views/partials/statisticsLeaderboards.blade.php
+    'totalShifts'           => 'Shifts', 
+    'leaderBoards'          => 'Leaderboard',
+
+    // /resources/views/partials/clubStatistics.blade.php
+    'infoFor'               => 'Member statistics',
+
+    // /resources/views/partials/personalStatistics.blade.php
+
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/surveyAnswerStatus.blade.php
@@ -400,5 +411,6 @@ return [
     'placeholderDescription'        => 'Description:',
     'placeholderActiveUntil'        => 'Active until:',
 
-    //
+    //Misc
+    'guest'                         => 'Guest',
 ];
