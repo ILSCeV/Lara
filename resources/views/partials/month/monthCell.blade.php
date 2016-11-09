@@ -1,12 +1,9 @@
 {{-- Needs variables: $surveys, $events --}}
 
 @foreach($surveys as $survey) {{-- going over all surveys see weekCellSurvey for a single survey--}}
-<?php
-$myDate = \Carbon\Carbon::now();
-$myDate = $myDate->subDay()->format('Y-m-d H-m-s');
-?>
 
-@if($survey->deadline < $myDate)
+{{-- check if the survey is already over --}}
+@if(strtotime($survey->deadline) < time())
     <?php $classString = "past-eventOrSurvey"; ?>
 @else
     <?php $classString = ""; ?>
@@ -45,11 +42,9 @@ $myDate = $myDate->subDay()->format('Y-m-d H-m-s');
 
 @foreach($events as $clubEvent)
     @if($clubEvent->evnt_date_start === date("Y-m-d", $weekDay->getTimestamp()))
-        <?php
-        $myDate = \Carbon\Carbon::now();
-        $myDate = $myDate->subDay()->format('Y-m-d');
-        ?>
-        @if($clubEvent->evnt_date_start < $myDate)
+        {{--Check if the event is still going on--}}
+        @if(strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time())
+            {{-- The event is already over --}}
             <?php $classString = "past-eventOrSurvey"; ?>
         @else
             <?php $classString = ""; ?>
