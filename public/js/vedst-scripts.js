@@ -300,6 +300,57 @@ $( document ).ready( function() {
         });
     });
 
+    // Show/hide taken shifts
+
+    $(document).ready(function() {
+        if(typeof(Storage) !== "undefined")
+        {
+            if (localStorage.showTakenShifts == "Vergebenen Diensten einblenden")
+            {
+                $('div.green').parent().parent().parent().removeClass('hide');
+                $('#show-hide-taken-shifts').text("Vergebenen Diensten ausblenden");
+                $container.isotope('layout');
+            }
+            else if (localStorage.showTakenShifts == "Vergebenen Diensten ausblenden")
+            {
+                $('div.green').parent().parent().parent().addClass('hide');
+                $('#show-hide-taken-shifts').text("Vergebenen Diensten einblenden");
+                $('.isotope').isotope('layout')
+            }
+        }
+    });
+
+    $(function(){
+        $('#show-hide-taken-shifts').click(function(e) {
+            if ($('div.green').parent().parent().parent().hasClass("hide"))
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined")
+                {
+                    localStorage.showTakenShifts = $(this).text();
+                }
+
+                // change state, change button
+                $('div.green').parent().parent().parent().removeClass('hide');
+                $(this).text("Vergebenen Diensten ausblenden");
+                $container.isotope('layout');
+            }
+            else
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined")
+                {
+                    localStorage.showTakenShifts = $(this).text();
+                }
+
+                // change state, change button
+                $('div.green').parent().parent().parent().addClass('hide');
+                $(this).text("Vergebenen Diensten einblenden");
+                $('.isotope').isotope('layout')
+            };
+        });
+    });
+
 
    // Week view changer
 

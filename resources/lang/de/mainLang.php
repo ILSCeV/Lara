@@ -355,6 +355,7 @@ return [
     
     'weekMoSu'                              => 'Woche: Montag - Sonntag',
     'weekWeTu'                              => 'Woche: Mittwoch - Dienstag',
+    'hideTakenShifts'                       => 'Vergebenen Diensten ausblenden',
     
     //-----------------------------------------------------------------------------------------------------------
     
