@@ -267,8 +267,8 @@ return [
     'manageTemplate'        => 'Vorlagen verwalten',
     
     //create button text
-    'createAndAddNewEvent'  => 'Neue Veranstaltung/Aufgabe hinzufügen',
-    'createAndAddNewSurvey' => 'Neue Umfrage hinzufügen',
+    'createNewEvent'           => 'Neues Event erstellen',
+    'createNewSurvey'          => 'Neue Umfrage erstellen',
     
     //Member types
     'candidate'             => 'Kandidat',

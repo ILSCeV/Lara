@@ -267,8 +267,8 @@ return [
     'manageTemplate'        => 'Manage templates',
     
     //create button text
-    'createAndAddNewEvent'  => 'Add new Event/Task',
-    'createAndAddNewSurvey' => 'Add new Survey',
+    'createNewEvent'           => 'Create new event',
+    'createNewSurvey'          => 'Create new survey',
     
     //Member types
     'candidate'             => 'Candidate',
