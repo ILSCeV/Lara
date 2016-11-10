@@ -305,16 +305,16 @@ $( document ).ready( function() {
     $(document).ready(function() {
         if(typeof(Storage) !== "undefined")
         {
-            if (localStorage.showTakenShifts == "Vergebenen Diensten einblenden")
+            if (localStorage.showTakenShifts == "Vergebene Dienste einblenden")
             {
-                $('div.green').parent().parent().parent().removeClass('hide');
-                $('#show-hide-taken-shifts').text("Vergebenen Diensten ausblenden");
+                $('div.green').closest('.row').removeClass('hide');
+                $('#show-hide-taken-shifts').text("Vergebene Dienste ausblenden");
                 $container.isotope('layout');
             }
-            else if (localStorage.showTakenShifts == "Vergebenen Diensten ausblenden")
+            else if (localStorage.showTakenShifts == "Vergebene Dienste ausblenden")
             {
-                $('div.green').parent().parent().parent().addClass('hide');
-                $('#show-hide-taken-shifts').text("Vergebenen Diensten einblenden");
+                $('div.green').closest('.row').addClass('hide');
+                $('#show-hide-taken-shifts').text("Vergebene Dienste einblenden");
                 $('.isotope').isotope('layout')
             }
         }
@@ -322,7 +322,7 @@ $( document ).ready( function() {
 
     $(function(){
         $('#show-hide-taken-shifts').click(function(e) {
-            if ($('div.green').parent().parent().parent().hasClass("hide"))
+            if ($('div.green').closest('.row').hasClass("hide"))
             {
                 // save selection in local storage
                 if(typeof(Storage) !== "undefined")
@@ -331,8 +331,8 @@ $( document ).ready( function() {
                 }
 
                 // change state, change button
-                $('div.green').parent().parent().parent().removeClass('hide');
-                $(this).text("Vergebenen Diensten ausblenden");
+                $('div.green').closest('.row').removeClass('hide');
+                $(this).text("Vergebene Dienste ausblenden");
                 $container.isotope('layout');
             }
             else
@@ -344,8 +344,8 @@ $( document ).ready( function() {
                 }
 
                 // change state, change button
-                $('div.green').parent().parent().parent().addClass('hide');
-                $(this).text("Vergebenen Diensten einblenden");
+                $('div.green').closest('.row').addClass('hide');
+                $(this).text("Vergebene Dienste einblenden");
                 $('.isotope').isotope('layout')
             };
         });
