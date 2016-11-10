@@ -109,14 +109,14 @@ Route::get('lang/{lang}', ['as'=>'lang.switch', function($lang){
 }]);
 
 // RESTful RESOURCES
-Route::resource('jobtype', 	'JobtypeController', 		['only'   => ['index', 'destroy']]);
+Route::resource('jobtype', 	'JobtypeController');
 Route::resource('entry', 	'ScheduleEntryController', 	['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('schedule', 'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('event', 	'ClubEventController', 		['except' => ['index']]);
 Route::resource('person', 	'PersonController', 		['only'   => ['index']]);
 Route::resource('club', 	'ClubController', 			['only'   => ['index']]);
 Route::resource('survey',	'SurveyController',			['except' => ['index']]);
-Route::resource('survey.answer', 'SurveyAnswerController', ['only' => ['show', 'store', 'update', 'destroy']]); //show only for testing purposes
+Route::resource('survey.answer', 'SurveyAnswerController', ['only' => ['show', 'store', 'update', 'destroy']]);
 
 
 // STATISTICS

@@ -1,4 +1,4 @@
-<!-- Needs variables: jobtypes -->
+{{-- Needs variables: jobtypes --}}
 
 @extends('layouts.master')
 
@@ -34,9 +34,6 @@
 					</th>
 					<th class="col-md-6">
 						Verwaltung
-					</th>
-					<th>
-						&nbsp;
 					</th>
 				</tr>
 			</thead>
@@ -87,7 +84,10 @@
 		</table>
 	</div>
 		
-	{{ $jobtypes->links() }}
+	<center>
+		{{ $jobtypes->links() }}
+	</center>
+
 	<br/>
 @else
 	@include('partials.accessDenied')
