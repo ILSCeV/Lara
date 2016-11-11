@@ -65,9 +65,9 @@ class JobtypeController extends Controller
                            ->orderBy('jbtyp_title', 'ASC')
                            ->get();
 
-        $events = ScheduleEntry::where('jbtyp_id', '=', $id)->with('schedule.event')->paginate(25);
+        $entries = ScheduleEntry::where('jbtyp_id', '=', $id)->with('schedule.event.getPlace')->paginate(25);
 
-        return View::make('jobTypeView', compact('current_jobtype', 'jobtypes', 'events'));
+        return View::make('jobTypeView', compact('current_jobtype', 'jobtypes', 'entries'));
     }
 
     /**
@@ -122,7 +122,7 @@ class JobtypeController extends Controller
             
             // Inform the user about the redirect and go to detailed info about the job type selected
             Session::put('message', 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.');
-            Session::put('msgType', 'warning');
+            Session::put('msgType', 'danger');
             return Redirect::action( 'JobtypeController@show', ['id' => $jobtype->id] );
         } 
         else 
@@ -132,7 +132,7 @@ class JobtypeController extends Controller
             // Log the action while we still have the data
             Log::info('Jobtype deleted: ' . 
                       Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') . 
-                      ') deleted "' . $jobtype->jbtyp_title .  '" (it wasn not used in any schedule).');
+                      ') deleted "' . $jobtype->jbtyp_title .  '" (it was not used in any schedule).');
 
             // Now delete the jobtype
             Jobtype::destroy($id);
@@ -140,7 +140,7 @@ class JobtypeController extends Controller
             // Return to the management page
             Session::put('message', 'Diensttyp wurde erfolgreich gelöscht.');
             Session::put('msgType', 'success');
-            return Redirect::action( 'JobtypeController@index', ['id' => $jobtype->id] );
+            return Redirect::action( 'JobtypeController@index' );
         }
     }
 }

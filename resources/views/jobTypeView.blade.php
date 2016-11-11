@@ -1,4 +1,4 @@
-{{-- Needs variable: $current_jobtype, $jobtypes, $schedules --}}
+{{-- Needs variable: $current_jobtype, $jobtypes, $entries --}}
 @extends('layouts.master')
 
 @section('title')
@@ -12,54 +12,126 @@
 	OR Session::get('userGroup') == 'clubleitung'
 	OR Session::get('userGroup') == 'admin'))
 
-	<div class="panel">
+	<div class="panel panel-info">
 		<div class="panel-heading">
-				<h4 class="panel-title">"{!! $current_jobtype->jbtyp_title !!}" (#{{ $current_jobtype->id }}) ist bei folgenden Events im Einsatz:</h4>
+			<h4 class="panel-title">"{!! $current_jobtype->jbtyp_title !!}" (#{{ $current_jobtype->id }})</h4>
+			Dauer:&nbsp;&nbsp;{!! date("H:i", strtotime($current_jobtype->jbtyp_time_start)) !!} -
+							  {!! date("H:i", strtotime($current_jobtype->jbtyp_time_end)) !!}<br/>
+			Statistische Wertung: {!! $current_jobtype->jbtyp_statistical_weight !!} <br/>
 		</div>		
-		<table class="table table-hover table-condensed">
-			<thead>
-				<tr>
-					<th class="col-md-1">
-						ID
-					</th>
-					<th class="col-md-3">
-						Event
-					</th>
-					<th class="col-md-1">
-						Sektion
-					</th>
-					<th class="col-md-2">
-						Datum
-					</th>
-					<th class="col-md-5">
-						Ersetze mit: <span>{{$counter = 0}}</span>
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<div class="container">
-					@foreach($events as $event)
+		@if( $entries->count() == 0 )
+			<div class="panel panel-body">
+			Dieser Diensttyp wird bei keinem einzigen Event benutzt... Traurig, so was...<br/>
+			Vielleicht wäre es sinnvoll, ihn einfach zu
+				<a href="../jobtype/{{ $current_jobtype->id }}"
+				   class="btn btn-small btn-danger"
+				   data-toggle="tooltip"
+                   data-placement="bottom"
+                   title="&#39;&#39;{!! $current_jobtype->jbtyp_title !!}&#39;&#39; (#{{ $current_jobtype->id }}) löschen"
+				   data-method="delete"
+				   data-token="{{csrf_token()}}"
+				   rel="nofollow"
+				   data-confirm="Wirklich löschen?">
+					   	löschen
+				</a>
+				?
+			</div>
+		@else
+			<div class="panel-body">
+		      	Dieser Dienstyp wird bei folgenden Events eingesetzt. Um ihn zu entfernen, ersetze jede Instanz erst mit einem anderen Diensttyp.
+			</div>
+			<table class="table table-hover table-condensed">
+				<thead>
+					<tr class="active">
+						<th>
+							&nbsp;
+						</th>
+						<th class="col-md-1">
+							ID
+						</th>
+						<th class="col-md-3">
+							Event
+						</th>
+						<th class="col-md-1">
+							Sektion
+						</th>
+						<th class="col-md-2">
+							Wann?
+						</th>
+						<th class="col-md-5">
+							Aktionen
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($entries as $event)
 						<tr>
+							<td>
+								&nbsp;
+							</td>
 							<td>
 						      	{!! $event->schedule->event->id !!}
 							</td>
 							<td>						
-								{!! $event->schedule->event->evnt_title !!}
+								<a href="/event/{!! $event->schedule->event->id !!}">{!! $event->schedule->event->evnt_title !!}</a>
 							</td>
 							<td>
-								{!! $event->schedule->event->plc_id !!}
+								{!! $event->schedule->event->getPlace->plc_title !!}
 							</td>
 							<td>
-								{!! $event->schedule->event->evnt_date_start !!} 
-								{!! $event->schedule->event->evnt_time_start !!}-{!! $event->schedule->event->evnt_time_end !!}
+								{!! strftime("%a, %d. %b", strtotime($event->schedule->event->evnt_date_start)) !!} um  
+								{!! date("H:i", strtotime($event->schedule->event->evnt_time_start)) !!}
 							</td>
 							<td>
-								<div id={{ "box" . ++$counter }} class="box">
+
+
+					           		<div class="btn-group">
+									  	<a href="#" 
+									  	   class="btn btn-small btn-default dropdown-toggle" 
+									  	   name={{ "entry" . $event->id }}
+						           		   id={{   "entry" . $event->id }}
+						           		   data-toggle="dropdown" 
+						           		   aria-expanded="true">
+									  			Ersetze "{!! $current_jobtype->jbtyp_title !!}" (#{{ $current_jobtype->id }}) hier durch...
+									  			<span class="caret"></span>
+									  	</a>
+
+										<ul class="dropdown-menu">
+											@foreach($jobtypes as $jobtype)
+												<li class="dropdown"> 
+													<a href="javascript:void(0);" 
+													   onClick="$(this).dropdownSelect(&#39;{{ $jobtype->jbtyp_title }}&#39;, 
+													   								   &#39;{{ $jobtype->jbtyp_time_start }}&#39;, 
+													   								   &#39;{{ $jobtype->jbtyp_time_end }}&#39;,
+													   								   &#39;{{ $jobtype->jbtyp_statistical_weight }}&#39;); alert('Will set jobtype of {!! "ScheduleEntry" . $event->id !!} to jobtype {!! $jobtype->jbtyp_title !!} (#{!! $jobtype->id !!}) ')">
+													   	(#{{ $jobtype->id }}) 
+													   	{{  $jobtype->jbtyp_title }} 
+													   	(<i class='fa fa-clock-o'></i>
+														{{  date("H:i", strtotime($jobtype->jbtyp_time_start))
+															. "-" .
+														    date("H:i", strtotime($jobtype->jbtyp_time_end)) . ")" }}
+													</a>
+												</li>
+											@endforeach
+										</ul>
+
+									</div>
+							</td>
+						</tr>
+					@endforeach
+
+{{-- TODO FOR LATER: BATCH REASSIGN
+						<tr>
+							<td colspan="4">
+						      	&nbsp;
+							</td>
+							<td>
+								Ersetze <strong>alle</strong> Einträge oben durch
 					           	<div class="input-append btn-group">
 						           	<input type="text" 
-						           		   name={{ "jobType" . $counter }}
+						           		   name={{ "entry" . $event->id }}
 						           		   class="input" 
-						           		   id={{ "jobType" . $counter }}
+						           		   id={{ "entry" . $event->id }}
 						           		   value=""
 						           		   placeholder="{{ trans('mainLang.serviceTypeEnter') }}"/>
 
@@ -75,7 +147,7 @@
 													   onClick="$(this).dropdownSelect(&#39;{{ $jobtype->jbtyp_title }}&#39;, 
 													   								   &#39;{{ $jobtype->jbtyp_time_start }}&#39;, 
 													   								   &#39;{{ $jobtype->jbtyp_time_end }}&#39;,
-													   								   &#39;{{ $jobtype->jbtyp_statistical_weight }}&#39;);">
+													   								   &#39;{{ $jobtype->jbtyp_statistical_weight }}&#39;); alert('Will set jobtype of all of the above to jobtype {!! $jobtype->jbtyp_title !!} (#{!! $jobtype->id !!}) ')">
 													   	(#{{ $jobtype->id }}) 
 													   	{{  $jobtype->jbtyp_title }} 
 													   	(<i class='fa fa-clock-o'></i>
@@ -90,36 +162,15 @@
 								</div>
 							</td>
 						</tr>
-					@endforeach
-					<tr>
-						<td colspan="5">
-							&nbsp;
-						</td>
-					</tr>
-					<tr>
-						<td colspan="5">
-							<a href="../jobtype/{{ $current_jobtype->id }}"
-								   class="btn btn-danger"
-								   data-toggle="tooltip"
-			                       data-placement="right"
-			                       title="{!! $current_jobtype->jbtyp_title !!} löschen"
-								   data-method="delete"
-								   data-token="{{csrf_token()}}"
-								   rel="nofollow"
-								   data-confirm="Wirklich löschen?">
-								   Änderungen speichern und "{!! $current_jobtype->jbtyp_title !!}" (#{{ $current_jobtype->id }}) löschen
-								</a>
-								&nbsp;&nbsp;
-								Dafür musst du für jedes Event, wo dieser Dienst früher benutzt wurde, einen Ersatz gewählt haben. Geht auch seitenweise.
-						</td>
-					</tr>
-				</div>
-			</tbody>
-		</table>
+--}}
+
+				</tbody>
+			</table>
+		@endif
 	</div>
 		
 	<center>
-		{{ $events->links() }}
+		{{ $entries->links() }}
 	</center>
 	
 	<br/>

@@ -13,27 +13,30 @@
 	OR Session::get('userGroup') == 'clubleitung'
 	OR Session::get('userGroup') == 'admin'))
 
-	<div class="panel">
+	<div class="panel panel-info">
 		<div class="panel-heading">
 				<h4 class="panel-title">Verwaltung: Diensttypen</h4>
 		</div>		
-		<table class="table table-hover table-condensed">
+		<table class="table info table-hover table-condensed">
 			<thead>
-				<tr>
+				<tr class="active">
 					<th>
 						&nbsp;
 					</th>
-					<th class="col-md-2">
-						Dienst
+					<th>
+						ID
 					</th>
 					<th class="col-md-3">
+						Dienst
+					</th>
+					<th class="col-md-2">
 						Dauer
 					</th>
 					<th class="col-md-1">
-						Wertung
+						Statistische Wertung
 					</th>
-					<th class="col-md-6">
-						Verwaltung
+					<th class="col-md-5">
+						Aktionen
 					</th>
 				</tr>
 			</thead>
@@ -44,6 +47,9 @@
 						<tr>
 							<td>
 								&nbsp;
+							</td>
+							<td>
+								{!! $jobtype->id !!}
 							</td>
 							<td>
 						      	{!! Form::text('jbtyp_title' . $jobtype->id, 
@@ -66,15 +72,12 @@
 							</td>
 							<td>
 								<a href="../jobtype/{{ $jobtype->id }}"
-								   class="btn btn-small"
-								   data-toggle="tooltip"
-			                       data-placement="right"
-			                       title="Delete"
+								   class="btn btn-small btn-danger"
 								   data-method="delete"
 								   data-token="{{csrf_token()}}"
 								   rel="nofollow"
 								   data-confirm="Wirklich löschen?">
-								   <i class="fa fa-trash"></i>
+								   	Diesen Diensttyp entfernen
 								</a>
 							</td>
 						</tr>
