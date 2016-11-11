@@ -61,9 +61,7 @@ class JobtypeController extends Controller
         $current_jobtype = Jobtype::findOrFail($id);
 
         // get a list of all available job types
-        $jobtypes = Jobtype::where('jbtyp_is_archived', '=', '0')
-                           ->orderBy('jbtyp_title', 'ASC')
-                           ->get();
+        $jobtypes = Jobtype::orderBy('jbtyp_title', 'ASC')->get();
 
         $entries = ScheduleEntry::where('jbtyp_id', '=', $id)->with('schedule.event.getPlace')->paginate(25);
 

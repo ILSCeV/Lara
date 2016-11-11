@@ -781,6 +781,69 @@ jQuery( document ).ready( function( $ ) {
 
     });
 
+
+////////////////////////////////
+// MANAGEMENT: UPDATE JOBTYPE //
+////////////////////////////////
+
+    $( '.updateJobtype' ).on( 'submit', function() {
+
+        $.ajax({  
+            type: $( this ).prop( 'method' ),  
+
+            url: $( this ).prop( 'action' ),  
+
+            data: JSON.stringify({
+                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                    "_token":       $(this).find( 'input[name=_token]' ).val(),
+
+                    // Actual data being sent below
+                    "entryId":      $(this).closest("form").attr("id"), 
+                    "jobtypeId":    $(this).find("[name^=jobtype]").val(),
+
+                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+                    "_method": "put"
+                }),  
+
+            dataType: 'json',
+
+            contentType: 'application/json',
+            
+            beforeSend: function() {
+                // console.log("beforesend");
+            },
+            
+            complete: function() {
+                // console.log('complete');
+            },
+
+            success: function(data) {  
+                //console.log("success");
+                // remove row to indicate successful renaming of the jobtype
+                $(".jobtype-event-row" + data["entryId"]).hide();
+
+                // if all rows except table header were hidden (all jobtypes substituted withn other ones),
+                // refresh the page to get the delete button or show remaining jobtypes
+                if ($("tr:visible").length <= 1) {
+                    // we remove arguments after "?" because otherwise user could land on a pagination page that is already empty
+                    window.location = window.location.href.split("?")[0];
+                }
+                
+            },
+
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(JSON.stringify(xhr.responseJSON));
+            }
+
+        });
+
+        // Prevent the form from actually submitting in browser
+        return false; 
+
+    });
+
+
+
     /*
     $( '.survey' ).on( 'submit', function() {
 

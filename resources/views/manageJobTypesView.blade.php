@@ -76,7 +76,7 @@
 								   data-method="delete"
 								   data-token="{{csrf_token()}}"
 								   rel="nofollow"
-								   data-confirm="Wirklich löschen?">
+								   data-confirm="Möchtest du &#39;&#39;{!! $jobtype->jbtyp_title !!}&#39;&#39; (#{{ $jobtype->id }}) wirklich löschen? Diese Aktion kann man nicht rückgängig machen!">
 								   	Diesen Diensttyp entfernen
 								</a>
 							</td>

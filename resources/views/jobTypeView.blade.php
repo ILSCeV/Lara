@@ -31,7 +31,7 @@
 				   data-method="delete"
 				   data-token="{{csrf_token()}}"
 				   rel="nofollow"
-				   data-confirm="Wirklich löschen?">
+				   data-confirm="Möchtest du &#39;&#39;{!! $current_jobtype->jbtyp_title !!}&#39;&#39; (#{{ $current_jobtype->id }}) wirklich löschen? Diese Aktion kann man nicht rückgängig machen!">
 					   	löschen
 				</a>
 				?
@@ -64,32 +64,40 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($entries as $event)
-						<tr>
+					@foreach($entries as $entry)
+						<tr class="{!! "jobtype-event-row" . $entry->id !!}" name="{!! "jobtype-event-row" . $entry->id !!}">
 							<td>
 								&nbsp;
 							</td>
 							<td>
-						      	{!! $event->schedule->event->id !!}
+						      	{!! $entry->schedule->event->id !!}
 							</td>
 							<td>						
-								<a href="/event/{!! $event->schedule->event->id !!}">{!! $event->schedule->event->evnt_title !!}</a>
+								<a href="/event/{!! $entry->schedule->event->id !!}">{!! $entry->schedule->event->evnt_title !!}</a>
 							</td>
 							<td>
-								{!! $event->schedule->event->getPlace->plc_title !!}
+								{!! $entry->schedule->event->getPlace->plc_title !!}
 							</td>
 							<td>
-								{!! strftime("%a, %d. %b", strtotime($event->schedule->event->evnt_date_start)) !!} um  
-								{!! date("H:i", strtotime($event->schedule->event->evnt_time_start)) !!}
+								{!! strftime("%a, %d. %b", strtotime($entry->schedule->event->evnt_date_start)) !!} um  
+								{!! date("H:i", strtotime($entry->schedule->event->evnt_time_start)) !!}
 							</td>
 							<td>
+								{!! Form::open(  array( 'route'  => ['entry.update', $entry->id],
+						                                'id' 	 => $entry->id,
+						                                'method' => 'put',
+						                                'class'  => 'updateJobtype')  ) !!}
 
+					           		{{-- Fields to populate --}}
+							        <input type="text" id="{!! 'entry' . $entry->id !!}" name="{!!   'entry' . $entry->id !!}" value="" hidden />
+							        <input type="text" id="{!! 'jobtype' . $entry->id !!}" name="{!! 'jobtype' . $entry->id !!}" value="" hidden />
 
-					           		<div class="btn-group">
+					           		<div class="btn-group dropdown-jobtypes">
+
 									  	<a href="#" 
-									  	   class="btn btn-small btn-default dropdown-toggle" 
-									  	   name={{ "entry" . $event->id }}
-						           		   id={{   "entry" . $event->id }}
+									  	   class="btn btn-small btn-default" 
+									  	   name={{ "dropdown" . $entry->id }}
+						           		   id={{   "dropdown" . $entry->id }}
 						           		   data-toggle="dropdown" 
 						           		   aria-expanded="true">
 									  			Ersetze "{!! $current_jobtype->jbtyp_title !!}" (#{{ $current_jobtype->id }}) hier durch...
@@ -100,10 +108,9 @@
 											@foreach($jobtypes as $jobtype)
 												<li class="dropdown"> 
 													<a href="javascript:void(0);" 
-													   onClick="$(this).dropdownSelect(&#39;{{ $jobtype->jbtyp_title }}&#39;, 
-													   								   &#39;{{ $jobtype->jbtyp_time_start }}&#39;, 
-													   								   &#39;{{ $jobtype->jbtyp_time_end }}&#39;,
-													   								   &#39;{{ $jobtype->jbtyp_statistical_weight }}&#39;); alert('Will set jobtype of {!! "ScheduleEntry" . $event->id !!} to jobtype {!! $jobtype->jbtyp_title !!} (#{!! $jobtype->id !!}) ')">
+													   onClick="document.getElementById('{{ 'entry'. $entry->id }}').value='{{ $entry->id }}';
+document.getElementById('{{ 'jobtype'. $entry->id }}').value='{{ $jobtype->id }}';
+document.getElementById('{{ 'btn-submit-changes'. $entry->id }}').click();">
 													   	(#{{ $jobtype->id }}) 
 													   	{{  $jobtype->jbtyp_title }} 
 													   	(<i class='fa fa-clock-o'></i>
@@ -116,6 +123,8 @@
 										</ul>
 
 									</div>
+								{!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $entry->id, 'hidden') ) !!}
+			        			{!! Form::close() !!}
 							</td>
 						</tr>
 					@endforeach
