@@ -20,6 +20,9 @@ $("#button-create-submit").add("#button-edit-submit").click(function () {
     if ($("#filter-checkboxes").find("input[type=checkbox]:checked").length === 0) {
         errors.push("Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.");
     }
+    if ($('[name="preparationTime"]').val() === "") {
+        errors.push("Die Dienstvorbereitungszeit vergessen!");
+    }
 
     if (errors.length > 0) {
         bootbox.alert(errors.map(err => "<p>" + err + "</p>").join("\n"))
