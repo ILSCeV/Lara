@@ -154,13 +154,12 @@ jQuery( document ).ready( function( $ ) {
 });
 
 $('input').focusout(function() {
-    var oldThis = this;
     // hack to allow for click to register before focusout is called
-    setTimeout(function() {
-        if ($(oldThis).prop('id') === 'newName') {
+    if ($(this).prop('id') === 'newName') {
+        setTimeout(function() {
             $('#dropdown-menu_name').hide();
-        }
-    }, 500);
+        }, 200);
+    }
 });
 
 ///////////////////////////////////

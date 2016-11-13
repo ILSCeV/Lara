@@ -951,3 +951,12 @@ Examples :
 $('[name^=btn-submit-change]').click(function() {
     $(this).parents('.row').removeClass('my-shift');
 });
+
+$('input').focusout(function() {
+    if ($(this).prop('placeholder') === '=FREI=') {
+        // hack to allow for click to register before focusout is called
+        setTimeout(function () {
+            $('.dropdown-username').hide();
+        }, 200);
+    }
+});
