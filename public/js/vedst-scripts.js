@@ -896,3 +896,7 @@ Examples :
     Laravel.initialize();
 
 })(window, jQuery);
+
+$('[name^=btn-submit-change]').click(function() {
+    $(this).parents('.row').removeClass('my-shift');
+});

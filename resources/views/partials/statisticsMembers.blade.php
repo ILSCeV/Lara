@@ -17,7 +17,7 @@
 </div>
 
 <div class="panel panel-body no-padding">
-    <div id="myTabContent" class="tab-content">
+    <div id="leaderboardsTabs" class="tab-content">
         @foreach($clubInfos as $title => $clubInfo)
             <div class="tab-pane fade in {{ Session::get('userClub') === $title ? 'active' : '' }}" id="{{$title}}">
                 <table class="table table-hover" >

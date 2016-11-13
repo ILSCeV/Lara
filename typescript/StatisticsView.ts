@@ -8,11 +8,12 @@ function getRowShifts(a: string) {
     return $(a).children("td").eq(1).text();
 }
 
+
 //inspired by http://stackoverflow.com/questions/3160277/jquery-table-sort
-$(".fa-sort, .fa-sort-desc, .fa-sort-asc").click(function () {
-    let isAscending = $(this).hasClass('fa-sort-asc');
-    let rowCatcher = $(this).parent().data('sort') === 'name' ? getRowName : getRowShifts;
-    let $table = $(this).parents("table");
+function sortLeaderboards(sortIcon: JQuery) {
+    let isAscending = sortIcon.hasClass('fa-sort-asc');
+    let rowCatcher = sortIcon.parent().data('sort') === 'name' ? getRowName : getRowShifts;
+    let $table = sortIcon.parents("table");
     let rows = $table
         .find("tbody")
         .find("tr")
@@ -22,11 +23,18 @@ $(".fa-sort, .fa-sort-desc, .fa-sort-asc").click(function () {
         rows.reverse();
     }
     rows.forEach(row => $table.append($(row)));
-    $(this).parents('table')
+    sortIcon.parents('table')
         .find('.fa-sort, .fa-sort-desc, .fa-sort-asc')
         .removeClass('fa-sort-asc')
         .removeClass('fa-sort-desc')
         .addClass('fa-sort');
-    $(this).removeClass('fa-sort')
+    sortIcon.removeClass('fa-sort')
         .addClass(isAscending ? 'fa-sort-desc' : 'fa-sort-asc');
+}
+$(".fa-sort, .fa-sort-desc, .fa-sort-asc").click(function () {
+    sortLeaderboards(this);
+});
+
+$('#leaderboardsTabs').find('thead').find('td').click(function() {
+    sortLeaderboards($($(this).find('i').first()));
 });

@@ -150,8 +150,14 @@ jQuery( document ).ready( function( $ ) {
     $("[class^=row]").on('click', 'ul', function () {
         $('.edit_drop').attr('style', 'display: none');
     });
+
 });
 
+$('input').focusout(function() {
+    if ($(this).prop('id') === 'newName') {
+        $('#dropdown-menu_name').hide();
+    }
+});
 
 ///////////////////////////////////
 // AUTOCOMPLETE USERNAMES SURVEY //
