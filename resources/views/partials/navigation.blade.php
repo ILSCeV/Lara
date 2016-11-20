@@ -27,7 +27,10 @@
             <li><a href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
 
 {{-- MEMBER STATISTICS / members only --}}
-            @if(Session::has('userId'))
+            {{-- @if(Session::has('userId')) --}}
+            {{-- Restict access for now --}}
+            @if(Session::get('userGroup') == 'clubleitung'
+             OR Session::get('userGroup') == 'admin')
                 <li><a href="{{ asset('/statistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
             @endif
             

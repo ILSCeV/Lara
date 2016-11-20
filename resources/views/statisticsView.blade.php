@@ -5,6 +5,10 @@
 
 @section('content')
 
+{{-- Restrict access for now --}}
+@if(Session::get('userGroup') == 'clubleitung'
+ OR Session::get('userGroup') == 'admin')
+
     {{-- prev/next month --}}
     <div class="col-xs-12 col-md-12">
         <div class="col-xs-12 col-md-5 btn-group no-padding">
@@ -49,4 +53,9 @@
         </div>
 
     </div>
+
+@else
+    @include('partials.accessDenied')
+@endif
+
 @stop
