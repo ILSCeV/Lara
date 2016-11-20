@@ -131,7 +131,7 @@ class ScheduleEntry extends Model
 
     public function event()
     {
-        return $this->hasManyThrough('Lara\ClubEvent', 'Lara\Schedule', 'evnt_id', 'id');
+        return $this->schedule()->event();
     }
 
 	public function start()

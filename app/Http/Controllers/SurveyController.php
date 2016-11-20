@@ -449,8 +449,8 @@ class SurveyController extends Controller
 
         foreach ($deletedQuestions as $index => $question) {
             $trashedQuestion = $oldQuestions->get($index);
-            $trashedQuestion->options->each(Revision::deleteWithRevision);
-            $trashedQuestion->cells->each(Revision::deleteWithRevision);
+            $trashedQuestion->options->each(function($option) { Revision::deleteWithRevision($option);});
+            $trashedQuestion->cells->each(function($cell) { Revision::deleteWithRevision($cell);});
             Revision::deleteWithRevision($trashedQuestion);
         }
 

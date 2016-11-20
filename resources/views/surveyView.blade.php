@@ -129,7 +129,7 @@ $userCanEditDueToRole
             </h4>
 
         </div>
-        <div class="panel-body">
+        <div class="panel-body" >
             @if($survey->description != null)
                 {{ trans('mainLang.description') }}: {!! $survey->description !!}
             @endif

@@ -460,3 +460,8 @@ input[type=number],
     background-color: #FFF89B;
     padding: 8px !important;
 }
+
+.divider{
+    padding-bottom: 3pt;
+    border-bottom:1px #eeeeee solid;
+}

@@ -300,6 +300,57 @@ $( document ).ready( function() {
         });
     });
 
+    // Show/hide taken shifts
+
+    $(document).ready(function() {
+        if(typeof(Storage) !== "undefined")
+        {
+            if (localStorage.showTakenShifts == "Vergebene Dienste einblenden")
+            {
+                $('div.green').closest('.row').removeClass('hide');
+                $('#show-hide-taken-shifts').text("Vergebene Dienste ausblenden");
+                $container.isotope('layout');
+            }
+            else if (localStorage.showTakenShifts == "Vergebene Dienste ausblenden")
+            {
+                $('div.green').closest('.row').addClass('hide');
+                $('#show-hide-taken-shifts').text("Vergebene Dienste einblenden");
+                $('.isotope').isotope('layout')
+            }
+        }
+    });
+
+    $(function(){
+        $('#show-hide-taken-shifts').click(function(e) {
+            if ($('div.green').closest('.row').hasClass("hide"))
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined")
+                {
+                    localStorage.showTakenShifts = $(this).text();
+                }
+
+                // change state, change button
+                $('div.green').closest('.row').removeClass('hide');
+                $(this).text("Vergebene Dienste ausblenden");
+                $container.isotope('layout');
+            }
+            else
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined")
+                {
+                    localStorage.showTakenShifts = $(this).text();
+                }
+
+                // change state, change button
+                $('div.green').closest('.row').addClass('hide');
+                $(this).text("Vergebene Dienste einblenden");
+                $('.isotope').isotope('layout')
+            };
+        });
+    });
+
 
    // Week view changer
 
@@ -959,3 +1010,16 @@ Examples :
     Laravel.initialize();
 
 })(window, jQuery);
+
+$('[name^=btn-submit-change]').click(function() {
+    $(this).parents('.row').removeClass('my-shift');
+});
+
+$('input').focusout(function() {
+    if ($(this).prop('placeholder') === '=FREI=') {
+        // hack to allow for click to register before focusout is called
+        setTimeout(function () {
+            $('.dropdown-username').hide();
+        }, 200);
+    }
+});

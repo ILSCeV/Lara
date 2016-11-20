@@ -358,6 +358,7 @@ return [
     
     'weekMoSu'                              => 'Week: Monday - Sunday',
     'weekWeTu'                              => 'Week: Wednesday - Tuesday',
+    'hideTakenShifts'                       => 'Hide taken shifts',
     
     //-----------------------------------------------------------------------------------------------------------
     

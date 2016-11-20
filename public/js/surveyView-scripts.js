@@ -150,8 +150,17 @@ jQuery( document ).ready( function( $ ) {
     $("[class^=row]").on('click', 'ul', function () {
         $('.edit_drop').attr('style', 'display: none');
     });
+
 });
 
+$('input').focusout(function() {
+    // hack to allow for click to register before focusout is called
+    if ($(this).prop('id') === 'newName') {
+        setTimeout(function() {
+            $('#dropdown-menu_name').hide();
+        }, 200);
+    }
+});
 
 ///////////////////////////////////
 // AUTOCOMPLETE USERNAMES SURVEY //

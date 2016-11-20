@@ -21,8 +21,18 @@ $("#button-create-submit").add("#button-edit-submit").click(function () {
         errors.push("Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.");
     }
 
+    if ($('[name="preparationTime"]').val() === "") {
+        errors.push("Die Dienstvorbereitungszeit vergessen!");
+    }
+    if ($('[name="beginTime"]').val() === "") {
+        errors.push("Die Startzeit vergessen!");
+    }
+    if ($('[name="endTime"]').val() === "") {
+        errors.push("Die Endzeit vergessen!");
+    }
+
     if (errors.length > 0) {
-        bootbox.alert(errors.map(err => "<p>" + err + "</p>").join("\n"))
+        bootbox.alert(errors.map(err => "<p>" + err + "</p>").join("\n"));
         return false;
     }
 });
