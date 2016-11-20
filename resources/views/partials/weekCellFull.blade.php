@@ -39,8 +39,10 @@
 	@endif
 
 			<h4 class="panel-title">
+				@include("partials.event-marker")
+				&nbsp;
 				<a href="{{ URL::route('event.show', $clubEvent->id) }}">
-					@include("partials.event-marker")&nbsp;<span class="name">{{ $clubEvent->evnt_title }}</span>
+					<span class="name">{{ $clubEvent->evnt_title }}</span>
 				</a>
 			</h4>
 
