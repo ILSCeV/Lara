@@ -15,7 +15,7 @@ $("#button-create-submit").add("#button-edit-submit").click(function () {
     let beginDate = new Date($("[name='beginDate']").prop("value") + " " + $("[name='beginTime']").prop("value"));
     let endDate = new Date($("[name='endDate']").prop("value") + " " + $("[name='endTime']").prop("value"));
     if (beginDate.getTime() > endDate.getTime()) {
-        errors.push("Die Startzeit liegt vor der Endzeit!");
+        errors.push("Die Endzeit liegt vor der Startzeit!");
     }
     if ($("#filter-checkboxes").find("input[type=checkbox]:checked").length === 0) {
         errors.push("Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.");
