@@ -21,8 +21,8 @@
 
             <div class="form-group">
                 {!! Form::label('deadline', Lang::get('mainLang.placeholderActiveUntil')) !!}
-                {!! Form:: date('deadlineDate', $date, ['class' => 'form-control'] ) !!}
-                {!! Form:: time('deadlineTime', $time, ['class' => 'form-control'] ) !!}
+                {!! Form::date('deadlineDate', $date, ['class' => 'form-control'] ) !!}
+                {!! Form::time('deadlineTime', $time, ['class' => 'form-control', 'step' => 1] ) !!}
             </div>
 
             <div class="form-group">
