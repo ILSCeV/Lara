@@ -65,10 +65,10 @@
                         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-globe" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" id="languageSelection">
                             @foreach (Config::get('languages') as $lang => $language)
                                 <li>
-                                    <a href="{{ route('lang.switch', $lang) }}">{{$language}}</a>
+                                    <a href="{{ route('lang.switch', $lang) }}" data-language="{{$lang}}">{{$language}}</a>
                                 </li>
                             @endforeach
                         </ul>
