@@ -96,6 +96,7 @@ Route::get('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventContr
 // AJAX calls
 Route::get('person/{query?}', 'PersonController@index');
 Route::get('club/{query?}', 'ClubController@index');
+Route::get('personal/statistics/chartData', 'PersonalController@chartData');
 
 // additional route to store a SurveyAnswer
 Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');
@@ -120,6 +121,7 @@ Route::resource('survey.answer', 'SurveyAnswerController', ['only' => ['show', '
 
 // STATISTICS
 Route::get('/statistics/{year?}/{month?}',						'StatisticsController@showStatistics');
+Route::get('/personal/statistics',                              'PersonalController@statistics');
 
 /*
 Route::post('/statistics', 						['as'   => 'statisticsChangeDate',
