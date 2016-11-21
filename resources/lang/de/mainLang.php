@@ -205,6 +205,10 @@ return [
     'Fr' => 'Freitag',
     'Sa' => 'Samstag',
     'Su' => 'Sonntag',
+
+
+    // resources/view/partials/calendarLinkEvent.blade.php
+    'addToCalendar' => 'Füge dieses Event zu deinem Google Kalender hinzu',
     
     //-----------------------------------------------------------------------------------------------------------
     
