@@ -29,16 +29,8 @@ class StatisticsController extends Controller
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next month');
 
-        $rewardableEventTypes = collect([
-            0, // usual opening
-            2, // special
-            3, // live band / DJ
-            6, // flooding
-            7, // flyers
-        ]);
-        $shifts = ScheduleEntry::whereHas('schedule.event', function ($query) use ($from, $till, $rewardableEventTypes) {
-            $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')])
-                ->whereIn('evnt_type', $rewardableEventTypes);
+        $shifts = ScheduleEntry::whereHas('schedule.event', function ($query) use ($from, $till) {
+            $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
         })->get();
         $clubs = Club::activeClubs()->with('activePersons')->get();
 

@@ -56,6 +56,10 @@ class ClubEvent extends Model
 	public function getPlace() {
 		return $this->belongsTo('Lara\Place', 'plc_id', 'id');
 	}
+
+	public function place() {
+        return $this->belongsTo('Lara\Place', 'plc_id', 'id');
+    }
 	
 	/**
 	 * Get the corresponding schedule.
