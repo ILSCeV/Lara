@@ -212,7 +212,55 @@
 		@endif
 	</div>
 
-{{-- Legend --}}
+    <div class="col-md-12 col-xs-12 text-dark-grey centered text-dark-grey hidden-print">
+        <a href="#" id="permalink">{{ trans('mainLang.getPermalink') }}</a>
+    </div>
+    <script>
+        document.getElementById('permalink').onclick = function(){
+            var url = location.protocol + '//' + location.host + location.pathname + '?';
+            //Check section filtering
+            if($('#bc-Cafe-filter').hasClass('btn-primary'))
+            {
+                url+='s=ccafe&';
+            }
+            else if($('#bc-Club-filter').hasClass('btn-primary'))
+            {
+                url+='s=cclub&';
+            }
+            else {
+                url+='s=all&'
+            }
+
+            //Check time
+            if($('#show-hide-time').text()=="{{ trans('mainLang.showTimes') }}"){
+                url+='t=true&';
+            }
+            else
+            {
+                url+='t=false&';
+            }
+
+            //Week start
+            if($('#change-week-view').text()=="{{ trans('mainLang.weekMoSu') }}"){
+                url+='w=MiDi&';
+            }
+            else
+            {
+                url+='w=MoSu&';
+            }
+
+            //hide or show taken shifts
+            if($('#show-hide-taken-shifts').text()=="{{ trans('mainLang.hideTakenShifts') }}"){
+                url+='h=false';
+            }
+            else
+            {
+                url+='h=true';
+            }
+            document.location.href=url;
+        };
+    </script>
+    {{-- Legend --}}
 @include("partials.legend")
 
 @stop
