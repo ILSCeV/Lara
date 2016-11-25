@@ -102,9 +102,9 @@ Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');
 
 // Language
 Route::get('lang/{lang}', ['as'=>'lang.switch', function($lang){
-	if (array_key_exists($lang, Config::get('languages'))) {
-            Session::set('applocale', $lang);
-        }
+    if (array_key_exists($lang, Config::get('languages'))) {
+        Session::set('applocale', $lang);
+    }
     return Redirect::back();
 }]);
 

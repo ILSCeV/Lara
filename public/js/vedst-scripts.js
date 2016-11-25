@@ -1023,3 +1023,8 @@ $('input').focusout(function() {
         }, 200);
     }
 });
+
+$('#languageSelection').find('a').click(function() {
+    var language = $(this).data('language');
+    localStorage.setItem('language', language);
+});

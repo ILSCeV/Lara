@@ -204,7 +204,9 @@ return [
     'Fr' => 'Friday',
     'Sa' => 'Saturday',
     'Su' => 'Sunday',
-    
+
+    // resources/view/partials/calendarLinkEvent.blade.php
+    'addToCalendar' => 'Add this event to your calendar',
     //-----------------------------------------------------------------------------------------------------------
     
     // resources/views/createSurveyView.blade.php

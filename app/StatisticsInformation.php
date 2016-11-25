@@ -14,10 +14,14 @@ class StatisticsInformation
 
     public function make(Person $person, $shifts, Club $club)
     {
-        // use a flatMap, because shifts returns an array, so with a normal map we would have an array of arrays
-        $usersShifts = $shifts->where('prsn_id', $person->id);
+        $usersShifts = $shifts->where('prsn_id', $person->id)->filter(function($shift) use($club) {
+            // reduce club id by one to cancel out the mismatch between Clubs and Places Table
+            return $shift->schedule->event->plc_id === $club->id - 1;
+        });
 
-        $this->totalShifts = $usersShifts->count();
+        $this->totalShifts = $usersShifts->reduce(function ($prev, $current) {
+            return $current->entry_statistical_weight + $prev;
+        }, 0);
 
         $this->user = $person;
         $this->userClub = $club;
