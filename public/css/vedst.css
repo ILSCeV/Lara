@@ -465,3 +465,7 @@ input[type=number],
     padding-bottom: 3pt;
     border-bottom:1px #eeeeee solid;
 }
+
+.tooltip {
+    position: fixed
+}

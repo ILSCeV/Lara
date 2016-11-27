@@ -6,4 +6,4 @@
 @endif
 		&location=Max-Planck-Ring+16,+98693+Ilmenau
 		&ctz=Europe/Berlin
-		&trp=false" target="_blank" rel="nofollow">{!! $content !!}</a>
+		&trp=false" target="_blank" rel="nofollow" data-toggle="tooltip" title="{{ trans('mainLang.addToCalendar')}}">{!! $content !!}</a>
