@@ -1,8 +1,9 @@
 $(function () {
     var data = $.getJSON('/personal/statistics/chartData', function(data) {
-        var categories = Object.keys(data).sort();
-        var series = categories.map(function(category) {
-            return data[category];
+        var personalData = data['personal'];
+        var categories = Object.keys(personalData).sort();
+        var personalSeries = categories.map(function(category) {
+            return personalData[category];
         });
         $('#activityGraph').highcharts({
             chart: {
@@ -13,8 +14,9 @@ $(function () {
             },
             xAxis: {
                 categories: categories.map(function(date) {
+                    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                     var month = new Date(date);
-                    return month.getMonth() + month.getFullYear();
+                    return months[month.getMonth()] + ' ' + month.getFullYear();
                 })
             },
             yAxis: {
@@ -39,8 +41,9 @@ $(function () {
             },
             series: [{
                 name: 'Your shifts',
-                data: series
-            }]
+                data: personalSeries
+            }],
+            credits: false
         });
     });
 });

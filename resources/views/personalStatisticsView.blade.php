@@ -6,20 +6,17 @@
 @section('content')
 
     <div class="row">
+        <div id="activityGraph"/>
+    </div>
+    <div class="row">
         {{-- Most done shift--}}
         <div class="col-md-7 col-sm-7 col-xs-12 no-padding">
-            <div>Your most done shift is</div>
+            <div class="panel">Your most done shift is</div>
         </div>
 
         {{-- Least done shift--}}
         <div class="col-md-5 col-sm-5 col-xs-12 no-padding-xs">
-            <br class="visible-xs">
-            <div> Your least done shift is</div>
-
-        </div>
-    </div>
-    <div class="row">
-        <div id="activityGraph">
+            <div class="panel"> Your least done shift is</div>
 
         </div>
     </div>

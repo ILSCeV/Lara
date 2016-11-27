@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\View;
 use Lara\Http\Requests;
+use Lara\Person;
 use Lara\ScheduleEntry;
 
 class PersonalController extends Controller
@@ -39,6 +40,8 @@ class PersonalController extends Controller
         })->map(function($value) {
             return count($value);
         });
-        return response()->json($shiftsByMonth);
+
+        $json = ['personal' => $shiftsByMonth];
+        return response()->json($json);
     }
 }
