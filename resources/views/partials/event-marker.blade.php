@@ -39,8 +39,4 @@
     $content = '<i class="fa fa-list-alt white-text"></i>'
     ?>
 @endif
-{{-- Kinda hacky way to add a title to all icons. TODO: Refactor this --}}
-<?php
-        $content = preg_replace('/\<i /', '<i title="' . trans('mainLang.addToCalendar') . '" ', $content, 1);
-?>
 @include("partials.calendarLinkEvent", [$clubEvent, $content])
