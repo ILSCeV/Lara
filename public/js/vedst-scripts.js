@@ -418,15 +418,15 @@ $( document ).ready( function() {
 $(document).ready(function() {
     if(typeof(Storage) !== "undefined") 
     {
-        if (localStorage.filter == "nur bc-Club") 
+        if (localStorage.filter.match("bc-Club")) 
         {
             $("#bc-Club-filter").trigger("click"); 
         } 
-        else if (localStorage.filter == "nur bc-Café") 
+        else if (localStorage.filter.match("bc-Café")) 
         {
             $("#bc-Cafe-filter").trigger("click");                   
         }
-        else if (localStorage.filter == "Alle Sektionen")
+        else if (localStorage.filter.match("\\*"))
         {
             $("#show-all-filter").trigger("click");                    
         }
@@ -445,17 +445,17 @@ $(document).ready(function() {
         // check if local storage in use
         if(typeof(Storage) !== "undefined") 
         {
-            if (localStorage.filter == "nur bc-Club") 
+            if (localStorage.filter.match("bc-Club")) 
             {
                 $('.filter').hide();
                 $('.bc-Club').show(); 
             }
-            else if (localStorage.filter == "nur bc-Café")
+            else if (localStorage.filter.match("bc-Café"))
             {
                 $('.filter').hide();
                 $('.bc-Café').show(); 
             }
-            else if (localStorage.filter == "Alle Sektionen") 
+            else if (localStorage.filter.match("\\*"))
             {
                 $('.filter').show();  
             }
