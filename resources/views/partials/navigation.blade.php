@@ -44,12 +44,14 @@
                 </a>
                 <ul class="dropdown-menu" role="menu">
 
-{{-- JOB TYPE MANAGEMENT / marketing, section management or admins only --}}
+{{-- JOB TYPE MANAGEMENT / marketing, section management or admins only 
+     COMMENTED OUT FOR NOW, WILL RESTORE IN THE NEXT UPDATE 
                 @if(Session::get('userGroup') == 'marketing'
                  OR Session::get('userGroup') == 'clubleitung'
                  OR Session::get('userGroup') == 'admin')
                     <li><a href="{{ asset('jobtype') }}">{{ trans('mainLang.manageJobType') }}</a></li>
                 @endif
+--}}
 
 {{-- LARA LOGS / section management or admins only --}}
                 @if(Session::get('userGroup') == 'clubleitung'
