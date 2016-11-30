@@ -473,12 +473,15 @@ class SurveyController extends Controller
                 $deletedOptions = $optionTexts->diffKeys($newOptions);
                 $newlyCreatedOptions = $newOptions->diffKeys($optionTexts);
                 $unmodifiedOptions = $optionTexts->filter(function ($option, $optionIndex) use ($newOptions) {
+                    if ($newOptions->count() <= $optionIndex)  {
+                        return false;
+                    }
                     return $newOptions[$optionIndex] === $option;
                 });
                 $modifiedOptions = $optionTexts->diff($unmodifiedOptions);
 
                 foreach ($deletedOptions as $optionIndex => $option) {
-                    Revision::deleteWithRevision($oldAnswerOptions->get(index)->get($optionIndex));
+                    Revision::deleteWithRevision($oldAnswerOptions->get($index)->get($optionIndex));
                 }
                 foreach ($newlyCreatedOptions as $optionIndex => $option) {
                     SurveyAnswerOption::make($questionToModify, $option);
