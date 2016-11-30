@@ -266,6 +266,18 @@ $( document ).ready( function() {
                 $('#show-hide-time').text("Zeiten einblenden");
                 $('.isotope').isotope('layout')                  
             }
+
+            var language = localStorage.language;
+            if (language) {
+                $.ajax({
+                    url: '/lang',
+                    success: function(data) {
+                        if (data.language !== language) {
+                            window.location = '/lang/' + language;
+                        }
+                    }
+                });
+            }
         }
     });
 
@@ -1024,7 +1036,7 @@ $('input').focusout(function() {
     }
 });
 
-$('#languageSelection').find('a').click(function() {
+$('.languageSwitcher').find('a').click(function() {
     var language = $(this).data('language');
     localStorage.setItem('language', language);
 });

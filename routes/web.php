@@ -96,6 +96,9 @@ Route::get('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventContr
 // AJAX calls
 Route::get('person/{query?}', 'PersonController@index');
 Route::get('club/{query?}', 'ClubController@index');
+Route::get('lang', function() {
+    return response()->json(['language' => Session::get('applocale')]);
+});
 
 // additional route to store a SurveyAnswer
 Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');
