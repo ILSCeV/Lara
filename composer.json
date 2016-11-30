@@ -20,7 +20,6 @@
         "symfony/dom-crawler": "2.5.*",
         "orangehill/iseed": "dev-master",
         "phpspec/phpspec": "~2.1",
-        "orangehill/iseed": "dev-master",
         "laracasts/integrated": "^0.15.6"
     },
     "autoload": {
