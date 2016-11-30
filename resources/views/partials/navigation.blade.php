@@ -61,7 +61,7 @@
 
 {{-- LANGUAGE SWITCHER / public --}}
                 @foreach (Config::get('languages') as $lang => $language)
-                    <li class="languageSwitcher"><a href="{{ route('lang.switch', $lang) }}" data-language="{{$lang}}"><i class="fa fa-globe" aria-hidden="true"></i></i> {{$language}}</a></li>
+                    <li><a href="{{ route('lang.switch', $lang) }}"><i class="fa fa-globe" aria-hidden="true"></i></i> {{$language}}</a></li>
                 @endforeach
 
                 </ul>
