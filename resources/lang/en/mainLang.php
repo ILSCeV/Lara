@@ -333,7 +333,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/weekCellHidden.blade.php
-    'moreDetailsAfterLogInMessage' => 'More details are accessible to members after logging in. :break',
+    'moreDetailsAfterLogInMessage' => 'More details are accessible to members after logging in.',
     // 'moreDetailsAfterLogInMessage2' => 'after logging in.', 
     // Merged with line above but there is now way to break the line (format is still ok) 
     // ToDo find a solution for breaking lines
