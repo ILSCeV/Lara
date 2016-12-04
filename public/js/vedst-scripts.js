@@ -274,7 +274,7 @@ $( document ).ready( function() {
                 success: function(data) {
                     if (language === 'en' || language === 'de') {
                         if (data.language !== language) {
-                            window.location = 'lang/' + language;
+                            window.location = '/lang/' + language;
                         }
                     }
                     else {
