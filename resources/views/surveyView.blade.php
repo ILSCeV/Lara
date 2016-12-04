@@ -94,7 +94,7 @@ $userCanEditDueToRole
               {{--if a question is set to required show a * if the user didn't fill it in--}}
                {{-- Offset of 3 for the first two columns in the table and a switch from 0-indexed to 1-indexed array --}}
                 #survey-answer td:nth-of-type({{$index + 3}}):before {
-                content: "{{$question->question . $question->is_required ? '*' : ''}} ";
+                content: "{{$question->question . ($question->is_required ? '*' : '')}} ";
                 float: left;
                 display: inline-block;
                 overflow: hidden;
