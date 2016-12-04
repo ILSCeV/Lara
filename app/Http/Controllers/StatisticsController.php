@@ -27,7 +27,7 @@ class StatisticsController extends Controller
         }
         $from = new DateTime($year . '-' . $month . '-01');
         $till = new DateTime($from->format('Y-m-d'));
-        $till->modify('next month');
+        $till->modify('next month')->modify('-1 day');
 
         $shifts = ScheduleEntry::whereHas('schedule.event', function ($query) use ($from, $till) {
             $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
