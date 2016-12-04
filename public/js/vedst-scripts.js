@@ -266,6 +266,22 @@ $( document ).ready( function() {
                 $('#show-hide-time').text("Zeiten einblenden");
                 $('.isotope').isotope('layout')                  
             }
+
+            var language = localStorage.language;
+
+            $.ajax({
+                url: '/lang',
+                success: function(data) {
+                    if (language === 'en' || language === 'de') {
+                        if (data.language !== language) {
+                            window.location = 'lang/' + language;
+                        }
+                    }
+                    else {
+                        localStorage.language = data.language;
+                    }
+                }
+            })
         }
     });
 
@@ -418,15 +434,19 @@ $( document ).ready( function() {
 $(document).ready(function() {
     if(typeof(Storage) !== "undefined") 
     {
-        if (localStorage.filter.match("bc-Club")) 
+        var filter = localStorage.filter;
+        if (!filter) {
+            return;
+        }
+        if (filter.match("bc-Club"))
         {
             $("#bc-Club-filter").trigger("click"); 
         } 
-        else if (localStorage.filter.match("bc-Café")) 
+        else if (filter.match("bc-Café"))
         {
             $("#bc-Cafe-filter").trigger("click");                   
         }
-        else if (localStorage.filter.match("\\*"))
+        else if (filter.match("\\*"))
         {
             $("#show-all-filter").trigger("click");                    
         }
@@ -443,19 +463,19 @@ $(document).ready(function() {
     // checking if we are in the month view
     if ($('#own-filter-marker').length) {
         // check if local storage in use
-        if(typeof(Storage) !== "undefined") 
-        {
-            if (localStorage.filter.match("bc-Club")) 
+        if(typeof(Storage) !== "undefined" && localStorage.filter) {
+            var filter = localStorage.filter;
+            if (filter.match("bc-Club"))
             {
                 $('.filter').hide();
                 $('.bc-Club').show(); 
             }
-            else if (localStorage.filter.match("bc-Café"))
+            else if (filter.match("bc-Café"))
             {
                 $('.filter').hide();
                 $('.bc-Café').show(); 
             }
-            else if (localStorage.filter.match("\\*"))
+            else if (filter.match("\\*"))
             {
                 $('.filter').show();  
             }
@@ -1024,7 +1044,7 @@ $('input').focusout(function() {
     }
 });
 
-$('#languageSelection').find('a').click(function() {
+$('.languageSwitcher').find('a').click(function() {
     var language = $(this).data('language');
     localStorage.setItem('language', language);
 });
