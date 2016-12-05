@@ -1,15 +1,3 @@
-// Non-sticky footer at the bottom of the screen
-$(document).ready(function() {
-
-    var docHeight = $(window).height();
-    var footerHeight = $('#footer').height();
-    var footerTop = $('#footer').position().top + footerHeight;
-
-    if (footerTop < docHeight) {
-        $('#footer').css('margin-top', (docHeight - footerTop) + 'px');
-    }
-});
-
 // Automatically close messages after 4 seconds (4000 milliseconds). M.
 window.setTimeout(function() {
     $(".message").fadeTo(1000, 0).slideUp(500, function(){
