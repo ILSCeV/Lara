@@ -1,9 +1,25 @@
-// Automatically close messages after 4 seconds (4000 milliseconds). M.
+///////////////
+// All views //
+///////////////
+
+
+
+// Enable Tooltips
+$(function () { $("[data-toggle='tooltip']").tooltip(); });     
+
+// Automatically close notifications after 4 seconds (4000 milliseconds)
 window.setTimeout(function() {
     $(".message").fadeTo(1000, 0).slideUp(500, function(){
         $(this).alert('close'); 
     });
 }, 4000);
+
+
+
+////////////////
+// Event view //
+////////////////
+
 
 
 // Show/hide more button for infos
@@ -66,15 +82,6 @@ $(function(){
 
 
 
-// Show/hide comments
-$(function(){
-	$('.showhide').click(function(e) {
-		$(this).parent().next('.hide').toggleClass('show');
-        $('.isotope').isotope('layout') 
-	});
-});
-
-
 // Show/hide change history
 $(function(){
     $('#show-hide-history').click(function(e) {
@@ -98,8 +105,95 @@ $(function(){
 
 
 
-// Shows dynamic form fields for new job types 
+////////////////
+// Month view //
+////////////////
 
+
+
+// Filtering month view without Isotope
+$(document).ready(function() {  
+    // checking if we are in the month view
+    if ($('#own-filter-marker').length) {
+        // check if local storage in use
+        if(typeof(Storage) !== "undefined" && localStorage.filter) {
+            var filter = localStorage.filter;
+            if (filter.match("bc-Club"))
+            {
+                $('.filter').hide();
+                $('.bc-Club').show(); 
+            }
+            else if (filter.match("bc-Café"))
+            {
+                $('.filter').hide();
+                $('.bc-Café').show(); 
+            }
+            else if (filter.match("\\*"))
+            {
+                $('.filter').show();  
+            }
+        }
+
+        // click checks
+        // bind filter button click
+        $('#filters').on( 'click', 'button', function() {
+            var filterValue = $( this ).attr('data-filter');
+            if (filterValue.match("bc-Club")) 
+            {
+                $('.filter').hide();
+                $('.bc-Club').show(); 
+            }
+            else if (filterValue.match("bc-Café"))
+            {
+                $('.filter').hide(); 
+                $('.bc-Café').show(); 
+            }
+            else if (filterValue.match("\\*")) 
+            {
+                $('.filter').show(); 
+            }
+            
+        });
+
+    }
+});
+
+
+
+///////////////
+// Week view //
+///////////////
+
+
+
+// Show/hide comments
+$(function(){
+    $('.showhide').click(function(e) {
+        $(this).parent().next('.hide').toggleClass('show');
+        $('.isotope').isotope('layout') 
+    });
+});
+
+
+
+// button to remove events from week view - mostly for printing
+$(function(){
+    $('.hide-event').click(function(e) {
+        // change state, change button
+        $(this).parent().parent().parent().parent().parent().addClass('hide');
+        $('.isotope').isotope('layout')       
+    });
+});
+
+
+
+//////////////////////
+// Create/edit view //
+//////////////////////
+
+
+
+// Shows dynamic form fields for new job types 
 $(document).ready(function() {
     // initialise counter
     var iCnt = parseInt($('#counter').val());
@@ -174,12 +268,9 @@ $(document).ready(function() {
  
 
 
-
-
-// Enable Tooltips
-$(function () { $("[data-toggle='tooltip']").tooltip(); });     
-
-
+/////////////////////
+// Section filters //
+/////////////////////
 
 
 
@@ -237,6 +328,13 @@ $( document ).ready( function() {
   });
   
 
+
+/////////////////////
+// Feature filters //
+/////////////////////
+
+
+
     // Show/hide time of entries
 
     $(document).ready(function() {
@@ -272,6 +370,7 @@ $( document ).ready( function() {
             })
         }
     });
+
 
     $(function(){
         $('#show-hide-time').click(function(e) {
@@ -356,7 +455,7 @@ $( document ).ready( function() {
     });
 
 
-   // Week view changer
+    // Week view changer
 
     $(document).ready(function() {
         if(typeof(Storage) !== "undefined") 
@@ -411,10 +510,6 @@ $( document ).ready( function() {
         });
     });
 
-
-
-
-
 });
 
 
@@ -443,69 +538,11 @@ $(document).ready(function() {
 
 
 
-
-
-// Filtering month view without Isotope
-// onLoad inits
-$(document).ready(function() {  
-    // checking if we are in the month view
-    if ($('#own-filter-marker').length) {
-        // check if local storage in use
-        if(typeof(Storage) !== "undefined" && localStorage.filter) {
-            var filter = localStorage.filter;
-            if (filter.match("bc-Club"))
-            {
-                $('.filter').hide();
-                $('.bc-Club').show(); 
-            }
-            else if (filter.match("bc-Café"))
-            {
-                $('.filter').hide();
-                $('.bc-Café').show(); 
-            }
-            else if (filter.match("\\*"))
-            {
-                $('.filter').show();  
-            }
-        }
-
-        // click checks
-        // bind filter button click
-        $('#filters').on( 'click', 'button', function() {
-            var filterValue = $( this ).attr('data-filter');
-            if (filterValue.match("bc-Club")) 
-            {
-                $('.filter').hide();
-                $('.bc-Club').show(); 
-            }
-            else if (filterValue.match("bc-Café"))
-            {
-                $('.filter').hide(); 
-                $('.bc-Café').show(); 
-            }
-            else if (filterValue.match("\\*")) 
-            {
-                $('.filter').show(); 
-            }
-            
-        });
-
-    }
-});
-
-// button to remove events from week view - mostly for printing
-$(function(){
-    $('.hide-event').click(function(e) {
-        // change state, change button
-        $(this).parent().parent().parent().parent().parent().addClass('hide');
-        $('.isotope').isotope('layout')       
-    });
-});
-
-
 //////////
 // AJAX //
 //////////
+
+
 
 // Update schedule entries
 jQuery( document ).ready( function( $ ) {
@@ -628,9 +665,13 @@ jQuery( document ).ready( function( $ ) {
         });
     } );
 
+
+
 /////////////////////////
 // AUTOCOMPELETE CLUBS //
 /////////////////////////   
+
+
 
     // open club dropdown on input selection
     $( '.scheduleEntry' ).find('input').on( 'focus', function() {
@@ -841,9 +882,12 @@ jQuery( document ).ready( function( $ ) {
     });
 
 
+
 ////////////////////////////////
 // MANAGEMENT: UPDATE JOBTYPE //
 ////////////////////////////////
+
+
 
     $( '.updateJobtype' ).on( 'submit', function() {
 
@@ -901,24 +945,6 @@ jQuery( document ).ready( function( $ ) {
 
     });
 
-
-
-    /*
-    $( '.survey' ).on( 'submit', function() {
-
-        // For passworded surveys: check if a password field exists and is not empty
-        // We will check correctness on the server side
-        if ($(this).parentsUntil($(this), '.panel-warning').find("[name^=password]").length
-            && !$(this).parentsUntil($(this), '.panel-warning').find("[name^=password]").val()) {
-            var password = window.prompt('Bitte noch das Passwort für diese Umfrage eingeben:');
-            $(this).parentsUntil($(this), '.panel-warning').find("[name^=password]").val(password);
-        } else {
-            var password = $(this).parentsUntil($(this), '.panel-warning').find("[name^=password]").val();
-        }
-        //return false; ?
-    });
-    */
-
     // Detect entry name change and remove LDAP id from the previous entry
     $('.scheduleEntry').find("[name^=userName]").on('input propertychange paste', function() {
         $(this).parent().find("[name^=ldapId]").val("");
@@ -931,6 +957,8 @@ jQuery( document ).ready( function( $ ) {
 ////////////////////////////////////
 // Clever RESTful Resource Delete //
 ////////////////////////////////////
+
+
 
 /*
 Taken from: https://gist.github.com/soufianeEL/3f8483f0f3dc9e3ec5d9
