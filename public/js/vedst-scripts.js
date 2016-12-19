@@ -16,6 +16,33 @@ window.setTimeout(function() {
 
 
 
+// Own shift highlighting 
+$('[name^=btn-submit-change]').click(function() {
+    $(this).parents('.row').removeClass('my-shift');
+});
+
+
+
+// Dropdown hiding fix 
+$('input').focusout(function() {
+    if ($(this).prop('placeholder') === '=FREI=') {
+        // hack to allow for click to register before focusout is called
+        setTimeout(function () {
+            $('.dropdown-username').hide();
+        }, 200);
+    }
+});
+
+
+
+// Language switcher 
+$('.languageSwitcher').find('a').click(function() {
+    var language = $(this).data('language');
+    localStorage.setItem('language', language);
+});
+
+
+
 ////////////////
 // Event view //
 ////////////////
@@ -102,15 +129,6 @@ $(function(){
         };        
     });
 });
-
-
-
-////////////////
-// Month view //
-////////////////
-
-
-
 
 
 
@@ -230,7 +248,13 @@ $(document).ready(function() {
 
 $( document ).ready( function() {
 
-    // Month view without Isotope, section filters only
+
+    //////////////////////////////////////////////////////
+    // Month view without Isotope, section filters only //
+    //////////////////////////////////////////////////////
+    
+
+
     if ($('#month-view-marker').length) 
     {
         // Apply filters from local storage on page load
@@ -310,8 +334,16 @@ $( document ).ready( function() {
             }
         });
     } 
-    else    // Week view with Isotope, section and feature filters
+    else    
     {
+
+
+        /////////////////////////////////////////////////////////
+        // Week view with Isotope, section and feature filters //
+        /////////////////////////////////////////////////////////
+
+
+
         // init Isotope
         var $container = $('.isotope').isotope(
         {
@@ -334,6 +366,14 @@ $( document ).ready( function() {
                 }
             }   
         });
+
+
+
+
+        /////////////////////
+        // Section filters //
+        /////////////////////
+
 
 
         // Apply filters from local storage on page load
@@ -418,10 +458,9 @@ $( document ).ready( function() {
 
      
 
-
-    /////////////////////
-    // Feature filters //
-    /////////////////////
+        /////////////////////
+        // Feature filters //
+        /////////////////////
 
 
 
@@ -1134,21 +1173,3 @@ Examples :
     Laravel.initialize();
 
 })(window, jQuery);
-
-$('[name^=btn-submit-change]').click(function() {
-    $(this).parents('.row').removeClass('my-shift');
-});
-
-$('input').focusout(function() {
-    if ($(this).prop('placeholder') === '=FREI=') {
-        // hack to allow for click to register before focusout is called
-        setTimeout(function () {
-            $('.dropdown-username').hide();
-        }, 200);
-    }
-});
-
-$('.languageSwitcher').find('a').click(function() {
-    var language = $(this).data('language');
-    localStorage.setItem('language', language);
-});
