@@ -111,52 +111,6 @@ $(function(){
 
 
 
-// Filtering month view without Isotope
-$(document).ready(function() {  
-    // checking if we are in the month view
-    if ($('#own-filter-marker').length) {
-        // check if local storage in use
-        if(typeof(Storage) !== "undefined" && localStorage.filter) {
-            var filter = localStorage.filter;
-            if (filter.match("bc-Club"))
-            {
-                $('.filter').hide();
-                $('.bc-Club').show(); 
-            }
-            else if (filter.match("bc-Café"))
-            {
-                $('.filter').hide();
-                $('.bc-Café').show(); 
-            }
-            else if (filter.match("\\*"))
-            {
-                $('.filter').show();  
-            }
-        }
-
-        // click checks
-        // bind filter button click
-        $('#filters').on( 'click', 'button', function() {
-            var filterValue = $( this ).attr('data-filter');
-            if (filterValue.match("bc-Club")) 
-            {
-                $('.filter').hide();
-                $('.bc-Club').show(); 
-            }
-            else if (filterValue.match("bc-Café"))
-            {
-                $('.filter').hide(); 
-                $('.bc-Café').show(); 
-            }
-            else if (filterValue.match("\\*")) 
-            {
-                $('.filter').show(); 
-            }
-            
-        });
-
-    }
-});
 
 
 
@@ -268,248 +222,384 @@ $(document).ready(function() {
  
 
 
-/////////////////////
-// Section filters //
-/////////////////////
+/////////////
+// Filters //
+/////////////
 
 
 
-// ISOTOPE masonry plugin
 $( document ).ready( function() {
-  // init Isotope
-  var $container = $('.isotope').isotope({
-    itemSelector: '.element-item',
-    layoutMode: 'masonry',
-    masonry: {
-          columnWidth: '.grid-sizer'
-      },
-    getSortData: {
-      name: '.name',
-      symbol: '.symbol',
-      number: '.number parseInt',
-      category: '[data-category]',
-      weight: function( itemElem ) {
-        var weight = $( itemElem ).find('.weight').text();
-        return parseFloat( weight.replace( /[\(\)]/g, '') );
-      }
-    }
-  });
 
-  // filter functions
-  var filterFns = {
-    // show if name matches class
-    name: function() {
-      var name = $(this).find('.name').text();
-    }
-  };
-
-  // bind filter button click
-  $('#filters').on( 'click', 'button', function() {
-    var filterValue = $( this ).attr('data-filter');
-    // use filterFn if matches value
-    filterValue = filterFns[ filterValue ] || filterValue;
-    $container.isotope({ filter: filterValue });
-  });
-  
-  // change is-checked (btn-primary) class on buttons and update local storage
-  $('.btn-group').each( function( i, buttonGroup ) {
-    var $buttonGroup = $( buttonGroup );
-    $buttonGroup.on( 'click', 'button', function() {
-        // highlight selection
-        $buttonGroup.find('.btn-primary').removeClass('btn-primary');
-        $( this ).addClass('btn-primary');
-
-        // save selection in local storage
-        if(typeof(Storage) !== "undefined") 
+    // Month view without Isotope, section filters only
+    if ($('#month-view-marker').length) 
+    {
+        // Apply filters from local storage on page load
+        
+        // First hide all
+        $('.section-filter').hide();
+        
+        // go through local storage
+        for (i = 0; i < window.localStorage.length; i++) 
         {
-            localStorage.filter = $(this).text();
-        }
-    });
-  });
-  
+            key = window.localStorage.key(i);
 
-
-/////////////////////
-// Feature filters //
-/////////////////////
-
-
-
-    // Show/hide time of entries
-
-    $(document).ready(function() {
-        if(typeof(Storage) !== "undefined") 
-        {
-            if (localStorage.showTime == "Zeiten einblenden") 
+            // look for all entries starting with "filter-" prefix
+            if (key.slice(0,7) === "filter-") 
             {
-                $('.entry-time').removeClass('hide'); 
-                $('#show-hide-time').text("Zeiten ausblenden");
-                $container.isotope('layout');
-            } 
-            else if (localStorage.showTime == "Zeiten ausblenden") 
-            {
-                $('.entry-time').addClass('hide');
-                $('#show-hide-time').text("Zeiten einblenden");
-                $('.isotope').isotope('layout')                  
+                // find what should be revealed
+                if (window.localStorage.getItem(key) == "show") 
+                { 
+                    // show events
+                    $("."+key.slice(7)).show(); 
+
+                    // set filter buttons to the saved state
+                    $('#filter-'+key.slice(7)).addClass('btn-primary');
+                };             
             }
+        }
 
-            var language = localStorage.language;
+        // Filter buttons action
+        $('#section-filter').on( 'click', 'button', function() 
+        {
+            // save current filter intent
+            var filterValue = $( this ).attr('data-filter');
 
-            $.ajax({
-                url: '/lang',
-                success: function(data) {
-                    if (language === 'en' || language === 'de') {
-                        if (data.language !== language) {
-                            window.location = '/lang/' + language;
+            if ( $(this).hasClass('btn-primary') ) 
+            {   // case 1: this section was shown, intent to hide
+                
+                // deactivate button
+                $(this).removeClass('btn-primary');
+
+                // save choice to local storage
+                if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'hide'); }
+                
+                // First hide all
+                $('.section-filter').hide();
+                
+                // go through local storage
+                for (i = 0; i < window.localStorage.length; i++) 
+                {
+                    key = window.localStorage.key(i);
+
+                    // look for all entries starting with "filter-" prefix
+                    if (key.slice(0,7) === "filter-") 
+                    {
+                        // find what should be revealed
+                        if (window.localStorage.getItem(key) == "show") 
+                        { 
+                            // show events
+                            $("."+key.slice(7)).show(); 
+
+                            // set filter buttons to the saved state
+                            $('#filter-'+key.slice(7)).addClass('btn-primary');
+                        };             
+                    }
+                }
+            } 
+            else 
+            {   //case 2: this section was hidden, intent to show
+                
+                // reactivate button
+                $(this).addClass('btn-primary');
+
+                // save choice to local storage
+                if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'show'); }
+                
+                // show events from this section in view
+                $("."+filterValue).show(); 
+            }
+        });
+    } 
+    else    // Week view with Isotope, section and feature filters
+    {
+        // init Isotope
+        var $container = $('.isotope').isotope(
+        {
+            itemSelector: '.element-item',
+            layoutMode: 'masonry',
+            masonry: 
+            {
+                columnWidth: '.grid-sizer'
+            },
+            getSortData: 
+            {
+                name: '.name',
+                symbol: '.symbol',
+                number: '.number parseInt',
+                category: '[data-category]',
+                weight: function( itemElem ) 
+                {
+                    var weight = $( itemElem ).find('.weight').text();
+                    return parseFloat( weight.replace( /[\(\)]/g, '') );
+                }
+            }   
+        });
+
+
+        // Apply filters from local storage on page load
+        
+        // First hide all
+        $('.section-filter').hide();
+
+        // go through local storage
+        for (i = 0; i < window.localStorage.length; i++) 
+        {
+            key = window.localStorage.key(i);
+
+            // look for all entries starting with "filter-" prefix
+            if (key.slice(0,7) === "filter-") 
+            {
+                // find what should be revealed 
+                if (window.localStorage.getItem(key) == "show") 
+                { 
+                    // show events
+                    $("."+key.slice(7)).show(); 
+                    $('.isotope').isotope('layout');
+
+                    // set filter buttons to the saved state
+                    $('#filter-'+key.slice(7)).addClass('btn-primary');
+                };             
+            }
+        }
+
+        // Filter buttons action
+        $('#section-filter').on( 'click', 'button', function() 
+        {
+            // save current filter intent
+            var filterValue = $( this ).attr('data-filter');
+
+            if ( $(this).hasClass('btn-primary') ) 
+            {   // case 1: this section was shown, intent to hide
+                
+                // deactivate button
+                $(this).removeClass('btn-primary');
+
+                // save choice to local storage
+                if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'hide'); }
+                
+                // First hide all
+                $('.section-filter').hide();
+                
+                // go through local storage
+                for (i = 0; i < window.localStorage.length; i++) 
+                {
+                    key = window.localStorage.key(i);
+
+                    // look for all entries starting with "filter-" prefix
+                    if (key.slice(0,7) === "filter-") 
+                    {
+                        // find what should be revealed
+                        if (window.localStorage.getItem(key) == "show") 
+                        { 
+                            // show events
+                            $("."+key.slice(7)).show(); 
+
+                            // set filter buttons to the saved state
+                            $('#filter-'+key.slice(7)).addClass('btn-primary');
+                        };             
+                    }
+                }
+                $('.isotope').isotope('layout'); 
+            } 
+            else 
+            {   //case 2: this section was hidden, intent to show
+                
+                // reactivate button
+                $(this).addClass('btn-primary');
+
+                // save choice to local storage
+                if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'show'); }
+                
+                // show events from this section in view
+                $("."+filterValue).show();
+                $('.isotope').isotope('layout');
+            }
+        });
+
+     
+
+
+    /////////////////////
+    // Feature filters //
+    /////////////////////
+
+
+
+        // Show/hide time of entries
+
+        $(document).ready(function() {
+            if(typeof(Storage) !== "undefined") 
+            {
+                if (localStorage.showTime == "Zeiten einblenden") 
+                {
+                    $('.entry-time').removeClass('hide'); 
+                    $('#show-hide-time').text("Zeiten ausblenden");
+                    $container.isotope('layout');
+                } 
+                else if (localStorage.showTime == "Zeiten ausblenden") 
+                {
+                    $('.entry-time').addClass('hide');
+                    $('#show-hide-time').text("Zeiten einblenden");
+                    $('.isotope').isotope('layout');                  
+                }
+
+                var language = localStorage.language;
+
+                $.ajax({
+                    url: '/lang',
+                    success: function(data) {
+                        if (language === 'en' || language === 'de') {
+                            if (data.language !== language) {
+                                window.location = '/lang/' + language;
+                            }
+                        }
+                        else {
+                            localStorage.language = data.language;
                         }
                     }
-                    else {
-                        localStorage.language = data.language;
+                })
+            }
+        });
+
+
+        $(function(){
+            $('#show-hide-time').click(function(e) {
+                if ($('.entry-time').hasClass("hide")) 
+                {
+                    // save selection in local storage
+                    if(typeof(Storage) !== "undefined") 
+                    {
+                        localStorage.showTime = $(this).text();
                     }
+
+                    // change state, change button
+                    $('.entry-time').removeClass('hide'); 
+                    $(this).text("Zeiten ausblenden");
+                    $container.isotope('layout');
                 }
-            })
-        }
-    });
-
-
-    $(function(){
-        $('#show-hide-time').click(function(e) {
-            if ($('.entry-time').hasClass("hide")) 
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") 
+                else
                 {
-                    localStorage.showTime = $(this).text();
-                }
+                    // save selection in local storage
+                    if(typeof(Storage) !== "undefined") 
+                    {
+                        localStorage.showTime = $(this).text();
+                    }
 
-                // change state, change button
-                $('.entry-time').removeClass('hide'); 
-                $(this).text("Zeiten ausblenden");
-                $container.isotope('layout');
-            }
-            else
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") 
-                {
-                    localStorage.showTime = $(this).text();
-                }
-
-                // change state, change button
-                $('.entry-time').addClass('hide');
-                $(this).text("Zeiten einblenden");
-                $('.isotope').isotope('layout')
-            };        
+                    // change state, change button
+                    $('.entry-time').addClass('hide');
+                    $(this).text("Zeiten einblenden");
+                    $('.isotope').isotope('layout');
+                };        
+            });
         });
-    });
 
-    // Show/hide taken shifts
+        // Show/hide taken shifts
 
-    $(document).ready(function() {
-        if(typeof(Storage) !== "undefined")
-        {
-            if (localStorage.showTakenShifts == "Vergebene Dienste einblenden")
+        $(document).ready(function() {
+            if(typeof(Storage) !== "undefined")
             {
-                $('div.green').closest('.row').removeClass('hide');
-                $('#show-hide-taken-shifts').text("Vergebene Dienste ausblenden");
-                $container.isotope('layout');
-            }
-            else if (localStorage.showTakenShifts == "Vergebene Dienste ausblenden")
-            {
-                $('div.green').closest('.row').addClass('hide');
-                $('#show-hide-taken-shifts').text("Vergebene Dienste einblenden");
-                $('.isotope').isotope('layout')
-            }
-        }
-    });
-
-    $(function(){
-        $('#show-hide-taken-shifts').click(function(e) {
-            if ($('div.green').closest('.row').hasClass("hide"))
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined")
+                if (localStorage.showTakenShifts == "Vergebene Dienste einblenden")
                 {
-                    localStorage.showTakenShifts = $(this).text();
+                    $('div.green').closest('.row').removeClass('hide');
+                    $('#show-hide-taken-shifts').text("Vergebene Dienste ausblenden");
+                    $container.isotope('layout');
                 }
-
-                // change state, change button
-                $('div.green').closest('.row').removeClass('hide');
-                $(this).text("Vergebene Dienste ausblenden");
-                $container.isotope('layout');
-            }
-            else
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined")
+                else if (localStorage.showTakenShifts == "Vergebene Dienste ausblenden")
                 {
-                    localStorage.showTakenShifts = $(this).text();
+                    $('div.green').closest('.row').addClass('hide');
+                    $('#show-hide-taken-shifts').text("Vergebene Dienste einblenden");
+                    $('.isotope').isotope('layout');
                 }
-
-                // change state, change button
-                $('div.green').closest('.row').addClass('hide');
-                $(this).text("Vergebene Dienste einblenden");
-                $('.isotope').isotope('layout')
-            };
+            }
         });
-    });
 
-
-    // Week view changer
-
-    $(document).ready(function() {
-        if(typeof(Storage) !== "undefined") 
-        {
-            if (localStorage.weekViewType == "Woche: Montag - Sonntag") 
-            {
-                $('.week-mo-so').removeClass('hide');
-                $('.week-mi-di').addClass('hide');
-                $('#change-week-view').text("Woche: Mittwoch - Dienstag");
-                $container.isotope('layout');
-            } 
-            else if (localStorage.weekViewType == "Woche: Mittwoch - Dienstag") 
-            {
-                $('.week-mo-so').addClass('hide');
-                $('.week-mi-di').removeClass('hide');
-                $('#change-week-view').text("Woche: Montag - Sonntag");
-                $('.isotope').isotope('layout')                  
-            }
-        }
-    });
-
-    $(function(){
-        $('#change-week-view').click(function(e) {
-            if ($('.week-mo-so').hasClass('hide')) 
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") 
+        $(function(){
+            $('#show-hide-taken-shifts').click(function(e) {
+                if ($('div.green').closest('.row').hasClass("hide"))
                 {
-                    localStorage.weekViewType = $(this).text();
-                }
+                    // save selection in local storage
+                    if(typeof(Storage) !== "undefined")
+                    {
+                        localStorage.showTakenShifts = $(this).text();
+                    }
 
-                // change state, change button
-                $('.week-mo-so').removeClass('hide');
-                $('.week-mi-di').addClass('hide');
-                $(this).text("Woche: Mittwoch - Dienstag");
-                $container.isotope('layout');
-            }
-            else
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") 
+                    // change state, change button
+                    $('div.green').closest('.row').removeClass('hide');
+                    $(this).text("Vergebene Dienste ausblenden");
+                    $container.isotope('layout');
+                }
+                else
                 {
-                    localStorage.weekViewType = $(this).text();
-                }
+                    // save selection in local storage
+                    if(typeof(Storage) !== "undefined")
+                    {
+                        localStorage.showTakenShifts = $(this).text();
+                    }
 
-                // change state, change button
-                $('.week-mo-so').addClass('hide');
-                $('.week-mi-di').removeClass('hide');
-                $(this).text("Woche: Montag - Sonntag");
-                $('.isotope').isotope('layout')
-            };        
+                    // change state, change button
+                    $('div.green').closest('.row').addClass('hide');
+                    $(this).text("Vergebene Dienste einblenden");
+                    $('.isotope').isotope('layout');
+                };
+            });
         });
-    });
 
+
+        // Week view changer
+
+        $(document).ready(function() {
+            if(typeof(Storage) !== "undefined") 
+            {
+                if (localStorage.weekViewType == "Woche: Montag - Sonntag") 
+                {
+                    $('.week-mo-so').removeClass('hide');
+                    $('.week-mi-di').addClass('hide');
+                    $('#change-week-view').text("Woche: Mittwoch - Dienstag");
+                    $container.isotope('layout');
+                } 
+                else if (localStorage.weekViewType == "Woche: Mittwoch - Dienstag") 
+                {
+                    $('.week-mo-so').addClass('hide');
+                    $('.week-mi-di').removeClass('hide');
+                    $('#change-week-view').text("Woche: Montag - Sonntag");
+                    $('.isotope').isotope('layout')                  
+                }
+            }
+        });
+
+        $(function(){
+            $('#change-week-view').click(function(e) {
+                if ($('.week-mo-so').hasClass('hide')) 
+                {
+                    // save selection in local storage
+                    if(typeof(Storage) !== "undefined") 
+                    {
+                        localStorage.weekViewType = $(this).text();
+                    }
+
+                    // change state, change button
+                    $('.week-mo-so').removeClass('hide');
+                    $('.week-mi-di').addClass('hide');
+                    $(this).text("Woche: Mittwoch - Dienstag");
+                    $container.isotope('layout');
+                }
+                else
+                {
+                    // save selection in local storage
+                    if(typeof(Storage) !== "undefined") 
+                    {
+                        localStorage.weekViewType = $(this).text();
+                    }
+
+                    // change state, change button
+                    $('.week-mo-so').addClass('hide');
+                    $('.week-mi-di').removeClass('hide');
+                    $(this).text("Woche: Montag - Sonntag");
+                    $('.isotope').isotope('layout')
+                };        
+            });
+        });
+    };
 });
 
 

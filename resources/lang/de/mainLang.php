@@ -135,8 +135,6 @@ return [
     'orThe'                 => 'oder die',
     'marketingManager'      => 'Marketingverantwortlichen',
     'canChangeEventJob'     => 'dürfen diese Veranstaltung/Aufgabe ändern.',
-    
-    'only'                  => 'Nur',
     'commaThe'              => ', die ', //line number ~332
     
     //-----------------------------------------------------------------------------------------------------------

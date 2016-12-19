@@ -1,5 +1,12 @@
-<div id="filters" class="btn-group hidden-print">  
-	  <button class="btn btn-xs btn-primary"  type="button" id="show-all-filter" data-filter="*">{{ trans('mainLang.allSections') }}</button>
-	  <button class="btn btn-xs" type="button" id="bc-Cafe-filter" data-filter=".bc-Café">{{ trans('mainLang.only') }} bc-Café</button>
-	  <button class="btn btn-xs" type="button" id="bc-Club-filter" data-filter=".bc-Club">{{ trans('mainLang.only') }} bc-Club</button>
+<span>Filter: &nbsp;&nbsp;</span>
+<div id="section-filter" class="btn-group hidden-print">  
+	{{-- Show/hide events belonging to a chosen section --}}
+	@foreach($sections as $section)
+		<button class="btn btn-xs" 
+				type="button" 
+				id="filter-{!! $section["plc_title"] !!}" 
+				data-filter="{!! $section["plc_title"] !!}">
+			{!! $section["plc_title"] !!}
+		</button>
+	@endforeach
 </div>
