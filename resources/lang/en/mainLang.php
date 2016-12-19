@@ -353,7 +353,7 @@ return [
     // /public/js/vedst-script.js
     'errorMessageForgotFilter'              => 'The filter wasn not set! Please add at least one section this event should be shown to.',
     'errorMessageEnterPasswordForShiftPlan' => 'Please enter the password for this schedule:',
-    'showTimes'                             => 'Show times',
+    'shiftTime'                             => 'Shift time',
     //'hideTimes' already exists#
     
     'weekMoSu'                              => 'Week: Monday - Sunday',

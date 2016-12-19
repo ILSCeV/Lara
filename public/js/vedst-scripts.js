@@ -424,74 +424,64 @@ $( document ).ready( function() {
     /////////////////////
 
 
+        //////////////////////////////
+        // Show/hide time of shifts //
+        //////////////////////////////
 
-        // Show/hide time of entries
+        // set translated strings
+        if (localStorage.getItem('language') == "en") 
+        {
+            $('#toggle-shift-time').text("Shift time");
+        }
+        else // default to German
+        {
+            $('#toggle-shift-time').text("Dienstzeiten");
+        }
 
-        $(document).ready(function() {
-            if(typeof(Storage) !== "undefined") 
+
+        // Apply saved preferences from local storage on pageload
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.shiftTime == "show") 
+            {   
+                $('.entry-time').removeClass("hide"); 
+                $('#toggle-shift-time').addClass("btn-primary");
+                $('.isotope').isotope('layout');
+            } 
+            else if (localStorage.shiftTime == "hide") 
             {
-                if (localStorage.showTime == "Zeiten einblenden") 
-                {
-                    $('.entry-time').removeClass('hide'); 
-                    $('#show-hide-time').text("Zeiten ausblenden");
-                    $container.isotope('layout');
-                } 
-                else if (localStorage.showTime == "Zeiten ausblenden") 
-                {
-                    $('.entry-time').addClass('hide');
-                    $('#show-hide-time').text("Zeiten einblenden");
-                    $('.isotope').isotope('layout');                  
-                }
+                $('.entry-time').addClass("hide");
+                $('#toggle-shift-time').removeClass("btn-primary");
+                $('.isotope').isotope('layout');                  
+            }      
+        };
 
-                var language = localStorage.language;
+        // Filter buttons action
+        $('#toggle-shift-time').click(function(e) 
+        { 
+            if ($('.entry-time').is(":visible"))    // times are shown, intent to hide
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.shiftTime = "hide"; }
 
-                $.ajax({
-                    url: '/lang',
-                    success: function(data) {
-                        if (language === 'en' || language === 'de') {
-                            if (data.language !== language) {
-                                window.location = '/lang/' + language;
-                            }
-                        }
-                        else {
-                            localStorage.language = data.language;
-                        }
-                    }
-                })
+                // change state, change button
+                $('.entry-time').addClass("hide"); 
+                $('#toggle-shift-time').removeClass("btn-primary");
+                $('.isotope').isotope('layout');
             }
+            else    // times are hidden, intent to show
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.shiftTime = "show"; }
+
+                // change state, change button
+                $('.entry-time').removeClass("hide");
+                $('#toggle-shift-time').addClass("btn-primary");
+                $('.isotope').isotope('layout');
+            };        
         });
 
 
-        $(function(){
-            $('#show-hide-time').click(function(e) {
-                if ($('.entry-time').hasClass("hide")) 
-                {
-                    // save selection in local storage
-                    if(typeof(Storage) !== "undefined") 
-                    {
-                        localStorage.showTime = $(this).text();
-                    }
-
-                    // change state, change button
-                    $('.entry-time').removeClass('hide'); 
-                    $(this).text("Zeiten ausblenden");
-                    $container.isotope('layout');
-                }
-                else
-                {
-                    // save selection in local storage
-                    if(typeof(Storage) !== "undefined") 
-                    {
-                        localStorage.showTime = $(this).text();
-                    }
-
-                    // change state, change button
-                    $('.entry-time').addClass('hide');
-                    $(this).text("Zeiten einblenden");
-                    $('.isotope').isotope('layout');
-                };        
-            });
-        });
 
         // Show/hide taken shifts
 

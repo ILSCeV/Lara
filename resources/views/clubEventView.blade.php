@@ -172,7 +172,7 @@
 
 	<br>
                         <div class="panelEventView">
-	&nbsp;&nbsp;<button class="btn btn-xs pull-right hidden-print"  type="button" id="show-hide-time">{{ trans('mainLang.hideTimes') }}</button>
+	&nbsp;&nbsp;<button class="btn btn-xs pull-right hidden-print"  type="button" id="toggle-shift-time">{{ trans('mainLang.hideTimes') }}</button>
 
 
 	<div class="panel panel-warning">

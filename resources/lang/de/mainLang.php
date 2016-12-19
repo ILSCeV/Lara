@@ -352,7 +352,7 @@ return [
     // /public/js/vedst-script.js
     'errorMessageForgotFilter'              => 'Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.',
     'errorMessageEnterPasswordForShiftPlan' => 'Bitte noch das Passwort für diesen Dienstplan eingeben:',
-    'showTimes'                             => 'Zeiten einblenden',
+    'shiftTime'                             => 'Dienstzeiten',
     //'hideTimes' already exists
     
     'weekMoSu'                              => 'Woche: Montag - Sonntag',
