@@ -356,8 +356,7 @@ return [
     'shiftTime'                             => 'Shift time',
     //'hideTimes' already exists#
     
-    'weekMoSu'                              => 'Week: Monday - Sunday',
-    'weekWeTu'                              => 'Week: Wednesday - Tuesday',
+    'weekStart'                             => 'Monday - Sunday',
     'hideTakenShifts'                       => 'Only EMPTY shifts',
     
     //-----------------------------------------------------------------------------------------------------------

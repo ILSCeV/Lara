@@ -355,8 +355,7 @@ return [
     'shiftTime'                             => 'Dienstzeiten',
     //'hideTimes' already exists
     
-    'weekMoSu'                              => 'Woche: Montag - Sonntag',
-    'weekWeTu'                              => 'Woche: Mittwoch - Dienstag',
+    'weekStart'                             => 'Montag - Sonntag',
     'hideTakenShifts'                       => 'Nur FREIe Dienste',
     
     //-----------------------------------------------------------------------------------------------------------

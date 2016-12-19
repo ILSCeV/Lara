@@ -548,85 +548,80 @@ $( document ).ready( function() {
 
 
 
-        // Week view changer
+        ///////////////////////////////////////////////
+        // Week view changer: start Monday/Wednesday //
+        ///////////////////////////////////////////////
 
-        $(document).ready(function() {
-            if(typeof(Storage) !== "undefined") 
+
+
+        // set translated strings
+        if (localStorage.getItem('language') == "en") 
+        {
+            var weekMonSun = "Monday - Sunday";
+            var weekWedTue = "Wednesday - Tuesday";
+        }
+        else // default to German
+        {
+            var weekMonSun = "Montag - Sonntag";
+            var weekWedTue = "Mittwoch - Dienstag";
+        }
+
+
+        // Apply saved preferences from local storage on pageload
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.weekStart == "monday") 
+            {   
+                $('.week-mo-so').removeClass('hide');
+                $('.week-mi-di').addClass('hide');
+                $('#toggle-week-start').addClass("btn-primary");
+                $('#toggle-week-start').removeClass("btn-success");
+                $('#toggle-week-start').text(weekMonSun);
+                $('.isotope').isotope('layout');
+            } 
+            else if (localStorage.weekStart == "wednesday") 
             {
-                if (localStorage.weekViewType == "Woche: Montag - Sonntag") 
-                {
-                    $('.week-mo-so').removeClass('hide');
-                    $('.week-mi-di').addClass('hide');
-                    $('#change-week-view').text("Woche: Mittwoch - Dienstag");
-                    $container.isotope('layout');
-                } 
-                else if (localStorage.weekViewType == "Woche: Mittwoch - Dienstag") 
-                {
-                    $('.week-mo-so').addClass('hide');
-                    $('.week-mi-di').removeClass('hide');
-                    $('#change-week-view').text("Woche: Montag - Sonntag");
-                    $('.isotope').isotope('layout')                  
-                }
+                $('.week-mo-so').addClass('hide');
+                $('.week-mi-di').removeClass('hide');
+                $('#toggle-week-start').removeClass("btn-primary");
+                $('#toggle-week-start').addClass("btn-success");
+                $('#toggle-week-start').text(weekWedTue);
+                $('.isotope').isotope('layout');                  
+            }      
+        };
+
+        // Filter buttons action
+        $('#toggle-week-start').click(function(e) 
+        { 
+            if ($('.week-mi-di').is(":hidden"))    // week starts monday, intent to start on wednesday
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.weekStart = "wednesday"; }
+
+                // change state, change button
+                $('.week-mo-so').addClass('hide');
+                $('.week-mi-di').removeClass('hide');
+                $('#toggle-week-start').removeClass("btn-primary");
+                $('#toggle-week-start').addClass("btn-success");
+                $('#toggle-week-start').text(weekWedTue);
+                $('.isotope').isotope('layout');
             }
+            else    // week starts on wednesday, intent to start on monday
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.weekStart = "monday"; }
+
+                // change state, change button
+                $('.week-mo-so').removeClass('hide');
+                $('.week-mi-di').addClass('hide');
+                $('#toggle-week-start').addClass("btn-primary");
+                $('#toggle-week-start').removeClass("btn-success");
+                $('#toggle-week-start').text(weekMonSun);
+                $('.isotope').isotope('layout');
+            };        
         });
 
-        $(function(){
-            $('#change-week-view').click(function(e) {
-                if ($('.week-mo-so').hasClass('hide')) 
-                {
-                    // save selection in local storage
-                    if(typeof(Storage) !== "undefined") 
-                    {
-                        localStorage.weekViewType = $(this).text();
-                    }
-
-                    // change state, change button
-                    $('.week-mo-so').removeClass('hide');
-                    $('.week-mi-di').addClass('hide');
-                    $(this).text("Woche: Mittwoch - Dienstag");
-                    $container.isotope('layout');
-                }
-                else
-                {
-                    // save selection in local storage
-                    if(typeof(Storage) !== "undefined") 
-                    {
-                        localStorage.weekViewType = $(this).text();
-                    }
-
-                    // change state, change button
-                    $('.week-mo-so').addClass('hide');
-                    $('.week-mi-di').removeClass('hide');
-                    $(this).text("Woche: Montag - Sonntag");
-                    $('.isotope').isotope('layout')
-                };        
-            });
-        });
     };
-});
-
-
-// Saving filtering for isotope, using browser local storage if enabled to save/resume state
-$(document).ready(function() {
-    if(typeof(Storage) !== "undefined") 
-    {
-        var filter = localStorage.filter;
-        if (!filter) {
-            return;
-        }
-        if (filter.match("bc-Club"))
-        {
-            $("#bc-Club-filter").trigger("click"); 
-        } 
-        else if (filter.match("bc-Café"))
-        {
-            $("#bc-Cafe-filter").trigger("click");                   
-        }
-        else if (filter.match("\\*"))
-        {
-            $("#show-all-filter").trigger("click");                    
-        }
-    }
 });
 
 
