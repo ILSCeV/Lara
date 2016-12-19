@@ -45,12 +45,13 @@
 			@include('partials.filter')
 			{{-- show time button Ger.: Zeiten einblenden --}}
 			<button class="btn btn-xs hidden-print" type="button" id="toggle-shift-time">{{ trans('mainLang.shiftTime') }}</button> 
-
-			{{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
-			<button class="btn btn-xs hidden-print" type="button" id="toggle-week-start">{{ trans('mainLang.weekMoSu') }}</button> 
 			
 			{{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
-			<button class="btn btn-xs hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button> 
+			<button class="btn btn-xs hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button>
+			
+			{{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
+			<button class="btn btn-xs hidden-print" type="button" id="toggle-week-start">{{ trans('mainLang.weekMoSu') }}</button> 
+						 
 			<br class="visible-xs hidden-print">
 		</div>
 	</div>

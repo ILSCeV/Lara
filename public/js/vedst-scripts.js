@@ -424,9 +424,12 @@ $( document ).ready( function() {
     /////////////////////
 
 
+
         //////////////////////////////
         // Show/hide time of shifts //
         //////////////////////////////
+
+
 
         // set translated strings
         if (localStorage.getItem('language') == "en") 
@@ -483,56 +486,66 @@ $( document ).ready( function() {
 
 
 
-        // Show/hide taken shifts
+        ////////////////////////////
+        // Show/hide taken shifts //
+        ////////////////////////////
 
-        $(document).ready(function() {
-            if(typeof(Storage) !== "undefined")
+
+
+
+        // set translated strings
+        if (localStorage.getItem('language') == "en") 
+        {
+            $('#toggle-taken-shifts').text("Only EMPTY shifts");
+        }
+        else // default to German
+        {
+            $('#toggle-taken-shifts').text("Nur FREIe Dienste");
+        }
+
+
+        // Apply saved preferences from local storage on pageload
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.onlyEmptyShifts == "true") 
+            {   
+                $('div.green').closest('.row').addClass('hide');
+                $('#toggle-taken-shifts').addClass("btn-primary");
+                $('.isotope').isotope('layout');
+            } 
+            else if (localStorage.onlyEmptyShifts == "false") 
             {
-                if (localStorage.showTakenShifts == "Vergebene Dienste einblenden")
-                {
-                    $('div.green').closest('.row').removeClass('hide');
-                    $('#show-hide-taken-shifts').text("Vergebene Dienste ausblenden");
-                    $container.isotope('layout');
-                }
-                else if (localStorage.showTakenShifts == "Vergebene Dienste ausblenden")
-                {
-                    $('div.green').closest('.row').addClass('hide');
-                    $('#show-hide-taken-shifts').text("Vergebene Dienste einblenden");
-                    $('.isotope').isotope('layout');
-                }
+                $('div.green').closest('.row').removeClass('hide');
+                $('#toggle-taken-shifts').removeClass("btn-primary");
+                $('.isotope').isotope('layout');                  
+            }      
+        };
+
+        // Filter buttons action
+        $('#toggle-taken-shifts').click(function(e) 
+        { 
+            if ($('div.green').closest('.row').is(":visible"))    // all shifts are shown, intent to hide full shifts
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.onlyEmptyShifts = "true"; }
+
+                // change state, change button
+                $('div.green').closest('.row').addClass('hide'); 
+                $('#toggle-taken-shifts').addClass("btn-primary");
+                $('.isotope').isotope('layout');
             }
+            else    // only empty shifts shown, intent to show all shifts
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.onlyEmptyShifts = "false"; }
+
+                // change state, change button
+                $('div.green').closest('.row').removeClass('hide');
+                $('#toggle-taken-shifts').removeClass("btn-primary");
+                $('.isotope').isotope('layout');
+            };        
         });
 
-        $(function(){
-            $('#show-hide-taken-shifts').click(function(e) {
-                if ($('div.green').closest('.row').hasClass("hide"))
-                {
-                    // save selection in local storage
-                    if(typeof(Storage) !== "undefined")
-                    {
-                        localStorage.showTakenShifts = $(this).text();
-                    }
-
-                    // change state, change button
-                    $('div.green').closest('.row').removeClass('hide');
-                    $(this).text("Vergebene Dienste ausblenden");
-                    $container.isotope('layout');
-                }
-                else
-                {
-                    // save selection in local storage
-                    if(typeof(Storage) !== "undefined")
-                    {
-                        localStorage.showTakenShifts = $(this).text();
-                    }
-
-                    // change state, change button
-                    $('div.green').closest('.row').addClass('hide');
-                    $(this).text("Vergebene Dienste einblenden");
-                    $('.isotope').isotope('layout');
-                };
-            });
-        });
 
 
         // Week view changer
