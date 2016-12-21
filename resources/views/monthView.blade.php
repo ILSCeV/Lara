@@ -28,8 +28,10 @@
         </div>
 
         <!-- Section filter -->
-        <div class="col-xs-12 col-md-7 pull-right">
-            @include('partials.filter')
+        <div class="col-xs-12 col-md-7 no-padding">
+            <div class="pull-right">
+                @include('partials.filter')
+            </div>
         </div>
 
         <br class="hidden-xs">

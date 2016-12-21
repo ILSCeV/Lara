@@ -1,4 +1,3 @@
-<span>Filter: &nbsp;&nbsp;</span>
 <div id="section-filter" class="btn-group hidden-print">  
 	{{-- Show/hide events belonging to a chosen section --}}
 	@foreach($sections as $section)
@@ -10,3 +9,4 @@
 		</button>
 	@endforeach
 </div>
+
