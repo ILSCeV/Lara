@@ -50,7 +50,7 @@
                 @endif
             </span>
             <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
-                <small><a href="http://github.com/4D44H/lara-vedst">{{ trans('mainLang.moreInfosProjectsite') }}</a>.
+                <small><a href="https://github.com/ILSCeV/Lara">{{ trans('mainLang.moreInfosProjectsite') }}</a>.
                 </small>
             </span>
             <br class="visible-xs visible-sm">
