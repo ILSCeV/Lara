@@ -32,14 +32,5 @@ class RevisionEntry extends Model
     {
         return $this->belongsTo('Lara\Revision', 'revision_id', 'id');
     }
-
-    /**
-     * Get the corresponding Revision.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function revision()
-    {
-        return $this->belongsTo('Lara\Revision', 'revision_id', 'id');
-    }
+    
 }

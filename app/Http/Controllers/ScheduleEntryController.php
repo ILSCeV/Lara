@@ -114,42 +114,6 @@ class ScheduleEntryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Check if it's our form (CSRF protection)
-        if ( Session::token() !== Input::get( '_token' ) ) {
-            return response()->json('Fehler: die Session ist abgelaufen. Bitte aktualisiere die Seite und logge dich ggf. erneut ein.', 401);
-        }
-
-        // If we only want to modify the jobtype via management pages - do it without evaluating the rest
-        if ( !empty($request->get('jobtypeId')) AND is_numeric($request->get('jobtypeId')) ) {
-
-            // Find the corresponding entry object 
-            $entry = ScheduleEntry::where('id', '=', $request->get('entryId'))->first();
-
-
-            
-
-            // Save old value for revision
-            $oldJobtype = Jobtype::where('id', '=', $entry->jbtyp_id)->first()->jbtyp_title;
-
-            // Substitute values
-            $entry->jbtyp_id = $request->get('jobtypeId');
-            $entry->save();
-
-            // Log changes 
-            ScheduleController::logRevision($entry->getSchedule,    // schedule object
-                                $entry,                             // entry object
-                                "Diensttyp geändert",               // action description
-                                null,                               // old value - TODO LATER
-                                null,                               // new value - TODO LATER
-                                null,                               // old comment - no change here
-                                null);                              // new comment - no change here
-
-            // Formulate the response
-            return response()->json(["entryId" => $entry->id, 
-                                     "updatedJobtypeTitle" => Jobtype::where('id', '=', $entry->jbtyp_id)->first()->jbtyp_title], 
-                                     200);
-        }
-        
         // Extract request data 
         $entryId     = $request->get('entryId');
         $userName    = $request->get('userName');
@@ -158,6 +122,11 @@ class ScheduleEntryController extends Controller
         $userClub    = $request->get('userClub');
         $userComment = $request->get('userComment');
         $password    = $request->get('password');
+
+        // Check if it's our form (CSRF protection)
+        if ( Session::token() !== Input::get( '_token' ) ) {
+            return response()->json('Fehler: die Session ist abgelaufen. Bitte aktualisiere die Seite und logge dich ggf. erneut ein.', 401);
+        }
 
         // Check if someone modified LDAP ID manually
         if ( !empty($ldapId) AND !is_numeric($ldapId) ) {

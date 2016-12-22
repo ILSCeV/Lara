@@ -13,10 +13,6 @@ return [
     |
     */
 
-    // Laravel 5.3 style:
-    // 'fetch' => PDO::FETCH_OBJ,
-    
-    // Laravel 5.2 style:
     'fetch' => PDO::FETCH_CLASS,
 
     /*
@@ -80,7 +76,6 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
-            'sslmode' => 'prefer',
         ],
 
     ],

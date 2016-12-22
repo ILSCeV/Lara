@@ -102,7 +102,7 @@ class ScheduleEntry extends Model
 			
 		return null;
 	}
-
+	
 	/**
 	 * Get end time of a scheduleEntry which has $jobtypeId.
 	 *
@@ -123,25 +123,5 @@ class ScheduleEntry extends Model
 			
 		return null;
 	}
-
-	public function schedule()
-    {
-        return $this->belongsTo('Lara\Schedule', 'schdl_id', 'id');
-    }
-
-    public function event()
-    {
-        return $this->schedule()->event();
-    }
-
-	public function start()
-    {
-        return $this->event()->evnt_date_start();
-    }
-
-    public function end()
-    {
-        return $this->event()->evnt_date_end();
-    }
 
 }

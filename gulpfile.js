@@ -1,3 +1,5 @@
+var elixir = require('laravel-elixir');
+
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -8,6 +10,10 @@
  | file for our application, as well as publishing vendor resources.
  |
  */
+
+elixir(function(mix) {
+    mix.sass('app.scss');
+});
 
 var gulp = require('gulp');
 var ts = require('gulp-typescript');

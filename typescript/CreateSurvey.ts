@@ -1,4 +1,5 @@
-///<reference path="_references.ts"/>
+///<reference path="../typings/index.d.ts"/>
+///<reference path="Utilities.ts"/>
 
 $("#button-create-survey").click(() => {
     let errors = new Array<string>();
@@ -10,5 +11,3 @@ $("#button-create-survey").click(() => {
         return false;
     }
 });
-
-

@@ -32,14 +32,4 @@ class RevisionObjectRelation extends Model
     {
         return $this->belongsTo('Lara\Revision', 'revision_id', 'id');
     }
-
-    /**
-     * Get the corresponding Person.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function revision()
-    {
-        return $this->belongsTo('Lara\Revision', 'revision_id', 'id');
-    }
 }
