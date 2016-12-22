@@ -1,21 +1,52 @@
-// Non-sticky footer at the bottom of the screen
-$(document).ready(function() {
+///////////////
+// All views //
+///////////////
 
-    var docHeight = $(window).height();
-    var footerHeight = $('#footer').height();
-    var footerTop = $('#footer').position().top + footerHeight;
 
-    if (footerTop < docHeight) {
-        $('#footer').css('margin-top', (docHeight - footerTop) + 'px');
-    }
-});
 
-// Automatically close messages after 4 seconds (4000 milliseconds). M.
+// Enable Tooltips
+$(function () { $("[data-toggle='tooltip']").tooltip(); });     
+
+// Automatically close notifications after 4 seconds (4000 milliseconds)
 window.setTimeout(function() {
     $(".message").fadeTo(1000, 0).slideUp(500, function(){
         $(this).alert('close'); 
     });
 }, 4000);
+
+
+
+// Own shift highlighting 
+$('[name^=btn-submit-change]').click(function() {
+    $(this).parents('.row').removeClass('my-shift');
+});
+
+
+
+// Dropdown hiding fix 
+$('input').focusout(function() {
+    if ($(this).prop('placeholder') === '=FREI=') {
+        // hack to allow for click to register before focusout is called
+        setTimeout(function () {
+            $('.dropdown-username').hide();
+        }, 200);
+    }
+});
+
+
+
+// Language switcher 
+$('.languageSwitcher').find('a').click(function() {
+    var language = $(this).data('language');
+    localStorage.setItem('language', language);
+});
+
+
+
+////////////////
+// Event view //
+////////////////
+
 
 
 // Show/hide more button for infos
@@ -78,15 +109,6 @@ $(function(){
 
 
 
-// Show/hide comments
-$(function(){
-	$('.showhide').click(function(e) {
-		$(this).parent().next('.hide').toggleClass('show');
-        $('.isotope').isotope('layout') 
-	});
-});
-
-
 // Show/hide change history
 $(function(){
     $('#show-hide-history').click(function(e) {
@@ -110,8 +132,40 @@ $(function(){
 
 
 
-// Shows dynamic form fields for new job types 
+///////////////
+// Week view //
+///////////////
 
+
+
+// Show/hide comments
+$(function(){
+    $('.showhide').click(function(e) {
+        $(this).parent().next('.hide').toggleClass('show');
+        $('.isotope').isotope('layout') 
+    });
+});
+
+
+
+// button to remove events from week view - mostly for printing
+$(function(){
+    $('.hide-event').click(function(e) {
+        // change state, change button
+        $(this).parent().parent().parent().parent().parent().addClass('hide');
+        $('.isotope').isotope('layout')       
+    });
+});
+
+
+
+//////////////////////
+// Create/edit view //
+//////////////////////
+
+
+
+// Shows dynamic form fields for new job types 
 $(document).ready(function() {
     // initialise counter
     var iCnt = parseInt($('#counter').val());
@@ -186,318 +240,436 @@ $(document).ready(function() {
  
 
 
-
-
-// Enable Tooltips
-$(function () { $("[data-toggle='tooltip']").tooltip(); });     
-
-
+/////////////
+// Filters //
+/////////////
 
 
 
-// ISOTOPE masonry plugin
 $( document ).ready( function() {
-  // init Isotope
-  var $container = $('.isotope').isotope({
-    itemSelector: '.element-item',
-    layoutMode: 'masonry',
-    masonry: {
-          columnWidth: '.grid-sizer'
-      },
-    getSortData: {
-      name: '.name',
-      symbol: '.symbol',
-      number: '.number parseInt',
-      category: '[data-category]',
-      weight: function( itemElem ) {
-        var weight = $( itemElem ).find('.weight').text();
-        return parseFloat( weight.replace( /[\(\)]/g, '') );
-      }
-    }
-  });
-
-  // filter functions
-  var filterFns = {
-    // show if name matches class
-    name: function() {
-      var name = $(this).find('.name').text();
-    }
-  };
-
-  // bind filter button click
-  $('#filters').on( 'click', 'button', function() {
-    var filterValue = $( this ).attr('data-filter');
-    // use filterFn if matches value
-    filterValue = filterFns[ filterValue ] || filterValue;
-    $container.isotope({ filter: filterValue });
-  });
-  
-  // change is-checked (btn-primary) class on buttons and update local storage
-  $('.btn-group').each( function( i, buttonGroup ) {
-    var $buttonGroup = $( buttonGroup );
-    $buttonGroup.on( 'click', 'button', function() {
-        // highlight selection
-        $buttonGroup.find('.btn-primary').removeClass('btn-primary');
-        $( this ).addClass('btn-primary');
-
-        // save selection in local storage
-        if(typeof(Storage) !== "undefined") 
-        {
-            localStorage.filter = $(this).text();
-        }
-    });
-  });
-  
-
-    // Show/hide time of entries
-
-    $(document).ready(function() {
-        if(typeof(Storage) !== "undefined") 
-        {
-            if (localStorage.showTime == "Zeiten einblenden") 
-            {
-                $('.entry-time').removeClass('hide'); 
-                $('#show-hide-time').text("Zeiten ausblenden");
-                $container.isotope('layout');
-            } 
-            else if (localStorage.showTime == "Zeiten ausblenden") 
-            {
-                $('.entry-time').addClass('hide');
-                $('#show-hide-time').text("Zeiten einblenden");
-                $('.isotope').isotope('layout')                  
-            }
-        }
-    });
-
-    $(function(){
-        $('#show-hide-time').click(function(e) {
-            if ($('.entry-time').hasClass("hide")) 
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") 
-                {
-                    localStorage.showTime = $(this).text();
-                }
-
-                // change state, change button
-                $('.entry-time').removeClass('hide'); 
-                $(this).text("Zeiten ausblenden");
-                $container.isotope('layout');
-            }
-            else
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") 
-                {
-                    localStorage.showTime = $(this).text();
-                }
-
-                // change state, change button
-                $('.entry-time').addClass('hide');
-                $(this).text("Zeiten einblenden");
-                $('.isotope').isotope('layout')
-            };        
-        });
-    });
-
-    // Show/hide taken shifts
-
-    $(document).ready(function() {
-        if(typeof(Storage) !== "undefined")
-        {
-            if (localStorage.showTakenShifts == "Vergebene Dienste einblenden")
-            {
-                $('div.green').closest('.row').removeClass('hide');
-                $('#show-hide-taken-shifts').text("Vergebene Dienste ausblenden");
-                $container.isotope('layout');
-            }
-            else if (localStorage.showTakenShifts == "Vergebene Dienste ausblenden")
-            {
-                $('div.green').closest('.row').addClass('hide');
-                $('#show-hide-taken-shifts').text("Vergebene Dienste einblenden");
-                $('.isotope').isotope('layout')
-            }
-        }
-    });
-
-    $(function(){
-        $('#show-hide-taken-shifts').click(function(e) {
-            if ($('div.green').closest('.row').hasClass("hide"))
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined")
-                {
-                    localStorage.showTakenShifts = $(this).text();
-                }
-
-                // change state, change button
-                $('div.green').closest('.row').removeClass('hide');
-                $(this).text("Vergebene Dienste ausblenden");
-                $container.isotope('layout');
-            }
-            else
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined")
-                {
-                    localStorage.showTakenShifts = $(this).text();
-                }
-
-                // change state, change button
-                $('div.green').closest('.row').addClass('hide');
-                $(this).text("Vergebene Dienste einblenden");
-                $('.isotope').isotope('layout')
-            };
-        });
-    });
 
 
-   // Week view changer
-
-    $(document).ready(function() {
-        if(typeof(Storage) !== "undefined") 
-        {
-            if (localStorage.weekViewType == "Woche: Montag - Sonntag") 
-            {
-                $('.week-mo-so').removeClass('hide');
-                $('.week-mi-di').addClass('hide');
-                $('#change-week-view').text("Woche: Mittwoch - Dienstag");
-                $container.isotope('layout');
-            } 
-            else if (localStorage.weekViewType == "Woche: Mittwoch - Dienstag") 
-            {
-                $('.week-mo-so').addClass('hide');
-                $('.week-mi-di').removeClass('hide');
-                $('#change-week-view').text("Woche: Montag - Sonntag");
-                $('.isotope').isotope('layout')                  
-            }
-        }
-    });
-
-    $(function(){
-        $('#change-week-view').click(function(e) {
-            if ($('.week-mo-so').hasClass('hide')) 
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") 
-                {
-                    localStorage.weekViewType = $(this).text();
-                }
-
-                // change state, change button
-                $('.week-mo-so').removeClass('hide');
-                $('.week-mi-di').addClass('hide');
-                $(this).text("Woche: Mittwoch - Dienstag");
-                $container.isotope('layout');
-            }
-            else
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") 
-                {
-                    localStorage.weekViewType = $(this).text();
-                }
-
-                // change state, change button
-                $('.week-mo-so').addClass('hide');
-                $('.week-mi-di').removeClass('hide');
-                $(this).text("Woche: Montag - Sonntag");
-                $('.isotope').isotope('layout')
-            };        
-        });
-    });
+    //////////////////////////////////////////////////////
+    // Month view without Isotope, section filters only //
+    //////////////////////////////////////////////////////
+    
 
 
-
-
-
-});
-
-
-// Saving filtering for isotope, using browser local storage if enabled to save/resume state
-$(document).ready(function() {
-    if(typeof(Storage) !== "undefined") 
+    if ($('#month-view-marker').length) 
     {
-        if (localStorage.filter.match("bc-Club")) 
+        // Apply filters from local storage on page load
+        
+        // First hide all
+        $('.section-filter').hide();
+        
+        // go through local storage
+        for (i = 0; i < window.localStorage.length; i++) 
         {
-            $("#bc-Club-filter").trigger("click"); 
-        } 
-        else if (localStorage.filter.match("bc-Café")) 
-        {
-            $("#bc-Cafe-filter").trigger("click");                   
-        }
-        else if (localStorage.filter.match("\\*"))
-        {
-            $("#show-all-filter").trigger("click");                    
-        }
-    }
-});
+            key = window.localStorage.key(i);
 
-
-
-
-
-// Filtering month view without Isotope
-// onLoad inits
-$(document).ready(function() {  
-    // checking if we are in the month view
-    if ($('#own-filter-marker').length) {
-        // check if local storage in use
-        if(typeof(Storage) !== "undefined") 
-        {
-            if (localStorage.filter.match("bc-Club")) 
+            // look for all entries starting with "filter-" prefix
+            if (key.slice(0,7) === "filter-") 
             {
-                $('.filter').hide();
-                $('.bc-Club').show(); 
-            }
-            else if (localStorage.filter.match("bc-Café"))
-            {
-                $('.filter').hide();
-                $('.bc-Café').show(); 
-            }
-            else if (localStorage.filter.match("\\*"))
-            {
-                $('.filter').show();  
+                // find what should be revealed
+                if (window.localStorage.getItem(key) == "show") 
+                { 
+                    // show events
+                    $("."+key.slice(7)).show(); 
+
+                    // set filter buttons to the saved state
+                    $('#filter-'+key.slice(7)).addClass('btn-primary');
+                };             
             }
         }
 
-        // click checks
-        // bind filter button click
-        $('#filters').on( 'click', 'button', function() {
+        // Filter buttons action
+        $('#section-filter').on( 'click', 'button', function() 
+        {
+            // save current filter intent
             var filterValue = $( this ).attr('data-filter');
-            if (filterValue.match("bc-Club")) 
-            {
-                $('.filter').hide();
-                $('.bc-Club').show(); 
+
+            if ( $(this).hasClass('btn-primary') ) 
+            {   // case 1: this section was shown, intent to hide
+                
+                // deactivate button
+                $(this).removeClass('btn-primary');
+
+                // save choice to local storage
+                if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'hide'); }
+                
+                // First hide all
+                $('.section-filter').hide();
+                
+                // go through local storage
+                for (i = 0; i < window.localStorage.length; i++) 
+                {
+                    key = window.localStorage.key(i);
+
+                    // look for all entries starting with "filter-" prefix
+                    if (key.slice(0,7) === "filter-") 
+                    {
+                        // find what should be revealed
+                        if (window.localStorage.getItem(key) == "show") 
+                        { 
+                            // show events
+                            $("."+key.slice(7)).show(); 
+
+                            // set filter buttons to the saved state
+                            $('#filter-'+key.slice(7)).addClass('btn-primary');
+                        };             
+                    }
+                }
+            } 
+            else 
+            {   //case 2: this section was hidden, intent to show
+                
+                // reactivate button
+                $(this).addClass('btn-primary');
+
+                // save choice to local storage
+                if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'show'); }
+                
+                // show events from this section in view
+                $("."+filterValue).show(); 
             }
-            else if (filterValue.match("bc-Café"))
+        });
+    } 
+    else    
+    {
+
+
+        /////////////////////////////////////////////////////////
+        // Week view with Isotope, section and feature filters //
+        /////////////////////////////////////////////////////////
+
+
+
+        // init Isotope
+        var $container = $('.isotope').isotope(
+        {
+            itemSelector: '.element-item',
+            layoutMode: 'masonry',
+            masonry: 
             {
-                $('.filter').hide(); 
-                $('.bc-Café').show(); 
-            }
-            else if (filterValue.match("\\*")) 
+                columnWidth: '.grid-sizer'
+            },
+            getSortData: 
             {
-                $('.filter').show(); 
-            }
-            
+                name: '.name',
+                symbol: '.symbol',
+                number: '.number parseInt',
+                category: '[data-category]',
+                weight: function( itemElem ) 
+                {
+                    var weight = $( itemElem ).find('.weight').text();
+                    return parseFloat( weight.replace( /[\(\)]/g, '') );
+                }
+            }   
         });
 
-    }
+
+
+
+        /////////////////////
+        // Section filters //
+        /////////////////////
+
+
+
+        // Apply filters from local storage on page load
+        
+        // First hide all
+        $('.section-filter').hide();
+
+        // go through local storage
+        for (i = 0; i < window.localStorage.length; i++) 
+        {
+            key = window.localStorage.key(i);
+
+            // look for all entries starting with "filter-" prefix
+            if (key.slice(0,7) === "filter-") 
+            {
+                // find what should be revealed 
+                if (window.localStorage.getItem(key) == "show") 
+                { 
+                    // show events
+                    $("."+key.slice(7)).show(); 
+                    $('.isotope').isotope('layout');
+
+                    // set filter buttons to the saved state
+                    $('#filter-'+key.slice(7)).addClass('btn-primary');
+                };             
+            }
+        }
+
+        // Filter buttons action
+        $('#section-filter').on( 'click', 'button', function() 
+        {
+            // save current filter intent
+            var filterValue = $( this ).attr('data-filter');
+
+            if ( $(this).hasClass('btn-primary') ) 
+            {   // case 1: this section was shown, intent to hide
+                
+                // deactivate button
+                $(this).removeClass('btn-primary');
+
+                // save choice to local storage
+                if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'hide'); }
+                
+                // First hide all
+                $('.section-filter').hide();
+                
+                // go through local storage
+                for (i = 0; i < window.localStorage.length; i++) 
+                {
+                    key = window.localStorage.key(i);
+
+                    // look for all entries starting with "filter-" prefix
+                    if (key.slice(0,7) === "filter-") 
+                    {
+                        // find what should be revealed
+                        if (window.localStorage.getItem(key) == "show") 
+                        { 
+                            // show events
+                            $("."+key.slice(7)).show(); 
+
+                            // set filter buttons to the saved state
+                            $('#filter-'+key.slice(7)).addClass('btn-primary');
+                        };             
+                    }
+                }
+                $('.isotope').isotope('layout'); 
+            } 
+            else 
+            {   //case 2: this section was hidden, intent to show
+                
+                // reactivate button
+                $(this).addClass('btn-primary');
+
+                // save choice to local storage
+                if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'show'); }
+                
+                // show events from this section in view
+                $("."+filterValue).show();
+                $('.isotope').isotope('layout');
+            }
+        });
+
+     
+
+        /////////////////////
+        // Feature filters //
+        /////////////////////
+
+
+
+        //////////////////////////////
+        // Show/hide time of shifts //
+        //////////////////////////////
+
+
+
+        // set translated strings
+        if (localStorage.getItem('language') == "en") 
+        {
+            $('#toggle-shift-time').text("Shift time");
+        }
+        else // default to German
+        {
+            $('#toggle-shift-time').text("Dienstzeiten");
+        }
+
+
+        // Apply saved preferences from local storage on pageload
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.shiftTime == "show") 
+            {   
+                $('.entry-time').removeClass("hide"); 
+                $('#toggle-shift-time').addClass("btn-primary");
+                $('.isotope').isotope('layout');
+            } 
+            else if (localStorage.shiftTime == "hide") 
+            {
+                $('.entry-time').addClass("hide");
+                $('#toggle-shift-time').removeClass("btn-primary");
+                $('.isotope').isotope('layout');                  
+            }      
+        };
+
+        // Filter buttons action
+        $('#toggle-shift-time').click(function(e) 
+        { 
+            if ($('.entry-time').is(":visible"))    // times are shown, intent to hide
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.shiftTime = "hide"; }
+
+                // change state, change button
+                $('.entry-time').addClass("hide"); 
+                $('#toggle-shift-time').removeClass("btn-primary");
+                $('.isotope').isotope('layout');
+            }
+            else    // times are hidden, intent to show
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.shiftTime = "show"; }
+
+                // change state, change button
+                $('.entry-time').removeClass("hide");
+                $('#toggle-shift-time').addClass("btn-primary");
+                $('.isotope').isotope('layout');
+            };        
+        });
+
+
+
+        ////////////////////////////
+        // Show/hide taken shifts //
+        ////////////////////////////
+
+
+
+
+        // set translated strings
+        if (localStorage.getItem('language') == "en") 
+        {
+            $('#toggle-taken-shifts').text("Only EMPTY shifts");
+        }
+        else // default to German
+        {
+            $('#toggle-taken-shifts').text("Nur FREIe Dienste");
+        }
+
+
+        // Apply saved preferences from local storage on pageload
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.onlyEmptyShifts == "true") 
+            {   
+                $('div.green').closest('.row').addClass('hide');
+                $('#toggle-taken-shifts').addClass("btn-primary");
+                $('.isotope').isotope('layout');
+            } 
+            else if (localStorage.onlyEmptyShifts == "false") 
+            {
+                $('div.green').closest('.row').removeClass('hide');
+                $('#toggle-taken-shifts').removeClass("btn-primary");
+                $('.isotope').isotope('layout');                  
+            }      
+        };
+
+        // Filter buttons action
+        $('#toggle-taken-shifts').click(function(e) 
+        { 
+            if ($('div.green').closest('.row').is(":visible"))    // all shifts are shown, intent to hide full shifts
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.onlyEmptyShifts = "true"; }
+
+                // change state, change button
+                $('div.green').closest('.row').addClass('hide'); 
+                $('#toggle-taken-shifts').addClass("btn-primary");
+                $('.isotope').isotope('layout');
+            }
+            else    // only empty shifts shown, intent to show all shifts
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.onlyEmptyShifts = "false"; }
+
+                // change state, change button
+                $('div.green').closest('.row').removeClass('hide');
+                $('#toggle-taken-shifts').removeClass("btn-primary");
+                $('.isotope').isotope('layout');
+            };        
+        });
+
+
+
+        ///////////////////////////////////////////////
+        // Week view changer: start Monday/Wednesday //
+        ///////////////////////////////////////////////
+
+
+
+        // set translated strings
+        if (localStorage.getItem('language') == "en") 
+        {
+            var weekMonSun = "Monday - Sunday";
+            var weekWedTue = "Wednesday - Tuesday";
+        }
+        else // default to German
+        {
+            var weekMonSun = "Montag - Sonntag";
+            var weekWedTue = "Mittwoch - Dienstag";
+        }
+
+
+        // Apply saved preferences from local storage on pageload
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.weekStart == "monday") 
+            {   
+                $('.week-mo-so').removeClass('hide');
+                $('.week-mi-di').addClass('hide');
+                $('#toggle-week-start').addClass("btn-primary");
+                $('#toggle-week-start').removeClass("btn-success");
+                $('#toggle-week-start').text(weekMonSun);
+                $('.isotope').isotope('layout');
+            } 
+            else if (localStorage.weekStart == "wednesday") 
+            {
+                $('.week-mo-so').addClass('hide');
+                $('.week-mi-di').removeClass('hide');
+                $('#toggle-week-start').removeClass("btn-primary");
+                $('#toggle-week-start').addClass("btn-success");
+                $('#toggle-week-start').text(weekWedTue);
+                $('.isotope').isotope('layout');                  
+            }      
+        };
+
+        // Filter buttons action
+        $('#toggle-week-start').click(function(e) 
+        { 
+            if ($('.week-mi-di').is(":hidden"))    // week starts monday, intent to start on wednesday
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.weekStart = "wednesday"; }
+
+                // change state, change button
+                $('.week-mo-so').addClass('hide');
+                $('.week-mi-di').removeClass('hide');
+                $('#toggle-week-start').removeClass("btn-primary");
+                $('#toggle-week-start').addClass("btn-success");
+                $('#toggle-week-start').text(weekWedTue);
+                $('.isotope').isotope('layout');
+            }
+            else    // week starts on wednesday, intent to start on monday
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.weekStart = "monday"; }
+
+                // change state, change button
+                $('.week-mo-so').removeClass('hide');
+                $('.week-mi-di').addClass('hide');
+                $('#toggle-week-start').addClass("btn-primary");
+                $('#toggle-week-start').removeClass("btn-success");
+                $('#toggle-week-start').text(weekMonSun);
+                $('.isotope').isotope('layout');
+            };        
+        });
+
+    };
 });
 
-// button to remove events from week view - mostly for printing
-$(function(){
-    $('.hide-event').click(function(e) {
-        // change state, change button
-        $(this).parent().parent().parent().parent().parent().addClass('hide');
-        $('.isotope').isotope('layout')       
-    });
-});
 
 
 //////////
 // AJAX //
 //////////
+
+
 
 // Update schedule entries
 jQuery( document ).ready( function( $ ) {
@@ -620,9 +792,13 @@ jQuery( document ).ready( function( $ ) {
         });
     } );
 
+
+
 /////////////////////////
 // AUTOCOMPELETE CLUBS //
 /////////////////////////   
+
+
 
     // open club dropdown on input selection
     $( '.scheduleEntry' ).find('input').on( 'focus', function() {
@@ -833,9 +1009,12 @@ jQuery( document ).ready( function( $ ) {
     });
 
 
+
 ////////////////////////////////
 // MANAGEMENT: UPDATE JOBTYPE //
 ////////////////////////////////
+
+
 
     $( '.updateJobtype' ).on( 'submit', function() {
 
@@ -893,24 +1072,6 @@ jQuery( document ).ready( function( $ ) {
 
     });
 
-
-
-    /*
-    $( '.survey' ).on( 'submit', function() {
-
-        // For passworded surveys: check if a password field exists and is not empty
-        // We will check correctness on the server side
-        if ($(this).parentsUntil($(this), '.panel-warning').find("[name^=password]").length
-            && !$(this).parentsUntil($(this), '.panel-warning').find("[name^=password]").val()) {
-            var password = window.prompt('Bitte noch das Passwort für diese Umfrage eingeben:');
-            $(this).parentsUntil($(this), '.panel-warning').find("[name^=password]").val(password);
-        } else {
-            var password = $(this).parentsUntil($(this), '.panel-warning').find("[name^=password]").val();
-        }
-        //return false; ?
-    });
-    */
-
     // Detect entry name change and remove LDAP id from the previous entry
     $('.scheduleEntry').find("[name^=userName]").on('input propertychange paste', function() {
         $(this).parent().find("[name^=ldapId]").val("");
@@ -923,6 +1084,8 @@ jQuery( document ).ready( function( $ ) {
 ////////////////////////////////////
 // Clever RESTful Resource Delete //
 ////////////////////////////////////
+
+
 
 /*
 Taken from: https://gist.github.com/soufianeEL/3f8483f0f3dc9e3ec5d9
@@ -1010,21 +1173,3 @@ Examples :
     Laravel.initialize();
 
 })(window, jQuery);
-
-$('[name^=btn-submit-change]').click(function() {
-    $(this).parents('.row').removeClass('my-shift');
-});
-
-$('input').focusout(function() {
-    if ($(this).prop('placeholder') === '=FREI=') {
-        // hack to allow for click to register before focusout is called
-        setTimeout(function () {
-            $('.dropdown-username').hide();
-        }, 200);
-    }
-});
-
-$('#languageSelection').find('a').click(function() {
-    var language = $(this).data('language');
-    localStorage.setItem('language', language);
-});

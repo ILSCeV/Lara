@@ -4,6 +4,7 @@ namespace Lara;
 
 use Illuminate\Support\Facades\Session;
 use Lara\Http\Requests\SurveyRequest;
+use Hash;
 
 class Survey extends BaseSoftDelete
 {

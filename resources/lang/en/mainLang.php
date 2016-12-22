@@ -134,8 +134,6 @@ return [
     'orThe'                 => 'or',
     'marketingManager'      => 'marketing managers',
     'canChangeEventJob'     => 'may change this event/task.',
-
-    'only'                  => 'Only',
     'commaThe'              => ', the ', //line number ~332
     
     //-----------------------------------------------------------------------------------------------------------
@@ -333,7 +331,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/weekCellHidden.blade.php
-    'moreDetailsAfterLogInMessage' => 'More details are accessible to members after logging in. :break',
+    'moreDetailsAfterLogInMessage' => 'More details are accessible to members after logging in.',
     // 'moreDetailsAfterLogInMessage2' => 'after logging in.', 
     // Merged with line above but there is now way to break the line (format is still ok) 
     // ToDo find a solution for breaking lines
@@ -355,12 +353,11 @@ return [
     // /public/js/vedst-script.js
     'errorMessageForgotFilter'              => 'The filter wasn not set! Please add at least one section this event should be shown to.',
     'errorMessageEnterPasswordForShiftPlan' => 'Please enter the password for this schedule:',
-    'showTimes'                             => 'Show times',
+    'shiftTime'                             => 'Shift time',
     //'hideTimes' already exists#
     
-    'weekMoSu'                              => 'Week: Monday - Sunday',
-    'weekWeTu'                              => 'Week: Wednesday - Tuesday',
-    'hideTakenShifts'                       => 'Hide taken shifts',
+    'weekStart'                             => 'Monday - Sunday',
+    'hideTakenShifts'                       => 'Only EMPTY shifts',
     
     //-----------------------------------------------------------------------------------------------------------
     

@@ -27,14 +27,11 @@
             </a>
         </div>
 
-        <!-- create button -->
-        <div class="col-xs-12 col-md-3">
-            &nbsp;
-        </div>
-
-        <!-- filter -->
-        <div class="col-xs-12 col-md-4 pull-right">
-            @include('partials.filter')
+        <!-- Section filter -->
+        <div class="col-xs-12 col-md-7 no-padding">
+            <div class="pull-right">
+                @include('partials.filter')
+            </div>
         </div>
 
         <br class="hidden-xs">
@@ -113,7 +110,7 @@
         @include("partials.legend")
 
         {{-- filter hack --}}
-        <span id="own-filter-marker" hidden>&nbsp;</span>
+        <span id="month-view-marker" hidden>&nbsp;</span>
     </div>
 
 @stop

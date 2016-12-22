@@ -135,8 +135,6 @@ return [
     'orThe'                 => 'oder die',
     'marketingManager'      => 'Marketingverantwortlichen',
     'canChangeEventJob'     => 'dürfen diese Veranstaltung/Aufgabe ändern.',
-    
-    'only'                  => 'Nur',
     'commaThe'              => ', die ', //line number ~332
     
     //-----------------------------------------------------------------------------------------------------------
@@ -354,12 +352,11 @@ return [
     // /public/js/vedst-script.js
     'errorMessageForgotFilter'              => 'Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.',
     'errorMessageEnterPasswordForShiftPlan' => 'Bitte noch das Passwort für diesen Dienstplan eingeben:',
-    'showTimes'                             => 'Zeiten einblenden',
+    'shiftTime'                             => 'Dienstzeiten',
     //'hideTimes' already exists
     
-    'weekMoSu'                              => 'Woche: Montag - Sonntag',
-    'weekWeTu'                              => 'Woche: Mittwoch - Dienstag',
-    'hideTakenShifts'                       => 'Vergebene Dienste ausblenden',
+    'weekStart'                             => 'Montag - Sonntag',
+    'hideTakenShifts'                       => 'Nur FREIe Dienste',
     
     //-----------------------------------------------------------------------------------------------------------
     

@@ -108,6 +108,10 @@ Route::get('lang/{lang}', ['as'=>'lang.switch', function($lang){
     return Redirect::back();
 }]);
 
+Route::get('lang', function() {
+    return response()->json(['language' => Session::get('applocale')]);
+});
+
 // RESTful RESOURCES
 Route::resource('jobtype', 	'JobtypeController');
 Route::resource('entry', 	'ScheduleEntryController', 	['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
