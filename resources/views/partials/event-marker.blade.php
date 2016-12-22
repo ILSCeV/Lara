@@ -1,21 +1,42 @@
 @if( $clubEvent->evnt_type == 0)
-	<i class="fa fa-calendar-o white-text"></i>
+    <?php
+    $content = '<i class="fa fa-calendar-o white-text"></i>'
+    ?>
 @elseif( $clubEvent->evnt_type == 1)
-	<small>&nbsp;</small><i class="fa fa-info white-text"></i><small>&nbsp;</small>
+    <?php
+    $content = '<small>&nbsp;</small><i class="fa fa-info white-text"></i><small>&nbsp;</small>'
+    ?>
 @elseif( $clubEvent->evnt_type == 2)
-	<i class="fa fa-star white-text"></i>
+    <?php
+    $content = '<i class="fa fa-star white-text"></i>'
+    ?>
 @elseif( $clubEvent->evnt_type == 3)
-	<i class="fa fa-music white-text"></i>
+    <?php
+    $content = '<i class="fa fa-music white-text"></i>'
+    ?>
 @elseif( $clubEvent->evnt_type == 4)
-	<i class="fa fa-eye-slash white-text"></i>
+    <?php
+    $content = '<i class="fa fa-eye-slash white-text"></i>'
+    ?>
 @elseif( $clubEvent->evnt_type == 5)
-	<small>&nbsp;</small><i class="fa fa-eur white-text"></i><small>&nbsp;</small>
+    <?php
+    $content = '<small>&nbsp;</small><i class="fa fa-eur white-text"></i><small>&nbsp;</small>'
+    ?>
 @elseif( $clubEvent->evnt_type == 6)
-	<i class="fa fa-life-ring white-text"></i>
+    <?php
+    $content = '<i class="fa fa-life-ring white-text"></i>'
+    ?>
 @elseif( $clubEvent->evnt_type == 7)
-	<i class="fa fa-building white-text"></i>
+    <?php
+    $content = '<i class="fa fa-building white-text"></i>'
+    ?>
 @elseif( $clubEvent->evnt_type == 8)
-	<i class="fa fa-ticket white-text"></i>
+    <?php
+    $content = '<i class="fa fa-ticket white-text"></i>'
+    ?>
 @elseif( $clubEvent->evnt_type == 9)
-	<i class="fa fa-list-alt white-text"></i>
+    <?php
+    $content = '<i class="fa fa-list-alt white-text"></i>'
+    ?>
 @endif
+@include("partials.calendarLinkEvent", [$clubEvent, $content])

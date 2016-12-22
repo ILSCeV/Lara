@@ -56,6 +56,10 @@ class ClubEvent extends Model
 	public function getPlace() {
 		return $this->belongsTo('Lara\Place', 'plc_id', 'id');
 	}
+
+	public function place() {
+        return $this->belongsTo('Lara\Place', 'plc_id', 'id');
+    }
 	
 	/**
 	 * Get the corresponding schedule.
@@ -84,4 +88,8 @@ class ClubEvent extends Model
         }
         return false;
     }
+
+	public function shifts() {
+		return $this->hasManyThrough('Lara\ScheduleEntry', 'Lara\Schedule', 'evnt_id', 'schdl_id', 'id');
+	}
 }
