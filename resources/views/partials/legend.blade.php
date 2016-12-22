@@ -1,4 +1,4 @@
-<br>
+<hr class="hidden-print">
 <div class="col-md-12 col-xs-12 text-dark-grey centered text-dark-grey hidden-print">
       <i class="fa fa-calendar-o"></i>
        - {{ trans('mainLang.normalProgramm') }}

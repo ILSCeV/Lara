@@ -1,4 +1,5 @@
-///<reference path="_references.ts"/>
+///<reference path="../typings/index.d.ts"/>
+///<reference path="Utilities.ts"/>
 
 // values of events that should trigger the selection of all clubs
 let internalEventValues = [
@@ -15,24 +16,14 @@ $("#button-create-submit").add("#button-edit-submit").click(function () {
     let beginDate = new Date($("[name='beginDate']").prop("value") + " " + $("[name='beginTime']").prop("value"));
     let endDate = new Date($("[name='endDate']").prop("value") + " " + $("[name='endTime']").prop("value"));
     if (beginDate.getTime() > endDate.getTime()) {
-        errors.push("Die Endzeit liegt vor der Startzeit!");
+        errors.push("Die Startzeit liegt vor der Endzeit!");
     }
     if ($("#filter-checkboxes").find("input[type=checkbox]:checked").length === 0) {
         errors.push("Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.");
     }
 
-    if ($('[name="preparationTime"]').val() === "") {
-        errors.push("Die Dienstvorbereitungszeit vergessen!");
-    }
-    if ($('[name="beginTime"]').val() === "") {
-        errors.push("Die Startzeit vergessen!");
-    }
-    if ($('[name="endTime"]').val() === "") {
-        errors.push("Die Endzeit vergessen!");
-    }
-
     if (errors.length > 0) {
-        bootbox.alert(errors.map(err => "<p>" + err + "</p>").join("\n"));
+        bootbox.alert(errors.map(err => "<p>" + err + "</p>").join("\n"))
         return false;
     }
 });

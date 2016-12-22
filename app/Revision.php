@@ -50,34 +50,4 @@ class Revision extends Model
     {
         return $this->hasMany('Lara\RevisionEntry');
     }
-
-    /**
-     * Get the corresponding Person.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function person()
-    {
-        return $this->belongsTo('Lara\Person', 'creator_id', 'id');
-    }
-
-    /**
-     * Get the corresponding Revision_SurveyAnswer.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function surveyAnswerRevision()
-    {
-        return $this->hasOne('Lara\Revision_SurveyAnswer');
-    }
-
-    /**
-     * Get the corresponding RevisionEntries.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function entries()
-    {
-        return $this->hasMany('Lara\RevisionEntry');
-    }
 }

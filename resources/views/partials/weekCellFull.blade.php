@@ -39,10 +39,8 @@
 	@endif
 
 			<h4 class="panel-title">
-				@include("partials.event-marker")
-				&nbsp;
 				<a href="{{ URL::route('event.show', $clubEvent->id) }}">
-					<span class="name">{{ $clubEvent->evnt_title }}</span>
+					@include("partials.event-marker")&nbsp;<span class="name">{{ $clubEvent->evnt_title }}</span>
 				</a>
 			</h4>
 
@@ -76,8 +74,7 @@
 			{{-- Show schedule entries --}}
 			@foreach($entries = $clubEvent->getSchedule->getEntries as $entry)
 				{{-- highlight with my-shift class if the signed in user is the person to do the entry --}}
-                {{-- add a divider if the shift is not the last one --}}
-			    <div class="row{!! $entry !== $entries->last() ? ' divider': false !!}{!! ( isset($entry->getPerson->prsn_ldap_id) AND Session::has('userId') AND $entry->getPerson->prsn_ldap_id == Session::get('userId')) ? " my-shift" : false !!}">
+			    <div class="row {!! ( isset($entry->getPerson->prsn_ldap_id) AND Session::has('userId') AND $entry->getPerson->prsn_ldap_id == Session::get('userId')) ? "my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
 			                                'id' => $entry->id,
 			                                'method' => 'put',
@@ -129,7 +126,13 @@
 
 			        {!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $entry->id, 'hidden') ) !!}
 			        {!! Form::close() !!}
+
 			    </div>
+
+				{{-- Show a line after each row except the last one --}}
+				@if($entry !== $entries->last() )
+					<hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
+				@endif
 
 			@endforeach
 

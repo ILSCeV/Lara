@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Ludwig
+ * Date: 23.06.2016
+ * Time: 16:03
+ */
 
 namespace Lara\Library;
 
@@ -168,16 +174,5 @@ class Revision
                 $revision_entry->old_value = $this->old_model->attributesToArray()[$column_name];
         }
         return $revision_entry->save();
-    }
-
-    /**
-     * Deletes the model and creates a Revision
-     * @param $model the Model to delete
-     * @return bool true if saving the revision was successfull
-     */
-    public static function deleteWithRevision(Model $model)
-    {
-        $revision = new Revision($model);
-        return $model->delete() && $revision->save($model, 'Deleted');
     }
 }
