@@ -135,8 +135,6 @@ return [
     'orThe'                 => 'oder die',
     'marketingManager'      => 'Marketingverantwortlichen',
     'canChangeEventJob'     => 'dürfen diese Veranstaltung/Aufgabe ändern.',
-    
-    'only'                  => 'Nur',
     'commaThe'              => ', die ', //line number ~332
     
     //-----------------------------------------------------------------------------------------------------------
@@ -205,6 +203,10 @@ return [
     'Fr' => 'Freitag',
     'Sa' => 'Samstag',
     'Su' => 'Sonntag',
+
+
+    // resources/view/partials/calendarLinkEvent.blade.php
+    'addToCalendar' => 'Füge dieses Event zu deinem Google Kalender hinzu',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -237,7 +239,7 @@ return [
     'adjustRoster'          => 'Dienstplan anpassen',
     'serviceTypeEnter'      => 'Diensttyp hier eingeben',
     'weight'                => 'Gewicht (für Statistik)',
-    'statisticalEvaluation' => 'Statistische Wertung',
+    'statisticalEvaluation' => 'Statistik',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -267,8 +269,8 @@ return [
     'manageTemplate'        => 'Vorlagen verwalten',
     
     //create button text
-    'createAndAddNewEvent'  => 'Neue Veranstaltung/Aufgabe hinzufügen',
-    'createAndAddNewSurvey' => 'Neue Umfrage hinzufügen',
+    'createNewEvent'           => 'Neues Event erstellen',
+    'createNewSurvey'          => 'Neue Umfrage erstellen',
     
     //Member types
     'candidate'             => 'Kandidat',
@@ -284,7 +286,15 @@ return [
     
     // /resources/views/partials/scheduleEntryStatus.blade.php
     'jobFree'               => 'Dienst frei',
-    
+
+    // /resources/views/partials/statisticsLeaderboards.blade.php
+    'totalShifts'           => 'Dienste',
+    'leaderBoards'          => 'Bestenliste',
+
+    // /resources/views/partials/clubStatistics.blade.php
+    'infoFor'               => 'Mitgliederstatistik',
+
+    // /resources/views/partials/personalStatistics.blade.php
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/surveyAnswerStatus.blade.php
@@ -342,11 +352,11 @@ return [
     // /public/js/vedst-script.js
     'errorMessageForgotFilter'              => 'Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.',
     'errorMessageEnterPasswordForShiftPlan' => 'Bitte noch das Passwort für diesen Dienstplan eingeben:',
-    'showTimes'                             => 'Zeiten einblenden',
+    'shiftTime'                             => 'Dienstzeiten',
     //'hideTimes' already exists
     
-    'weekMoSu'                              => 'Woche: Montag - Sonntag',
-    'weekWeTu'                              => 'Woche: Mittwoch - Dienstag',
+    'weekStart'                             => 'Montag - Sonntag',
+    'hideTakenShifts'                       => 'Nur FREIe Dienste',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -404,5 +414,6 @@ return [
     'placeholderDescription'        => 'Beschreibung:',
     'placeholderActiveUntil'        => 'Aktiv bis:',
     
-    //
+    // Misc.
+    'guest'                         => 'Gast',
 ];

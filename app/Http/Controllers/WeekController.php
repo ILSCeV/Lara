@@ -17,6 +17,7 @@ use Lara\ClubEvent;
 use Lara\Schedule;
 use Lara\Person;
 use Lara\Club;
+use Lara\Place;
 
 class WeekController extends Controller {
 
@@ -91,6 +92,9 @@ class WeekController extends Controller {
 							->orderBy('deadline')
 							->get();
 		
+		$sections = Place::where('id', '>', 0)
+                         ->orderBy('plc_title')
+                         ->get(['id','plc_title']);
 
         // Filter - Workaround for older events: populate filter with event club
         foreach ($events as $clubEvent) {	        
@@ -104,6 +108,6 @@ class WeekController extends Controller {
 
         return View::make('weekView', compact('events', 'schedules',  'date', 
         									  'entries', 'weekStart', 'weekEnd', 
-											  'clubs', 'surveys'));
+											  'clubs', 'surveys', 'sections'));
 	}
 }

@@ -24,11 +24,12 @@
 @if (Session::has("userName"))
     <ul class="dropdown-menu dropdown-username" style="position: absolute;">
         <li id="yourself">
-            <a href="javascript:void(0);" 
+            <a href="javascript:void(0);"
                onClick="document.getElementById('userName{{ ''. $entry->id }}').value='{{Session::get('userName')}}';
-                        document.getElementById('club{{ ''. $entry->id }}').value='{{Session::get('userClub')}}';
-                        document.getElementById('ldapId{{ ''. $entry->id }}').value='{{Session::get('userId')}}'
-                            document.getElementById('btn-submit-changes{{ ''. $entry->id }}').click();">
+                       document.getElementById('club{{ ''. $entry->id }}').value='{{Session::get('userClub')}}';
+                       document.getElementById('ldapId{{ ''. $entry->id }}').value='{{Session::get('userId')}}';
+                       document.getElementById('btn-submit-changes{{ ''. $entry->id }}').click();
+                       $(this).parents('.row').addClass('my-shift')">
                 <b>{{ trans('mainLang.IDoIt') }}</b>
             </a>
         </li>

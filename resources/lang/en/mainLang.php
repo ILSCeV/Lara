@@ -134,8 +134,6 @@ return [
     'orThe'                 => 'or',
     'marketingManager'      => 'marketing managers',
     'canChangeEventJob'     => 'may change this event/task.',
-
-    'only'                  => 'Only',
     'commaThe'              => ', the ', //line number ~332
     
     //-----------------------------------------------------------------------------------------------------------
@@ -204,7 +202,9 @@ return [
     'Fr' => 'Friday',
     'Sa' => 'Saturday',
     'Su' => 'Sunday',
-    
+
+    // resources/view/partials/calendarLinkEvent.blade.php
+    'addToCalendar' => 'Add this event to your calendar',
     //-----------------------------------------------------------------------------------------------------------
     
     // resources/views/createSurveyView.blade.php
@@ -236,7 +236,7 @@ return [
     'adjustRoster'          => 'Adjust schedule',
     'serviceTypeEnter'      => 'Enter shift type here',
     'weight'                => 'Statistical weight',
-    'statisticalEvaluation' => 'Statistical Evaluation',
+    'statisticalEvaluation' => 'Statistics',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -267,8 +267,8 @@ return [
     'manageTemplate'        => 'Manage templates',
     
     //create button text
-    'createAndAddNewEvent'  => 'Add new Event/Task',
-    'createAndAddNewSurvey' => 'Add new Survey',
+    'createNewEvent'           => 'Create new event',
+    'createNewSurvey'          => 'Create new survey',
     
     //Member types
     'candidate'             => 'Candidate',
@@ -284,7 +284,18 @@ return [
     
     // /resources/views/partials/scheduleEntryStatus.blade.php
     'jobFree'               => 'Shift free',
-    
+
+    //-----------------------------------------------------------------------------------------------------------
+
+    // /resources/views/partials/statisticsLeaderboards.blade.php
+    'totalShifts'           => 'Shifts', 
+    'leaderBoards'          => 'Leaderboard',
+
+    // /resources/views/partials/clubStatistics.blade.php
+    'infoFor'               => 'Member statistics',
+
+    // /resources/views/partials/personalStatistics.blade.php
+
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/surveyAnswerStatus.blade.php
@@ -320,7 +331,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/weekCellHidden.blade.php
-    'moreDetailsAfterLogInMessage' => 'More details are accessible to members after logging in. :break',
+    'moreDetailsAfterLogInMessage' => 'More details are accessible to members after logging in.',
     // 'moreDetailsAfterLogInMessage2' => 'after logging in.', 
     // Merged with line above but there is now way to break the line (format is still ok) 
     // ToDo find a solution for breaking lines
@@ -342,11 +353,11 @@ return [
     // /public/js/vedst-script.js
     'errorMessageForgotFilter'              => 'The filter wasn not set! Please add at least one section this event should be shown to.',
     'errorMessageEnterPasswordForShiftPlan' => 'Please enter the password for this schedule:',
-    'showTimes'                             => 'Show times',
+    'shiftTime'                             => 'Shift time',
     //'hideTimes' already exists#
     
-    'weekMoSu'                              => 'Week: Monday - Sunday',
-    'weekWeTu'                              => 'Week: Wednesday - Tuesday',
+    'weekStart'                             => 'Monday - Sunday',
+    'hideTakenShifts'                       => 'Only EMPTY shifts',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -400,5 +411,6 @@ return [
     'placeholderDescription'        => 'Description:',
     'placeholderActiveUntil'        => 'Active until:',
 
-    //
+    //Misc
+    'guest'                         => 'Guest',
 ];
