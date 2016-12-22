@@ -27,4 +27,3 @@ Lara VedSt is based on:
 - [Bootbox.js 4.4.0](http://bootboxjs.com/)
 
 (All licensed under [MIT License](http://opensource.org/licenses/MIT) or [GNU GPL v.3](http://opensource.org/licenses/GPL-3.0)).
-.
