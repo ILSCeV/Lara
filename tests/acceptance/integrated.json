@@ -1,0 +1,6 @@
+{
+	"baseUrl": "http://localhost/",
+	"selenium": {
+        "browser": "chrome"
+    }
+}

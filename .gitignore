@@ -20,3 +20,6 @@ _ide_helper_models.php
 
 .DS_Store
 Thumbs.db
+/selenium/
+/tests/acceptance/tests/
+/composer.lock
