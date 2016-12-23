@@ -63,7 +63,7 @@
                     <label for="password" class="control-label col-md-4 col-sm-5 col-xs-12"
                            style="padding-left: 0;">{{ trans('mainLang.passwordEntry') }}:</label>
                     <div class="col-md-4 col-sm-7 col-xs-12" style="padding-left: 0;">
-                        {!! Form::password('password', '' ) !!}
+                        {!! Form::password('password', [''] ) !!}
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-12"></div>
                 </div>
@@ -72,7 +72,7 @@
                     <label for="passwordDouble" class="control-label col-md-4 col-sm-5 col-xs-12"
                            style="padding-left: 0" ;>{{ trans('mainLang.passwordRepeat') }}:</label>
                     <div class="col-md-4 col-sm-7 col-xs-12" style="padding-left: 0;">
-                        {!! Form::password('password_confirmation', '') !!}
+                        {!! Form::password('password_confirmation', ['']) !!}
                     </div>
                     <div class="col-md-4 col-sm-2 col-xs-12"></div>
                 </div>

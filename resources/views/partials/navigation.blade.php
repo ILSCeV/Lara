@@ -177,10 +177,10 @@
                                 <br class="visible-xs">
 
                                 {!! Form::password( 'password', 
-                                                     array('placeholder'  => Lang::get('mainLang.password' ),
-                                                           'class'        => 'form-control',
-                                                           'autocomplete' => 'off',
-                                                           'style'        => 'cursor: auto') ) !!} 
+                                                   ['placeholder'  => Lang::get('mainLang.password' ),
+                                                    'class'        => 'form-control',
+                                                    'autocomplete' => 'off',
+                                                    'style'        => 'cursor: auto'] ) !!} 
                                 
                                 <br class="visible-xs">
 

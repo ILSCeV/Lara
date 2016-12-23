@@ -73,10 +73,10 @@
 		{{-- Show password input if schedule needs one --}}
 		@if( $clubEvent->getSchedule->schdl_password != '')
 		    <div class="{{ $classString }} hidden-print">
-		        {!! Form::password('password' . $clubEvent->getSchedule->id, array('required', 
+		        {!! Form::password('password' . $clubEvent->getSchedule->id, ['required', 
 		                                             'class'=>'col-md-12 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
-		                                             'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
+		                                             'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
 		        <br />
 		    </div> 
 		@endif 

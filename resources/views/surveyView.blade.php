@@ -152,9 +152,9 @@ $userCanEditDueToRole
     <div class="panel panel-warning">
         @if( $survey->password != '')
             <div class="hidden-print panel-heading">
-                {!! Form::password('password', array('class'=>'col-md-4 col-xs-12 black-text',
-                                                     'id'=>'password' . $survey->id,
-                                                     'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
+                {!! Form::password('password', ['class'=>'col-md-4 col-xs-12 black-text',
+                                                'id'=>'password' . $survey->id,
+                                                'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
                 <br>
             </div>
         @endif
