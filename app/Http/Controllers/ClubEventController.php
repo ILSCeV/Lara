@@ -255,8 +255,11 @@ class ClubEventController extends Controller
         });
 
         $revisions = json_decode($clubEvent->getSchedule->entry_revisions, true);
-        $revisions = array_reverse($revisions);
+        
         if (!is_null($revisions)) {
+            // reverse order to show latest revision first
+            $revisions = array_reverse($revisions);
+
             // deleting ip adresses from output for privacy reasons
             foreach ($revisions as $entry) {
                 unset($entry["from ip"]);
