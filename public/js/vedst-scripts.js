@@ -258,29 +258,32 @@ $( document ).ready( function() {
     if ($('#month-view-marker').length) 
     {
         // Apply filters from local storage on page load
-        
-        // First hide all
-        $('.section-filter').hide();
-        
-        // go through local storage
-        for (i = 0; i < window.localStorage.length; i++) 
+
+        // first hide all sections
+        $('.section-filter').hide(); 
+
+        // get all sections from buttons we created while rendering on the backend side
+        var sections = [];
+        $.each($('.section-filter-selector'), function(){ sections.push($(this).prop('id')); });
+
+        for (i = 0; i < sections.length; ++i ) 
         {
-            key = window.localStorage.key(i);
+            // if "hide": filter exists and set to "hide" - no action needed
+            // if "show": filter exists and set to "show" - show events, highlight button
+            // if "null": filter doesn't exist - default to "show"
+            if ( localStorage.getItem(sections[i]) !== "hide" ) 
+            {   
+                // save section filter value
+                if(typeof(Storage) !== "undefined") { localStorage.setItem(sections[i], "show"); };
 
-            // look for all entries starting with "filter-" prefix
-            if (key.slice(0,7) === "filter-") 
-            {
-                // find what should be revealed
-                if (window.localStorage.getItem(key) == "show") 
-                { 
-                    // show events
-                    $("."+key.slice(7)).show(); 
+                // show events from this section in view
+                $("."+sections[i].slice(7)).show();
 
-                    // set filter buttons to the saved state
-                    $('#filter-'+key.slice(7)).addClass('btn-primary');
-                };             
-            }
+                // set filter buttons to the saved state
+                $('#'+sections[i]).addClass('btn-primary');
+            } 
         }
+
 
         // Filter buttons action
         $('#section-filter').on( 'click', 'button', function() 
@@ -377,30 +380,33 @@ $( document ).ready( function() {
 
 
         // Apply filters from local storage on page load
-        
-        // First hide all
-        $('.section-filter').hide();
 
-        // go through local storage
-        for (i = 0; i < window.localStorage.length; i++) 
+        // first hide all sections
+        $('.section-filter').hide(); 
+
+        // get all sections from buttons we created while rendering on the backend side
+        var sections = [];
+        $.each($('.section-filter-selector'), function(){ sections.push($(this).prop('id')); });
+
+        for (i = 0; i < sections.length; ++i ) 
         {
-            key = window.localStorage.key(i);
+            // if "hide": filter exists and set to "hide" - no action needed
+            // if "show": filter exists and set to "show" - show events, highlight button
+            // if "null": filter doesn't exist - default to "show"
+            if ( localStorage.getItem(sections[i]) !== "hide" ) 
+            {   
+                // save section filter value
+                if(typeof(Storage) !== "undefined") { localStorage.setItem(sections[i], "show"); };
 
-            // look for all entries starting with "filter-" prefix
-            if (key.slice(0,7) === "filter-") 
-            {
-                // find what should be revealed 
-                if (window.localStorage.getItem(key) == "show") 
-                { 
-                    // show events
-                    $("."+key.slice(7)).show(); 
-                    $('.isotope').isotope('layout');
+                // show events from this section in view
+                $("."+sections[i].slice(7)).show();
+                $('.isotope').isotope('layout');
 
-                    // set filter buttons to the saved state
-                    $('#filter-'+key.slice(7)).addClass('btn-primary');
-                };             
-            }
+                // set filter buttons to the saved state
+                $('#'+sections[i]).addClass('btn-primary');
+            } 
         }
+        
 
         // Filter buttons action
         $('#section-filter').on( 'click', 'button', function() 
