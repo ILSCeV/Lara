@@ -1,21 +1,21 @@
 ## Club management software built on top of Laravel 5.3
 
 ## About
-**Lara** ("**Ve**rwaltung **d**es **St**udentenclubs" = "student club management" in German) is a planning tool that combines a calender with personnel scheduling, developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all [Ilmenauer Studentenclub e.V.](http://www.il-sc.de) sections.
+**Lara** is a planning tool that combines a calender with personnel scheduling, developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all [Ilmenauer Studentenclub e.V.](http://www.il-sc.de) sections.
 
-For more information visit [Wiki](https://github.com/ILSCeV/lara-vedst/wiki)
+For more information visit [Wiki](https://github.com/ILSCeV/Lara/wiki)
 
 
 ## Contributing
 We always welcome any help in any form :)
 
-If you want to contribute, please read this short overview first: [Contributing](https://github.com/ILSCeV/lara-vedst/wiki/Contributing)
+If you want to contribute, please read this short overview first: [Contributing](https://github.com/ILSCeV/Lara/wiki/Contributing)
 
-For a detailed list of open requirements and change-requests visit [Issues](https://github.com/4D44H/lara-vedst/issues) and/or contact [Maxim](https://github.com/4D44H).
+For a detailed list of open requirements and change-requests contact [Maxim](https://github.com/4D44H) for access to the Trello boards.
 
 
 ## License
-Code published under [GNU GPL v.3](https://github.com/4D44H/lara-vedst/blob/master/LICENSE).
+Code published under [GNU GPL v.3](https://github.com/4D44H/Lara/blob/master/LICENSE).
 
 Lara VedSt is based on: 
 - [Laravel 5.3](http://laravel.com)
