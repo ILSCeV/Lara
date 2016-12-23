@@ -4,7 +4,7 @@
                        array( 'placeholder'=>'-', 
                        'id'=>'club' . $entry->id, 
                        'class'=>'col-xs-12 col-md-12',
-                       'autocomplete'=>'off') ) !!}
+                       'autocomplete'=>'off')) !!}
     </div>
 @else   
     <div class="btn-group col-xs-10 col-md-10 no-padding">
@@ -15,7 +15,7 @@
                           'class'=>'col-xs-12 col-md-12',
                        	  'autocomplete'=>'off')) !!}
         @else
-            {!! Form::text('club' . $entry->id, 
+            {!! Form::text('club' . $entry->id, '',
                            array('id'=>'club' . $entry->id, 
                           'class'=>'col-xs-12 col-md-12',
                           'autocomplete'=>'off')) !!}
