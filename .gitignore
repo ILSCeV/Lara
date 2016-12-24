@@ -2,6 +2,9 @@
 /node_modules
 logo.psd
 
+/public/logo.png
+/app/Http/Controllers/LoginController.php
+
 .env
 .env-prod
 .env-local
