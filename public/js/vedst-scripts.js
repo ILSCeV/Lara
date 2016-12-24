@@ -995,7 +995,11 @@ jQuery( document ).ready( function( $ ) {
                 // we receive this parameters: e.g. ["status"=>"fa fa-adjust", "style"=>"color:yellowgreen;", "title"=>"Kandidat"] 
                 $("#spinner").attr("style", data["userStatus"]["style"]);
                 $("#spinner").attr("data-original-title", data["userStatus"]["title"]);
-                $("#spinner").removeClass().addClass(data["userStatus"]["status"]).removeAttr("id");               
+                $("#spinner").removeClass().addClass(data["userStatus"]["status"]).removeAttr("id");
+
+                if (data["is_current_user"]) {
+                    $userNameInput.closest('form').parent().addClass('my-shift');
+                }
             },
 
             error: function (xhr, ajaxOptions, thrownError) {
