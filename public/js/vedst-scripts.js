@@ -700,7 +700,7 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.scheduleEntry' ).find("input[id^='userName']").on('input', function() {
+    $( '.scheduleEntry' ).find("input[id^='userName'], input[id^=comment]").on('input', function() {
         // show only current button
         $('[name^=btn-submit-change]')
             .addClass('hide')
