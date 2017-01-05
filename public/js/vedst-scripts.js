@@ -615,30 +615,35 @@ $( document ).ready( function() {
         // Apply saved preferences from local storage on pageload
         if(typeof(Storage) !== "undefined") 
         {
-            if (localStorage.weekStart == "monday") 
-            {   
-                $('.week-mo-so').removeClass('hide');
-                $('.week-mi-di').addClass('hide');
-                $('#toggle-week-start').addClass("btn-primary");
-                $('#toggle-week-start').removeClass("btn-success");
-                $('#toggle-week-start').text(weekMonSun);
-                $('.isotope').isotope('layout');
-            } 
-            else if (localStorage.weekStart == "wednesday") 
+            if (localStorage.weekStart === "wednesday") 
             {
+                // apply transformation, value already saved in storage
                 $('.week-mo-so').addClass('hide');
                 $('.week-mi-di').removeClass('hide');
                 $('#toggle-week-start').removeClass("btn-primary");
                 $('#toggle-week-start').addClass("btn-success");
                 $('#toggle-week-start').text(weekWedTue);
                 $('.isotope').isotope('layout');                  
-            }      
+            } 
+            else // default to localStorage.weekStart == "monday" and save to storage
+            {
+                // save or update selection in local storage
+                localStorage.weekStart = "monday";
+
+                // apply transformation
+                $('.week-mo-so').removeClass('hide');
+                $('.week-mi-di').addClass('hide');
+                $('#toggle-week-start').addClass("btn-primary");
+                $('#toggle-week-start').removeClass("btn-success");
+                $('#toggle-week-start').text(weekMonSun);
+                $('.isotope').isotope('layout');
+            }     
         };
 
         // Filter buttons action
         $('#toggle-week-start').click(function(e) 
         { 
-            if ($('.week-mi-di').is(":hidden"))    // week starts monday, intent to start on wednesday
+            if (localStorage.weekStart === "monday")    // week starts monday, intent to start on wednesday
             {
                 // save selection in local storage
                 if(typeof(Storage) !== "undefined") { localStorage.weekStart = "wednesday"; }
@@ -651,7 +656,7 @@ $( document ).ready( function() {
                 $('#toggle-week-start').text(weekWedTue);
                 $('.isotope').isotope('layout');
             }
-            else    // week starts on wednesday, intent to start on monday
+            else    // localStorage.weekStart == "wednesday" -> week starts on wednesday, intent to start on monday
             {
                 // save selection in local storage
                 if(typeof(Storage) !== "undefined") { localStorage.weekStart = "monday"; }
