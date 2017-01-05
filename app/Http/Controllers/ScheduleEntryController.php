@@ -71,17 +71,20 @@ class ScheduleEntryController extends Controller
                               ->firstOrFail();
                               
         // Person NULL means "=FREI=" - check for it every time you query a relationship
-        $response = ['id'                => $entry->id, 
-                     'jbtyp_title'       => $entry->getJobType->jbtyp_title,
-                     'prsn_name'         => !is_null($entry->getPerson) ? $entry->getPerson->prsn_name          : "=FREI=",
-                     'prsn_ldap_id'      => !is_null($entry->getPerson) ? $entry->getPerson->prsn_ldap_id       : "",
-                     'prsn_status'       => !is_null($entry->getPerson) ? $entry->getPerson->prsn_status        : "",
-                     'clb_title'         => !is_null($entry->getPerson) ? $entry->getPerson->getClub->clb_title : "",
-                     'entry_user_comment'=> $entry->entry_user_comment,
-                     'entry_time_start'  => $entry->entry_time_start,
-                     'entry_time_end'    => $entry->entry_time_end,
-                     'updated_at'        => $entry->updated_at];
-                     
+        $ldapId = !is_null($entry->getPerson) ? $entry->getPerson->prsn_ldap_id : "";
+        $response = [
+            'id'                => $entry->id,
+            'jbtyp_title'       => $entry->getJobType->jbtyp_title,
+            'prsn_name'         => !is_null($entry->getPerson) ? $entry->getPerson->prsn_name          : "=FREI=",
+            'prsn_ldap_id'      => $ldapId,
+            'prsn_status'       => !is_null($entry->getPerson) ? $entry->getPerson->prsn_status        : "",
+            'clb_title'         => !is_null($entry->getPerson) ? $entry->getPerson->getClub->clb_title : "",
+            'entry_user_comment'=> $entry->entry_user_comment,
+            'entry_time_start'  => $entry->entry_time_start,
+            'entry_time_end'    => $entry->entry_time_end,
+            'updated_at'        => $entry->updated_at,
+            'is_current_user'   => $ldapId == Session::get('userId')
+        ];
 
         if (Request::ajax()) {
             return response()->json($response);
@@ -354,14 +357,17 @@ class ScheduleEntryController extends Controller
         $userStatus = $this->updateStatus($entry);        
 
         // Formulate the response
-        return response()->json(["entryId"     => $entry->id, 
-                                 "userStatus"  => $userStatus,
-                                 "userName"    => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->prsn_name,
-                                 "ldapId"      => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->prsn_ldap_id, 
-                                 "userClub"    => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->getClub->clb_title,
-                                 "userComment" => $entry->entry_user_comment,
-                                 "timestamp"   => $timestamp], 
-                                 200);
+        $prsn_ldap_id = is_null($entry->getPerson()->first()) ? "" : $entry->getPerson()->first()->prsn_ldap_id;
+        return response()->json([
+            "entryId"           => $entry->id,
+            "userStatus"        => $userStatus,
+            "userName"          => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->prsn_name,
+            "ldapId"            => $prsn_ldap_id,
+            "userClub"          => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->getClub->clb_title,
+            "userComment"       => $entry->entry_user_comment,
+            "timestamp"         => $timestamp,
+            "is_current_user"   => $prsn_ldap_id == Session::get('userId')
+        ], 200);
     }
 
 
