@@ -77,6 +77,10 @@
     background-color: white;
 }
 
+.otherMonth {
+    background-color: lightgray;
+}
+
 .empty {
     display: block;
 }
