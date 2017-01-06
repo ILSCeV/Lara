@@ -1,9 +1,10 @@
 /vendor
 /node_modules
-logo.psd
 
+logo.psd
 public/logo.png
-app/Http/Controllers/LoginController.php
+
+public/gitrevision.txt
 
 .htpasswd
 .env
@@ -11,8 +12,9 @@ app/Http/Controllers/LoginController.php
 .env-local
 composer.phar
 composer.lock
+
+app/Http/Controllers/LoginController.php
 config/bcLDAP.php
-public/gitrevision.txt
 
 Homestead.yaml
 Homestead.json
