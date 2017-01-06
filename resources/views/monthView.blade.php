@@ -85,7 +85,7 @@
                     </div>
                     {{-- Foreach on DatePeriod excludes the last day, so we iterate over Monday to Sunday--}}
                     @foreach(new DatePeriod($weekStart, new DateInterval('P1D'), $weekEnd) as $weekDay)
-                        @include('partials.month.day')
+                        @include('partials.month.day', ['month' => $date['month']])
                     @endforeach
                 </div>
             @else
@@ -97,7 +97,7 @@
                         </a>
                     </div>
                     @foreach(new DatePeriod($weekStart, new DateInterval('P1D'), $weekEnd) as $weekDay)
-                        @include('partials.month.day')
+                        @include('partials.month.day', ['month' => $date['month']])
                     @endforeach
                 </div>
             @endif
