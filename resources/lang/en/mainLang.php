@@ -204,7 +204,17 @@ return [
     'Su' => 'Sunday',
 
     // resources/view/partials/calendarLinkEvent.blade.php
-    'addToCalendar' => 'Add this event to your calendar',
+    'addToCalendar' => 'Add this event to your Google calendar',
+
+    // resources/views/partials/month/day.blade.php
+    'createEventOnThisDate' => 'Create new event on this day',
+
+    // resources/views/partials/month/monthCell.blade.php
+    'showDetails' => 'Show details',
+
+    // resources/views/monthView.blade.php
+    'showWeek' => 'Switch to this week\'s detailed view',
+
     //-----------------------------------------------------------------------------------------------------------
     
     // resources/views/createSurveyView.blade.php

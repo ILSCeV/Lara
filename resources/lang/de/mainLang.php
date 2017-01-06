@@ -206,7 +206,16 @@ return [
 
 
     // resources/view/partials/calendarLinkEvent.blade.php
-    'addToCalendar' => 'Füge dieses Event zu deinem Google Kalender hinzu',
+    'addToCalendar' => 'Event zu eigenem Google Kalender hinzufügen',
+
+    // resources/views/partials/month/day.blade.php
+    'createEventOnThisDate' => 'Neues Event an diesem Tag erstellen',
+
+    // resources/views/partials/month/monthCell.blade.php
+    'showDetails' => 'Details anzeigen',
+
+    // resources/views/monthView.blade.php
+    'showWeek' => 'Detaillierte Ansicht dieser Woche anzeigen',
     
     //-----------------------------------------------------------------------------------------------------------
     
