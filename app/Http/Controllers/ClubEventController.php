@@ -345,8 +345,8 @@ class ClubEventController extends Controller
         if (Input::get('password') != Input::get('passwordDouble')) {
             Session::put('message', Config::get('messages_de.password-mismatch') );
             Session::put('msgType', 'danger');
-            return Redirect::back()->withInput(); 
-            }
+            return Redirect::back()->withInput();
+        }
 
         // first we fill objects with data
         // if there is an error, we have not saved yet, so we need no rollback
