@@ -14,7 +14,8 @@ $("#button-create-submit").add("#button-edit-submit").click(function () {
     let beginDate = new Date($("[name='beginDate']").prop("value") + " " + $("[name='beginTime']").prop("value"));
     let endDate = new Date($("[name='endDate']").prop("value") + " " + $("[name='endTime']").prop("value"));
 
-    let conditions: {[key: string]: boolean} = {
+    // contains the keys to translations to be shown if the condition is fulfilled
+    let errorConditions: {[key: string]: boolean} = {
         'endBeforeStart': beginDate.getTime() > endDate.getTime(),
         'forgotFilter': $("#filter-checkboxes").find("input[type=checkbox]:checked").length === 0,
         'forgotPreparation': $('[name="preparationTime"]').val() === "",
@@ -22,9 +23,9 @@ $("#button-create-submit").add("#button-edit-submit").click(function () {
         'forgotEndTime': $('[name="endTime"]').val() === ""
     };
 
-    let untranslatedErrors = Object.keys(conditions).filter(key => conditions[key]);
-
-    let errors = untranslatedErrors.map(key => translate(key));
+    let errors = Object.keys(errorConditions)
+        .filter(key => errorConditions[key])
+        .map(key => translate(key));
 
     if (errors.length > 0) {
         bootbox.alert(errors.map(err => "<p>" + err + "</p>").join("\n"));
