@@ -4,8 +4,9 @@
 
 // load languages
 function translate(str) {
-    var translations = localStorage["language"] === "de" ? deTranslations : enTranslations;
-    return translations[str] ? translations[str] : '!! Translation necessary !!';
+    var language = localStorage["language"];
+    var translations = language === "de" ? deTranslations : enTranslations;
+    return translations[str] ? translations[str] : '!! Translation necessary: ' + str + ' in language' + language + ' !!';
 }
 
 // Enable Tooltips

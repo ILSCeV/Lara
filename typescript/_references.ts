@@ -7,3 +7,6 @@
 ///<reference path="StatisticsView.ts"/>
 ///<reference path="Utilities.ts"/>
 
+declare let translate: (key: string) => string;
+
+
