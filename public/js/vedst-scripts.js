@@ -946,7 +946,7 @@ jQuery( document ).ready( function( $ ) {
                 $("input[id=ldapId"   + data["entryId"] + "]").val(data["ldapId"]);
                 $("input[id=timestamp"+ data["entryId"] + "]").val(data["timestamp"]);
                 $("input[id=club"     + data["entryId"] + "]").val(data["userClub"]).attr("placeholder", "-");
-                $("input[id=comment"  + data["entryId"] + "]").val(data["userComment"]).attr("placeholder", "Kommentar hier hinzufügen");
+                $("input[id=comment"  + data["entryId"] + "]").val(data["userComment"]).attr("placeholder", translate("addCommentHere"));
 
                 // Switch comment icon in week view
                 if ( $("input[id=comment"  + data["entryId"] + "]").val() == "" ) {

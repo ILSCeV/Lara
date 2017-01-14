@@ -9,4 +9,5 @@ var enTranslations = {
     "forgotStartTime": "You forgot the starting time",
     "forgotEndTime": "You forgot the end time.",
     "descriptionTooLong": "Your description is too long. The text should contain less than 1500 characters.",
+    "addCommentHere": "Add comment here"
 };

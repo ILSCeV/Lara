@@ -9,4 +9,5 @@ var deTranslations = {
     "forgotStartTime": "Die Startzeit vergessen!",
     "forgotEndTime": "Die Endzeit vergessen!",
     "descriptionTooLong": "Der Beschreibungstext ist zu lange! Der Text sollte weniger als 1500 Zeichen enthalten.",
+    "addCommentHere": "Kommentar hier hinzufügen"
 };
