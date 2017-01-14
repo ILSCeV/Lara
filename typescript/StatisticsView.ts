@@ -44,13 +44,28 @@ $(".statisticClubPicker").find("a").click(function() {
     localStorage.setItem('preferredStatistics', clubName);
 });
 
+$(".leaderboardsClubPicker").find("a").click(function() {
+    let leaderBoardName = $(this).text().trim();
+    localStorage.setItem('preferredLeaderboards', leaderBoardName);
+});
+
 $(() => {
-    let preference = localStorage.getItem('preferredStatistics');
-    if (preference) {
+    let preferredStatistics = localStorage.getItem('preferredStatistics');
+    if (preferredStatistics) {
         $('.statisticClubPicker').find('a').filter(function() {
-            return $(this).text().trim() === preference;
+            return $(this).text().trim() === preferredStatistics;
         })
             .first()
             .click();
     }
+
+    let preferredLeaderboards = localStorage.getItem('preferredLeaderboards');
+    if (preferredLeaderboards) {
+        $('.leaderboardsClubPicker').find('a').filter(function() {
+            return $(this).text().trim() === preferredLeaderboards;
+        })
+            .first()
+            .click();
+    }
+
 });

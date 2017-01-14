@@ -4,11 +4,11 @@
     </h4>
 
     <ul class="nav nav-tabs">
-        <li>
+        <li class="leaderboardsClubPicker">
             <a aria-expanded="true" href="#allLeaderboards" data-toggle="tab">All</a>
         </li>
         @foreach($clubInfos->keys() as $title)
-            <li class="{{Session::get('userClub') == $title? 'active': ''}}">
+            <li class="{{Session::get('userClub') == $title? 'active': ''}} leaderboardsClubPicker">
                 <a aria-expanded="{{Session::get('userClub') == $title? 'active': ''}}" 
                    href="#{{$title}}Leaderboards"
                    data-toggle="tab">
