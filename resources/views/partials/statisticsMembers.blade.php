@@ -5,7 +5,7 @@
 
    <ul class="nav nav-tabs">
         @foreach($clubInfos->keys() as $title)
-            <li class="{{Session::get('userClub') == $title? 'active': ''}}">
+            <li class="{{Session::get('userClub') == $title? 'active': ''}} statisticClubPicker">
                 <a aria-expanded="{{Session::get('userClub') == $title? 'true' : 'false'}}" 
                    href="#{{$title}}" 
                    data-toggle="tab">

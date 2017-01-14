@@ -38,3 +38,19 @@ $(".fa-sort, .fa-sort-desc, .fa-sort-asc").click(function () {
 $('#leaderboardsTabs').find('thead').find('td').click(function() {
     sortLeaderboards($($(this).find('i').first()));
 });
+
+$(".statisticClubPicker").find("a").click(function() {
+    let clubName = $(this).text().trim();
+    localStorage.setItem('preferredStatistics', clubName);
+});
+
+$(() => {
+    let preference = localStorage.getItem('preferredStatistics');
+    if (preference) {
+        $('.statisticClubPicker').find('a').filter(function() {
+            return $(this).text().trim() === preference;
+        })
+            .first()
+            .click();
+    }
+});
