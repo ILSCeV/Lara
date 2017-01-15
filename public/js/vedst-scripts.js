@@ -2,10 +2,14 @@
 // All views //
 ///////////////
 
-// load languages
+// Default language is german
+$(function() {
+    localStorage["language"] = localStorage["language"] || "de";
+});
+
 function translate(str) {
     var language = localStorage["language"];
-    var translations = language === "de" ? deTranslations : enTranslations;
+    var translations = language === "en" ? enTranslations : deTranslations;
     return translations[str] ? translations[str] : '!! Translation necessary: ' + str + ' in language' + language + ' !!';
 }
 
