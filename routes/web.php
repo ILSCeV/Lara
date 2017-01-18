@@ -125,3 +125,19 @@ Route::resource('survey.answer', 'SurveyAnswerController', ['only' => ['show', '
 
 // STATISTICS
 Route::get('/statistics/{year?}/{month?}',						'StatisticsController@showStatistics');
+
+
+// JSON EXPORT - RETURNS EVENTS METADATA
+Route::get('export/{clb_id}/{date_start}/{nr_of_events}', function($clb_id, $date_start, $nr_of_events) {
+
+	$results = \Lara\ClubEvent::where('plc_id', '=', $clb_id)
+							  ->where('evnt_is_private', '=', '0')
+							  ->where('evnt_date_start', '>=', $date_start)
+							  ->whereIn('evnt_type', [0,2,3])
+							  ->orderBy('evnt_date_start')
+							  ->orderBy('evnt_time_start')
+							  ->take($nr_of_events)
+							  ->get(['id', 'evnt_title', 'evnt_date_start', 'evnt_time_start']);
+
+	return response()->json($results, 200, [], JSON_UNESCAPED_UNICODE);
+}); 
