@@ -1049,7 +1049,7 @@ jQuery( document ).ready( function( $ ) {
 
                 // if all rows except table header were hidden (all jobtypes substituted withn other ones),
                 // refresh the page to get the delete button or show remaining jobtypes
-                if ($("tr:visible").length <= 1) {
+                if ($("#events-rows").children("tr:visible").length <= 1) {
                     // we remove arguments after "?" because otherwise user could land on a pagination page that is already empty
                     window.location = window.location.href.split("?")[0];
                 }

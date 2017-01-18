@@ -52,25 +52,25 @@
 								{!! $jobtype->id !!}
 							</td>
 							<td>
-						      	{!! Form::text('jbtyp_title' . $jobtype->id, 
-											   $jobtype->jbtyp_title, 
-											   array('id'=>'jbtyp_title' . $jobtype->id)) !!}
+						      	<a href="../jobtype/{{ $jobtype->id }}">
+						      		{!! $jobtype->jbtyp_title !!}
+						      	</a>
 							</td>
 							<td>						
-								{!! Form::input('time','jbtyp_time_start' . $jobtype->id, 
-											   $jobtype->jbtyp_time_start, 
-											   array('id'=>'jbtyp_time_start' . $jobtype->id)) !!}
+								{!! date("H:i", strtotime($jobtype->jbtyp_time_start)) !!}
 								-
-								{!! Form::input('time','jbtyp_time_end' . $jobtype->id, 
-											   $jobtype->jbtyp_time_end, 
-											   array('id'=>'jbtyp_time_end' . $jobtype->id)) !!}
+								{!! date("H:i", strtotime($jobtype->jbtyp_time_end)) !!}
 							</td>
 							<td>
-								{!! Form::text('jbtyp_statistical_weight' . $jobtype->id, 
-											   $jobtype->jbtyp_statistical_weight, 
-											   array('id'=>'jbtyp_statistical_weight' . $jobtype->id)) !!}
+								{!! $jobtype->jbtyp_statistical_weight !!}
 							</td>
 							<td>
+								<a href="../jobtype/{{ $jobtype->id }}"
+								   class="btn btn-small btn-success"
+								   rel="nofollow">
+								   	Details ansehen und anpassen
+								</a>
+								&nbsp;&nbsp;
 								<a href="../jobtype/{{ $jobtype->id }}"
 								   class="btn btn-small btn-danger"
 								   data-method="delete"
