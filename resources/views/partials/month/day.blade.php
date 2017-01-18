@@ -11,7 +11,10 @@
 @endif
     <div class="cell10 padleft">
         @if(Session::has('userGroup'))
-            <a href="{{ Request::getBasePath() }}/event/{{ strftime("%Y/%m/%d", $weekDay->getTimestamp()) }}/0/create">
+            <a href="{{ Request::getBasePath() }}/event/{{ strftime("%Y/%m/%d", $weekDay->getTimestamp()) }}/0/create"
+               data-toggle="tooltip" 
+               data-placement="top"
+               title="{{ trans('mainLang.createEventOnThisDate')}}">
                 {{$weekDay->format('d')}}
             </a>
         @else

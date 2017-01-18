@@ -10,26 +10,22 @@ let internalEventValues = [
 ];
 
 $("#button-create-submit").add("#button-edit-submit").click(function () {
-    let errors = new Array<string>();
 
     let beginDate = new Date($("[name='beginDate']").prop("value") + " " + $("[name='beginTime']").prop("value"));
     let endDate = new Date($("[name='endDate']").prop("value") + " " + $("[name='endTime']").prop("value"));
-    if (beginDate.getTime() > endDate.getTime()) {
-        errors.push("Die Endzeit liegt vor der Startzeit!");
-    }
-    if ($("#filter-checkboxes").find("input[type=checkbox]:checked").length === 0) {
-        errors.push("Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.");
-    }
 
-    if ($('[name="preparationTime"]').val() === "") {
-        errors.push("Die Dienstvorbereitungszeit vergessen!");
-    }
-    if ($('[name="beginTime"]').val() === "") {
-        errors.push("Die Startzeit vergessen!");
-    }
-    if ($('[name="endTime"]').val() === "") {
-        errors.push("Die Endzeit vergessen!");
-    }
+    // contains the keys to translations to be shown if the condition is fulfilled
+    let errorConditions: {[key: string]: boolean} = {
+        'endBeforeStart': beginDate.getTime() > endDate.getTime(),
+        'forgotFilter': $("#filter-checkboxes").find("input[type=checkbox]:checked").length === 0,
+        'forgotPreparation': $('[name="preparationTime"]').val() === "",
+        'forgotStartTime': $('[name="beginTime"]').val() === "",
+        'forgotEndTime': $('[name="endTime"]').val() === ""
+    };
+
+    let errors = Object.keys(errorConditions)
+        .filter(key => errorConditions[key])
+        .map(key => translate(key));
 
     if (errors.length > 0) {
         bootbox.alert(errors.map(err => "<p>" + err + "</p>").join("\n"));

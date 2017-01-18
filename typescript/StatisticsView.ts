@@ -38,3 +38,34 @@ $(".fa-sort, .fa-sort-desc, .fa-sort-asc").click(function () {
 $('#leaderboardsTabs').find('thead').find('td').click(function() {
     sortLeaderboards($($(this).find('i').first()));
 });
+
+$(".statisticClubPicker").find("a").click(function() {
+    let clubName = $(this).text().trim();
+    localStorage.setItem('preferredStatistics', clubName);
+});
+
+$(".leaderboardsClubPicker").find("a").click(function() {
+    let leaderBoardName = $(this).text().trim();
+    localStorage.setItem('preferredLeaderboards', leaderBoardName);
+});
+
+$(() => {
+    let preferredStatistics = localStorage.getItem('preferredStatistics');
+    if (preferredStatistics) {
+        $('.statisticClubPicker').find('a').filter(function() {
+            return $(this).text().trim() === preferredStatistics;
+        })
+            .first()
+            .click();
+    }
+
+    let preferredLeaderboards = localStorage.getItem('preferredLeaderboards');
+    if (preferredLeaderboards) {
+        $('.leaderboardsClubPicker').find('a').filter(function() {
+            return $(this).text().trim() === preferredLeaderboards;
+        })
+            .first()
+            .click();
+    }
+
+});
