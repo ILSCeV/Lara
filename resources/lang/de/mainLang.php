@@ -299,6 +299,7 @@ return [
     // /resources/views/partials/statisticsLeaderboards.blade.php
     'totalShifts'           => 'Dienste',
     'leaderBoards'          => 'Bestenliste',
+    'allClubs'              => 'Alle',
 
     // /resources/views/partials/clubStatistics.blade.php
     'infoFor'               => 'Mitgliederstatistik',

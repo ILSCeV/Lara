@@ -300,6 +300,7 @@ return [
     // /resources/views/partials/statisticsLeaderboards.blade.php
     'totalShifts'           => 'Shifts', 
     'leaderBoards'          => 'Leaderboard',
+    'allClubs'              => 'All',
 
     // /resources/views/partials/clubStatistics.blade.php
     'infoFor'               => 'Member statistics',
