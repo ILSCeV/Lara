@@ -136,7 +136,7 @@ Route::get('export/{clb_id}/{date_start}/{nr_of_events}', function($clb_id, $dat
 							  ->whereIn('evnt_type', [0,2,3])
 							  ->orderBy('evnt_date_start')
 							  ->orderBy('evnt_time_start')
-							  ->take($nr_of_events)
+							  ->take((0 <= $nr_of_events) && ($nr_of_events <= 20) ? $nr_of_events : 20)	// setting output size range to 0-20
 							  ->get(['id', 'evnt_title', 'evnt_date_start', 'evnt_time_start']);
 
 	return response()->json($results, 200, [], JSON_UNESCAPED_UNICODE);
