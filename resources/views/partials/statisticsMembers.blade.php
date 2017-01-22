@@ -5,7 +5,7 @@
 
    <ul class="nav nav-tabs">
         @foreach($clubInfos->keys() as $title)
-            <li class="{{Session::get('userClub') == $title? 'active': ''}}">
+            <li class="{{Session::get('userClub') == $title? 'active': ''}} statisticClubPicker">
                 <a aria-expanded="{{Session::get('userClub') == $title? 'true' : 'false'}}" 
                    href="#{{$title}}" 
                    data-toggle="tab">
@@ -17,7 +17,7 @@
 </div>
 
 <div class="panel panel-body no-padding">
-    <div id="leaderboardsTabs" class="tab-content">
+    <div id="memberStatisticsTabs" class="tab-content">
         @foreach($clubInfos as $title => $clubInfo)
             <div class="tab-pane fade in {{ Session::get('userClub') === $title ? 'active' : '' }}" id="{{$title}}">
                 <table class="table table-hover" >
