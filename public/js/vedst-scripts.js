@@ -2,7 +2,16 @@
 // All views //
 ///////////////
 
+// Default language is german
+$(function() {
+    localStorage["language"] = localStorage["language"] || "de";
+});
 
+function translate(str) {
+    var language = localStorage["language"];
+    var translations = language === "en" ? enTranslations : deTranslations;
+    return translations[str] ? translations[str] : '!! Translation necessary: ' + str + ' in language' + language + ' !!';
+}
 
 // Enable Tooltips
 $(function () { $("[data-toggle='tooltip']").tooltip(); });     
@@ -477,15 +486,7 @@ $( document ).ready( function() {
 
 
         // set translated strings
-        if (localStorage.getItem('language') == "en") 
-        {
-            $('#toggle-shift-time').text("Shift time");
-        }
-        else // default to German
-        {
-            $('#toggle-shift-time').text("Dienstzeiten");
-        }
-
+        $('#toggle-shift-time').text(translate('shiftTime'));
 
         // Apply saved preferences from local storage on pageload
         if(typeof(Storage) !== "undefined") 
@@ -535,19 +536,7 @@ $( document ).ready( function() {
         // Show/hide taken shifts //
         ////////////////////////////
 
-
-
-
-        // set translated strings
-        if (localStorage.getItem('language') == "en") 
-        {
-            $('#toggle-taken-shifts').text("Only EMPTY shifts");
-        }
-        else // default to German
-        {
-            $('#toggle-taken-shifts').text("Nur FREIe Dienste");
-        }
-
+        $('#toggle-taken-shifts').text(translate("onlyEmpty"));
 
         // Apply saved preferences from local storage on pageload
         if(typeof(Storage) !== "undefined") 
@@ -600,17 +589,8 @@ $( document ).ready( function() {
 
 
         // set translated strings
-        if (localStorage.getItem('language') == "en") 
-        {
-            var weekMonSun = "Monday - Sunday";
-            var weekWedTue = "Wednesday - Tuesday";
-        }
-        else // default to German
-        {
-            var weekMonSun = "Montag - Sonntag";
-            var weekWedTue = "Mittwoch - Dienstag";
-        }
-
+        var weekMonSun = translate('mondayToSunday');
+        var weekWedTue = translate('wednesdayToTuesday');
 
         // Apply saved preferences from local storage on pageload
         if(typeof(Storage) !== "undefined") 
@@ -970,7 +950,7 @@ jQuery( document ).ready( function( $ ) {
                 $("input[id=ldapId"   + data["entryId"] + "]").val(data["ldapId"]);
                 $("input[id=timestamp"+ data["entryId"] + "]").val(data["timestamp"]);
                 $("input[id=club"     + data["entryId"] + "]").val(data["userClub"]).attr("placeholder", "-");
-                $("input[id=comment"  + data["entryId"] + "]").val(data["userComment"]).attr("placeholder", "Kommentar hier hinzufügen");
+                $("input[id=comment"  + data["entryId"] + "]").val(data["userComment"]).attr("placeholder", translate("addCommentHere"));
 
                 // Switch comment icon in week view
                 if ( $("input[id=comment"  + data["entryId"] + "]").val() == "" ) {

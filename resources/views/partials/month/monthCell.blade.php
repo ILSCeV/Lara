@@ -31,8 +31,11 @@
             <i class="fa fa-bar-chart-o white-text"></i>
             &nbsp;&nbsp;
             {{-- provide a URL to the survey --}}
-            <a href="{{ URL::route('survey.show', $survey->id) }}">
-                {{-- instead of private survey show the actual titel of the survey --}}
+            <a href="{{ URL::route('survey.show', $survey->id) }}"
+               data-toggle="tooltip" 
+               data-placement="right"
+               title="{{ trans('mainLang.showDetails')}}">
+                {{-- instead of private survey show the actual title of the survey --}}
                 <span class="white-text"> &nbsp;{{ $survey->title }} </span>
             </a>
         </div>
@@ -88,7 +91,10 @@
                     @endif
                     @include("partials.event-marker", $clubEvent)
                     &nbsp;&nbsp;
-                    <a href="{{ URL::route('event.show', $clubEvent->id) }}">
+                    <a href="{{ URL::route('event.show', $clubEvent->id) }}"
+                       data-toggle="tooltip" 
+                       data-placement="right"
+                       title="{{ trans('mainLang.showDetails')}}">
                         {{ $clubEvent->evnt_title }}
                     </a>
                 </div>
@@ -129,7 +135,10 @@
             @endif
             @include("partials.event-marker", $clubEvent)
             &nbsp;&nbsp;
-            <a href="{{ URL::route('event.show', $clubEvent->id) }}">
+            <a href="{{ URL::route('event.show', $clubEvent->id) }}"
+               data-toggle="tooltip" 
+               data-placement="right"
+               title="{{ trans('mainLang.showDetails')}}">
                 {{ $clubEvent->evnt_title }}
             </a>
         </div>
