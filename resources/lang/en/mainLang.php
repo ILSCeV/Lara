@@ -303,8 +303,8 @@ return [
     'allClubs'              => 'All',
 
     // /resources/view/partials/statistics/amountOfShiftsDisplay.blade.php
-    'shiftsInOtherClubs'    => 'Shifts in other club',
-    'shiftsInOwnClub'       => 'Shifts in own club',
+    'shiftsInOtherSection'    => 'Shifts in other sections',
+    'shiftsInOwnSection'       => 'Shifts in own section',
 
     // /resources/views/partials/clubStatistics.blade.php
     'infoFor'               => 'Member statistics',
