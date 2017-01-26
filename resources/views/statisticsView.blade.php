@@ -54,6 +54,13 @@
 
     </div>
 
+    {{-- JS helpers --}}
+    <script>
+        var chosenMonth = {{ $month }}; 
+        var chosenYear = {{ $year }};
+        var chosenPerson;
+    </script>
+
 @else
     @include('partials.accessDenied')
 @endif
