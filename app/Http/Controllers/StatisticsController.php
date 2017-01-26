@@ -41,23 +41,22 @@ class StatisticsController extends Controller
                 $info = new StatisticsInformation();
                 return $info->make($person, $shifts, $club);
             });
-            $maxShifts = $infosForClub->pluck('totalShifts')->sort()->last();
+            $maxShifts = $infosForClub->map(function($info){return $info->inOwnClub + $info->inOtherClubs;})->sort()->last();
 
             // avoid division by zero
             $maxShifts = max($maxShifts, 1);
             $infosForClub = $infosForClub->sortBy('user.prsn_name')
                 ->map(function(StatisticsInformation $info) use($maxShifts) {
-                    $info->shiftsPercent = $info->totalShifts / ($maxShifts * 1.5) * 100;
+                    $info->shiftsPercentIntern = $info->inOwnClub / ($maxShifts * 1.5) * 100;
+                    $info->shiftsPercentExtern = $info->inOtherClubs / ($maxShifts * 1.5) * 100;
                     return $info;
                 });
             return [$club->clb_title => $infosForClub];
         });
-        $userId = Session::get('userId');
 
         $infos = $clubInfos->flatten();
         
-        $userInfo = $infos->where('user.prsn_ldap_id', $userId)->first();
-        return View::make('statisticsView', compact('infos', 'userInfo', 'clubInfos', 'userId', 'year', 'month'));
+        return View::make('statisticsView', compact('infos', 'clubInfos', 'userId', 'year', 'month'));
 
     }
 

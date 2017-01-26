@@ -44,12 +44,10 @@
                                     </a>
                                 </td>
                                 <td>
-                                    {{$info->totalShifts}}
+                                    @include('partials.statistics.amountOfShiftsDisplay')
                                 </td>
                                 <td>
-                                    <div class="progress centered">
-                                        <div class="progress-bar" style="width: {{$info->shiftsPercent}}%;"></div>
-                                    </div>
+                                    @include('partials.statistics.graphicShifts')
                                 </td>
                             </tr>
                         @endforeach
