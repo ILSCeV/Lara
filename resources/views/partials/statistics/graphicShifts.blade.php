@@ -9,4 +9,7 @@
          data-toggle="tooltip"
          title="{{trans('mainLang.shiftsInOtherSection')}}">
     </div>
+    <div class="progress-bar"
+         style="width: {{100 - $info->shiftsPercentExtern - $info->shiftsPercentIntern}}%; background-color: lightblue;">
+    </div>
 </div>
