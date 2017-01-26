@@ -302,6 +302,10 @@ return [
     'leaderBoards'          => 'Leaderboard',
     'allClubs'              => 'All',
 
+    // /resources/view/partials/statistics/amountOfShiftsDisplay.blade.php
+    'shiftsInOtherClubs'    => 'Shifts in other club',
+    'shiftsInOwnClub'       => 'Shifts in own club',
+
     // /resources/views/partials/clubStatistics.blade.php
     'infoFor'               => 'Member statistics',
 

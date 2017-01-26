@@ -41,13 +41,10 @@
                                     @include('partials.personStatusMarker', ['person' => $info->user]){{$info->user->prsn_name }}
                                 </td>
                                 <td>
-                                    {{$info->inOwnClub}} <span style="color: lightgrey">{{ $info->inOtherClubs > 0 ? '+ ' . $info->inOtherClubs : '' }}</span>
+                                    @include('partials.statistics.amountOfShiftsDisplay')
                                 </td>
                                 <td>
-                                    <div class="progress centered">
-                                        <div class="progress-bar" style="width: {{$info->shiftsPercentIntern}}%;"></div>
-                                        <div class="progress-bar" style="width: {{$info->shiftsPercentExtern}}%; background-color: lightgrey;"></div>
-                                    </div>
+                                    @include('partials.statistics.graphicShifts')
                                 </td>
                             </tr>
                         @endforeach

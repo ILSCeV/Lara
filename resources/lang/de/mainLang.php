@@ -301,6 +301,10 @@ return [
     'leaderBoards'          => 'Bestenliste',
     'allClubs'              => 'Alle',
 
+    // /resources/view/partials/statistics/amountOfShiftsDisplay.blade.php
+    'shiftsInOtherClubs'    => 'Dienste in einem anderen Club',
+    'shiftsInOwnClub'       => 'Dienste in eigenem Club',
+
     // /resources/views/partials/clubStatistics.blade.php
     'infoFor'               => 'Mitgliederstatistik',
 

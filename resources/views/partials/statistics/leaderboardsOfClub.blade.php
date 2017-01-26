@@ -22,7 +22,7 @@
                     </td>
                 @endif
                 <td>
-                    {{$info->inOwnClub}} <span style="color: lightgrey">{{ $info->inOtherClubs > 0 ? '+ ' . $info->inOtherClubs : '' }}</span>
+                    @include('partials.statistics.amountOfShiftsDisplay')
                 </td>
             </tr>
         @endforeach
