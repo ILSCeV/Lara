@@ -299,7 +299,7 @@ return [
 
     // /resources/views/partials/statisticsLeaderboards.blade.php
     'totalShifts'           => 'Shifts', 
-    'leaderBoards'          => 'Leaderboard',
+    'leaderBoards'          => 'Leaderboard (this semester)',
     'allClubs'              => 'All',
 
     // /resources/view/partials/statistics/amountOfShiftsDisplay.blade.php

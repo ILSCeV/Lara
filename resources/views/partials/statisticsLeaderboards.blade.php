@@ -22,8 +22,8 @@
 
 <div class="panel panel-body no-padding">
     <div id="myTabContent" class="tab-content">
-        @include('partials.statistics.leaderboardsOfClub', ['infos' => $infos, 'showClubName' => true, 'name' => 'all'])
-        @foreach($clubInfos as $title => $clubInfo)
+        @include('partials.statistics.leaderboardsOfClub', ['infos' => $semesterInfos->flatten(), 'showClubName' => true, 'name' => 'all'])
+        @foreach($semesterInfos as $title => $clubInfo)
             @include('partials.statistics.leaderboardsOfClub', ['infos' => $clubInfo, 'showClubName' => false, 'name' => $title])
         @endforeach
     </div>

@@ -298,7 +298,7 @@ return [
 
     // /resources/views/partials/statisticsLeaderboards.blade.php
     'totalShifts'           => 'Dienste',
-    'leaderBoards'          => 'Bestenliste',
+    'leaderBoards'          => 'Bestenliste (dieses Semester)',
     'allClubs'              => 'Alle',
 
     // /resources/view/partials/statistics/amountOfShiftsDisplay.blade.php
