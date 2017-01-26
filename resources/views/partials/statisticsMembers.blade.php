@@ -41,11 +41,12 @@
                                     @include('partials.personStatusMarker', ['person' => $info->user]){{$info->user->prsn_name }}
                                 </td>
                                 <td>
-                                    {{$info->totalShifts}}
+                                    {{$info->inOwnClub}} <span style="color: lightgrey">{{ $info->inOtherClubs > 0 ? '+ ' . $info->inOtherClubs : '' }}</span>
                                 </td>
                                 <td>
                                     <div class="progress centered">
-                                        <div class="progress-bar" style="width: {{$info->shiftsPercent}}%;"></div>
+                                        <div class="progress-bar" style="width: {{$info->shiftsPercentIntern}}%;"></div>
+                                        <div class="progress-bar" style="width: {{$info->shiftsPercentExtern}}%; background-color: lightgrey;"></div>
                                     </div>
                                 </td>
                             </tr>

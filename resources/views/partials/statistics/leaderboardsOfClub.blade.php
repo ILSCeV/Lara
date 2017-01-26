@@ -11,7 +11,7 @@
         </thead>
         <tbody>
         {{-- Only show Top 10 Shifts --}}
-        @foreach($infos->sortByDesc('totalShifts')->take(10) as $info)
+        @foreach($infos->sortByDesc('inOwnClub')->take(10) as $info)
             <tr class=" {{$info->user->isLoggedInUser() ? 'my-shift' : ''}}">
                 <td>
                     @include('partials.personStatusMarker', ['person' => $info->user]){{$info->user->prsn_name }}
@@ -22,7 +22,7 @@
                     </td>
                 @endif
                 <td>
-                    {{$info->totalShifts}}
+                    {{$info->inOwnClub}} <span style="color: lightgrey">{{ $info->inOtherClubs > 0 ? '+ ' . $info->inOtherClubs : '' }}</span>
                 </td>
             </tr>
         @endforeach
