@@ -12,7 +12,7 @@ var deTranslations = {
     "addCommentHere": "Kommentar hier hinzufügen",
 
     'loading': 'Wird geladen...',
-    'listOfShiftsDone': 'Liste aller gezählten Diensten von ',
+    'listOfShiftsDone': 'Liste aller gezählten Dienste von ',
     'noShiftsInThisPeriod': 'Keine Dienste in dieser Periode.',
     'shift': 'Dienst',
     'event': 'Event',
