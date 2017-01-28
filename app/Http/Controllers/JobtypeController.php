@@ -88,7 +88,63 @@ class JobtypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Check credentials: you can only edit, if you have rights for marketing, section management or admin
+        if(!Session::has('userId') 
+            OR (Session::get('userGroup') != 'marketing'
+                AND Session::get('userGroup') != 'clubleitung'
+                AND Session::get('userGroup') != 'admin'))
+        {
+            Session::put('message', trans('mainLang.cantTouchThis'));
+            Session::put('msgType', 'danger');
+            return Redirect::back();
+        }
+
+        // Get all the data (throws a 404 error if jobtype doesn't exist)
+        $jobtype = Jobtype::findOrFail($id);
+
+        // Extract request data
+        $newTitle       = $request->get('jbtyp_title'.$id);
+        $newTimeStart   = $request->get('jbtyp_time_start'.$id);
+        $newTimeEnd     = $request->get('jbtyp_time_end'.$id);
+        $newWeight      = $request->get('jbtyp_statistical_weight'.$id);
+
+        // Check for empty values
+        if (empty($newTitle) || empty($newTimeStart) || empty($newTimeEnd)) {
+            Session::put('message', trans('mainLang.cantBeBlank'));
+            Session::put('msgType', 'danger');
+            return Redirect::back();
+        }
+
+        // Statistical weight must be numerical
+        if (!is_numeric($newWeight)) {
+            Session::put('message', trans('mainLang.nonNumericStats'));
+            Session::put('msgType', 'danger');
+            return Redirect::back();
+        }
+
+        // Statistical weight must be positive
+        if ($newWeight < 0.0) {
+            Session::put('message', trans('mainLang.negativeStats'));
+            Session::put('msgType', 'danger');
+            return Redirect::back();
+        }
+
+        // Log the action while we still have the data
+        Log::info('Jobtype edited: ' . 
+                  Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') . 
+                  ') changed shift type #' . $jobtype->id . ' from "' . $jobtype->jbtyp_title . '", start: ' . $jobtype->jbtyp_time_start . ', end: ' . $jobtype->jbtyp_time_end . ', weight: ' . $jobtype->jbtyp_statistical_weight . ' to "' . $newTitle . '" , start: ' . $newTimeStart . ', end: ' . $newTimeEnd . ', weight: ' . $newWeight . '. ');
+
+        // Write and save changes
+        $jobtype->jbtyp_title               = $newTitle;
+        $jobtype->jbtyp_time_start          = $newTimeStart;
+        $jobtype->jbtyp_time_end            = $newTimeEnd;
+        $jobtype->jbtyp_statistical_weight  = $newWeight;
+        $jobtype->save();
+
+        // Return to the jobtype page
+        Session::put('message', trans('mainLang.changesSaved'));
+        Session::put('msgType', 'success');
+        return Redirect::back();
     }
 
     /**
@@ -105,7 +161,7 @@ class JobtypeController extends Controller
                 AND Session::get('userGroup') != 'clubleitung'
                 AND Session::get('userGroup') != 'admin'))
         {
-            Session::put('message', 'Du darfst das nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
+            Session::put('message', trans('mainLang.cantTouchThis'));
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
@@ -119,7 +175,7 @@ class JobtypeController extends Controller
             // CASE 1: job type still in use - let the user decide what to do in each case    
             
             // Inform the user about the redirect and go to detailed info about the job type selected
-            Session::put('message', 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.');
+            Session::put('message', trans('mainLang.deleteFailedJobtypeInUse'));
             Session::put('msgType', 'danger');
             return Redirect::action( 'JobtypeController@show', ['id' => $jobtype->id] );
         } 
@@ -136,7 +192,7 @@ class JobtypeController extends Controller
             Jobtype::destroy($id);
 
             // Return to the management page
-            Session::put('message', 'Diensttyp wurde erfolgreich gelöscht.');
+            Session::put('message', trans('mainLang.changesSaved'));
             Session::put('msgType', 'success');
             return Redirect::action( 'JobtypeController@index' );
         }
