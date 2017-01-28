@@ -441,8 +441,8 @@ return [
     'actions'                       => 'Actions',
     'deleteConfirmation'            => 'Do you really want to delete this shift type:',
     'warningNotReversible'          => 'This action is not reversible!',
-    'showDetails'                   => 'Open and edit details',
-    'deleteThisJobtype'             => 'Delete this shift type',
+    'showDetails'                   => 'Edit details',
+    'deleteThisJobtype'             => 'Delete',
 
     'reset'                         => 'Reset',
     'update'                        => 'Save changes',
@@ -451,7 +451,7 @@ return [
     'jobtypeUsedInFollowingEvents'  => 'This shift type is used in the following events. To remove it you should substitute each of its instances with another shift type.',
     'event'                         => 'Event',
     'date'                          => 'Date',
-    'substituteThisInstance'        => 'Substitute here with...',
+    'substituteThisInstance'        => 'Substitute with...',
 
     'cantTouchThis'                 => 'Nice try! You can\'t change this, ask saction management or marketing ;)',
     'cantBeBlank'                   => 'This values can\'t be empty.',

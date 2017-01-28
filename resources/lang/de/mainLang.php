@@ -443,8 +443,8 @@ return [
     'actions'                       => 'Aktionen',
     'deleteConfirmation'            => 'Möchtest du folgenden Diensttyp wirklich löschen:',
     'warningNotReversible'          => 'Diese Aktion kann man nicht rückgängig machen!',
-    'showDetails'                   => 'Details ansehen und anpassen',
-    'deleteThisJobtype'             => 'Diesen Diensttyp entfernen',
+    'showDetails'                   => 'Details anpassen',
+    'deleteThisJobtype'             => 'Entfernen',
 
     'reset'                         => 'Zurücksetzen',
     'update'                        => 'Änderungen speichern',
@@ -453,7 +453,7 @@ return [
     'jobtypeUsedInFollowingEvents'  => 'Dieser Dienstyp wird bei folgenden Events eingesetzt. Um ihn zu entfernen, ersetze jede Instanz erst mit einem anderen Diensttyp.',
     'event'                         => 'Event',
     'date'                          => 'Datum',
-    'substituteThisInstance'        => 'Ersetze hier durch...',
+    'substituteThisInstance'        => 'Ersetzen durch...',
 
     'cantTouchThis'                 => 'Netter Versuch - du darfst das nicht einfach ändern! Frage die Clubleitung oder Markleting ;)',
     'cantBeBlank'                   => 'Diese Werte dürfen nicht leer sein.',

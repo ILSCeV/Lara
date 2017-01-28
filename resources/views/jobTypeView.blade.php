@@ -102,22 +102,19 @@
 							<table class="table table-hover table-condensed" id="events-rows">
 								<thead>
 									<tr class="active">
-										<th>
-											&nbsp;
-										</th>
-										<th class="col-md-1">
+										<th class="col-md-1 col-xs-1">
 											#
 										</th>
-										<th class="col-md-3">
+										<th class="col-md-3 col-xs-4">
 											{{ trans('mainLang.event') }}
 										</th>
-										<th class="col-md-1">
+										<th class="col-md-1 col-xs-1">
 											{{ trans('mainLang.section') }}
 										</th>
-										<th class="col-md-2">
+										<th class="col-md-2 col-xs-4">
 											{{ trans('mainLang.date') }}
 										</th>
-										<th class="col-md-5">
+										<th class="col-md-5 col-xs-2">
 											{{ trans('mainLang.actions') }}
 										</th>
 									</tr>
@@ -125,9 +122,6 @@
 								<tbody>
 									@foreach($entries as $entry)
 										<tr class="{!! "jobtype-event-row" . $entry->id !!}" name="{!! "jobtype-event-row" . $entry->id !!}">
-											<td>
-												&nbsp;
-											</td>
 											<td>
 										      	{!! $entry->schedule->event->id !!}
 											</td>
