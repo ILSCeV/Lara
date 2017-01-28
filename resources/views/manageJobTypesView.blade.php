@@ -3,7 +3,7 @@
 @extends('layouts.master')
 
 @section('title')
-	Verwaltung: Diensttypen
+	{{ trans('mainLang.management') }}: {{ trans('mainLang.jobtypes') }} 
 @stop
 
 @section('content')
@@ -15,7 +15,7 @@
 
 	<div class="panel panel-info">
 		<div class="panel-heading">
-				<h4 class="panel-title">Verwaltung: Diensttypen</h4>
+				<h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.jobtypes') }}</h4>
 		</div>		
 		<table class="table info table-hover table-condensed">
 			<thead>
@@ -24,19 +24,19 @@
 						&nbsp;
 					</th>
 					<th>
-						ID
+						#
 					</th>
 					<th class="col-md-3">
-						Dienst
+						{{ trans('mainLang.shift') }}
 					</th>
 					<th class="col-md-2">
-						Dauer
+						{{ trans('mainLang.start') }}-{{ trans('mainLang.end') }}
 					</th>
 					<th class="col-md-1">
-						Statistische Wertung
+						{{ trans('mainLang.weight') }}
 					</th>
 					<th class="col-md-5">
-						Aktionen
+						{{ trans("mainLang.actions") }}
 					</th>
 				</tr>
 			</thead>
@@ -68,7 +68,7 @@
 								<a href="../jobtype/{{ $jobtype->id }}"
 								   class="btn btn-small btn-success"
 								   rel="nofollow">
-								   	Details ansehen und anpassen
+								   	{{ trans('mainlang.showDetails') }}
 								</a>
 								&nbsp;&nbsp;
 								<a href="../jobtype/{{ $jobtype->id }}"
@@ -76,8 +76,8 @@
 								   data-method="delete"
 								   data-token="{{csrf_token()}}"
 								   rel="nofollow"
-								   data-confirm="Möchtest du &#39;&#39;{!! $jobtype->jbtyp_title !!}&#39;&#39; (#{{ $jobtype->id }}) wirklich löschen? Diese Aktion kann man nicht rückgängig machen!">
-								   	Diesen Diensttyp entfernen
+								   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $jobtype->jbtyp_title !!}&#39;&#39; (#{{ $jobtype->id }})? {{ trans('mainLang.warningNotReversible') }}">
+								   	{{ trans('mainLang.deleteThisJobtype') }}
 								</a>
 							</td>
 						</tr>

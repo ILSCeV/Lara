@@ -2,7 +2,7 @@
 @extends('layouts.master')
 
 @section('title')
-	Verwaltung: {!! $current_jobtype->jbtyp_title !!} (#{{ $current_jobtype->id }})
+	{{ trans('mainLang.management') }}: #{{ $current_jobtype->id }} - {!! $current_jobtype->jbtyp_title !!} 
 @stop
 
 @section('content')
@@ -67,8 +67,8 @@
 							&nbsp;
 						</td>
 						<td>
-							<button type="reset" class="btn btn-small btn-default">Reset</button>
-					    	<button type="submit" class="btn btn-small btn-success">Update</button>
+							<button type="reset" class="btn btn-small btn-default">{{ trans('mainLang.reset') }}</button>
+					    	<button type="submit" class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
 						</td>
 					</tr>
 				{!! Form::close() !!}
@@ -76,8 +76,7 @@
 				@if( $entries->count() == 0 )
 					<tr>
 						<td width="100%" colspan="2" class="left-padding-16">
-							Dieser Diensttyp wird bei keinem einzigen Event benutzt... Traurig, so was...<br/>
-							Vielleicht wäre es sinnvoll, ihn einfach zu
+							{{ trans('mainLang.jobtypeNeverUsed') }}
 							<a href="../jobtype/{{ $current_jobtype->id }}"
 							   class="btn btn-small btn-danger"
 							   data-toggle="tooltip"
@@ -86,8 +85,8 @@
 							   data-method="delete"
 							   data-token="{{csrf_token()}}"
 							   rel="nofollow"
-							   data-confirm="Möchtest du &#39;&#39;{!! $current_jobtype->jbtyp_title !!}&#39;&#39; (#{{ $current_jobtype->id }}) wirklich löschen? Diese Aktion kann man nicht rückgängig machen!">
-								   	löschen
+							   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_jobtype->jbtyp_title !!}&#39;&#39; (#{{ $current_jobtype->id }})? {{ trans('mainLang.warningNotReversible') }}">
+								   	{{ trans('mainLang.delete') }}
 							</a>
 							?
 						</td>
@@ -95,7 +94,7 @@
 				@else
 					<tr>
 						<td width="100%" colspan="2" class="left-padding-16">
-					      	Dieser Dienstyp wird bei folgenden Events eingesetzt. Um ihn zu entfernen, ersetze jede Instanz erst mit einem anderen Diensttyp.
+					      	{{ trans('mainLang.jobtypeUsedInFollowingEvents') }}
 					    </td>
 					</tr>
 					<tr>
@@ -107,19 +106,19 @@
 											&nbsp;
 										</th>
 										<th class="col-md-1">
-											ID
+											#
 										</th>
 										<th class="col-md-3">
-											Event
+											{{ trans('mainLang.event') }}
 										</th>
 										<th class="col-md-1">
-											Sektion
+											{{ trans('mainLang.section') }}
 										</th>
 										<th class="col-md-2">
-											Wann?
+											{{ trans('mainLang.date') }}
 										</th>
 										<th class="col-md-5">
-											Aktionen
+											{{ trans('mainLang.actions') }}
 										</th>
 									</tr>
 								</thead>
@@ -160,7 +159,7 @@
 										           		   id={{   "dropdown" . $entry->id }}
 										           		   data-toggle="dropdown" 
 										           		   aria-expanded="true">
-													  			Ersetze "{!! $current_jobtype->jbtyp_title !!}" (#{{ $current_jobtype->id }}) hier durch...
+										           		   		{{ trans('mainLang.substituteThisInstance') }}
 													  			<span class="caret"></span>
 													  	</a>
 

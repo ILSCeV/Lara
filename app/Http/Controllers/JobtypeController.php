@@ -94,7 +94,7 @@ class JobtypeController extends Controller
                 AND Session::get('userGroup') != 'clubleitung'
                 AND Session::get('userGroup') != 'admin'))
         {
-            Session::put('message', 'Netter Versuch - du darfst das nicht einfach ändern! Frage die Clubleitung oder Markleting ;)');
+            Session::put('message', trans('mainLang.cantTouchThis'));
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
@@ -110,21 +110,21 @@ class JobtypeController extends Controller
 
         // Check for empty values
         if (empty($newTitle) || empty($newTimeStart) || empty($newTimeEnd)) {
-            Session::put('message', 'Diese Werte dürfen nicht leer sein.');
+            Session::put('message', trans('mainLang.cantBeBlank'));
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
 
         // Statistical weight must be numerical
         if (!is_numeric($newWeight)) {
-            Session::put('message', 'Statistische Gewichte soll man mit Ziffern eingeben ;)');
+            Session::put('message', trans('mainLang.nonNumericStats'));
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
 
         // Statistical weight must be positive
         if ($newWeight < 0.0) {
-            Session::put('message', 'Statistische Gewichte dürfen nicht negativ sein.');
+            Session::put('message', trans('mainLang.negativeStats'));
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
@@ -142,7 +142,7 @@ class JobtypeController extends Controller
         $jobtype->save();
 
         // Return to the jobtype page
-        Session::put('message', 'Diensttyp wurde erfolgreich aktualisiert.');
+        Session::put('message', trans('mainLang.changesSaved'));
         Session::put('msgType', 'success');
         return Redirect::back();
     }
@@ -161,7 +161,7 @@ class JobtypeController extends Controller
                 AND Session::get('userGroup') != 'clubleitung'
                 AND Session::get('userGroup') != 'admin'))
         {
-            Session::put('message', 'Du darfst das nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
+            Session::put('message', trans('mainLang.cantTouchThis'));
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
@@ -175,7 +175,7 @@ class JobtypeController extends Controller
             // CASE 1: job type still in use - let the user decide what to do in each case    
             
             // Inform the user about the redirect and go to detailed info about the job type selected
-            Session::put('message', 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.');
+            Session::put('message', trans('mainLang.deleteFailedJobtypeInUse'));
             Session::put('msgType', 'danger');
             return Redirect::action( 'JobtypeController@show', ['id' => $jobtype->id] );
         } 
@@ -192,7 +192,7 @@ class JobtypeController extends Controller
             Jobtype::destroy($id);
 
             // Return to the management page
-            Session::put('message', 'Diensttyp wurde erfolgreich gelöscht.');
+            Session::put('message', trans('mainLang.changesSaved'));
             Session::put('msgType', 'success');
             return Redirect::action( 'JobtypeController@index' );
         }
