@@ -9,5 +9,14 @@ var enTranslations = {
     "forgotStartTime": "You forgot the starting time",
     "forgotEndTime": "You forgot the end time.",
     "descriptionTooLong": "Your description is too long. The text should contain less than 1500 characters.",
-    "addCommentHere": "Add comment here"
+    "addCommentHere": "Add comment here",
+
+    'loading': 'Loading...',
+    'listOfShiftsDone': 'List of counted shifts done by ',
+    'noShiftsInThisPeriod': 'No shifts done in chosen timeframe.',
+    'shift': 'Shift',
+    'event': 'Event',
+    'section': 'Section',
+    'date': 'Date',
+    'weight': 'Weight'
 };

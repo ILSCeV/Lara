@@ -11,6 +11,7 @@ use Lara\ScheduleEntry;
 use View;
 use Lara\Person;
 use Session;
+use Redirect;
 
 use Lara\Http\Requests;
 use Lara\StatisticsInformation;
@@ -57,5 +58,51 @@ class StatisticsController extends Controller
         
         return View::make('statisticsView', compact('infos', 'clubInfos', 'userId', 'year', 'month'));
 
+    }
+
+
+
+    /**
+     * Returns list of all shifts a selected person did in a chosen month, with some associated metadata
+     *
+     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function shiftsByPerson($id = null)
+    {
+        // fill empty parameters - no date selected means show current month and year
+        if (!isset($id)) { return Redirect::action( 'StatisticsController@showStatistics'); }
+        request("year") ? $year = request("year") : $year = strftime('%Y');
+        request("month") ? $month = request("month") : $month = strftime('%m');
+
+        // set the time window
+        $from = new DateTime($year . '-' . $month . '-01');
+        $till = new DateTime($from->format('Y-m-d'));
+        $till->modify('next month')->modify('-1 day');
+
+        // get all shifts in selected time window, for selected person, with their attributes
+        $shifts =  ScheduleEntry::where('prsn_id', '=', $id)
+                                ->whereHas('schedule.event', function ($query) use ($from, $till) {
+                                    $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
+                                })
+                                ->with('getJobType', 'schedule.event.place')
+                                ->get();
+
+        // TODO: sort shifts by date
+        
+        // format the response
+        $response = [];
+        foreach ($shifts as $shift) {
+            $response[] = [ 'id'        =>$shift->id, 
+                            'shift'     =>$shift->getJobType->jbtyp_title, 
+                            'event'     =>$shift->schedule->event->evnt_title, 
+                            'event_id'  =>$shift->schedule->event->id,
+                            'section'   =>$shift->schedule->event->place->plc_title,
+                            'date'      =>$shift->schedule->event->evnt_date_start, 
+                            'weight'    =>$shift->entry_statistical_weight];
+        }
+
+        return response()->json($response);        
     }
 }

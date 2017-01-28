@@ -469,3 +469,14 @@ input[type=number],
 .tooltip {
     position: fixed
 }
+
+
+/* Statistics */
+
+.bc-Club-section-highlight {
+    border-left: 5px #e98383 solid !important;
+}
+
+.bc-Café-section-highlight {
+    border-left: 5px #52aadc solid !important;
+}
