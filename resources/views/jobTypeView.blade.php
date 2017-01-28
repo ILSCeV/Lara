@@ -14,11 +14,24 @@
 
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			<h4 class="panel-title">"{!! $current_jobtype->jbtyp_title !!}" (#{{ $current_jobtype->id }})</h4>
+			<h4 class="panel-title">#{{ $current_jobtype->id }}: "{!! $current_jobtype->jbtyp_title !!}" </h4>
 		</div>
 		<div class="panel panel-body no-padding">
 			<table class="table table-hover">
-				<form>
+				{!! Form::open(  array( 'route' => ['jobtype.update', $current_jobtype->id],
+		                                'id' => $current_jobtype->id, 
+		                                'method' => 'PUT', 
+		                                'class' => 'jobType')  ) !!}
+					<tr>
+						<td width="20%" class="left-padding-16">
+							<i>{{ trans('mainLang.jobType') }}:</i>
+						</td>
+						<td>
+							{!! Form::text('jbtyp_title' . $current_jobtype->id, 
+							   $current_jobtype->jbtyp_title, 
+							   array('id'=>'jbtyp_title' . $current_jobtype->id)) !!}
+						</td>
+					</tr>
 					<tr>
 						<td width="20%" class="left-padding-16">
 							<i>{{ trans('mainLang.begin') }}:</i>
@@ -49,7 +62,16 @@
 							   array('id'=>'jbtyp_statistical_weight' . $current_jobtype->id)) !!} <br/>
 						</td>
 					</tr>
-				</form>
+					<tr>
+						<td>
+							&nbsp;
+						</td>
+						<td>
+							<button type="reset" class="btn btn-small btn-default">Reset</button>
+					    	<button type="submit" class="btn btn-small btn-success">Update</button>
+						</td>
+					</tr>
+				{!! Form::close() !!}
 
 				@if( $entries->count() == 0 )
 					<tr>
@@ -168,50 +190,6 @@
 											</td>
 										</tr>
 									@endforeach
-
-					{{-- TODO FOR LATER: BATCH REASSIGN
-											<tr>
-												<td colspan="4">
-											      	&nbsp;
-												</td>
-												<td>
-													Ersetze <strong>alle</strong> Einträge oben durch
-										           	<div class="input-append btn-group">
-											           	<input type="text" 
-											           		   name={{ "entry" . $event->id }}
-											           		   class="input" 
-											           		   id={{ "entry" . $event->id }}
-											           		   value=""
-											           		   placeholder="{{ trans('mainLang.serviceTypeEnter') }}"/>
-
-														<span id="dropdown">
-															<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-																<span class="caret"></span>
-															</a>
-
-															<ul class="dropdown-menu">
-																@foreach($jobtypes as $jobtype)
-																	<li class="dropdown"> 
-																		<a href="javascript:void(0);" 
-																		   onClick="$(this).dropdownSelect(&#39;{{ $jobtype->jbtyp_title }}&#39;, 
-																		   								   &#39;{{ $jobtype->jbtyp_time_start }}&#39;, 
-																		   								   &#39;{{ $jobtype->jbtyp_time_end }}&#39;,
-																		   								   &#39;{{ $jobtype->jbtyp_statistical_weight }}&#39;); alert('Will set jobtype of all of the above to jobtype {!! $jobtype->jbtyp_title !!} (#{!! $jobtype->id !!}) ')">
-																		   	(#{{ $jobtype->id }}) 
-																		   	{{  $jobtype->jbtyp_title }} 
-																		   	(<i class='fa fa-clock-o'></i>
-																			{{  date("H:i", strtotime($jobtype->jbtyp_time_start))
-																				. "-" .
-																			    date("H:i", strtotime($jobtype->jbtyp_time_end)) . ")" }}
-																		</a>
-																	</li>
-																@endforeach
-															</ul>
-														</span>
-													</div>
-												</td>
-											</tr>
-					--}}
 
 								</tbody>
 							</table>

@@ -425,4 +425,15 @@ return [
     
     // Misc.
     'guest'                         => 'Gast',
+
+
+
+    //////////////////////////
+    // Management: JobTypes //
+    //////////////////////////
+    
+
+    'jobType'                       => 'Diensttyp',
+
+
 ];

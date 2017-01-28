@@ -423,4 +423,13 @@ return [
 
     //Misc
     'guest'                         => 'Guest',
+
+
+
+    //////////////////////////
+    // Management: JobTypes //
+    //////////////////////////
+    
+
+    'jobType'                       => 'Shift type',
 ];
