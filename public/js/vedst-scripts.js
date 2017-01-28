@@ -703,13 +703,18 @@ $( document ).ready( function() {
                 // Fill with data received 
                 for (var i = 0; i < response.length; i++)
                 {
-                    $("#person-shifts-overview").append("<tr><td>"  + (1+i) + "</td><td>" 
-                                                                    + response[i]["shift"] + "</td><td>"
-                                                                    + "<a href=\"../../event/" + response[i]["event_id"] + "\" >" 
-                                                                    + response[i]["event"] + "</a></td><td>" 
-                                                                    + response[i]["section"] + "</td><td>"
-                                                                    + response[i]["date"] + "</td><td>" 
-                                                                    + response[i]["weight"] + "</td></tr>");
+                    $("#person-shifts-overview").append("<tr" 
+                                                          // Change background for shifts in other sections
+                                                          + (localStorage.preferredStatistics !== response[i]["section"] ? " class=\"active text-muted\"" : "\"\"") + ">"
+                                                          + "<td>"  + (1+i) + "</td>" 
+                                                          + "<td>" + response[i]["shift"] + "</td>"
+                                                          + "<td>" + "<a href=\"../../event/" + response[i]["event_id"] + "\" >" 
+                                                          + response[i]["event"] + "</a></td>"
+                                                          // Color-coding for different sections 
+                                                          + "<td class=\"" + response[i]["section"]+ "-section-highlight\">"     
+                                                          + response[i]["section"] + "</td>"
+                                                          + "<td>" + response[i]["date"] + "</td>" 
+                                                          + "<td>" + response[i]["weight"] + "</td></tr>");
                 }
 
             }); 
