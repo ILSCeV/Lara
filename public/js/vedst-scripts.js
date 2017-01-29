@@ -51,6 +51,20 @@ $('.languageSwitcher').find('a').click(function() {
 });
 
 
+////////////////
+// Month view //
+////////////////
+
+
+// Scroll to current date/event if in mobile view
+if ($(window).width() < 978) {
+    $('html, body').animate({
+        scrollTop: $(".scroll-marker").offset().top -80
+    }, 1000);
+};
+
+
+
 
 ////////////////
 // Event view //
