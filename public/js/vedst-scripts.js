@@ -195,9 +195,9 @@ $(document).ready(function() {
         // update fields for following entries
         temp.nextUntil("br").each(function() {
             $(this).attr('id', "box" + ++tempId);
-            $(this).find("[name^=jobType]").attr('id', "jobType" + tempId).attr('name', "jobType" + tempId);
-            $(this).find("[name^=timeStart]").attr('id', "timeStart" + tempId).attr('name', "timeStart" + tempId);
-            $(this).find("[name^=timeEnd]").attr('id', "timeEnd" + tempId).attr('name', "timeEnd" + tempId);
+            $(this).find("[name^=jbtyp_title]").attr('id', "jbtyp_title" + tempId).attr('name', "jbtyp_title" + tempId);
+            $(this).find("[name^=jbtyp_time_start]").attr('id', "jbtyp_time_start" + tempId).attr('name', "jbtyp_time_start" + tempId);
+            $(this).find("[name^=jbtyp_time_end]").attr('id', "jbtyp_time_end" + tempId).attr('name', "jbtyp_time_end" + tempId);
             $(this).find("[name^=jbtyp_statistical_weight]").attr('id', "jbtyp_statistical_weight" + tempId).attr('name', "jbtyp_statistical_weight" + tempId);
         }); 
 
@@ -218,9 +218,9 @@ $(document).ready(function() {
             // update fields for following entries
             temp.nextUntil("br").each(function() {
                 $(this).attr('id', "box" + ++tempId);
-                $(this).find("[name^=jobType]").attr('id', "jobType" + tempId).attr('name', "jobType" + tempId);
-                $(this).find("[name^=timeStart]").attr('id', "timeStart" + tempId).attr('name', "timeStart" + tempId);
-                $(this).find("[name^=timeEnd]").attr('id', "timeEnd" + tempId).attr('name', "timeEnd" + tempId);
+                $(this).find("[name^=jbtyp_title]").attr('id', "jbtyp_title" + tempId).attr('name', "jbtyp_title" + tempId);
+                $(this).find("[name^=jbtyp_time_start]").attr('id', "jbtyp_time_start" + tempId).attr('name', "jbtyp_time_start" + tempId);
+                $(this).find("[name^=jbtyp_time_end]").attr('id', "jbtyp_time_end" + tempId).attr('name', "jbtyp_time_end" + tempId);
                 $(this).find("[name^=jbtyp_statistical_weight]").attr('id', "jbtyp_statistical_weight" + tempId).attr('name', "jbtyp_statistical_weight" + tempId);
             }); 
 
@@ -240,9 +240,9 @@ $(document).ready(function() {
     // populate from dropdown select
     $.fn.dropdownSelect = function(jobtype, timeStart, timeEnd, weight) {
         
-        $(this).closest('.box').find("[name^=jobType]").val(jobtype);
-        $(this).closest('.box').find("[name^=timeStart]").val(timeStart);
-        $(this).closest('.box').find("[name^=timeEnd]").val(timeEnd);   
+        $(this).closest('.box').find("[name^=jbtyp_title]").val(jobtype);
+        $(this).closest('.box').find("[name^=jbtyp_time_start]").val(timeStart);
+        $(this).closest('.box').find("[name^=jbtyp_time_end]").val(timeEnd);   
         $(this).closest('.box').find("[name^=jbtyp_statistical_weight]").val(weight);
     };
 });
@@ -968,6 +968,118 @@ jQuery( document ).ready( function( $ ) {
             },
         });
     } );
+
+
+
+    ///////////////////////////
+    // AUTOCOMPLETE JOBTYPES //
+    ///////////////////////////
+    
+
+
+    // open jobtype dropdown on input selection
+    $( '.box' ).find('input[type=text]').on( 'focus', function() 
+    {
+        // remove all other dropdowns
+        $(document).find('.dropdown-jobtypes').hide();
+        // open dropdown for current input
+        $(document.activeElement).next('.dropdown-jobtypes').show();
+    } );
+
+    // hide all dropdowns on ESC keypress
+    $(document).keyup(function(e) 
+    {
+      if (e.keyCode === 27) {
+        $(document).find('.dropdown-jobtypes').hide();
+      }
+    });
+
+    $( '.box' ).find("input[id^='jbtyp_title']").on( 'input', function() 
+    {
+        // do all the work here after AJAX response is received
+        function ajaxCallBackClubs(response) { 
+
+            // clear array from previous results
+            $(document.activeElement).next('.dropdown-jobtypes').contents().remove();
+
+            // format data received
+            response.forEach(function(data) {
+
+                // add found jobtypes and metadata to the dropdown
+                $(document.activeElement).next('.dropdown-jobtypes').append(
+                    '<li><a href="javascript:void(0);">' 
+                    + '<span id="jobTypeTitle">' 
+                    + data.jbtyp_title 
+                    + '</span>'
+                    + ' (<i class="fa fa-clock-o"></i> '
+                    + '<span id="jobTypeTimeStart">'
+                    + data.jbtyp_time_start
+                    + '</span>'
+                    + '-'
+                    + '<span id="jobTypeTimeEnd">'
+                    + data.jbtyp_time_end
+                    + '</span>'
+                    + '<span id="jobTypeWeight" class="hidden">'
+                    + data.jbtyp_statistical_weight
+                    + '</span>'
+                    + ')' 
+                    + '</a></li>');
+            });  
+
+            // process clicks inside the dropdown
+            $(document.activeElement).next('.dropdown-jobtypes').children('li').click(function(e)
+            {
+                var selectedJobTypeTitle        = $(this).find('#jobTypeTitle').html();
+                var selectedJobTypeTimeStart    = $(this).find('#jobTypeTimeStart').html();
+                var selectedJobTypeTimeEnd      = $(this).find('#jobTypeTimeEnd').html();
+                var selectedJobTypeWeight       = $(this).find('#jobTypeWeight').html();
+                var currentInputId              = $(this).closest(".box").attr("id").slice(3);
+
+                // update fields
+                $("input[id=jbtyp_title"                + currentInputId + "]").val(selectedJobTypeTitle);
+                $("input[id=jbtyp_time_start"           + currentInputId + "]").val(selectedJobTypeTimeStart);
+                $("input[id=jbtyp_time_end"             + currentInputId + "]").val(selectedJobTypeTimeEnd);
+                $("input[id=jbtyp_statistical_weight"   + currentInputId + "]").val(selectedJobTypeWeight);
+
+                // close dropdown afterwards
+                $(document).find('.dropdown-jobtypes').hide();
+            });
+
+            // reveal newly created dropdown
+            $(document.activeElement).next('.dropdown-jobtypes').show();
+
+        }
+
+        // short delay to prevents double sending
+        $(this).delay('250');
+
+        // Request autocompleted names
+        $.ajax({  
+            type: $( this ).prop( 'method' ),  
+
+            url: "/jobtype/" + $(this).val(),  
+
+            data: {
+                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                    "_token": $(this).find( 'input[name=_token]' ).val(),
+
+                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+                    "_method": "get"
+            },  
+
+            dataType: 'json',
+
+            success: function(response){
+                // external function handles the response
+                ajaxCallBackClubs(response);
+            },
+        });
+    } );
+
+
+
+
+
 
 
     // Submit changes

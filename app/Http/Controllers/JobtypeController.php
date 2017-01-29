@@ -21,6 +21,25 @@ class JobtypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function find($query = NULL)
+    {
+        if ( is_null($query) ) { $query = ""; } // if no parameter specified - empty means "show all"
+
+        $jobtypes =  \Lara\Jobtype::where('jbtyp_title', 'like', '%' . $query . '%')
+                                  ->orderBy('jbtyp_title')
+                                  ->get(['jbtyp_title', 
+                                         'jbtyp_time_start', 
+                                         'jbtyp_time_end', 
+                                         'jbtyp_statistical_weight']);
+                                                   
+        return response()->json($jobtypes);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $jobtypes = Jobtype::orderBy('jbtyp_title', 'ASC')->paginate(25);
