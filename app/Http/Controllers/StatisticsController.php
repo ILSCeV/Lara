@@ -87,6 +87,9 @@ class StatisticsController extends Controller
                                     $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
                                 })
                                 ->with('getJobType', 'schedule.event.place')
+                                ->orderBy(function() {
+
+                                })
                                 ->get();
 
         // TODO: sort shifts by date

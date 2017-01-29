@@ -44,7 +44,7 @@ class JobtypeController extends Controller
     {
         $jobtypes = Jobtype::orderBy('jbtyp_title', 'ASC')->paginate(25);
 
-        return view('manageJobtypesView', ['jobtypes' => $jobtypes]);
+        return view('manageJobTypesView', ['jobtypes' => $jobtypes]);
     }
 
     /**
