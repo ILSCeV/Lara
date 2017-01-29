@@ -80,7 +80,7 @@ class StatisticsController extends Controller
      * Get the start and end of the current semester
      * @return array
      */
-    public function semesterData(): array
+    public function semesterData()
     {
         $currentYear = (int) date('Y');
         $currentMonth = (int) date('m');
