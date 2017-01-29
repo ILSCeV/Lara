@@ -1057,7 +1057,7 @@ jQuery( document ).ready( function( $ ) {
         $.ajax({  
             type: $( this ).prop( 'method' ),  
 
-            url: "/jobtype/" + $(this).val(),  
+            url: "/jobtypes/" + $(this).val(),  
 
             data: {
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
