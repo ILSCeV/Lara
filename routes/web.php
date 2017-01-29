@@ -94,8 +94,10 @@ Route::get('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventContr
 
 
 // AJAX calls
-Route::get('person/{query?}', 'PersonController@index');
-Route::get('club/{query?}', 'ClubController@index');
+Route::get('person/{query?}', 				'PersonController@index');
+Route::get('club/{query?}', 				'ClubController@index');
+Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson');
+Route::get('jobtypes/{query?}', 				'JobtypeController@find');
 Route::get('personal/statistics/chartData', 'PersonalController@chartData');
 
 // additional route to store a SurveyAnswer
@@ -109,34 +111,37 @@ Route::get('lang/{lang}', ['as'=>'lang.switch', function($lang){
     return Redirect::back();
 }]);
 
+Route::get('lang', function() {
+    return response()->json(['language' => Session::get('applocale')]);
+});
+
 // RESTful RESOURCES
+Route::resource('jobtype', 	'JobtypeController');
 Route::resource('entry', 	'ScheduleEntryController', 	['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('schedule', 'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('event', 	'ClubEventController', 		['except' => ['index']]);
 Route::resource('person', 	'PersonController', 		['only'   => ['index']]);
 Route::resource('club', 	'ClubController', 			['only'   => ['index']]);
 Route::resource('survey',	'SurveyController',			['except' => ['index']]);
-Route::resource('survey.answer', 'SurveyAnswerController', ['only' => ['show', 'store', 'update', 'destroy']]); //show only for testing purposes
+Route::resource('survey.answer', 'SurveyAnswerController', ['only' => ['show', 'store', 'update', 'destroy']]);
 
 
 // STATISTICS
 Route::get('/statistics/{year?}/{month?}',						'StatisticsController@showStatistics');
 Route::get('/personal/statistics',                              'PersonalController@statistics');
 
-/*
-Route::post('/statistics', 						['as'   => 'statisticsChangeDate',
-											     'uses' => 'StatisticsController@showStatistics']);
-*/
-/*
-// MANAGEMENT
-Route::get('/management/jobtypes',				'ManagementController@showJobTypes');
-Route::get('/management/places',				'ManagementController@showPlaces');
-Route::get('/management/templates',				'ManagementController@showTemplates');
 
-Route::post('/management/jobtypes', 			['as'   => 'updateJobTypes',
-												 'uses' => 'ManagementController@updateJobTypes']);
-Route::post('/management/places', 				['as'   => 'updatePlaces',
-												 'uses' => 'ManagementController@updatePlaces']);
-Route::post('/management/templates', 			['as'   => 'updateTemplates',
-												 'uses' => 'ManagementController@updateTemplates']);
-*/
+// JSON EXPORT - RETURNS EVENTS METADATA
+Route::get('export/{clb_id}/{date_start}/{nr_of_events}', function($clb_id, $date_start, $nr_of_events) {
+
+	$results = \Lara\ClubEvent::where('plc_id', '=', $clb_id)
+							  ->where('evnt_is_private', '=', '0')
+							  ->where('evnt_date_start', '>=', $date_start)
+							  ->whereIn('evnt_type', [0,2,3])
+							  ->orderBy('evnt_date_start')
+							  ->orderBy('evnt_time_start')
+							  ->take((0 <= $nr_of_events) && ($nr_of_events <= 20) ? $nr_of_events : 20)	// setting output size range to 0-20
+							  ->get(['id', 'evnt_title', 'evnt_date_start', 'evnt_time_start']);
+
+	return response()->json($results, 200, [], JSON_UNESCAPED_UNICODE);
+}); 

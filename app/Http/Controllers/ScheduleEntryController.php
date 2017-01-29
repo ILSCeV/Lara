@@ -71,17 +71,20 @@ class ScheduleEntryController extends Controller
                               ->firstOrFail();
                               
         // Person NULL means "=FREI=" - check for it every time you query a relationship
-        $response = ['id'                => $entry->id, 
-                     'jbtyp_title'       => $entry->getJobType->jbtyp_title,
-                     'prsn_name'         => !is_null($entry->getPerson) ? $entry->getPerson->prsn_name          : "=FREI=",
-                     'prsn_ldap_id'      => !is_null($entry->getPerson) ? $entry->getPerson->prsn_ldap_id       : "",
-                     'prsn_status'       => !is_null($entry->getPerson) ? $entry->getPerson->prsn_status        : "",
-                     'clb_title'         => !is_null($entry->getPerson) ? $entry->getPerson->getClub->clb_title : "",
-                     'entry_user_comment'=> $entry->entry_user_comment,
-                     'entry_time_start'  => $entry->entry_time_start,
-                     'entry_time_end'    => $entry->entry_time_end,
-                     'updated_at'        => $entry->updated_at];
-                     
+        $ldapId = !is_null($entry->getPerson) ? $entry->getPerson->prsn_ldap_id : "";
+        $response = [
+            'id'                => $entry->id,
+            'jbtyp_title'       => $entry->getJobType->jbtyp_title,
+            'prsn_name'         => !is_null($entry->getPerson) ? $entry->getPerson->prsn_name          : "=FREI=",
+            'prsn_ldap_id'      => $ldapId,
+            'prsn_status'       => !is_null($entry->getPerson) ? $entry->getPerson->prsn_status        : "",
+            'clb_title'         => !is_null($entry->getPerson) ? $entry->getPerson->getClub->clb_title : "",
+            'entry_user_comment'=> $entry->entry_user_comment,
+            'entry_time_start'  => $entry->entry_time_start,
+            'entry_time_end'    => $entry->entry_time_end,
+            'updated_at'        => $entry->updated_at,
+            'is_current_user'   => $ldapId == Session::get('userId')
+        ];
 
         if (Request::ajax()) {
             return response()->json($response);
@@ -114,6 +117,42 @@ class ScheduleEntryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Check if it's our form (CSRF protection)
+        if ( Session::token() !== Input::get( '_token' ) ) {
+            return response()->json('Fehler: die Session ist abgelaufen. Bitte aktualisiere die Seite und logge dich ggf. erneut ein.', 401);
+        }
+
+        // If we only want to modify the jobtype via management pages - do it without evaluating the rest
+        if ( !empty($request->get('jobtypeId')) AND is_numeric($request->get('jobtypeId')) ) {
+
+            // Find the corresponding entry object 
+            $entry = ScheduleEntry::where('id', '=', $request->get('entryId'))->first();
+
+
+            
+
+            // Save old value for revision
+            $oldJobtype = Jobtype::where('id', '=', $entry->jbtyp_id)->first()->jbtyp_title;
+
+            // Substitute values
+            $entry->jbtyp_id = $request->get('jobtypeId');
+            $entry->save();
+
+            // Log changes 
+            ScheduleController::logRevision($entry->getSchedule,    // schedule object
+                                $entry,                             // entry object
+                                "Diensttyp geändert",               // action description
+                                null,                               // old value - TODO LATER
+                                null,                               // new value - TODO LATER
+                                null,                               // old comment - no change here
+                                null);                              // new comment - no change here
+
+            // Formulate the response
+            return response()->json(["entryId" => $entry->id, 
+                                     "updatedJobtypeTitle" => Jobtype::where('id', '=', $entry->jbtyp_id)->first()->jbtyp_title], 
+                                     200);
+        }
+        
         // Extract request data 
         $entryId     = $request->get('entryId');
         $userName    = $request->get('userName');
@@ -122,11 +161,6 @@ class ScheduleEntryController extends Controller
         $userClub    = $request->get('userClub');
         $userComment = $request->get('userComment');
         $password    = $request->get('password');
-
-        // Check if it's our form (CSRF protection)
-        if ( Session::token() !== Input::get( '_token' ) ) {
-            return response()->json('Fehler: die Session ist abgelaufen. Bitte aktualisiere die Seite und logge dich ggf. erneut ein.', 401);
-        }
 
         // Check if someone modified LDAP ID manually
         if ( !empty($ldapId) AND !is_numeric($ldapId) ) {
@@ -323,14 +357,17 @@ class ScheduleEntryController extends Controller
         $userStatus = $this->updateStatus($entry);        
 
         // Formulate the response
-        return response()->json(["entryId"     => $entry->id, 
-                                 "userStatus"  => $userStatus,
-                                 "userName"    => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->prsn_name,
-                                 "ldapId"      => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->prsn_ldap_id, 
-                                 "userClub"    => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->getClub->clb_title,
-                                 "userComment" => $entry->entry_user_comment,
-                                 "timestamp"   => $timestamp], 
-                                 200);
+        $prsn_ldap_id = is_null($entry->getPerson()->first()) ? "" : $entry->getPerson()->first()->prsn_ldap_id;
+        return response()->json([
+            "entryId"           => $entry->id,
+            "userStatus"        => $userStatus,
+            "userName"          => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->prsn_name,
+            "ldapId"            => $prsn_ldap_id,
+            "userClub"          => is_null( $entry->getPerson()->first() ) ? "" : $entry->getPerson()->first()->getClub->clb_title,
+            "userComment"       => $entry->entry_user_comment,
+            "timestamp"         => $timestamp,
+            "is_current_user"   => $prsn_ldap_id == Session::get('userId')
+        ], 200);
     }
 
 

@@ -134,8 +134,6 @@ return [
     'orThe'                 => 'or',
     'marketingManager'      => 'marketing managers',
     'canChangeEventJob'     => 'may change this event/task.',
-
-    'only'                  => 'Only',
     'commaThe'              => ', the ', //line number ~332
     
     //-----------------------------------------------------------------------------------------------------------
@@ -206,7 +204,17 @@ return [
     'Su' => 'Sunday',
 
     // resources/view/partials/calendarLinkEvent.blade.php
-    'addToCalendar' => 'Add this event to your calendar',
+    'addToCalendar' => 'Add this event to your Google calendar',
+
+    // resources/views/partials/month/day.blade.php
+    'createEventOnThisDate' => 'Create new event on this day',
+
+    // resources/views/partials/month/monthCell.blade.php
+    'showDetails' => 'Show details',
+
+    // resources/views/monthView.blade.php
+    'showWeek' => 'Switch to this week\'s detailed view',
+
     //-----------------------------------------------------------------------------------------------------------
     
     // resources/views/createSurveyView.blade.php
@@ -269,8 +277,8 @@ return [
     'manageTemplate'        => 'Manage templates',
     
     //create button text
-    'createAndAddNewEvent'  => 'Add new Event/Task',
-    'createAndAddNewSurvey' => 'Add new Survey',
+    'createNewEvent'           => 'Create new event',
+    'createNewSurvey'          => 'Create new survey',
     
     //Member types
     'candidate'             => 'Candidate',
@@ -292,6 +300,11 @@ return [
     // /resources/views/partials/statisticsLeaderboards.blade.php
     'totalShifts'           => 'Shifts', 
     'leaderBoards'          => 'Leaderboard',
+    'allClubs'              => 'All',
+
+    // /resources/view/partials/statistics/amountOfShiftsDisplay.blade.php
+    'shiftsInOtherSection'      => 'Shifts in other sections',
+    'shiftsInOwnSection'        => 'Shifts in own section',
 
     // /resources/views/partials/clubStatistics.blade.php
     'infoFor'               => 'Member statistics',
@@ -333,7 +346,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/weekCellHidden.blade.php
-    'moreDetailsAfterLogInMessage' => 'More details are accessible to members after logging in. :break',
+    'moreDetailsAfterLogInMessage' => 'More details are accessible to members after logging in.',
     // 'moreDetailsAfterLogInMessage2' => 'after logging in.', 
     // Merged with line above but there is now way to break the line (format is still ok) 
     // ToDo find a solution for breaking lines
@@ -355,12 +368,11 @@ return [
     // /public/js/vedst-script.js
     'errorMessageForgotFilter'              => 'The filter wasn not set! Please add at least one section this event should be shown to.',
     'errorMessageEnterPasswordForShiftPlan' => 'Please enter the password for this schedule:',
-    'showTimes'                             => 'Show times',
+    'shiftTime'                             => 'Shift time',
     //'hideTimes' already exists#
     
-    'weekMoSu'                              => 'Week: Monday - Sunday',
-    'weekWeTu'                              => 'Week: Wednesday - Tuesday',
-    'hideTakenShifts'                       => 'Hide taken shifts',
+    'weekStart'                             => 'Monday - Sunday',
+    'hideTakenShifts'                       => 'Only EMPTY shifts',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -416,4 +428,40 @@ return [
 
     //Misc
     'guest'                         => 'Guest',
+    'accessDenied'                  => 'Wait a second... Only logged-in members with verified credentials can get in here! Now go log in, or come to the next meeting and become a member.',
+
+
+
+    ////////////////
+    // Management //
+    ////////////////
+
+    'management'                    => 'Management',
+    'jobType'                       => 'Shift type',
+    'jobtypes'                      => 'Shift types',
+    'shift'                         => 'Shift',
+    'start'                         => 'Start',
+    'end'                           => 'End',
+    'weight'                        => 'Weight',
+    'actions'                       => 'Actions',
+    'deleteConfirmation'            => 'Do you really want to delete this shift type:',
+    'warningNotReversible'          => 'This action is not reversible!',
+    'showDetails'                   => 'Edit details',
+    'deleteThisJobtype'             => 'Delete',
+
+    'reset'                         => 'Reset',
+    'update'                        => 'Save changes',
+    'delete'                        => 'delete it',
+    'jobtypeNeverUsed'              => 'This shift type was never used... Quite sad, isn\'t it? Maybe you should just ',
+    'jobtypeUsedInFollowingEvents'  => 'This shift type is used in the following events. To remove it you should substitute each of its instances with another shift type.',
+    'event'                         => 'Event',
+    'date'                          => 'Date',
+    'substituteThisInstance'        => 'Substitute with...',
+
+    'cantTouchThis'                 => 'Nice try! You can\'t change this, ask saction management or marketing ;)',
+    'cantBeBlank'                   => 'This values can\'t be empty.',
+    'nonNumericStats'               => 'Statistical weight must be entered with numbers ;)',
+    'negativeStats'                 => 'Statistical weight can\'t be negative.',
+    'changesSaved'                  => 'Changes saved successfully.',
+    'deleteFailedJobtypeInUse'      => 'Shift type was not deleted, because it\'s in use. Here you can change that.',
 ];

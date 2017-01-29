@@ -255,7 +255,11 @@ class ClubEventController extends Controller
         });
 
         $revisions = json_decode($clubEvent->getSchedule->entry_revisions, true);
+        
         if (!is_null($revisions)) {
+            // reverse order to show latest revision first
+            $revisions = array_reverse($revisions);
+
             // deleting ip adresses from output for privacy reasons
             foreach ($revisions as $entry) {
                 unset($entry["from ip"]);
@@ -341,8 +345,8 @@ class ClubEventController extends Controller
         if (Input::get('password') != Input::get('passwordDouble')) {
             Session::put('message', Config::get('messages_de.password-mismatch') );
             Session::put('msgType', 'danger');
-            return Redirect::back()->withInput(); 
-            }
+            return Redirect::back()->withInput();
+        }
 
         // first we fill objects with data
         // if there is an error, we have not saved yet, so we need no rollback

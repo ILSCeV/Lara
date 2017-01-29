@@ -94,7 +94,7 @@ $userCanEditDueToRole
               {{--if a question is set to required show a * if the user didn't fill it in--}}
                {{-- Offset of 3 for the first two columns in the table and a switch from 0-indexed to 1-indexed array --}}
                 #survey-answer td:nth-of-type({{$index + 3}}):before {
-                content: "{{$question->question . $question->is_required ? '*' : ''}} ";
+                content: "{{$question->question . ($question->is_required ? '*' : '')}} ";
                 float: left;
                 display: inline-block;
                 overflow: hidden;
@@ -152,9 +152,9 @@ $userCanEditDueToRole
     <div class="panel panel-warning">
         @if( $survey->password != '')
             <div class="hidden-print panel-heading">
-                {!! Form::password('password', array('class'=>'col-md-4 col-xs-12 black-text',
-                                                     'id'=>'password' . $survey->id,
-                                                     'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
+                {!! Form::password('password', ['class'=>'col-md-4 col-xs-12 black-text',
+                                                'id'=>'password' . $survey->id,
+                                                'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
                 <br>
             </div>
         @endif

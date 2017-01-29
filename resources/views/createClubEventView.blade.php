@@ -178,15 +178,15 @@
 					<label for="place" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
 					<span class="col-md-10 col-sm-10 col-xs-12">	   	
 						@if($place == "1")
-							{!! Form::text('place', 'bc-Club', array('id'=>'place') ) !!}
+							{!! Form::text('place', 'bc-Club', array('id'=>'place', 'readonly') ) !!}
 						@elseif($place == "2")
-							{!! Form::text('place', 'bc-Café', array('id'=>'place') ) !!}
+							{!! Form::text('place', 'bc-Café', array('id'=>'place', 'readonly') ) !!}
 						@else
 							{{-- Set default values to the club the user is a member in. --}}
 							@if(Session::get('userClub') == 'bc-Club')
-								{!! Form::text('place', 'bc-Club', array('id'=>'place') ) !!}
+								{!! Form::text('place', 'bc-Club', array('id'=>'place', 'readonly')) !!}
 							@elseif(Session::get('userClub') == 'bc-Café')
-								{!! Form::text('place', 'bc-Café', array('id'=>'place') ) !!}
+								{!! Form::text('place', 'bc-Café', array('id'=>'place', 'readonly') ) !!}
 							@endif 
 						@endif
 					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
@@ -306,14 +306,14 @@
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 			    	<label for="password" class="control-label col-md-5 col-sm-5 col-xs-12">{{ trans('mainLang.passwordEntry') }}:</label>
 			    	<div class="col-md-7 col-sm-7 col-xs-12">
-			    		{!! Form::password('password', '' ) !!}
+			    		{!! Form::password('password', [''] ) !!}
 			    	</div>
 			    </div>
 
 			    <div class="form-groupcol-md-12 col-sm-12 col-xs-12 no-padding">
 			    	<label fro="passwordDouble" class="control-label col-md-5 col-sm-5 col-xs-12">{{ trans('mainLang.passwordRepeat') }}:</label>
 			    	<div class="col-md-7 col-sm-7 col-xs-12">
-			    		{!! Form::password('passwordDouble', '') !!}
+			    		{!! Form::password('passwordDouble', ['']) !!}
 			    	</div>
 			    </div>
 

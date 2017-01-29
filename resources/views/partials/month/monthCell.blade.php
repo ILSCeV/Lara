@@ -31,8 +31,11 @@
             <i class="fa fa-bar-chart-o white-text"></i>
             &nbsp;&nbsp;
             {{-- provide a URL to the survey --}}
-            <a href="{{ URL::route('survey.show', $survey->id) }}">
-                {{-- instead of private survey show the actual titel of the survey --}}
+            <a href="{{ URL::route('survey.show', $survey->id) }}"
+               data-toggle="tooltip" 
+               data-placement="right"
+               title="{{ trans('mainLang.showDetails')}}">
+                {{-- instead of private survey show the actual title of the survey --}}
                 <span class="white-text"> &nbsp;{{ $survey->title }} </span>
             </a>
         </div>
@@ -58,11 +61,11 @@
         {{-- Filter --}}
         @if ( empty($clubEvent->evnt_show_to_club) )
             {{-- Workaround for older events: if filter is empty - use event club data instead --}}
-            <div class="filter {!! $clubEvent->getPlace->plc_title !!}  word-break">
-            @else
-                {{-- Normal scenario: add a css class according to filter data --}}
-                <div class="filter {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} {!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} word-break">
-            @endif
+            <div class="{!! $clubEvent->getPlace->plc_title !!}  word-break">
+        @else
+            {{-- Normal scenario: add a css class according to filter data --}}
+            <div class="word-break section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach">
+        @endif
 
             {{-- guests see private events as placeholders only, so check if user is logged in --}}
             @if(!Session::has('userId'))
@@ -88,11 +91,14 @@
                     @endif
                     @include("partials.event-marker", $clubEvent)
                     &nbsp;&nbsp;
-                    <a href="{{ URL::route('event.show', $clubEvent->id) }}">
+                    <a href="{{ URL::route('event.show', $clubEvent->id) }}"
+                       data-toggle="tooltip" 
+                       data-placement="right"
+                       title="{{ trans('mainLang.showDetails')}}">
                         {{ $clubEvent->evnt_title }}
                     </a>
                 </div>
-            @endif
+                @endif
 
             {{-- show everything for members, but switch the color theme according to event type --}}
             @else
@@ -129,7 +135,10 @@
             @endif
             @include("partials.event-marker", $clubEvent)
             &nbsp;&nbsp;
-            <a href="{{ URL::route('event.show', $clubEvent->id) }}">
+            <a href="{{ URL::route('event.show', $clubEvent->id) }}"
+               data-toggle="tooltip" 
+               data-placement="right"
+               title="{{ trans('mainLang.showDetails')}}">
                 {{ $clubEvent->evnt_title }}
             </a>
         </div>

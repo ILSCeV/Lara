@@ -39,8 +39,10 @@
 	@endif
 
 			<h4 class="panel-title">
+				@include("partials.event-marker")
+				&nbsp;
 				<a href="{{ URL::route('event.show', $clubEvent->id) }}">
-					@include("partials.event-marker")&nbsp;<span class="name">{{ $clubEvent->evnt_title }}</span>
+					<span class="name">{{ $clubEvent->evnt_title }}</span>
 				</a>
 			</h4>
 
@@ -61,10 +63,10 @@
 		{{-- Show password input if schedule needs one --}}
 		@if( $clubEvent->getSchedule->schdl_password != '')
 		    <div class="{{ $classString }} hidden-print">
-		        {!! Form::password('password' . $clubEvent->getSchedule->id, array('required', 
+		        {!! Form::password('password' . $clubEvent->getSchedule->id, ['required', 
 		                                             'class'=>'col-md-12 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
-		                                             'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
+		                                             'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
 		        <br/>
 		    </div>
 		@endif

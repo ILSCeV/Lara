@@ -3,8 +3,9 @@
 
 	<head>
 		<title>Lara | @yield('title', 'VedSt Default Title')</title>
-
+        <meta charset="UTF-8">
 		<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+        <meta http-equiv="Cache-control" content="no-cache">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="{{ asset('/css/bootstrap-select.min.css') }}">
@@ -35,31 +36,37 @@
         @yield('content')
     </section>
 
- 	<footer class="container footer" id="footer">
-        <hr class="hidden-print">
-        <span class="col-xs-12 col-sm-4 col-md-4 text-dark-grey" style="text-align: center;">
-            <small><a href="mailto:maxim.drachinskiy@bc-studentenclub.de"> {{ trans('mainLang.notWorkingMail',['Name' => 'Maxim']) }} </a></small>
-        </span>
-        <span class="col-xs-6 col-sm-4 col-md-4 text-dark-grey" style="text-align: center;">
-            @if(File::exists("gitrevision.txt"))
-                <small>{{File::get("gitrevision.txt")}}</small>
-            @else
-                <small>&nbsp;</small>
-            @endif
-        </span>
-        <span class="col-xs-6 col-sm-4 col-md-4 text-dark-grey" style="text-align: center;">
-            <small><a href="http://github.com/4D44H/lara-vedst">{{ trans('mainLang.moreInfosProjectsite') }}</a>.
-            </small>
-        </span>
-        <br class="visible-xs visible-sm">
-        <br>
-        <br>
+    <br>
+ 	<footer class="navbar-default navbar-static-bottom" id="footer">
+        <div class="container">
+            <br>
+            <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
+                <small><a href="mailto:maxim.drachinskiy@bc-studentenclub.de"> {{ trans('mainLang.notWorkingMail',['Name' => 'Maxim']) }} </a></small>
+            </span>
+            <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
+                @if(File::exists("gitrevision.txt"))
+                    <small>{{File::get("gitrevision.txt")}}</small>
+                @else
+                    <small>&nbsp;</small>
+                @endif
+            </span>
+            <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
+                <small><a href="https://github.com/ILSCeV/Lara">{{ trans('mainLang.moreInfosProjectsite') }}</a>.
+                </small>
+            </span>
+            <br class="visible-xs visible-sm">
+            <br class="visible-xs visible-sm">
+            <br>
+            <br>
+        </div>
 	</footer>
 
     <script src="{{ asset('/js/jquery-2.1.3.min.js') }}"></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/js/bootbox.min.js') }}"></script>
     <script src="{{ asset('/js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('/lang/de.js') }}"></script>
+    <script src="{{ asset('/lang/en.js') }}"></script>
     <script src="{{ asset('/js/vedst-scripts.js') }}"></script>
     <script src="{{ asset('/js/bin/bundle.js') }}"></script>
     <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>

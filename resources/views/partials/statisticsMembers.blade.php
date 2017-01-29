@@ -5,7 +5,7 @@
 
    <ul class="nav nav-tabs">
         @foreach($clubInfos->keys() as $title)
-            <li class="{{Session::get('userClub') == $title? 'active': ''}}">
+            <li class="{{Session::get('userClub') == $title? 'active': ''}} statisticClubPicker">
                 <a aria-expanded="{{Session::get('userClub') == $title? 'true' : 'false'}}" 
                    href="#{{$title}}" 
                    data-toggle="tab">
@@ -17,7 +17,7 @@
 </div>
 
 <div class="panel panel-body no-padding">
-    <div id="leaderboardsTabs" class="tab-content">
+    <div id="memberStatisticsTabs" class="tab-content">
         @foreach($clubInfos as $title => $clubInfo)
             <div class="tab-pane fade in {{ Session::get('userClub') === $title ? 'active' : '' }}" id="{{$title}}">
                 <table class="table table-hover" >
@@ -38,15 +38,16 @@
                         @foreach($clubInfo as $info)
                             <tr class="{{$info->user->isLoggedInUser() ? 'my-shift' : ''}}">
                                 <td>
-                                    @include('partials.personStatusMarker', ['person' => $info->user]){{$info->user->prsn_name }}
+                                    @include('partials.personStatusMarker', ['person' => $info->user])
+                                    <a href="#" onclick="chosenPerson = '{{$info->user->prsn_name}}'" name="show-stats-person{{$info->user->id}}" id="{{$info->user->id}}">
+                                        {{$info->user->prsn_name}}
+                                    </a>
                                 </td>
                                 <td>
-                                    {{$info->totalShifts}}
+                                    @include('partials.statistics.amountOfShiftsDisplay')
                                 </td>
                                 <td>
-                                    <div class="progress centered">
-                                        <div class="progress-bar" style="width: {{$info->shiftsPercent}}%;"></div>
-                                    </div>
+                                    @include('partials.statistics.graphicShifts')
                                 </td>
                             </tr>
                         @endforeach

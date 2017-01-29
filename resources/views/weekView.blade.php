@@ -42,12 +42,18 @@
 
 		{{-- filter --}}
 		<div class="col-xs-12 col-md-6 hidden-print">
-			@include('partials.filter')
-			<br class="hidden-xs">
-			<button class="btn btn-xs hidden-print" type="button" id="show-hide-time">{{ trans('mainLang.showTimes') }}</button> {{-- show time button Ger.: Zeiten einblenden --}}
-			<button class="btn btn-xs hidden-print" type="button" id="change-week-view">{{ trans('mainLang.weekMoSu') }}</button> {{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
-			<button class="btn btn-xs hidden-print" type="button" id="show-hide-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button> {{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
-			<br class="visible-xs hidden-print">
+			<div class="pull-right">
+				@include('partials.filter')
+				{{-- show time button Ger.: Zeiten einblenden --}}
+				<button class="btn btn-xs hidden-print" type="button" id="toggle-shift-time">{{ trans('mainLang.shiftTime') }}</button> 
+				
+				{{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
+				<button class="btn btn-xs hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button>
+				
+				{{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
+				<button class="btn btn-xs btn-primary hidden-print" type="button" id="toggle-week-start">{{ trans('mainLang.weekStart') }}</button> 
+							 
+			</div>
 		</div>
 	</div>
 
@@ -76,13 +82,13 @@
 								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
 							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
 							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
+								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach week-mo-so">
 							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
 								  === date("W", strtotime("next Week".$weekStart))
 								  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
+								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach week-mi-di hide">
 							@else
-								<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
+								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach">
 							@endif
 								@include('partials.weekCellHidden')
 							</div>
@@ -95,13 +101,13 @@
 								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
 							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
 							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
+								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach week-mo-so">
 							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
 								  === date("W", strtotime("next Week".$weekStart))
 								  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
+								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach week-mi-di hide">
 							@else
-								<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
+								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach">
 							@endif
 									
 								@include('partials.weekCellProtected')
@@ -120,26 +126,26 @@
 								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
 							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
 							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
+								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach week-mo-so">
 							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
 								  === date("W", strtotime("next Week".$weekStart))
 								  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
+								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach week-mi-di hide">
 							@else
-								<div class="element-item private {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
+								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach">
 							@endif
 
 						@else
 
 							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
 							  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mo-so">
+								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach week-mo-so">
 							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
 								  === date("W", strtotime("next Week".$weekStart))
 								  AND date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!} week-mi-di hide">
+								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach week-mi-di hide">
 							@else
-								<div class="element-item {!! in_array( "bc-Club", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Club" : false !!} 	{!! in_array( "bc-Café", json_decode($clubEvent->evnt_show_to_club) ) ? "bc-Café" : false !!}">
+								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach">
 							@endif
 
 						@endif
@@ -155,12 +161,12 @@
 					@foreach($surveys as $survey)
 						@if ( date('W', strtotime($survey->deadline)) === $date['week']
 			             AND  date('N', strtotime($survey->deadline)) < 3 )
-							<div class="element-item bc-Club bc-Café week-mo-so ">
+							<div class="element-item section-filter bc-Club bc-Café week-mo-so ">
 						@elseif ( date("W", strtotime($survey->deadline) ) === date("W", strtotime("next Week".$weekStart))
 			             AND      date('N', strtotime($survey->deadline)) < 3 )
-							<div class="element-item bc-Club bc-Café week-mi-di hide">
+							<div class="element-item section-filter bc-Club bc-Café week-mi-di hide">
 						@else
-							<div class="element-item bc-Club bc-Café">
+							<div class="element-item section-filter bc-Club bc-Café">
 						@endif
 							@include('partials.weekCellSurvey')
 						</div>
@@ -190,12 +196,12 @@
 					@foreach($surveys as $survey)
 						@if ( date('W', strtotime($survey->deadline)) === $date['week']
 			             AND  date('N', strtotime($survey->deadline)) < 3 )
-							<div class="element-item bc-Club bc-Café week-mo-so ">
+							<div class="element-item section-filter bc-Club bc-Café week-mo-so ">
 						@elseif ( date("W", strtotime($survey->deadline) ) === date("W", strtotime("next Week".$weekStart))
 			             AND      date('N', strtotime($survey->deadline)) < 3 )
-							<div class="element-item bc-Club bc-Café week-mi-di hide">
+							<div class="element-item section-filter bc-Club bc-Café week-mi-di hide">
 						@else
-							<div class="element-item bc-Club bc-Café">
+							<div class="element-item section-filter bc-Club bc-Café">
 						@endif
 							@include('partials.weekCellSurvey')
 						</div>

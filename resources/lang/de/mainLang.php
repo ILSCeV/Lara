@@ -135,8 +135,6 @@ return [
     'orThe'                 => 'oder die',
     'marketingManager'      => 'Marketingverantwortlichen',
     'canChangeEventJob'     => 'dürfen diese Veranstaltung/Aufgabe ändern.',
-    
-    'only'                  => 'Nur',
     'commaThe'              => ', die ', //line number ~332
     
     //-----------------------------------------------------------------------------------------------------------
@@ -208,7 +206,16 @@ return [
 
 
     // resources/view/partials/calendarLinkEvent.blade.php
-    'addToCalendar' => 'Füge dieses Event zu deinem Google Kalender hinzu',
+    'addToCalendar' => 'Event zu eigenem Google Kalender hinzufügen',
+
+    // resources/views/partials/month/day.blade.php
+    'createEventOnThisDate' => 'Neues Event an diesem Tag erstellen',
+
+    // resources/views/partials/month/monthCell.blade.php
+    'showDetails' => 'Details anzeigen',
+
+    // resources/views/monthView.blade.php
+    'showWeek' => 'Detaillierte Ansicht dieser Woche anzeigen',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -271,8 +278,8 @@ return [
     'manageTemplate'        => 'Vorlagen verwalten',
     
     //create button text
-    'createAndAddNewEvent'  => 'Neue Veranstaltung/Aufgabe hinzufügen',
-    'createAndAddNewSurvey' => 'Neue Umfrage hinzufügen',
+    'createNewEvent'           => 'Neues Event erstellen',
+    'createNewSurvey'          => 'Neue Umfrage erstellen',
     
     //Member types
     'candidate'             => 'Kandidat',
@@ -292,6 +299,11 @@ return [
     // /resources/views/partials/statisticsLeaderboards.blade.php
     'totalShifts'           => 'Dienste',
     'leaderBoards'          => 'Bestenliste',
+    'allClubs'              => 'Alle',
+
+    // /resources/view/partials/statistics/amountOfShiftsDisplay.blade.php
+    'shiftsInOtherSection'      => 'Dienste in anderen Sektionen',
+    'shiftsInOwnSection'        => 'Dienste in eigener Sektion',
 
     // /resources/views/partials/clubStatistics.blade.php
     'infoFor'               => 'Mitgliederstatistik',
@@ -354,12 +366,11 @@ return [
     // /public/js/vedst-script.js
     'errorMessageForgotFilter'              => 'Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.',
     'errorMessageEnterPasswordForShiftPlan' => 'Bitte noch das Passwort für diesen Dienstplan eingeben:',
-    'showTimes'                             => 'Zeiten einblenden',
+    'shiftTime'                             => 'Dienstzeiten',
     //'hideTimes' already exists
     
-    'weekMoSu'                              => 'Woche: Montag - Sonntag',
-    'weekWeTu'                              => 'Woche: Mittwoch - Dienstag',
-    'hideTakenShifts'                       => 'Vergebene Dienste ausblenden',
+    'weekStart'                             => 'Montag - Sonntag',
+    'hideTakenShifts'                       => 'Nur FREIe Dienste',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -419,4 +430,43 @@ return [
     
     // Misc.
     'guest'                         => 'Gast',
+    'accessDenied'                  => 'Moment mal... Nur eingeloggte Mitglieder mit ausreichender Berechtigung dürfen hier rein! Logge dich ein, oder komm zur nächsten Versammlung und werde Mitglied.',
+
+
+
+    ////////////////
+    // Management //
+    ////////////////
+
+    'management'                    => 'Verwaltung',
+    'jobType'                       => 'Diensttyp',
+    'jobtypes'                      => 'Diensttypen',
+    'shift'                         => 'Dienst',
+    'start'                         => 'Beginn',
+    'end'                           => 'Ende',
+    'weight'                        => 'Wert',
+    'actions'                       => 'Aktionen',
+    'deleteConfirmation'            => 'Möchtest du folgenden Diensttyp wirklich löschen:',
+    'warningNotReversible'          => 'Diese Aktion kann man nicht rückgängig machen!',
+    'showDetails'                   => 'Details anpassen',
+    'deleteThisJobtype'             => 'Entfernen',
+
+    'reset'                         => 'Zurücksetzen',
+    'update'                        => 'Änderungen speichern',
+    'delete'                        => 'löschen',
+    'jobtypeNeverUsed'              => 'Dieser Diensttyp wird bei keinem einzigen Event benutzt... Traurig, so was... Vielleicht wäre es sinnvoll, ihn einfach zu',
+    'jobtypeUsedInFollowingEvents'  => 'Dieser Dienstyp wird bei folgenden Events eingesetzt. Um ihn zu entfernen, ersetze jede Instanz erst mit einem anderen Diensttyp.',
+    'event'                         => 'Event',
+    'date'                          => 'Datum',
+    'substituteThisInstance'        => 'Ersetzen durch...',
+
+    'cantTouchThis'                 => 'Netter Versuch - du darfst das nicht einfach ändern! Frage die Clubleitung oder Markleting ;)',
+    'cantBeBlank'                   => 'Diese Werte dürfen nicht leer sein.',
+    'nonNumericStats'               => 'Statistische Wertung muss man mit Ziffern eingeben ;)',
+    'negativeStats'                 => 'Statistische Wertung darf nicht negativ sein.',
+    'changesSaved'                  => 'Änderungen erfolgreich gespeichert.',
+    'deleteFailedJobtypeInUse'      => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
+
+
+
 ];

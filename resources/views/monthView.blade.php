@@ -27,14 +27,11 @@
             </a>
         </div>
 
-        <!-- create button -->
-        <div class="col-xs-12 col-md-3">
-            &nbsp;
-        </div>
-
-        <!-- filter -->
-        <div class="col-xs-12 col-md-4 pull-right">
-            @include('partials.filter')
+        <!-- Section filter -->
+        <div class="col-xs-12 col-md-7 no-padding">
+            <div class="pull-right">
+                @include('partials.filter')
+            </div>
         </div>
 
         <br class="hidden-xs">
@@ -82,25 +79,31 @@
                 {{-- Current week --}}
                 <div class="calendarRow clearfix group WeekMarkerRow" >
                     <div class="calendarWeek WeekMarker">
-                        <a href="{!! Request::getBasePath() !!}/calendar/{{$weekStart->format('Y\/\K\WW')}}">
+                        <a href="{!! Request::getBasePath() !!}/calendar/{{$weekStart->format('Y\/\K\WW')}}"
+                           data-toggle="tooltip" 
+                           data-placement="top"
+                           title="{{ trans('mainLang.showWeek')}}">
                             <span class="onlyOnMobile">{{ trans('mainLang.Cw') }}</span> {{$weekStart->format('W')}}.
                         </a>
                     </div>
                     {{-- Foreach on DatePeriod excludes the last day, so we iterate over Monday to Sunday--}}
                     @foreach(new DatePeriod($weekStart, new DateInterval('P1D'), $weekEnd) as $weekDay)
-                        @include('partials.month.day')
+                        @include('partials.month.day', ['month' => $date['month']])
                     @endforeach
                 </div>
             @else
                 {{-- Not current week --}}
                 <div class="calendarRow clearfix group">
                     <div class="calendarWeek ">
-                        <a href="{!! Request::getBasePath() !!}/calendar/{{$weekStart->format('Y\/\K\WW')}}">
+                        <a href="{!! Request::getBasePath() !!}/calendar/{{$weekStart->format('Y\/\K\WW')}}"
+                           data-toggle="tooltip" 
+                           data-placement="top"
+                           title="{{ trans('mainLang.showWeek')}}">
                             <span class="onlyOnMobile">{{ trans('mainLang.Cw') }}</span> {{$weekStart->format('W')}}.
                         </a>
                     </div>
                     @foreach(new DatePeriod($weekStart, new DateInterval('P1D'), $weekEnd) as $weekDay)
-                        @include('partials.month.day')
+                        @include('partials.month.day', ['month' => $date['month']])
                     @endforeach
                 </div>
             @endif
@@ -113,7 +116,7 @@
         @include("partials.legend")
 
         {{-- filter hack --}}
-        <span id="own-filter-marker" hidden>&nbsp;</span>
+        <span id="month-view-marker" hidden>&nbsp;</span>
     </div>
 
 @stop

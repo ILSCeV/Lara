@@ -1,14 +1,15 @@
+
 <div class="panel panel-heading no-padding">
     <h4 class="panel-title all-sides-padding-16">
         {{ trans('mainLang.leaderBoards') }}
     </h4>
 
     <ul class="nav nav-tabs">
-        <li>
-            <a aria-expanded="true" href="#allLeaderboards" data-toggle="tab">All</a>
+        <li class="leaderboardsClubPicker">
+            <a aria-expanded="true" href="#allLeaderboards" data-toggle="tab">{{ trans('mainLang.allClubs') }}</a>
         </li>
         @foreach($clubInfos->keys() as $title)
-            <li class="{{Session::get('userClub') == $title? 'active': ''}}">
+            <li class="{{Session::get('userClub') == $title? 'active': ''}} leaderboardsClubPicker">
                 <a aria-expanded="{{Session::get('userClub') == $title? 'active': ''}}" 
                    href="#{{$title}}Leaderboards"
                    data-toggle="tab">
