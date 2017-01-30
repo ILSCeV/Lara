@@ -13,6 +13,11 @@ function translate(str) {
     return translations[str] ? translations[str] : '!! Translation necessary: "' + str + '" in language "' + language + '" !!';
 }
 
+function getLocale() {
+    var language = localStorage["language"];
+    return language === "en" ? "en-us" : 'de';
+}
+
 // Enable Tooltips
 $(function () { $("[data-toggle='tooltip']").tooltip(); });     
 

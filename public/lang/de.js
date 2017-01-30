@@ -18,5 +18,11 @@ var deTranslations = {
     'event': 'Event',
     'section': 'Sektion',
     'date': 'Datum',
-    'weight': 'Wert'
+    'weight': 'Wert',
+
+    //personal statistics
+    'monthlyActivity': 'Deine monatliche Aktivität',
+    'shiftAmount': 'Anzahl der Schichten',
+    'ownActivity': 'Deine Schichten',
+    'average': 'Durchschnitt',
 };

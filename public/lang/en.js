@@ -18,5 +18,11 @@ var enTranslations = {
     'event': 'Event',
     'section': 'Section',
     'date': 'Date',
-    'weight': 'Weight'
+    'weight': 'Weight',
+
+    //personal statistics
+    'monthlyActivity': 'Your monthly activity',
+    'shiftAmount': 'Amount of shifts',
+    'ownActivity': 'Your shifts',
+    'average': 'Average',
 };

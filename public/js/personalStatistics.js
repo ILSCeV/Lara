@@ -13,18 +13,18 @@ $(function() {
 
         chart = Highcharts.chart('activityGraph', {
             title: {
-                text: 'Your monthly activity'
+                text: translate('monthlyActivity')
             },
             xAxis: {
                 categories: categories.map(function(date) {
                     var month = new Date(date);
-                    return months[month.getMonth()] + ' ' + month.getFullYear();
+                    return month.toLocaleString(getLocale(), {month: 'short', year: 'numeric'})
                 })
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Amount of shifts'
+                    text: translate('shiftAmount')
                 }
             },
             tooltip: {
@@ -39,7 +39,7 @@ $(function() {
         });
 
         chart.addSeries({
-            name: 'Your activity',
+            name: translate('ownActivity'),
             data: personalSeries,
             type: 'column',
             zones: [
@@ -63,7 +63,7 @@ $(function() {
                 return personalData[category];
             });
             chart.addSeries({
-                name: 'Average',
+                name: translate('average'),
                 data: averageSeries
             })
         });

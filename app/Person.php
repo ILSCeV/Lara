@@ -47,4 +47,13 @@ class Person extends Model
     public function isLoggedInUser() {
         return $this->prsn_ldap_id == Session::get('userId');
     }
+
+    /**
+     * Get the current user
+     * @return mixed
+     */
+    public static function current() {
+        return Person::where('prsn_ldap_id', '=', Session::get('userId'))
+            ->first();
+    }
 }
