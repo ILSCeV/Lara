@@ -3,7 +3,7 @@
 @extends('layouts.master')
 
 @section('title')
-	Verwaltung: Diensttypen
+	{{ trans('mainLang.management') }}: {{ trans('mainLang.jobtypes') }} 
 @stop
 
 @section('content')
@@ -13,78 +13,74 @@
 	OR Session::get('userGroup') == 'clubleitung'
 	OR Session::get('userGroup') == 'admin'))
 
-	<div class="panel panel-info">
+	<div class="panel panel-info col-xs-12 no-padding">
 		<div class="panel-heading">
-				<h4 class="panel-title">Verwaltung: Diensttypen</h4>
-		</div>		
-		<table class="table info table-hover table-condensed">
-			<thead>
-				<tr class="active">
-					<th>
-						&nbsp;
-					</th>
-					<th>
-						ID
-					</th>
-					<th class="col-md-3">
-						Dienst
-					</th>
-					<th class="col-md-2">
-						Dauer
-					</th>
-					<th class="col-md-1">
-						Statistische Wertung
-					</th>
-					<th class="col-md-5">
-						Aktionen
-					</th>
-				</tr>
-			</thead>
-			<tbody>
+				<h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.jobtypes') }}</h4>
+		</div>	
+		<div class="panel panel-body no-padding">	
+			<table class="table info table-hover table-condensed">
+				<thead>
+					<tr class="active">
+						<th class="col-md-1 col-xs-1">
+							#
+						</th>
+						<th class="col-md-3 col-xs-3">
+							{{ trans('mainLang.shift') }}
+						</th>
+						<th class="col-md-2 col-xs-2">
+							{{ trans('mainLang.start') }}-{{ trans('mainLang.end') }}
+						</th>
+						<th class="col-md-1 col-xs-1">
+							{{ trans('mainLang.weight') }}
+						</th>
+						<th class="col-md-4 col-xs-4">
+							{{ trans("mainLang.actions") }}
+						</th>
+					</tr>
+				</thead>
+				<tbody>
 
-				<div class="container">
-					@foreach($jobtypes as $jobtype)
-						<tr>
-							<td>
-								&nbsp;
-							</td>
-							<td>
-								{!! $jobtype->id !!}
-							</td>
-							<td>
-						      	{!! Form::text('jbtyp_title' . $jobtype->id, 
-											   $jobtype->jbtyp_title, 
-											   array('id'=>'jbtyp_title' . $jobtype->id)) !!}
-							</td>
-							<td>						
-								{!! Form::input('time','jbtyp_time_start' . $jobtype->id, 
-											   $jobtype->jbtyp_time_start, 
-											   array('id'=>'jbtyp_time_start' . $jobtype->id)) !!}
-								-
-								{!! Form::input('time','jbtyp_time_end' . $jobtype->id, 
-											   $jobtype->jbtyp_time_end, 
-											   array('id'=>'jbtyp_time_end' . $jobtype->id)) !!}
-							</td>
-							<td>
-								{!! Form::text('jbtyp_statistical_weight' . $jobtype->id, 
-											   $jobtype->jbtyp_statistical_weight, 
-											   array('id'=>'jbtyp_statistical_weight' . $jobtype->id)) !!}
-							</td>
-							<td>
-								<a href="../jobtype/{{ $jobtype->id }}"
-								   class="btn btn-small btn-danger"
-								   data-method="delete"
-								   data-token="{{csrf_token()}}"
-								   rel="nofollow"
-								   data-confirm="Möchtest du &#39;&#39;{!! $jobtype->jbtyp_title !!}&#39;&#39; (#{{ $jobtype->id }}) wirklich löschen? Diese Aktion kann man nicht rückgängig machen!">
-								   	Diesen Diensttyp entfernen
-								</a>
-							</td>
-						</tr>
-					@endforeach
-				</div>
-			</tbody>
-		</table>
+					<div class="container">
+						@foreach($jobtypes as $jobtype)
+							<tr>
+								<td>
+									{!! $jobtype->id !!}
+								</td>
+								<td>
+							      	<a href="../jobtype/{{ $jobtype->id }}">
+							      		{!! $jobtype->jbtyp_title !!}
+							      	</a>
+								</td>
+								<td>						
+									{!! date("H:i", strtotime($jobtype->jbtyp_time_start)) !!}
+									-
+									{!! date("H:i", strtotime($jobtype->jbtyp_time_end)) !!}
+								</td>
+								<td>
+									{!! $jobtype->jbtyp_statistical_weight !!}
+								</td>
+								<td>
+									<a href="../jobtype/{{ $jobtype->id }}"
+									   class="btn btn-small btn-success"
+									   rel="nofollow">
+									   	{{ trans('mainlang.showDetails') }}
+									</a>
+									&nbsp;&nbsp;
+									<a href="../jobtype/{{ $jobtype->id }}"
+									   class="btn btn-small btn-danger"
+									   data-method="delete"
+									   data-token="{{csrf_token()}}"
+									   rel="nofollow"
+									   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $jobtype->jbtyp_title !!}&#39;&#39; (#{{ $jobtype->id }})? {{ trans('mainLang.warningNotReversible') }}">
+									   	{{ trans('mainLang.deleteThisJobtype') }}
+									</a>
+								</td>
+							</tr>
+						@endforeach
+					</div>
+				</tbody>
+			</table>
+		</div>
 	</div>
 		
 	<center>

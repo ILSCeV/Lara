@@ -1,3 +1,3 @@
-<div class="panel">
-	{{ Config::get('messages_de.access-denied') }}
+<div class="panel panel-body">
+	{{ trans('mainLang.accessDenied') }}
 </div>

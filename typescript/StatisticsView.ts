@@ -40,15 +40,17 @@ function updateSortIconStyle($table: JQuery, byName: boolean, descending: boolea
 }
 
 function sortLeaderboards(sortIcon: JQuery) {
-    let $table = sortIcon.parents("table");
+    let $tables = $('#memberStatisticsTabs').find('table');
     let wasAscending = sortIcon.hasClass('fa-sort-asc');
     let isNameSort = sortIcon.parent().data('sort') === 'name';
 
     localStorage.setItem('preferredSortType', isNameSort ? 'name' : 'shifts');
     localStorage.setItem('preferredSortOrder', wasAscending ? 'descending' : 'ascending');
 
-    sortTable($table, isNameSort, wasAscending);
-    updateSortIconStyle($table, isNameSort, wasAscending);
+    $tables.each(function(){
+        sortTable($(this), isNameSort, wasAscending);
+        updateSortIconStyle($(this), isNameSort, wasAscending);
+    });
 }
 
 $(".fa-sort, .fa-sort-desc, .fa-sort-asc").click(function () {
@@ -68,6 +70,7 @@ $(".leaderboardsClubPicker").find("a").click(function() {
     let leaderBoardName = $(this).text().trim();
     localStorage.setItem('preferredLeaderboards', leaderBoardName);
 });
+
 
 $(() => {
     let preferredStatistics = localStorage.getItem('preferredStatistics');

@@ -13,49 +13,28 @@
 		            <div id={{ "box" . ++$counter }} class="box">
 			           	<div class="input-append btn-group">
 				           	<input type="text" 
-				           		   name={{ "jobType" . $counter }}
+				           		   name={{ "jbtyp_title" . $counter }}
 				           		   class="input" 
-				           		   id={{ "jobType" . $counter }}
+				           		   id={{ "jbtyp_title" . $counter }}
 				           		   value="{{ $entry->getJobType->jbtyp_title }}"
 				           		   placeholder="{{ trans('mainLang.serviceTypeEnter') }}"/>
+				           	
+				           	<ul class="dropdown-menu dropdown-jobtypes" style="position: absolute;">
+				    		</ul>
 
-							<span id="dropdown">
-								<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-									<span class="caret"></span>
-								</a>
-
-								<ul class="dropdown-menu">
-									@foreach($jobtypes as $jobtype)
-										<li class="dropdown"> 
-											<a href="javascript:void(0);" 
-											   onClick="$(this).dropdownSelect(&#39;{{ $jobtype->jbtyp_title }}&#39;, 
-											   								   &#39;{{ $jobtype->jbtyp_time_start }}&#39;, 
-											   								   &#39;{{ $jobtype->jbtyp_time_end }}&#39;,
-											   								   &#39;{{ $jobtype->jbtyp_statistical_weight }}&#39;);">
-
-											   	{{  $jobtype->jbtyp_title }} 
-											   	(<i class='fa fa-clock-o'></i>
-												{{  date("H:i", strtotime($jobtype->jbtyp_time_start))
-													. "-" .
-												    date("H:i", strtotime($jobtype->jbtyp_time_end)) . ")" }}
-											</a>
-										</li>
-									@endforeach
-								</ul>
-							</span>
 						</div>
 						&nbsp;&nbsp;&nbsp;&nbsp;
 
 						<input type="time" class="input" 
-							   name={{ "timeStart" . $counter }}
-							   id={{ "timeStart" . $counter }}
+							   name={{ "jbtyp_time_start" . $counter }}
+							   id={{ "jbtyp_time_start" . $counter }}
 							   value="{{ $entry->entry_time_start }}" 
 							   required />
 
 		            	<input type="time" 
 		            		   class="input" 
-		            		   name={{ "timeEnd" . $counter }} 
-		            		   id={{ "timeEnd" . $counter }}
+		            		   name={{ "jbtyp_time_end" . $counter }} 
+		            		   id={{ "jbtyp_time_end" . $counter }}
 		            		   value="{{ $entry->entry_time_end }}" 
 		            		   required />
 
@@ -81,51 +60,29 @@
 		    <div id={{ "box" . ++$counter }} class="box">
 	           	<div class="input-append btn-group">
 		           	<input type="text" 
-		           		   name={{ "jobType" . $counter }}
+		           		   name={{ "jbtyp_title" . $counter }}
 		           		   class="input" 
-		           		   id={{ "jobType" . $counter }}
+		           		   id={{ "jbtyp_title" . $counter }}
 		           		   value=""
 		           		   placeholder="{{ trans('mainLang.serviceTypeEnter') }}"/>
 
-					<span id="dropdown">
-						<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-							<span class="caret"></span>
-						</a>
-
-						<ul class="dropdown-menu">
-							@foreach($jobtypes as $jobtype)
-								<li class="dropdown"> 
-									<a href="javascript:void(0);" 
-									   onClick="$(this).dropdownSelect(&#39;{{ $jobtype->jbtyp_title }}&#39;, 
-									   								   &#39;{{ $jobtype->jbtyp_time_start }}&#39;, 
-									   								   &#39;{{ $jobtype->jbtyp_time_end }}&#39;,
-									   								   &#39;{{ $jobtype->jbtyp_statistical_weight }}&#39;);">
-
-									   	{{  $jobtype->jbtyp_title }} 
-									   	(<i class='fa fa-clock-o'></i>
-										{{  date("H:i", strtotime($jobtype->jbtyp_time_start))
-											. "-" .
-										    date("H:i", strtotime($jobtype->jbtyp_time_end)) . ")" }}
-									</a>
-								</li>
-							@endforeach
-						</ul>
-					</span>
+					<ul class="dropdown-menu dropdown-jobtypes" style="position: absolute;">
+				    </ul>
 				</div>
 
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<br class="visible-xs">
 
 				<input type="time" class="input" 
-					   name={{ "timeStart" . $counter }}
-					   id={{ "timeStart" . $counter }}
+					   name={{ "jbtyp_time_start" . $counter }}
+					   id={{ "jbtyp_time_start" . $counter }}
 					   value="21:00" required />
 	        	
 
 	        	<input type="time" 
 	        		   class="input" 
-	        		   name={{ "timeEnd" . $counter }} 
-	        		   id={{ "timeEnd" . $counter }}
+	        		   name={{ "jbtyp_time_end" . $counter }} 
+	        		   id={{ "jbtyp_time_end" . $counter }}
 	        		   value="01:00" required />
 
 				&nbsp;<br class="visible-xs">{{ trans('mainLang.weight') }}:&nbsp;

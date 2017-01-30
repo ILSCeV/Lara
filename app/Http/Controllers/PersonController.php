@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Cache;
 use DateTime;
 use DateInterval;
+use Session;
+use Config;
+use Redirect;
 
 use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
@@ -19,8 +22,16 @@ class PersonController extends Controller
      */
     public function index( $query = NULL )
     {
-        if ( is_null($query) ) {
-            // if no parameter specified - empty means "show all"
+        // Not showing everything to guests
+        if(!Session::has('userId'))
+        {
+            Session::put('message', Config::get('messages_de.access-denied'));
+            Session::put('msgType', 'danger');
+            return Redirect::action('MonthController@showMonth', ['year' => date("Y"), 'month' => date('m')]);
+        }
+
+        // if no parameter specified - empty means "show all"
+        if ( is_null($query) ) {  
             $query = "";
         }
 

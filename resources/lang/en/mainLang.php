@@ -302,6 +302,10 @@ return [
     'leaderBoards'          => 'Leaderboard',
     'allClubs'              => 'All',
 
+    // /resources/view/partials/statistics/amountOfShiftsDisplay.blade.php
+    'shiftsInOtherSection'      => 'Shifts in other sections',
+    'shiftsInOwnSection'        => 'Shifts in own section',
+
     // /resources/views/partials/clubStatistics.blade.php
     'infoFor'               => 'Member statistics',
 
@@ -424,4 +428,40 @@ return [
 
     //Misc
     'guest'                         => 'Guest',
+    'accessDenied'                  => 'Wait a second... Only logged-in members with verified credentials can get in here! Now go log in, or come to the next meeting and become a member.',
+
+
+
+    ////////////////
+    // Management //
+    ////////////////
+
+    'management'                    => 'Management',
+    'jobType'                       => 'Shift type',
+    'jobtypes'                      => 'Shift types',
+    'shift'                         => 'Shift',
+    'start'                         => 'Start',
+    'end'                           => 'End',
+    'weight'                        => 'Weight',
+    'actions'                       => 'Actions',
+    'deleteConfirmation'            => 'Do you really want to delete this shift type:',
+    'warningNotReversible'          => 'This action is not reversible!',
+    'showDetails'                   => 'Edit details',
+    'deleteThisJobtype'             => 'Delete',
+
+    'reset'                         => 'Reset',
+    'update'                        => 'Save changes',
+    'delete'                        => 'delete it',
+    'jobtypeNeverUsed'              => 'This shift type was never used... Quite sad, isn\'t it? Maybe you should just ',
+    'jobtypeUsedInFollowingEvents'  => 'This shift type is used in the following events. To remove it you should substitute each of its instances with another shift type.',
+    'event'                         => 'Event',
+    'date'                          => 'Date',
+    'substituteThisInstance'        => 'Substitute with...',
+
+    'cantTouchThis'                 => 'Nice try! You can\'t change this, ask saction management or marketing ;)',
+    'cantBeBlank'                   => 'This values can\'t be empty.',
+    'nonNumericStats'               => 'Statistical weight must be entered with numbers ;)',
+    'negativeStats'                 => 'Statistical weight can\'t be negative.',
+    'changesSaved'                  => 'Changes saved successfully.',
+    'deleteFailedJobtypeInUse'      => 'Shift type was not deleted, because it\'s in use. Here you can change that.',
 ];
