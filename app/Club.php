@@ -3,6 +3,7 @@
 namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
+use Lara\Place;
 
 class Club extends Model
 {
@@ -44,6 +45,10 @@ class Club extends Model
     public static function activeClubs()
     {
         return Club::whereIn('id', ['2', '3']);
+    }
+
+    public function correspondingPlace() {
+        return Place::where('plc_title', '=', $this->clb_title)->first();
     }
 
 }

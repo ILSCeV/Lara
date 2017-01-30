@@ -3,6 +3,7 @@
 namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
+use Lara\Club;
 
 class Place extends Model
 {
@@ -30,4 +31,8 @@ class Place extends Model
 	public function getClubEvent() {
 		return $this->hasMany('Lara\ClubEvent', 'plc_id', 'id');
 	}
+
+	public function correspondingClub() {
+	    return Club::where('clb_title', '=', $this->plc_title)->first();
+    }
 }
