@@ -5,9 +5,8 @@
 
 @section('content')
 
-{{-- Restrict access for now --}}
-@if(Session::get('userGroup') == 'clubleitung'
- OR Session::get('userGroup') == 'admin')
+{{-- Restrict access to members only --}}
+@if(Session::has('userId'))
 
     {{-- prev/next month --}}
     <div class="col-xs-12 col-md-12">

@@ -27,10 +27,7 @@
             <li><a href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
 
 {{-- MEMBER STATISTICS / members only --}}
-            {{-- @if(Session::has('userId')) --}}
-            {{-- Restict access for now --}}
-            @if(Session::get('userGroup') == 'clubleitung'
-             OR Session::get('userGroup') == 'admin')
+            @if(Session::has('userId'))
                 <li><a href="{{ asset('/statistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
             @endif
             
@@ -44,7 +41,7 @@
                 </a>
                 <ul class="dropdown-menu" role="menu">
 
-{{-- JOB TYPE MANAGEMENT / marketing, section management or admins only --}}
+{{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
 
                 @if(Session::get('userGroup') == 'marketing'
                  OR Session::get('userGroup') == 'clubleitung'
