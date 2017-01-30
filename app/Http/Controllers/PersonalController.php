@@ -51,6 +51,7 @@ class PersonalController extends Controller
             ->where('clb_id', $club->id)
             ->count();
         $shiftsByMonth = $this->shiftsByMonth($allShifts)
+            // average the shifts by dividing through active members
             ->map(function($value) use ($activeMembers) {
                 return $value / $activeMembers;
             });
@@ -69,13 +70,18 @@ class PersonalController extends Controller
             $date = new DateTime($value->schedule->event->evnt_date_start);
             return $date->format('Y-m');
         })->map(function ($entries) {
+            // get total weight done
+            // on personal page we just count all shifts, without splitting them between clubs
             return $entries->map(function(ScheduleEntry $entry) {
                 return $entry->entry_statistical_weight;
             })->sum();
         });
 
+        // if you did no shifts in a month it will not appear in the data.
+        // to fix this, we will have to find the missing months and add them (with 0 shifts done)
         $firstMonth = $byMonth->keys()->first();
-        $lastMonth = $byMonth->keys()->last();
+        // set to today, if you did no shifts in this month we still want to display the average
+        $lastMonth = 'today';
         $monthInterval = new DateInterval('P1M');
 
         $period = new DatePeriod(new DateTime($firstMonth), $monthInterval, new DateTime($lastMonth));
