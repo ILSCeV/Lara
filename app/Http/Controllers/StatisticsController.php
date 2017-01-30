@@ -87,7 +87,8 @@ class StatisticsController extends Controller
                                     $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
                                 })
                                 ->with('getJobType', 'schedule.event.place')
-                                ->get();
+                                ->get()
+                                ->sortBy('schedule.event.evnt_date_start');
 
         // TODO: sort shifts by date
         
@@ -99,7 +100,7 @@ class StatisticsController extends Controller
                             'event'     =>$shift->schedule->event->evnt_title, 
                             'event_id'  =>$shift->schedule->event->id,
                             'section'   =>$shift->schedule->event->place->plc_title,
-                            'date'      =>$shift->schedule->event->evnt_date_start, 
+                            'date'      => strftime("%d.%m.%Y", strtotime($shift->schedule->event->evnt_date_start)),
                             'weight'    =>$shift->entry_statistical_weight];
         }
 
