@@ -3,17 +3,13 @@
 namespace Lara\Http\Controllers;
 
 use DateTime;
-use Illuminate\Http\Request;
 
 use Lara\Club;
-use Lara\ClubEvent;
 use Lara\ScheduleEntry;
 use View;
-use Lara\Person;
 use Session;
 use Redirect;
 
-use Lara\Http\Requests;
 use Lara\StatisticsInformation;
 
 class StatisticsController extends Controller

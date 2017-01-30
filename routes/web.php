@@ -98,7 +98,8 @@ Route::get('person/{query?}', 				'PersonController@index');
 Route::get('club/{query?}', 				'ClubController@index');
 Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson');
 Route::get('jobtypes/{query?}', 				'JobtypeController@find');
-Route::get('personal/statistics/chartData', 'PersonalController@chartData');
+Route::get('personal/statistics/chartData/average', 'PersonalController@averageData');
+Route::get('personal/statistics/chartData/{prsn_id?}', 'PersonalController@chartData');
 
 // additional route to store a SurveyAnswer
 Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');

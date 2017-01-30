@@ -1,20 +1,22 @@
-$(function () {
-    var data = $.getJSON('/personal/statistics/chartData', function(data) {
+var chart;
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var activeMonths;
+
+$(function() {
+    $.getJSON('/personal/statistics/chartData', function(data) {
         var personalData = data['personal'];
         var categories = Object.keys(personalData).sort();
+        activeMonths = categories;
         var personalSeries = categories.map(function(category) {
             return personalData[category];
         });
-        $('#activityGraph').highcharts({
-            chart: {
-                type: 'column'
-            },
+
+        chart = Highcharts.chart('activityGraph', {
             title: {
                 text: 'Your monthly activity'
             },
             xAxis: {
                 categories: categories.map(function(date) {
-                    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                     var month = new Date(date);
                     return months[month.getMonth()] + ' ' + month.getFullYear();
                 })
@@ -33,17 +35,38 @@ $(function () {
                 shared: true,
                 useHTML: true
             },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            series: [{
-                name: 'Your shifts',
-                data: personalSeries
-            }],
             credits: false
+        });
+
+        chart.addSeries({
+            name: 'Your activity',
+            data: personalSeries,
+            type: 'column',
+            zones: [
+                {
+                    value: 1.1,
+                    color: '#f72024'
+                },
+                {
+                    value: 4.5,
+                    color: '#f2f714'
+                },
+                {
+                    color: '#26ec33'
+                },
+            ],
+        });
+
+        $.getJSON('/personal/statistics/chartData/average', function(data) {
+            var personalData = data['average'];
+            var averageSeries = activeMonths.map(function(category) {
+                return personalData[category];
+            });
+            chart.addSeries({
+                name: 'Average',
+                data: averageSeries
+            })
         });
     });
 });
+
