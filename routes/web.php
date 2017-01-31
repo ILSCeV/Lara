@@ -142,4 +142,7 @@ Route::get('export/{clb_id}/{date_start}/{nr_of_events}', function($clb_id, $dat
 							  ->get(['id', 'evnt_title', 'evnt_date_start', 'evnt_time_start']);
 
 	return response()->json($results, 200, [], JSON_UNESCAPED_UNICODE);
-}); 
+});
+
+//Ical Stuff
+Route::get('/ical/events/all', 'IcalController@events');
