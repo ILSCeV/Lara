@@ -18,7 +18,7 @@ class IcalController extends Controller
     {
         $vCalendar = new Calendar('Events');
 
-        $events = ClubEvent::all();
+        $events = ClubEvent::where("evnt_is_private","=",'0')->get();
         $vEvents = $events->map(function ($evt) {
             $dateString = "Y-m-d H:i:s";
             $vEvent = new Event();
@@ -26,7 +26,7 @@ class IcalController extends Controller
             $vEvent->setDtStart(\DateTime::createFromFormat($dateString,"".$evt->evnt_date_start." ".$evt->evnt_time_start));
             $vEvent->setDtEnd(\DateTime::createFromFormat($dateString,"".$evt->evnt_date_end." ".$evt->evnt_time_end));
             $vEvent->setSummary($evt->evnt_title);
-            //var_dump($evt);
+            $vEvent->setDescription($evt->evnt_subtitle);
 
             return $vEvent;
         });
