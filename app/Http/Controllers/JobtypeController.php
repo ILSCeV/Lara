@@ -141,7 +141,7 @@ class JobtypeController extends Controller
             return Redirect::back();
         }
 
-        // Statistical weight must be positive
+        // Statistical weight must be non-negative
         if ($newWeight < 0.0) {
             Session::put('message', trans('mainLang.negativeStats'));
             Session::put('msgType', 'danger');
