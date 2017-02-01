@@ -146,3 +146,4 @@ Route::get('export/{clb_id}/{date_start}/{nr_of_events}', function($clb_id, $dat
 
 //Ical Stuff
 Route::get('/ical/events/all', 'IcalController@events');
+Route::get('/ical/events/user/{club_id}/{alarm}', 'IcalController@userScheduleWithAlarm');
