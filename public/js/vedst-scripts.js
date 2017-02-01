@@ -13,8 +13,12 @@ function translate(str) {
     return translations[str] ? translations[str] : '!! Translation necessary: "' + str + '" in language "' + language + '" !!';
 }
 
+
+
 // Enable Tooltips
 $(function () { $("[data-toggle='tooltip']").tooltip(); });     
+
+
 
 // Automatically close notifications after 4 seconds (4000 milliseconds)
 window.setTimeout(function() {
@@ -49,6 +53,17 @@ $('.languageSwitcher').find('a').click(function() {
     var language = $(this).data('language');
     localStorage.setItem('language', language);
 });
+
+
+
+// conversion of html entities to text (e.g. "&" as "&amp;")
+// ref: https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery
+function decodeEntities(encodedString) {
+    var textArea = document.createElement('textarea');
+    textArea.innerHTML = encodedString;
+    return textArea.value;
+}
+
 
 
 ////////////////
@@ -1049,7 +1064,7 @@ jQuery( document ).ready( function( $ ) {
             // process clicks inside the dropdown
             $(document.activeElement).next('.dropdown-jobtypes').children('li').click(function(e)
             {
-                var selectedJobTypeTitle        = $(this).find('#jobTypeTitle').html();
+                var selectedJobTypeTitle        = decodeEntities($(this).find('#jobTypeTitle').html());     // decoding html entities in the process
                 var selectedJobTypeTimeStart    = $(this).find('#jobTypeTimeStart').html();
                 var selectedJobTypeTimeEnd      = $(this).find('#jobTypeTimeEnd').html();
                 var selectedJobTypeWeight       = $(this).find('#jobTypeWeight').html();
