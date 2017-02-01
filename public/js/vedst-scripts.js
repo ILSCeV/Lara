@@ -91,7 +91,28 @@ $(document).ready(function()
 // Event view //
 ////////////////
 
+//Draws the ticker dividing lines between shifts with the same name and time. Needs to be called everytime toggle-taken-shifts is pressed.
+function drawLines(){
+    //Clear all thicker lines
+    $('div.row').removeClass('divider-thick');
+    var $shifts = $('div.green:visible, div.red:visible');
+    for(var i=1; i<$shifts.length; i++){
+        if($($shifts[i]).text() != $($shifts[i-1]).text())
+        {
+            console.log("Draw");
+            if($($shifts[i-1]).closest('.schedule_entry').hasClass('divider')){ //To avoid the line after the last shift
+                $($shifts[i-1]).closest('.schedule_entry').addClass('divider-thick');
+            }
+        }
+    }
+}
 
+$(function(){
+    $('#toggle-taken-shifts').click(function(){
+        drawLines();
+    });
+    drawLines();
+});
 
 // Show/hide more button for infos
 $(function(){

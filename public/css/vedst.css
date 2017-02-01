@@ -231,6 +231,10 @@ input[type=number],
  * Week view
  */
 
+.divider-thick {
+    border-bottom: 1px #999 solid !important;
+}
+
 .hide {
     overflow: hidden;
     height: 0px;

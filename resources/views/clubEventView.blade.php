@@ -197,7 +197,7 @@
 		<div class="panel-body no-padding ">
 			@foreach($entries as $entry)
 				{{-- highlight with my-shift class if the signed in user is the person to do the entry --}}
-				<div class="row paddingTop {!! ( isset($entry->getPerson->prsn_ldap_id) AND Session::has('userId') AND $entry->getPerson->prsn_ldap_id == Session::get('userId')) ? "my-shift" : false !!}">
+				<div class="row paddingTop schedule_entry{!! $entry !== $entries->last() ? " divider" : false  !!}{!! ( isset($entry->getPerson->prsn_ldap_id) AND Session::has('userId') AND $entry->getPerson->prsn_ldap_id == Session::get('userId')) ? " my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
 			                                'id' => $entry->id, 
 			                                'method' => 'PUT', 
@@ -210,7 +210,7 @@
 			        </div>
 
 			        {{-- ENTRY TITLE --}}
-			        <div class="col-md-2 col-sm-2 col-xs-4 left-padding-8">
+			        <div class="col-md-2 col-sm-2 col-xs-4 left-padding-8 entry_title">
 			            @include("partials.scheduleEntryTitle")
 			        </div>
 
@@ -289,10 +289,6 @@
 
 				</div>
 
-				{{-- Show a line after each row except the last one --}}
-				@if($entry !== $entries->last() )
-					<hr class="col-md-12 col-md-12 col-xs-12 top-padding no-margin no-padding">
-				@endif
 
 			@endforeach
 		</div>
