@@ -373,7 +373,7 @@ return [
     
     'weekStart'                             => 'Monday - Sunday',
     'hideTakenShifts'                       => 'Only EMPTY shifts',
-    'getPermalink'                          => 'Get a permanent link to the current week',
+    'getPermalink'                          => 'Get a permanent link',
     
     //-----------------------------------------------------------------------------------------------------------
     

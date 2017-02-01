@@ -308,7 +308,72 @@ $(document).ready(function() {
 // Filters //
 /////////////
 
+//section: e.g.
+function showSection(section){
+    $("."+section.slice(7)).show();
+    $('.isotope').isotope('layout');
 
+    // set filter buttons to the saved state
+    $('#'+section).addClass('btn-primary');
+}
+
+function hideSection(section){
+    $("."+section.slice(7)).hide();
+    $('.isotope').isotope('layout');
+
+    // set filter buttons to the saved state
+    $('#'+section).removeClass('btn-primary');
+}
+
+//////////////////////////////
+// Show/hide time of shifts //
+//////////////////////////////
+
+function showTimes(){
+    $('.entry-time').removeClass("hide");
+    $('#toggle-shift-time').addClass("btn-primary");
+    $('.isotope').isotope('layout');
+}
+
+function hideTimes(){
+    $('.entry-time').addClass("hide");
+    $('#toggle-shift-time').removeClass("btn-primary");
+    $('.isotope').isotope('layout');
+}
+
+function showTakenShifts(){
+    $('div.green').closest('.row').removeClass('hide');
+    $('#toggle-taken-shifts').removeClass("btn-primary");
+    $('.isotope').isotope('layout');
+}
+
+function hideTakenShifts(){
+    $('div.green').closest('.row').addClass('hide');
+    $('#toggle-taken-shifts').addClass("btn-primary");
+    $('.isotope').isotope('layout');
+}
+
+// set translated strings
+var weekMonSun = translate('mondayToSunday');
+var weekWedTue = translate('wednesdayToTuesday');
+
+function setWeekMoSu(){
+    $('.week-mo-so').removeClass('hide');
+    $('.week-mi-di').addClass('hide');
+    $('#toggle-week-start').addClass("btn-primary");
+    $('#toggle-week-start').removeClass("btn-success");
+    $('#toggle-week-start').text(weekMonSun);
+    $('.isotope').isotope('layout');
+}
+
+function setWeekWeTu(){
+    $('.week-mo-so').addClass('hide');
+    $('.week-mi-di').removeClass('hide');
+    $('#toggle-week-start').removeClass("btn-primary");
+    $('#toggle-week-start').addClass("btn-success");
+    $('#toggle-week-start').text(weekWedTue);
+    $('.isotope').isotope('layout');
+}
 
 $( document ).ready( function() {
 
@@ -330,7 +395,7 @@ $( document ).ready( function() {
         var sections = [];
         $.each($('.section-filter-selector'), function(){ sections.push($(this).prop('id')); });
 
-        for (i = 0; i < sections.length; ++i ) 
+        for (var i = 0; i < sections.length; ++i )
         {
             // if "hide": filter exists and set to "hide" - no action needed
             // if "show": filter exists and set to "show" - show events, highlight button
@@ -340,11 +405,7 @@ $( document ).ready( function() {
                 // save section filter value
                 if(typeof(Storage) !== "undefined") { localStorage.setItem(sections[i], "show"); };
 
-                // show events from this section in view
-                $("."+sections[i].slice(7)).show();
-
-                // set filter buttons to the saved state
-                $('#'+sections[i]).addClass('btn-primary');
+                showSection(sections[i]);
             } 
         }
 
@@ -382,8 +443,8 @@ $( document ).ready( function() {
                             $("."+key.slice(7)).show(); 
 
                             // set filter buttons to the saved state
-                            $('#filter-'+key.slice(7)).addClass('btn-primary');
-                        };             
+                            $('#'+key).addClass('btn-primary');
+                        };
                     }
                 }
             } 
@@ -462,12 +523,7 @@ $( document ).ready( function() {
                 // save section filter value
                 if(typeof(Storage) !== "undefined") { localStorage.setItem(sections[i], "show"); };
 
-                // show events from this section in view
-                $("."+sections[i].slice(7)).show();
-                $('.isotope').isotope('layout');
-
-                // set filter buttons to the saved state
-                $('#'+sections[i]).addClass('btn-primary');
+                showSection(sections[i]);
             } 
         }
         
@@ -538,8 +594,6 @@ $( document ).ready( function() {
         // Show/hide time of shifts //
         //////////////////////////////
 
-
-
         // set translated strings
         $('#toggle-shift-time').text(translate('shiftTime'));
 
@@ -548,15 +602,11 @@ $( document ).ready( function() {
         {
             if (localStorage.shiftTime == "show") 
             {   
-                $('.entry-time').removeClass("hide"); 
-                $('#toggle-shift-time').addClass("btn-primary");
-                $('.isotope').isotope('layout');
+                showTimes();
             } 
             else if (localStorage.shiftTime == "hide") 
             {
-                $('.entry-time').addClass("hide");
-                $('#toggle-shift-time').removeClass("btn-primary");
-                $('.isotope').isotope('layout');                  
+                hideTimes();
             }      
         };
 
@@ -569,9 +619,7 @@ $( document ).ready( function() {
                 if(typeof(Storage) !== "undefined") { localStorage.shiftTime = "hide"; }
 
                 // change state, change button
-                $('.entry-time').addClass("hide"); 
-                $('#toggle-shift-time').removeClass("btn-primary");
-                $('.isotope').isotope('layout');
+                hideTimes();
             }
             else    // times are hidden, intent to show
             {
@@ -579,9 +627,7 @@ $( document ).ready( function() {
                 if(typeof(Storage) !== "undefined") { localStorage.shiftTime = "show"; }
 
                 // change state, change button
-                $('.entry-time').removeClass("hide");
-                $('#toggle-shift-time').addClass("btn-primary");
-                $('.isotope').isotope('layout');
+                showTimes();
             };        
         });
 
@@ -598,15 +644,11 @@ $( document ).ready( function() {
         {
             if (localStorage.onlyEmptyShifts == "true") 
             {   
-                $('div.green').closest('.row').addClass('hide');
-                $('#toggle-taken-shifts').addClass("btn-primary");
-                $('.isotope').isotope('layout');
+                hideTakenShifts();
             } 
             else if (localStorage.onlyEmptyShifts == "false") 
             {
-                $('div.green').closest('.row').removeClass('hide');
-                $('#toggle-taken-shifts').removeClass("btn-primary");
-                $('.isotope').isotope('layout');                  
+                showTakenShifts();
             }      
         };
 
@@ -619,9 +661,7 @@ $( document ).ready( function() {
                 if(typeof(Storage) !== "undefined") { localStorage.onlyEmptyShifts = "true"; }
 
                 // change state, change button
-                $('div.green').closest('.row').addClass('hide'); 
-                $('#toggle-taken-shifts').addClass("btn-primary");
-                $('.isotope').isotope('layout');
+                hideTakenShifts();
             }
             else    // only empty shifts shown, intent to show all shifts
             {
@@ -629,9 +669,7 @@ $( document ).ready( function() {
                 if(typeof(Storage) !== "undefined") { localStorage.onlyEmptyShifts = "false"; }
 
                 // change state, change button
-                $('div.green').closest('.row').removeClass('hide');
-                $('#toggle-taken-shifts').removeClass("btn-primary");
-                $('.isotope').isotope('layout');
+                showTakenShifts();
             };        
         });
 
@@ -642,23 +680,13 @@ $( document ).ready( function() {
         ///////////////////////////////////////////////
 
 
-
-        // set translated strings
-        var weekMonSun = translate('mondayToSunday');
-        var weekWedTue = translate('wednesdayToTuesday');
-
         // Apply saved preferences from local storage on pageload
         if(typeof(Storage) !== "undefined") 
         {
             if (localStorage.weekStart === "wednesday") 
             {
                 // apply transformation, value already saved in storage
-                $('.week-mo-so').addClass('hide');
-                $('.week-mi-di').removeClass('hide');
-                $('#toggle-week-start').removeClass("btn-primary");
-                $('#toggle-week-start').addClass("btn-success");
-                $('#toggle-week-start').text(weekWedTue);
-                $('.isotope').isotope('layout');                  
+                setWeekWeTu();
             } 
             else // default to localStorage.weekStart == "monday" and save to storage
             {
@@ -666,12 +694,7 @@ $( document ).ready( function() {
                 localStorage.weekStart = "monday";
 
                 // apply transformation
-                $('.week-mo-so').removeClass('hide');
-                $('.week-mi-di').addClass('hide');
-                $('#toggle-week-start').addClass("btn-primary");
-                $('#toggle-week-start').removeClass("btn-success");
-                $('#toggle-week-start').text(weekMonSun);
-                $('.isotope').isotope('layout');
+                setWeekMoSu();
             }     
         };
 
@@ -684,12 +707,7 @@ $( document ).ready( function() {
                 if(typeof(Storage) !== "undefined") { localStorage.weekStart = "wednesday"; }
 
                 // change state, change button
-                $('.week-mo-so').addClass('hide');
-                $('.week-mi-di').removeClass('hide');
-                $('#toggle-week-start').removeClass("btn-primary");
-                $('#toggle-week-start').addClass("btn-success");
-                $('#toggle-week-start').text(weekWedTue);
-                $('.isotope').isotope('layout');
+                setWeekWeTu();
             }
             else    // localStorage.weekStart == "wednesday" -> week starts on wednesday, intent to start on monday
             {
@@ -697,12 +715,7 @@ $( document ).ready( function() {
                 if(typeof(Storage) !== "undefined") { localStorage.weekStart = "monday"; }
 
                 // change state, change button
-                $('.week-mo-so').removeClass('hide');
-                $('.week-mi-di').addClass('hide');
-                $('#toggle-week-start').addClass("btn-primary");
-                $('#toggle-week-start').removeClass("btn-success");
-                $('#toggle-week-start').text(weekMonSun);
-                $('.isotope').isotope('layout');
+                setWeekMoSu();
             };        
         });
 
@@ -1272,8 +1285,6 @@ jQuery( document ).ready( function( $ ) {
         return false; 
 
     });
-
-
 
 ////////////////////////////////
 // MANAGEMENT: UPDATE JOBTYPE //

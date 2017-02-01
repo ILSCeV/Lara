@@ -37,13 +37,16 @@
     </section>
 
     <br>
- 	<footer class="navbar-default navbar-static-bottom" id="footer">
+ 	<footer class="navbar-default navbar-static-bottom hidden-print" id="footer">
         <div class="container">
             <br>
             <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
                 <small><a href="mailto:maxim.drachinskiy@bc-studentenclub.de"> {{ trans('mainLang.notWorkingMail',['Name' => 'Maxim']) }} </a></small>
             </span>
             <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
+                <div class="centered text-dark-grey hidden-print">
+                    <a href="#" id="permalink">{{ trans('mainLang.getPermalink') }}</a>
+                </div>
                 @if(File::exists("gitrevision.txt"))
                     <small>{{File::get("gitrevision.txt")}}</small>
                 @else

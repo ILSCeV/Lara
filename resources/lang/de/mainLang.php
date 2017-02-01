@@ -371,7 +371,7 @@ return [
     
     'weekStart'                             => 'Montag - Sonntag',
     'hideTakenShifts'                       => 'Nur FREIe Dienste',
-    'getPermalink'                          => 'Permanent-Link zur derzeitigen Woche erhalten',
+    'getPermalink'                          => 'Permanent-Link erhalten',
     
     //-----------------------------------------------------------------------------------------------------------
     

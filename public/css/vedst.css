@@ -227,6 +227,10 @@ input[type=number],
     text-align: center;
 }
 
+#permalink{
+    display:none;
+}
+
 /**
  * Week view
  */
