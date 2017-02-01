@@ -18,6 +18,7 @@ class IcalController extends Controller
 
     const DATE_FORMAT = "Y-m-d H:i:s";
 
+    /** creates an ical for all club-events*/
     public function events()
     {
         $vCalendar = new Calendar('Events');
@@ -47,6 +48,11 @@ class IcalController extends Controller
         echo $vCalendar->render();
     }
 
+    /**
+     * creates an individual ical using your club_id
+     * @param $club_id - your club id, for example 1970
+     * @param $alarm - how many minutes you want to remind before the event
+     */
     public function userScheduleWithAlarm($club_id, $alarm = null) {
         $vCalendar = new Calendar('Events');
         $events = ScheduleEntry::with("getPerson","getSchedule","getSchedule.event")
@@ -57,8 +63,8 @@ class IcalController extends Controller
 
         $vEvents = $events->map(function ($evt) {
             $vEvent = new Event();
-            $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $evt->event . " " . $evt->entry_time_start));
-            $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $evt->event . " " . $evt->entry_time_end));
+            $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $evt->event->evnt_date_start . " " . $evt->entry_time_start));
+            $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $evt->event->evnt_date_end . " " . $evt->entry_time_end));
             $vEvent->setSummary($evt->event->evnt_title);
             $vEvent->setDescription($evt->event->evnt_public_info);
             $place = $evt->event->place->plc_title;
