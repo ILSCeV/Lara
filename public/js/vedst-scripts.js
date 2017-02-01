@@ -99,7 +99,6 @@ function drawLines(){
     for(var i=1; i<$shifts.length; i++){
         if($($shifts[i]).text() != $($shifts[i-1]).text())
         {
-            console.log("Draw");
             if($($shifts[i-1]).closest('.schedule_entry').hasClass('divider')){ //To avoid the line after the last shift
                 $($shifts[i-1]).closest('.schedule_entry').addClass('divider-thick');
             }
