@@ -1115,6 +1115,9 @@ jQuery( document ).ready( function( $ ) {
             var password = $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
         }
 
+        // necessary for the ajax callbacks
+        var currentId = $(this).attr('id');
+
         $.ajax({  
             type: $( this ).prop( 'method' ),  
 
@@ -1148,11 +1151,15 @@ jQuery( document ).ready( function( $ ) {
                 $(document).find('.dropdown-username').hide();
                 $(document).find('.dropdown-club').hide();
 
-                // HOTFIX: resolve current schedule entry ID via looking for an active save button
-                var currentId = $('button.btn-primary').parents('form').attr('id');
-
                 // Remove save icon and show a spinner in the username status while we are waiting for a server response
-                $('#btn-submit-changes' + currentId).addClass('hide').parent().children('i').removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner").attr("data-original-title", "In Arbeit...").css("color", "darkgrey");                
+                $('#btn-submit-changes' + currentId).addClass('hide')
+                    .parent()
+                    .children('i')
+                    .removeClass()
+                    .addClass("fa fa-spinner fa-spin")
+                    .attr("id", "spinner")
+                    .attr("data-original-title", "In Arbeit...")
+                    .css("color", "darkgrey");
             },
             
             complete: function() {
