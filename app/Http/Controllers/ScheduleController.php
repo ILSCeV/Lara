@@ -355,7 +355,7 @@ class ScheduleController extends Controller
         {
 
             // same job type as before - do nothing
-            if ( $entry->getJobType == Input::get('jbtyp_title' + $counterHelper) ) 
+            if ( $entry->getJobType == Input::get('jbtyp_title' . $counterHelper) )
             {
                 // add to new collection
                 $newEntries->add(ScheduleController::updateScheduleEntry($entry, $jobtype->id, $counterHelper));
