@@ -61,7 +61,7 @@ class IcalController extends Controller
      */
     public function userScheduleWithAlarm($club_id, $alarm)
     {
-        $peronal_calendar = \Cache::remember("ical" . $club_id . $alarm, 4 * 60, function () use ($club_id, $alarm) {
+        $personal_calendar = \Cache::remember("ical" . $club_id . $alarm, 4 * 60, function () use ($club_id, $alarm) {
             $person = Person::where('prsn_ldap_id', '=', $club_id)->first();
 
             $vCalendar = new Calendar('Events');
@@ -106,7 +106,7 @@ class IcalController extends Controller
         header('Content-Type: text/calendar; charset=utf-8');
         header('Content-Disposition: attachment; filename="cal.ics"');
 
-        echo $peronal_calendar;
+        echo $personal_calendar;
     }
 
 }
