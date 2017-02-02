@@ -81,7 +81,7 @@ class IcalController extends Controller
                 $vEvent->setDescription($schedule->event->evnt_public_info);
                 $place = $schedule->event->place->plc_title;
                 $vEvent->setLocation($place, $place);
-                if ( $alarm >0 ) {
+                if ( $alarm >0 && ($start_date_time > new \DateTime()) ) {
                     $vAlarm = new Alarm();
                     $vAlarm->setAction(Alarm::ACTION_DISPLAY);
                     $vAlarm->setDescription($schedule->event->evnt_title);
