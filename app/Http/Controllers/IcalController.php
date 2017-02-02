@@ -54,14 +54,14 @@ class IcalController extends Controller
      * @param $club_id - your club id, for example 1970
      * @param $alarm - how many minutes you want to remind before the event
      */
-    public function userScheduleWithAlarm($club_id, $alarm = null) {
+    public function userScheduleWithAlarm($club_id, $alarm) {
 
         $person = Person::where('prsn_ldap_id', '=', $club_id)->first();
 
         $vCalendar = new Calendar('Events');
-        $events = ScheduleEntry::where('prsn_id','=', $person->prsn_id)->with("schedule","schedule.event.place","schedule.event")->get();
+        $events = ScheduleEntry::where('prsn_id','=', $person->id)->with("schedule","schedule.event.place","schedule.event")->get();
 
-        $vEvents = $events->map(function ($evt) {
+        $vEvents = $events->map(function ($evt) use ($alarm) {
             $schedule = $evt->schedule;
             $start_time = "";
             if($schedule->event->evnt_time_start == $evt->entry_time_start){
@@ -81,7 +81,7 @@ class IcalController extends Controller
                 $vEvent->setDescription($schedule->event->evnt_public_info);
                 $place = $schedule->event->place->plc_title;
                 $vEvent->setLocation($place, $place);
-                if (isset($alarm)) {
+                if ( $alarm >0 ) {
                     $vAlarm = new Alarm();
                     $vAlarm->setAction(Alarm::ACTION_DISPLAY);
                     $vAlarm->setDescription($schedule->event->evnt_title);
