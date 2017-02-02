@@ -71,19 +71,24 @@ class IcalController extends Controller
             }
 
             $vEvent = new Event();
-            $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $schedule->event->evnt_date_start . " " . $start_time));
-            $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $schedule->event->evnt_date_end . " " . $evt->entry_time_end));
-            $vEvent->setSummary($schedule->event->evnt_title);
-            $vEvent->setDescription($schedule->event->evnt_public_info);
-            $place = $schedule->event->place->plc_title;
-            $vEvent->setLocation($place, $place);
-                if(isset($alarm)){
+            $start_date_time = \DateTime::createFromFormat(self::DATE_FORMAT, "" . $schedule->event->evnt_date_start . " " . $start_time);
+            $stop_date_time = \DateTime::createFromFormat(self::DATE_FORMAT, "" . $schedule->event->evnt_date_end . " " . $evt->entry_time_end);
+
+            if($start_date_time!=false && $stop_date_time != false) {
+                $vEvent->setDtStart($start_date_time);
+                $vEvent->setDtEnd($stop_date_time);
+                $vEvent->setSummary($schedule->event->evnt_title);
+                $vEvent->setDescription($schedule->event->evnt_public_info);
+                $place = $schedule->event->place->plc_title;
+                $vEvent->setLocation($place, $place);
+                if (isset($alarm)) {
                     $vAlarm = new Alarm();
                     $vAlarm->setAction(Alarm::ACTION_DISPLAY);
                     $vAlarm->setDescription($schedule->event->evnt_title);
-                    $vAlarm->setTrigger("-PT".$alarm."M");
+                    $vAlarm->setTrigger("-PT" . $alarm . "M");
                     $vEvent->addComponent($vAlarm);
                 }
+            }
             return $vEvent;
         });
 
