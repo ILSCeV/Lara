@@ -11,6 +11,7 @@ use Eluceo\iCal\Component\Alarm;
 use Eluceo\iCal\Component\Calendar;
 use Eluceo\iCal\Component\Event;
 use Lara\ClubEvent;
+use Lara\Person;
 use Lara\ScheduleEntry;
 
 class IcalController extends Controller
@@ -54,25 +55,32 @@ class IcalController extends Controller
      * @param $alarm - how many minutes you want to remind before the event
      */
     public function userScheduleWithAlarm($club_id, $alarm = null) {
-        $vCalendar = new Calendar('Events');
-        $events = ScheduleEntry::with("getPerson","getSchedule","getSchedule.event")
-            ->where("getPerson.prsn_ldap_id","=",$club_id)
-        ->get();
 
-        var_dump($events[10]->getPerson);
+        $person = Person::where('prsn_ldap_id', '=', $club_id)->first();
+
+        $vCalendar = new Calendar('Events');
+        $events = ScheduleEntry::where('prsn_id','=', $person->prsn_id)->with("schedule","schedule.event.place","schedule.event")->get();
 
         $vEvents = $events->map(function ($evt) {
+            $schedule = $evt->schedule;
+            $start_time = "";
+            if($schedule->event->evnt_time_start == $evt->entry_time_start){
+                $start_time = $schedule->schdl_time_preparation_start;
+            } else {
+                $start_time = $evt->entry_time_start;
+            }
+
             $vEvent = new Event();
-            $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $evt->event->evnt_date_start . " " . $evt->entry_time_start));
-            $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $evt->event->evnt_date_end . " " . $evt->entry_time_end));
-            $vEvent->setSummary($evt->event->evnt_title);
-            $vEvent->setDescription($evt->event->evnt_public_info);
-            $place = $evt->event->place->plc_title;
+            $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $schedule->event->evnt_date_start . " " . $start_time));
+            $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $schedule->event->evnt_date_end . " " . $evt->entry_time_end));
+            $vEvent->setSummary($schedule->event->evnt_title);
+            $vEvent->setDescription($schedule->event->evnt_public_info);
+            $place = $schedule->event->place->plc_title;
             $vEvent->setLocation($place, $place);
                 if(isset($alarm)){
                     $vAlarm = new Alarm();
                     $vAlarm->setAction(Alarm::ACTION_DISPLAY);
-                    $vAlarm->setDescription($evt->event->evnt_title);
+                    $vAlarm->setDescription($schedule->event->evnt_title);
                     $vAlarm->setTrigger("-PT".$alarm."M");
                     $vEvent->addComponent($vAlarm);
                 }
