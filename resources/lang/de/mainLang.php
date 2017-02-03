@@ -448,7 +448,7 @@ return [
     'actions'                       => 'Aktionen',
     'deleteConfirmation'            => 'Möchtest du folgenden Diensttyp wirklich löschen:',
     'warningNotReversible'          => 'Diese Aktion kann man nicht rückgängig machen!',
-    'showDetails'                   => 'Details anpassen',
+    'editDetails'                   => 'Details anpassen',
     'deleteThisJobtype'             => 'Entfernen',
 
     'reset'                         => 'Zurücksetzen',
