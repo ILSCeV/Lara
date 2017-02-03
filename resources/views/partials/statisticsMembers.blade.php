@@ -38,15 +38,16 @@
                         @foreach($clubInfo as $info)
                             <tr class="{{$info->user->isLoggedInUser() ? 'my-shift' : ''}}">
                                 <td>
-                                    @include('partials.personStatusMarker', ['person' => $info->user]){{$info->user->prsn_name }}
+                                    @include('partials.personStatusMarker', ['person' => $info->user])
+                                    <a href="#" onclick="chosenPerson = '{{$info->user->prsn_name}}'" name="show-stats-person{{$info->user->id}}" id="{{$info->user->id}}">
+                                        {{$info->user->prsn_name}}
+                                    </a>
                                 </td>
                                 <td>
-                                    {{$info->totalShifts}}
+                                    @include('partials.statistics.amountOfShiftsDisplay')
                                 </td>
                                 <td>
-                                    <div class="progress centered">
-                                        <div class="progress-bar" style="width: {{$info->shiftsPercent}}%;"></div>
-                                    </div>
+                                    @include('partials.statistics.graphicShifts')
                                 </td>
                             </tr>
                         @endforeach

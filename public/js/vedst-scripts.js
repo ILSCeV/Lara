@@ -10,11 +10,15 @@ $(function() {
 function translate(str) {
     var language = localStorage["language"];
     var translations = language === "en" ? enTranslations : deTranslations;
-    return translations[str] ? translations[str] : '!! Translation necessary: ' + str + ' in language' + language + ' !!';
+    return translations[str] ? translations[str] : '!! Translation necessary: "' + str + '" in language "' + language + '" !!';
 }
+
+
 
 // Enable Tooltips
 $(function () { $("[data-toggle='tooltip']").tooltip(); });     
+
+
 
 // Automatically close notifications after 4 seconds (4000 milliseconds)
 window.setTimeout(function() {
@@ -49,6 +53,37 @@ $('.languageSwitcher').find('a').click(function() {
     var language = $(this).data('language');
     localStorage.setItem('language', language);
 });
+
+
+
+// conversion of html entities to text (e.g. "&" as "&amp;")
+// ref: https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery
+function decodeEntities(encodedString) {
+    var textArea = document.createElement('textarea');
+    textArea.innerHTML = encodedString;
+    return textArea.value;
+}
+
+
+
+////////////////
+// Month view //
+////////////////
+
+
+// Scroll to current date/event if in mobile view in current month
+$(document).ready(function() 
+{
+    // check if we are in month view and if the today-marker exists
+    if ($('#month-view-marker').length && $(".scroll-marker").length) 
+    {
+        if ($(window).width() < 978) 
+        {
+            $('html, body').animate({ scrollTop: $(".scroll-marker").offset().top -80 }, 1000);
+        };
+    };
+});
+
 
 
 
@@ -195,9 +230,9 @@ $(document).ready(function() {
         // update fields for following entries
         temp.nextUntil("br").each(function() {
             $(this).attr('id', "box" + ++tempId);
-            $(this).find("[name^=jobType]").attr('id', "jobType" + tempId).attr('name', "jobType" + tempId);
-            $(this).find("[name^=timeStart]").attr('id', "timeStart" + tempId).attr('name', "timeStart" + tempId);
-            $(this).find("[name^=timeEnd]").attr('id', "timeEnd" + tempId).attr('name', "timeEnd" + tempId);
+            $(this).find("[name^=jbtyp_title]").attr('id', "jbtyp_title" + tempId).attr('name', "jbtyp_title" + tempId);
+            $(this).find("[name^=jbtyp_time_start]").attr('id', "jbtyp_time_start" + tempId).attr('name', "jbtyp_time_start" + tempId);
+            $(this).find("[name^=jbtyp_time_end]").attr('id', "jbtyp_time_end" + tempId).attr('name', "jbtyp_time_end" + tempId);
             $(this).find("[name^=jbtyp_statistical_weight]").attr('id', "jbtyp_statistical_weight" + tempId).attr('name', "jbtyp_statistical_weight" + tempId);
         }); 
 
@@ -218,9 +253,9 @@ $(document).ready(function() {
             // update fields for following entries
             temp.nextUntil("br").each(function() {
                 $(this).attr('id', "box" + ++tempId);
-                $(this).find("[name^=jobType]").attr('id', "jobType" + tempId).attr('name', "jobType" + tempId);
-                $(this).find("[name^=timeStart]").attr('id', "timeStart" + tempId).attr('name', "timeStart" + tempId);
-                $(this).find("[name^=timeEnd]").attr('id', "timeEnd" + tempId).attr('name', "timeEnd" + tempId);
+                $(this).find("[name^=jbtyp_title]").attr('id', "jbtyp_title" + tempId).attr('name', "jbtyp_title" + tempId);
+                $(this).find("[name^=jbtyp_time_start]").attr('id', "jbtyp_time_start" + tempId).attr('name', "jbtyp_time_start" + tempId);
+                $(this).find("[name^=jbtyp_time_end]").attr('id', "jbtyp_time_end" + tempId).attr('name', "jbtyp_time_end" + tempId);
                 $(this).find("[name^=jbtyp_statistical_weight]").attr('id', "jbtyp_statistical_weight" + tempId).attr('name', "jbtyp_statistical_weight" + tempId);
             }); 
 
@@ -240,9 +275,9 @@ $(document).ready(function() {
     // populate from dropdown select
     $.fn.dropdownSelect = function(jobtype, timeStart, timeEnd, weight) {
         
-        $(this).closest('.box').find("[name^=jobType]").val(jobtype);
-        $(this).closest('.box').find("[name^=timeStart]").val(timeStart);
-        $(this).closest('.box').find("[name^=timeEnd]").val(timeEnd);   
+        $(this).closest('.box').find("[name^=jbtyp_title]").val(jobtype);
+        $(this).closest('.box').find("[name^=jbtyp_time_start]").val(timeStart);
+        $(this).closest('.box').find("[name^=jbtyp_time_end]").val(timeEnd);   
         $(this).closest('.box').find("[name^=jbtyp_statistical_weight]").val(weight);
     };
 });
@@ -656,6 +691,102 @@ $( document ).ready( function() {
 
 
 
+////////////////
+// Statistics //
+////////////////
+
+
+
+    ///////////////////////////////////////
+    // Show shifts for a selected person //
+    ///////////////////////////////////////
+
+
+
+    $('[name^=show-stats-person]').click(function() {
+
+        // Initialise modal and show loading icon and message
+        var dialog = bootbox.dialog({
+            title: translate('listOfShiftsDone') + chosenPerson,
+            size: 'large',
+            message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>'
+        });
+
+       
+        // Do all the work here after AJAX response is received
+        function ajaxCallBackPersonStats(response) { 
+
+            // Parse and show response
+            dialog.init(function(){
+
+                // Initialise table structure
+                dialog.find('.modal-body').addClass("no-padding").html(
+                    "<table id=\"person-shifts-overview\" class=\"table table-hover no-padding\"><thead><tr><th>#</th><th>" 
+                        + translate('shift') + "</th><th>" 
+                        + translate('event') + "</th><th>" 
+                        + translate('section') + "</th><th>" 
+                        + translate('date') + "</th><th>" 
+                        + translate('weight') + "</th></tr></thead></table>"
+                );
+
+                // check for empty response
+                if (response.length === 0) 
+                {
+                    $("#person-shifts-overview").append("<tr><td colspan=6>"  + translate('noShiftsInThisPeriod') + "</td></tr>");
+                }
+
+                // Fill with data received 
+                for (var i = 0; i < response.length; i++)
+                {
+                    $("#person-shifts-overview").append("<tr" 
+                                                          // Change background for shifts in other sections
+                                                          + (localStorage.preferredStatistics !== response[i]["section"] ? " class=\"active text-muted\"" : "\"\"") + ">"
+                                                          + "<td>"  + (1+i) + "</td>" 
+                                                          + "<td>" + response[i]["shift"] + "</td>"
+                                                          + "<td>" + "<a href=\"../../event/" + response[i]["event_id"] + "\" >" 
+                                                          + response[i]["event"] + "</a></td>"
+                                                          // Color-coding for different sections 
+                                                          + "<td class=\"" + response[i]["section"]+ "-section-highlight\">"     
+                                                          + response[i]["section"] + "</td>"
+                                                          + "<td>" + response[i]["date"] + "</td>" 
+                                                          + "<td>" + response[i]["weight"] + "</td></tr>");
+                }
+
+            }); 
+        }
+
+        // AJAX Request shifts for a person selected
+        $.ajax({  
+            type: $( this ).prop( 'method' ),  
+
+            url: "/statistics/person/" + $(this).prop("id"),  
+
+            data: {
+                    // chosen date values from the view
+                    "month": chosenMonth,
+                    "year":  chosenYear,
+
+                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                    "_token": $(this).find( 'input[name=_token]' ).val(),
+
+                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+                    "_method": "get"
+            },  
+
+            dataType: 'json',
+
+            success: function(response){
+                // external function handles the response
+                ajaxCallBackPersonStats(response);
+            },
+        });
+
+    });
+
+
+
+
+
 //////////
 // AJAX //
 //////////
@@ -874,6 +1005,118 @@ jQuery( document ).ready( function( $ ) {
     } );
 
 
+
+    ///////////////////////////
+    // AUTOCOMPLETE JOBTYPES //
+    ///////////////////////////
+    
+
+
+    // open jobtype dropdown on input selection
+    $( '.box' ).find('input[type=text]').on( 'focus', function() 
+    {
+        // remove all other dropdowns
+        $(document).find('.dropdown-jobtypes').hide();
+        // open dropdown for current input
+        $(document.activeElement).next('.dropdown-jobtypes').show();
+    } );
+
+    // hide all dropdowns on ESC keypress
+    $(document).keyup(function(e) 
+    {
+      if (e.keyCode === 27) {
+        $(document).find('.dropdown-jobtypes').hide();
+      }
+    });
+
+    $( '.box' ).find("input[id^='jbtyp_title']").on( 'input', function() 
+    {
+        // do all the work here after AJAX response is received
+        function ajaxCallBackClubs(response) { 
+
+            // clear array from previous results
+            $(document.activeElement).next('.dropdown-jobtypes').contents().remove();
+
+            // format data received
+            response.forEach(function(data) {
+
+                // add found jobtypes and metadata to the dropdown
+                $(document.activeElement).next('.dropdown-jobtypes').append(
+                    '<li><a href="javascript:void(0);">' 
+                    + '<span id="jobTypeTitle">' 
+                    + data.jbtyp_title 
+                    + '</span>'
+                    + ' (<i class="fa fa-clock-o"></i> '
+                    + '<span id="jobTypeTimeStart">'
+                    + data.jbtyp_time_start
+                    + '</span>'
+                    + '-'
+                    + '<span id="jobTypeTimeEnd">'
+                    + data.jbtyp_time_end
+                    + '</span>'
+                    + '<span id="jobTypeWeight" class="hidden">'
+                    + data.jbtyp_statistical_weight
+                    + '</span>'
+                    + ')' 
+                    + '</a></li>');
+            });  
+
+            // process clicks inside the dropdown
+            $(document.activeElement).next('.dropdown-jobtypes').children('li').click(function(e)
+            {
+                var selectedJobTypeTitle        = decodeEntities($(this).find('#jobTypeTitle').html());     // decoding html entities in the process
+                var selectedJobTypeTimeStart    = $(this).find('#jobTypeTimeStart').html();
+                var selectedJobTypeTimeEnd      = $(this).find('#jobTypeTimeEnd').html();
+                var selectedJobTypeWeight       = $(this).find('#jobTypeWeight').html();
+                var currentInputId              = $(this).closest(".box").attr("id").slice(3);
+
+                // update fields
+                $("input[id=jbtyp_title"                + currentInputId + "]").val(selectedJobTypeTitle);
+                $("input[id=jbtyp_time_start"           + currentInputId + "]").val(selectedJobTypeTimeStart);
+                $("input[id=jbtyp_time_end"             + currentInputId + "]").val(selectedJobTypeTimeEnd);
+                $("input[id=jbtyp_statistical_weight"   + currentInputId + "]").val(selectedJobTypeWeight);
+
+                // close dropdown afterwards
+                $(document).find('.dropdown-jobtypes').hide();
+            });
+
+            // reveal newly created dropdown
+            $(document.activeElement).next('.dropdown-jobtypes').show();
+
+        }
+
+        // short delay to prevents double sending
+        $(this).delay('250');
+
+        // Request autocompleted names
+        $.ajax({  
+            type: $( this ).prop( 'method' ),  
+
+            url: "/jobtypes/" + $(this).val(),  
+
+            data: {
+                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                    "_token": $(this).find( 'input[name=_token]' ).val(),
+
+                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+                    "_method": "get"
+            },  
+
+            dataType: 'json',
+
+            success: function(response){
+                // external function handles the response
+                ajaxCallBackClubs(response);
+            },
+        });
+    } );
+
+
+
+
+
+
+
     // Submit changes
     $( '.scheduleEntry' ).on( 'submit', function() {
 
@@ -886,6 +1129,9 @@ jQuery( document ).ready( function( $ ) {
         } else {
             var password = $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
         }
+
+        // necessary for the ajax callbacks
+        var currentId = $(this).attr('id');
 
         $.ajax({  
             type: $( this ).prop( 'method' ),  
@@ -920,11 +1166,15 @@ jQuery( document ).ready( function( $ ) {
                 $(document).find('.dropdown-username').hide();
                 $(document).find('.dropdown-club').hide();
 
-                // HOTFIX: resolve current schedule entry ID via looking for an active save button
-                var currentId = $('button.btn-primary').parents('form').attr('id');
-
                 // Remove save icon and show a spinner in the username status while we are waiting for a server response
-                $('#btn-submit-changes' + currentId).addClass('hide').parent().children('i').removeClass().addClass("fa fa-spinner fa-spin").attr("id", "spinner").attr("data-original-title", "In Arbeit...").css("color", "darkgrey");                
+                $('#btn-submit-changes' + currentId).addClass('hide')
+                    .parent()
+                    .children('i')
+                    .removeClass()
+                    .addClass("fa fa-spinner fa-spin")
+                    .attr("id", "spinner")
+                    .attr("data-original-title", "In Arbeit...")
+                    .css("color", "darkgrey");
             },
             
             complete: function() {
@@ -1049,7 +1299,7 @@ jQuery( document ).ready( function( $ ) {
 
                 // if all rows except table header were hidden (all jobtypes substituted withn other ones),
                 // refresh the page to get the delete button or show remaining jobtypes
-                if ($("tr:visible").length <= 1) {
+                if ($("#events-rows").children("tr:visible").length <= 1) {
                     // we remove arguments after "?" because otherwise user could land on a pagination page that is already empty
                     window.location = window.location.href.split("?")[0];
                 }

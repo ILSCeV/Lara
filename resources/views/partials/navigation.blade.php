@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-default navbar-static-top navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
         <button type="button"
@@ -27,10 +27,7 @@
             <li><a href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
 
 {{-- MEMBER STATISTICS / members only --}}
-            {{-- @if(Session::has('userId')) --}}
-            {{-- Restict access for now --}}
-            @if(Session::get('userGroup') == 'clubleitung'
-             OR Session::get('userGroup') == 'admin')
+            @if(Session::has('userId'))
                 <li><a href="{{ asset('/statistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
             @endif
             
@@ -44,14 +41,14 @@
                 </a>
                 <ul class="dropdown-menu" role="menu">
 
-{{-- JOB TYPE MANAGEMENT / marketing, section management or admins only 
-     COMMENTED OUT FOR NOW, WILL RESTORE IN THE NEXT UPDATE 
+{{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
+
                 @if(Session::get('userGroup') == 'marketing'
                  OR Session::get('userGroup') == 'clubleitung'
                  OR Session::get('userGroup') == 'admin')
                     <li><a href="{{ asset('jobtype') }}">{{ trans('mainLang.manageJobType') }}</a></li>
                 @endif
---}}
+
 
 {{-- LARA LOGS / section management or admins only --}}
                 @if(Session::get('userGroup') == 'clubleitung'

@@ -285,7 +285,7 @@ class ScheduleController extends Controller
         for ($i=1; $i <= Input::get("counter"); $i++) {
 
             // skip empty fields
-            if (!empty(Input::get("jobType" . $i))) 
+            if (!empty(Input::get("jbtyp_title" . $i))) 
             {       
 
                 // check if job type exists
@@ -298,13 +298,13 @@ class ScheduleController extends Controller
                 if (is_null($jobType))
                 {
                     // TITLE
-                    $jobType = Jobtype::create(array('jbtyp_title' => Input::get("jobType" . $i)));
+                    $jobType = Jobtype::create(array('jbtyp_title' => Input::get("jbtyp_title" . $i)));
 
                     // TIME START
-                    $jobType->jbtyp_time_start = Input::get('timeStart' . $i);
+                    $jobType->jbtyp_time_start = Input::get('jbtyp_time_start' . $i);
 
                     // TIME END
-                    $jobType->jbtyp_time_end = Input::get('timeEnd' . $i);
+                    $jobType->jbtyp_time_end = Input::get('jbtyp_time_end' . $i);
 
                     // STATISTICAL WEIGHT
                     $jobType->jbtyp_statistical_weight = Input::get('jbtyp_statistical_weight' . $i);
@@ -355,14 +355,14 @@ class ScheduleController extends Controller
         {
 
             // same job type as before - do nothing
-            if ( $entry->getJobType == Input::get('jobType' + $counterHelper) ) 
+            if ( $entry->getJobType == Input::get('jbtyp_title' . $counterHelper) )
             {
                 // add to new collection
                 $newEntries->add(ScheduleController::updateScheduleEntry($entry, $jobtype->id, $counterHelper));
 
             } 
             // job type empty - delete entry
-            elseif ( Input::get("jobType" . $counterHelper) == '' ) 
+            elseif ( Input::get("jbtyp_title" . $counterHelper) == '' ) 
             {
                 // log revision
                 ScheduleController::logRevision($entry->getSchedule,    // schedule object
@@ -380,7 +380,7 @@ class ScheduleController extends Controller
             // some new job type added - change entry
             else 
             {       
-                $jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jobType" . $counterHelper)));
+                $jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jbtyp_title" . $counterHelper)));
                 $entry->jbtyp_id = $jobtype->id;
 
                 // log revision
@@ -407,9 +407,9 @@ class ScheduleController extends Controller
             for ($i= $counterHelper; $i <= $numberOfSubmittedEntries; $i++) 
             {
                 // skip empty fields, create new fields only if input not empty
-                if (!empty(Input::get("jobType" . $i))) 
+                if (!empty(Input::get("jbtyp_title" . $i))) 
                 {
-                    $jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jobType" . $i)));
+                    $jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jbtyp_title" . $i)));
 
                     $newEntry = new ScheduleEntry;
                     $newEntry->jbtyp_id = $jobtype->id;
@@ -460,9 +460,9 @@ class ScheduleController extends Controller
     */
     private static function updateScheduleEntry($scheduleEntry, $jobtypeId, $counterValue)
     {
-        $scheduleEntry->entry_time_start = Input::get('timeStart' . $counterValue);
+        $scheduleEntry->entry_time_start = Input::get('jbtyp_time_start' . $counterValue);
 
-        $scheduleEntry->entry_time_end = Input::get('timeEnd' . $counterValue);
+        $scheduleEntry->entry_time_end = Input::get('jbtyp_time_end' . $counterValue);
 
         $scheduleEntry->entry_statistical_weight = Input::get('jbtyp_statistical_weight' . $counterValue);
 
