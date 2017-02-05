@@ -48,10 +48,9 @@ class IcalController extends Controller
         });
 
 
-        header('Content-Type: text/calendar; charset=utf-8');
-        header('Content-Disposition: attachment; filename="cal.ics"');
-
-        echo $calendar;
+        return response($calendar)
+            ->header('Content-Type: text/calendar','charset=utf-8')
+            ->header('Content-Disposition: attachment', 'filename="cal.ics"');
     }
 
     /**
@@ -65,15 +64,18 @@ class IcalController extends Controller
             $person = Person::where('prsn_ldap_id', '=', $club_id)->first();
 
             $vCalendar = new Calendar('Events');
-            $events = ScheduleEntry::where('prsn_id', '=', $person->id)->with("schedule", "schedule.event.place", "schedule.event")->get();
+            $events = ScheduleEntry::where('prsn_id', '=', $person->id)->with("schedule", "schedule.event.place", "schedule.event", "jobType")->get();
 
             $vEvents = $events->map(function ($evt) use ($alarm) {
                 $schedule = $evt->schedule;
                 $start_time = "";
+                $preparationNeeded = false;
                 if ($schedule->event->evnt_time_start == $evt->entry_time_start) {
                     $start_time = $schedule->schdl_time_preparation_start;
+                    $preparationNeeded = true;
                 } else {
                     $start_time = $evt->entry_time_start;
+                    $preparationNeeded = false;
                 }
 
                 $vEvent = new Event();
@@ -83,8 +85,12 @@ class IcalController extends Controller
                 if ($start_date_time != false && $stop_date_time != false) {
                     $vEvent->setDtStart($start_date_time);
                     $vEvent->setDtEnd($stop_date_time);
-                    $vEvent->setSummary($schedule->event->evnt_title);
-                    $vEvent->setDescription($schedule->event->evnt_public_info);
+                    $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->jobType->jbtyp_title));
+                    $prefixDescription = "";
+                    if($preparationNeeded){
+                        $prefixDescription = "DV: ".$start_time."\n";
+                    }
+                    $vEvent->setDescription($prefixDescription.$schedule->event->evnt_public_info);
                     $place = $schedule->event->place->plc_title;
                     $vEvent->setLocation($place, $place);
                     if ($alarm > 0 && ($start_date_time > new \DateTime())) {
@@ -103,10 +109,12 @@ class IcalController extends Controller
             }
             return $vCalendar->render();
         });
-        header('Content-Type: text/calendar; charset=utf-8');
-        header('Content-Disposition: attachment; filename="cal.ics"');
+        ;
 
-        echo $personal_calendar;
+
+        return response($personal_calendar)
+            ->header('Content-Type: text/calendar','charset=utf-8')
+            ->header('Content-Disposition: attachment', 'filename="cal.ics"');
     }
 
 }
