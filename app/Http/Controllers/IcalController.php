@@ -22,7 +22,7 @@ class IcalController extends Controller
     /** creates an ical for all club-events*/
     public function events()
     {
-        $calendar =  \Cache::remember("icalAllEvents",4*60, function (){
+        $calendar = \Cache::remember("icalAllEvents", 4 * 60, function () {
             $vCalendar = new Calendar('Events');
 
             $events = ClubEvent::where("evnt_is_private", "=", '0')
@@ -49,8 +49,10 @@ class IcalController extends Controller
 
 
         return response($calendar)
-            ->header('Content-Type: text/calendar','charset=utf-8')
-            ->header('Content-Disposition: attachment', 'filename="cal.ics"');
+            ->withHeaders(['Content-Type' => 'text/calendar',
+                'charset' => 'utf-8',
+                'Content-Disposition' => 'attachment; filename="cal.ics"'
+            ]);
     }
 
     /**
@@ -85,18 +87,18 @@ class IcalController extends Controller
                 if ($start_date_time != false && $stop_date_time != false) {
                     $vEvent->setDtStart($start_date_time);
                     $vEvent->setDtEnd($stop_date_time);
-                    $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->jobType->jbtyp_title));
+                    $vEvent->setSummary("" . ($schedule->event->evnt_title) . " - " . ($evt->jobType->jbtyp_title));
                     $prefixDescription = "";
-                    if($preparationNeeded){
-                        $prefixDescription = "DV: ".$start_time."\n";
+                    if ($preparationNeeded) {
+                        $prefixDescription = "shift start:".$evt->entry_time_start." DV-time: " . $start_time . "\n";
                     }
-                    $vEvent->setDescription($prefixDescription.$schedule->event->evnt_public_info);
+                    $vEvent->setDescription($prefixDescription . $schedule->event->evnt_public_info);
                     $place = $schedule->event->place->plc_title;
                     $vEvent->setLocation($place, $place);
                     if ($alarm > 0 && ($start_date_time > new \DateTime())) {
                         $vAlarm = new Alarm();
                         $vAlarm->setAction(Alarm::ACTION_DISPLAY);
-                        $vAlarm->setDescription($schedule->event->evnt_title);
+                        $vAlarm->setDescription($schedule->event->evnt_title. " - " . ($evt->jobType->jbtyp_title));
                         $vAlarm->setTrigger("-PT" . $alarm . "M");
                         $vEvent->addComponent($vAlarm);
                     }
@@ -108,13 +110,14 @@ class IcalController extends Controller
                 $vCalendar->addComponent($vEvent);
             }
             return $vCalendar->render();
-        });
-        ;
+        });;
 
 
         return response($personal_calendar)
-            ->header('Content-Type: text/calendar','charset=utf-8')
-            ->header('Content-Disposition: attachment', 'filename="cal.ics"');
+            ->withHeaders(['Content-Type' => 'text/calendar',
+                'charset' => 'utf-8',
+                'Content-Disposition' => 'attachment; filename="'.$club_id.'.ics"'
+                ]);
     }
 
 }
