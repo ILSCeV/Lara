@@ -38,7 +38,7 @@ class Utilities
         $keys = self::getAllCacheKeys();
         foreach ($keys as $key){
             if(strpos($keys,'ical')!==false){
-                \Cache::forever($key);
+                \Cache::forget($key);
             }
         }
     }
