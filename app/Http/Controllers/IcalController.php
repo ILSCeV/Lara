@@ -10,6 +10,8 @@ namespace Lara\Http\Controllers;
 use Eluceo\iCal\Component\Alarm;
 use Eluceo\iCal\Component\Calendar;
 use Eluceo\iCal\Component\Event;
+
+use Eluceo\iCal\Component\Timezone;
 use Lara\ClubEvent;
 use Lara\Person;
 use Lara\ScheduleEntry;
@@ -24,12 +26,14 @@ class IcalController extends Controller
     {
         $calendar = \Cache::remember("icalAllEvents", 4 * 60, function () {
             $vCalendar = new Calendar('Events');
+            $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
 
             $events = ClubEvent::where("evnt_is_private", "=", '0')
                 ->with('place')
                 ->get();
             $vEvents = $events->map(function ($evt) {
                 $vEvent = new Event();
+                $vEvent->setUseTimezone(true);
                 $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $evt->evnt_date_start . " " . $evt->evnt_time_start));
                 $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $evt->evnt_date_end . " " . $evt->evnt_time_end));
                 $vEvent->setSummary($evt->evnt_title);
@@ -46,7 +50,6 @@ class IcalController extends Controller
 
             return $vCalendar->render();
         });
-
 
         return response($calendar)
             ->withHeaders(['Content-Type' => 'text/calendar',
@@ -66,7 +69,11 @@ class IcalController extends Controller
             $person = Person::where('prsn_ldap_id', '=', $club_id)->first();
 
             $vCalendar = new Calendar('Events');
-            $events = ScheduleEntry::where('prsn_id', '=', $person->id)->with("schedule", "schedule.event.place", "schedule.event", "jobType")->get();
+            $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
+
+            $events = ScheduleEntry::where('prsn_id', '=', $person->id)
+                ->with("schedule", "schedule.event.place", "schedule.event", "jobType")
+                ->get();
 
             $vEvents = $events->map(function ($evt) use ($alarm) {
                 $schedule = $evt->schedule;
@@ -95,6 +102,7 @@ class IcalController extends Controller
                     $vEvent->setDescription($prefixDescription . $schedule->event->evnt_public_info);
                     $place = $schedule->event->place->plc_title;
                     $vEvent->setLocation($place, $place);
+                    $vEvent->setUseTimezone(true);
                     if ($alarm > 0 && ($start_date_time > new \DateTime())) {
                         $vAlarm = new Alarm();
                         $vAlarm->setAction(Alarm::ACTION_DISPLAY);
