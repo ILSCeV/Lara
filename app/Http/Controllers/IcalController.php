@@ -87,9 +87,18 @@ class IcalController extends Controller
                     $preparationNeeded = false;
                 }
 
+                $stopHour = intval(substr($evt->entry_time_end,0,2));
+
+                $stop_date = "";
+                if($stopHour>18){
+                    $stop_date = $schedule->event->evnt_date_start;
+                } else{
+                    $stop_date = $schedule->event->evnt_date_end;
+                }
+
                 $vEvent = new Event();
                 $start_date_time = \DateTime::createFromFormat(self::DATE_FORMAT, "" . $schedule->event->evnt_date_start . " " . $start_time);
-                $stop_date_time = \DateTime::createFromFormat(self::DATE_FORMAT, "" . $schedule->event->evnt_date_end . " " . $evt->entry_time_end);
+                $stop_date_time = \DateTime::createFromFormat(self::DATE_FORMAT, "" . $stop_date . " " . $evt->entry_time_end);
 
                 if ($start_date_time != false && $stop_date_time != false) {
                     $vEvent->setDtStart($start_date_time);

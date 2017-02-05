@@ -20,7 +20,8 @@ class Utilities
             }, $text);
     }
 
-    static function getAllCacheKeys(){
+    static function getAllCacheKeys()
+    {
         $storage = Cache::getStore(); // will return instance of FileStore
         $filesystem = $storage->getFilesystem(); // will return instance of Filesystem
 
@@ -34,10 +35,11 @@ class Utilities
         return $keys;
     }
 
-    static function clearIcalCache(){
+    static function clearIcalCache()
+    {
         $keys = self::getAllCacheKeys();
-        foreach ($keys as $key){
-            if(strpos($keys,'ical')!==false){
+        foreach ($keys as $key) {
+            if (strpos($keys, 'ical') !== false) {
                 \Cache::forget($key);
             }
         }
