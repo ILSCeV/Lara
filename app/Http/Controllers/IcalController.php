@@ -60,7 +60,7 @@ class IcalController extends Controller
      * @param $club_id - your club id, for example 1970
      * @param $alarm - how many minutes you want to remind before the event
      */
-    public function userScheduleWithAlarm($club_id, $alarm)
+    public function userScheduleWithAlarm($club_id, $alarm=0)
     {
         $personal_calendar = \Cache::remember("ical" . $club_id . $alarm, 4 * 60, function () use ($club_id, $alarm) {
             $person = Person::where('prsn_ldap_id', '=', $club_id)->first();
