@@ -122,7 +122,7 @@ class ScheduleEntryController extends Controller
             return response()->json('Fehler: die Session ist abgelaufen. Bitte aktualisiere die Seite und logge dich ggf. erneut ein.', 401);
         }
 
-        \Artisan::call("cache:clear");
+        Utilities::clearIcalCache();
 
         // If we only want to modify the jobtype via management pages - do it without evaluating the rest
         if ( !empty($request->get('jobtypeId')) AND is_numeric($request->get('jobtypeId')) ) {
@@ -391,6 +391,7 @@ class ScheduleEntryController extends Controller
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
+        Utilities::clearIcalCache();
 
         // Delete the entry
         ScheduleEntry::destroy($id);
