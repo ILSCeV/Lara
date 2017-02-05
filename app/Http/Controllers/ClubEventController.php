@@ -199,7 +199,7 @@ class ClubEventController extends Controller
         // log the action
         Log::info('Event created: ' . Session::get('userName') . ' (' . Session::get('userId') . ', ' 
                  . Session::get('userGroup') . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
-            
+        \Artisan::call("cache:clear");
         // show new event
         return Redirect::action('ClubEventController@show', array('id' => $newEvent->id));
     }
@@ -366,6 +366,7 @@ class ClubEventController extends Controller
         $schedule->save();
         foreach($entries as $entry)
             $entry->save();
+        \Artisan::call("cache:clear");
                                                                            
         // show event
         return Redirect::action('ClubEventController@show', array('id' => $id));
@@ -389,6 +390,7 @@ class ClubEventController extends Controller
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
+        \Artisan::call("cache:clear");
 
         // Check credentials: you can only delete, if you have rights for marketing or management. 
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
