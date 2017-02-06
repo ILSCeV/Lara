@@ -19,9 +19,14 @@ use Lara\ScheduleEntry;
 class IcalController extends Controller
 {
     /** date time format */
-    const DATE_FORMAT = "Y-m-d H:i:s";
+    const DATE_TIME_FORMAT = "Y-m-d H:i:s";
 
+    /** date format */
+    const DATE_FORMAT = "Y-m-d";
+
+    /** accessor to all ical keys in the cache Cache::get(self::ICAL_ACCESSOR) */
     const ICAL_ACCESSOR = "icalcache";
+
 
     /** creates an ical for all club-events*/
     public function events()
@@ -30,14 +35,20 @@ class IcalController extends Controller
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
 
+            $now = new \DateTimeImmutable();
+            $startDate = $now->add(new \DateInterval("-P6M"));
+            $stopDate = $now->add(new \DateInterval("P6M"));
+
             $events = ClubEvent::where("evnt_is_private", "=", '0')
+                ->where('evnt_date_start','>=',strtotime($startDate->format(self::DATE_FORMAT)))
+                ->where('evnt_date_end','<=',strtotime($stopDate->format(self::DATE_FORMAT)))
                 ->with('place')
                 ->get();
             $vEvents = $events->map(function ($evt) {
                 $vEvent = new Event();
                 $vEvent->setUseTimezone(true);
-                $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $evt->evnt_date_start . " " . $evt->evnt_time_start));
-                $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_FORMAT, "" . $evt->evnt_date_end . " " . $evt->evnt_time_end));
+                $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $evt->evnt_date_start . " " . $evt->evnt_time_start));
+                $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $evt->evnt_date_end . " " . $evt->evnt_time_end));
                 $vEvent->setSummary($evt->evnt_title);
                 $vEvent->setDescription($evt->evnt_public_info);
                 $place = $evt->place->plc_title;
@@ -104,8 +115,8 @@ class IcalController extends Controller
                 }
 
                 $vEvent = new Event();
-                $start_date_time = \DateTime::createFromFormat(self::DATE_FORMAT, "" . $schedule->event->evnt_date_start . " " . $start_time);
-                $stop_date_time = \DateTime::createFromFormat(self::DATE_FORMAT, "" . $stop_date . " " . $evt->entry_time_end);
+                $start_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $schedule->event->evnt_date_start . " " . $start_time);
+                $stop_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $stop_date . " " . $evt->entry_time_end);
 
                 if ($start_date_time != false && $stop_date_time != false) {
                     $vEvent->setDtStart($start_date_time);
