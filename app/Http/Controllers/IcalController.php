@@ -36,12 +36,12 @@ class IcalController extends Controller
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
 
             $now = new \DateTimeImmutable();
-            $startDate = $now->add(new \DateInterval("-P6M"));
+            $startDate = $now->sub(new \DateInterval("P6M"));
             $stopDate = $now->add(new \DateInterval("P6M"));
 
             $events = ClubEvent::where("evnt_is_private", "=", '0')
-                ->where('evnt_date_start','>=',strtotime($startDate->format(self::DATE_FORMAT)))
-                ->where('evnt_date_end','<=',strtotime($stopDate->format(self::DATE_FORMAT)))
+                ->where('evnt_date_start',">=" ,$startDate->format(self::DATE_FORMAT))
+                ->where('evnt_date_start',"<=",$stopDate->format(self::DATE_FORMAT))
                 ->with('place')
                 ->get();
             $vEvents = $events->map(function ($evt) {
@@ -88,9 +88,14 @@ class IcalController extends Controller
 
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
+           /* $now = new \DateTimeImmutable();
+            $startDate = $now->sub(new \DateInterval("P6M"));
+            $stopDate = $now->add(new \DateInterval("P6M")); */
 
             $events = ScheduleEntry::where('prsn_id', '=', $person->id)
                 ->with("schedule", "schedule.event.place", "schedule.event", "jobType")
+             //   ->where('schedule.event.evnt_date_start',">=" ,$startDate->format(self::DATE_FORMAT))
+             //   ->where('schedule.event.evnt_date_start',"<=",$stopDate->format(self::DATE_FORMAT))
                 ->get();
 
             $vEvents = $events->map(function ($evt) use ($alarm) {
