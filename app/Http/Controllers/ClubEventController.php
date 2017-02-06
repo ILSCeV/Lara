@@ -366,7 +366,7 @@ class ClubEventController extends Controller
         $schedule->save();
         foreach($entries as $entry)
             $entry->save();
-        \Artisan::call("cache:clear");
+        Utilities::clearIcalCache();
                                                                            
         // show event
         return Redirect::action('ClubEventController@show', array('id' => $id));
