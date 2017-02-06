@@ -10,8 +10,8 @@ namespace Lara\Http\Controllers;
 use Eluceo\iCal\Component\Alarm;
 use Eluceo\iCal\Component\Calendar;
 use Eluceo\iCal\Component\Event;
-
 use Eluceo\iCal\Component\Timezone;
+use Illuminate\Support\Facades\Cache;
 use Lara\ClubEvent;
 use Lara\Person;
 use Lara\ScheduleEntry;
@@ -21,10 +21,12 @@ class IcalController extends Controller
     /** date time format */
     const DATE_FORMAT = "Y-m-d H:i:s";
 
+    const ICAL_ACCESSOR = "icalcache";
+
     /** creates an ical for all club-events*/
     public function events()
     {
-        $calendar = \Cache::remember("icalAllEvents", 4 * 60, function () {
+        $calendar = Cache::remember("icalAllEvents", 4 * 60, function () {
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
 
@@ -40,6 +42,11 @@ class IcalController extends Controller
                 $vEvent->setDescription($evt->evnt_public_info);
                 $place = $evt->place->plc_title;
                 $vEvent->setLocation($place, $place);
+
+                $keys = Cache::get(self::ICAL_ACCESSOR, array());
+                array_push($keys, "icalAllEvents");
+                $keys = array_unique($keys);
+                Cache::put(self::ICAL_ACCESSOR, $keys);
 
                 return $vEvent;
             });
@@ -63,9 +70,9 @@ class IcalController extends Controller
      * @param $club_id - your club id, for example 1970
      * @param $alarm - how many minutes you want to remind before the event
      */
-    public function userScheduleWithAlarm($club_id, $alarm=0)
+    public function userScheduleWithAlarm($club_id, $alarm = 0)
     {
-        $personal_calendar = \Cache::remember("ical" . $club_id . $alarm, 4 * 60, function () use ($club_id, $alarm) {
+        $personal_calendar = Cache::remember("ical" . $club_id . $alarm, 4 * 60, function () use ($club_id, $alarm) {
             $person = Person::where('prsn_ldap_id', '=', $club_id)->first();
 
             $vCalendar = new Calendar('Events');
@@ -87,12 +94,12 @@ class IcalController extends Controller
                     $preparationNeeded = false;
                 }
 
-                $stopHour = intval(substr($evt->entry_time_end,0,2));
+                $stopHour = intval(substr($evt->entry_time_end, 0, 2));
 
                 $stop_date = "";
-                if($stopHour>18){
+                if ($stopHour > 18) {
                     $stop_date = $schedule->event->evnt_date_start;
-                } else{
+                } else {
                     $stop_date = $schedule->event->evnt_date_end;
                 }
 
@@ -106,7 +113,7 @@ class IcalController extends Controller
                     $vEvent->setSummary("" . ($schedule->event->evnt_title) . " - " . ($evt->jobType->jbtyp_title));
                     $prefixDescription = "";
                     if ($preparationNeeded) {
-                        $prefixDescription = "shift start:".$evt->entry_time_start." DV-time: " . $start_time . "\n";
+                        $prefixDescription = "shift start:" . $evt->entry_time_start . " DV-time: " . $start_time . "\n";
                     }
                     $vEvent->setDescription($prefixDescription . $schedule->event->evnt_public_info);
                     $place = $schedule->event->place->plc_title;
@@ -115,7 +122,7 @@ class IcalController extends Controller
                     if ($alarm > 0 && ($start_date_time > new \DateTime())) {
                         $vAlarm = new Alarm();
                         $vAlarm->setAction(Alarm::ACTION_DISPLAY);
-                        $vAlarm->setDescription($schedule->event->evnt_title. " - " . ($evt->jobType->jbtyp_title));
+                        $vAlarm->setDescription($schedule->event->evnt_title . " - " . ($evt->jobType->jbtyp_title));
                         $vAlarm->setTrigger("-PT" . $alarm . "M");
                         $vEvent->addComponent($vAlarm);
                     }
@@ -126,6 +133,12 @@ class IcalController extends Controller
             foreach ($vEvents as $vEvent) {
                 $vCalendar->addComponent($vEvent);
             }
+
+            $keys = Cache::get(self::ICAL_ACCESSOR, array());
+            array_push($keys, "ical" . $club_id . $alarm);
+            $keys = array_unique($keys);
+            Cache::put(self::ICAL_ACCESSOR, $keys);
+
             return $vCalendar->render();
         });;
 
@@ -133,8 +146,8 @@ class IcalController extends Controller
         return response($personal_calendar)
             ->withHeaders(['Content-Type' => 'text/calendar',
                 'charset' => 'utf-8',
-                'Content-Disposition' => 'attachment; filename="'.$club_id.'.ics"'
-                ]);
+                'Content-Disposition' => 'attachment; filename="' . $club_id . '.ics"'
+            ]);
     }
 
 }

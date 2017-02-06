@@ -3,6 +3,9 @@
 
 namespace Lara;
 
+use Illuminate\Support\Facades\Cache;
+use Lara\Http\Controllers\IcalController;
+
 
 class Utilities
 {
@@ -20,28 +23,17 @@ class Utilities
             }, $text);
     }
 
-    static function getAllCacheKeys()
+    static function getAllCachedIcalKeys()
     {
-        $storage = Cache::getStore(); // will return instance of FileStore
-        $filesystem = $storage->getFilesystem(); // will return instance of Filesystem
-
-        $keys = [];
-        foreach ($filesystem->allFiles('') as $file1) {
-            foreach ($filesystem->allFiles($file1) as $file2) {
-                $keys = array_merge($keys, $filesystem->allFiles($file1 . '/' . $file2));
-            }
-        }
-
-        return $keys;
+        return Cache::get(IcalController::ICAL_ACCESSOR, array());
     }
 
     static function clearIcalCache()
     {
-        $keys = self::getAllCacheKeys();
+        $keys = self::getAllCachedIcalKeys();
         foreach ($keys as $key) {
-            if (strpos($keys, 'ical') !== false) {
-                \Cache::forget($key);
-            }
+            Cache::forget($key);
         }
+        Cache::forget(IcalController::ICAL_ACCESSOR);
     }
 }
