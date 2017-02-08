@@ -440,7 +440,6 @@ class ScheduleEntryController extends Controller
             $person = Person::create( array('prsn_ldap_id' => null) );
             $person->prsn_name = $userName;
             $person->prsn_status = "";
-            $person->prsn_uid = hash("sha512", uniqid());
         }
         // Otherwise find existing MEMBER person in DB
         else
@@ -454,6 +453,7 @@ class ScheduleEntryController extends Controller
                 $person = Person::create( array('prsn_ldap_id' => $ldapId) );
                 $person->prsn_name = $userName;
                 $person->prsn_status = Session::get('userStatus');
+                $person->prsn_uid = hash("sha512", uniqid());
             }
 
             // If a person adds him/herself - update status from session to catch if it was changed in LDAP
