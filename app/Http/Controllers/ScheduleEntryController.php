@@ -440,6 +440,7 @@ class ScheduleEntryController extends Controller
             $person = Person::create( array('prsn_ldap_id' => null) );
             $person->prsn_name = $userName;
             $person->prsn_status = "";
+            $person->prsn_uid = hash("sha512", uniqid());
         }
         // Otherwise find existing MEMBER person in DB
         else

@@ -78,13 +78,13 @@ class IcalController extends Controller
 
     /**
      * creates an individual ical using your club_id
-     * @param $club_id - your club id, for example 1970
+     * @param $prsn_uid - your club id, for example 56202a26bbe2c6a847ed83fe266b2017d8a21cf6db610886990dbbad2fdb1fd68b58e6209154a2358f925b670b98daaed403413f0f152f0522ff0f22e3b39b9c
      * @param $alarm - how many minutes you want to remind before the event
      */
-    public function userScheduleWithAlarm($club_id, $alarm = 0)
+    public function userScheduleWithAlarm($prsn_uid, $alarm = 0)
     {
-        $personal_calendar = Cache::remember("ical" . $club_id . $alarm, 4 * 60, function () use ($club_id, $alarm) {
-            $person = Person::where('prsn_ldap_id', '=', $club_id)->first();
+        $personal_calendar = Cache::remember("ical" . $prsn_uid . $alarm, 4 * 60, function () use ($prsn_uid, $alarm) {
+            $person = Person::where('prsn_uid', '=', $prsn_uid)->first();
 
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
@@ -151,7 +151,7 @@ class IcalController extends Controller
             }
 
             $keys = Cache::get(self::ICAL_ACCESSOR, array());
-            array_push($keys, "ical" . $club_id . $alarm);
+            array_push($keys, "ical" . $prsn_uid . $alarm);
             $keys = array_unique($keys);
             Cache::put(self::ICAL_ACCESSOR, $keys);
 
@@ -162,7 +162,7 @@ class IcalController extends Controller
         return response($personal_calendar)
             ->withHeaders(['Content-Type' => 'text/calendar',
                 'charset' => 'utf-8',
-                'Content-Disposition' => 'attachment; filename="' . $club_id . '.ics"'
+                'Content-Disposition' => 'attachment; filename="' . $prsn_uid . '.ics"'
             ]);
     }
 

@@ -27,6 +27,7 @@ $factory->define(Lara\Person::class, function (Faker\Generator $faker) {
         'prsn_name' => $faker->name(),
         'prsn_ldap_id' => $faker->numberBetween(4000, 8000),
         'prsn_status' => $faker->randomElement(['member', 'veteran', 'candidate']),
+        'prsn_uid' => hash("sha512", uniqid()),
         'clb_id' => $faker->randomElement([2,3])
     ];
 });
