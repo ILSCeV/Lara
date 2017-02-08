@@ -15,7 +15,7 @@ class AddPersonUidColumn extends Migration
     {
         /** add column for person uid used for ical feed */
         Schema::table('persons', function (Blueprint $table) {
-            $table->string('prsn_uid');
+            $table->longText('prsn_uid');
         });
 
         $persons = Person::all();
