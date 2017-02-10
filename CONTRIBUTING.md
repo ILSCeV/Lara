@@ -25,21 +25,22 @@ Awesome! We try to get our code as close as possible to the following Coding Sty
 - [Google JavaScript Style Guide](https://google.github.io/styleguide/javascriptguide.xml) for JS
 - [Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.xml) for HTML/CSS
 - [Google Material Design Guidelines](https://material.google.com/) for UX/UI elements
+- ["How to Write a Git Commit Message" (by Chris Beams)](http://chris.beams.io/posts/git-commit/) for Git commit messages
 
-**Please check that standards before submitting your changes - this will make everyone's life easier**! But if your code style isn't perfect, don't worry - we are not very strict, and functionality is more important than bureaucracy ;)
+**Please check that standards before submitting your changes - this will make everyone's life easier**! 
 
 Afterwards [create a pull request](https://github.com/ILSCeV/lara-vedst/compare) and **describe the changes you made** in a couple of sentences. 
 
 ## Which branch?
-*(Right now this structure is not implemented yet -> planned for 08.08.2016-15.08.2016)*
+Release branches:
+- **master** represents current state in Lara on the production server and should only be committed to if Lara is also updated.
+- **berta** represents current state in Berta (Beta-version of Lara) and should only be committed to if Berta is also updated.
+- **release/x.x.x** branches are for preparation of new beta/production releases and allow for last-minute minor bug fixes and Co. 
 
-- **master** has the latest stable production-ready state. 
-
-Generally, you should **NOT** create pull requests to **master** - please use development branches instead (listed below):
+Generally, you should **NOT** create pull requests to **master**, **berta** or **release/x.x.x** - please use development branches instead (listed below):
 
 - **develop** has latest delivered development changes for the next release. 
 - **feature branches** are used to develop new features for the upcoming or a distant future release.
-- **release branches** support preparation of a new production release and allow for last-minute minor bug fixes and Co.
 - **hotfix branches** are for when a critical bug in a production version must be resolved immediately - the essence is that work of team members (on the develop branch) can continue, while another person is preparing a quick production fix.
 
 **tl;dr**:
@@ -48,11 +49,42 @@ Generally, you should **NOT** create pull requests to **master** - please use de
 
 **Further details:** ["A successful git branching model" by Vincent Driessen](http://nvie.com/posts/a-successful-git-branching-model/)
 
+## Git HowTo
+
+### Git config
+```
+git config --global merge.ff only
+git config --global fetch.prune true
+git config --global pull.rebase true
+```
+
+### Updating your branch
+Assuming you are writing a new feature **feature/supercool** and you want to integrate the latest changes from **develop**:
+ 1. ```git checkout feature/supercool```
+ 2. ```git fetch```
+ 3. ```git rebase origin origin/development```
+ 4. ```git push origin/feature/supercool --force```
+
+### Merging a bugfix or a feature
+Assuming you wrote a new feature **feature/supercool** and you want to integrate it into **develop**:
+ 1. ```git checkout feature/supercool```
+ 2. ```git fetch```
+ 3. ```git rebase origin origin/development```
+ 4. ```git checkout development```
+ 5. ```git rebase origin/development```
+ 6. ```git merge --ff-only feature/supercool```
+ 7. ```git merge --squash feature/supercool```
+
+**Step 6** will take your commits and place them on top of the head of **develop**.
+Alternatively, you can use **step 7** - this will squash your commits to a single one. 
+
+
 ## Versioning
 Given a version number MAJOR.MINOR.PATCH (e.g. 2.0.0), increment the:
 - MAJOR version when you make incompatible API changes,
 - MINOR version when you add functionality in a backwards-compatible manner, and
 - PATCH version when you make backwards-compatible bug fixes.
+
 Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
 
 **Further details**: [Semantic versioning v2.0.0 by Tom Preston-Werner](http://semver.org/)

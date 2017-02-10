@@ -1,27 +1,30 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
+    "name": "ILSCeV/Lara",
+    "description": "A calender with personnel scheduling for club management, built on top of Laravel 5.",
+    "keywords": ["calendar", "scheduling", "Lara", "ILSCeV"],
+    "license": "GPL-3.0",
     "type": "project",
+    "authors": [
+        {
+            "name": "Maxim Drachinskiy",
+            "email": "4d44h@protonmail.com",
+            "role": "Project Manager"
+        }
+    ],
     "require": {
         "php": ">=5.6.4",
-        "laravel/framework": "5.3.*",
-        "laravelcollective/html": "5.3.*",
-        "rap2hpoutre/laravel-log-viewer": "^0.5.3",
-        "barryvdh/laravel-ide-helper": "^2.1",
-        "doctrine/dbal": "^2.5",
+        "barryvdh/laravel-ide-helper": "^2.2",
+        "laravel/framework": "5.4.*",
+        "laravel/tinker": "~1.0",
+        "laravelcollective/html": "^5.3.0",
+        "rap2hpoutre/laravel-log-viewer": "^0.8.0",
         "eluceo/ical": "^0.11.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.0",
-        "symfony/css-selector": "2.5.*",
-        "symfony/dom-crawler": "2.5.*",
-        "orangehill/iseed": "dev-master",
-        "phpspec/phpspec": "~2.1",
-        "laracasts/integrated": "^0.15.6"
+        "phpunit/phpunit": "~5.7",
+        "orangehill/iseed": "dev-master"
     },
     "autoload": {
         "classmap": [
@@ -32,11 +35,9 @@
         }
     },
     "autoload-dev": {
-        "classmap": [
-            "tests/TestCase.php",
-            "tests/LaraTestCase.php",
-            "tests/traits/"
-        ]
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     },
     "scripts": {
         "post-root-package-install": [
@@ -51,12 +52,11 @@
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan clear-compiled",
-            "php artisan ide-helper:generate",
             "php artisan optimize"
         ]
     },
     "config": {
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "sort-packages": true
     }
 }

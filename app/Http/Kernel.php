@@ -15,6 +15,9 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        \Lara\Http\Middleware\TrimStrings::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
     /**
@@ -24,13 +27,16 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
+            \Lara\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
+            // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \Lara\Http\Middleware\EncryptCookies::class,
-            \Lara\Http\Middleware\Language::class,
             \Lara\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+            // Added for Lara
+            \Lara\Http\Middleware\Language::class,
         ],
 
         'api' => [
@@ -54,14 +60,11 @@ class Kernel extends HttpKernel
         'guest' => \Lara\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
-        //custom middleware
+        // Added for Lara
         'creator' => \Lara\Http\Middleware\Creator::class,
-
         // _ is used because "Private" would be a taken word in php: "private function ..."
         'privateEntry' => \Lara\Http\Middleware\PrivateEntry::class,    
-             
         'deadlineSurvey' => \Lara\Http\Middleware\DeadlineSurvey::class,
         'rejectGuests' => \Lara\Http\Middleware\RejectGuests::class,
-
     ];
 }

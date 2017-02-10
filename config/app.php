@@ -166,31 +166,24 @@ return [
         /*
          * Package Service Providers...
          */
-
-        //
+        Laravel\Tinker\TinkerServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
         Lara\Providers\AppServiceProvider::class,
-        // Lara\Providers\BroadcastServiceProvider::class,
         Lara\Providers\AuthServiceProvider::class,
+        // Lara\Providers\BroadcastServiceProvider::class,
         Lara\Providers\EventServiceProvider::class,
         Lara\Providers\RouteServiceProvider::class,
 
         /*
-         * Providers for Lara-VedSt
-         */
-        Collective\Html\HtmlServiceProvider::class,
-        Orangehill\Iseed\IseedServiceProvider::class,
-        /*
-         * ide-helper for php storm
+         * Lara Service Providers...
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
-        // Log viewer
+        Collective\Html\HtmlServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
-
+        Orangehill\Iseed\IseedServiceProvider::class,
     ],
 
     /*
@@ -210,6 +203,8 @@ return [
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
+        'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
+        'Bus' => Illuminate\Support\Facades\Bus::class,
         'Cache' => Illuminate\Support\Facades\Cache::class,
         'Config' => Illuminate\Support\Facades\Config::class,
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
@@ -238,12 +233,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        /*
-         * Aliases needed for Lara-VedSt
-         */
-        'Form'      => Collective\Html\FormFacade::class,
-        'Html'      => Collective\Html\HtmlFacade::class,
-        'Input'     => Illuminate\Support\Facades\Input::class,
+        // Lara Aliases
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
 
     ],
 

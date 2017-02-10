@@ -1,4 +1,4 @@
-## Club management software built on top of Laravel 5.3
+## Club management software built on top of Laravel 5.4
 
 ## About
 **Lara** is a planning tool that combines a calender with personnel scheduling, developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all [Ilmenauer Studentenclub e.V.](http://www.il-sc.de) sections.
@@ -15,10 +15,10 @@ For a detailed list of open requirements and change-requests contact [Maxim](htt
 
 
 ## License
-Code published under [GNU GPL v.3](https://github.com/4D44H/Lara/blob/master/LICENSE).
+Code published under [GNU GPL v.3](https://github.com/ILSCeV/Lara/blob/master/LICENSE).
 
 Lara VedSt is based on: 
-- [Laravel 5.3](http://laravel.com)
+- [Laravel 5.4](http://laravel.com)
 - [Bootswatch 3.3.6](http://bootswatch.com)
 - [JQuery 2.1.3](http://jquery.com)
 - [Font Awesome 4.5.0](http://fortawesome.github.io/Font-Awesome) 
