@@ -18,7 +18,7 @@ class PrivateEntry
     public function handle($request, Closure $next, $classpath, $routeParameterName)
     {
         $newObject = new $classpath;
-        $object = $newObject->findOrFail($request->route()->getParameter($routeParameterName));
+        $object = $newObject->findOrFail($request->route()->parameter($routeParameterName));
 
         if(!$object->is_private
             OR $request->session()->get('userId')) {

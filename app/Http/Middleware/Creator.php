@@ -20,7 +20,7 @@ class Creator
     public function handle($request, Closure $next, $classpath, $routeParameterName)
     {
         $newObject = new $classpath();
-        $object = $newObject->findOrFail($request->route()->getParameter($routeParameterName));
+        $object = $newObject->findOrFail($request->route()->parameter($routeParameterName));
         if($object->creator_id == $request->session()->get('userId')
             OR $request->session()->get('userGroup') == "clubleitung"
             OR $request->session()->get('userGroup') == "marketing"
