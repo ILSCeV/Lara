@@ -817,7 +817,6 @@ $('[name^=icalfeeds]').click(function() {
 
         success: function(response){
             // external function handles the response
-            console.log(response);
             dialog.find('.modal-body').addClass("no-padding").html("<table class='table table-hover no-padding'>" +
                 "<thead><tr>" +
                 "<th>Link für:</th>" +
@@ -829,9 +828,22 @@ $('[name^=icalfeeds]').click(function() {
             if (!(typeof response['personal'] === 'undefined' || response['personal'] === null)) {
                 icalTbody.append('<tr>' +
                         '<td> persönlich </td>'+
-                        '<td> <input type="text" value="'+ response['personal'] +'"/></td>'+
+                        '<td> <input class="form-control" type="text" value="'+ response['personal'] +'"/></td>'+
                     '</tr>')
             }
+            var locationsNames = response['locationName'];
+            var locations = response['location'];
+            console.log(locations);
+
+            locationsNames.forEach(function (element, idx) {
+                console.log(idx);
+                console.log(element);
+                icalTbody.append('<tr>' +
+                    '<td> private ' + element +  '</td>' +
+                    '<td>' +'<input class="form-control" type="text" value="'+ locations[idx][element] +'"/>'  +  '</td>' +
+                    '</tr>');
+            });
+
         }
 
     });
