@@ -56,6 +56,12 @@
                     <li><a href="{{ asset('/logs') }}">Logs</a></li>
                 @endif
 
+{{-- ICal feed links --}}
+
+                    @if(Session::has('userGroup'))
+                    <li><a href="#" name="icalfeeds">{{ trans('mainLang.icalfeeds') }}</a></li>
+                    @endif
+
 {{-- LANGUAGE SWITCHER / public --}}
                 @foreach (Config::get('languages') as $lang => $language)
                     <li class="languageSwitcher"><a href="{{ route('lang.switch', $lang) }}" data-language="{{$lang}}"><i class="fa fa-globe" aria-hidden="true"></i></i> {{$language}}</a></li>

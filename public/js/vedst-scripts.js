@@ -793,8 +793,49 @@ $( document ).ready( function() {
     });
 
 
+//////////
+// ICal //
+//////////
+$('[name^=icalfeeds]').click(function() {
+// Initialise modal and show loading icon and message
+    var dialog = bootbox.dialog({
+        title: "ical feeds",
+        size: 'large',
+        message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>'
+    });
 
+    $.ajax({
+        url: "/ical/links/",
 
+        data: {
+            // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+            "_token": $(this).find( 'input[name=_token]' ).val(),
+
+        },
+
+        dataType: 'json',
+
+        success: function(response){
+            // external function handles the response
+            console.log(response);
+            dialog.find('.modal-body').addClass("no-padding").html("<table class='table table-hover no-padding'>" +
+                "<thead><tr>" +
+                "<th>Link für:</th>" +
+                "<th> Link </th>" +
+                "</tr></thead>" +
+                "<tbody id='icalTbody'></tbody>" +
+                "</table>");
+            var icalTbody = $('#icalTbody');
+            if (!(typeof response['personal'] === 'undefined' || response['personal'] === null)) {
+                icalTbody.append('<tr>' +
+                        '<td> persönlich </td>'+
+                        '<td> <input type="text" value="'+ response['personal'] +'"/></td>'+
+                    '</tr>')
+            }
+        }
+
+    });
+});
 
 //////////
 // AJAX //

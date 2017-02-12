@@ -12,8 +12,11 @@ use Eluceo\iCal\Component\Calendar;
 use Eluceo\iCal\Component\Event;
 use Eluceo\iCal\Component\Timezone;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 use Lara\ClubEvent;
 use Lara\Person;
+use Lara\Place;
 use Lara\ScheduleEntry;
 
 class IcalController extends Controller
@@ -40,8 +43,8 @@ class IcalController extends Controller
             $stopDate = $now->add(new \DateInterval("P6M"));
 
             $events = ClubEvent::where("evnt_is_private", "=", '0')
-                ->where('evnt_date_start',">=" ,$startDate->format(self::DATE_FORMAT))
-                ->where('evnt_date_start',"<=",$stopDate->format(self::DATE_FORMAT))
+                ->where('evnt_date_start', ">=", $startDate->format(self::DATE_FORMAT))
+                ->where('evnt_date_start', "<=", $stopDate->format(self::DATE_FORMAT))
                 ->with('place')
                 ->get();
             $vEvents = $events->map(function ($evt) {
@@ -57,7 +60,7 @@ class IcalController extends Controller
                 $keys = Cache::get(self::ICAL_ACCESSOR, array());
                 array_push($keys, "icalAllEvents");
                 $keys = array_unique($keys);
-                Cache::put(self::ICAL_ACCESSOR, $keys,4*60);
+                Cache::put(self::ICAL_ACCESSOR, $keys, 4 * 60);
 
                 return $vEvent;
             });
@@ -88,14 +91,14 @@ class IcalController extends Controller
 
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
-           /* $now = new \DateTimeImmutable();
-            $startDate = $now->sub(new \DateInterval("P6M"));
-            $stopDate = $now->add(new \DateInterval("P6M")); */
+            /* $now = new \DateTimeImmutable();
+             $startDate = $now->sub(new \DateInterval("P6M"));
+             $stopDate = $now->add(new \DateInterval("P6M")); */
 
             $events = ScheduleEntry::where('prsn_id', '=', $person->id)
                 ->with("schedule", "schedule.event.place", "schedule.event", "jobType")
-             //   ->where('schedule.event.evnt_date_start',">=" ,$startDate->format(self::DATE_FORMAT))
-             //   ->where('schedule.event.evnt_date_start',"<=",$stopDate->format(self::DATE_FORMAT))
+                //   ->where('schedule.event.evnt_date_start',">=" ,$startDate->format(self::DATE_FORMAT))
+                //   ->where('schedule.event.evnt_date_start',"<=",$stopDate->format(self::DATE_FORMAT))
                 ->get();
 
             $vEvents = $events->map(function ($evt) use ($alarm) {
@@ -153,7 +156,7 @@ class IcalController extends Controller
             $keys = Cache::get(self::ICAL_ACCESSOR, array());
             array_push($keys, "ical" . $prsn_uid . $alarm);
             $keys = array_unique($keys);
-            Cache::put(self::ICAL_ACCESSOR, $keys,4*60);
+            Cache::put(self::ICAL_ACCESSOR, $keys, 4 * 60);
 
             return $vCalendar->render();
         });;
@@ -164,6 +167,26 @@ class IcalController extends Controller
                 'charset' => 'utf-8',
                 'Content-Disposition' => 'attachment; filename="' . $prsn_uid . '.ics"'
             ]);
+    }
+
+    public function generateLinks()
+    {
+        $userId = Session::get('userId');
+
+        $person = Person::where('prsn_ldap_id', '=', $userId)->first();
+
+        $result = [];
+
+        $places = Place::all();
+        foreach ($places as $place) {
+            $placeLink = [$place->plc_title => URL::to('/') . '/ical/feed/' . $place->place_uid];
+            $result['location'][] = $placeLink;
+        }
+        if (!is_null($person)) {
+            $result['personal'] = URL::to('/') . '/ical/events/user/' . $person->prsn_uid;
+        }
+
+        return response()->json($result);
     }
 
 }
