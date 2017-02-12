@@ -24,8 +24,8 @@ class StatisticsInformation
         });
 
         $shiftsInOwnClub = $usersShifts->filter(function ($shift) use ($club) {
-            // reduce club id by one to cancel out the mismatch between Clubs and Places Table
-            return $shift->schedule->event->plc_id === $club->id - 1;
+            $visibleClubs = json_decode($shift->schedule->event->evnt_show_to_club);
+            return in_array($club->clb_title, $visibleClubs);
         });
 
         $this->inOwnClub = $shiftsInOwnClub->reduce(function ($prev, $current) {

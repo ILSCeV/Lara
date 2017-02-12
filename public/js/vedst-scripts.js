@@ -740,7 +740,7 @@ $( document ).ready( function() {
                 {
                     $("#person-shifts-overview").append("<tr" 
                                                           // Change background for shifts in other sections
-                                                          + (localStorage.preferredStatistics !== response[i]["section"] ? " class=\"active text-muted\"" : "\"\"") + ">"
+                                                          + (!response[i]["isOwnClub"] ? " class=\"active text-muted\"" : "\"\"") + ">"
                                                           + "<td>"  + (1+i) + "</td>" 
                                                           + "<td>" + response[i]["shift"] + "</td>"
                                                           + "<td>" + "<a href=\"../../event/" + response[i]["event_id"] + "\" >" 
