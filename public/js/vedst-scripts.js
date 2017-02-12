@@ -817,7 +817,20 @@ $('[name^=icalfeeds]').click(function() {
 
         success: function(response){
             // external function handles the response
-            dialog.find('.modal-body').addClass("no-padding").html("<table class='table table-hover no-padding'>" +
+
+            var remindPersonalIcalInput;
+            if ((typeof response['personal'] === 'undefined' || response['personal'] === null)) {
+                remindPersonalIcalInput = '';
+            } else {
+                remindPersonalIcalInput = '<div class="input-group">' +
+                    '<span class="input-group-addon">Erinnerung vor dem Dienst</span> ' +
+                    '<input id="personalIcalRemindValue" class="form-control" type="number" value="0"/>' +
+                    '</div>';
+            }
+
+            dialog.find('.modal-body').addClass("no-padding").html("" +
+                remindPersonalIcalInput +
+                "<table class='table table-hover no-padding'>" +
                 "<thead><tr>" +
                 "<th>Link für:</th>" +
                 "<th> Link </th>" +
@@ -828,22 +841,27 @@ $('[name^=icalfeeds]').click(function() {
             if (!(typeof response['personal'] === 'undefined' || response['personal'] === null)) {
                 icalTbody.append('<tr>' +
                         '<td> persönlich </td>'+
-                        '<td> <input class="form-control" type="text" value="'+ response['personal'] +'"/></td>'+
+                        '<td> <span id="ical_personal_link" class="hidden">'+response['personal']+'</span> <input id="ical_personal_input" class="form-control" type="text" value="'+ response['personal'] +'"/></td>'+
                     '</tr>')
             }
             var locationsNames = response['locationName'];
             var locations = response['location'];
-            console.log(locations);
-
+            var locationsPublic = response['locationPublic'];
             locationsNames.forEach(function (element, idx) {
-                console.log(idx);
-                console.log(element);
+                icalTbody.append('<tr>' +
+                    '<td>' + element +  '</td>' +
+                    '<td>' +'<input class="form-control" type="text" value="'+ locationsPublic[idx][element] +'"/>'  +  '</td>' +
+                    '</tr>');
+            });
+            locationsNames.forEach(function (element, idx) {
                 icalTbody.append('<tr>' +
                     '<td> private ' + element +  '</td>' +
                     '<td>' +'<input class="form-control" type="text" value="'+ locations[idx][element] +'"/>'  +  '</td>' +
                     '</tr>');
             });
-
+            $('#personalIcalRemindValue').change(function () {
+                $('#ical_personal_input').val($('#ical_personal_link').text() + $('#personalIcalRemindValue').val());
+            });
         }
 
     });

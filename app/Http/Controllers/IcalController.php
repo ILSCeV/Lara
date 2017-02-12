@@ -134,7 +134,7 @@ class IcalController extends Controller
                     if ($preparationNeeded) {
                         $prefixDescription = "shift start:" . $evt->entry_time_start . " DV-time: " . $start_time . "\n";
                     }
-                    $vEvent->setDescription($prefixDescription . $schedule->event->evnt_public_info);
+                    $vEvent->setDescription($prefixDescription . $schedule->event->evnt_public_info . "\n\n----\nprivate:\n" . $schedule->event->evnt_private_details);
                     $place = $schedule->event->place->plc_title;
                     $vEvent->setLocation($place, $place);
                     $vEvent->setUseTimezone(true);
@@ -180,11 +180,13 @@ class IcalController extends Controller
         $places = Place::all();
         foreach ($places as $place) {
             $placeLink = [$place->plc_title => URL::to('/') . '/ical/feed/' . $place->place_uid];
+            $publicLinks = [$place->plc_title => URL::to('/') . "/ical/location/" . $place->plc_title];
             $result['location'][] = $placeLink;
+            $result['locationPublic'][] = $publicLinks;
             $result['locationName'][] = $place->plc_title;
         }
         if (!is_null($person)) {
-            $result['personal'] = URL::to('/') . '/ical/events/user/' . $person->prsn_uid;
+            $result['personal'] = URL::to('/') . '/ical/events/user/' . $person->prsn_uid . '/';
         }
 
         return response()->json($result);
