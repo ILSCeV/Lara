@@ -57,7 +57,7 @@ class IcalController extends Controller
                 $keys = Cache::get(self::ICAL_ACCESSOR, array());
                 array_push($keys, "icalAllEvents");
                 $keys = array_unique($keys);
-                Cache::put(self::ICAL_ACCESSOR, $keys);
+                Cache::put(self::ICAL_ACCESSOR, $keys,4*60);
 
                 return $vEvent;
             });
@@ -153,7 +153,7 @@ class IcalController extends Controller
             $keys = Cache::get(self::ICAL_ACCESSOR, array());
             array_push($keys, "ical" . $prsn_uid . $alarm);
             $keys = array_unique($keys);
-            Cache::put(self::ICAL_ACCESSOR, $keys);
+            Cache::put(self::ICAL_ACCESSOR, $keys,4*60);
 
             return $vCalendar->render();
         });;
