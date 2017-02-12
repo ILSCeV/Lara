@@ -181,6 +181,7 @@ class IcalController extends Controller
         foreach ($places as $place) {
             $placeLink = [$place->plc_title => URL::to('/') . '/ical/feed/' . $place->place_uid];
             $result['location'][] = $placeLink;
+            $result['locationName'][] = $place->plc_title;
         }
         if (!is_null($person)) {
             $result['personal'] = URL::to('/') . '/ical/events/user/' . $person->prsn_uid;
