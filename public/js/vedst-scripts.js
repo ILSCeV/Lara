@@ -816,11 +816,10 @@ $('[name^=icalfeeds]').click(function() {
         dataType: 'json',
 
         success: function(response){
-            // external function handles the response
-
+            // we don't need to show this field, if the person does not exists, instead we show a warning
             var remindPersonalIcalInput;
             if ((typeof response['personal'] === 'undefined' || response['personal'] === null)) {
-                remindPersonalIcalInput = '';
+                remindPersonalIcalInput = '<span class="alert alert-warning"> <span class="glyphicon glyphicon-warning-sign"></span> Bitte trage dich zuerst für einen Dienst ein um deinen Persönlichen feed angezeigt zu bekommen! </span>';
             } else {
                 remindPersonalIcalInput = '<div class="input-group">' +
                     '<span class="input-group-addon">Erinnerung vor dem Dienst</span> ' +

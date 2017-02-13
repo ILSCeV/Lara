@@ -31,10 +31,14 @@ class IcalController extends Controller
     const ICAL_ACCESSOR = "icalcache";
 
 
-    /** creates an ical for all club-events*/
-    public function events()
+    /**
+     * creates an ical for all club-events
+     * @param $location the location
+     * @param $with_private_info if this is enabled private infos will appended to the result
+     */
+    public function events($location, $with_private_info = 0)
     {
-        $calendar = Cache::remember("icalAllEvents", 4 * 60, function () {
+        $calendar = Cache::remember("icalAllEvents" . $location, 4 * 60, function () use ($location, $with_private_info) {
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
 
@@ -42,23 +46,41 @@ class IcalController extends Controller
             $startDate = $now->sub(new \DateInterval("P6M"));
             $stopDate = $now->add(new \DateInterval("P6M"));
 
-            $events = ClubEvent::where("evnt_is_private", "=", '0')
-                ->where('evnt_date_start', ">=", $startDate->format(self::DATE_FORMAT))
+            $place = null;
+            if ($with_private_info>0) {
+                $place = Place::where('place_uid', "=", $location)->first();
+            } else {
+                $place = Place::where('plc_title', "=", $location)->first();
+            }
+            if (is_null($place)) {
+                return $vCalendar->render();
+            }
+
+            $eventsQuery = ClubEvent::where('evnt_date_start', ">=", $startDate->format(self::DATE_FORMAT))
                 ->where('evnt_date_start', "<=", $stopDate->format(self::DATE_FORMAT))
                 ->with('place')
-                ->get();
-            $vEvents = $events->map(function ($evt) {
+                ->where('plc_id', "=", $place->id);
+            if ($with_private_info == 0) {
+                $eventsQuery = $eventsQuery->where("evnt_is_private", "=", '0');
+            }
+            $events = $eventsQuery->get();
+            $vEvents = $events->map(function ($evt) use ($location, $with_private_info) {
                 $vEvent = new Event();
                 $vEvent->setUseTimezone(true);
                 $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $evt->evnt_date_start . " " . $evt->evnt_time_start));
                 $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $evt->evnt_date_end . " " . $evt->evnt_time_end));
                 $vEvent->setSummary($evt->evnt_title);
-                $vEvent->setDescription($evt->evnt_public_info);
+
+                $evtDescription = $evt->evnt_public_info;
+                if($with_private_info>0){
+                    $evtDescription = $evtDescription."\n\n----\nprivate\n----\n" . $evt->evnt_private_details;
+                }
+                $vEvent->setDescription($evtDescription);
                 $place = $evt->place->plc_title;
                 $vEvent->setLocation($place, $place);
 
                 $keys = Cache::get(self::ICAL_ACCESSOR, array());
-                array_push($keys, "icalAllEvents");
+                array_push($keys, "icalAllEvents" . $location);
                 $keys = array_unique($keys);
                 Cache::put(self::ICAL_ACCESSOR, $keys, 4 * 60);
 
@@ -97,8 +119,6 @@ class IcalController extends Controller
 
             $events = ScheduleEntry::where('prsn_id', '=', $person->id)
                 ->with("schedule", "schedule.event.place", "schedule.event", "jobType")
-                //   ->where('schedule.event.evnt_date_start',">=" ,$startDate->format(self::DATE_FORMAT))
-                //   ->where('schedule.event.evnt_date_start',"<=",$stopDate->format(self::DATE_FORMAT))
                 ->get();
 
             $vEvents = $events->map(function ($evt) use ($alarm) {
@@ -169,6 +189,7 @@ class IcalController extends Controller
             ]);
     }
 
+    /** generate links for ui */
     public function generateLinks()
     {
         $userId = Session::get('userId');
@@ -179,7 +200,7 @@ class IcalController extends Controller
 
         $places = Place::all();
         foreach ($places as $place) {
-            $placeLink = [$place->plc_title => URL::to('/') . '/ical/feed/' . $place->place_uid];
+            $placeLink = [$place->plc_title => URL::to('/') . '/ical/feed/' . $place->place_uid . "/1"];
             $publicLinks = [$place->plc_title => URL::to('/') . "/ical/location/" . $place->plc_title];
             $result['location'][] = $placeLink;
             $result['locationPublic'][] = $publicLinks;
