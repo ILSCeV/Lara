@@ -467,6 +467,8 @@ return [
     'changesSaved'                  => 'Änderungen erfolgreich gespeichert.',
     'deleteFailedJobtypeInUse'      => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
 
-
-
+    //////////
+    // ICal //
+    //////////
+    'icalfeeds'                     => 'Kalenderfeed im ICal-Format',
 ];

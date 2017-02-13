@@ -59,7 +59,7 @@
 {{-- ICal feed links --}}
 
                     @if(Session::has('userGroup'))
-                    <li><a href="#" name="icalfeeds">{{ trans('mainLang.icalfeeds') }}</a></li>
+                    <li><a href="#" name="icalfeeds"><i class="fa fa-calendar" aria-hidden="true"></i> {{ trans('mainLang.icalfeeds') }}</a></li>
                     @endif
 
 {{-- LANGUAGE SWITCHER / public --}}

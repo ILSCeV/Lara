@@ -799,7 +799,7 @@ $( document ).ready( function() {
 $('[name^=icalfeeds]').click(function() {
 // Initialise modal and show loading icon and message
     var dialog = bootbox.dialog({
-        title: "ical feeds",
+        title: translate("icalfeeds"),
         size: 'large',
         message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>'
     });
@@ -819,10 +819,10 @@ $('[name^=icalfeeds]').click(function() {
             // we don't need to show this field, if the person does not exists, instead we show a warning
             var remindPersonalIcalInput;
             if ((typeof response['personal'] === 'undefined' || response['personal'] === null)) {
-                remindPersonalIcalInput = '<span class="alert alert-warning"> <span class="glyphicon glyphicon-warning-sign"></span> Bitte trage dich zuerst für einen Dienst ein um deinen Persönlichen feed angezeigt zu bekommen! </span>';
+                remindPersonalIcalInput = '<div class="alert alert-warning"> <span class="glyphicon glyphicon-warning-sign"></span> '+ translate("noPrivateCalendarWarn") +' </div>';
             } else {
                 remindPersonalIcalInput = '<div class="input-group">' +
-                    '<span class="input-group-addon">Erinnerung vor dem Dienst</span> ' +
+                    '<span class="input-group-addon">' + translate('remindsBeforeShiftStart') + '</span> ' +
                     '<input id="personalIcalRemindValue" class="form-control" type="number" value="0"/>' +
                     '</div>';
             }
@@ -831,15 +831,15 @@ $('[name^=icalfeeds]').click(function() {
                 remindPersonalIcalInput +
                 "<table class='table table-hover no-padding'>" +
                 "<thead><tr>" +
-                "<th>Link für:</th>" +
-                "<th> Link </th>" +
+                "<th></th>" +
+                "<th> "+ translate('iCalendarlink') + " </th>" +
                 "</tr></thead>" +
                 "<tbody id='icalTbody'></tbody>" +
                 "</table>");
             var icalTbody = $('#icalTbody');
             if (!(typeof response['personal'] === 'undefined' || response['personal'] === null)) {
                 icalTbody.append('<tr>' +
-                        '<td> persönlich </td>'+
+                        '<td> ' + translate('personalFeed') + ' </td>'+
                         '<td> <span id="ical_personal_link" class="hidden">'+response['personal']+'</span> <input id="ical_personal_input" class="form-control" type="text" value="'+ response['personal'] +'"/></td>'+
                     '</tr>')
             }

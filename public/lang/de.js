@@ -18,5 +18,11 @@ var deTranslations = {
     'event': 'Event',
     'section': 'Sektion',
     'date': 'Datum',
-    'weight': 'Wert'
+    'weight': 'Wert',
+
+    "icalfeeds" : "Kalenderfeeds",
+    'remindsBeforeShiftStart' : 'Wieviele minuten vor deinem Dienst möchtest du erinnert werden?',
+    "noPrivateCalendarWarn" :"Bitte trage dich zuerst für einen Dienst ein um deinen Persönlichen feed angezeigt zu bekommen!",
+    'iCalendarlink':'Link',
+    "personalFeed":'persönlicher Feed'
 };
