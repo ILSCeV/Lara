@@ -150,3 +150,4 @@ Route::get('/ical/location/{location}/{with_private_info?}', 'IcalController@eve
 Route::get('/ical/events/user/{club_id}/{alarm?}', 'IcalController@userScheduleWithAlarm');
 Route::get('/ical/links', 'IcalController@generateLinks');
 Route::get('/ical/event/{evt_id}','IcalController@singleEvent');
+Route::get('/ical/feed/allevents', 'IcalController@allPublicEvents' )->name("icalallevents");

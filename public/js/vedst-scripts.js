@@ -843,9 +843,17 @@ $('[name^=icalfeeds]').click(function() {
                         '<td> <span id="ical_personal_link" class="hidden">'+response['personal']+'</span> <input id="ical_personal_input" class="form-control" type="text" value="'+ response['personal'] +'"/></td>'+
                     '</tr>')
             }
+
+            var allPublicEvents = response['allPublicEvents'];
             var locationsNames = response['locationName'];
             var locations = response['location'];
             var locationsPublic = response['locationPublic'];
+
+            icalTbody.append('<tr>' +
+                '<td></td>' +
+                '<td>' +'<input class="form-control" type="text" value="'+ allPublicEvents +'"/>'  +  '</td>' +
+                '</tr>');
+
             locationsNames.forEach(function (element, idx) {
                 icalTbody.append('<tr>' +
                     '<td>' + element +  '</td>' +
