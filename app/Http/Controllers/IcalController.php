@@ -47,7 +47,7 @@ class IcalController extends Controller
             $stopDate = $now->add(new \DateInterval("P6M"));
 
             $place = null;
-            if ($with_private_info>0) {
+            if ($with_private_info > 0) {
                 $place = Place::where('place_uid', "=", $location)->first();
             } else {
                 $place = Place::where('plc_title', "=", $location)->first();
@@ -72,17 +72,12 @@ class IcalController extends Controller
                 $vEvent->setSummary($evt->evnt_title);
 
                 $evtDescription = $evt->evnt_public_info;
-                if($with_private_info>0){
-                    $evtDescription = $evtDescription."\n\n----\nprivate\n----\n" . $evt->evnt_private_details;
+                if ($with_private_info > 0) {
+                    $evtDescription = $evtDescription . "\n\n----\nprivate\n----\n" . $evt->evnt_private_details;
                 }
                 $vEvent->setDescription($evtDescription);
                 $place = $evt->place->plc_title;
                 $vEvent->setLocation($place, $place);
-
-                $keys = Cache::get(self::ICAL_ACCESSOR, array());
-                array_push($keys, "icalAllEvents" . $location);
-                $keys = array_unique($keys);
-                Cache::put(self::ICAL_ACCESSOR, $keys, 4 * 60);
 
                 return $vEvent;
             });
@@ -90,6 +85,11 @@ class IcalController extends Controller
             foreach ($vEvents as $vEvent) {
                 $vCalendar->addComponent($vEvent);
             }
+
+            $keys = Cache::get(self::ICAL_ACCESSOR, array());
+            array_push($keys, "icalAllEvents" . $location);
+            $keys = array_unique($keys);
+            Cache::put(self::ICAL_ACCESSOR, $keys, 4 * 60);
 
             return $vCalendar->render();
         });
@@ -186,6 +186,42 @@ class IcalController extends Controller
             ->withHeaders(['Content-Type' => 'text/calendar',
                 'charset' => 'utf-8',
                 'Content-Disposition' => 'attachment; filename="' . $prsn_uid . '.ics"'
+            ]);
+    }
+
+    public function singleEvent($evt_id)
+    {
+        $calendar = Cache::remember("ical" . $evt_id, 4 * 60, function () use ($evt_id) {
+            $vCalendar = new Calendar('Events');
+            $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
+            $event = ClubEvent::where('id', '=', $evt_id)->first();
+            if (isset($event)) {
+                $vEvent = new Event();
+                $vEvent->setUseTimezone(true);
+                $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $event->evnt_date_start . " " . $event->evnt_time_start));
+                $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $event->evnt_date_end . " " . $event->evnt_time_end));
+                $vEvent->setSummary($event->evnt_title);
+
+                $evtDescription = $event->evnt_public_info;
+                $evtDescription = $evtDescription . "\n\n----\nprivate\n----\n" . $event->evnt_private_details;
+                $vEvent->setDescription($evtDescription);
+                $place = $event->place->plc_title;
+                $vEvent->setLocation($place, $place);
+                $vCalendar->addComponent($vEvent);
+            }
+
+            $keys = Cache::get(self::ICAL_ACCESSOR, array());
+            array_push($keys, "ical" . $evt_id);
+            $keys = array_unique($keys);
+            Cache::put(self::ICAL_ACCESSOR, $keys, 4 * 60);
+
+            return $vCalendar->render();
+        });
+
+        return response($calendar)
+            ->withHeaders(['Content-Type' => 'text/calendar',
+                'charset' => 'utf-8',
+                'Content-Disposition' => 'attachment; filename="' . $evt_id . '.ics"'
             ]);
     }
 

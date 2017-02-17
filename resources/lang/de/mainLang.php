@@ -206,7 +206,7 @@ return [
 
 
     // resources/view/partials/calendarLinkEvent.blade.php
-    'addToCalendar' => 'Event zu eigenem Google Kalender hinzufügen',
+    'addToCalendar' => 'Event zu bevorzugter Kalenderlösung hinzufügen',
 
     // resources/views/partials/month/day.blade.php
     'createEventOnThisDate' => 'Neues Event an diesem Tag erstellen',

@@ -204,7 +204,7 @@ return [
     'Su' => 'Sunday',
 
     // resources/view/partials/calendarLinkEvent.blade.php
-    'addToCalendar' => 'Add this event to your Google calendar',
+    'addToCalendar' => 'Add this event to your favorite calendar solution',
 
     // resources/views/partials/month/day.blade.php
     'createEventOnThisDate' => 'Create new event on this day',
