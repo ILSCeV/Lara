@@ -31,8 +31,58 @@ class IcalController extends Controller
     const ICAL_ACCESSOR = "icalcache";
 
 
+    public function allPublicEvents()
+    {
+        $calendar = Cache::remember('icalAllPublicEvents', 4 * 60, function () {
+            $vCalendar = new Calendar('Events');
+            $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
+
+            $now = new \DateTimeImmutable();
+            $startDate = $now->sub(new \DateInterval("P6M"));
+            $stopDate = $now->add(new \DateInterval("P6M"));
+
+            $events = ClubEvent::
+            where('evnt_date_start', ">=", $startDate->format(self::DATE_FORMAT))
+                ->where('evnt_date_start', "<=", $stopDate->format(self::DATE_FORMAT))
+                ->where('evnt_is_private', '=', '0')
+                ->get();
+            $vEvents = $events->map(function ($evt) {
+                $vEvent = new Event();
+                $vEvent->setUseTimezone(true);
+                $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $evt->evnt_date_start . " " . $evt->evnt_time_start));
+                $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $evt->evnt_date_end . " " . $evt->evnt_time_end));
+                $vEvent->setSummary($evt->evnt_title);
+
+                $evtDescription = URL::route('event.show', $evt->id) . "\n\n" . $evt->evnt_public_info;
+
+                $vEvent->setDescription($evtDescription);
+                $place = $evt->place->plc_title;
+                $vEvent->setLocation($place, $place);
+
+                return $vEvent;
+            });
+
+            foreach ($vEvents as $vEvent) {
+                $vCalendar->addComponent($vEvent);
+            }
+
+            $keys = Cache::get(self::ICAL_ACCESSOR, array());
+            array_push($keys, "icalAllPublicEvents");
+            $keys = array_unique($keys);
+            Cache::put(self::ICAL_ACCESSOR, $keys, 4 * 60);
+
+            return $vCalendar->render();
+        });
+
+        return response($calendar)
+            ->withHeaders(['Content-Type' => 'text/calendar',
+                'charset' => 'utf-8',
+                'Content-Disposition' => 'attachment; filename="cal.ics"'
+            ]);
+    }
+
     /**
-     * creates an ical for all club-events
+     * creates an iCal for all club-events
      * @param $location the location
      * @param $with_private_info if this is enabled private infos will appended to the result
      */
@@ -71,7 +121,7 @@ class IcalController extends Controller
                 $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $evt->evnt_date_end . " " . $evt->evnt_time_end));
                 $vEvent->setSummary($evt->evnt_title);
 
-                $evtDescription = $evt->evnt_public_info;
+                $evtDescription = URL::route('event.show', $evt->id) . "\n\n" . $evt->evnt_public_info;
                 if ($with_private_info > 0) {
                     $evtDescription = $evtDescription . "\n\n----\nprivate\n----\n" . $evt->evnt_private_details;
                 }
@@ -102,7 +152,7 @@ class IcalController extends Controller
     }
 
     /**
-     * creates an individual ical using your club_id
+     * creates an individual iCal using your club_id
      * @param $prsn_uid - your club id, for example 56202a26bbe2c6a847ed83fe266b2017d8a21cf6db610886990dbbad2fdb1fd68b58e6209154a2358f925b670b98daaed403413f0f152f0522ff0f22e3b39b9c
      * @param $alarm - how many minutes you want to remind before the event
      */
@@ -150,7 +200,7 @@ class IcalController extends Controller
                     $vEvent->setDtStart($start_date_time);
                     $vEvent->setDtEnd($stop_date_time);
                     $vEvent->setSummary("" . ($schedule->event->evnt_title) . " - " . ($evt->jobType->jbtyp_title));
-                    $prefixDescription = "";
+                    $prefixDescription = "" . URL::route('event.show', $evt->id) . "\n\n";
                     if ($preparationNeeded) {
                         $prefixDescription = "shift start:" . $evt->entry_time_start . " DV-time: " . $start_time . "\n";
                     }
@@ -189,9 +239,10 @@ class IcalController extends Controller
             ]);
     }
 
+    /** creates an iCal for a single event */
     public function singleEvent($evt_id)
     {
-        $calendar = Cache::remember("ical" . $evt_id, 4 * 60, function () use ($evt_id) {
+        $calendar = Cache::remember("ical" . $evt_id . Session::has('userGroup'), 4 * 60, function () use ($evt_id) {
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
             $event = ClubEvent::where('id', '=', $evt_id)->first();
@@ -202,8 +253,10 @@ class IcalController extends Controller
                 $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $event->evnt_date_end . " " . $event->evnt_time_end));
                 $vEvent->setSummary($event->evnt_title);
 
-                $evtDescription = $event->evnt_public_info;
-                $evtDescription = $evtDescription . "\n\n----\nprivate\n----\n" . $event->evnt_private_details;
+                $evtDescription = "" . URL::route('event.show', $event->id) . "\n\n" . $event->evnt_public_info;
+                if (Session::has('userGroup')) {
+                    $evtDescription = $evtDescription . "\n\n----\nprivate\n----\n" . $event->evnt_private_details;
+                }
                 $vEvent->setDescription($evtDescription);
                 $place = $event->place->plc_title;
                 $vEvent->setLocation($place, $place);
@@ -235,6 +288,7 @@ class IcalController extends Controller
         $result = [];
 
         $places = Place::all();
+        $result['allPublicEvents'] = URL::route('icalallevents');
         foreach ($places as $place) {
             $placeLink = [$place->plc_title => URL::to('/') . '/ical/feed/' . $place->place_uid . "/1"];
             $publicLinks = [$place->plc_title => URL::to('/') . "/ical/location/" . $place->plc_title];
