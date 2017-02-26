@@ -832,13 +832,20 @@ $('[name^=icalfeeds]').click(function() {
                 "<table class='table table-hover no-padding'>" +
                 "<thead><tr>" +
                 "<th></th>" +
-                "<th> "+ translate('iCalendarlink') + " </th>" +
+                "<th> " + translate('iCalendarlink') + " </th>" +
                 "</tr></thead>" +
                 "<tbody id='icalTbody'></tbody>" +
-                "</table>");
+                "<tfoot>" +
+                "<tr>" +
+                "<td class='warning'></td>" +
+                "<td>" + translate("internalUsageOnly") + "</td> " +
+                "</tr>" +
+                "</tfoot>" +
+                "</table>"
+            );
             var icalTbody = $('#icalTbody');
             if (!(typeof response['personal'] === 'undefined' || response['personal'] === null)) {
-                icalTbody.append('<tr>' +
+                icalTbody.append('<tr class="warning">' +
                         '<td> ' + translate('personalFeed') + ' </td>'+
                         '<td> <span id="ical_personal_link" class="hidden">'+response['personal']+'</span> <input id="ical_personal_input" class="form-control" type="text" value="'+ response['personal'] +'"/></td>'+
                     '</tr>')
@@ -861,7 +868,7 @@ $('[name^=icalfeeds]').click(function() {
                     '</tr>');
             });
             locationsNames.forEach(function (element, idx) {
-                icalTbody.append('<tr>' +
+                icalTbody.append('<tr class="warning">' +
                     '<td> private ' + element +  '</td>' +
                     '<td>' +'<input class="form-control" type="text" value="'+ locations[idx][element] +'"/>'  +  '</td>' +
                     '</tr>');

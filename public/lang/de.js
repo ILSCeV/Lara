@@ -24,5 +24,6 @@ var deTranslations = {
     'remindsBeforeShiftStart' : 'Wieviele minuten vor deinem Dienst möchtest du erinnert werden?',
     "noPrivateCalendarWarn" :"Bitte trage dich zuerst für einen Dienst ein um deinen Persönlichen feed angezeigt zu bekommen!",
     'iCalendarlink':'Link',
-    "personalFeed":'persönlicher Feed'
+    "personalFeed":'persönlicher Feed',
+    "internalUsageOnly":"Nur für den Internen gebrauch!"
 };

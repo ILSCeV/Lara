@@ -24,5 +24,6 @@ var enTranslations = {
     'remindsBeforeShiftStart' : 'How many minutes before your service would you like to be reminded?',
     "noPrivateCalendarWarn" :"Please join a shift to get your private Calendar visible!",
     'iCalendarlink':'link',
-    "personalFeed":'personal feed'
+    "personalFeed":'personal feed',
+    "internalUsageOnly":"only for internal usage"
 };
