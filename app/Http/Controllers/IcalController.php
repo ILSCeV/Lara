@@ -41,8 +41,7 @@ class IcalController extends Controller
             $startDate = $now->sub(new \DateInterval("P6M"));
             $stopDate = $now->add(new \DateInterval("P6M"));
 
-            $events = ClubEvent::
-            where('evnt_date_start', ">=", $startDate->format(self::DATE_FORMAT))
+            $events = ClubEvent::where('evnt_date_start', ">=", $startDate->format(self::DATE_FORMAT))
                 ->where('evnt_date_start', "<=", $stopDate->format(self::DATE_FORMAT))
                 ->where('evnt_is_private', '=', '0')
                 ->get();
@@ -147,7 +146,7 @@ class IcalController extends Controller
         return response($calendar)
             ->withHeaders(['Content-Type' => 'text/calendar',
                 'charset' => 'utf-8',
-                'Content-Disposition' => 'attachment; filename="cal.ics"'
+                'Content-Disposition' => 'attachment; filename="location.ics"'
             ]);
     }
 
