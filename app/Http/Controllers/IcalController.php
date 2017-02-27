@@ -44,6 +44,7 @@ class IcalController extends Controller
             $events = ClubEvent::where('evnt_date_start', ">=", $startDate->format(self::DATE_FORMAT))
                 ->where('evnt_date_start', "<=", $stopDate->format(self::DATE_FORMAT))
                 ->where('evnt_is_private', '=', '0')
+                ->where('evnt_is_published', '=', '1')
                 ->get();
             $vEvents = $events->map(function ($evt) {
                 $vEvent = new Event();
@@ -110,7 +111,7 @@ class IcalController extends Controller
                 ->with('place')
                 ->where('plc_id', "=", $place->id);
             if ($with_private_info == 0) {
-                $eventsQuery = $eventsQuery->where("evnt_is_private", "=", '0');
+                $eventsQuery = $eventsQuery->where("evnt_is_private", "=", '0')->where('evnt_is_published', '=', '1');
             }
             $events = $eventsQuery->get();
             $vEvents = $events->map(function ($evt) use ($location, $with_private_info) {

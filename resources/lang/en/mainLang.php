@@ -469,5 +469,6 @@ return [
     // ICal //
     //////////
 
-    'icalfeeds'                     =>  'Calendarfeed using ICal',
+    'icalfeeds'                     =>  'Calendarfeed using iCal',
+    'publishEvent'                  =>  'publish event'
 ];

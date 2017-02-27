@@ -470,5 +470,6 @@ return [
     //////////
     // ICal //
     //////////
-    'icalfeeds'                     => 'Kalenderfeed im ICal-Format',
+    'icalfeeds'                     => 'Kalenderfeed im iCal-Format',
+    'publishEvent'                  => 'Event veröffentlichen'
 ];

@@ -499,6 +499,8 @@ class ClubEventController extends Controller
         // reversed this: input=1 means "event is public", input=0 means "event is private"
         $event->evnt_is_private = (Input::get('isPrivate') == '1') ? 0 : 1;
 
+        $event->evnt_is_published = (int) Input::get('evntIsPublished','0');
+
         // Filter
         $filter = [];
         if (Input::get('filterShowToClub2') == '1') { array_push($filter, 'bc-Club'); }

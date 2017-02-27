@@ -45,7 +45,8 @@ class ClubEvent extends Model
 								'evnt_time_end',
 								'evnt_public_info',		
 								'evnt_private_details',
-								'evnt_is_private');
+								'evnt_is_private',
+                                'evnt_is_published');
 
 	/**
 	 * Get the corresponding place.
