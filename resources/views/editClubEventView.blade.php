@@ -348,7 +348,7 @@ AND (Session::get('userGroup') == 'marketing'
 @stop
 
 @section('moreScripts')
-<<script src="{{ asset('/js/edit-shift.js') }}"></script>
+<script src="{{ asset('/js/edit-shift.js') }}"></script>
 @stop
 
 

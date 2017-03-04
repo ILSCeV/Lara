@@ -6,6 +6,13 @@ var updatePublishEvent = function () {
     } else {
         publishBtn.removeClass("btn-success").addClass("btn-danger");
     }
+    var isPrivateInput = $('[name=isPrivate]');
+    if (isPrivateInput.is(':checked')) {
+        publishBtn.removeClass('hidden');
+    } else {
+        publishBtn.addClass("hidden");
+        $('[name=evntIsPublished]').prop("checked", false);
+    }
 };
 $(window).load(updatePublishEvent);
 $('#publishBtn').click(function () {
@@ -28,3 +35,5 @@ $('#publishBtn').click(function () {
         });
     }
 });
+
+$('input[name=isPrivate]').change(updatePublishEvent);
