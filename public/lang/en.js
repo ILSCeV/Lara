@@ -25,5 +25,6 @@ var enTranslations = {
     "noPrivateCalendarWarn" :"Please join a shift to get your private Calendar visible!",
     'iCalendarlink':'link',
     "personalFeed":'personal feed',
-    "internalUsageOnly":"only for internal usage"
+    "internalUsageOnly":"only for internal usage",
+    "publishEventWarning":"If you publish an event it will be visible in the public calendar-feeds."
 };

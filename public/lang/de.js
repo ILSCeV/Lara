@@ -25,5 +25,6 @@ var deTranslations = {
     "noPrivateCalendarWarn" :"Bitte trage dich zuerst für einen Dienst ein um deinen Persönlichen feed angezeigt zu bekommen!",
     'iCalendarlink':'Link',
     "personalFeed":'persönlicher Feed',
-    "internalUsageOnly":"Nur für den Internen gebrauch!"
+    "internalUsageOnly":"Nur für den Internen gebrauch!",
+    "publishEventWarning":"Wenn Sie die Veranstaltung veröffentlichen wird sie über Öffentlichen Kalenderfeeds sichtbar werden."
 };
