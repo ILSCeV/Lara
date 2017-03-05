@@ -818,8 +818,6 @@ $('[name^=icalfeeds]').click(function() {
         success: function(response){
             // we don't need to show this field, if the person does not exists, instead we show a warning
             var remindPersonalIcalInput;
-            console.log(response['isPublic']);
-            console.log(typeof response['isPublic']!== 'undefined');
             if ((typeof response['personal'] === 'undefined' || response['personal'] === null)) {
                 if(typeof response['isPublic']!== 'undefined' && response['isPublic']!==true) {
                     remindPersonalIcalInput = '<div class="alert alert-warning"> <span class="glyphicon glyphicon-warning-sign"></span> ' + translate("noPrivateCalendarWarn") + ' </div>';
@@ -833,26 +831,20 @@ $('[name^=icalfeeds]').click(function() {
                     '</div>';
             }
 
-            var tableFooter = "";
-            if(typeof response['isPublic']!== 'undefined' && response['isPublic']!==true){
-                tableFooter = "<tfoot>" +
-                    "<tr>" +
-                    "<td class='warning'></td>" +
-                    "<td>" + translate("internalUsageOnly") + "</td> " +
-                    "</tr>" +
-                    "</tfoot>";
+            var legend = "";
+            if (typeof response['isPublic'] !== 'undefined' && response['isPublic'] !== true) {
+                legend = '<div>' + translate('legend') + ': <span class="bg-warning" style="border: black; border-style: solid; border-width: 1px;"> <span class="glyphicon">&nbsp;</span></span> ' + translate("internalUsageOnly") + '</div>  ';
             }
-
 
             dialog.find('.modal-body').addClass("no-padding").html("" +
                 remindPersonalIcalInput +
+                legend +
                 "<table class='table table-hover no-padding'>" +
                 "<thead><tr>" +
                 "<th></th>" +
                 "<th> " + translate('iCalendarlink') + " </th>" +
                 "</tr></thead>" +
                 "<tbody id='icalTbody'></tbody>" +
-                tableFooter +
                 "</table>"
             );
             var icalTbody = $('#icalTbody');

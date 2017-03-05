@@ -26,5 +26,6 @@ var deTranslations = {
     'iCalendarlink':'Link',
     "personalFeed":'persönlicher Feed',
     "internalUsageOnly":"Nur für den Internen gebrauch!",
-    "publishEventWarning":"Wenn Sie die Veranstaltung veröffentlichen wird sie über Öffentlichen Kalenderfeeds sichtbar werden."
+    "publishEventWarning":"Wenn Sie die Veranstaltung veröffentlichen wird sie über Öffentlichen Kalenderfeeds sichtbar werden.",
+    "legend":"Legende"
 };

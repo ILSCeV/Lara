@@ -26,5 +26,6 @@ var enTranslations = {
     'iCalendarlink':'link',
     "personalFeed":'personal feed',
     "internalUsageOnly":"only for internal usage",
-    "publishEventWarning":"If you publish an event it will be visible in the public calendar-feeds."
+    "publishEventWarning":"If you publish an event it will be visible in the public calendar-feeds.",
+    "legend":"Legend"
 };
