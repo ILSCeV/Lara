@@ -818,14 +818,31 @@ $('[name^=icalfeeds]').click(function() {
         success: function(response){
             // we don't need to show this field, if the person does not exists, instead we show a warning
             var remindPersonalIcalInput;
+            console.log(response['isPublic']);
+            console.log(typeof response['isPublic']!== 'undefined');
             if ((typeof response['personal'] === 'undefined' || response['personal'] === null)) {
-                remindPersonalIcalInput = '<div class="alert alert-warning"> <span class="glyphicon glyphicon-warning-sign"></span> '+ translate("noPrivateCalendarWarn") +' </div>';
+                if(typeof response['isPublic']!== 'undefined' && response['isPublic']!==true) {
+                    remindPersonalIcalInput = '<div class="alert alert-warning"> <span class="glyphicon glyphicon-warning-sign"></span> ' + translate("noPrivateCalendarWarn") + ' </div>';
+                } else {
+                    remindPersonalIcalInput="";
+                }
             } else {
                 remindPersonalIcalInput = '<div class="input-group">' +
                     '<span class="input-group-addon">' + translate('remindsBeforeShiftStart') + '</span> ' +
                     '<input id="personalIcalRemindValue" class="form-control" type="number" value="0"/>' +
                     '</div>';
             }
+
+            var tableFooter = "";
+            if(typeof response['isPublic']!== 'undefined' && response['isPublic']!==true){
+                tableFooter = "<tfoot>" +
+                    "<tr>" +
+                    "<td class='warning'></td>" +
+                    "<td>" + translate("internalUsageOnly") + "</td> " +
+                    "</tr>" +
+                    "</tfoot>";
+            }
+
 
             dialog.find('.modal-body').addClass("no-padding").html("" +
                 remindPersonalIcalInput +
@@ -835,12 +852,7 @@ $('[name^=icalfeeds]').click(function() {
                 "<th> " + translate('iCalendarlink') + " </th>" +
                 "</tr></thead>" +
                 "<tbody id='icalTbody'></tbody>" +
-                "<tfoot>" +
-                "<tr>" +
-                "<td class='warning'></td>" +
-                "<td>" + translate("internalUsageOnly") + "</td> " +
-                "</tr>" +
-                "</tfoot>" +
+                tableFooter +
                 "</table>"
             );
             var icalTbody = $('#icalTbody');
@@ -867,12 +879,14 @@ $('[name^=icalfeeds]').click(function() {
                     '<td>' +'<input class="form-control" type="text" value="'+ locationsPublic[idx][element] +'"/>'  +  '</td>' +
                     '</tr>');
             });
-            locationsNames.forEach(function (element, idx) {
-                icalTbody.append('<tr class="warning">' +
-                    '<td> private ' + element +  '</td>' +
-                    '<td>' +'<input class="form-control" type="text" value="'+ locations[idx][element] +'"/>'  +  '</td>' +
-                    '</tr>');
-            });
+            if(typeof response['isPublic']!== 'undefined' && response['isPublic']!==true) {
+                locationsNames.forEach(function (element, idx) {
+                    icalTbody.append('<tr class="warning">' +
+                        '<td> private ' + element + '</td>' +
+                        '<td>' + '<input class="form-control" type="text" value="' + locations[idx][element] + '"/>' + '</td>' +
+                        '</tr>');
+                });
+            }
             $('#personalIcalRemindValue').change(function () {
                 $('#ical_personal_input').val($('#ical_personal_link').text() + $('#personalIcalRemindValue').val());
             });

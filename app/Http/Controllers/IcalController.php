@@ -290,13 +290,22 @@ class IcalController extends Controller
         $places = Place::all();
         $result['allPublicEvents'] = URL::route('icalallevents');
         foreach ($places as $place) {
-            $placeLink = [$place->plc_title => URL::to('/') . '/ical/feed/' . $place->place_uid . "/1"];
+
+            if(Session::has('userGroup')) {
+                $placeLink = [$place->plc_title => URL::to('/') . '/ical/feed/' . $place->place_uid . "/1"];
+                $result['location'][] = $placeLink;
+            }
             $publicLinks = [$place->plc_title => URL::to('/') . "/ical/location/" . $place->plc_title];
-            $result['location'][] = $placeLink;
+
             $result['locationPublic'][] = $publicLinks;
             $result['locationName'][] = $place->plc_title;
         }
-        if (!is_null($person)) {
+        if(!Session::has('userId')){
+            $result['isPublic'] = true;
+        } else {
+            $result['isPublic'] = false;
+        }
+        if (!is_null($person) && Session::has('userId')) {
             $result['personal'] = URL::to('/') . '/ical/events/user/' . $person->prsn_uid . '/';
         }
 
