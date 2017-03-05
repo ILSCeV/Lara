@@ -797,12 +797,21 @@ $( document ).ready( function() {
 // ICal //
 //////////
 $('[name^=icalfeeds]').click(function() {
-// Initialise modal and show loading icon and message
+
+    var clipboard = null;
+    // Initialise modal and show loading icon and message
     var dialog = bootbox.dialog({
         title: translate("icalfeeds"),
         size: 'large',
-        message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>'
+        message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
+        callback:function(){
+            if(clipboard!==null){
+                clipboard.destroy();
+            }
+        }
     });
+
+
 
     $.ajax({
         url: "/ical/links/",
@@ -833,7 +842,7 @@ $('[name^=icalfeeds]').click(function() {
 
             var legend = "";
             if (typeof response['isPublic'] !== 'undefined' && response['isPublic'] !== true) {
-                legend = '<div>' + translate('legend') + ': <span class="bg-warning" style="border: black; border-style: solid; border-width: 1px;"> <span class="glyphicon">&nbsp;</span></span> ' + translate("internalUsageOnly") + '</div>  ';
+                legend = '<div>' + translate('legend') + ': <span class="bg-warning" style="border: 1px solid black;"> <span class="glyphicon">&nbsp;</span></span> ' + translate("internalUsageOnly") + '</div>  ';
             }
 
             dialog.find('.modal-body').addClass("no-padding").html("" +
@@ -850,8 +859,15 @@ $('[name^=icalfeeds]').click(function() {
             var icalTbody = $('#icalTbody');
             if (!(typeof response['personal'] === 'undefined' || response['personal'] === null)) {
                 icalTbody.append('<tr class="warning">' +
-                        '<td> ' + translate('personalFeed') + ' </td>'+
-                        '<td> <span id="ical_personal_link" class="hidden">'+response['personal']+'</span> <input id="ical_personal_input" class="form-control" type="text" value="'+ response['personal'] +'"/></td>'+
+                        '<td> ' + translate('personalFeed') + '<span id="ical_personal_link" class="hidden">'+response['personal']+'</span>  </td>'+
+                        '<td> ' +
+                    '<div class="input-group"> ' +
+                    '<input class="form-control " id="ical_personal_input" type="text" value="'+ response['personal'] +'"/>' +
+                    '<span class="input-group-btn">' +
+                    '<button type="button" class=" icalinput btn btn-default" data-clipboard-target="#ical_personal_input" ><span class="fa fa-clipboard"></span> </button> ' +
+                    '</span> ' +
+                    '</div>' +
+                    '</td>'+
                     '</tr>')
             }
 
@@ -862,26 +878,47 @@ $('[name^=icalfeeds]').click(function() {
 
             icalTbody.append('<tr>' +
                 '<td></td>' +
-                '<td>' +'<input class="form-control" type="text" value="'+ allPublicEvents +'"/>'  +  '</td>' +
+                '<td>' +
+                '<div class="input-group"> ' +
+                '<input class="form-control " id="icalAllPublicEvents" type="text" value="'+ allPublicEvents +'"/>' +
+                '<span class="input-group-btn">' +
+                '<button type="button" class=" icalinput btn btn-default" data-clipboard-target="#icalAllPublicEvents" ><span class="fa fa-clipboard"></span> </button> ' +
+                '</span>' +
+                '</div>'  +  '</td>' +
                 '</tr>');
 
             locationsNames.forEach(function (element, idx) {
                 icalTbody.append('<tr>' +
                     '<td>' + element +  '</td>' +
-                    '<td>' +'<input class="form-control" type="text" value="'+ locationsPublic[idx][element] +'"/>'  +  '</td>' +
+                    '<td>' +
+                    '<div class="input-group"> ' +
+                    '<input class="form-control " type="text" id="locationPublic'+ idx +'" value="'+ locationsPublic[idx][element] +'"/>'  +
+                    '<span class="input-group-btn">' +
+                    '<button type="button" class=" icalinput btn btn-default" data-clipboard-target="#locationPublic'+ idx +'" ><span class="fa fa-clipboard"></span> </button> ' +
+                    '</span>' +
+                    '</div>' +
+                    '</td>' +
                     '</tr>');
             });
             if(typeof response['isPublic']!== 'undefined' && response['isPublic']!==true) {
                 locationsNames.forEach(function (element, idx) {
                     icalTbody.append('<tr class="warning">' +
                         '<td> private ' + element + '</td>' +
-                        '<td>' + '<input class="form-control" type="text" value="' + locations[idx][element] + '"/>' + '</td>' +
+                        '<td>' +
+                        '<div class="input-group"> ' +
+                        '<input class="form-control " type="text" id="location'+ idx +'" value="' + locations[idx][element] + '"/>' +
+                        '<span class="input-group-btn">' +
+                        '<button type="button" class=" icalinput btn btn-default" data-clipboard-target="#location'+ idx +'"  ><span class="fa fa-clipboard"></span> </button> ' +
+                        '</span>' +
+                        '</div>' +
+                        '</td>' +
                         '</tr>');
                 });
             }
             $('#personalIcalRemindValue').change(function () {
                 $('#ical_personal_input').val($('#ical_personal_link').text() + $('#personalIcalRemindValue').val());
             });
+            clipboard = new Clipboard('.icalinput');
         }
 
     });
