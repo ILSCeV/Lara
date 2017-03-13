@@ -1,5 +1,7 @@
 ## Club management software built on top of Laravel 5.3
 
+[![Join the chat at https://gitter.im/4D44H/lara-vedst](https://badges.gitter.im/4D44H/lara-vedst.svg)](https://gitter.im/4D44H/lara-vedst?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## About
 **Lara** is a planning tool that combines a calender with personnel scheduling, developed for [bc-Studentenclub](http://www.bc-club.de) and intended to scale to all [Ilmenauer Studentenclub e.V.](http://www.il-sc.de) sections.
 
