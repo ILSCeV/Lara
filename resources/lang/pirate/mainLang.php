@@ -418,8 +418,8 @@ return [
     //Navigation
     'clubNumber'                    => 'Clubnummer',
     'password'                      => 'Passwort',
-    'logIn'                         => 'Anmelden',
-    'logOut'                        => 'Abmelden',
+    'logIn'                         => 'An Bord gehen',
+    'logOut'                        => 'Schiff Verlassen',
     //ScheduleEntryName
     '=FREI='                        => '=FREI=', //not used yet
     //surveyForm
