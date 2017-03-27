@@ -1,5 +1,6 @@
 <?php
 return [
-    'en' => 'English',
-    'de' => 'Deutsch',
+    'pi' => 'Piratensprache',
+    'en'     => 'English',
+    'de'     => 'Deutsch',
 ];

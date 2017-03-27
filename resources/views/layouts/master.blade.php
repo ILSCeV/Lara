@@ -67,6 +67,7 @@
     <script src="{{ asset('/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('/lang/de.js') }}"></script>
     <script src="{{ asset('/lang/en.js') }}"></script>
+    <script src="{{ asset('/lang/pi.js') }}"></script>
     <script src="{{ asset('/js/vedst-scripts.js') }}"></script>
     <script src="{{ asset('/js/bin/bundle.js') }}"></script>
     <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>
