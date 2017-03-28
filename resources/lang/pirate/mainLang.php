@@ -40,15 +40,15 @@ return [
 
     //Event types ------------------------------------
     'type'                  => 'Typ',
-    'normalProgramm'        => 'normales Programm',
+    'normalProgramm'        => 'Seemanslieder singen',
     'information'           => 'Information',
-    'special'               => 'Spezial',
-    'LiveBandDJ'            => 'Live Band / Live DJ / Lesung',
-    'internalEvent'         => 'interne Veranstaltung',
-    'utilization'           => 'Nutzung',
+    'special'               => 'Kombüse',
+    'LiveBandDJ'            => 'Seeschlacht',
+    'internalEvent'         => 'Kiel holen',
+    'utilization'           => 'Passagier Beförderung',
     'flooding'              => 'Deck Schrubben',
-    'flyersPlacard'         => 'Anhoyern',
-    'marketingFlyersPlacard'=> 'Marketing / Flyer / Plakate', //used in legend.blade.php
+    'flyersPlacard'         => 'Rum verteilen',
+    'marketingFlyersPlacard'=> 'Anhoyern', //used in legend.blade.php
     'preSale'               => 'Vorverkauf',
     'others'                => 'Sonstiges',
     
@@ -59,7 +59,7 @@ return [
     
     'DV-Time'               => 'DV-Zeit',
     'club'                  => 'Schiff',
-    'internalEventP'        => 'Interne Veranstaltung', // Placeholder string
+    'internalEventP'        => 'Kiel holen', // Placeholder string
     'internEventP'          => 'Internes Event',        // Placeholder string for example used in monthCell.blade.php
     
     'willShowFor'           => 'wird angezeigt für',
@@ -107,7 +107,7 @@ return [
     //blockString line~168
     'showForLoggedInMember'     => 'Dieses Event wird nur für eingeloggte Mitglieder sichtbar sein!',
     'showForExternOrChangeType' => 'Um sie für Externe sichtbar zu machen oder den Typ zu ändern,',
-    'askTheCLOrMM'              => 'frage die Clubleitung oder die Marketingverantwortlichen.',
+    'askTheCLOrMM'              => 'frage die Admiralität oder den Smutje.',
 
     'section'               => 'Abteil',
     'showFor'               => 'Zeige für',
@@ -131,9 +131,9 @@ return [
     //Lines for editing only with permission
     'noNotThisWay'          => 'Ne, das geht so nicht...',
     'onlyThe'               => 'Nur die',
-    'clubManagement'        => 'Offiziere',
+    'clubManagement'        => 'Admiral',
     'orThe'                 => 'oder die',
-    'marketingManager'      => 'Anwerber',
+    'marketingManager'      => 'Smutje',
     'canChangeEventJob'     => 'dürfen diese Veranstaltung/Aufgabe ändern.',
     'commaThe'              => ', die ', //line number ~332
     
@@ -165,7 +165,7 @@ return [
     'name'                  => 'Name',
     'myClub'                => 'Schiff',
 
-    'addMe'                 => 'Mich eintragen!',
+    'addMe'                 => 'Anhoyern!',
     
     //Answers
     'yes'                   => 'Ja',
@@ -271,7 +271,7 @@ return [
     'month'                 => 'Monat',
     'week'                  => 'Woche',
     //not translated the term 'logs'
-    'manageClub'            => 'Clubs verwalten',
+    'manageClub'            => 'Schiffe verwalten',
     'manageJobType'         => 'Diensttypen verwalten', 
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
     
@@ -282,11 +282,11 @@ return [
     'createNewSurvey'          => 'Neue Umfrage erstellen',
     
     //Member types
-    'candidate'             => 'Landratte',
+    'candidate'             => 'Frischling',
     'veteran'               => 'Seebär',
-    'ex-member'             => 'ex-Mitglied',
+    'ex-member'             => 'Einbeiniger',
     'active'                => 'Matrose',
-    'external'              => 'Extern',
+    'external'              => 'Landratte',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -344,7 +344,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/weekCellHidden.blade.php
-    'moreDetailsAfterLogInMessage'      => 'Weitere Details sind für Mitglieder nach dem Einloggen zugänglich.',
+    'moreDetailsAfterLogInMessage'      => 'Weitere Details sind für Crewmitglieder nach dem Einloggen zugänglich.',
     // 'moreDetailsAfterLogInMessage2'  => 'nach dem Einloggen zugänglich.', 
     // Merged with line above but there is now way to break the line (format is still ok) 
     // ToDo find a solution
@@ -404,7 +404,7 @@ return [
     'placeholderTitleWineEvening'   => 'z.B. Weinabend', 
     //'placeholderTitleWineEvening'
     
-    'placeholderSubTitleWineEvening'=> 'z.B. Das Leben ist zu kurz, um schlechten Wein zu trinken', 
+    'placeholderSubTitleWineEvening'=> 'z.B. Das Leben ist zu kurz, um schlechten Grogg zu trinken',
     //'placeholderSubTitleWineEvening'
     
     'placeholderPublicInfo'         => 'z.B. Karten nur im Vorverkauf',
@@ -419,7 +419,7 @@ return [
     'clubNumber'                    => 'Clubnummer',
     'password'                      => 'Passwort',
     'logIn'                         => 'An Bord gehen',
-    'logOut'                        => 'Schiff Verlassen',
+    'logOut'                        => 'Über Bord gehen',
     //ScheduleEntryName
     '=FREI='                        => '=FREI=', //not used yet
     //surveyForm
@@ -429,8 +429,8 @@ return [
     'placeholderActiveUntil'        => 'Aktiv bis:',
     
     // Misc.
-    'guest'                         => 'Gast',
-    'accessDenied'                  => 'Moment mal... Nur eingeloggte Mitglieder mit ausreichender Berechtigung dürfen hier rein! Logge dich ein, oder komm zur nächsten Versammlung und werde Mitglied.',
+    'guest'                         => 'Passagier',
+    'accessDenied'                  => 'Moment mal... Nur eingeloggte Crewmitglieder mit ausreichendem Rang dürfen hier rein! Logge dich ein, oder komm zur nächsten Versammlung und heuer an.',
 
 
 
