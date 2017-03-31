@@ -41,7 +41,7 @@ return [
     //Event types ------------------------------------
     'type'                  => 'Typ',
     'normalProgramm'        => 'Seemanslieder singen',
-    'information'           => 'Information',
+    'information'           => 'Ausschau halten',
     'special'               => 'Kombüse',
     'LiveBandDJ'            => 'Seeschlacht',
     'internalEvent'         => 'Kiel holen',
