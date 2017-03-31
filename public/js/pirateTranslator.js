@@ -11,18 +11,19 @@ $(window).load(
     function () {
 
         var arrifier = function (str) {
-            var regex = /ar/g;
+            var regex = new RegExp('ar','i');
             return str.replace(regex,'ARRR');
         };
 
         var doTranslations = function (index, elem) {
             var oldText = $(elem).text().trim();
             var translation = translate(oldText);
+            var newText = oldText;
             if(translation.indexOf('Translation necessary:') === -1){
-                var newText = $(elem).html().replaceAll(oldText, translation);
-                var aRRRRifiedText = arrifier(newText);
-                $(elem).html(aRRRRifiedText);
+                newText = $(elem).html().replaceAll(oldText, translation);
             }
+            var aRRRRifiedText = arrifier(newText);
+            $(elem).html(aRRRRifiedText);
         };
 
         $('div.cal-event a').each(doTranslations);
