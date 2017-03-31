@@ -33,5 +33,6 @@ var pirateTranslations = {
     'Fete des Profs' : 'Fete des Klabautermanns',
     'Wild Wild West' : 'Jo Ho Ho Ho',
     'Aufbau Themenabend' : 'Papagei füttern',
-    'Abbau Themenabend' : 'Augenklappe wechseln'
+    'Abbau Themenabend' : 'Augenklappe wechseln',
+    'Science Slam' : 'Black Jack'
 };
