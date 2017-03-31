@@ -27,11 +27,10 @@ return [
     //-----------------------------------------------------------------------------------------------------
 
     // /resources/views/layouts/master.blade.php
-    'notWorkingMail'        => 'Eine Planke ist lose? Schreibe :Name eine Mail',
-    'mail'                  => ' eine Mail.', //not used
+    'notWorkingMail'        => 'Eine Planke ist lose? Versende :Name eine Taube!',
     //'moreInfos'           => 'Mehr Infos? Besuche die ',
     //'projectsite'         => 'Projektseite auf GitHub',
-    'moreInfosProjectsite'  => 'Mehr Infos? Besuche die Projektseite auf GitHub',
+    'moreInfosProjectsite'  => 'Wo aus? Kletter\' in den Mast!',
     
     //-----------------------------------------------------------------------------------------------------
 
@@ -39,17 +38,17 @@ return [
     // resources/views/clubEventView.blade.php
 
     //Event types ------------------------------------
-    'type'                  => 'Typ',
+    'type'                  => 'Fall',
     'normalProgramm'        => 'Seemanslieder singen',
     'information'           => 'Ausschau halten',
     'special'               => 'Kombüse',
     'LiveBandDJ'            => 'Seeschlacht',
-    'internalEvent'         => 'Kiel holen',
-    'utilization'           => 'Passagier Beförderung',
-    'flooding'              => 'Deck Schrubben',
+    'internalEvent'         => 'Kielholen',
+    'utilization'           => 'Passagierbeförderung',
+    'flooding'              => 'Deck schrubben',
     'flyersPlacard'         => 'Rum verteilen',
     'marketingFlyersPlacard'=> 'Anhoyern', //used in legend.blade.php
-    'preSale'               => 'Vorverkauf',
+    'preSale'               => 'Seelenverkäufer',
     'others'                => 'Sonstiges',
     
     //----------------------------------------------
@@ -57,30 +56,30 @@ return [
     'begin'                 => 'Beginn',
     'end'                   => 'Ende',
     
-    'DV-Time'               => 'DV-Zeit',
+    'DV-Time'               => 'An Bord sein',
     'club'                  => 'Schiff',
-    'internalEventP'        => 'Kiel holen', // Placeholder string
-    'internEventP'          => 'Internes Event',        // Placeholder string for example used in monthCell.blade.php
+    'internalEventP'        => 'Kielholen', // Placeholder string
+    'internEventP'          => 'Kielholen', // Placeholder string for example used in monthCell.blade.php
     
-    'willShowFor'           => 'wird angezeigt für',
+    'willShowFor'           => 'Ahoi an',
     
     'changeEvent'           => 'Veranstaltung ändern',
     'deleteEvent'           => 'Veranstaltung löschen',
     'confirmDeleteEvent'    => 'Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!',
     
-    'additionalInfo'        => 'Weitere Details',
-    'moreDetails'           => 'Interne Information',
+    'additionalInfo'        => 'Flaschenpost',
+    'moreDetails'           => 'Ansagen vom Kapitän',
     
     //Button
-    'showMore'              => 'mehr anzeigen',
-    'showLess'              => 'weniger anzeigen',
+    'showMore'              => 'Mehr!',
+    'showLess'              => 'Verschwinde!',
     
-    'hideTimes'             => 'Zeiten ausblenden',
+    'hideTimes'             => 'Glasen wegpacken',
     
-    'addComment'            => 'Kommentar hier hinzufügen',  //not used Line ClubEventView ~270 Placeholder message and similar
+    'addComment'            => 'Blödsinn ausrufen',  //not used Line ClubEventView ~270 Placeholder message and similar
     
     //List of Changes
-    'listChanges'           => 'Liste der Änderungen',
+    'listChanges'           => 'Schiffsregister',
 
     'work'                  => 'Dienst',
     'whatChanged'           => 'Was wurde geändert?',
@@ -196,23 +195,23 @@ return [
     // resources/views/monthView.blade.php
     //short weekdays + CW
     'Cw' => 'KW',
-    'Mo' => 'Montag',
-    'Tu' => 'Dienstag',
-    'We' => 'Mittwoch',
-    'Th' => 'Donnerstag',
-    'Fr' => 'Freitag',
-    'Sa' => 'Samstag',
-    'Su' => 'Sonntag',
+    'Mo' => 'Manendach',
+    'Tu' => 'Dinxendach',
+    'We' => 'Woensdach',
+    'Th' => 'Donresdach',
+    'Fr' => 'Vridach',
+    'Sa' => 'Saterdagh',
+    'Su' => 'Sonnendach',
 
 
     // resources/view/partials/calendarLinkEvent.blade.php
-    'addToCalendar' => 'Event zu eigenem Google Kalender hinzufügen',
+    'addToCalendar' => 'Schiffroute auf dem Rücken tätowieren',
 
     // resources/views/partials/month/day.blade.php
-    'createEventOnThisDate' => 'Neues Event an diesem Tag erstellen',
+    'createEventOnThisDate' => 'Neue Fahrt an diesem Tag ansagen',
 
     // resources/views/partials/month/monthCell.blade.php
-    'showDetails' => 'Details anzeigen',
+    'showDetails' => 'Die Mannschaft besuchen',
 
     // resources/views/monthView.blade.php
     'showWeek' => 'Detaillierte Ansicht dieser Woche anzeigen',
@@ -248,12 +247,12 @@ return [
     'adjustRoster'          => 'Dienstplan anpassen',
     'serviceTypeEnter'      => 'Diensttyp hier eingeben',
     'weight'                => 'Gewicht (für Statistik)',
-    'statisticalEvaluation' => 'Statistik',
+    'statisticalEvaluation' => 'Kombüse',
     
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/filter.blade.php
-    'allSections'           => 'Alle Sektionen',
+    'allSections'           => 'Alle Schiffe',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -278,8 +277,8 @@ return [
     'manageTemplate'        => 'Vorlagen verwalten',
     
     //create button text
-    'createNewEvent'           => 'Neues Event erstellen',
-    'createNewSurvey'          => 'Neue Umfrage erstellen',
+    'createNewEvent'           => 'Neue Fahrt ansagen',
+    'createNewSurvey'          => 'Die Mannschaft fragen',
     
     //Member types
     'candidate'             => 'Frischling',
@@ -297,16 +296,16 @@ return [
     'jobFree'               => 'Dienst frei',
 
     // /resources/views/partials/statisticsLeaderboards.blade.php
-    'totalShifts'           => 'Dienste',
+    'totalShifts'           => 'Flaschen',
     'leaderBoards'          => 'Bestenliste',
     'allClubs'              => 'Alle',
 
     // /resources/view/partials/statistics/amountOfShiftsDisplay.blade.php
-    'shiftsInOtherSection'      => 'Dienste in anderen Sektionen',
-    'shiftsInOwnSection'        => 'Dienste in eigener Sektion',
+    'shiftsInOtherSection'      => 'Dienste auf anderen Schiffen',
+    'shiftsInOwnSection'        => 'Dienste auf eigenem Schiff',
 
     // /resources/views/partials/clubStatistics.blade.php
-    'infoFor'               => 'Mitgliederstatistik',
+    'infoFor'               => 'Thekenrechnung',
 
     // /resources/views/partials/personalStatistics.blade.php
     //-----------------------------------------------------------------------------------------------------------
