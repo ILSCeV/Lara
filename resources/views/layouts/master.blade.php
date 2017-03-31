@@ -23,7 +23,12 @@
         <![endif]-->
 	</head>
 
-  <body>
+    @if(Session::get("applocale") === "pirate")
+        <body  style="background-image:url({{  asset('/background-pirate.jpg') }}) !important; background-size:initial; background-position:center;">
+    @else
+        <body>
+    @endif
+  
 		<header class="navigation">
 			@include('partials.navigation')
 		</header>

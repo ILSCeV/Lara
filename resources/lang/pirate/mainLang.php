@@ -30,7 +30,7 @@ return [
     'notWorkingMail'        => 'Eine Planke ist lose? Versende :Name eine Taube!',
     //'moreInfos'           => 'Mehr Infos? Besuche die ',
     //'projectsite'         => 'Projektseite auf GitHub',
-    'moreInfosProjectsite'  => 'Wo aus? Kletter\' in den Mast!',
+    'moreInfosProjectsite'  => 'Land in sicht? Kletter\' in den Mast!',
     
     //-----------------------------------------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ return [
     'type'                  => 'Fall',
     'normalProgramm'        => 'Seemanslieder singen',
     'information'           => 'Ausschau halten',
-    'special'               => 'Kombüse',
+    'special'               => 'Festmahl',
     'LiveBandDJ'            => 'Seeschlacht',
     'internalEvent'         => 'Kielholen',
     'utilization'           => 'Passagierbeförderung',
@@ -74,7 +74,7 @@ return [
     'showMore'              => 'Mehr!',
     'showLess'              => 'Verschwinde!',
     
-    'hideTimes'             => 'Glasen wegpacken',
+    'hideTimes'             => 'Gläser wegpacken',
     
     'addComment'            => 'Blödsinn ausrufen',  //not used Line ClubEventView ~270 Placeholder message and similar
     
@@ -267,8 +267,8 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/navigation.blade.php
-    'month'                 => 'Monat',
-    'week'                  => 'Woche',
+    'month'                 => 'Jahreszwölftel',
+    'week'                  => 'Trinkzeit',
     //not translated the term 'logs'
     'manageClub'            => 'Schiffe verwalten',
     'manageJobType'         => 'Diensttypen verwalten', 
@@ -343,7 +343,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     
     // /resources/views/partials/weekCellHidden.blade.php
-    'moreDetailsAfterLogInMessage'      => 'Weitere Details sind für Crewmitglieder nach dem Einloggen zugänglich.',
+    'moreDetailsAfterLogInMessage'      => 'Darüber reden wir erst wenn du an Bord gehst!',
     // 'moreDetailsAfterLogInMessage2'  => 'nach dem Einloggen zugänglich.', 
     // Merged with line above but there is now way to break the line (format is still ok) 
     // ToDo find a solution
@@ -365,10 +365,10 @@ return [
     // /public/js/vedst-script.js
     'errorMessageForgotFilter'              => 'Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.',
     'errorMessageEnterPasswordForShiftPlan' => 'Bitte noch das Passwort für diesen Dienstplan eingeben:',
-    'shiftTime'                             => 'Dienstzeiten',
+    'shiftTime'                             => 'Deckzeit',
     //'hideTimes' already exists
     
-    'weekStart'                             => 'Montag - Sonntag',
+    'weekStart'                             => 'Manendach - Sonnendach',
     'hideTakenShifts'                       => 'Nur FREIe Dienste',
     
     //-----------------------------------------------------------------------------------------------------------
@@ -398,7 +398,7 @@ return [
     */
     
     //ClubEvent
-    'addCommentHere'                => 'Kommentar hier hinzufügen',
+    'addCommentHere'                => 'Blödsinn ausrufen',
     'enterPasswordHere'             => 'Passwort hier eingeben',
     'placeholderTitleWineEvening'   => 'z.B. Weinabend', 
     //'placeholderTitleWineEvening'
@@ -415,8 +415,8 @@ return [
     
     //Partials
     //Navigation
-    'clubNumber'                    => 'Clubnummer',
-    'password'                      => 'Passwort',
+    'clubNumber'                    => 'Matrose',
+    'password'                      => 'Das geheime Wort',
     'logIn'                         => 'An Bord gehen',
     'logOut'                        => 'Über Bord gehen',
     //ScheduleEntryName
