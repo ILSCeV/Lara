@@ -18,5 +18,6 @@ var pirateTranslations = {
     'event': 'Event',
     'section': 'Sektion',
     'date': 'Datum',
-    'weight': 'Wert'
+    'weight': 'Wert',
+    'CGW VVK' : "ARRRRRRRRRRRRRRRRR"
 };
