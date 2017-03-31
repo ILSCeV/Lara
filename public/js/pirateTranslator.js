@@ -9,11 +9,19 @@ String.prototype.replaceAll = function(search, replacement) {
 
 $(window).load(
     function () {
+
+        var arrifier = function (str) {
+            var regex = /ar/g;
+            return str.replace(regex,'ARRR');
+        };
+
         var doTranslations = function (index, elem) {
             var oldText = $(elem).text().trim();
             var translation = translate(oldText);
             if(translation.indexOf('Translation necessary:') === -1){
-                $(elem).html($(elem).html().replaceAll(oldText, translation));
+                var newText = $(elem).html().replaceAll(oldText, translation);
+                var aRRRRifiedText = arrifier(newText);
+                $(elem).html(aRRRRifiedText);
             }
         };
 
