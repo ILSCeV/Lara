@@ -43,7 +43,7 @@ return [
     'information'           => 'Ausschau halten',
     'special'               => 'Festmahl',
     'LiveBandDJ'            => 'Seeschlacht',
-    'internalEvent'         => 'Kielholen',
+    'internalEvent'         => 'Feirn im engsten Kreise',
     'utilization'           => 'Passagierbeförderung',
     'flooding'              => 'Deck schrubben',
     'flyersPlacard'         => 'Rum verteilen',
@@ -58,8 +58,8 @@ return [
     
     'DV-Time'               => 'An Bord sein',
     'club'                  => 'Schiff',
-    'internalEventP'        => 'Kielholen', // Placeholder string
-    'internEventP'          => 'Kielholen', // Placeholder string for example used in monthCell.blade.php
+    'internalEventP'        => 'Feirn im engsten Kreise', // Placeholder string
+    'internEventP'          => 'Feirn im engsten Kreise', // Placeholder string for example used in monthCell.blade.php
     
     'willShowFor'           => 'Ahoi an',
     

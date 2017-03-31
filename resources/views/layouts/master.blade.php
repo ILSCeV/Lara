@@ -23,11 +23,12 @@
         <![endif]-->
 	</head>
 
-    @if(Session::get("applocale") === "pirate")
-        <body  style="background-image:url({{  asset('/background-pirate.jpg') }}) !important; background-size:initial; background-position:center;">
-    @else
-        <body>
-    @endif
+    <body>
+        <script type="text/javascript">
+            if (localStorage.getItem( "language" ) === "pirate") {
+                document.body.style = "background-image:url({{  asset('/background-pirate.jpg') }}) !important; background-size:initial; background-position:center;";
+            }
+        </script>
   
 		<header class="navigation">
 			@include('partials.navigation')
@@ -76,9 +77,9 @@
     <script src="{{ asset('/js/vedst-scripts.js') }}"></script>
     <script src="{{ asset('/js/bin/bundle.js') }}"></script>
     <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>
-        @if(Session::get('applocale') == 'pirate')
-            <script src="{{ asset('/js/pirateTranslator.js') }}"></script>
-        @endif
+    @if(Session::get('applocale') == 'pirate')
+        <script src="{{ asset('/js/pirateTranslator.js') }}"></script>
+    @endif
 	@yield('moreScripts')
   </body>
 </html>
