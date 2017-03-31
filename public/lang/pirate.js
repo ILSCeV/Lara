@@ -26,5 +26,12 @@ var pirateTranslations = {
     'Reno' : 'Schiff reparieren',
     'Weinabend' : 'Rumabend',
     'Kneipenabend' : 'Kneipenschlägerei',
-    'Fernwehvortrag' : 'Seemannsgarn'
+    'Fernwehvortrag' : 'Seemannsgarn',
+    'Geschenkübergabe' : 'Priese aufteilen',
+    'Walpurgisnacht Vorbereitung':'Raubzug Vorbereitung',
+    'Walpurgisnacht' : 'Campus ausrauben',
+    'Fete des Profs' : 'Fete des Klabautermanns',
+    'Wild Wild West' : 'Jo Ho Ho Ho',
+    'Aufbau Themenabend' : 'Papagei füttern',
+    'Abbau Themenabend' : 'Augenklappe wechseln'
 };
