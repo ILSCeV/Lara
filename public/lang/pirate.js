@@ -19,5 +19,12 @@ var pirateTranslations = {
     'section': 'Sektion',
     'date': 'Datum',
     'weight': 'Wert',
-    'CGW VVK' : "ARRRRRRRRRRRRRRRRR"
+    'CGW VVK' : "Holzbein VVK",
+    'Fluten' : 'Deck Schrubben',
+    'Flutplan' : 'Deck Schrubben',
+    'Sektbrunch' : 'Groggverkostung',
+    'Reno' : 'Schiff reparieren',
+    'Weinabend' : 'Rumabend',
+    'Kneipenabend' : 'Kneipenschlägerei',
+    'Fernwehvortrag' : 'Seemannsgarn'
 };
