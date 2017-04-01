@@ -24,12 +24,6 @@
 	</head>
 
     <body>
-        <script type="text/javascript">
-            if (localStorage.getItem( "language" ) === "pirate") {
-
-            }
-        </script>
-  
 		<header class="navigation">
 			@include('partials.navigation')
 		</header>
