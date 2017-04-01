@@ -35,5 +35,6 @@ var pirateTranslations = {
     'Aufbau Themenabend' : 'Papagei füttern',
     'Abbau Themenabend' : 'Augenklappe wechseln',
     'Science Slam' : 'Black Jack',
-    'Frühstück' : "Mahlzeit"
+    'Frühstück' : "Mahlzeit",
+    'Flyern' : 'Rum verteilen'
 };

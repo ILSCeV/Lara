@@ -77,9 +77,8 @@
     <script src="{{ asset('/js/vedst-scripts.js') }}"></script>
     <script src="{{ asset('/js/bin/bundle.js') }}"></script>
     <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>
-    @if(Session::get('applocale') == 'pirate')
-        <script src="{{ asset('/js/pirateTranslator.js') }}"></script>
-    @endif
+    <script src="{{ asset('/js/pirateTranslator.js') }}"></script>
+
 	@yield('moreScripts')
   </body>
 </html>
