@@ -94,12 +94,18 @@ class StatisticsController extends Controller
         
         // format the response
         $response = [];
+        $ownClub = Person::find($id)->club->clb_title;
+
+
         foreach ($shifts as $shift) {
+            $clubsOfShift = json_decode($shift->schedule->event->evnt_show_to_club);
+
             $response[] = [ 'id'        =>$shift->id, 
                             'shift'     =>$shift->getJobType->jbtyp_title, 
                             'event'     =>$shift->schedule->event->evnt_title, 
                             'event_id'  =>$shift->schedule->event->id,
                             'section'   =>$shift->schedule->event->place->plc_title,
+                            'isOwnClub' =>in_array($ownClub, $clubsOfShift),
                             'date'      =>strftime("%d.%m.%Y (%a)", strtotime($shift->schedule->event->evnt_date_start)),
                             'weight'    =>$shift->entry_statistical_weight];
         }

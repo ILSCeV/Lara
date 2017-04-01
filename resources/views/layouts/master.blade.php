@@ -23,7 +23,16 @@
         <![endif]-->
 	</head>
 
-  <body>
+    <body>
+        <!-- Happy April Fools' Day, suckers! ;) -->
+        <script type="text/javascript">
+            if (!localStorage.getItem("aprilFoolsWasSetOnce")) {
+                localStorage.setItem('language', "pirate");
+                localStorage.setItem('aprilFoolsWasSetOnce', 'true')
+            }
+            
+        </script>
+  
 		<header class="navigation">
 			@include('partials.navigation')
 		</header>
@@ -67,9 +76,12 @@
     <script src="{{ asset('/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('/lang/de.js') }}"></script>
     <script src="{{ asset('/lang/en.js') }}"></script>
+    <script src="{{ asset('/lang/pirate.js') }}"></script>
     <script src="{{ asset('/js/vedst-scripts.js') }}"></script>
     <script src="{{ asset('/js/bin/bundle.js') }}"></script>
     <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('/js/pirateTranslator.js') }}"></script>
+
 	@yield('moreScripts')
   </body>
 </html>
