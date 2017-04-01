@@ -14,11 +14,7 @@
 
 {{-- LARA LOGO --}}
         <a class="navbar-brand" href="{{ asset('/') }}">
-          @if(Session::get("applocale") === "pirate")
-            <img src="{{  asset('/logo-pirate.png') }}" alt="LARRRA">
-          @else
-            <img src="{{  asset('/logo.png') }}" alt="LARA">
-          @endif
+            <img id="nav-logo-field" src="{{  asset('/logo.png') }}" alt="LARA">
         </a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">

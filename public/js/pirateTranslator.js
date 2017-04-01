@@ -9,6 +9,10 @@ if (localStorage.getItem( "language" ) === "pirate") {
 
     $(window).load(
         function () {
+            var navLogoField = $('#nav-logo-field');
+            var srcfield  = navLogoField.attr('src');
+            navLogoField.attr('src', srcfield.replace(/logo.png/g,'logo-pirate.png'));
+            navLogoField.attr('alt','LARRRRA');
 
             var arrifier = function (str) {
                 var regex = new RegExp('ar', 'i');
