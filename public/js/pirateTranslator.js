@@ -31,7 +31,7 @@ if ((localStorage.getItem( "language" ) || 'pirate')  === "pirate") {
                 $(elem).html(aRRRRifiedText);
             };
 
-            $('div.cal-event a').each(doTranslations);
+            $('div.cal-event a:nth-child(2)').each(doTranslations);
             $('span.name').each(doTranslations);
             $('div.panelEventView .panel-title ').each(doTranslations);
         }
