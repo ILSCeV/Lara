@@ -446,7 +446,7 @@ return [
     'actions'                       => 'Actions',
     'deleteConfirmation'            => 'Do you really want to delete this shift type:',
     'warningNotReversible'          => 'This action is not reversible!',
-    'showDetails'                   => 'Edit details',
+    'editDetails'                   => 'Edit details',
     'deleteThisJobtype'             => 'Delete',
 
     'reset'                         => 'Reset',

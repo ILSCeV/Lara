@@ -63,7 +63,7 @@
 									<a href="../jobtype/{{ $jobtype->id }}"
 									   class="btn btn-small btn-success"
 									   rel="nofollow">
-									   	{{ trans('mainLang.showDetails') }}
+									   	{{ trans('mainLang.editDetails') }}
 									</a>
 									&nbsp;&nbsp;
 									<a href="../jobtype/{{ $jobtype->id }}"
