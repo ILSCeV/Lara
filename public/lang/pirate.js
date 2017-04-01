@@ -49,5 +49,5 @@ var pirateTranslations = {
     'CGW Tshirt/Hoodies' : 'CGW Kleider', 
     'CGW Backgammon/ Kickerturnier /Sonntagsöffnung' : 'CGW Schatzsuche und Trinkspiele',
     'CGW Spieleabend' : 'CGW "Fünf Finger Fillet"-Abend',
-
+    'Wochentliche ClubBildungsMaßnahme (CBM)' : 'Wöchentliche Auspeitschung mit der Neunschwänzigen Katze'
 };
