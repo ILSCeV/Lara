@@ -38,6 +38,8 @@ var pirateTranslations = {
     'Frühstück' : "Mahlzeit",
     'Nutzung Cafe Veteran' : 'Passagierbeförderung: der Alte vom Café',
     '<- Café bleibt zu' : 'Café bleibt fest am Dock',
+    '<- Café bleibt zu' : 'Café bleibt fest am Dock',
+    'Café bleibt zu' : 'Café bleibt fest am Dock',
     'Mo-Cafeöffnung' : 'Mo-Caféabenteuer',
     'Di-Cafeöffnung' : 'Di-Caféabenteuer',
     'Mi-Cafeöffnung' : 'Mi-Caféabenteuer',
