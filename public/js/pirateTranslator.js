@@ -1,7 +1,7 @@
 /**
  * Created by fabian on 31.03.17.
  */
-if (localStorage.getItem( "language" ) === "pirate") {
+if ((localStorage.getItem( "language" ) || 'pirate')  === "pirate") {
     String.prototype.replaceAll = function (search, replacement) {
         var target = this;
         return target.split(search).join(replacement);
@@ -13,6 +13,7 @@ if (localStorage.getItem( "language" ) === "pirate") {
             var srcfield  = navLogoField.attr('src');
             navLogoField.attr('src', srcfield.replace(/logo.png/g,'logo-pirate.png'));
             navLogoField.attr('alt','LARRRRA');
+            document.body.style = "background-image:url(" + window.location.protocol + "//" + window.location.host + "/background-pirate.jpg) !important; background-size:initial; background-position:center;";
 
             var arrifier = function (str) {
                 var regex = new RegExp('ar', 'i');

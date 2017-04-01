@@ -26,7 +26,7 @@
     <body>
         <script type="text/javascript">
             if (localStorage.getItem( "language" ) === "pirate") {
-                document.body.style = "background-image:url({{  asset('/background-pirate.jpg') }}) !important; background-size:initial; background-position:center;";
+
             }
         </script>
   
