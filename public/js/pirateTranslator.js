@@ -1,7 +1,7 @@
 /**
  * Created by fabian on 31.03.17.
  */
-if ((localStorage.getItem( "language" ) || 'pirate')  === "pirate") {
+if ((localStorage.getItem( "language" ) || 'de')  === "pirate") {
     String.prototype.replaceAll = function (search, replacement) {
         var target = this;
         return target.split(search).join(replacement);
