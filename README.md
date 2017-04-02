@@ -23,7 +23,7 @@ Lara VedSt is based on:
 - [JQuery 2.1.3](http://jquery.com)
 - [Font Awesome 4.7.0](http://fortawesome.github.io/Font-Awesome) 
 - [Isotope 2.2.0](http://isotope.metafizzy.co/)
-- [Typescript 1.8](http://www.typescriptlang.org/)
+- [Typescript 2.2](http://www.typescriptlang.org/)
 - [Bootbox.js 4.4.0](http://bootboxjs.com/)
 - [clipboardjs 1.6.1](https://clipboardjs.com/)
 
