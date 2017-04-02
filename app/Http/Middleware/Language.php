@@ -19,13 +19,21 @@ class Language
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
-    {
+    public function handle($request, Closure $next)    {
+        
         if (Session::has('applocale') AND array_key_exists(Session::get('applocale'), Config::get('languages'))) {
             App::setLocale(Session::get('applocale'));
         }
-        else { //Optional as Laravel will automatically set the fallback language if there is none specified
-            App::setLocale(Config::get('app.locale'));
+        else {
+            //Detect Browser Prefered language
+            $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+            if(array_key_exists($locale,Config::get('languages'))){
+                App::setLocale($locale);
+                Session::set('applocale', $locale);
+            } else {
+                //Optional as Laravel will automatically set the fallback language if there is none specified
+                App::setLocale(Config::get('app.locale'));
+            }
         }
         return $next($request);
     }

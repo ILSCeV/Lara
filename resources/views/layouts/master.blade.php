@@ -23,7 +23,12 @@
         <![endif]-->
 	</head>
 
-  <body>
+    <body>
+        <!-- Set the language to the same as the server -->
+        <script type="text/javascript">
+                localStorage.setItem('language', "{{ Session::get("applocale","de") }}");
+        </script>
+  
 		<header class="navigation">
 			@include('partials.navigation')
 		</header>
