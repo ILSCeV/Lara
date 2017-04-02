@@ -24,15 +24,6 @@
 	</head>
 
     <body>
-        <!-- Happy April Fools' Day, suckers! ;) -->
-        <script type="text/javascript">
-            if (!localStorage.getItem("aprilFoolsWasSetOnce")) {
-                localStorage.setItem('language', "pirate");
-                localStorage.setItem('aprilFoolsWasSetOnce', 'true')
-            }
-            
-        </script>
-  
 		<header class="navigation">
 			@include('partials.navigation')
 		</header>
