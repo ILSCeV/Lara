@@ -383,8 +383,7 @@ class ClubEventController extends Controller
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
-        Utilities::clearIcalCache();
-
+        
         // Check credentials: you can only delete, if you have rights for marketing or management. 
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
         $created_by = $revisions[0]["user id"];
@@ -403,7 +402,7 @@ class ClubEventController extends Controller
         // Log the action while we still have the data
         Log::info('Event deleted: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
                  . Session::get('userGroup') . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
-
+        Utilities::clearIcalCache();
 
         // Delete schedule with entries
         $result = (new ScheduleController)->destroy($event->getSchedule()->first()->id);
