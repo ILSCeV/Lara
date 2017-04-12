@@ -14,7 +14,7 @@ AND (Session::get('userGroup') == 'marketing'
 	
 	{!! Form::open(['method' => 'PUT', 'route' => ['event.update', $event->id]]) !!}
 
-	<div class="row">
+<div class="row" xmlns="http://www.w3.org/1999/html">
 		<div class="panel col-md-6 col-sm-12 col-xs-12">
 
 			<div class="panel-heading">
@@ -311,12 +311,22 @@ AND (Session::get('userGroup') == 'marketing'
 	<br>
 	@include('partials.editSchedule')
 	<br>
-	
+
 	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<br class="visible-xs"><br class="visible-xs">
 	<a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }} </a>
-	
+    @if(
+    Session::get('userGroup') == 'marketing'
+    OR Session::get('userGroup') == 'clubleitung'
+    OR Session::get('userGroup') == 'admin')
+        <div class="hidden">
+            {!! Form::checkbox('evntIsPublished', '1', $event->evnt_is_published == 1) !!}
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <br class="visible-xs"><br class="visible-xs">
+	    <button type="button" class="btn" id="publishBtn">{{ trans('mainLang.publishEvent') }}</button>
+    @endif
 	{!! Form::close() !!}
 
 @else
@@ -337,5 +347,8 @@ AND (Session::get('userGroup') == 'marketing'
 
 @stop
 
+@section('moreScripts')
+<script src="{{ asset('/js/edit-shift.js') }}"></script>
+@stop
 
 

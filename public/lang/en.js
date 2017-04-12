@@ -18,5 +18,14 @@ var enTranslations = {
     'event': 'Event',
     'section': 'Section',
     'date': 'Date',
-    'weight': 'Weight'
+    'weight': 'Weight',
+
+    "icalfeeds" : "Calendarfeeds",
+    'remindsBeforeShiftStart' : 'How many minutes before your service would you like to be reminded?',
+    "noPrivateCalendarWarn" :"Please join a shift to get your private Calendar visible!",
+    'iCalendarlink':'link',
+    "personalFeed":'personal feed',
+    "internalUsageOnly":"only for internal usage",
+    "publishEventWarning":"If you publish an event it will be visible in the public calendar-feeds.",
+    "legend":"Legend"
 };

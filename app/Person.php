@@ -23,7 +23,8 @@ class Person extends Model
 	protected $fillable = array('prsn_name', 
 								'prsn_ldap_id',
 								'prsn_status',
-								'clb_id');
+								'clb_id',
+                                'prsn_uid');
 
 	/**
 	 * Get the corresponding club.

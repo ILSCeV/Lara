@@ -37,6 +37,16 @@ class ScheduleEntry extends Model
 	public function getJobType() {
         return $this->belongsTo('Lara\Jobtype', 'jbtyp_id', 'id');
     }
+
+	/**
+	 * Get the corresponding job type.
+	 * Looks up in table jobtypes for that entry, which has the same id like jbtyp_id of ScheduleEntry instance.
+	 *
+	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Jobtype
+	 */
+	public function jobType() {
+		return $this->belongsTo('Lara\Jobtype', 'jbtyp_id', 'id');
+	}
 	
 	/**
 	 * Get the corresponding person, if existing.

@@ -56,6 +56,10 @@
                     <li><a href="{{ asset('/logs') }}">Logs</a></li>
                 @endif
 
+{{-- ICal feed links --}}
+
+                    <li><a href="#" name="icalfeeds"><i class="fa fa-calendar" aria-hidden="true"></i> {{ trans('mainLang.icalfeeds') }}</a></li>
+
 {{-- LANGUAGE SWITCHER / public --}}
                 @foreach (Config::get('languages') as $lang => $language)
                     <li class="languageSwitcher"><a href="{{ route('lang.switch', $lang) }}" data-language="{{$lang}}"><i class="fa fa-globe" aria-hidden="true"></i></i> {{$language}}</a></li>

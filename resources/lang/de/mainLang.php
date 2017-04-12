@@ -206,7 +206,7 @@ return [
 
 
     // resources/view/partials/calendarLinkEvent.blade.php
-    'addToCalendar' => 'Event zu eigenem Google Kalender hinzufügen',
+    'addToCalendar' => 'Event zu bevorzugter Kalenderlösung hinzufügen',
 
     // resources/views/partials/month/day.blade.php
     'createEventOnThisDate' => 'Neues Event an diesem Tag erstellen',
@@ -467,6 +467,9 @@ return [
     'changesSaved'                  => 'Änderungen erfolgreich gespeichert.',
     'deleteFailedJobtypeInUse'      => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
 
-
-
+    //////////
+    // ICal //
+    //////////
+    'icalfeeds'                     => 'Kalenderfeed im iCal-Format',
+    'publishEvent'                  => 'Event veröffentlichen'
 ];

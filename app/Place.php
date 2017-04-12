@@ -19,7 +19,7 @@ class Place extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('plc_title');
+	protected $fillable = array('plc_title', 'place_uid');
 
 	/**
 	 * Get the corresponding club events.

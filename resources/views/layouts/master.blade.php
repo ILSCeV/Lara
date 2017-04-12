@@ -23,16 +23,7 @@
         <![endif]-->
 	</head>
 
-    <body>
-        <!-- Happy April Fools' Day, suckers! ;) -->
-        <script type="text/javascript">
-            if (!localStorage.getItem("aprilFoolsWasSetOnce")) {
-                localStorage.setItem('language', "pirate");
-                localStorage.setItem('aprilFoolsWasSetOnce', 'true')
-            }
-            
-        </script>
-  
+  <body>
 		<header class="navigation">
 			@include('partials.navigation')
 		</header>
@@ -80,6 +71,7 @@
     <script src="{{ asset('/js/vedst-scripts.js') }}"></script>
     <script src="{{ asset('/js/bin/bundle.js') }}"></script>
     <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('/js/clipboard.min.js') }}"></script>
     <script src="{{ asset('/js/pirateTranslator.js') }}"></script>
 
 	@yield('moreScripts')
