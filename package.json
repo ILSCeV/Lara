@@ -7,7 +7,8 @@
         "lodash": "^4.16.2",
         "ts-loader": "^2.0.3",
         "typescript": "^2.2.2",
-        "vue": "^2.0.1"
+        "vue": "^2.0.1",
+        "clipboard": "^1.6.1"
     },
     "private": true,
     "scripts": {

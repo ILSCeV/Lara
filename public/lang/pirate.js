@@ -19,6 +19,16 @@ var pirateTranslations = {
     'section': 'Schiff',
     'date': 'Datum',
     'weight': 'Wert',
+
+    "icalfeeds" : "Kalenderfeeds",
+    'remindsBeforeShiftStart' : 'Wieviele minuten vor deinem Dienst möchtest du erinnert werden?',
+    "noPrivateCalendarWarn" :"Bitte trage dich zuerst für einen Dienst ein um deinen Persönlichen feed angezeigt zu bekommen!",
+    'iCalendarlink':'Link',
+    "personalFeed":'persönlicher Feed',
+    "internalUsageOnly":"Nur für den Internen gebrauch!",
+    "publishEventWarning":"Wenn Sie die Veranstaltung veröffentlichen wird sie über Öffentlichen Kalenderfeeds sichtbar werden.",
+    "legend":"Legende",
+
     'CGW VVK' : "Holzbein VVK",
     'Fluten' : 'Deck Schrubben',
     'Flutplan' : 'Deck Schrubben',

@@ -67,6 +67,7 @@
 	</footer>
 
     <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ asset('/js/clipboard.min.js') }}"></script>
         @if(Session::get("applocale","de")  == "pirate")
             <script src="{{ asset('/js/pirateTranslator.js') }}"></script>
         @endif

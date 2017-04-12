@@ -2,13 +2,12 @@
 
 namespace Lara\Http\Middleware;
 
+use App;
+use Application;
 use Closure;
-use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Session;
+use Config;
+use Redirector;
+use Session;
 
 class Language
 {
@@ -29,7 +28,7 @@ class Language
             $locale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
             if(array_key_exists($locale,Config::get('languages'))){
                 App::setLocale($locale);
-                Session::set('applocale', $locale);
+                Session::put('applocale', $locale);
             } else {
                 //Optional as Laravel will automatically set the fallback language if there is none specified
                 App::setLocale(Config::get('app.locale'));
