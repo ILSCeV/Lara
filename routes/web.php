@@ -103,12 +103,9 @@ Route::get('jobtypes/{query?}', 				'JobtypeController@find');
 Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');
 
 // Language
-Route::get('lang/{lang}', ['as'=>'lang.switch', function($lang){
-    if (array_key_exists($lang, Config::get('languages'))) {
-        Session::set('applocale', $lang);
-    }
-    return Redirect::back();
-}]);
+
+Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');
+
 
 Route::get('lang', function() {
     return response()->json(['language' => Session::get('applocale')]);

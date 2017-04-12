@@ -6,6 +6,7 @@ use Config;
 
 use Illuminate\Support\Facades\App;
 use Input;
+use Lara\Settings;
 use Log;
 use Redirect;
 use Session;
@@ -95,10 +96,15 @@ class LoginController extends Controller
     public function doLogin()
     {
         if (App::environment('development')) {
-            return $this->doDevelopmentLogin();
+            $result = $this->doDevelopmentLogin();
         } else {
-            return $this->doProductionLogin();
+            $result = $this->doProductionLogin();
         }
+        $userSettings = Settings::where('userId','=',Session::get('userId'))->first();
+        if(isset($userSettings)){
+            Session::set('applocale', $userSettings->language);
+        }
+        return $result;
 
     }
 

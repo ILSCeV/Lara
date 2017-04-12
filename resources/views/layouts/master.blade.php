@@ -23,7 +23,12 @@
         <![endif]-->
 	</head>
 
-  <body>
+    <body @if(Session::get("applocale","de")  == "pirate") style="background-image:url( {{asset('/background-pirate.jpg')}} ) !important; background-size:initial; background-position:center;"  @endif>
+        <!-- Set the language to the same as the server -->
+        <script type="text/javascript">
+                localStorage.setItem('language', "{{ Session::get("applocale","de") }}");
+        </script>
+  
 		<header class="navigation">
 			@include('partials.navigation')
 		</header>
@@ -72,8 +77,9 @@
     <script src="{{ asset('/js/bin/bundle.js') }}"></script>
     <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('/js/clipboard.min.js') }}"></script>
-    <script src="{{ asset('/js/pirateTranslator.js') }}"></script>
-
+        @if(Session::get("applocale","de")  == "pirate")
+            <script src="{{ asset('/js/pirateTranslator.js') }}"></script>
+        @endif
 	@yield('moreScripts')
   </body>
 </html>
