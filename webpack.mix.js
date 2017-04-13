@@ -14,31 +14,30 @@ const { mix } = require('laravel-mix');
 mix.sass('resources/assets/sass/app.scss', 'public/css')
 	.scripts([
         // jQuery and Plugins
-        'public/js/jquery-2.1.3.min.js',
+        'node_modules/jquery/dist/jquery.min.js',
 
         // Misc. js libraries
-        'public/js/isotope.pkgd.min.js',
-        'public/js/html5shiv.js',
-        'public/js/es6-promise.min.js',
-        'public/js/clipboard.min.js',
-
+        'node_modules/isotope-layout/dist/isotope.pkgd.min.js',
+        'node_modules/html5shiv/dist/html5shiv.min.js',
+        'node_modules/es6-promise/dist/es6-promise.min.js',
+        'node_modules/clipboard/dist/clipboard.min.js',
 
         // bootstrap and related libraries
-        'public/js/bootstrap.min.js',
-        'public/js/bootbox.min.js',
-        'public/js/bootstrap-select.min.js',
+        'node_modules/bootstrap/dist/js/bootstrap.min.js',
+        'node_modules/bootbox/bootbox.min.js',
+        'node_modules/bootstrap-select/dist/js/bootstrap-select.min.js',
 
         // languages
-        'public/lang/*.js',
+        'resources/assets/js/lang/*.js',
 
         // Lara scripts
-        'public/js/vedst-scripts.js',
+        'resources/assets/js/vedst-scripts.js',
 
         // Compiled typescript
-        'public/js/bin/bundle.js',
+        'resources/assets/ts/bin/bundle.js',
 	], 'public/js/app.js')
 .scripts([
-	'public/js/surveyEdit-Create-scripts.js',
-	'public/js/surveyView-scripts.js',
+	'resources/assets/js/surveyEdit-Create-scripts.js',
+	'resources/assets/js/surveyView-scripts.js',
 	], 'public/js/surveys.js')
 	.version()

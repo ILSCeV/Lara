@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"outFile": "resources/assets/ts/bin/build.js",
+		"types": [
+			"jquery",
+			"bootstrap",
+			"bootbox"
+		]
+	},
+	"include": [
+		"resources/assets/ts/*.ts"
+	]
+}

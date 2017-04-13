@@ -9,10 +9,11 @@ public/gitrevision.txt
 public/fonts/vendor/**/*
 
 public/js/app.*.js
-public/js/bin/bundle.js
 public/js/surveys.*.js
 public/css/app.*.css
 public/mix-manifest.json
+
+resources/assets/ts/bin/**/*
 
 .htpasswd
 .env

@@ -1,10 +1,10 @@
 ///<reference path="_references.ts"/>
 
-function getRowName(a: string) {
+function getRowName(a: string | HTMLElement) {
     return $(a).children("td").eq(0).text();
 }
 
-function getRowShifts(a: string) {
+function getRowShifts(a: string | HTMLElement) {
     return $(a).children("td").eq(1).text();
 }
 

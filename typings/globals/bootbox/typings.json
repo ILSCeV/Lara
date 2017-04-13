@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/ba53c34e010a79cb4d9eeb38ded8eb6734ce2d47/bootbox/bootbox.d.ts",
-    "raw": "registry:dt/bootbox#4.4.0+20160830081945",
-    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/ba53c34e010a79cb4d9eeb38ded8eb6734ce2d47/bootbox/bootbox.d.ts"
-  }
-}
