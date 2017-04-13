@@ -34,7 +34,7 @@ mix.sass('resources/assets/sass/app.scss', 'public/css')
         'resources/assets/js/vedst-scripts.js',
 
         // Compiled typescript
-        'resources/assets/ts/bin/bundle.js',
+        'resources/assets/ts/bin/build.js',
 	], 'public/js/app.js')
 .scripts([
 	'resources/assets/js/surveyEdit-Create-scripts.js',

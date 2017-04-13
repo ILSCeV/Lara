@@ -1,5 +1,3 @@
-///<reference path="_references"/>
-
 class Question {
 
     private questionDiv: JQuery;

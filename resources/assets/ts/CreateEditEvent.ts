@@ -1,5 +1,3 @@
-///<reference path="_references.ts"/>
-
 // values of events that should trigger the selection of all clubs
 let internalEventValues = [
     "1", // Info

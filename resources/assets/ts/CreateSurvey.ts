@@ -1,5 +1,3 @@
-///<reference path="_references.ts"/>
-
 $("#button-create-survey").click(() => {
     let errors = new Array<string>();
 
