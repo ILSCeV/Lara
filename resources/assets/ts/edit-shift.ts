@@ -1,5 +1,6 @@
 var updatePublishEvent = function () {
-    var evtPublished = $('[name=evntIsPublished]').is(':checked');
+    let $eventPublished = $('[name=evntIsPublished]');
+    var evtPublished = $eventPublished.is(':checked');
     var publishBtn = $('#publishBtn');
     if (evtPublished) {
         publishBtn.removeClass("btn-danger").addClass("btn-success");
@@ -14,7 +15,7 @@ var updatePublishEvent = function () {
         $('[name=evntIsPublished]').prop("checked", false);
     }
 };
-$(window).load(updatePublishEvent);
+$(window).on('load', updatePublishEvent);
 $('#publishBtn').click(function () {
     if ($('[name=evntIsPublished]').is(':checked')) {
         $('[name=evntIsPublished]').prop('checked', !$('[name=evntIsPublished]').is(':checked'));
@@ -22,7 +23,7 @@ $('#publishBtn').click(function () {
     } else {
         bootbox.confirm({
             title: '<div class="alert alert-warning text-center"><span class="glyphicon glyphicon-warning-sign"></span> WARNING <span class="glyphicon glyphicon-warning-sign"></span></div>',
-            size: 'medium',
+            size: 'small',
             message: '<p>' + translate('publishEventWarning') + '</p>',
             callback: function (result) {
                 if (!result) {

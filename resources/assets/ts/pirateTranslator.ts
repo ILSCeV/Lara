@@ -2,12 +2,16 @@
  * Created by fabian on 31.03.17.
  */
 
-    String.prototype.replaceAll = function (search, replacement) {
-        var target = this;
-        return target.split(search).join(replacement);
-    };
+interface String {
+    replaceAll: (search: string, replacement: string) => string
+}
+String.prototype.replaceAll = function (search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
 
-    $(window).load(
+if (localStorage.language === 'pirate') {
+    $(window).on('load',
         function () {
             var navLogoField = $('#nav-logo-field');
             var srcfield  = navLogoField.attr('src');
@@ -35,3 +39,4 @@
             $('div.panelEventView .panel-title ').each(doTranslations);
         }
     );
+}

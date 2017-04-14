@@ -35,9 +35,7 @@ mix.sass('resources/assets/sass/app.scss', 'public/css')
 
         // Compiled typescript
         'resources/assets/ts/bin/build.js',
+        'resources/assets/js/surveyView-scripts.js'
 	], 'public/js/app.js')
-.scripts([
-	'resources/assets/js/surveyEdit-Create-scripts.js',
-	'resources/assets/js/surveyView-scripts.js',
-	], 'public/js/surveys.js')
 	.version()
+    .sourceMaps()

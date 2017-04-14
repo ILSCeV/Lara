@@ -26,7 +26,7 @@ $(function() {
     });
 
     $("form").submit(function () {
-        if ($('#btnAdd') !== '.click') {
+        if (<any>$('#btnAdd') !== '.click') {
             $(window).unbind('beforeunload');
         }
     });
@@ -145,9 +145,14 @@ function setQuestionNumberDisplayed() {
 }
 
 function getLastQuestionId() {
-    return parseInt(/questionText\[([0-9]*)\]/g.exec($('.questions').children()
-        .last()
-        .find('[name^=questionText]')
-        .prop('name')
-    )[1]);
+    try {
+        return parseInt(/questionText\[([0-9]*)\]/g.exec($('.questions').children()
+            .last()
+            .find('[name^=questionText]')
+            .prop('name')
+        )[1]);
+    }
+    catch (e) {
+        return 0;
+    }
 }

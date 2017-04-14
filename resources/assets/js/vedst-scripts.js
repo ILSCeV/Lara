@@ -7,21 +7,6 @@ $(function() {
     localStorage["language"] = localStorage["language"] || "pirate";
 });
 
-function translate(str) {
-    var language = localStorage["language"];
-    var translations = null;
-    switch (language){
-        case "en": translations = enTranslations;
-        break;
-        case "de": translations = deTranslations;
-        break;
-        case "pirate":
-        default:
-            translations = pirateTranslations;
-    }
-    return translations[str] ? translations[str] : '!! Translation necessary: "' + str + '" in language "' + language + '" !!';
-}
-
 
 
 // Enable Tooltips
