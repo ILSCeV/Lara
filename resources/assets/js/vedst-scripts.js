@@ -1,283 +1,3 @@
-///////////////
-// All views //
-///////////////
-
-// Default language is german
-$(function() {
-    localStorage["language"] = localStorage["language"] || "pirate";
-});
-
-
-
-// Enable Tooltips
-$(function () { $("[data-toggle='tooltip']").tooltip(); });     
-
-
-
-// Automatically close notifications after 4 seconds (4000 milliseconds)
-window.setTimeout(function() {
-    $(".message").fadeTo(1000, 0).slideUp(500, function(){
-        $(this).alert('close'); 
-    });
-}, 4000);
-
-
-
-// Own shift highlighting 
-$('[name^=btn-submit-change]').click(function() {
-    $(this).parents('.row').removeClass('my-shift');
-});
-
-
-
-// Dropdown hiding fix 
-$('input').focusout(function() {
-    if ($(this).prop('placeholder') === '=FREI=') {
-        // hack to allow for click to register before focusout is called
-        setTimeout(function () {
-            $('.dropdown-username').hide();
-        }, 200);
-    }
-});
-
-
-
-// Language switcher 
-$('.languageSwitcher').find('a').click(function() {
-    var language = $(this).data('language');
-    localStorage.setItem('language', language);
-});
-
-
-
-// conversion of html entities to text (e.g. "&" as "&amp;")
-// ref: https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery
-function decodeEntities(encodedString) {
-    var textArea = document.createElement('textarea');
-    textArea.innerHTML = encodedString;
-    return textArea.value;
-}
-
-
-
-////////////////
-// Month view //
-////////////////
-
-
-// Scroll to current date/event if in mobile view in current month
-$(document).ready(function() 
-{
-    // check if we are in month view and if the today-marker exists
-    if ($('#month-view-marker').length && $(".scroll-marker").length) 
-    {
-        if ($(window).width() < 978) 
-        {
-            $('html, body').animate({ scrollTop: $(".scroll-marker").offset().top -80 }, 1000);
-        };
-    };
-});
-
-
-
-
-////////////////
-// Event view //
-////////////////
-
-
-
-// Show/hide more button for infos
-$(function(){
-	$('.moreless-more-info').click(function(e) {
-		$(this).parent().children('.more-info').toggleClass('moreshow-info');
-        $(this).parent().children('.more-info').css('height','auto'); 
-        $(this).parent().children('.moreless-less-info').show();
-        $(this).parent().children('.moreless-more-info').hide();
-	});
-});
-
-$(function(){
-    $('.moreless-less-info').click(function(e) {
-        $(this).parent().children('.more-info').toggleClass('moreshow-info');
-        $(this).parent().children('.more-info').css('height','100'); 
-        $(this).parent().children('.more-info').height(100);  
-        $(this).parent().children('.moreless-less-info').hide();
-        $(this).parent().children('.moreless-more-info').show();  
-    });
-});
-
-$(function(){
-    $('.moreless-more-info').hide();
-    $('.moreless-less-info').hide();
-    if ($('.more-info').height() > 100) {   
-        $('.more-info').height(100);        
-        $('.moreless-more-info').show();
-    };
-});
-
-$(function(){
-    $('.moreless-more-details').click(function(e) {
-        $(this).parent().children('.more-details').toggleClass('moreshow-details');
-        $(this).parent().children('.more-details').css('height','auto'); 
-        $(this).parent().children('.moreless-less-details').show();
-        $(this).parent().children('.moreless-more-details').hide();
-    });
-});
-
-$(function(){
-    $('.moreless-less-details').click(function(e) {
-        $(this).parent().children('.more-details').toggleClass('moreshow-details');
-        $(this).parent().children('.more-details').css('height','100'); 
-        $(this).parent().children('.more-details').height(100);  
-        $(this).parent().children('.moreless-less-details').hide();
-        $(this).parent().children('.moreless-more-details').show();  
-    });
-});
-
-$(function(){
-    $('.moreless-more-details').hide();
-    $('.moreless-less-details').hide();
-    if ($('.more-details').height() > 100) {   
-        $('.more-details').height(100);        
-        $('.moreless-more-details').show();
-    };
-
-});
-
-
-
-// Show/hide change history
-$(function(){
-    $('#show-hide-history').click(function(e) {
-        e.preventDefault();
-        if ($('#change-history').hasClass("hide")) 
-        {
-            // change state, change button
-            $('#change-history').removeClass('hide'); 
-            $('#arrow-icon').removeClass('fa-caret-right');
-            $('#arrow-icon').addClass('fa-sort-desc');
-        }
-        else
-        {
-            // change state, change button
-            $('#change-history').addClass('hide');
-            $('#arrow-icon').addClass('fa-caret-right');
-            $('#arrow-icon').removeClass('fa-sort-desc');
-        };        
-    });
-});
-
-
-
-///////////////
-// Week view //
-///////////////
-
-
-
-// Show/hide comments
-$(function(){
-    $('.showhide').click(function(e) {
-        $(this).parent().next('.hide').toggleClass('show');
-        $('.isotope').isotope('layout') 
-    });
-});
-
-
-
-// button to remove events from week view - mostly for printing
-$(function(){
-    $('.hide-event').click(function(e) {
-        // change state, change button
-        $(this).parent().parent().parent().parent().parent().addClass('hide');
-        $('.isotope').isotope('layout')       
-    });
-});
-
-
-
-//////////////////////
-// Create/edit view //
-//////////////////////
-
-
-
-// Shows dynamic form fields for new job types 
-$(document).ready(function() {
-    // initialise counter
-    var iCnt = parseInt($('#counter').val());
-
-    if (iCnt < 2) {
-        $(".btnRemove").hide();
-    }; 
-
-    // Add one more job with every click on "+"
-    $('.btnAdd').click(function() {            
-        
-        var temp = $(this).closest('.box');
-        var tempId = parseInt(temp.attr('id').substring(3,7));
-
-        // clone entry
-        temp.clone(true).insertAfter(temp);
-
-        // update fields for following entries
-        temp.nextUntil("br").each(function() {
-            $(this).attr('id', "box" + ++tempId);
-            $(this).find("[name^=jbtyp_title]").attr('id', "jbtyp_title" + tempId).attr('name', "jbtyp_title" + tempId);
-            $(this).find("[name^=jbtyp_time_start]").attr('id', "jbtyp_time_start" + tempId).attr('name', "jbtyp_time_start" + tempId);
-            $(this).find("[name^=jbtyp_time_end]").attr('id', "jbtyp_time_end" + tempId).attr('name', "jbtyp_time_end" + tempId);
-            $(this).find("[name^=jbtyp_statistical_weight]").attr('id', "jbtyp_statistical_weight" + tempId).attr('name', "jbtyp_statistical_weight" + tempId);
-        }); 
-
-        // update counter
-        iCnt = iCnt + 1;
-        $('#counter').val(iCnt);      
-
-        if (iCnt >> 1) {
-            $(".btnRemove").show();
-        };  
-    });
-
-    // Remove selected job
-    $('.btnRemove').click(function(e) {            
-            var temp = $(this).closest('.box');
-            var tempId = parseInt(temp.attr('id').substring(3,7)) - 1;
-
-            // update fields for following entries
-            temp.nextUntil("br").each(function() {
-                $(this).attr('id', "box" + ++tempId);
-                $(this).find("[name^=jbtyp_title]").attr('id', "jbtyp_title" + tempId).attr('name', "jbtyp_title" + tempId);
-                $(this).find("[name^=jbtyp_time_start]").attr('id', "jbtyp_time_start" + tempId).attr('name', "jbtyp_time_start" + tempId);
-                $(this).find("[name^=jbtyp_time_end]").attr('id', "jbtyp_time_end" + tempId).attr('name', "jbtyp_time_end" + tempId);
-                $(this).find("[name^=jbtyp_statistical_weight]").attr('id', "jbtyp_statistical_weight" + tempId).attr('name', "jbtyp_statistical_weight" + tempId);
-            }); 
-
-            // delete entry
-            $(this).closest(".box").remove();
-            e.preventDefault();
-            
-            // update counter
-            iCnt = iCnt - 1; 
-            $('#counter').val(iCnt);
-
-            if (iCnt < 2) {
-                $(".btnRemove").hide();
-            }; 
-    });
-
-    // populate from dropdown select
-    $.fn.dropdownSelect = function(jobtype, timeStart, timeEnd, weight) {
-        
-        $(this).closest('.box').find("[name^=jbtyp_title]").val(jobtype);
-        $(this).closest('.box').find("[name^=jbtyp_time_start]").val(timeStart);
-        $(this).closest('.box').find("[name^=jbtyp_time_end]").val(timeEnd);   
-        $(this).closest('.box').find("[name^=jbtyp_statistical_weight]").val(weight);
-    };
-});
- 
-
-
 /////////////
 // Filters //
 /////////////
@@ -682,6 +402,288 @@ $( document ).ready( function() {
 
     };
 });
+
+
+
+
+///////////////
+// All views //
+///////////////
+
+// Default language is german
+$(function() {
+    localStorage["language"] = localStorage["language"] || "pirate";
+});
+
+
+
+// Enable Tooltips
+$(function () { $("[data-toggle='tooltip']").tooltip(); });     
+
+
+
+// Automatically close notifications after 4 seconds (4000 milliseconds)
+window.setTimeout(function() {
+    $(".message").fadeTo(1000, 0).slideUp(500, function(){
+        $(this).alert('close'); 
+    });
+}, 4000);
+
+
+
+// Own shift highlighting 
+$('[name^=btn-submit-change]').click(function() {
+    $(this).parents('.row').removeClass('my-shift');
+});
+
+
+
+// Dropdown hiding fix 
+$('input').focusout(function() {
+    if ($(this).prop('placeholder') === '=FREI=') {
+        // hack to allow for click to register before focusout is called
+        setTimeout(function () {
+            $('.dropdown-username').hide();
+        }, 200);
+    }
+});
+
+
+
+// Language switcher 
+$('.languageSwitcher').find('a').click(function() {
+    var language = $(this).data('language');
+    localStorage.setItem('language', language);
+});
+
+
+
+// conversion of html entities to text (e.g. "&" as "&amp;")
+// ref: https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery
+function decodeEntities(encodedString) {
+    var textArea = document.createElement('textarea');
+    textArea.innerHTML = encodedString;
+    return textArea.value;
+}
+
+
+
+////////////////
+// Month view //
+////////////////
+
+
+// Scroll to current date/event if in mobile view in current month
+$(document).ready(function() 
+{
+    // check if we are in month view and if the today-marker exists
+    if ($('#month-view-marker').length && $(".scroll-marker").length) 
+    {
+        if ($(window).width() < 978) 
+        {
+            $('html, body').animate({ scrollTop: $(".scroll-marker").offset().top -80 }, 1000);
+        };
+    };
+});
+
+
+
+
+////////////////
+// Event view //
+////////////////
+
+
+
+// Show/hide more button for infos
+$(function(){
+	$('.moreless-more-info').click(function(e) {
+		$(this).parent().children('.more-info').toggleClass('moreshow-info');
+        $(this).parent().children('.more-info').css('height','auto'); 
+        $(this).parent().children('.moreless-less-info').show();
+        $(this).parent().children('.moreless-more-info').hide();
+	});
+});
+
+$(function(){
+    $('.moreless-less-info').click(function(e) {
+        $(this).parent().children('.more-info').toggleClass('moreshow-info');
+        $(this).parent().children('.more-info').css('height','100'); 
+        $(this).parent().children('.more-info').height(100);  
+        $(this).parent().children('.moreless-less-info').hide();
+        $(this).parent().children('.moreless-more-info').show();  
+    });
+});
+
+$(function(){
+    $('.moreless-more-info').hide();
+    $('.moreless-less-info').hide();
+    if ($('.more-info').height() > 100) {   
+        $('.more-info').height(100);        
+        $('.moreless-more-info').show();
+    };
+});
+
+$(function(){
+    $('.moreless-more-details').click(function(e) {
+        $(this).parent().children('.more-details').toggleClass('moreshow-details');
+        $(this).parent().children('.more-details').css('height','auto'); 
+        $(this).parent().children('.moreless-less-details').show();
+        $(this).parent().children('.moreless-more-details').hide();
+    });
+});
+
+$(function(){
+    $('.moreless-less-details').click(function(e) {
+        $(this).parent().children('.more-details').toggleClass('moreshow-details');
+        $(this).parent().children('.more-details').css('height','100'); 
+        $(this).parent().children('.more-details').height(100);  
+        $(this).parent().children('.moreless-less-details').hide();
+        $(this).parent().children('.moreless-more-details').show();  
+    });
+});
+
+$(function(){
+    $('.moreless-more-details').hide();
+    $('.moreless-less-details').hide();
+    if ($('.more-details').height() > 100) {   
+        $('.more-details').height(100);        
+        $('.moreless-more-details').show();
+    };
+
+});
+
+
+
+// Show/hide change history
+$(function(){
+    $('#show-hide-history').click(function(e) {
+        e.preventDefault();
+        if ($('#change-history').hasClass("hide")) 
+        {
+            // change state, change button
+            $('#change-history').removeClass('hide'); 
+            $('#arrow-icon').removeClass('fa-caret-right');
+            $('#arrow-icon').addClass('fa-sort-desc');
+        }
+        else
+        {
+            // change state, change button
+            $('#change-history').addClass('hide');
+            $('#arrow-icon').addClass('fa-caret-right');
+            $('#arrow-icon').removeClass('fa-sort-desc');
+        };        
+    });
+});
+
+
+
+///////////////
+// Week view //
+///////////////
+
+
+
+// Show/hide comments
+$(function(){
+    $('.showhide').click(function(e) {
+        $(this).parent().next('.hide').toggleClass('show');
+        $('.isotope').isotope('layout') 
+    });
+});
+
+
+
+// button to remove events from week view - mostly for printing
+$(function(){
+    $('.hide-event').click(function(e) {
+        // change state, change button
+        $(this).parent().parent().parent().parent().parent().addClass('hide');
+        $('.isotope').isotope('layout')       
+    });
+});
+
+
+
+//////////////////////
+// Create/edit view //
+//////////////////////
+
+
+
+// Shows dynamic form fields for new job types 
+$(document).ready(function() {
+    // initialise counter
+    var iCnt = parseInt($('#counter').val());
+
+    if (iCnt < 2) {
+        $(".btnRemove").hide();
+    }; 
+
+    // Add one more job with every click on "+"
+    $('.btnAdd').click(function() {            
+        
+        var temp = $(this).closest('.box');
+        var tempId = parseInt(temp.attr('id').substring(3,7));
+
+        // clone entry
+        temp.clone(true).insertAfter(temp);
+
+        // update fields for following entries
+        temp.nextUntil("br").each(function() {
+            $(this).attr('id', "box" + ++tempId);
+            $(this).find("[name^=jbtyp_title]").attr('id', "jbtyp_title" + tempId).attr('name', "jbtyp_title" + tempId);
+            $(this).find("[name^=jbtyp_time_start]").attr('id', "jbtyp_time_start" + tempId).attr('name', "jbtyp_time_start" + tempId);
+            $(this).find("[name^=jbtyp_time_end]").attr('id', "jbtyp_time_end" + tempId).attr('name', "jbtyp_time_end" + tempId);
+            $(this).find("[name^=jbtyp_statistical_weight]").attr('id', "jbtyp_statistical_weight" + tempId).attr('name', "jbtyp_statistical_weight" + tempId);
+        }); 
+
+        // update counter
+        iCnt = iCnt + 1;
+        $('#counter').val(iCnt);      
+
+        if (iCnt >> 1) {
+            $(".btnRemove").show();
+        };  
+    });
+
+    // Remove selected job
+    $('.btnRemove').click(function(e) {            
+            var temp = $(this).closest('.box');
+            var tempId = parseInt(temp.attr('id').substring(3,7)) - 1;
+
+            // update fields for following entries
+            temp.nextUntil("br").each(function() {
+                $(this).attr('id', "box" + ++tempId);
+                $(this).find("[name^=jbtyp_title]").attr('id', "jbtyp_title" + tempId).attr('name', "jbtyp_title" + tempId);
+                $(this).find("[name^=jbtyp_time_start]").attr('id', "jbtyp_time_start" + tempId).attr('name', "jbtyp_time_start" + tempId);
+                $(this).find("[name^=jbtyp_time_end]").attr('id', "jbtyp_time_end" + tempId).attr('name', "jbtyp_time_end" + tempId);
+                $(this).find("[name^=jbtyp_statistical_weight]").attr('id', "jbtyp_statistical_weight" + tempId).attr('name', "jbtyp_statistical_weight" + tempId);
+            }); 
+
+            // delete entry
+            $(this).closest(".box").remove();
+            e.preventDefault();
+            
+            // update counter
+            iCnt = iCnt - 1; 
+            $('#counter').val(iCnt);
+
+            if (iCnt < 2) {
+                $(".btnRemove").hide();
+            }; 
+    });
+
+    // populate from dropdown select
+    $.fn.dropdownSelect = function(jobtype, timeStart, timeEnd, weight) {
+        
+        $(this).closest('.box').find("[name^=jbtyp_title]").val(jobtype);
+        $(this).closest('.box').find("[name^=jbtyp_time_start]").val(timeStart);
+        $(this).closest('.box').find("[name^=jbtyp_time_end]").val(timeEnd);   
+        $(this).closest('.box').find("[name^=jbtyp_statistical_weight]").val(weight);
+    };
+});
+ 
 
 
 
