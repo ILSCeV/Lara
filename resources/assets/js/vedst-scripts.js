@@ -828,13 +828,13 @@ $('[name^=icalfeeds]').click(function () {
 
             var legend = "";
             if (typeof response['isPublic'] !== 'undefined' && response['isPublic'] !== true) {
-                legend = '<div>' + translate('legend') + ': <span class="bg-warning" style="border: 1px solid black;"> <span class="glyphicon">&nbsp;</span></span> ' + translate("internalUsageOnly") + '</div>  ';
+                legend = '<div class="all-sides-padding-16">' + translate('legend') + ': <span class="bg-warning" style="border: 1px solid black;"> <span class="glyphicon">&nbsp;</span></span> ' + translate("internalUsageOnly") + '</div>  ';
             }
 
             dialog.find('.modal-body').addClass("no-padding").html("" +
                 remindPersonalIcalInput +
                 legend +
-                "<table class='table table-hover no-padding'>" +
+                "<table class='table table-hover'>" +
                 "<thead><tr>" +
                 "<th></th>" +
                 "<th> " + translate('iCalendarlink') + " </th>" +
@@ -842,7 +842,9 @@ $('[name^=icalfeeds]').click(function () {
                 "<tbody id='icalTbody'></tbody>" +
                 "</table>"
             );
+
             var icalTbody = $('#icalTbody');
+
             if (!(typeof response['personal'] === 'undefined' || response['personal'] === null)) {
                 icalTbody.append('<tr class="warning">' +
                     '<td> ' + translate('personalFeed') + '<span id="ical_personal_link" class="hidden">' + response['personal'] + '</span>  </td>' +
@@ -850,7 +852,7 @@ $('[name^=icalfeeds]').click(function () {
                     '<div class="input-group"> ' +
                     '<input class="form-control " id="ical_personal_input" type="text" value="' + response['personal'] + '"/>' +
                     '<span class="input-group-btn">' +
-                    '<button type="button" class=" icalinput btn btn-default" data-clipboard-target="#ical_personal_input" ><span class="fa fa-clipboard"></span> </button> ' +
+                    '<button type="button" class=" icalinput btn btn-small" data-clipboard-target="#ical_personal_input" ><span class="fa fa-clipboard"></span> </button> ' +
                     '</span> ' +
                     '</div>' +
                     '</td>' +
@@ -868,7 +870,7 @@ $('[name^=icalfeeds]').click(function () {
                 '<div class="input-group"> ' +
                 '<input class="form-control " id="icalAllPublicEvents" type="text" value="' + allPublicEvents + '"/>' +
                 '<span class="input-group-btn">' +
-                '<button type="button" class=" icalinput btn btn-default" data-clipboard-target="#icalAllPublicEvents" ><span class="fa fa-clipboard"></span> </button> ' +
+                '<button type="button" class=" icalinput btn btn-small" data-clipboard-target="#icalAllPublicEvents" ><span class="fa fa-clipboard"></span> </button> ' +
                 '</span>' +
                 '</div>' + '</td>' +
                 '</tr>');
@@ -880,7 +882,7 @@ $('[name^=icalfeeds]').click(function () {
                     '<div class="input-group"> ' +
                     '<input class="form-control " type="text" id="locationPublic' + idx + '" value="' + locationsPublic[idx][element] + '"/>' +
                     '<span class="input-group-btn">' +
-                    '<button type="button" class=" icalinput btn btn-default" data-clipboard-target="#locationPublic' + idx + '" ><span class="fa fa-clipboard"></span> </button> ' +
+                    '<button type="button" class=" icalinput btn btn-small" data-clipboard-target="#locationPublic' + idx + '" ><span class="fa fa-clipboard"></span> </button> ' +
                     '</span>' +
                     '</div>' +
                     '</td>' +
@@ -894,7 +896,7 @@ $('[name^=icalfeeds]').click(function () {
                         '<div class="input-group"> ' +
                         '<input class="form-control " type="text" id="location' + idx + '" value="' + locations[idx][element] + '"/>' +
                         '<span class="input-group-btn">' +
-                        '<button type="button" class=" icalinput btn btn-default" data-clipboard-target="#location' + idx + '"  ><span class="fa fa-clipboard"></span> </button> ' +
+                        '<button type="button" class=" icalinput btn btn-small" data-clipboard-target="#location' + idx + '"  ><span class="fa fa-clipboard"></span> </button> ' +
                         '</span>' +
                         '</div>' +
                         '</td>' +
