@@ -198,7 +198,7 @@ class IcalController extends Controller
 					$vEvent->setDtStart($start_date_time);
 					$vEvent->setDtEnd($stop_date_time);
 					$vEvent->setSummary("" . ( $schedule->event->evnt_title ) . " - " . ( $evt->jobType->jbtyp_title ));
-					$prefixDescription = "" . URL::route('event.show', $evt->id) . "\n\n";
+					$prefixDescription = "" . URL::route('event.show', $schedule->event->id) . "\n\n";
 					if ($preparationNeeded) {
 						$prefixDescription = $prefixDescription . "shift start:" . $evt->entry_time_start . " DV-time: " . $start_time . "\n";
 					}
