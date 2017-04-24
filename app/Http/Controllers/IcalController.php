@@ -288,7 +288,7 @@ class IcalController extends Controller
 		
 		$result = [];
 		
-		$places = Place::all();
+		$places = Place::where('plc_title','<>','-')->get();
 		$result['allPublicEvents'] = URL::route('icalallevents');
 		foreach ($places as $place) {
 			
