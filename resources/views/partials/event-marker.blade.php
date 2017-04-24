@@ -39,4 +39,9 @@
     $content = '<i class="fa fa-list-alt white-text"></i>'
     ?>
 @endif
+@if($clubEvent->evnt_is_published==1)
+    <?php
+    $content = '<i class="fa fa-check-square" aria-hidden="true"></i>'.$content;
+    ?>
+@endif
 @include("partials.calendarLinkEvent", [$clubEvent, $content])
