@@ -465,7 +465,13 @@ return [
     'negativeStats'                 => 'Statistische Wertung darf nicht negativ sein.',
     'changesSaved'                  => 'Änderungen erfolgreich gespeichert.',
     'deleteFailedJobtypeInUse'      => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
-
-
-
+    
+    
+    //////////
+    // ICal //
+    //////////
+    'icalfeeds'                     => 'Kalenderfeed im iCal-Format',
+    'publishEvent'                  => 'Event veröffentlichen',
+    'createAndPublish'              => 'Anker los und Angreifen',
+    'createUnpublished'             => 'Leinen los und Schleichfahrt'
 ];

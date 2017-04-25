@@ -471,5 +471,7 @@ return [
     // ICal //
     //////////
     'icalfeeds'                     => 'Kalenderfeed im iCal-Format',
-    'publishEvent'                  => 'Event veröffentlichen'
+    'publishEvent'                  => 'Event veröffentlichen',
+    'createAndPublish'              => 'Erstellen und veröffentlichen',
+    'createUnpublished'             => 'Erstelle unveröffentlicht'
 ];

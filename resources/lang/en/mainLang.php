@@ -470,5 +470,7 @@ return [
     //////////
 
     'icalfeeds'                     =>  'Calendarfeed using iCal',
-    'publishEvent'                  =>  'publish event'
+    'publishEvent'                  =>  'publish event',
+    'createAndPublish'              =>  'create and publish event',
+    'createUnpublished'             =>  'create event and leave unpublished'
 ];
