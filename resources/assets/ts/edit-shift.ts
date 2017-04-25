@@ -1,11 +1,13 @@
 var updatePublishEvent = function () {
     let $eventPublished = $('[name=evntIsPublished]');
     var evtPublished = $eventPublished.is(':checked');
+    var publishIndicator = $('#eventPublishedIndicator');
+    publishIndicator.removeClass('fa-check-square-o').removeClass('fa-square-o').removeClass('text-danger').removeClass('text-success');
     var publishBtn = $('#publishBtn');
     if (evtPublished) {
-        publishBtn.removeClass("btn-danger").addClass("btn-success");
+        publishIndicator.addClass('fa-check-square-o').addClass('text-success');
     } else {
-        publishBtn.removeClass("btn-success").addClass("btn-danger");
+        publishIndicator.addClass('fa-square-o').addClass('text-danger');
     }
     var isPrivateInput = $('[name=isPrivate]');
     if (isPrivateInput.is(':checked')) {
