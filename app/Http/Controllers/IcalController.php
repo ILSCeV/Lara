@@ -151,11 +151,16 @@ class IcalController extends Controller
             return $vCalendar->render();
         });
         
+        $filename = 'location';
+        if($with_private_info != 0){
+            $filename = $filename."-with-private-info";
+        }
+        
         return response($calendar)
             ->withHeaders([
                 'Content-Type'        => 'text/calendar',
                 'charset'             => 'utf-8',
-                'Content-Disposition' => 'attachment; filename="location.ics"',
+                'Content-Disposition' => 'attachment; filename="'.$filename.'.ics"',
             ]);
     }
     
@@ -244,7 +249,7 @@ class IcalController extends Controller
             ->withHeaders([
                 'Content-Type'        => 'text/calendar',
                 'charset'             => 'utf-8',
-                'Content-Disposition' => 'attachment; filename="'.$prsn_uid.'.ics"',
+                'Content-Disposition' => 'attachment; filename="shifts-with-my-name.ics"',
             ]);
     }
     
