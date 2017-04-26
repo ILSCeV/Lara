@@ -470,8 +470,12 @@ return [
     //////////
     // ICal //
     //////////
-    'icalfeeds'                     => 'Kalenderfeed im iCal-Format',
-    'publishEvent'                  => 'Event veröffentlichen',
-    'createAndPublish'              => 'Anker los und Angreifen',
-    'createUnpublished'             => 'Leinen los und Schleichfahrt'
+    
+    'icalfeeds'                     =>  'Kalenderfeed im iCal-Format',
+    'publishEvent'                  =>  'Event veröffentlichen',
+    'createAndPublish'              =>  'Anker los und Angreifen',
+    'createUnpublished'             =>  'Leinen los und Schleichfahrt',
+    'eventIsPublished'              =>  'Angriff - über diese Fahrt werden Lieder bereits gesungen',
+    'eventIsUnpublished'            =>  'Schleichfahrt - dieses Abenteuer wird von Barden nicht erwähnt'
+
 ];

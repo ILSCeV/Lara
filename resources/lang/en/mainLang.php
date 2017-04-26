@@ -472,5 +472,7 @@ return [
     'icalfeeds'                     =>  'Calendarfeed using iCal',
     'publishEvent'                  =>  'publish event',
     'createAndPublish'              =>  'create and publish event',
-    'createUnpublished'             =>  'create event and leave unpublished'
+    'createUnpublished'             =>  'create event and leave unpublished',
+    'eventIsPublished'              =>  'Event is published and added to calendar feed',
+    'eventIsUnpublished'            =>  'Event is not published and isn\'t visible in calendar feed'
 ];

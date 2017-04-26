@@ -470,8 +470,11 @@ return [
     //////////
     // ICal //
     //////////
-    'icalfeeds'                     => 'Kalenderfeed im iCal-Format',
-    'publishEvent'                  => 'Event veröffentlichen',
-    'createAndPublish'              => 'Erstellen und veröffentlichen',
-    'createUnpublished'             => 'Erstelle unveröffentlicht'
+    
+    'icalfeeds'                     =>  'Kalenderfeed im iCal-Format',
+    'publishEvent'                  =>  'Event veröffentlichen',
+    'createAndPublish'              =>  'Erstellen und veröffentlichen',
+    'createUnpublished'             =>  'Erstelle unveröffentlicht',
+    'eventIsPublished'              =>  'Event wurde veröffentlicht und ist zum Kalenderfeed hinzugefügt',
+    'eventIsUnpublished'            =>  'Event ist nicht veröffentlicht ist im Kalendarfeed nicht sichtbar'
 ];

@@ -295,7 +295,7 @@ class IcalController extends Controller
             ->withHeaders([
                 'Content-Type'        => 'text/calendar',
                 'charset'             => 'utf-8',
-                'Content-Disposition' => 'attachment; filename="'.$evt_id.'.ics"',
+                'Content-Disposition' => 'attachment; filename="lara-event-'.$evt_id.'.ics"',
             ]);
     }
     
