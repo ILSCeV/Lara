@@ -249,7 +249,7 @@ class IcalController extends Controller
             ->withHeaders([
                 'Content-Type'        => 'text/calendar',
                 'charset'             => 'utf-8',
-                'Content-Disposition' => 'attachment; filename="shifts-with-my-name.ics"',
+                'Content-Disposition' => 'attachment; filename="shifts-with-' . session::get('userName') . '.ics"',
             ]);
     }
     
