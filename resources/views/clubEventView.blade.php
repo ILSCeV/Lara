@@ -115,18 +115,26 @@
 					OR Session::get('userId') == $created_by))
 					<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">
 						<span class="pull-right">
-							<a  id="unPubishEventBtn"
-								href="#" class="btn btn-danger @if($clubEvent->evnt_is_published == 0) hidden @endif"
+							<a  id="unPublishEventBtn"
+								href="{{ URL::route('togglePublishState', $clubEvent->id) }}" 
+								class="btn btn-success @if($clubEvent->evnt_is_published == 0) hidden @endif"
+								name="toggle-publish-state"
 							    data-toggle="tooltip"
 							    data-placement="bottom"
-							    title="{{trans("mainLang.unpublishEvent")}}">
+							    title="{{trans("mainLang.unpublishEvent")}}"
+							    data-token="{{csrf_token()}}"
+								onclick="return confirm('{{ trans('mainLang.confirmUnpublishingEvent') }}')">
 								<i class="fa fa-check-square-o"></i>
 							</a>
-							<a id="pubishEventBtn"
-							   href="#" class="btn btn-success @if($clubEvent->evnt_is_published == 1) hidden @endif"
-							   data-toggle="tooltip"
-							   data-placement="bottom"
-							   title="{{trans("mainLang.publishEvent")}}">
+							<a  id="pubishEventBtn"
+								href="{{ URL::route('togglePublishState', $clubEvent->id) }}" 
+								class="btn btn-danger @if($clubEvent->evnt_is_published == 1) hidden @endif"
+								name="toggle-publish-state"
+								data-toggle="tooltip"
+								data-placement="bottom"
+								title="{{trans("mainLang.publishEvent")}}"
+								data-token="{{csrf_token()}}"
+								onclick="return confirm('{{ trans('mainLang.confirmPublishingEvent') }}')">
 								<i class="fa fa-square-o"></i>
 							</a>
 							&nbsp;&nbsp;

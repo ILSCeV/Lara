@@ -14,6 +14,8 @@ use Eluceo\iCal\Component\Timezone;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use Redirect;
+use Log;
 use Lara\ClubEvent;
 use Lara\Person;
 use Lara\Place;
@@ -331,6 +333,67 @@ class IcalController extends Controller
         }
         
         return response()->json($result);
+    }
+
+
+    /**
+     * Will change the publishing state of a given event to the opposite
+     * @param  int $id for event ID
+     * @return Redirect back
+     */
+    public function togglePublishState($id) {
+
+        // Find event
+        $event = ClubEvent::findOrFail($id);
+        
+        // Check credentials: you can only delete, if you have rights for marketing or management. 
+        $revisions = json_decode($event->getSchedule->entry_revisions, true);
+        $created_by = $revisions[0]["user id"];
+        if(!Session::has('userId')
+            OR (Session::get('userGroup') != 'marketing'
+                AND Session::get('userGroup') != 'clubleitung'
+                AND Session::get('userGroup') != 'admin'))
+        {
+            Session::put('message', 'Du darfst dieses Event nicht veröffentlichen! Frage die Clubleitung oder Markleting ;)');
+            Session::put('msgType', 'danger');
+            return back();
+        }
+
+        if ($event->evnt_is_published == "1") 
+        {   
+            // was published, intent: unpublish
+            
+
+            // INSERT YOUR UNPUBLISH ROUTINE HERE
+
+
+            // Log the action while we still have the data
+            Log::info('Event unpublished: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
+                 . Session::get('userGroup') . ') unpublished event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+
+            // Inform the user
+            Session::put('message', "Dieses Event wurde erfolgreich aus dem Kalenderfeed entfernt.");
+            Session::put('msgType', 'danger');
+            return back();
+
+        } 
+        else 
+        { 
+            // was unpublished, intent: publish
+            
+
+            // INSERT YOUR PUBLISH ROUTINE HERE
+            
+
+            // Log the action while we still have the data
+            Log::info('Event published: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
+                 . Session::get('userGroup') . ') published event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+
+            // Inform the user
+            Session::put('message', "Dieses Event wurde erfolgreich zum Kalenderfeed hinzugefügt.");
+            Session::put('msgType', 'success');
+            return back();
+        }
     }
     
 }

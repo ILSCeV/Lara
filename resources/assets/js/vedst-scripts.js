@@ -783,6 +783,8 @@ $(document).ready(function() {
 //////////
 // ICal //
 //////////
+
+
 $('[name^=icalfeeds]').click(function () {
 
     var clipboard = null;
@@ -911,6 +913,8 @@ $('[name^=icalfeeds]').click(function () {
 
     });
 });
+
+
 
 //////////
 // AJAX //

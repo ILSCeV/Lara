@@ -476,5 +476,7 @@ return [
     'createAndPublish'              =>  'Create and publish event',
     'createUnpublished'             =>  'Create event without publishing',
     'eventIsPublished'              =>  'Event is published and added to calendar feed',
-    'eventIsUnpublished'            =>  'Event is not published and isn\'t visible in calendar feed'
+    'eventIsUnpublished'            =>  'Event is not published and isn\'t visible in calendar feed',
+    'confirmPublishingEvent'        =>  'Are you sure you want to publish this event to calendar feed?',
+    'confirmUnpublishingEvent'      =>  'Are you sure you want to remove this event from the calendar feed?'
 ];
