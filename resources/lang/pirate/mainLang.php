@@ -473,6 +473,7 @@ return [
     
     'icalfeeds'                     =>  'Kalenderfeed im iCal-Format',
     'publishEvent'                  =>  'Event veröffentlichen',
+    'unpublishEvent'                =>  'War alles nur Seemansgarn',
     'createAndPublish'              =>  'Anker los und Angreifen',
     'createUnpublished'             =>  'Leinen los und Schleichfahrt',
     'eventIsPublished'              =>  'Angriff - über diese Fahrt werden Lieder bereits gesungen',

@@ -473,6 +473,7 @@ return [
     
     'icalfeeds'                     =>  'Kalenderfeed im iCal-Format',
     'publishEvent'                  =>  'Event veröffentlichen',
+    'unpublishEvent'                =>  'Veröffentlichung rückängig machen',
     'createAndPublish'              =>  'Erstellen und veröffentlichen',
     'createUnpublished'             =>  'Erstelle unveröffentlicht',
     'eventIsPublished'              =>  'Event wurde veröffentlicht und ist zum Kalenderfeed hinzugefügt',
