@@ -480,6 +480,7 @@ return [
     'eventIsPublished'              =>  'Angriff - über diese Fahrt werden Lieder bereits gesungen',
     'eventIsUnpublished'            =>  'Schleichfahrt - dieses Abenteuer wird von Barden nicht erwähnt',
     'confirmPublishingEvent'        =>  'Möchtest du dieses Event wirklich zum Kalenderfeed hinzufügen?',
-    'confirmUnpublishingEvent'      =>  'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?'
+    'confirmUnpublishingEvent'      =>  'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
+    'iCal'                          =>  'iCal'
 
 ];

@@ -106,6 +106,20 @@
 								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
 							</td>
 						</tr>
+						<tr>
+							<td width="20%" class="left-padding-16">
+								<i>{{ trans('mainLang.iCal') }}:</i>
+							</td>
+							<td>
+								@if($clubEvent->evnt_is_published == "1")
+									<i class="fa fa-check-square-o" aria-hidden="true"></i>
+									&nbsp;&nbsp;{{trans('mainLang.eventIsPublished')}}
+								@else
+									<i class="fa fa-square-o" aria-hidden="true"></i>
+									&nbsp;&nbsp;{{trans('mainLang.eventIsUnpublished')}}
+								@endif
+							</td>
+						</tr>
 					</table>
 				{{-- CRUD --}}
 				@if(Session::has('userGroup')
@@ -117,25 +131,26 @@
 						<span class="pull-right">
 							<a  id="unPublishEventBtn"
 								href="{{ URL::route('togglePublishState', $clubEvent->id) }}" 
-								class="btn btn-success @if($clubEvent->evnt_is_published == 0) hidden @endif"
+								class="btn btn-danger @if($clubEvent->evnt_is_published == 0) hidden @endif"
 								name="toggle-publish-state"
 							    data-toggle="tooltip"
 							    data-placement="bottom"
 							    title="{{trans("mainLang.unpublishEvent")}}"
 							    data-token="{{csrf_token()}}"
 								onclick="return confirm('{{ trans('mainLang.confirmUnpublishingEvent') }}')">
-								<i class="fa fa-check-square-o"></i>
+								<i class="fa fa-bullhorn" aria-hidden="true"></i>
 							</a>
 							<a  id="pubishEventBtn"
 								href="{{ URL::route('togglePublishState', $clubEvent->id) }}" 
-								class="btn btn-danger @if($clubEvent->evnt_is_published == 1) hidden @endif"
+								class="btn btn-success @if($clubEvent->evnt_is_published == 1) hidden @endif"
 								name="toggle-publish-state"
 								data-toggle="tooltip"
 								data-placement="bottom"
 								title="{{trans("mainLang.publishEvent")}}"
 								data-token="{{csrf_token()}}"
 								onclick="return confirm('{{ trans('mainLang.confirmPublishingEvent') }}')">
-								<i class="fa fa-square-o"></i>
+								<i class="fa fa-bullhorn" aria-hidden="true"></i>
+
 							</a>
 							&nbsp;&nbsp;
 							<a href="{{ URL::route('event.edit', $clubEvent->id) }}"
