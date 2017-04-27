@@ -116,20 +116,20 @@
 					<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">
 						<span class="pull-right">
 							<a  id="unPubishEventBtn"
-								href="#" class="btn btn-primary @if($clubEvent->evnt_is_published == 0) hidden @endif"
+								href="#" class="btn btn-danger @if($clubEvent->evnt_is_published == 0) hidden @endif"
 							    data-toggle="tooltip"
 							    data-placement="bottom"
 							    title="{{trans("mainLang.unpublishEvent")}}">
 								<i class="fa fa-check-square-o"></i>
 							</a>
-							<a
-							   id="pubishEventBtn"
-							   href="#" class="btn btn-primary @if($clubEvent->evnt_is_published == 1) hidden @endif"
+							<a id="pubishEventBtn"
+							   href="#" class="btn btn-success @if($clubEvent->evnt_is_published == 1) hidden @endif"
 							   data-toggle="tooltip"
 							   data-placement="bottom"
 							   title="{{trans("mainLang.publishEvent")}}">
 								<i class="fa fa-square-o"></i>
 							</a>
+							&nbsp;&nbsp;
 							<a href="{{ URL::route('event.edit', $clubEvent->id) }}"
 							   class="btn btn-primary"
 							   data-toggle="tooltip"

@@ -130,6 +130,7 @@ return [
     //Lines for editing only with permission
     'noNotThisWay'          => 'Ne, das geht so nicht...',
     'onlyThe'               => 'Nur die',
+    'only'                  => 'Nur',
     'clubManagement'        => 'Admiral',
     'orThe'                 => 'oder die',
     'marketingManager'      => 'Smutje',

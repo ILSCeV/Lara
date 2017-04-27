@@ -131,6 +131,7 @@ return [
     //Lines for editing only with permission
     'noNotThisWay'          => 'Ne, das geht so nicht...',
     'onlyThe'               => 'Nur die',
+    'only'                  => 'Nur',
     'clubManagement'        => 'Clubleitung',
     'orThe'                 => 'oder die',
     'marketingManager'      => 'Marketingverantwortlichen',
@@ -473,7 +474,7 @@ return [
     
     'icalfeeds'                     =>  'Kalenderfeed im iCal-Format',
     'publishEvent'                  =>  'Event veröffentlichen',
-    'unpublishEvent'                =>  'Veröffentlichung rückängig machen',
+    'unpublishEvent'                =>  'Event aus dem Kalenderfeed entfernen',
     'createAndPublish'              =>  'Erstellen und veröffentlichen',
     'createUnpublished'             =>  'Erstelle unveröffentlicht',
     'eventIsPublished'              =>  'Event wurde veröffentlicht und ist zum Kalenderfeed hinzugefügt',

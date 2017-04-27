@@ -130,6 +130,7 @@ return [
     //Lines for editing only with permission
     'noNotThisWay'          => 'No, not this way...',
     'onlyThe'               => 'Only the',
+    'only'                  => 'Only',
     'clubManagement'        => 'club management',
     'orThe'                 => 'or',
     'marketingManager'      => 'marketing managers',
@@ -470,10 +471,10 @@ return [
     //////////
 
     'icalfeeds'                     =>  'Calendarfeed using iCal',
-    'publishEvent'                  =>  'publish event',
-    'unpublishEvent'                =>  'revert publishing event',
-    'createAndPublish'              =>  'create and publish event',
-    'createUnpublished'             =>  'create event and leave unpublished',
+    'publishEvent'                  =>  'Publish event to calendar feed',
+    'unpublishEvent'                =>  'Remove event from calendar feed',
+    'createAndPublish'              =>  'Create and publish event',
+    'createUnpublished'             =>  'Create event without publishing',
     'eventIsPublished'              =>  'Event is published and added to calendar feed',
     'eventIsUnpublished'            =>  'Event is not published and isn\'t visible in calendar feed'
 ];
