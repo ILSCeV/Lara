@@ -253,7 +253,7 @@ return [
 
     // /resources/views/partials/filter.blade.php
     'allSections'           => 'All sections',
-
+    'comments'              => 'Comments',
     //-----------------------------------------------------------------------------------------------------------
 
     // /resources/views/partials/legend.blade.php

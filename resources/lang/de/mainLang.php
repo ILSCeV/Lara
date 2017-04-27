@@ -255,6 +255,7 @@ return [
     
     // /resources/views/partials/filter.blade.php
     'allSections'           => 'Alle Sektionen',
+    'comments'              => 'Kommentare',
     
     //-----------------------------------------------------------------------------------------------------------
     

@@ -49,6 +49,9 @@
 				
 				{{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
 				<button class="btn btn-xs hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button>
+
+				{{-- show/hide all comment fields --}}
+				<button class="btn btn-xs hidden-print" type="button" id="toggle-all-comments">{{ trans('mainLang.comments') }}</button>
 				
 				{{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
 				<button class="btn btn-xs btn-primary hidden-print" type="button" id="toggle-week-start">{{ trans('mainLang.weekStart') }}</button> 

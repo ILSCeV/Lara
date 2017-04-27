@@ -331,6 +331,57 @@ $( document ).ready( function() {
 
 
 
+
+        ////////////////////////////
+        // Show/hide all comments //
+        ////////////////////////////
+
+
+
+        // Apply saved preferences from local storage on pageload
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.allComments == "show") 
+            {   
+                $('[name^=comment]').removeClass("hide"); 
+                $('#toggle-all-comments').addClass("btn-primary");
+                $('.isotope').isotope('layout');
+            } 
+            else if (localStorage.allComments == "hide") 
+            {
+                $('[name^=comment]').addClass("hide");
+                $('#toggle-all-comments').removeClass("btn-primary");
+                $('.isotope').isotope('layout');                  
+            }      
+        };
+
+        // Filter buttons action
+        $('#toggle-all-comments').click(function(e) 
+        { 
+            if ($('[name^=comment]').is(":visible"))    // comments are shown, intent to hide
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.allComments = "hide"; }
+
+                // change state, change button
+                $('[name^=comment]').addClass("hide"); 
+                $('#toggle-all-comments').removeClass("btn-primary");
+                $('.isotope').isotope('layout');
+            }
+            else    // comments are hidden, intent to show
+            {
+                // save selection in local storage
+                if(typeof(Storage) !== "undefined") { localStorage.allComments = "show"; }
+
+                // change state, change button
+                $('[name^=comment]').removeClass("hide");
+                $('#toggle-all-comments').addClass("btn-primary");
+                $('.isotope').isotope('layout');
+            };        
+        });
+
+
+
         ///////////////////////////////////////////////
         // Week view changer: start Monday/Wednesday //
         ///////////////////////////////////////////////
@@ -585,12 +636,23 @@ $(function(){
 
 
 // Show/hide comments
-$(function(){
-    $('.showhide').click(function(e) {
-        $(this).parent().next('.hide').toggleClass('show');
-        $('.isotope').isotope('layout') 
-    });
+$('.showhide').click(function(e) {
+    if ($(this).parent().next('[name^=comment]').is(":visible"))    
+    {
+        // comment is shown, intent to hide
+        $(this).parent().next('[name^=comment]').addClass("hide");
+    }
+    else
+    {
+        // comment is hidden, intent to show
+        $(this).parent().next('[name^=comment]').removeClass("hide");
+    };   
+    $('.isotope').isotope('layout');     
 });
+
+
+
+
 
 
 
