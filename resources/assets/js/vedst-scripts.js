@@ -717,12 +717,18 @@ $(document).ready(function() {
 
                 // Initialise table structure
                 dialog.find('.modal-body').addClass("no-padding").html(
-                    "<table id=\"person-shifts-overview\" class=\"table table-hover no-padding\"><thead><tr><th>#</th><th>" 
-                        + translate('shift') + "</th><th>" 
-                        + translate('event') + "</th><th>" 
-                        + translate('section') + "</th><th>" 
-                        + translate('date') + "</th><th>" 
-                        + translate('weight') + "</th></tr></thead></table>"
+                    "<table id=\"person-shifts-overview\" class=\"table table-hover no-padding\">"
+                        + "<thead>"
+                        + "<tr>"
+                        + "<th>#</th>"
+                        + "<th>" + translate('shift') + "</th>" 
+                        + "<th>" + translate('event') + "</th>" 
+                        + "<th>" + translate('section') + "</th>" 
+                        + "<th>" + translate('date') + "</th>" 
+                        + "<th>" + translate('weight') + "</th>"
+                        + "</tr>"
+                        + "</thead>"
+                    +"</table>"
                 );
 
                 // check for empty response
@@ -734,18 +740,19 @@ $(document).ready(function() {
                 // Fill with data received 
                 for (var i = 0; i < response.length; i++)
                 {
-                    $("#person-shifts-overview").append("<tr" 
-                                                          // Change background for shifts in other sections
-                                                          + (!response[i]["isOwnClub"] ? " class=\"active text-muted\"" : "\"\"") + ">"
-                                                          + "<td>"  + (1+i) + "</td>" 
-                                                          + "<td>" + response[i]["shift"] + "</td>"
-                                                          + "<td>" + "<a href=\"../../event/" + response[i]["event_id"] + "\" >" 
-                                                          + response[i]["event"] + "</a></td>"
-                                                          // Color-coding for different sections 
-                                                          + "<td class=\"" + response[i]["section"]+ "-section-highlight\">"     
-                                                          + response[i]["section"] + "</td>"
-                                                          + "<td>" + response[i]["date"] + "</td>" 
-                                                          + "<td>" + response[i]["weight"] + "</td></tr>");
+                    $("#person-shifts-overview").append(
+                        "<tbody>" 
+                        // Change background for shifts in other sections
+                        + "<tr" + (!response[i]["isOwnClub"] ? " class=\"active text-muted\"" : "") + ">" 
+                        + "<td>"  + (1+i) + "</td>" 
+                        + "<td>" + response[i]["shift"] + "</td>"
+                        + "<td>" + "<a href=\"../../event/" + response[i]["event_id"] + "\">" + response[i]["event"] + "</a>" + "</td>"
+                        // Color-coding for different sections 
+                        + "<td class=\"" + response[i]["section"]+ "-section-highlight\">" + response[i]["section"] + "</td>"
+                        + "<td>" + response[i]["date"] + "</td>" 
+                        + "<td>" + response[i]["weight"] + "</td>"
+                        + "</tr>"
+                        + "</tbody>");
                 }
 
             }); 
