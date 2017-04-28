@@ -7,19 +7,20 @@
 
 namespace Lara\Http\Controllers;
 
+use Cache;
 use Eluceo\iCal\Component\Alarm;
 use Eluceo\iCal\Component\Calendar;
 use Eluceo\iCal\Component\Event;
 use Eluceo\iCal\Component\Timezone;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
-use Redirect;
-use Log;
 use Lara\ClubEvent;
 use Lara\Person;
 use Lara\Place;
 use Lara\ScheduleEntry;
+use Lara\Utilities;
+use Log;
+use Redirect;
+use Session;
+use URL;
 
 /** Controller for generating iCal feeds */
 class IcalController extends Controller
@@ -154,7 +155,7 @@ class IcalController extends Controller
         });
         
         $filename = 'location';
-        if($with_private_info != 0){
+        if ($with_private_info != 0) {
             $filename = $filename."-with-private-info";
         }
         
@@ -334,64 +335,68 @@ class IcalController extends Controller
         
         return response()->json($result);
     }
-
-
+    
+    
     /**
      * Will change the publishing state of a given event to the opposite
      * @param  int $id for event ID
      * @return Redirect back
      */
-    public function togglePublishState($id) {
-
+    public function togglePublishState($id)
+    {
+        
         // Find event
         $event = ClubEvent::findOrFail($id);
         
         // Check credentials: you can only delete, if you have rights for marketing or management. 
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
         $created_by = $revisions[0]["user id"];
-        if(!Session::has('userId')
+        if (!Session::has('userId')
             OR (Session::get('userGroup') != 'marketing'
                 AND Session::get('userGroup') != 'clubleitung'
-                AND Session::get('userGroup') != 'admin'))
-        {
-            Session::put('message', 'Du darfst dieses Event nicht veröffentlichen! Frage die Clubleitung oder Markleting ;)');
+                AND Session::get('userGroup') != 'admin')
+        ) {
+            Session::put('message',
+                'Du darfst dieses Event nicht veröffentlichen! Frage die Clubleitung oder Markleting ;)');
             Session::put('msgType', 'danger');
+            
             return back();
         }
-
-        if ($event->evnt_is_published == "1") 
-        {   
+        
+        if ($event->evnt_is_published == 1) {
             // was published, intent: unpublish
             
-
+            
             // INSERT YOUR UNPUBLISH ROUTINE HERE
-
-
+            $event->evnt_is_published = 0;
+            $event->save();
+            Utilities::clearIcalCache();
             // Log the action while we still have the data
-            Log::info('Event unpublished: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
-                 . Session::get('userGroup') . ') unpublished event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
-
+            Log::info('Event unpublished: '.Session::get('userName').' ('.Session::get('userId').', '
+                .Session::get('userGroup').') unpublished event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
+            
             // Inform the user
             Session::put('message', "Dieses Event wurde erfolgreich aus dem Kalenderfeed entfernt.");
             Session::put('msgType', 'danger');
+            
             return back();
-
-        } 
-        else 
-        { 
+            
+        } else {
             // was unpublished, intent: publish
             
-
-            // INSERT YOUR PUBLISH ROUTINE HERE
             
-
+            // INSERT YOUR PUBLISH ROUTINE HERE
+            $event->evnt_is_published = 1;
+            $event->save();
+            Utilities::clearIcalCache();
             // Log the action while we still have the data
-            Log::info('Event published: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
-                 . Session::get('userGroup') . ') published event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
-
+            Log::info('Event published: '.Session::get('userName').' ('.Session::get('userId').', '
+                .Session::get('userGroup').') published event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
+            
             // Inform the user
             Session::put('message', "Dieses Event wurde erfolgreich zum Kalenderfeed hinzugefügt.");
             Session::put('msgType', 'success');
+            
             return back();
         }
     }

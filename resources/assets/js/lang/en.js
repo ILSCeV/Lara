@@ -27,5 +27,7 @@ var enTranslations = {
     "personalFeed":'personal feed',
     "internalUsageOnly":"only for internal usage",
     "publishEventWarning":"If you publish an event it will be visible in the public calendar-feeds.",
-    "legend":"Legend"
+    "legend":"Legend",
+    'confirmPublishingEvent': 'Are you sure you want to publish this event to calendar feed?',
+    'confirmUnpublishingEvent': 'Are you sure you want to remove this event from the calendar feed?'
 };

@@ -129,29 +129,29 @@
 					OR Session::get('userId') == $created_by))
 					<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">
 						<span class="pull-right">
-							<a  id="unPublishEventBtn"
-								href="{{ URL::route('togglePublishState', $clubEvent->id) }}" 
+							<button  id="unPublishEventLnkBtn"
+								data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
 								class="btn btn-danger @if($clubEvent->evnt_is_published == 0) hidden @endif"
 								name="toggle-publish-state"
 							    data-toggle="tooltip"
 							    data-placement="bottom"
 							    title="{{trans("mainLang.unpublishEvent")}}"
 							    data-token="{{csrf_token()}}"
-								onclick="return confirm('{{ trans('mainLang.confirmUnpublishingEvent') }}')">
+								>
 								<i class="fa fa-bullhorn" aria-hidden="true"></i>
-							</a>
-							<a  id="pubishEventBtn"
-								href="{{ URL::route('togglePublishState', $clubEvent->id) }}" 
+							</button>
+							<button  id="pubishEventLnkBtn"
+								data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
 								class="btn btn-success @if($clubEvent->evnt_is_published == 1) hidden @endif"
 								name="toggle-publish-state"
 								data-toggle="tooltip"
 								data-placement="bottom"
 								title="{{trans("mainLang.publishEvent")}}"
 								data-token="{{csrf_token()}}"
-								onclick="return confirm('{{ trans('mainLang.confirmPublishingEvent') }}')">
+								>
 								<i class="fa fa-bullhorn" aria-hidden="true"></i>
 
-							</a>
+							</button>
 							&nbsp;&nbsp;
 							<a href="{{ URL::route('event.edit', $clubEvent->id) }}"
 							   class="btn btn-primary"
