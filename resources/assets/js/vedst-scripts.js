@@ -285,6 +285,8 @@ $( document ).ready( function() {
         // Show/hide taken shifts //
         ////////////////////////////
 
+
+
         $('#toggle-taken-shifts').text(translate("onlyEmpty"));
 
         // Apply saved preferences from local storage on pageload
@@ -331,55 +333,58 @@ $( document ).ready( function() {
 
 
 
-
         ////////////////////////////
         // Show/hide all comments //
         ////////////////////////////
 
 
+        
 
-        // Apply saved preferences from local storage on pageload
-        if(typeof(Storage) !== "undefined") 
+        // Constraint: limits usage of this filter to week view only
+        if ($('#week-view-marker').length) 
         {
-            if (localStorage.allComments == "show") 
-            {   
-                $('[name^=comment]').removeClass("hide"); 
-                $('#toggle-all-comments').addClass("btn-primary");
-                $('.isotope').isotope('layout');
-            } 
-            else if (localStorage.allComments == "hide") 
+            // Apply saved preferences from local storage on pageload
+            if(typeof(Storage) !== "undefined") 
             {
-                $('[name^=comment]').addClass("hide");
-                $('#toggle-all-comments').removeClass("btn-primary");
-                $('.isotope').isotope('layout');                  
-            }      
+                if (localStorage.allComments == "show") 
+                {   
+                    $('[name^=comment]').removeClass("hide"); 
+                    $('#toggle-all-comments').addClass("btn-primary");
+                    $('.isotope').isotope('layout');
+                } 
+                else if (localStorage.allComments == "hide") 
+                {
+                    $('[name^=comment]').addClass("hide");
+                    $('#toggle-all-comments').removeClass("btn-primary");
+                    $('.isotope').isotope('layout');                  
+                }      
+            };
+
+            // Filter buttons action
+            $('#toggle-all-comments').click(function(e) 
+            { 
+                if ($('[name^=comment]').is(":visible"))    // comments are shown, intent to hide
+                {
+                    // save selection in local storage
+                    if(typeof(Storage) !== "undefined") { localStorage.allComments = "hide"; }
+
+                    // change state, change button
+                    $('[name^=comment]').addClass("hide"); 
+                    $('#toggle-all-comments').removeClass("btn-primary");
+                    $('.isotope').isotope('layout');
+                }
+                else    // comments are hidden, intent to show
+                {
+                    // save selection in local storage
+                    if(typeof(Storage) !== "undefined") { localStorage.allComments = "show"; }
+
+                    // change state, change button
+                    $('[name^=comment]').removeClass("hide");
+                    $('#toggle-all-comments').addClass("btn-primary");
+                    $('.isotope').isotope('layout');
+                };        
+            });
         };
-
-        // Filter buttons action
-        $('#toggle-all-comments').click(function(e) 
-        { 
-            if ($('[name^=comment]').is(":visible"))    // comments are shown, intent to hide
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") { localStorage.allComments = "hide"; }
-
-                // change state, change button
-                $('[name^=comment]').addClass("hide"); 
-                $('#toggle-all-comments').removeClass("btn-primary");
-                $('.isotope').isotope('layout');
-            }
-            else    // comments are hidden, intent to show
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") { localStorage.allComments = "show"; }
-
-                // change state, change button
-                $('[name^=comment]').removeClass("hide");
-                $('#toggle-all-comments').addClass("btn-primary");
-                $('.isotope').isotope('layout');
-            };        
-        });
-
 
 
         ///////////////////////////////////////////////

@@ -215,8 +215,13 @@
 		@endif
 	</div>
 
-{{-- Legend --}}
-@include("partials.legend")
+    <div class="col-md-12 col-xs-12">
+        {{-- Legend --}}
+        @include("partials.legend")
+
+        {{-- filter hack --}}
+        <span id="week-view-marker" hidden>&nbsp;</span>
+    </div>
 
 @stop
 
