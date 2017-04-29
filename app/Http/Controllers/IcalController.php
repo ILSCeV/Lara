@@ -217,7 +217,7 @@ class IcalController extends Controller
                     $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->jobType->jbtyp_title));
                     $prefixDescription = "".URL::route('event.show', $schedule->event->id)."\n\n";
                     if ($preparationNeeded) {
-                        $prefixDescription = $prefixDescription.trans('mainLang.begin').$evt->entry_time_start." ".trans('mainLang.DV-Time').": ".$start_time."\n\n";
+                        $prefixDescription = $prefixDescription.trans('mainLang.begin').": ".$evt->entry_time_start." ".trans('mainLang.DV-Time').": ".$start_time."\n\n";
                     }
                     $vEvent->setDescription($prefixDescription.trans('mainLang.additionalInfo').":\n".$schedule->event->evnt_public_info."\n\n----\n".trans('mainLang.moreDetails').":\n".$schedule->event->evnt_private_details);
                     $place = $schedule->event->place->plc_title;
