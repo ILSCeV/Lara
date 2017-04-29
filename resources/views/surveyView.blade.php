@@ -107,7 +107,6 @@ $userCanEditDueToRole
     </style>
 @stop
 @section('moreScripts'){{--collection of used java script functions to clean up the code--}}
-<script src="{{ mix('js/surveys.js') }}"></script>
 @stop
 @section('content')
 
