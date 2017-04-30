@@ -50,26 +50,28 @@ class IcalController extends Controller
                 ->where('evnt_is_private', '=', '0')
                 ->where('evnt_is_published', '=', '1')
                 ->get();
-
+            
             $vEvents = $events->map(function ($evt) {
                 $vEvent = new Event();
                 $vEvent->setUseTimezone(true);
-                $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $evt->evnt_date_start . " " . $evt->evnt_time_start));
-                $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $evt->evnt_date_end . " " . $evt->evnt_time_end));
+                $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_TIME_FORMAT,
+                    "".$evt->evnt_date_start." ".$evt->evnt_time_start));
+                $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_TIME_FORMAT,
+                    "".$evt->evnt_date_end." ".$evt->evnt_time_end));
                 $vEvent->setSummary($evt->evnt_title);
                 
-                $eventLink = "" . URL::route('event.show', $evt->id);
+                $eventLink = "".URL::route('event.show', $evt->id);
                 $eventTime = $evt->evnt_time_start;
-
+                
                 $additionalInfo = $evt->evnt_public_info !== "" ? $evt->evnt_public_info : "(-)";
-
-                $vEvent->setDescription(  "Link: " . $eventLink . "\n"
-                                        . "\n"
-                                        . trans('mainLang.begin') . ": " . $eventTime . "\n"
-                                        . "\n"
-                                        . trans('mainLang.additionalInfo') . ":\n"
-                                        . $additionalInfo . "\n" );
-
+                
+                $vEvent->setDescription("Link: ".$eventLink."\n"
+                    ."\n"
+                    .trans('mainLang.begin').": ".$eventTime."\n"
+                    ."\n"
+                    .trans('mainLang.additionalInfo').":\n"
+                    .$additionalInfo."\n");
+                
                 $place = $evt->place->plc_title;
                 $vEvent->setLocation($place, $place);
                 
@@ -96,7 +98,7 @@ class IcalController extends Controller
             ]);
     }
     
-
+    
     /**
      * creates an iCal for all club-events of a chosen location
      * @param $location the location
@@ -104,7 +106,7 @@ class IcalController extends Controller
      */
     public function events($location, $with_private_info = 0)
     {
-        $calendar = Cache::remember("icalAllEvents" . $location, 4 * 60, function () use ($location, $with_private_info) {
+        $calendar = Cache::remember("icalAllEvents".$location, 4 * 60, function () use ($location, $with_private_info) {
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
             
@@ -126,50 +128,52 @@ class IcalController extends Controller
                 ->where('evnt_date_start', "<=", $stopDate->format(self::DATE_FORMAT))
                 ->with('place', 'getSchedule')
                 ->where('plc_id', "=", $place->id);
-
+            
             if ($with_private_info == 0) {
                 $eventsQuery = $eventsQuery->where("evnt_is_private", "=", '0')->where('evnt_is_published', '=', '1');
             }
-
+            
             $events = $eventsQuery->get();
             $vEvents = $events->map(function ($evt) use ($location, $with_private_info) {
                 $vEvent = new Event();
                 $vEvent->setUseTimezone(true);
-                $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "".$evt->evnt_date_start . " " . $evt->evnt_time_start));
-                $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "".$evt->evnt_date_end . " " . $evt->evnt_time_end));
+                $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_TIME_FORMAT,
+                    "".$evt->evnt_date_start." ".$evt->evnt_time_start));
+                $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_TIME_FORMAT,
+                    "".$evt->evnt_date_end." ".$evt->evnt_time_end));
                 $vEvent->setSummary($evt->evnt_title);
-
+                
                 $schedule = $evt->getSchedule;
                 $start_time = "";
-
-                $eventLink = "" . URL::route('event.show', $evt->id);
+                
+                $eventLink = "".URL::route('event.show', $evt->id);
                 $eventTime = $evt->evnt_time_start;
                 $preparationsTime = $schedule->schdl_time_preparation_start;
                 $additionalInfo = $evt->evnt_public_info !== "" ? $evt->evnt_public_info : "(-)";
-
-                $evtDescription = "Link: " . $eventLink . "\n"
-                                . "\n"
-                                . trans('mainLang.begin') . ": " . $eventTime . "\n"
-                                . trans('mainLang.DV-Time') . ": " . $preparationsTime . "\n"
-                                . "\n"
-                                . "---\n"
-                                . "\n"
-                                . trans('mainLang.additionalInfo') . ":\n"
-                                . $additionalInfo . "\n";
+                
+                $evtDescription = "Link: ".$eventLink."\n"
+                    ."\n"
+                    .trans('mainLang.begin').": ".$eventTime."\n"
+                    .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
+                    ."\n"
+                    ."---\n"
+                    ."\n"
+                    .trans('mainLang.additionalInfo').":\n"
+                    .$additionalInfo."\n";
                 
                 if ($with_private_info > 0) {
                     $moreDetails = $evt->evnt_private_details !== "" ? $evt->evnt_private_details : "(-)";
-
+                    
                     $evtDescription = $evtDescription
-                                    . "\n"
-                                    . "---\n"
-                                    . "\n"
-                                    . trans('mainLang.moreDetails') . ":\n"
-                                    . $moreDetails;
+                        ."\n"
+                        ."---\n"
+                        ."\n"
+                        .trans('mainLang.moreDetails').":\n"
+                        .$moreDetails;
                 }
-
+                
                 $vEvent->setDescription($evtDescription);
-
+                
                 $place = $evt->place->plc_title;
                 $vEvent->setLocation($place, $place);
                 
@@ -181,7 +185,7 @@ class IcalController extends Controller
             }
             
             $keys = Cache::get(self::ICAL_ACCESSOR, []);
-            array_push($keys, "icalAllEvents" . $location);
+            array_push($keys, "icalAllEvents".$location);
             $keys = array_unique($keys);
             Cache::put(self::ICAL_ACCESSOR, $keys, 4 * 60);
             
@@ -190,18 +194,18 @@ class IcalController extends Controller
         
         $filename = 'all-events-single-location';
         if ($with_private_info != 0) {
-            $filename = $filename . "-with-private-info";
+            $filename = $filename."-with-private-info";
         }
         
         return response($calendar)
             ->withHeaders([
                 'Content-Type'        => 'text/calendar',
                 'charset'             => 'utf-8',
-                'Content-Disposition' => 'attachment; filename="' . $filename . '.ics"',
+                'Content-Disposition' => 'attachment; filename="'.$filename.'.ics"',
             ]);
     }
     
-
+    
     /**
      * creates an individual iCal using your club_id
      * @param $prsn_uid - your club id, for example 56202a26bbe2c6a847ed83fe266b2017d8a21cf6db610886990dbbad2fdb1fd68b58e6209154a2358f925b670b98daaed403413f0f152f0522ff0f22e3b39b9c
@@ -221,7 +225,7 @@ class IcalController extends Controller
             
             $vEvents = $events->map(function ($evt) use ($alarm) {
                 $schedule = $evt->schedule;
-
+                
                 $start_time = "";
                 $preparationNeeded = false;
                 if ($schedule->event->evnt_time_start == $evt->entry_time_start) {
@@ -241,39 +245,41 @@ class IcalController extends Controller
                 }
                 
                 $vEvent = new Event();
-
-                $start_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $schedule->event->evnt_date_start . " " . $start_time);
-                $stop_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $stop_date . " " . $evt->entry_time_end);
+                
+                $start_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT,
+                    "".$schedule->event->evnt_date_start." ".$start_time);
+                $stop_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT,
+                    "".$stop_date." ".$evt->entry_time_end);
                 
                 if ($start_date_time != false && $stop_date_time != false) {
                     $vEvent->setDtStart($start_date_time);
                     $vEvent->setDtEnd($stop_date_time);
-                    $vEvent->setSummary("" . ($schedule->event->evnt_title) . " - " . ($evt->jobType->jbtyp_title));
-
-                    $eventLink = "" . URL::route('event.show', $schedule->event->id);
+                    $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->jobType->jbtyp_title));
+                    
+                    $eventLink = "".URL::route('event.show', $schedule->event->id);
                     $eventTime = $evt->entry_time_start;
                     $preparationsTime = $schedule->schdl_time_preparation_start;
-
+                    
                     $additionalInfo = $schedule->event->evnt_public_info !== "" ? $schedule->event->evnt_public_info : "(-)";
                     $moreDetails = $schedule->event->evnt_private_details !== "" ? $schedule->event->evnt_private_details : "(-)";
-
-                    $vEvent->setDescription(  "Link: " . $eventLink . "\n"
-                                            . "\n"
-                                            . trans('mainLang.begin') . ": " . $eventTime . "\n"
-                                            . trans('mainLang.DV-Time') . ": " . $preparationsTime . "\n"
-                                            . "\n"
-                                            . trans('mainLang.shift') . ": " . $evt->jobtype->jbtyp_title . "\n"
-                                            . trans('mainLang.shiftTime') . ": " . $evt->entry_time_start . " - " . $evt->entry_time_end . "\n"
-                                            . "\n"
-                                            . "---\n"
-                                            . "\n"
-                                            . trans('mainLang.additionalInfo') . ":\n"
-                                            . $additionalInfo . "\n"
-                                            . "\n"
-                                            . "---\n"
-                                            . "\n"
-                                            . trans('mainLang.moreDetails') . ":\n"
-                                            . $moreDetails );
+                    
+                    $vEvent->setDescription("Link: ".$eventLink."\n"
+                        ."\n"
+                        .trans('mainLang.begin').": ".$eventTime."\n"
+                        .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
+                        ."\n"
+                        .trans('mainLang.shift').": ".$evt->jobtype->jbtyp_title."\n"
+                        .trans('mainLang.shiftTime').": ".$evt->entry_time_start." - ".$evt->entry_time_end."\n"
+                        ."\n"
+                        ."---\n"
+                        ."\n"
+                        .trans('mainLang.additionalInfo').":\n"
+                        .$additionalInfo."\n"
+                        ."\n"
+                        ."---\n"
+                        ."\n"
+                        .trans('mainLang.moreDetails').":\n"
+                        .$moreDetails);
                     
                     $place = $schedule->event->place->plc_title;
                     
@@ -283,8 +289,8 @@ class IcalController extends Controller
                     if ($alarm > 0 && ($start_date_time > new \DateTime())) {
                         $vAlarm = new Alarm();
                         $vAlarm->setAction(Alarm::ACTION_DISPLAY);
-                        $vAlarm->setDescription($schedule->event->evnt_title . " - " . ($evt->jobType->jbtyp_title));
-                        $vAlarm->setTrigger("-PT" . $alarm . "M");
+                        $vAlarm->setDescription($schedule->event->evnt_title." - ".($evt->jobType->jbtyp_title));
+                        $vAlarm->setTrigger("-PT".$alarm."M");
                         $vEvent->addComponent($vAlarm);
                     }
                 }
@@ -297,7 +303,7 @@ class IcalController extends Controller
             }
             
             $keys = Cache::get(self::ICAL_ACCESSOR, []);
-            array_push($keys, "ical" . $prsn_uid . $alarm);
+            array_push($keys, "ical".$prsn_uid.$alarm);
             $keys = array_unique($keys);
             Cache::put(self::ICAL_ACCESSOR, $keys, 4 * 60);
             
@@ -313,42 +319,44 @@ class IcalController extends Controller
             ]);
     }
     
-
+    
     /**
      * creates an iCal for a single event
      * @param $evt_id id of the event that should be exported
      */
     public function singleEvent($evt_id)
     {
-        $calendar = Cache::remember("ical" . $evt_id . Session::has('userGroup'), 4 * 60, function () use ($evt_id) {
+        $calendar = Cache::remember("ical".$evt_id.Session::has('userGroup'), 4 * 60, function () use ($evt_id) {
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
             $event = ClubEvent::where('id', '=', $evt_id)->first();
             if (isset($event)) {
                 $vEvent = new Event();
                 $vEvent->setUseTimezone(true);
-                $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $event->evnt_date_start . " " . $event->evnt_time_start));
-                $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_TIME_FORMAT, "" . $event->evnt_date_end . " " . $event->evnt_time_end));
+                $vEvent->setDtStart(\DateTime::createFromFormat(self::DATE_TIME_FORMAT,
+                    "".$event->evnt_date_start." ".$event->evnt_time_start));
+                $vEvent->setDtEnd(\DateTime::createFromFormat(self::DATE_TIME_FORMAT,
+                    "".$event->evnt_date_end." ".$event->evnt_time_end));
                 $vEvent->setSummary($event->evnt_title);
                 
-                $eventLink = "" . URL::route('event.show', $event->id);
-                $eventTime = $evt->evnt_time_start;
-                $additionalInfo = $evt->evnt_public_info !== "" ? $event->evnt_public_info : "(-)";
-
-                $vEvent->setDescription(  "Link: " . $eventLink . "\n"
-                                        . "\n"
-                                        . trans('mainLang.begin') . ": " . $eventTime . "\n"
-                                        . "\n"
-                                        . trans('mainLang.additionalInfo') . ":\n"
-                                        . $additionalInfo . "\n" );
-
+                $eventLink = "".URL::route('event.show', $event->id);
+                $eventTime = $event->evnt_time_start;
+                $additionalInfo = $event->evnt_public_info !== "" ? $event->evnt_public_info : "(-)";
+                
+                $vEvent->setDescription("Link: ".$eventLink."\n"
+                    ."\n"
+                    .trans('mainLang.begin').": ".$eventTime."\n"
+                    ."\n"
+                    .trans('mainLang.additionalInfo').":\n"
+                    .$additionalInfo."\n");
+                
                 $place = $event->place->plc_title;
                 $vEvent->setLocation($place, $place);
                 $vCalendar->addComponent($vEvent);
             }
             
             $keys = Cache::get(self::ICAL_ACCESSOR, []);
-            array_push($keys, "ical" . $evt_id . Session::has('userGroup'));
+            array_push($keys, "ical".$evt_id.Session::has('userGroup'));
             $keys = array_unique($keys);
             Cache::put(self::ICAL_ACCESSOR, $keys, 4 * 60);
             
@@ -359,11 +367,11 @@ class IcalController extends Controller
             ->withHeaders([
                 'Content-Type'        => 'text/calendar',
                 'charset'             => 'utf-8',
-                'Content-Disposition' => 'attachment; filename="lara-event-' . $evt_id . '.ics"',
+                'Content-Disposition' => 'attachment; filename="lara-event-'.$evt_id.'.ics"',
             ]);
     }
     
-
+    
     /** generate links for ui */
     public function generateLinks()
     {
@@ -376,25 +384,25 @@ class IcalController extends Controller
         $places = Place::where('plc_title', '<>', '-')->get();
         
         $result['allPublicEvents'] = URL::route('icalallevents');
-
+        
         foreach ($places as $place) {
             
             if (Session::has('userGroup')) {
-                $placeLink = [$place->plc_title => URL::to('/') . '/ical/feed/' . $place->place_uid . "/1"];
+                $placeLink = [$place->plc_title => URL::to('/').'/ical/feed/'.$place->place_uid."/1"];
                 $result['location'][] = $placeLink;
             }
-            $publicLinks = [$place->plc_title => URL::to('/') . "/ical/location/" . $place->plc_title];
+            $publicLinks = [$place->plc_title => URL::to('/')."/ical/location/".$place->plc_title];
             
             $result['locationPublic'][] = $publicLinks;
             $result['locationName'][] = $place->plc_title;
         }
-
+        
         if (!Session::has('userId')) {
             $result['isPublic'] = true;
         } else {
             $result['isPublic'] = false;
         }
-
+        
         if (!is_null($person) && Session::has('userId')) {
             $result['personal'] = URL::to('/').'/ical/events/user/'.$person->prsn_uid.'/';
         }
@@ -429,11 +437,11 @@ class IcalController extends Controller
         
         if ($event->evnt_is_published == 1) {
             // was published, intent: unpublish
-
+            
             $event->evnt_is_published = 0;
             $event->save();
             Utilities::clearIcalCache();
-
+            
             // Log the action while we still have the data
             Log::info('Event unpublished: '.Session::get('userName').' ('.Session::get('userId').', '
                 .Session::get('userGroup').') unpublished event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
@@ -446,11 +454,11 @@ class IcalController extends Controller
             
         } else {
             // was unpublished, intent: publish
-
+            
             $event->evnt_is_published = 1;
             $event->save();
             Utilities::clearIcalCache();
-
+            
             // Log the action while we still have the data
             Log::info('Event published: '.Session::get('userName').' ('.Session::get('userId').', '
                 .Session::get('userGroup').') published event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
