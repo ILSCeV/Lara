@@ -130,6 +130,7 @@ return [
     //Lines for editing only with permission
     'noNotThisWay'          => 'Ne, das geht so nicht...',
     'onlyThe'               => 'Nur die',
+    'only'                  => 'Nur',
     'clubManagement'        => 'Admiral',
     'orThe'                 => 'oder die',
     'marketingManager'      => 'Smutje',
@@ -253,6 +254,7 @@ return [
     
     // /resources/views/partials/filter.blade.php
     'allSections'           => 'Alle Schiffe',
+    'comments'              => 'Ausrufe',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -465,7 +467,21 @@ return [
     'negativeStats'                 => 'Statistische Wertung darf nicht negativ sein.',
     'changesSaved'                  => 'Änderungen erfolgreich gespeichert.',
     'deleteFailedJobtypeInUse'      => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
-
-
+    
+    
+    //////////
+    // ICal //
+    //////////
+    
+    'icalfeeds'                     =>  'Kalenderfeed im iCal-Format',
+    'publishEvent'                  =>  'Event veröffentlichen',
+    'unpublishEvent'                =>  'War alles nur Seemansgarn',
+    'createAndPublish'              =>  'Anker los und Angreifen',
+    'createUnpublished'             =>  'Leinen los und Schleichfahrt',
+    'eventIsPublished'              =>  'Angriff - über diese Fahrt werden Lieder bereits gesungen',
+    'eventIsUnpublished'            =>  'Schleichfahrt - dieses Abenteuer wird von Barden nicht erwähnt',
+    'confirmPublishingEvent'        =>  'Möchtest du dieses Event wirklich zum Kalenderfeed hinzufügen?',
+    'confirmUnpublishingEvent'      =>  'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
+    'iCal'                          =>  'iCal'
 
 ];

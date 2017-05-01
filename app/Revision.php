@@ -32,16 +32,6 @@ class Revision extends Model
     }
     
     /**
-     * Get the corresponding Revision_SurveyAnswer.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function getRevision_SurveyAnswer()
-    {
-        return $this->hasOne('Lara\Revision_SurveyAnswer');
-    }
-
-    /**
      * Get the corresponding RevisionEntries.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -59,16 +49,6 @@ class Revision extends Model
     public function person()
     {
         return $this->belongsTo('Lara\Person', 'creator_id', 'id');
-    }
-
-    /**
-     * Get the corresponding Revision_SurveyAnswer.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function surveyAnswerRevision()
-    {
-        return $this->hasOne('Lara\Revision_SurveyAnswer');
     }
 
     /**

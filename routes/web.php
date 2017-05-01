@@ -5,9 +5,9 @@
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| This file is where you may define all of the routes that are handled
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 |--------------------------------------------------------------------------
 | Default Laravel routes for reference
@@ -97,15 +97,13 @@ Route::get('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventContr
 Route::get('person/{query?}', 				'PersonController@index');
 Route::get('club/{query?}', 				'ClubController@index');
 Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson');
-Route::get('jobtypes/{query?}', 				'JobtypeController@find');
+Route::get('jobtypes/{query?}', 			'JobtypeController@find');
 
 // additional route to store a SurveyAnswer
 Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');
 
 // Language
-
 Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');
-
 
 Route::get('lang', function() {
     return response()->json(['language' => Session::get('applocale')]);
@@ -141,10 +139,11 @@ Route::get('export/{clb_id}/{date_start}/{nr_of_events}', function($clb_id, $dat
 	return response()->json($results, 200, [], JSON_UNESCAPED_UNICODE);
 });
 
-//Ical Stuff
-Route::get('/ical/public/allevents', 'IcalController@allPublicEvents' )->name("icalallevents");
-Route::get('/ical/feed/{location}/{with_private_info?}', 'IcalController@events');
-Route::get('/ical/location/{location}/{with_private_info?}', 'IcalController@events');
-Route::get('/ical/events/user/{club_id}/{alarm?}', 'IcalController@userScheduleWithAlarm');
-Route::get('/ical/links', 'IcalController@generateLinks');
-Route::get('/ical/event/{evt_id}','IcalController@singleEvent');
+// ICAL: CALENDAR FEED
+Route::get('/ical/public/allevents', 							'IcalController@allPublicEvents' )->name("icalallevents");
+Route::get('/ical/feed/{location}/{with_private_info?}', 		'IcalController@events');
+Route::get('/ical/location/{location}/{with_private_info?}', 	'IcalController@events');
+Route::get('/ical/events/user/{club_id}/{alarm?}', 				'IcalController@userScheduleWithAlarm');
+Route::get('/ical/links', 										'IcalController@generateLinks');
+Route::get('/ical/event/{evt_id}',								'IcalController@singleEvent');
+Route::get('/ical/event/{id}/publish', 							'IcalController@togglePublishState')->name("togglePublishState");

@@ -130,6 +130,7 @@ return [
     //Lines for editing only with permission
     'noNotThisWay'          => 'No, not this way...',
     'onlyThe'               => 'Only the',
+    'only'                  => 'Only',
     'clubManagement'        => 'club management',
     'orThe'                 => 'or',
     'marketingManager'      => 'marketing managers',
@@ -252,7 +253,7 @@ return [
 
     // /resources/views/partials/filter.blade.php
     'allSections'           => 'All sections',
-
+    'comments'              => 'Comments',
     //-----------------------------------------------------------------------------------------------------------
 
     // /resources/views/partials/legend.blade.php
@@ -470,5 +471,13 @@ return [
     //////////
 
     'icalfeeds'                     =>  'Calendarfeed using iCal',
-    'publishEvent'                  =>  'publish event'
+    'publishEvent'                  =>  'Publish event to calendar feed',
+    'unpublishEvent'                =>  'Remove event from calendar feed',
+    'createAndPublish'              =>  'Create and publish event',
+    'createUnpublished'             =>  'Create event without publishing',
+    'eventIsPublished'              =>  'Event is published and added to calendar feed',
+    'eventIsUnpublished'            =>  'Event is not published and isn\'t visible in calendar feed',
+    'confirmPublishingEvent'        =>  'Are you sure you want to publish this event to calendar feed?',
+    'confirmUnpublishingEvent'      =>  'Are you sure you want to remove this event from the calendar feed?',
+    'iCal'                          =>  'iCal'
 ];

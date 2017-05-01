@@ -491,10 +491,13 @@ class ClubEventController extends Controller
         // reversed this: input=1 means "event is public", input=0 means "event is private"
         $event->evnt_is_private = (Input::get('isPrivate') == '1') ? 0 : 1;
         $eventIsPublished = Input::get('evntIsPublished');
-        if (is_null($id)) {
-            $event->evnt_is_published = 0;
-        } elseif (!is_null($eventIsPublished)) {
+        
+        if (!is_null($eventIsPublished)) {
+            //event is pubished
             $event->evnt_is_published = (int)$eventIsPublished;
+        } elseif (Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung'  OR Session::get('userGroup') == 'admin'){
+            // event was unpublished
+            $event->evnt_is_published = 0;
         }
         // Filter
         $filter = [];

@@ -45,7 +45,8 @@
 					<span class="name">{{ $clubEvent->evnt_title }}</span>
 				</a>
 			</h4>
-
+			@include('partials.publishStateIndicatorRaw')
+			&nbsp;
 			{{ utf8_encode(strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start))) }}
 			&nbsp;
 			DV: {{ date("H:i", strtotime($clubEvent->getSchedule->schdl_time_preparation_start)) }}

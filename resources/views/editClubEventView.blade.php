@@ -103,7 +103,12 @@ AND (Session::get('userGroup') == 'marketing'
 								{{ trans('mainLang.showExtern') }}
 							</div>
 				            <br>
-							
+                            <div>
+                                <div class="hidden">
+                                    {!! Form::checkbox('evntIsPublished', '1', $event->evnt_is_published == 1) !!}
+                                </div>
+                                <button type="button" class="btn" id="publishBtn"> <i id="eventPublishedIndicator" class="fa @if($event->evnt_is_published == 1) fa-check-square-o @else fa-square-o @endif" aria-hidden="true"></i> {{ trans('mainLang.publishEvent') }}</button>
+                            </div>
 						</div>
 				    </div>
 				@else
@@ -184,7 +189,6 @@ AND (Session::get('userGroup') == 'marketing'
 									</span>
 				            	@endif
 				            </div>
-							
 						</div>
 				    </div>					
 				@endif
@@ -316,17 +320,6 @@ AND (Session::get('userGroup') == 'marketing'
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<br class="visible-xs"><br class="visible-xs">
 	<a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }} </a>
-    @if(
-    Session::get('userGroup') == 'marketing'
-    OR Session::get('userGroup') == 'clubleitung'
-    OR Session::get('userGroup') == 'admin')
-        <div class="hidden">
-            {!! Form::checkbox('evntIsPublished', '1', $event->evnt_is_published == 1) !!}
-        </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <br class="visible-xs"><br class="visible-xs">
-	    <button type="button" class="btn" id="publishBtn">{{ trans('mainLang.publishEvent') }}</button>
-    @endif
 	{!! Form::close() !!}
 
 @else
@@ -347,8 +340,6 @@ AND (Session::get('userGroup') == 'marketing'
 
 @stop
 
-@section('moreScripts')
-<script src="{{ asset('/js/edit-shift.js') }}"></script>
-@stop
+
 
 

@@ -106,6 +106,20 @@
 								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
 							</td>
 						</tr>
+						<tr>
+							<td width="20%" class="left-padding-16">
+								<i>{{ trans('mainLang.iCal') }}:</i>
+							</td>
+							<td>
+								@if($clubEvent->evnt_is_published == "1")
+									<i class="fa fa-check-square-o" aria-hidden="true"></i>
+									&nbsp;&nbsp;{{trans('mainLang.eventIsPublished')}}
+								@else
+									<i class="fa fa-square-o" aria-hidden="true"></i>
+									&nbsp;&nbsp;{{trans('mainLang.eventIsUnpublished')}}
+								@endif
+							</td>
+						</tr>
 					</table>
 				{{-- CRUD --}}
 				@if(Session::has('userGroup')
@@ -115,6 +129,30 @@
 					OR Session::get('userId') == $created_by))
 					<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">
 						<span class="pull-right">
+							<button  id="unPublishEventLnkBtn"
+								data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
+								class="btn btn-danger @if($clubEvent->evnt_is_published == 0) hidden @endif"
+								name="toggle-publish-state"
+							    data-toggle="tooltip"
+							    data-placement="bottom"
+							    title="{{trans("mainLang.unpublishEvent")}}"
+							    data-token="{{csrf_token()}}"
+								>
+								<i class="fa fa-bullhorn" aria-hidden="true"></i>
+							</button>
+							<button  id="pubishEventLnkBtn"
+								data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
+								class="btn btn-success @if($clubEvent->evnt_is_published == 1) hidden @endif"
+								name="toggle-publish-state"
+								data-toggle="tooltip"
+								data-placement="bottom"
+								title="{{trans("mainLang.publishEvent")}}"
+								data-token="{{csrf_token()}}"
+								>
+								<i class="fa fa-bullhorn" aria-hidden="true"></i>
+
+							</button>
+							&nbsp;&nbsp;
 							<a href="{{ URL::route('event.edit', $clubEvent->id) }}"
 							   class="btn btn-primary"
 							   data-toggle="tooltip"

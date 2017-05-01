@@ -134,6 +134,7 @@
                     @endif
             @endif
             @include("partials.event-marker", $clubEvent)
+            @include("partials.publishStateIndicator")
             &nbsp;&nbsp;
             <a href="{{ URL::route('event.show', $clubEvent->id) }}"
                data-toggle="tooltip" 
@@ -141,7 +142,9 @@
                title="{{ trans('mainLang.showDetails')}}">
                 {{ $clubEvent->evnt_title }}
             </a>
+
         </div>
+
     @endif
 </div>
 @endif

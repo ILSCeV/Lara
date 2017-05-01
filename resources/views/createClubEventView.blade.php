@@ -374,7 +374,14 @@
 	@include('partials.editSchedule')
 	<br>
 	
-	{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'btn btn-primary', 'id'=>'button-create-submit')) !!}
+	{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'hidden', 'id'=>'button-create-submit')) !!}
+    <input class="hidden" name="evntIsPublished" type="text" value="0" />
+    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung'  OR Session::get('userGroup') == 'admin')
+	<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<br class="visible-xs">
+    @endif
+	<button class="btn btn-primary" id="createUnpublishedBtn">{{trans('mainLang.createUnpublished')}}</button>
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<br class="visible-xs">
 	<a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>

@@ -3,7 +3,6 @@
 namespace Lara\Http\Controllers;
 
 use Config;
-
 use Illuminate\Support\Facades\App;
 use Input;
 use Lara\Settings;
@@ -102,7 +101,7 @@ class LoginController extends Controller
         }
         $userSettings = Settings::where('userId','=',Session::get('userId'))->first();
         if(isset($userSettings)){
-            Session::set('applocale', $userSettings->language);
+            Session::put('applocale', $userSettings->language);
         }
         return $result;
 

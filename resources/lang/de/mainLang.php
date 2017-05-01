@@ -131,6 +131,7 @@ return [
     //Lines for editing only with permission
     'noNotThisWay'          => 'Ne, das geht so nicht...',
     'onlyThe'               => 'Nur die',
+    'only'                  => 'Nur',
     'clubManagement'        => 'Clubleitung',
     'orThe'                 => 'oder die',
     'marketingManager'      => 'Marketingverantwortlichen',
@@ -254,6 +255,7 @@ return [
     
     // /resources/views/partials/filter.blade.php
     'allSections'           => 'Alle Sektionen',
+    'comments'              => 'Kommentare',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -470,6 +472,15 @@ return [
     //////////
     // ICal //
     //////////
-    'icalfeeds'                     => 'Kalenderfeed im iCal-Format',
-    'publishEvent'                  => 'Event veröffentlichen'
+    
+    'icalfeeds'                     =>  'Kalenderfeed im iCal-Format',
+    'publishEvent'                  =>  'Event veröffentlichen',
+    'unpublishEvent'                =>  'Event aus dem Kalenderfeed entfernen',
+    'createAndPublish'              =>  'Erstellen und veröffentlichen',
+    'createUnpublished'             =>  'Erstelle unveröffentlicht',
+    'eventIsPublished'              =>  'Event wurde veröffentlicht und ist zum Kalenderfeed hinzugefügt',
+    'eventIsUnpublished'            =>  'Event ist nicht veröffentlicht ist im Kalendarfeed nicht sichtbar',
+    'confirmPublishingEvent'        =>  'Möchtest du dieses Event wirklich zum Kalenderfeed hinzufügen?',
+    'confirmUnpublishingEvent'      =>  'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
+    'iCal'                          =>  'iCal'
 ];
