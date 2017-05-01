@@ -3,15 +3,19 @@
  */
 $(() => {
     $('#pubishEventLnkBtn').click(() => {
-        bootbox.confirm(translate('confirmPublishingEvent'), () => {
-            let targetLocation = $('#pubishEventLnkBtn').data('href');
-            window.location.href = targetLocation;
+        bootbox.confirm(translate('confirmPublishingEvent'), (result) => {
+            if (result) {
+                let targetLocation = $('#pubishEventLnkBtn').data('href');
+                window.location.href = targetLocation;
+            }
         });
     });
     $('#unPublishEventLnkBtn').click(() => {
-        bootbox.confirm(translate('confirmUnpublishingEvent'), () => {
-            let targetLocation = $('#unPublishEventLnkBtn').data('href');
-            window.location.href = targetLocation;
+        bootbox.confirm(translate('confirmUnpublishingEvent'), (result) => {
+            if (result) {
+                let targetLocation = $('#unPublishEventLnkBtn').data('href');
+                window.location.href = targetLocation;
+            }
         });
     });
 
