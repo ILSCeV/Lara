@@ -16,6 +16,7 @@ use Lara\ClubEvent;
 use Lara\Person;
 use Lara\Place;
 use Lara\ScheduleEntry;
+use Lara\Settings;
 use Lara\Utilities;
 use Log;
 use Redirect;
@@ -215,7 +216,13 @@ class IcalController extends Controller
     {
         $personal_calendar = Cache::remember("ical".$prsn_uid.$alarm, 4 * 60, function () use ($prsn_uid, $alarm) {
             $person = Person::where('prsn_uid', '=', $prsn_uid)->first();
-            
+    
+            if(isset($person)) {
+                $userSettings = Settings::where('userId', '=', $person->prsn_ldap_id)->first();
+                if (isset($userSettings)) {
+                    Session::put('applocale', $userSettings->language);
+                }
+            }
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
             
