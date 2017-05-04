@@ -21,7 +21,6 @@ class Language
      */
     public function handle($request, Closure $next)
     {
-        Log::debug("".$request);
         if (Session::has('applocale') AND array_key_exists(Session::get('applocale'), Config::get('languages'))) {
             App::setLocale(Session::get('applocale'));
         } else {
