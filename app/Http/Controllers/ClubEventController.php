@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 use Input;
 use Lara\Club;
 use Lara\ClubEvent;
-use Lara\Jobtype;
+use Lara\ShiftType;
+use Lara\Shift;
 use Lara\Person;
 use Lara\Place;
 use Lara\Schedule;
@@ -40,11 +41,6 @@ class ClubEventController extends Controller
      * @param  int $month
      * @param  int $day
      *
-     * @return view createClubEventView
-     * @return Place[] places
-     * @return Schedule[] templates
-     * @return Jobtype[] jobtypes
-     * @return string $date
      * @return \Illuminate\Http\Response
      */
     public function create($year = null, $month = null, $day = null, $templateId = null)
@@ -80,7 +76,7 @@ class ClubEventController extends Controller
                              ->get();
 
         // get a list of available job types
-        $jobtypes = Jobtype::where('jbtyp_is_archived', '=', '0')
+        $jobtypes = ShiftType::where('jbtyp_is_archived', '=', '0')
                            ->orderBy('jbtyp_title', 'ASC')
                            ->get();
 
@@ -93,7 +89,7 @@ class ClubEventController extends Controller
             $activeTemplate = $template->schdl_title;
 
             // get template data
-            $entries    = $template->shifts()->with('getJobType')->get();
+            $entries    = $template->shifts()->with('type')->get();
             $title      = $template->getClubEvent->evnt_title;
             $subtitle   = $template->getClubEvent->evnt_subtitle;
             $type       = $template->getClubEvent->evnt_type;
@@ -229,7 +225,7 @@ class ClubEventController extends Controller
         $schedule = Schedule::findOrFail($clubEvent->getSchedule->id);
 
         $entries = Shift::where('schdl_id', '=', $schedule->id)
-                                ->with('getJobType',
+                                ->with('type',
                                        'getPerson',
                                        'getPerson.getClub')
                                 ->get();
@@ -292,13 +288,13 @@ class ClubEventController extends Controller
 
 
         // get a list of available job types
-        $jobtypes = Jobtype::where('jbtyp_is_archived', '=', '0')
+        $jobtypes = ShiftType::where('jbtyp_is_archived', '=', '0')
                            ->orderBy('jbtyp_title', 'ASC')
                            ->get();
 
         // put template data into entries
         $entries = $schedule->shifts()
-                            ->with('getJobType')
+                            ->with('type')
                             ->get();
 
         // Filter - Workaround for older events: populate filter with event club
@@ -311,6 +307,7 @@ class ClubEventController extends Controller
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
         $created_by = $revisions[0]["user id"];
         $creator_name = $revisions[0]["user name"];
+
 
         return View::make('editClubEventView', compact('event',
                                                        'schedule',
