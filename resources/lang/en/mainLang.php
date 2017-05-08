@@ -379,7 +379,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
 
     // Controller  ToDo add these strings
-    // ScheduleEntryController
+    // ShiftController
     // action description
     'addedComment'              => 'Comment added',
     'deletedComment'            => 'Comment deleted',

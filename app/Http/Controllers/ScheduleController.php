@@ -142,7 +142,7 @@ class ScheduleController extends Controller
         }
         // Delete all corresponding entries first because of dependencies in database
         foreach ( $schedule->shifts->get() as $shift ) {
-            $result = (new ScheduleEntryController)->destroy($shift->id);
+            $result = (new ShiftController)->destroy($shift->id);
         }
 
         // Delete the schedule
@@ -304,7 +304,7 @@ class ScheduleController extends Controller
                 $shift->jbtyp_id = $shiftType->id;
 
                 // save changes
-                $scheduleEntries->add(ScheduleController::updateScheduleEntry($shift, $shiftType->id, $i));
+                $scheduleEntries->add(ScheduleController::updateShift($shift, $shiftType->id, $i));
             }
         }
 
@@ -340,7 +340,7 @@ class ScheduleController extends Controller
             if ( $shift->type == Input::get('jbtyp_title' . $counterHelper) )
             {
                 // add to new collection
-                $newEntries->add(ScheduleController::updateScheduleEntry($shift, $shift->type->id, $counterHelper));
+                $newEntries->add(ScheduleController::updateShift($shift, $shift->type->id, $counterHelper));
 
             } 
             // job type empty - delete shift
@@ -374,7 +374,7 @@ class ScheduleController extends Controller
                                                 $shift->getPerson);     // new value
                 */
                 // add to new collection
-                $newEntries->add(ScheduleController::updateScheduleEntry($shift, $shiftType->id, $counterHelper));
+                $newEntries->add(ScheduleController::updateShift($shift, $shiftType->id, $counterHelper));
             }
 
             // move to next input
@@ -407,7 +407,7 @@ class ScheduleController extends Controller
                                                     null);                  // new comment                   
 
                     // add to new collection
-                    $newEntries->add(ScheduleController::updateScheduleEntry($newShift, $shiftType->id, $i));
+                    $newEntries->add(ScheduleController::updateShift($newShift, $shiftType->id, $i));
                 }
             }
         }
@@ -420,7 +420,7 @@ class ScheduleController extends Controller
      * and returns either a false boolean for "no updates since timestamp provided"
      * or a JSON array of updated schedule entries
      *
-     * @param int $scheduleId 
+     * @param int $scheduleId
      * @param String $timestamp
      *
      * @return \Illuminate\Http\Response 
@@ -433,14 +433,14 @@ class ScheduleController extends Controller
 
 
     /**
-    * Update start and end time of $newScheduleEntry with input of gui elements
+    * Update start and end time of $shift with input of gui elements
     *
     * @param Shift $shift
     * @param int $jobtypeId
     * @param int $counterValue
     * @return Shift updates shift
     */
-    private static function updateScheduleEntry($shift, $jobtypeId, $counterValue)
+    private static function updateShift($shift, $jobtypeId, $counterValue)
     {
         $shift->entry_time_start = Input::get('jbtyp_time_start' . $counterValue);
 

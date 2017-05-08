@@ -111,7 +111,7 @@ Route::get('lang', function() {
 
 // RESTful RESOURCES
 Route::resource('jobtype', 	'ShiftTypeController');
-Route::resource('entry', 	'ScheduleEntryController', 	['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
+Route::resource('entry', 	'ShiftController', 	        ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('schedule', 'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('event', 	'ClubEventController', 		['except' => ['index']]);
 Route::resource('person', 	'PersonController', 		['only'   => ['index']]);

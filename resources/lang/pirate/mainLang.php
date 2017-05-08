@@ -377,7 +377,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     
     //Controller  ToDo add these strings
-    //ScheduleEntryController
+    //ShiftController
     //action description
     'addedComment'              => 'Kommentar hinzugefügt',
     'deletedComment'            => 'Kommentar gelöscht',
