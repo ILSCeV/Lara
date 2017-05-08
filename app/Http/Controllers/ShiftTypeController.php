@@ -3,13 +3,14 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use Lara\ShiftType;
-use Lara\Shift;
-use Session;
 use Log;
 use Redirect;
+use Session;
 use View;
+
+use Lara\Shift;
+use Lara\ShiftType;
+
 
 class ShiftTypeController extends Controller
 {

@@ -2,20 +2,17 @@
 
 namespace Lara\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Lara\Utilities;
-use Session;
-use Input;
-
 use Carbon\Carbon;
-
 use Hash;
+use Illuminate\Http\Request;
+use Input;
+use Session;
 
+use Lara\Club;
+use Lara\Person;
 use Lara\Shift;
 use Lara\ShiftType;
-use Lara\Person;
-use Lara\Club;
-
+use Lara\Utilities;
 
 class ShiftController extends Controller
 {
