@@ -62,13 +62,15 @@ class IcalController extends Controller
                 $vEvent->setSummary($evt->evnt_title);
                 
                 $eventLink = "".URL::route('event.show', $evt->id);
-                $eventTime = $evt->evnt_time_start;
+                $eventTimeStart = $evt->evnt_time_start;
+                $eventTimeEnd = $evt->evnt_time_end;
                 
                 $additionalInfo = $evt->evnt_public_info !== "" ? $evt->evnt_public_info : "(-)";
                 
                 $vEvent->setDescription("Link: ".$eventLink."\n"
                     ."\n"
-                    .trans('mainLang.begin').": ".$eventTime."\n"
+                    .trans('mainLang.begin').": ".$eventTimeStart."\n"
+                    .trans('mainLang.end').": ".$eventTimeEnd."\n"
                     ."\n"
                     .trans('mainLang.additionalInfo').":\n"
                     .$additionalInfo."\n");
@@ -148,13 +150,15 @@ class IcalController extends Controller
                 $start_time = "";
                 
                 $eventLink = "".URL::route('event.show', $evt->id);
-                $eventTime = $evt->evnt_time_start;
+                $eventTimeStart = $evt->evnt_time_start;
+                $eventTimeEnd = $evt->evnt_time_end;
                 $preparationsTime = $schedule->schdl_time_preparation_start;
                 $additionalInfo = $evt->evnt_public_info !== "" ? $evt->evnt_public_info : "(-)";
                 
                 $evtDescription = "Link: ".$eventLink."\n"
                     ."\n"
-                    .trans('mainLang.begin').": ".$eventTime."\n"
+                    .trans('mainLang.begin').": ".$eventTimeStart."\n"
+                    .trans('mainLang.end').": ".$eventTimeEnd."\n"
                     .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
                     ."\n"
                     ."---\n"
@@ -264,7 +268,8 @@ class IcalController extends Controller
                     $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->jobType->jbtyp_title));
                     
                     $eventLink = "".URL::route('event.show', $schedule->event->id);
-                    $eventTime = $evt->entry_time_start;
+                    $eventTimeStart = $schedule->event->evnt_time_start;
+                    $eventTimeEnd = $schedule->event->evnt_time_end;
                     $preparationsTime = $schedule->schdl_time_preparation_start;
                     
                     $additionalInfo = $schedule->event->evnt_public_info !== "" ? $schedule->event->evnt_public_info : "(-)";
@@ -272,7 +277,8 @@ class IcalController extends Controller
                     
                     $vEvent->setDescription("Link: ".$eventLink."\n"
                         ."\n"
-                        .trans('mainLang.begin').": ".$eventTime."\n"
+                        .trans('mainLang.begin').": ".$eventTimeStart."\n"
+                        .trans('mainLang.end').": ".$eventTimeEnd."\n"
                         .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
                         ."\n"
                         .trans('mainLang.shift').": ".$evt->jobtype->jbtyp_title."\n"
@@ -347,12 +353,14 @@ class IcalController extends Controller
                 $vEvent->setSummary($event->evnt_title);
                 
                 $eventLink = "".URL::route('event.show', $event->id);
-                $eventTime = $event->evnt_time_start;
+                $eventTimeStart = $event->evnt_time_start;
+                $eventTimeEnd = $event->evnt_time_end;
                 $additionalInfo = $event->evnt_public_info !== "" ? $event->evnt_public_info : "(-)";
                 
                 $vEvent->setDescription("Link: ".$eventLink."\n"
                     ."\n"
-                    .trans('mainLang.begin').": ".$eventTime."\n"
+                    .trans('mainLang.begin').": ".$eventTimeStart."\n"
+                    .trans('mainLang.end').": ".$eventTimeEnd."\n"
                     ."\n"
                     .trans('mainLang.additionalInfo').":\n"
                     .$additionalInfo."\n");
