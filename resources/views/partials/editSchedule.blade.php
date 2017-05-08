@@ -41,6 +41,8 @@
 
 		            	&nbsp;<br class="visible-xs">{{ trans('mainLang.weight') }}:&nbsp;
 		            	<input type="number" 
+		            		   step="0.1"
+		            		   min="0"
 		            		   class="input" 
 		            		   name={{ "jbtyp_statistical_weight" . $counter }} 
 		            		   id={{ "jbtyp_statistical_weight" . $counter }}
@@ -87,6 +89,8 @@
 
 				&nbsp;<br class="visible-xs">{{ trans('mainLang.weight') }}:&nbsp;
 	        	<input type="number" 
+	        		   step="0.1"
+            		   min="0"
 	        		   class="input" 
 	        		   name={{ "jbtyp_statistical_weight" . $counter }} 
 	        		   id={{ "jbtyp_statistical_weight" . $counter }}
