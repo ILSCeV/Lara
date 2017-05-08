@@ -11,7 +11,7 @@
               date("H:i", strtotime($entry->entry_time_end)) }}">
                 <small>
                     <strong>
-                        {{ $entry->getJobType->jbtyp_title }}
+                        {{ $entry->type->title() }}
                     </strong>
                     <div class="entry-time hide text-dark-grey">
                         {!! "(" . date("H:i", strtotime($entry->entry_time_start))

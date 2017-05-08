@@ -141,21 +141,4 @@ class Shift extends Model
     {
         return $this->belongsTo('Lara\Schedule', 'schdl_id', 'id');
     }
-
-    public function event()
-    {
-        return $this->schedule()->event();
-    }
-
-    public function start()
-    {
-        return $this->event()->evnt_date_start();
-    }
-
-    public function end()
-    {
-        return $this->event()->evnt_date_end();
-    }
-
-
 }

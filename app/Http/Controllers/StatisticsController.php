@@ -97,7 +97,7 @@ class StatisticsController extends Controller
             $clubsOfShift = json_decode($shift->schedule->event->evnt_show_to_club);
 
             $response[] = [ 'id'        =>$shift->id, 
-                            'shift'     =>$shift->getJobType->jbtyp_title, 
+                            'shift'     =>$shift->type->title(),
                             'event'     =>$shift->schedule->event->evnt_title, 
                             'event_id'  =>$shift->schedule->event->id,
                             'section'   =>$shift->schedule->event->place->plc_title,

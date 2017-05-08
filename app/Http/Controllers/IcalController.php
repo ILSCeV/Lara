@@ -265,7 +265,7 @@ class IcalController extends Controller
                 if ($start_date_time != false && $stop_date_time != false) {
                     $vEvent->setDtStart($start_date_time);
                     $vEvent->setDtEnd($stop_date_time);
-                    $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->jobType->jbtyp_title));
+                    $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->type->title()));
                     
                     $eventLink = "".URL::route('event.show', $schedule->event->id);
                     $eventTimeStart = substr($schedule->event->evnt_time_start, 0, 5);
@@ -281,7 +281,7 @@ class IcalController extends Controller
                         .trans('mainLang.end').": ".$eventTimeEnd."\n"
                         .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
                         ."\n"
-                        .trans('mainLang.shift').": ".$evt->jobtype->jbtyp_title."\n"
+                        .trans('mainLang.shift').": ".$evt->type->title()."\n"
                         .trans('mainLang.shiftTime').": ".substr($evt->entry_time_start, 0, 5)." - ".substr($evt->entry_time_end, 0, 5)."\n"
                         ."\n"
                         ."---\n"
@@ -302,7 +302,7 @@ class IcalController extends Controller
                     if ($alarm > 0 && ($start_date_time > new \DateTime())) {
                         $vAlarm = new Alarm();
                         $vAlarm->setAction(Alarm::ACTION_DISPLAY);
-                        $vAlarm->setDescription($schedule->event->evnt_title." - ".($evt->jobType->jbtyp_title));
+                        $vAlarm->setDescription($schedule->event->evnt_title." - ".($evt->type->title()));
                         $vAlarm->setTrigger("-PT".$alarm."M");
                         $vEvent->addComponent($vAlarm);
                     }

@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use DateTime;
 use Request;
 use Session;
 use Input;
@@ -162,7 +163,7 @@ class ScheduleController extends Controller
      * @param string $newComment
      * @return void
      */
-    public static function logRevision($schedule, $shift, $action, $old, $new, $oldComment, $newComment)
+    public static function logRevision($schedule, Shift $shift, $action, $old, $new, $oldComment, $newComment)
     {
         // workaround for older events where revision history is not present
         if($schedule->entry_revisions == "")
@@ -244,7 +245,7 @@ class ScheduleController extends Controller
         
         // append current change
         array_push($revisions, ["entry id"    => $shift->id,
-                                "job type"    => $shift->type->title,
+                                "job type"    => $shift->type->title(),
                                 "action"      => $action,
                                 "old id"      => $oldId,
                                 "old value"   => $oldName,

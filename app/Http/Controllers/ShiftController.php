@@ -37,7 +37,7 @@ class ShiftController extends Controller
         $isCurrentUser = $ldapId == Session::get('userId');
         $response = [
             'id'                => $shift->id,
-            'jbtyp_title'       => $shift->type->jbtyp_title,
+            'jbtyp_title'       => $shift->type->title(),
             'prsn_name'         => $name,
             'prsn_ldap_id'      => $ldapId,
             'prsn_status'       => $status,
