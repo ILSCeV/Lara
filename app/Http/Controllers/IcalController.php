@@ -62,8 +62,8 @@ class IcalController extends Controller
                 $vEvent->setSummary($evt->evnt_title);
                 
                 $eventLink = "".URL::route('event.show', $evt->id);
-                $eventTimeStart = $evt->evnt_time_start;
-                $eventTimeEnd = $evt->evnt_time_end;
+                $eventTimeStart = substr($evt->evnt_time_start, 0, 5);
+                $eventTimeEnd = substr($evt->evnt_time_end, 0, 5);
                 
                 $additionalInfo = $evt->evnt_public_info !== "" ? $evt->evnt_public_info : "(-)";
                 
@@ -150,9 +150,9 @@ class IcalController extends Controller
                 $start_time = "";
                 
                 $eventLink = "".URL::route('event.show', $evt->id);
-                $eventTimeStart = $evt->evnt_time_start;
-                $eventTimeEnd = $evt->evnt_time_end;
-                $preparationsTime = $schedule->schdl_time_preparation_start;
+                $eventTimeStart = substr($evt->evnt_time_start, 0, 5);
+                $eventTimeEnd = substr($evt->evnt_time_end, 0, 5);
+                $preparationsTime = substr($schedule->schdl_time_preparation_start, 0, 5);
                 $additionalInfo = $evt->evnt_public_info !== "" ? $evt->evnt_public_info : "(-)";
                 
                 $evtDescription = "Link: ".$eventLink."\n"
@@ -268,9 +268,9 @@ class IcalController extends Controller
                     $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->jobType->jbtyp_title));
                     
                     $eventLink = "".URL::route('event.show', $schedule->event->id);
-                    $eventTimeStart = $schedule->event->evnt_time_start;
-                    $eventTimeEnd = $schedule->event->evnt_time_end;
-                    $preparationsTime = $schedule->schdl_time_preparation_start;
+                    $eventTimeStart = substr($schedule->event->evnt_time_start, 0, 5);
+                    $eventTimeEnd = substr($schedule->event->evnt_time_end, 0, 5);
+                    $preparationsTime = substr($schedule->schdl_time_preparation_start, 0, 5);
                     
                     $additionalInfo = $schedule->event->evnt_public_info !== "" ? $schedule->event->evnt_public_info : "(-)";
                     $moreDetails = $schedule->event->evnt_private_details !== "" ? $schedule->event->evnt_private_details : "(-)";
@@ -282,7 +282,7 @@ class IcalController extends Controller
                         .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
                         ."\n"
                         .trans('mainLang.shift').": ".$evt->jobtype->jbtyp_title."\n"
-                        .trans('mainLang.shiftTime').": ".$evt->entry_time_start." - ".$evt->entry_time_end."\n"
+                        .trans('mainLang.shiftTime').": ".substr($evt->entry_time_start, 0, 5)." - ".substr($evt->entry_time_end, 0, 5)."\n"
                         ."\n"
                         ."---\n"
                         ."\n"
@@ -353,8 +353,8 @@ class IcalController extends Controller
                 $vEvent->setSummary($event->evnt_title);
                 
                 $eventLink = "".URL::route('event.show', $event->id);
-                $eventTimeStart = $event->evnt_time_start;
-                $eventTimeEnd = $event->evnt_time_end;
+                $eventTimeStart = substr('H:i', $event->evnt_time_start, 0, 5);
+                $eventTimeEnd = substr('H:i', $event->evnt_time_end, 0, 5);
                 $additionalInfo = $event->evnt_public_info !== "" ? $event->evnt_public_info : "(-)";
                 
                 $vEvent->setDescription("Link: ".$eventLink."\n"
