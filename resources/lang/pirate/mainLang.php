@@ -422,7 +422,7 @@ return [
     'password'                      => 'Das geheime Wort',
     'logIn'                         => 'An Bord gehen',
     'logOut'                        => 'Über Bord gehen',
-    //ScheduleEntryName
+    //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
     //surveyForm
     'placeholderSurveyTitle'        => 'Titel:',

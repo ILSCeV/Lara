@@ -86,7 +86,7 @@
 			@if (!is_null($clubEvent->getSchedule))	
 
 				{{-- Show schedule entries --}}
-				@foreach($entries = $clubEvent->getSchedule->getEntries as $entry)
+				@foreach($entries = $clubEvent->getSchedule->shifts as $entry)
 				    <div class="row">
 				        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
 				                                'id' => $entry->id, 

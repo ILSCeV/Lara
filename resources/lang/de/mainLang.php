@@ -423,7 +423,7 @@ return [
     'password'                      => 'Passwort',
     'logIn'                         => 'Anmelden',
     'logOut'                        => 'Abmelden',
-    //ScheduleEntryName
+    //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
     //surveyForm
     'placeholderSurveyTitle'        => 'Titel:',

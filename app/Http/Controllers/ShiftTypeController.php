@@ -159,7 +159,7 @@ class ShiftTypeController extends Controller
         $jobtype = ShiftType::findOrFail($id);
 
         // Before deleting, check if this job type is in use in any existing schedule
-        if (  ScheduleEntry::where('jbtyp_id', '=', $jobtype->id)->count() > 0  ) {
+        if (  Shift::where('jbtyp_id', '=', $jobtype->id)->count() > 0  ) {
             // CASE 1: job type still in use - let the user decide what to do in each case
 
             // Inform the user about the redirect and go to detailed info about the job type selected

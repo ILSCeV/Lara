@@ -420,7 +420,7 @@ return [
     'password'                      => 'Password',
     'logIn'                         => 'Login',
     'logOut'                        => 'Logout',
-    //ScheduleEntryName
+    //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
     //surveyForm
     'placeholderSurveyTitle'        => 'Title:',

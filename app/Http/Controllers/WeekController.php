@@ -81,8 +81,8 @@ class WeekController extends Controller {
         $events = ClubEvent::where('evnt_date_start','>=',$weekStart)
                            ->where('evnt_date_start','<=',$weekEnd)
                            ->with('getPlace',
-                           		  'getSchedule.getEntries.getJobType',
-                           		  'getSchedule.getEntries.getPerson.getClub')
+                           		  'getSchedule.shifts.getJobType',
+                           		  'getSchedule.shifts.getPerson.getClub')
                            ->orderBy('evnt_date_start')
                            ->orderBy('evnt_time_start')
                            ->get();

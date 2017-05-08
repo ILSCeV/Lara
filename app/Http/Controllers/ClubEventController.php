@@ -15,7 +15,6 @@ use Lara\Jobtype;
 use Lara\Person;
 use Lara\Place;
 use Lara\Schedule;
-use Lara\ScheduleEntry;
 use Lara\Utilities;
 use Log;
 use Redirect;
@@ -94,7 +93,7 @@ class ClubEventController extends Controller
             $activeTemplate = $template->schdl_title;
 
             // get template data
-            $entries    = $template->getEntries()->with('getJobType')->get();
+            $entries    = $template->shifts()->with('getJobType')->get();
             $title      = $template->getClubEvent->evnt_title;
             $subtitle   = $template->getClubEvent->evnt_subtitle;
             $type       = $template->getClubEvent->evnt_type;
@@ -173,7 +172,7 @@ class ClubEventController extends Controller
 
         $newSchedule->save();
 
-        $newEntries = ScheduleController::createScheduleEntries($newSchedule->id);
+        $newEntries = ScheduleController::createShifts($newSchedule->id);
         foreach($newEntries as $newEntry)
         {
             $newEntry->schdl_id = $newSchedule->id;
@@ -203,7 +202,7 @@ class ClubEventController extends Controller
      * @param  int $id
      * @return view ClubEventView
      * @return ClubEvent $clubEvent
-     * @return ScheduleEntry[] $entries
+     * @return Shifts[] $entries
      * @return RedirectResponse
      */
     public function show($id)
@@ -229,7 +228,7 @@ class ClubEventController extends Controller
 
         $schedule = Schedule::findOrFail($clubEvent->getSchedule->id);
 
-        $entries = ScheduleEntry::where('schdl_id', '=', $schedule->id)
+        $entries = Shift::where('schdl_id', '=', $schedule->id)
                                 ->with('getJobType',
                                        'getPerson',
                                        'getPerson.getClub')
@@ -269,9 +268,6 @@ class ClubEventController extends Controller
             $clubEvent->save();
         }
 
-
-
-
         return View::make('clubEventView', compact('clubEvent', 'entries', 'clubs', 'persons', 'revisions', 'created_by', 'creator_name'));
     }
 
@@ -301,7 +297,7 @@ class ClubEventController extends Controller
                            ->get();
 
         // put template data into entries
-        $entries = $schedule->getEntries()
+        $entries = $schedule->shifts()
                             ->with('getJobType')
                             ->get();
 
@@ -347,7 +343,7 @@ class ClubEventController extends Controller
 
         $schedule = (new ScheduleController)->update($event->getSchedule->id);
 
-        $entries = (new ScheduleController)->editScheduleEntries($schedule->id);
+        $entries = (new ScheduleController)->editShifts($schedule->id);
 
         // log the action
         Log::info('Event edited: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '

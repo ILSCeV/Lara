@@ -33,6 +33,6 @@ class Jobtype extends Model
 	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasMany of type ClubEvent
 	 */
 	public function getJob(){
-	  return $this->hasMany('Lara\ScheduleEntry', 'jbtyp_id', 'id');
+	  return $this->hasMany('Lara\Shift', 'jbtyp_id', 'id');
 	}
 }

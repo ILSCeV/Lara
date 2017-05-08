@@ -270,7 +270,7 @@ class ScheduleController extends Controller
     *
     * @return Collection scheduleEntries
     */
-    public static function createScheduleEntries()
+    public static function createShifts()
     {
         $scheduleEntries = new Collection;
 
@@ -318,7 +318,7 @@ class ScheduleController extends Controller
     * @param Schedule $schedule
     * @return Collection scheduleEntries
     */
-    public static function editScheduleEntries($scheduleId)
+    public static function editShifts($scheduleId)
     {
         // get number of submitted entries
         $numberOfSubmittedEntries = Input::get('counter');

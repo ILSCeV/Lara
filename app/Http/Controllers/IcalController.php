@@ -15,7 +15,7 @@ use Eluceo\iCal\Component\Timezone;
 use Lara\ClubEvent;
 use Lara\Person;
 use Lara\Place;
-use Lara\ScheduleEntry;
+use Lara\Shift;
 use Lara\Settings;
 use Lara\Utilities;
 use Log;
@@ -230,7 +230,7 @@ class IcalController extends Controller
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
             
-            $events = ScheduleEntry::where('prsn_id', '=', $person->id)
+            $events = Shift::where('prsn_id', '=', $person->id)
                 ->with("schedule", "schedule.event.place", "schedule.event", "jobType")
                 ->get();
             

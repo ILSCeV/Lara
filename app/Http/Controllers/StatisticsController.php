@@ -3,17 +3,13 @@
 namespace Lara\Http\Controllers;
 
 use DateTime;
-use Illuminate\Http\Request;
 
 use Lara\Club;
-use Lara\ClubEvent;
-use Lara\ScheduleEntry;
-use View;
 use Lara\Person;
-use Session;
+use Lara\Shift
 use Redirect;
+use View;
 
-use Lara\Http\Requests;
 use Lara\StatisticsInformation;
 
 class StatisticsController extends Controller
@@ -30,7 +26,7 @@ class StatisticsController extends Controller
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next month')->modify('-1 day');
 
-        $shifts = ScheduleEntry::whereHas('schedule.event', function ($query) use ($from, $till) {
+        $shifts = Shift::whereHas('schedule.event', function ($query) use ($from, $till) {
             $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
         })->get();
         $clubs = Club::activeClubs()->with('activePersons')->get();
@@ -82,7 +78,7 @@ class StatisticsController extends Controller
         $till->modify('next month')->modify('-1 day');
 
         // get all shifts in selected time window, for selected person, with their attributes
-        $shifts =  ScheduleEntry::where('prsn_id', '=', $id)
+        $shifts =  Shift::where('prsn_id', '=', $id)
                                 ->whereHas('schedule.event', function ($query) use ($from, $till) {
                                     $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
                                 })
