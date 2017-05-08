@@ -33,6 +33,10 @@ class Shift extends Model
         return $this->belongsTo('Lara\Jobtype', 'jbtyp_id', 'id');
     }
 
+    public function type() {
+        return $this->belongsTo('Lara\ShiftType', 'jbtyp_id', 'id');
+    }
+
     /**
      * Get the corresponding job type.
      * Looks up in table jobtypes for that entry, which has the same id like jbtyp_id of ScheduleEntry instance.

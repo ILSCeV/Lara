@@ -56,7 +56,11 @@ class Schedule extends Model
 	 */	
 	public function getEntries() {
 		return $this->hasMany('Lara\ScheduleEntry', 'schdl_id', 'id');
-	}	
+	}
+
+	public function shifts() {
+	    return $this->hasMany('Lara\Shift', 'schdl_id', 'id');
+    }
 	
 	/**
 	* Get names of jobtypes, which belongs to the schedule.

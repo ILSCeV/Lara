@@ -8,16 +8,9 @@ use Input;
 use Hash;
 use Illuminate\Database\Eloquent\Collection;
 
-use Lara\Jobtype;
 use Lara\Schedule;
-use Lara\ScheduleEntry;
-use Lara\ClubEvent;
-
-use Carbon\Carbon;
-use \Datetime;
-
-use Lara\Http\Requests;
-use Lara\Http\Controllers\Controller;
+use Lara\Shift;
+use Lara\ShiftType;
 
 class ScheduleController extends Controller
 {
@@ -148,8 +141,8 @@ class ScheduleController extends Controller
             return Redirect::back();
         }
         // Delete all corresponding entries first because of dependencies in database
-        foreach ( $schedule->getEntries()->get() as $entry ) {
-            $result = (new ScheduleEntryController)->destroy($entry->id);
+        foreach ( $schedule->shifts->get() as $shift ) {
+            $result = (new ScheduleEntryController)->destroy($shift->id);
         }
 
         // Delete the schedule
@@ -161,7 +154,7 @@ class ScheduleController extends Controller
      * Updates entry revision
      *
      * @param Schedule $schedule     
-     * @param ScheduleEntry $entry
+     * @param Shift $shift
      * @param string $action
      * @param string $old
      * @param string $new
@@ -169,7 +162,7 @@ class ScheduleController extends Controller
      * @param string $newComment
      * @return void
      */
-    public static function logRevision($schedule, $entry, $action, $old, $new, $oldComment, $newComment)
+    public static function logRevision($schedule, $shift, $action, $old, $new, $oldComment, $newComment)
     {
         // workaround for older events where revision history is not present
         if($schedule->entry_revisions == "")
@@ -250,8 +243,8 @@ class ScheduleController extends Controller
         }
         
         // append current change
-        array_push($revisions, ["entry id"    => $entry->id,
-                                "job type"    => $entry->getJobType->jbtyp_title,
+        array_push($revisions, ["entry id"    => $shift->id,
+                                "job type"    => $shift->type->title,
                                 "action"      => $action,
                                 "old id"      => $oldId,
                                 "old value"   => $oldName,
@@ -281,47 +274,37 @@ class ScheduleController extends Controller
     {
         $scheduleEntries = new Collection;
 
-        // parsing jobtype entries
+        // parsing shiftType entries
         for ($i=1; $i <= Input::get("counter"); $i++) {
 
             // skip empty fields
             if (!empty(Input::get("jbtyp_title" . $i))) 
             {       
+
                 // check if job type exists
-                $jobType = Jobtype::where('jbtyp_title', '=', Input::get("jbtyp_title" . $i))
-                                  ->where('jbtyp_time_start', '=', Input::get("jbtyp_time_start" . $i))
-                                  ->where('jbtyp_time_end', '=', Input::get("jbtyp_time_end" . $i))
+                $shiftType = ShiftType::where('jbtyp_title', '=', Input::get("jobType" . $i))
+                                  ->where('jbtyp_time_start', '=', Input::get("timeStart" . $i))
+                                  ->where('jbtyp_time_end', '=', Input::get("timeEnd" . $i))
                                   ->first();
                 
                 // If not found - create new job type with data provided
-                if (is_null($jobType))
+                if (is_null($shiftType))
                 {
-                    // TITLE
-                    $jobType = Jobtype::create(array('jbtyp_title' => Input::get("jbtyp_title" . $i)));
-
-                    // TIME START
-                    $jobType->jbtyp_time_start = Input::get('jbtyp_time_start' . $i);
-
-                    // TIME END
-                    $jobType->jbtyp_time_end = Input::get('jbtyp_time_end' . $i);
-
-                    // STATISTICAL WEIGHT
-                    $jobType->jbtyp_statistical_weight = Input::get('jbtyp_statistical_weight' . $i);
-
-                    // NEEDS PREPARATION
-                    $jobType->jbtyp_needs_preparation = 'true';
-
-                    // ARCHIVED set to "false"
-                    $jobType->jbtyp_is_archived = 'false';
-
-                    $jobType->save();
+                    $shiftType = ShiftType::create([
+                        'jbtyp_title' => Input::get("jbtyp_title" . $i),
+                        'jbtyp_time_start' => Input::get('jbtyp_time_start' . $i),
+                        'jbtyp_time_end' => Input::get('jbtyp_time_end' . $i),
+                        'jbtyp_statistical_weight' => Input::get('jbtyp_statistical_weight' . $i),
+                        'jbtyp_needs_preparation' => 'true',
+                        'jbtyp_is_archived' => 'false'
+                    ]);
                 }
 
-                $scheduleEntry = new ScheduleEntry;
-                $scheduleEntry->jbtyp_id = $jobType->id;
+                $shift = new Shift;
+                $shift->jbtyp_id = $shiftType->id;
 
                 // save changes
-                $scheduleEntries->add(ScheduleController::updateScheduleEntry($scheduleEntry, $jobType->id, $i));
+                $scheduleEntries->add(ScheduleController::updateScheduleEntry($shift, $shiftType->id, $i));
             }
         }
 
@@ -341,7 +324,7 @@ class ScheduleController extends Controller
         $numberOfSubmittedEntries = Input::get('counter');
 
         // get old entries for this schedule
-        $scheduleEntries = ScheduleEntry::where('schdl_id', '=', $scheduleId)->get();
+        $shifts = Shift::where('schdl_id', '=', $scheduleId)->get();
 
         // prepare a collection for updated entries
         $newEntries = new Collection;
@@ -349,49 +332,49 @@ class ScheduleController extends Controller
         // Counter to traverse all inputs from 1 to N
         $counterHelper = '1';
 
-        // check for changes in each entry
-        foreach ( $scheduleEntries as $entry ) 
+        // check for changes in each shift
+        foreach ( $shifts as $shift )
         {
 
             // same job type as before - do nothing
-            if ( $entry->getJobType == Input::get('jbtyp_title' . $counterHelper) )
+            if ( $shift->type == Input::get('jbtyp_title' . $counterHelper) )
             {
                 // add to new collection
-                $newEntries->add(ScheduleController::updateScheduleEntry($entry, $jobtype->id, $counterHelper));
+                $newEntries->add(ScheduleController::updateScheduleEntry($shift, $shift->type->id, $counterHelper));
 
             } 
-            // job type empty - delete entry
+            // job type empty - delete shift
             elseif ( Input::get("jbtyp_title" . $counterHelper) == '' ) 
             {
                 // log revision
-                ScheduleController::logRevision($entry->getSchedule,    // schedule object
-                                                $entry,                 // entry object
+                ScheduleController::logRevision($shift->getSchedule,    // schedule object
+                                                $shift,                 // shift object
                                                 "Dienst gelöscht",      // action description
-                                                $entry->getPerson,      // old value
+                                                $shift->getPerson,      // old value
                                                 null,                   // new value
                                                 null,                   // old comment
                                                 null);                  // new comment
 
                 // proceed with deletion
-                $entry->delete();
+                $shift->delete();
 
             } 
-            // some new job type added - change entry
+            // some new job type added - change shift
             else 
             {       
-                $jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jbtyp_title" . $counterHelper)));
-                $entry->jbtyp_id = $jobtype->id;
+                $shiftType = ShiftType::firstOrCreate(array('jbtyp_title'=>Input::get("jbtyp_title" . $counterHelper)));
+                $shift->jbtyp_id = $shiftType->id;
 
                 // log revision
                 /*
-                ScheduleController::logRevision($entry->getSchedule,    // schedule object
-                                                $entry,                 // entry object
+                ScheduleController::logRevision($shift->getSchedule,    // schedule object
+                                                $shift,                 // shift object
                                                 "Dienst aktualisiert",      // action description
-                                                $entry->getPerson,      // old value
-                                                $entry->getPerson);     // new value
+                                                $shift->getPerson,      // old value
+                                                $shift->getPerson);     // new value
                 */
                 // add to new collection
-                $newEntries->add(ScheduleController::updateScheduleEntry($entry, $jobtype->id, $counterHelper));
+                $newEntries->add(ScheduleController::updateScheduleEntry($shift, $shiftType->id, $counterHelper));
             }
 
             // move to next input
@@ -408,15 +391,15 @@ class ScheduleController extends Controller
                 // skip empty fields, create new fields only if input not empty
                 if (!empty(Input::get("jbtyp_title" . $i))) 
                 {
-                    $jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jbtyp_title" . $i)));
+                    $shiftType = ShiftType::firstOrCreate(array('jbtyp_title'=>Input::get("jbtyp_title" . $i)));
 
-                    $newEntry = new ScheduleEntry;
-                    $newEntry->jbtyp_id = $jobtype->id;
-                    $newEntry->schdl_id = $scheduleId;
+                    $newShift = new Shift;
+                    $newShift->jbtyp_id = $shiftType->id;
+                    $newShift->schdl_id = $scheduleId;
 
                     // log revision
-                    ScheduleController::logRevision($newEntry->getSchedule, // schedule object
-                                                    $newEntry,              // entry object
+                    ScheduleController::logRevision($newShift->getSchedule, // schedule object
+                                                    $newShift,              // shift object
                                                     "Dienst erstellt",      // action description
                                                     null,                   // old value
                                                     null,                   // new value
@@ -424,7 +407,7 @@ class ScheduleController extends Controller
                                                     null);                  // new comment                   
 
                     // add to new collection
-                    $newEntries->add(ScheduleController::updateScheduleEntry($newEntry, $jobtype->id, $i));
+                    $newEntries->add(ScheduleController::updateScheduleEntry($newShift, $shiftType->id, $i));
                 }
             }
         }
@@ -452,20 +435,20 @@ class ScheduleController extends Controller
     /**
     * Update start and end time of $newScheduleEntry with input of gui elements
     *
-    * @param ScheduleEntry $scheduleEntry
+    * @param Shift $shift
     * @param int $jobtypeId
     * @param int $counterValue
-    * @return ScheduleEntry updates scheduleentry
+    * @return Shift updates shift
     */
-    private static function updateScheduleEntry($scheduleEntry, $jobtypeId, $counterValue)
+    private static function updateScheduleEntry($shift, $jobtypeId, $counterValue)
     {
-        $scheduleEntry->entry_time_start = Input::get('jbtyp_time_start' . $counterValue);
+        $shift->entry_time_start = Input::get('jbtyp_time_start' . $counterValue);
 
-        $scheduleEntry->entry_time_end = Input::get('jbtyp_time_end' . $counterValue);
+        $shift->entry_time_end = Input::get('jbtyp_time_end' . $counterValue);
 
-        $scheduleEntry->entry_statistical_weight = Input::get('jbtyp_statistical_weight' . $counterValue);
+        $shift->entry_statistical_weight = Input::get('jbtyp_statistical_weight' . $counterValue);
 
-        return $scheduleEntry;
+        return $shift;
     }
     
 }
