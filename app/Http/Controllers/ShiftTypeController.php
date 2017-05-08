@@ -165,7 +165,7 @@ class ShiftTypeController extends Controller
             // Inform the user about the redirect and go to detailed info about the job type selected
             Session::put('message', trans('mainLang.deleteFailedJobtypeInUse'));
             Session::put('msgType', 'danger');
-            return Redirect::action( 'JobtypeController@show', ['id' => $jobtype->id] );
+            return Redirect::action( 'ShiftTypeController@show', ['id' => $jobtype->id] );
         }
         else
         {
