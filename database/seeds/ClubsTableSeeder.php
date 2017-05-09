@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class ClubsTableSeeder extends Seeder
@@ -12,20 +13,12 @@ class ClubsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+        DB::table('clubs')->delete();
 
-        \DB::table('clubs')->delete();
-        
-        \DB::table('clubs')->insert(array (
-            0 => 
-            array (
-                'id' => 1,
-                'clb_title' => '-',
-                'created_at' => '2016-05-18 17:13:26',
-                'updated_at' => '2016-05-18 17:13:26',
-            ),
-        ));
-        
-        
+        DB::table('clubs')->insert([
+            ['clb_title' => 'bc-Club', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'id' => 1],
+            ['clb_title' => 'bc-Café', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'id' => 2]
+        ]);
+        factory(Lara\Club::class, 10)->create();
     }
 }
