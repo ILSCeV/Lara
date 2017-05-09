@@ -14,6 +14,15 @@ class SurveyAnswerCellsTableSeeder extends Seeder
     {
         \DB::table('survey_answer_cells')->delete();
 
-        factory(Lara\SurveyAnswerCell::class, 500)->create();
+        Lara\SurveyAnswer::all()->each(function(Lara\SurveyAnswer $answer) {
+            $survey = $answer->survey;
+            $questions = $survey->questions;
+
+            foreach ($questions as $question) {
+                $cell = factory(Lara\SurveyAnswerCell::class)->make();
+                $cell->survey_answer_id = $answer->id;
+                $cell->survey_question_id = $question->id;
+            }
+        });
     }
 }
