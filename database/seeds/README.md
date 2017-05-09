@@ -13,3 +13,9 @@ There are two main files used for seeding:
 - `database/factories/ModelFactory`: Here you can describe the shape of the data that will be inserted into the database. This uses the faker package provided by laravel (for detailed use see [Faker](https://github.com/fzaninotto/Faker)).
 
 Seeding the databse will create places, persons and events according to the templates defined in the `ModelFactory`. This allows use to use fake data in developement without always having to dump the exisiting production database.
+
+To seed the database, use 
+``` 
+php artisan db:seed
+```
+Again ** This command will delete all your databse entries! ** 
