@@ -14,6 +14,6 @@ class SurveyAnswersTableSeeder extends Seeder
     {
         DB::table('survey_answers')->delete();
 
-        factory(Lara\SurveyAnswer::class, 100)->create()
+        factory(Lara\SurveyAnswer::class, 100)->create();
     }
 }
