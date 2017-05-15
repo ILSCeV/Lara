@@ -353,8 +353,8 @@ class IcalController extends Controller
                 $vEvent->setSummary($event->evnt_title);
                 
                 $eventLink = "".URL::route('event.show', $event->id);
-                $eventTimeStart = substr('H:i', $event->evnt_time_start, 0, 5);
-                $eventTimeEnd = substr('H:i', $event->evnt_time_end, 0, 5);
+                $eventTimeStart = substr($event->evnt_time_start, 0, 5);
+                $eventTimeEnd = substr($event->evnt_time_end, 0, 5);
                 $additionalInfo = $event->evnt_public_info !== "" ? $event->evnt_public_info : "(-)";
                 
                 $vEvent->setDescription("Link: ".$eventLink."\n"
