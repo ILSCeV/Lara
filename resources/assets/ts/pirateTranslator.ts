@@ -10,7 +10,7 @@ String.prototype.replaceAll = function (search, replacement) {
     return target.split(search).join(replacement);
 };
 
-if (localStorage.language === 'pirate') {
+if (localStorage["language"] === 'pirate') {
     $(window).on('load',
         function () {
             var navLogoField = $('#nav-logo-field');
