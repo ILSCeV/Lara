@@ -63,9 +63,6 @@ Route::get('logout', 							'LoginController@doLogout');
 Route::post('login', 							'LoginController@doLogin');
 Route::post('logout', 							'LoginController@doLogout');
 
-// USER MANAGEMENT
-Route::get('ldapsync', 							'PersonController@LDAPSync');
-
 
 // TIMESTAMP
 Route::get('updates/{id}', 						'ScheduleController@getUpdates');
