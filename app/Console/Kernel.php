@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         //  Syncronize Lara Persons with the latest status on the LDAP server
-        $schedule->command('ldapsync')->->dailyAt('04:00');
+        $schedule->command('ldapsync')->dailyAt('04:00');
     }
 
     /**
