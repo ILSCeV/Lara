@@ -134,7 +134,14 @@
                     @endif
             @endif
             @include("partials.event-marker", $clubEvent)
+
+            {{--
+
+            Disabling iCal until fully functional.
+
             @include("partials.publishStateIndicator")
+
+            --}}
             &nbsp;&nbsp;
             <a href="{{ URL::route('event.show', $clubEvent->id) }}"
                data-toggle="tooltip" 
