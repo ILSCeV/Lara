@@ -46,7 +46,9 @@
 		            		   class="input" 
 		            		   name={{ "jbtyp_statistical_weight" . $counter }} 
 		            		   id={{ "jbtyp_statistical_weight" . $counter }}
-		            		   value="{{ $entry->entry_statistical_weight }}" 
+		            		   value="{{ $entry->entry_statistical_weight }}"
+							   onkeypress="return event.charCode >= 48"
+							   min="0"
 		            		   required />
 
 		            	
@@ -95,6 +97,8 @@
 	        		   name={{ "jbtyp_statistical_weight" . $counter }} 
 	        		   id={{ "jbtyp_statistical_weight" . $counter }}
 	        		   value="1"
+					   onkeypress="return event.charCode >= 48"
+					   min="0"
 	        		   placeholder="{{ trans('mainLang.statisticalEvaluation') }}" required />
 
 	        	<input type="button" value="+" class="btn btn-small btn-success btnAdd" /> 

@@ -18,7 +18,7 @@ class DeadlineSurvey
      */
     public function handle($request, Closure $next)
     {
-        $survey = Survey::findOrFail($request->route()->getParameter('survey'));
+        $survey = Survey::findOrFail($request->route()->parameter('survey'));
         if(Carbon::now() < Carbon::createFromTimestamp(strtotime($survey->deadline))
             OR $request->session()->get('userGroup') == "clubleitung"
             OR $request->session()->get('userGroup') == "marketing"

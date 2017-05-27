@@ -1,28 +1,11 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
-    "type": "project",
-    "require": {
-        "php": ">=5.6.4",
-        "laravel/framework": "5.3.*",
-        "laravelcollective/html": "5.3.*",
-        "rap2hpoutre/laravel-log-viewer": "^0.5.3",
-        "barryvdh/laravel-ide-helper": "^2.1",
-        "doctrine/dbal": "^2.5", 
-        "laravel/tinker": "^1.0" 
-    },
-    "require-dev": {
-        "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.0",
-        "symfony/css-selector": "2.5.*",
-        "symfony/dom-crawler": "2.5.*",
-        "orangehill/iseed": "dev-master",
-        "phpspec/phpspec": "~2.1",
-        "laracasts/integrated": "^0.15.6"
-    },
+    "authors": [
+        {
+            "email": "4d44h@protonmail.com",
+            "name": "Maxim Drachinskiy",
+            "role": "Project Manager"
+        }
+    ],
     "autoload": {
         "classmap": [
             "database"
@@ -32,16 +15,40 @@
         }
     },
     "autoload-dev": {
-        "classmap": [
-            "tests/TestCase.php",
-            "tests/LaraTestCase.php",
-            "tests/traits/"
-        ]
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "description": "A calender with personnel scheduling for club management, built on top of Laravel 5.",
+    "keywords": [
+        "calendar",
+        "scheduling",
+        "Lara",
+        "ILSCeV"
+    ],
+    "license": "GPL-3.0",
+    "name": "ILSCeV/Lara",
+    "require": {
+        "barryvdh/laravel-ide-helper": "^2.2",
+        "laravel/framework": "5.4.*",
+        "laravel/tinker": "~1.0",
+        "laravelcollective/html": "^5.3.0",
+        "php": ">=5.6.4",
+        "rap2hpoutre/laravel-log-viewer": "^0.8.0",
+        "eluceo/ical": "^0.11.0"
+    },
+    "require-dev": {
+        "doctrine/dbal": "~2.3",
+        "fzaninotto/faker": "~1.4",
+        "mockery/mockery": "0.9.*",
+        "orangehill/iseed": "dev-master",
+        "phpunit/phpunit": "~5.7"
     },
     "scripts": {
-        "post-root-package-install": [
-            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
         "post-create-project-cmd": [
             "php artisan key:generate"
         ],
@@ -49,14 +56,13 @@
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
             "php artisan optimize"
         ],
+        "post-root-package-install": [
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan clear-compiled",
-            "php artisan ide-helper:generate",
             "php artisan optimize"
         ]
     },
-    "config": {
-        "preferred-install": "dist"
-    }
+    "type": "project"
 }

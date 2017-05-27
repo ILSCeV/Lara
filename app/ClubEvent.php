@@ -2,7 +2,7 @@
 
 /**
  * DO NOT CALL THIS CLASS "EVENT"
- * That name is reserved for Laravel events and will cause an error. 
+ * That name is reserved for Laravel events and will cause an error.
  *
  */
 
@@ -26,7 +26,7 @@ class ClubEvent extends Model
 	 * @var array
 	 */
 	protected $fillable = array('evnt_type',			// 0 -> default -> "normales Programm"
-														// 1 -> info only 
+														// 1 -> info only
 														// 2 -> highlight / special
 														// 3 -> live band / DJ / reading
 														// 4 -> internal event
@@ -35,7 +35,7 @@ class ClubEvent extends Model
 														// 7 -> flyer / poster
 														// 8 -> tickets -> "Vorverkauf"
 														// 9 -> internal task -> everything else
-								'evnt_title', 
+								'evnt_title',
 								'evnt_subtitle',
 								'plc_id',
 								'evnt_show_to_club',
@@ -43,9 +43,10 @@ class ClubEvent extends Model
 								'evnt_date_end',
 								'evnt_time_start',
 								'evnt_time_end',
-								'evnt_public_info',		
+								'evnt_public_info',
 								'evnt_private_details',
-								'evnt_is_private');
+								'evnt_is_private',
+								'evnt_is_published');
 
 	/**
 	 * Get the corresponding place.

@@ -131,6 +131,7 @@ return [
     //Lines for editing only with permission
     'noNotThisWay'          => 'Ne, das geht so nicht...',
     'onlyThe'               => 'Nur die',
+    'only'                  => 'Nur',
     'clubManagement'        => 'Clubleitung',
     'orThe'                 => 'oder die',
     'marketingManager'      => 'Marketingverantwortlichen',
@@ -206,7 +207,7 @@ return [
 
 
     // resources/view/partials/calendarLinkEvent.blade.php
-    'addToCalendar' => 'Event zu eigenem Google Kalender hinzufügen',
+    'addToCalendar' => 'Event zu bevorzugter Kalenderlösung hinzufügen',
 
     // resources/views/partials/month/day.blade.php
     'createEventOnThisDate' => 'Neues Event an diesem Tag erstellen',
@@ -254,6 +255,7 @@ return [
     
     // /resources/views/partials/filter.blade.php
     'allSections'           => 'Alle Sektionen',
+    'comments'              => 'Kommentare',
     
     //-----------------------------------------------------------------------------------------------------------
     
@@ -467,6 +469,18 @@ return [
     'changesSaved'                  => 'Änderungen erfolgreich gespeichert.',
     'deleteFailedJobtypeInUse'      => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
 
-
-
+    //////////
+    // ICal //
+    //////////
+    
+    'icalfeeds'                     =>  'Kalenderfeed im iCal-Format',
+    'publishEvent'                  =>  'Event veröffentlichen',
+    'unpublishEvent'                =>  'Event aus dem Kalenderfeed entfernen',
+    'createAndPublish'              =>  'Erstellen und veröffentlichen',
+    'createUnpublished'             =>  'Erstelle unveröffentlicht',
+    'eventIsPublished'              =>  'Event wurde veröffentlicht und ist zum Kalenderfeed hinzugefügt',
+    'eventIsUnpublished'            =>  'Event ist nicht veröffentlicht ist im Kalendarfeed nicht sichtbar',
+    'confirmPublishingEvent'        =>  'Möchtest du dieses Event wirklich zum Kalenderfeed hinzufügen?',
+    'confirmUnpublishingEvent'      =>  'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
+    'iCal'                          =>  'iCal'
 ];

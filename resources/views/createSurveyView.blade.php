@@ -19,8 +19,3 @@
         {!! Form::close() !!}
     </div>
 @stop
-
-@section('moreScripts')
-
-    <script src="{{ asset('js/surveyEdit-Create-scripts.js') }}"></script>
-@stop

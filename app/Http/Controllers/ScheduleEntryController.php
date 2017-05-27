@@ -3,6 +3,7 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Lara\Utilities;
 use Session;
 use Input;
 
@@ -121,6 +122,8 @@ class ScheduleEntryController extends Controller
         if ( Session::token() !== Input::get( '_token' ) ) {
             return response()->json('Fehler: die Session ist abgelaufen. Bitte aktualisiere die Seite und logge dich ggf. erneut ein.', 401);
         }
+
+        Utilities::clearIcalCache();
 
         // If we only want to modify the jobtype via management pages - do it without evaluating the rest
         if ( !empty($request->get('jobtypeId')) AND is_numeric($request->get('jobtypeId')) ) {
@@ -389,6 +392,7 @@ class ScheduleEntryController extends Controller
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
+        Utilities::clearIcalCache();
 
         // Delete the entry
         ScheduleEntry::destroy($id);
@@ -449,6 +453,7 @@ class ScheduleEntryController extends Controller
                 $person = Person::create( array('prsn_ldap_id' => $ldapId) );
                 $person->prsn_name = $userName;
                 $person->prsn_status = Session::get('userStatus');
+                $person->prsn_uid = hash("sha512", uniqid());
             }
 
             // If a person adds him/herself - update status from session to catch if it was changed in LDAP

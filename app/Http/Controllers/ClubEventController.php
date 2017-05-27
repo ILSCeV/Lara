@@ -2,32 +2,25 @@
 
 namespace Lara\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use Lara\Http\Requests;
-use Lara\Http\Controllers\Controller;
-
-use Lara\Utilities;
-use Session;
 use Cache;
-use DateTime;
-use DateInterval;
-use DateTimeZone;
-use View;
-use Input;
 use Config;
-use Log;
-use Redirect;
-
-use Carbon\Carbon;
-
+use DateInterval;
+use DateTime;
+use DateTimeZone;
+use Illuminate\Http\Request;
+use Input;
+use Lara\Club;
 use Lara\ClubEvent;
-use Lara\Schedule;
-use Lara\ScheduleEntry;
 use Lara\Jobtype;
 use Lara\Person;
-use Lara\Club;
 use Lara\Place;
+use Lara\Schedule;
+use Lara\ScheduleEntry;
+use Lara\Utilities;
+use Log;
+use Redirect;
+use Session;
+use View;
 
 class ClubEventController extends Controller
 {
@@ -56,7 +49,7 @@ class ClubEventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create($year = null, $month = null, $day = null, $templateId = null)
-    {    
+    {
         // Filling missing date and template number in case none are provided
         if ( is_null($year) ) {
             $year = date("Y");
@@ -129,12 +122,12 @@ class ClubEventController extends Controller
             $details    = null;
             $private    = null;
         }
-                
-        return View::make('createClubEventView', compact('places', 'jobtypes', 'templates', 
+
+        return View::make('createClubEventView', compact('places', 'jobtypes', 'templates',
                                                          'entries', 'title', 'subtitle', 'type',
                                                          'place', 'filter', 'timeStart', 'timeEnd',
                                                          'info', 'details', 'private', 'dv',
-                                                         'activeTemplate', 
+                                                         'activeTemplate',
                                                          'date'));
     }
 
@@ -152,11 +145,11 @@ class ClubEventController extends Controller
         if (Input::get('password') != Input::get('passwordDouble')) {
             Session::put('message', Config::get('messages_de.password-mismatch') );
             Session::put('msgType', 'danger');
-            return Redirect::back()->withInput(); 
+            return Redirect::back()->withInput();
             }
 
         $newEvent = $this->editClubEvent(null);
-        $newEvent->save();  
+        $newEvent->save();
 
         $newSchedule = (new ScheduleController)->update(null);
         $newSchedule->evnt_id = $newEvent->id;
@@ -197,9 +190,9 @@ class ClubEventController extends Controller
         }
 
         // log the action
-        Log::info('Event created: ' . Session::get('userName') . ' (' . Session::get('userId') . ', ' 
+        Log::info('Event created: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
                  . Session::get('userGroup') . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
-            
+        Utilities::clearIcalCache();
         // show new event
         return Redirect::action('ClubEventController@show', array('id' => $newEvent->id));
     }
@@ -214,15 +207,15 @@ class ClubEventController extends Controller
      * @return RedirectResponse
      */
     public function show($id)
-    {  
+    {
         $clubEvent = ClubEvent::with('getPlace')
                               ->findOrFail($id);
-        
+
         if(!Session::has('userId') && $clubEvent->evnt_is_private==1)
         {
             Session::put('message', Config::get('messages_de.access-denied'));
             Session::put('msgType', 'danger');
-            return Redirect::action('MonthController@showMonth', array('year' => date('Y'), 
+            return Redirect::action('MonthController@showMonth', array('year' => date('Y'),
                                                                    'month' => date('m')));
         }
 
@@ -233,17 +226,17 @@ class ClubEventController extends Controller
         //if URL is in one of the info boxes, convert it to clickable hyperlink (<a> tag)
         $clubEvent->evnt_public_info = Utilities::surroundLinksWithTags($clubEvent->evnt_public_info);
         $clubEvent->evnt_private_details = Utilities::surroundLinksWithTags($clubEvent->evnt_private_details);
-    
+
         $schedule = Schedule::findOrFail($clubEvent->getSchedule->id);
 
         $entries = ScheduleEntry::where('schdl_id', '=', $schedule->id)
                                 ->with('getJobType',
-                                       'getPerson', 
+                                       'getPerson',
                                        'getPerson.getClub')
                                 ->get();
 
         $clubs = Club::orderBy('clb_title')->pluck('clb_title', 'id');
-        
+
         $persons = Cache::remember('personsForDropDown', 10 , function()
         {
             $timeSpan = new DateTime("now");
@@ -255,7 +248,7 @@ class ClubEventController extends Controller
         });
 
         $revisions = json_decode($clubEvent->getSchedule->entry_revisions, true);
-        
+
         if (!is_null($revisions)) {
             // reverse order to show latest revision first
             $revisions = array_reverse($revisions);
@@ -274,10 +267,10 @@ class ClubEventController extends Controller
         if (empty($clubEvent->evnt_show_to_club) ) {
             $clubEvent->evnt_show_to_club = json_encode([$clubEvent->getPlace->plc_title], true);
             $clubEvent->save();
-        } 
-        
-            
-        
+        }
+
+
+
 
         return View::make('clubEventView', compact('clubEvent', 'entries', 'clubs', 'persons', 'revisions', 'created_by', 'creator_name'));
     }
@@ -300,13 +293,13 @@ class ClubEventController extends Controller
         // get a list of possible clubs to create an event at
         $places = Place::orderBy('plc_title', 'ASC')
                        ->pluck('plc_title', 'id');
-        
+
 
         // get a list of available job types
         $jobtypes = Jobtype::where('jbtyp_is_archived', '=', '0')
                            ->orderBy('jbtyp_title', 'ASC')
                            ->get();
-        
+
         // put template data into entries
         $entries = $schedule->getEntries()
                             ->with('getJobType')
@@ -323,10 +316,10 @@ class ClubEventController extends Controller
         $created_by = $revisions[0]["user id"];
         $creator_name = $revisions[0]["user name"];
 
-        return View::make('editClubEventView', compact('event', 
-                                                       'schedule', 
-                                                       'places', 
-                                                       'jobtypes',  
+        return View::make('editClubEventView', compact('event',
+                                                       'schedule',
+                                                       'places',
+                                                       'jobtypes',
                                                        'entries',
                                                        'created_by',
                                                        'creator_name'));
@@ -357,16 +350,17 @@ class ClubEventController extends Controller
         $entries = (new ScheduleController)->editScheduleEntries($schedule->id);
 
         // log the action
-        Log::info('Event edited: ' . Session::get('userName') . ' (' . Session::get('userId') . ', ' 
+        Log::info('Event edited: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
                  . Session::get('userGroup') . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
 
 
         // save all data in the database
-        $event->save(); 
+        $event->save();
         $schedule->save();
         foreach($entries as $entry)
             $entry->save();
-                                                                           
+        Utilities::clearIcalCache();
+
         // show event
         return Redirect::action('ClubEventController@show', array('id' => $id));
     }
@@ -380,20 +374,20 @@ class ClubEventController extends Controller
     public function destroy($id)
     {
         // Get all the data
-        $event = ClubEvent::find($id);  
-        
-        
+        $event = ClubEvent::find($id);
+
+
         // Check if event exists
         if ( is_null($event) ) {
             Session::put('message', Config::get('messages_de.event-doesnt-exist') );
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
-
+        
         // Check credentials: you can only delete, if you have rights for marketing or management. 
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
-        $created_by = $revisions[0]["user id"];  
-        if(!Session::has('userId') 
+        $created_by = $revisions[0]["user id"];
+        if(!Session::has('userId')
             OR (Session::get('userGroup') != 'marketing'
                 AND Session::get('userGroup') != 'clubleitung'
                 AND Session::get('userGroup') != 'admin'
@@ -401,25 +395,25 @@ class ClubEventController extends Controller
         {
             Session::put('message', 'Du darfst diese Veranstaltung/Aufgabe nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
             Session::put('msgType', 'danger');
-            return Redirect::action('MonthController@showMonth', array('year' => date('Y'), 
+            return Redirect::action('MonthController@showMonth', array('year' => date('Y'),
                                                                    'month' => date('m')));
         }
 
         // Log the action while we still have the data
-        Log::info('Event deleted: ' . Session::get('userName') . ' (' . Session::get('userId') . ', ' 
+        Log::info('Event deleted: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
                  . Session::get('userGroup') . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
-
+        Utilities::clearIcalCache();
 
         // Delete schedule with entries
         $result = (new ScheduleController)->destroy($event->getSchedule()->first()->id);
-        
+
         // Now delete the event itself
         ClubEvent::destroy($id);
 
         // show current month afterwards
         Session::put('message', Config::get('messages_de.event-delete-ok'));
         Session::put('msgType', 'success');
-        return Redirect::action( 'MonthController@showMonth', ['year' => date("Y"), 
+        return Redirect::action( 'MonthController@showMonth', ['year' => date("Y"),
                                                                'month' => date('m')] );
     }
 
@@ -432,7 +426,7 @@ class ClubEventController extends Controller
 
     /**
     * Edit or create a clubevent with its entered information.
-    * If $id is null create a new clubEvent, otherwise the clubEvent specified by $id will be edit. 
+    * If $id is null create a new clubEvent, otherwise the clubEvent specified by $id will be edit.
     *
     * @param int $id
     * @return ClubEvent clubEvent
@@ -441,18 +435,18 @@ class ClubEventController extends Controller
     {
         $event = new ClubEvent;
         if(!is_null($id)) {
-            $event = ClubEvent::findOrFail($id);        
+            $event = ClubEvent::findOrFail($id);
         }
-        
+
         // format: strings; no validation needed
         $event->evnt_title           = Input::get('title');
         $event->evnt_subtitle        = Input::get('subtitle');
         $event->evnt_public_info     = Input::get('publicInfo');
-        $event->evnt_private_details = Input::get('privateDetails');    
+        $event->evnt_private_details = Input::get('privateDetails');
         $event->evnt_type            = Input::get('evnt_type');
 
         // create new place
-        if (!Place::where('plc_title', '=', Input::get('place'))->first())      
+        if (!Place::where('plc_title', '=', Input::get('place'))->first())
         {
             $place = new Place;
             $place->plc_title = Input::get('place');
@@ -461,7 +455,7 @@ class ClubEventController extends Controller
             $event->plc_id = $place->id;
         }
         // use existing place
-        else    
+        else
         {
             $event->plc_id = Place::where('plc_title', '=', Input::get('place'))->first()->id;
         }
@@ -476,7 +470,7 @@ class ClubEventController extends Controller
         {
             $event->evnt_date_start = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));;
         }
-            
+
         if(!empty(Input::get('endDate')))
         {
             $newEndDate = new DateTime(Input::get('endDate'), new DateTimeZone(Config::get('app.timezone')));
@@ -486,23 +480,31 @@ class ClubEventController extends Controller
         {
             $event->evnt_date_end = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));;
         }
-        
+
         // format: time; validate on filled value  
         if(!empty(Input::get('beginTime'))) $event->evnt_time_start = Input::get('beginTime');
         else $event->evnt_time_start = mktime(0, 0, 0);
         if(!empty(Input::get('endTime'))) $event->evnt_time_end = Input::get('endTime');
         else $event->evnt_time_end = mktime(0, 0, 0);
-        
+
         // format: tinyInt; validate on filled value
         // reversed this: input=1 means "event is public", input=0 means "event is private"
         $event->evnt_is_private = (Input::get('isPrivate') == '1') ? 0 : 1;
-
+        $eventIsPublished = Input::get('evntIsPublished');
+        
+        if (!is_null($eventIsPublished)) {
+            //event is pubished
+            $event->evnt_is_published = (int)$eventIsPublished;
+        } elseif (Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung'  OR Session::get('userGroup') == 'admin'){
+            // event was unpublished
+            $event->evnt_is_published = 0;
+        }
         // Filter
         $filter = [];
         if (Input::get('filterShowToClub2') == '1') { array_push($filter, 'bc-Club'); }
         if (Input::get('filterShowToClub3') == '1') { array_push($filter, 'bc-Café'); }
         $event->evnt_show_to_club = json_encode($filter, true);
-        
+
         return $event;
     }
 }

@@ -23,7 +23,12 @@
         <![endif]-->
 	</head>
 
-    <body>
+    <body @if(Session::get("applocale","de")  == "pirate") style="background-image:url( {{asset('/background-pirate.jpg')}} ) !important; background-size:initial; background-position:center;"  @endif>
+        <!-- Set the language to the same as the server -->
+        <script type="text/javascript">
+                localStorage.setItem('language', "{{ Session::get("applocale","de") }}");
+        </script>
+
 		<header class="navigation">
 			@include('partials.navigation')
 		</header>
@@ -61,18 +66,10 @@
         </div>
 	</footer>
 
-    <script src="{{ asset('/js/jquery-2.1.3.min.js') }}"></script>
-    <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('/js/bootbox.min.js') }}"></script>
-    <script src="{{ asset('/js/isotope.pkgd.min.js') }}"></script>
-    <script src="{{ asset('/lang/de.js') }}"></script>
-    <script src="{{ asset('/lang/en.js') }}"></script>
-    <script src="{{ asset('/lang/pirate.js') }}"></script>
-    <script src="{{ asset('/js/vedst-scripts.js') }}"></script>
-    <script src="{{ asset('/js/bin/bundle.js') }}"></script>
-    <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('/js/pirateTranslator.js') }}"></script>
-
+    <script src="{{ mix('js/app.js') }}"></script>
+        @if(Session::get("applocale","de")  == "pirate")
+            <script src="{{ asset('/js/pirateTranslator.js') }}"></script>
+        @endif
 	@yield('moreScripts')
   </body>
 </html>

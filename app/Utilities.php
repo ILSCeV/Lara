@@ -3,6 +3,9 @@
 
 namespace Lara;
 
+use Illuminate\Support\Facades\Cache;
+use Lara\Http\Controllers\IcalController;
+
 
 class Utilities
 {
@@ -18,5 +21,19 @@ class Utilities
                 }
                 return sprintf('<a href="%s" target="_blank"> %s </a>', $link, $match[0]);
             }, $text);
+    }
+
+    static function getAllCachedIcalKeys()
+    {
+        return Cache::get(IcalController::ICAL_ACCESSOR, array());
+    }
+
+    static function clearIcalCache()
+    {
+        $keys = self::getAllCachedIcalKeys();
+        foreach ($keys as $key) {
+            Cache::forget($key);
+        }
+        Cache::forget(IcalController::ICAL_ACCESSOR);
     }
 }

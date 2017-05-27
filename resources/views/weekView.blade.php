@@ -49,6 +49,9 @@
 				
 				{{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
 				<button class="btn btn-xs hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button>
+
+				{{-- show/hide all comment fields --}}
+				<button class="btn btn-xs hidden-print" type="button" id="toggle-all-comments">{{ trans('mainLang.comments') }}</button>
 				
 				{{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
 				<button class="btn btn-xs btn-primary hidden-print" type="button" id="toggle-week-start">{{ trans('mainLang.weekStart') }}</button> 
@@ -212,8 +215,13 @@
 		@endif
 	</div>
 
-{{-- Legend --}}
-@include("partials.legend")
+    <div class="col-md-12 col-xs-12">
+        {{-- Legend --}}
+        @include("partials.legend")
+
+        {{-- filter hack --}}
+        <span id="week-view-marker" hidden>&nbsp;</span>
+    </div>
 
 @stop
 

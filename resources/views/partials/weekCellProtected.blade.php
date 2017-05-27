@@ -144,7 +144,8 @@
 							{{-- Hidden comment field to be opened after the click on the icon 
 							     see vedst-scripts "Show/hide comments" function --}}         
 							<div id="{!! 'comment' . $entry->id !!}"
-							     class="col-xs-10 col-md-10 hidden-print hide col-md-offset-1 word-break">
+							     class="col-xs-10 col-md-10 hidden-print hide col-md-offset-1 word-break"
+							     name="{!! 'comment' . $entry->id !!}">
 							    {!! !empty($entry->entry_user_comment) ? $entry->entry_user_comment : "-" !!}
 							</div>
 

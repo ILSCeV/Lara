@@ -48,16 +48,6 @@ class SurveyAnswer extends BaseSoftDelete
     }
 
     /**
-     * Get the corresponding Revision_SurveryAnswers.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function getRevision_SurveyAnswers()
-    {
-        return $this->hasMany('Lara\Revision_SurveyAnswer', 'object_id', 'id');
-    }
-
-    /**
      * Get the corresponding question.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -95,16 +85,6 @@ class SurveyAnswer extends BaseSoftDelete
     public function cells()
     {
         return $this->hasMany('Lara\SurveyAnswerCell');
-    }
-
-    /**
-     * Get the corresponding Revision_SurveryAnswers.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function revisions()
-    {
-        return $this->hasMany('Lara\Revision_SurveyAnswer', 'object_id', 'id');
     }
 
 }
