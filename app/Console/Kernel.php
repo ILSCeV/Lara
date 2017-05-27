@@ -14,7 +14,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\TestLog::class,
-        Commands\LDAPsync::class
+        Commands\LDAPsync::class,
+        Commands\UpdateLara::class
+
     ];
 
     /**
