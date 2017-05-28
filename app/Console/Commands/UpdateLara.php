@@ -19,7 +19,7 @@ class UpdateLara extends Command
      *
      * @var string
      */
-    protected $description = 'Pull latests changes from assigned branch, clear cache and views and apply migrations.';
+    protected $description = 'Enter maintenance mode, pull latests changes from assigned branch, clear cache and views, apply migrations, go live again.';
 
     /**
      * Create a new command instance.

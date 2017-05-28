@@ -21,7 +21,7 @@ class LDAPsync extends Command
      *
      * @var string
      */
-    protected $description = 'Overwrites name & status for every Persons in Lara with the latest state from LDAP.';
+    protected $description = 'Overwrite name & status for every Person in Lara DB with the latest state from LDAP.';
 
     /**
      * Create a new command instance.
