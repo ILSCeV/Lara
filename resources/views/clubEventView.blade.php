@@ -75,7 +75,7 @@
 								<i>{{ trans('mainLang.begin') }}:</i>
 							</td>
 							<td>
-								{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start)) }} um
+								{{ strftime("%a, %d. %b %Y", strtotime($clubEvent->evnt_date_start)) }} um
 								{{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
 							</td>
 						</tr>
@@ -84,7 +84,7 @@
 								<i>{{ trans('mainLang.end') }}:</i>
 							</td>
 							<td>
-								{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_end)) }} um
+								{{ strftime("%a, %d. %b %Y", strtotime($clubEvent->evnt_date_end)) }} um
 								{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 							</td>
 						</tr>

@@ -19,7 +19,7 @@ class UpdateLara extends Command
      *
      * @var string
      */
-    protected $description = 'Pull latests changes from assigned branch, clear cache and views and apply migrations.';
+    protected $description = 'Enter maintenance mode, pull latests changes from assigned branch, clear cache and views, apply migrations, go live again.';
 
     /**
      * Create a new command instance.
@@ -48,13 +48,15 @@ class UpdateLara extends Command
 
         // List of instructions to execute
         $instructions = [
-            'git pull',
-            'composer install',
-            'php artisan view:clear',
+            'php artisan down',             // Enter maintenance mode
+            'git pull',                     // Download latest changes from GitHub
+            'composer install',             // Install and update dependencies
+            'php artisan view:clear',       // Clear and update cache
             'php artisan config:cache',
-            'npm install',
+            'npm install',                  // JavaScript/TypeScript deployment
             'npm run dev',
-            'php artisan migrate'
+            'php artisan migrate',          // Apply new database changes
+            'php artisan up'                // Exit maintenance mode
         ];
 
         // initialize progress bar
@@ -65,15 +67,14 @@ class UpdateLara extends Command
 
             // log what you are doing
             $this->info(''); // new line
-            $this->info(''); // new line
-            $this->info('Executing "' . $step . '"');
-            $this->info(''); // new line
+            $this->info('Executing "' . $step . '"...');
 
             // perform the instruction
             exec($step);
 
             // adjust progress bar
             $bar->advance();
+            $this->info(''); // new line
         }
 
         // finish progress bar and end counter
