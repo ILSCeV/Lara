@@ -14,7 +14,13 @@
 
 {{-- LARA LOGO --}}
         <a class="navbar-brand" href="{{ asset('/') }}">
-            <img id="nav-logo-field" src="{{  asset('/logo.png') }}" alt="LARA">
+            @if (App::environment('development'))
+                <img id="nav-logo-field" src="{{  asset('/logos/lara-logo-dev.png') }}" alt="LARA dev">
+            @elseif (App::environment('beta'))
+                <img id="nav-logo-field" src="{{  asset('/logos/lara-logo-berta.png') }}" alt="BERTA">
+            @else
+               <img id="nav-logo-field" src="{{  asset('/logos/lara-logo-prod.png') }}" alt="LARA">
+            @endif  
         </a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">

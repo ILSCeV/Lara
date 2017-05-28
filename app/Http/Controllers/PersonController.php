@@ -10,6 +10,8 @@ use Session;
 use Config;
 use Redirect;
 
+use Lara\Person;
+
 use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
 
