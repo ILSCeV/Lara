@@ -14,7 +14,7 @@ class LDAPsync extends Command
      *
      * @var string
      */
-    protected $signature = 'ldapsync';
+    protected $signature = 'lara:ldapsync';
 
     /**
      * The console command description.
@@ -45,8 +45,8 @@ class LDAPsync extends Command
     public function handle()
     {
         // Inform the users
-        Log::info('LDAP sync started...');
-        $this->info('LDAP sync started...');
+        Log::info('Starting LDAP sync...');
+        $this->info('Starting LDAP sync...');
 
         // get a list of all persons saved in Lara
         $persons = Person::whereNotNull('prsn_ldap_id')->get();
@@ -148,7 +148,7 @@ class LDAPsync extends Command
         // report update time
         $this->info('');        // Linebreak
         $this->info('');        // Linebreak
-        $this->info('LDAP sync finished after ' . ($counterEnd - $counterStart) . ' seconds.');
-        Log::info('LDAP sync finished after ' . ($counterEnd - $counterStart) . ' seconds.');
+        $this->info('Finished LDAP sync after ' . ($counterEnd - $counterStart) . ' seconds.');
+        Log::info('Finished LDAP sync after ' . ($counterEnd - $counterStart) . ' seconds.');
     }
 }
