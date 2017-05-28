@@ -131,9 +131,6 @@ class ScheduleEntryController extends Controller
             // Find the corresponding entry object 
             $entry = ScheduleEntry::where('id', '=', $request->get('entryId'))->first();
 
-
-            
-
             // Save old value for revision
             $oldJobtype = Jobtype::where('id', '=', $entry->jbtyp_id)->first()->jbtyp_title;
 
