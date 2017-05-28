@@ -132,7 +132,7 @@
 												{!! $entry->schedule->event->getPlace->plc_title !!}
 											</td>
 											<td>
-												{!! strftime("%a, %d. %b", strtotime($entry->schedule->event->evnt_date_start)) !!} um  
+												{!! strftime("%a, %d. %b %Y", strtotime($entry->schedule->event->evnt_date_start)) !!} um  
 												{!! date("H:i", strtotime($entry->schedule->event->evnt_time_start)) !!}
 											</td>
 											<td>
