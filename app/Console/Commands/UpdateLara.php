@@ -50,7 +50,7 @@ class UpdateLara extends Command
         $instructions = [
             'php artisan down',                     // Enter maintenance mode
             'git pull',                             // Download latest changes from GitHub
-            'sh git-create-revisioninfo-hook.sh'    // Update version info in the footer
+            'sh git-create-revisioninfo-hook.sh',   // Update version info in the footer
             'composer install',                     // Install and update dependencies
             'php artisan view:clear',               // Clear and update cache
             'php artisan config:cache',
