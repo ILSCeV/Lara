@@ -187,7 +187,7 @@ class JobtypeController extends Controller
 
         // Get all the data 
         // (throws a 404 error if jobtype doesn't exist)
-        $jobtype = JobType::findOrFail($id);
+        $jobtype = Jobtype::findOrFail($id);
 
         // Before deleting, check if this job type is in use in any existing schedule
         if (  ScheduleEntry::where('jbtyp_id', '=', $jobtype->id)->count() > 0  ) {
@@ -208,7 +208,7 @@ class JobtypeController extends Controller
                       ') deleted "' . $jobtype->jbtyp_title .  '" (it was not used in any schedule).');
 
             // Now delete the jobtype
-            JobType::destroy($id);
+            Jobtype::destroy($id);
 
             // Return to the management page
             Session::put('message', trans('mainLang.changesSaved'));
