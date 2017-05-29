@@ -3,12 +3,9 @@
 namespace Lara\Console\Commands;
 
 use Illuminate\Console\Command;
-
-use \Lara\ScheduleEntry;
-use \Lara\JobType;
-
+use Lara\Jobtype;
+use Lara\ScheduleEntry;
 use Log;
-use Symfony\Component\Console\Helper\ProgressBar;
 
 class CleanShiftTypes extends Command
 {
@@ -53,7 +50,7 @@ class CleanShiftTypes extends Command
 
         // Retrieve all ShiftTypes,
         // and sort them backwards to delete rarely used latest entries first and avoid costly DB queries on older ones that are used more
-        $shifttypes = JobType::orderBy('id', 'desc')->get();
+        $shifttypes = Jobtype::orderBy('id', 'desc')->get();
 
         // Initialize progress bar
         $bar = $this->output->createProgressBar(count($shifttypes));
@@ -73,7 +70,7 @@ class CleanShiftTypes extends Command
                 $this->info('Shift type deleted: "' . $shifttype->jbtyp_title . '" (id:' . $shifttype->id . '), it was not used in any schedule.');
                 
                 // Now delete the jobtype
-                JobType::destroy($shifttype->id);
+                Jobtype::destroy($shifttype->id);
             } else {
 
                 // Step 2: check if there exists another shift with the same name and duration
