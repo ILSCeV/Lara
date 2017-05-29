@@ -85,7 +85,6 @@ class CleanShiftTypes extends Command
                 $alternative = JobType::where('jbtyp_title', '=', $shifttype->jbtyp_title)
                                       ->where('jbtyp_time_start', '=', $shifttype->jbtyp_time_start)
                                       ->where('jbtyp_time_end', '=', $shifttype->jbtyp_time_end)
-                                      ->orderBy('id')
                                       ->first();
 
                 // Check if we have found current shift type or another one
