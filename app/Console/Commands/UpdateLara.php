@@ -48,15 +48,16 @@ class UpdateLara extends Command
 
         // List of instructions to execute
         $instructions = [
-            'php artisan down',             // Enter maintenance mode
-            'git pull',                     // Download latest changes from GitHub
-            'composer install',             // Install and update dependencies
-            'php artisan view:clear',       // Clear and update cache
+            'php artisan down',                     // Enter maintenance mode
+            'git pull',                             // Download latest changes from GitHub
+            'sh git-create-revisioninfo-hook.sh'    // Update version info in the footer
+            'composer install',                     // Install and update dependencies
+            'php artisan view:clear',               // Clear and update cache
             'php artisan config:cache',
-            'npm install',                  // JavaScript/TypeScript deployment
+            'npm install',                          // JavaScript/TypeScript deployment
             'npm run dev',
-            'php artisan migrate',          // Apply new database changes
-            'php artisan up'                // Exit maintenance mode
+            'php artisan migrate',                  // Apply new database changes
+            'php artisan up'                        // Exit maintenance mode
         ];
 
         // initialize progress bar
