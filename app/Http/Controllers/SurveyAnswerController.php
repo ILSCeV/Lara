@@ -250,6 +250,9 @@ class SurveyAnswerController extends Controller
             case 'resigned':
                 $user_status_style = ["status" => "fa fa-star-o", "style" => "color:gold;", "title" => "ex-Mitglied"];
                 break;
+            case 'guest':
+                    $userStatus = ["status"=>"fa fa-circle", "style"=>"color:gold;", "title"=>"ex-Kandidat"];
+                    break;
             default:
                 $user_status_style = ["status" => "fa fa-circle", "style" => "color:lightgrey;", "title" => "Extern"];
         }
