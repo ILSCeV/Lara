@@ -286,6 +286,7 @@ return [
     'candidate'             => 'Frischling',
     'veteran'               => 'Seebär',
     'ex-member'             => 'Einbeiniger',
+    'ex-candidate'          => 'Deserteur',
     'active'                => 'Matrose',
     'external'              => 'Landratte',
     
