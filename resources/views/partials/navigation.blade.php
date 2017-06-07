@@ -62,9 +62,14 @@
                     <li><a href="{{ asset('/logs') }}">Logs</a></li>
                 @endif
 
-{{-- ICal feed links --}}
+
+{{-- ICal feed links 
+Disabling iCal until fully functional.
 
                     <li><a href="#" name="icalfeeds"><i class="fa fa-calendar" aria-hidden="true"></i> {{ trans('mainLang.icalfeeds') }}</a></li>
+
+--}} 
+
 
 {{-- LANGUAGE SWITCHER / public --}}
                 @foreach (Config::get('languages') as $lang => $language)

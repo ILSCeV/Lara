@@ -103,7 +103,13 @@ AND (Session::get('userGroup') == 'marketing'
 								{{ trans('mainLang.showExtern') }}
 							</div>
 				            <br>
-                            <div>
+				            {{-- 
+
+							Disabling iCal until fully functional -> hiding the div.
+							
+							--}}
+
+                            <div class="hidden">
                                 <div class="hidden">
                                     {!! Form::checkbox('evntIsPublished', '1', $event->evnt_is_published == 1) !!}
                                 </div>

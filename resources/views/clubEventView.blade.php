@@ -106,6 +106,12 @@
 								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
 							</td>
 						</tr>
+
+						{{--
+
+						Disabling iCal until fully functional.
+
+
 						<tr>
 							<td width="20%" class="left-padding-16">
 								<i>{{ trans('mainLang.iCal') }}:</i>
@@ -120,7 +126,10 @@
 								@endif
 							</td>
 						</tr>
+
+						--}}
 					</table>
+
 				{{-- CRUD --}}
 				@if(Session::get('userGroup') == 'marketing'
 				 OR Session::get('userGroup') == 'clubleitung'
@@ -128,7 +137,12 @@
 				 OR Session::get('userId') == $created_by)
 					<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">
 						<span class="pull-right">
-							{{-- Event publishing only for CL/marketing -> exclude creator --}}
+							{{-- Event publishing only for CL/marketing -> exclude creator 
+
+							
+							Disabling iCal until fully functional.
+
+
 							@if(Session::get('userGroup') == 'marketing'
 							 OR Session::get('userGroup') == 'clubleitung'
 							 OR Session::get('userGroup') == 'admin')
@@ -156,6 +170,9 @@
 								</button>
 								&nbsp;&nbsp;
 							@endif
+
+							--}}
+
 							<a href="{{ URL::route('event.edit', $clubEvent->id) }}"
 							   class="btn btn-primary"
 							   data-toggle="tooltip"

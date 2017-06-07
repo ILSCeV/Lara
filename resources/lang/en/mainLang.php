@@ -285,6 +285,7 @@ return [
     'candidate'             => 'Candidate',
     'veteran'               => 'Veteran',
     'ex-member'             => 'ex-Member',
+    'ex-candidate'          => 'ex-Candidate',
     'active'                => 'Active',
     'external'              => 'External',
 
