@@ -15,7 +15,8 @@ class Shift extends Model
         'entry_user_comment',
         'entry_time_start',
         'entry_time_end',
-        'entry_statistical_weight'
+        'entry_statistical_weight',
+        'position'
     ];
 
     public function comment() {
@@ -140,5 +141,8 @@ class Shift extends Model
     public function schedule()
     {
         return $this->belongsTo('Lara\Schedule', 'schdl_id', 'id');
+    }
+
+    public static function sortByOrder($shifts) {
     }
 }
