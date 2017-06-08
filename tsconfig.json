@@ -1,14 +1,15 @@
 {
     "compilerOptions": {
         "outFile": "resources/assets/ts/bin/build.js",
+        "sourceMap": true,
         "types": [
             "jquery",
             "bootstrap",
             "bootstrap-select",
             "bootbox",
+            "sortablejs",
             "es6-promise"
-        ],
-		"sourceMap": true
+        ]
     },
     "include": [
         "resources/assets/ts/*.ts"
