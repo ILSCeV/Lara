@@ -228,8 +228,8 @@ class ClubEventController extends Controller
                                 ->with('type',
                                        'getPerson',
                                        'getPerson.getClub')
-                                ->get()
-                                ->orderBy('position');
+                                ->orderBy('position')
+                                ->get();
 
         $clubs = Club::orderBy('clb_title')->pluck('clb_title', 'id');
 

@@ -371,7 +371,7 @@
 	</div>
 
 	<br>
-	@include('partials.editSchedule')
+		@include('partials.editSchedule')
 	<br>
 	
 	{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'hidden', 'id'=>'button-create-submit')) !!}
