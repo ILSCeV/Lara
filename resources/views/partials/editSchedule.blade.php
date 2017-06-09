@@ -8,7 +8,7 @@
 			@foreach($entries as $shift)
 				@include('partials.events.shift', [
 					"title" => $shift->type->jbtyp_title,
-					"startTime" => $shift->entry_time_start,
+					"startTime" => $shift->start,
 					"endTime" => $shift->entry_time_end,
 					"weight" => $shift->entry_statistical_weight,
 					"shiftId" => $shift->id,

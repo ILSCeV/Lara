@@ -239,11 +239,11 @@ class IcalController extends Controller
                 
                 $start_time = "";
                 $preparationNeeded = false;
-                if ($schedule->event->evnt_time_start == $evt->entry_time_start) {
+                if ($schedule->event->evnt_time_start == $evt->start) {
                     $start_time = $schedule->schdl_time_preparation_start;
                     $preparationNeeded = true;
                 } else {
-                    $start_time = $evt->entry_time_start;
+                    $start_time = $evt->start;
                     $preparationNeeded = false;
                 }
                 
@@ -282,7 +282,7 @@ class IcalController extends Controller
                         .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
                         ."\n"
                         .trans('mainLang.shift').": ".$evt->type->title()."\n"
-                        .trans('mainLang.shiftTime').": ".substr($evt->entry_time_start, 0, 5)." - ".substr($evt->entry_time_end, 0, 5)."\n"
+                        .trans('mainLang.shiftTime').": ".substr($evt->start, 0, 5)." - ".substr($evt->entry_time_end, 0, 5)."\n"
                         ."\n"
                         ."---\n"
                         ."\n"

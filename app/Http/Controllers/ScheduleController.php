@@ -310,7 +310,7 @@ class ScheduleController extends Controller
                 }
                 $shift->fill([
                     "schedule_id" => $scheduleId,
-                    "entry_time_start" => $inputShifts["start"][$i],
+                    "start" => $inputShifts["start"][$i],
                     "entry_time_end" => $inputShifts["end"][$i],
                     "entry_statistical_weight" => $inputShifts["weight"][$i],
                     "shifttype_id" => $shiftType->id,
@@ -365,7 +365,7 @@ class ScheduleController extends Controller
     */
     private static function updateShift($shift, $jobtypeId, $counterValue)
     {
-        $shift->entry_time_start = Input::get('jbtyp_time_start' . $counterValue);
+        $shift->start = Input::get('jbtyp_time_start' . $counterValue);
 
         $shift->entry_time_end = Input::get('jbtyp_time_end' . $counterValue);
 

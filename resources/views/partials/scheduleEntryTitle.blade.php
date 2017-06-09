@@ -6,7 +6,7 @@
         <span class="word-break" 
               data-toggle="tooltip" 
               data-placement="top" 
-              title="{{ date("H:i", strtotime($entry->entry_time_start)) . 
+              title="{{ date("H:i", strtotime($entry->start)) .
               "-" . 
               date("H:i", strtotime($entry->entry_time_end)) }}">
                 <small>
@@ -14,7 +14,7 @@
                         {{ $entry->type->title() }}
                     </strong>
                     <div class="entry-time hide text-dark-grey">
-                        {!! "(" . date("H:i", strtotime($entry->entry_time_start))
+                        {!! "(" . date("H:i", strtotime($entry->start))
                         . "-" .
                         date("H:i", strtotime($entry->entry_time_end)) . ")" !!}
                     </div>

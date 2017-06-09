@@ -43,7 +43,7 @@ class ShiftController extends Controller
             'prsn_status'       => $status,
             'clb_title'         => $clubTitle,
             'comment'=> $shift->comment,
-            'entry_time_start'  => $shift->entry_time_start,
+            'start'  => $shift->start,
             'entry_time_end'    => $shift->entry_time_end,
             'updated_at'        => $shift->updated_at,
             'is_current_user'   => $isCurrentUser
