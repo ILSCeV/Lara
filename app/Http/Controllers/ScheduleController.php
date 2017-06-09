@@ -152,15 +152,7 @@ class ScheduleController extends Controller
 
 
     public static function logAction(Shift $shift, $action) {
-        $schedule = $shift->schedule;
-        $originalAttributes = $shift->getOriginal();
-        $currentAttributes = $shift->getAttributes();
-        if ($shift->isDirty()) {
-            foreach ($shift->getDirty() as $dirtyAttribute) {
-
-            }
-        }
-
+        self::logRevision($shift->schedule, $shift, $action);
     }
 
     /**
@@ -175,7 +167,7 @@ class ScheduleController extends Controller
      * @param string $newComment
      * @return void
      */
-    public static function logRevision($schedule, Shift $shift, $action, $old, $new, $oldComment, $newComment)
+    public static function logRevision($schedule, Shift $shift, $action, $old = null, $new = null, $oldComment = null, $newComment = null)
     {
         // workaround for older events where revision history is not present
         if($schedule->entry_revisions == "")
@@ -293,6 +285,7 @@ class ScheduleController extends Controller
             ->get()
             ->each(function(Shift $shift) {
                 $shift->delete();
+                self::logAction($shift, "Dienst gelöscht");
             });
 
         for ($i = 0; $i < $amount; ++$i) {
@@ -324,7 +317,9 @@ class ScheduleController extends Controller
                     "position" => $i
                 ]);
 
-                // TODO: Logging
+                if (! $shift->exists) {
+                    self::logAction($shift, "Dienst erstellt");
+                }
 
                 $shift->save();
             }
