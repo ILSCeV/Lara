@@ -61,7 +61,7 @@ class ShiftTypeController extends Controller
         // get a list of all available job types
         $jobtypes = ShiftType::orderBy('jbtyp_title', 'ASC')->get();
 
-        $entries = Shift::where('jbtyp_id', '=', $id)
+        $entries = Shift::where('shifttype_id', '=', $id)
             ->with('schedule.event.getPlace')
             ->paginate(25);
 
@@ -160,7 +160,7 @@ class ShiftTypeController extends Controller
         $jobtype = ShiftType::findOrFail($id);
 
         // Before deleting, check if this job type is in use in any existing schedule
-        if (  Shift::where('jbtyp_id', '=', $jobtype->id)->count() > 0  ) {
+        if (  Shift::where('shifttype_id', '=', $jobtype->id)->count() > 0  ) {
             // CASE 1: job type still in use - let the user decide what to do in each case
 
             // Inform the user about the redirect and go to detailed info about the job type selected

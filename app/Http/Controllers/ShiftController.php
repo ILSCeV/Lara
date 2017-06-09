@@ -77,7 +77,7 @@ class ShiftController extends Controller
                 ->first();
 
             // Substitute values
-            $shift->jbtyp_id = $request->get('jobtypeId');
+            $shift->shifttype_id = $request->get('jobtypeId');
             $shift->save();
 
             // Log changes
@@ -92,7 +92,7 @@ class ShiftController extends Controller
             // Formulate the response
             return response()->json([
                 "entryId" => $shift->id,
-                "updatedJobtypeTitle" => ShiftType::where('id', '=', $shift->jbtyp_id)->first()->jbtyp_title
+                "updatedJobtypeTitle" => ShiftType::where('id', '=', $shift->shifttype_id)->first()->jbtyp_title
             ]);
         }
 

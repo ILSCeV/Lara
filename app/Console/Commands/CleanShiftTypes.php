@@ -59,7 +59,7 @@ class CleanShiftTypes extends Command
         foreach ($shifttypes as $shifttype) {
 
             // Get corresponding ScheduleEntries
-            $scheduleEntries = Shift::where('jbtyp_id', '=', $shifttype->id)->get();
+            $scheduleEntries = Shift::where('shifttype_id', '=', $shifttype->id)->get();
 
             if (  $scheduleEntries->count() === 0  ) {
                 
@@ -93,7 +93,7 @@ class CleanShiftTypes extends Command
 
                     // Substitute this shift type for the alternative
                     foreach ($scheduleEntries as $entry) {
-                        $entry->jbtyp_id = $alternative->id;
+                        $entry->shifttype_id = $alternative->id;
                         $entry->save();
                     }
 

@@ -313,7 +313,7 @@ class ScheduleController extends Controller
                     "entry_time_start" => $inputShifts["start"][$i],
                     "entry_time_end" => $inputShifts["end"][$i],
                     "entry_statistical_weight" => $inputShifts["weight"][$i],
-                    "jbtyp_id" => $shiftType->id,
+                    "shifttype_id" => $shiftType->id,
                     "position" => $i
                 ]);
 

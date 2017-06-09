@@ -10,7 +10,7 @@ class Shift extends Model
 
     protected $fillable = [
         'schedule_id',
-        'jbtyp_id',
+        'shifttype_id',
         'prsn_id',
         'entry_user_comment',
         'entry_time_start',
@@ -26,26 +26,26 @@ class Shift extends Model
 
     /**
      * Get the corresponding job type.
-     * Looks up in table shifttypes for that entry, which has the same id like jbtyp_id of ScheduleEntry instance.
+     * Looks up in table shifttypes for that entry, which has the same id like shifttype_id of ScheduleEntry instance.
      *
      * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type ShiftType
      */
     public function getJobType() {
-        return $this->belongsTo('Lara\ShiftType', 'jbtyp_id', 'id');
+        return $this->belongsTo('Lara\ShiftType', 'shifttype_id', 'id');
     }
 
     public function type() {
-        return $this->belongsTo('Lara\ShiftType', 'jbtyp_id', 'id');
+        return $this->belongsTo('Lara\ShiftType', 'shifttype_id', 'id');
     }
 
     /**
      * Get the corresponding job type.
-     * Looks up in table shifttypes for that entry, which has the same id like jbtyp_id of ScheduleEntry instance.
+     * Looks up in table shifttypes for that entry, which has the same id like shifttype_id of ScheduleEntry instance.
      *
      * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type ShiftType
      */
     public function jobType() {
-        return $this->belongsTo('Lara\ShiftType', 'jbtyp_id', 'id');
+        return $this->belongsTo('Lara\ShiftType', 'shifttype_id', 'id');
     }
 
     /**
@@ -88,7 +88,7 @@ class Shift extends Model
         {
             foreach($entries as $entry)
             {
-                if ($entry->jbtyp_id == $jobtypeId)
+                if ($entry->shifttype_id == $jobtypeId)
                     $count++;
             }
         }
@@ -109,7 +109,7 @@ class Shift extends Model
         {
             foreach($entries as $entry)
             {
-                if ($entry->jbtyp_id == $jobtypeId)
+                if ($entry->shifttype_id == $jobtypeId)
                     return $entry->entry_time_start;
             }
         }
@@ -130,7 +130,7 @@ class Shift extends Model
         {
             foreach($entries as $entry)
             {
-                if ($entry->jbtyp_id == $jobtypeId)
+                if ($entry->shifttype_id == $jobtypeId)
                     return $entry->entry_time_end;
             }
         }
