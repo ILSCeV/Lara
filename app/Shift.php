@@ -26,12 +26,12 @@ class Shift extends Model
 
     /**
      * Get the corresponding job type.
-     * Looks up in table jobtypes for that entry, which has the same id like jbtyp_id of ScheduleEntry instance.
+     * Looks up in table shifttypes for that entry, which has the same id like jbtyp_id of ScheduleEntry instance.
      *
-     * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Jobtype
+     * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type ShiftType
      */
     public function getJobType() {
-        return $this->belongsTo('Lara\Jobtype', 'jbtyp_id', 'id');
+        return $this->belongsTo('Lara\ShiftType', 'jbtyp_id', 'id');
     }
 
     public function type() {
@@ -40,12 +40,12 @@ class Shift extends Model
 
     /**
      * Get the corresponding job type.
-     * Looks up in table jobtypes for that entry, which has the same id like jbtyp_id of ScheduleEntry instance.
+     * Looks up in table shifttypes for that entry, which has the same id like jbtyp_id of ScheduleEntry instance.
      *
-     * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Jobtype
+     * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type ShiftType
      */
     public function jobType() {
-        return $this->belongsTo('Lara\Jobtype', 'jbtyp_id', 'id');
+        return $this->belongsTo('Lara\ShiftType', 'jbtyp_id', 'id');
     }
 
     /**

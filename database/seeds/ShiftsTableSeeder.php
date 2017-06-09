@@ -12,7 +12,7 @@ class ShiftsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('schedule_entries')->delete();
+        DB::table('shifts')->delete();
         factory(Lara\Shift::class, 500)->create();
     }
 }

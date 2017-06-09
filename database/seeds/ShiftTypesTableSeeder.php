@@ -12,7 +12,7 @@ class ShiftTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('jobtypes')->delete();
+        \DB::table('shifttypes')->delete();
 
         factory(Lara\ShiftType::class, 20)->create();
     }

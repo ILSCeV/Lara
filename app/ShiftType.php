@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShiftType extends Model
 {
-    protected $table = 'jobtypes';
+    protected $table = 'shifttypes';
 
     protected $fillable = [
         'jbtyp_title',
