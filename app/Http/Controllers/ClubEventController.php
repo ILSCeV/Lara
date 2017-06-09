@@ -89,7 +89,7 @@ class ClubEventController extends Controller
             $activeTemplate = $template->schdl_title;
 
             // get template data
-            $entries    = $template->shifts()->with('type')->get();
+            $entries    = $template->shifts()->with('type')->orderBy('position')->get();
             $title      = $template->getClubEvent->evnt_title;
             $subtitle   = $template->getClubEvent->evnt_subtitle;
             $type       = $template->getClubEvent->evnt_type;
@@ -168,21 +168,7 @@ class ClubEventController extends Controller
 
         $newSchedule->save();
 
-        $newEntries = ScheduleController::createShifts($newSchedule->id);
-        foreach([]as $newEntry)
-        {
-            $newEntry->schdl_id = $newSchedule->id;
-            $newEntry->save();
-
-            // log revision
-            ScheduleController::logRevision($newEntry->getSchedule,     // schedule object
-                                            $newEntry,                  // entry object
-                                            "Dienst erstellt",          // action description
-                                            null,                       // old value
-                                            null,                       // new value
-                                            null,                       // old comment
-                                            null);                      // new comment
-        }
+        ScheduleController::createShifts($newSchedule->id);
 
         // log the action
         Log::info('Event created: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
@@ -296,6 +282,7 @@ class ClubEventController extends Controller
         // put template data into entries
         $entries = $schedule->shifts()
                             ->with('type')
+                            ->orderBy('position')
                             ->get();
 
         // Filter - Workaround for older events: populate filter with event club
