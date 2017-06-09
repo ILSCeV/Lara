@@ -14,13 +14,13 @@ class CleanerNamesForShiftsTable extends Migration
     public function up()
     {
         Schema::table("shifts", function(Blueprint $table) {
-            $table->renameColumn("schdl_id", "schedule_id")
-                ->renameColumn("jbtyp_id", "shifttype_id")
-                ->renameColumn("prsn_id", "person_id")
-                ->renameColumn("entry_user_comment", "comment")
-                ->renameColumn("entry_statistical_weight", "statistical_weight")
-                ->renameColumn("entry_time_start", "start")
-                ->renameColumn("entry_time_end", "end");
+            $table->renameColumn("schdl_id", "schedule_id");
+            $table->renameColumn("jbtyp_id", "shifttype_id");
+            $table->renameColumn("prsn_id", "person_id");
+            $table->renameColumn("entry_user_comment", "comment");
+            $table->renameColumn("entry_statistical_weight", "statistical_weight");
+            $table->renameColumn("entry_time_start", "start");
+            $table->renameColumn("entry_time_end", "end");
         });
     }
 
@@ -32,13 +32,13 @@ class CleanerNamesForShiftsTable extends Migration
     public function down()
     {
         Schema::table("shifts", function(Blueprint $table) {
-            $table->renameColumn("schedule_id", "schdl_id")
-                ->renameColumn("shifttype_id", "jbtyp_id")
-                ->renameColumn("person_id", "prsn_id")
-                ->renameColumn("comment", "entry_user_comment")
-                ->renameColumn("statistical_weight", "entry_statistical_weight")
-                ->renameColumn("start", "entry_time_start")
-                ->renameColumn("end", "entry_time_end");
+            $table->renameColumn("schedule_id", "schdl_id");
+            $table->renameColumn("shifttype_id", "jbtyp_id");
+            $table->renameColumn("person_id", "prsn_id");
+            $table->renameColumn("comment", "entry_user_comment");
+            $table->renameColumn("statistical_weight", "entry_statistical_weight");
+            $table->renameColumn("start", "entry_time_start");
+            $table->renameColumn("end", "entry_time_end");
         });
     }
 }
