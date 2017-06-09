@@ -103,7 +103,7 @@ class StatisticsController extends Controller
                             'section'   =>$shift->schedule->event->place->plc_title,
                             'isOwnClub' =>in_array($ownClub, $clubsOfShift),
                             'date'      =>strftime("%d.%m.%Y (%a)", strtotime($shift->schedule->event->evnt_date_start)),
-                            'weight'    =>$shift->entry_statistical_weight];
+                            'weight'    =>$shift->statistical_weight];
         }
 
         return response()->json($response);        

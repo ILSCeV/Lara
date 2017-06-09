@@ -10,7 +10,7 @@
 					"title" => $shift->type->jbtyp_title,
 					"startTime" => $shift->start,
 					"endTime" => $shift->end,
-					"weight" => $shift->entry_statistical_weight,
+					"weight" => $shift->statistical_weight,
 					"shiftId" => $shift->id,
 					'shiftTypeId' => $shift->type->id
 				])

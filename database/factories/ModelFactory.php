@@ -137,7 +137,7 @@ $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
         'comment' => $faker->sentence,
         'start' => $start,
         'end' => $end,
-        'entry_statistical_weight' => 1
+        'statistical_weight' => 1
     ];
 });
 

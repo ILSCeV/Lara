@@ -312,7 +312,7 @@ class ScheduleController extends Controller
                     "schedule_id" => $scheduleId,
                     "start" => $inputShifts["start"][$i],
                     "end" => $inputShifts["end"][$i],
-                    "entry_statistical_weight" => $inputShifts["weight"][$i],
+                    "statistical_weight" => $inputShifts["weight"][$i],
                     "shifttype_id" => $shiftType->id,
                     "position" => $i
                 ]);
@@ -369,7 +369,7 @@ class ScheduleController extends Controller
 
         $shift->end = Input::get('jbtyp_time_end' . $counterValue);
 
-        $shift->entry_statistical_weight = Input::get('jbtyp_statistical_weight' . $counterValue);
+        $shift->statistical_weight = Input::get('jbtyp_statistical_weight' . $counterValue);
 
         return $shift;
     }

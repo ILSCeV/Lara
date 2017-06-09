@@ -20,7 +20,7 @@ class StatisticsInformation
         $usersShifts = $shifts->where('person_id', $person->id);
 
         $totalWeight = $usersShifts->reduce(function($prev, $current) {
-            return $current->entry_statistical_weight + $prev;
+            return $current->statistical_weight + $prev;
         });
 
         $shiftsInOwnClub = $usersShifts->filter(function ($shift) use ($club) {
@@ -29,7 +29,7 @@ class StatisticsInformation
         });
 
         $this->inOwnClub = $shiftsInOwnClub->reduce(function ($prev, $current) {
-            return $current->entry_statistical_weight + $prev;
+            return $current->statistical_weight + $prev;
         }, 0);
 
         $this->inOtherClubs = $totalWeight - $this->inOwnClub;
