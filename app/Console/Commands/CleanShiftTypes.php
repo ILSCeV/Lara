@@ -3,8 +3,8 @@
 namespace Lara\Console\Commands;
 
 use Illuminate\Console\Command;
-use Lara\Jobtype;
-use Lara\ScheduleEntry;
+use Lara\ShiftType;
+use Lara\Shift;
 use Log;
 
 class CleanShiftTypes extends Command
@@ -50,16 +50,16 @@ class CleanShiftTypes extends Command
 
         // Retrieve all ShiftTypes,
         // and sort them backwards to delete rarely used latest entries first and avoid costly DB queries on older ones that are used more
-        $shifttypes = Jobtype::orderBy('id', 'desc')->get();
+        $shifttypes = ShiftType::orderBy('id', 'desc')->get();
 
         // Initialize progress bar
         $bar = $this->output->createProgressBar(count($shifttypes));
 
-        // Iterate through all ShiftTypes, check if there is any ScheduleEntry it is used in, and if not - delete this ShiftType
+        // Iterate through all ShiftTypes, check if there is any shift it is used in, and if not - delete this ShiftType
         foreach ($shifttypes as $shifttype) {
 
             // Get corresponding ScheduleEntries
-            $scheduleEntries = ScheduleEntry::where('jbtyp_id', '=', $shifttype->id)->get();
+            $scheduleEntries = Shift::where('jbtyp_id', '=', $shifttype->id)->get();
 
             if (  $scheduleEntries->count() === 0  ) {
                 
@@ -69,8 +69,8 @@ class CleanShiftTypes extends Command
                 $this->info(''); // new line
                 $this->info('Shift type deleted: "' . $shifttype->jbtyp_title . '" (id:' . $shifttype->id . '), it was not used in any schedule.');
                 
-                // Now delete the jobtype
-                Jobtype::destroy($shifttype->id);
+                // Now delete the ShiftType
+                ShiftType::destroy($shifttype->id);
             } else {
 
                 // Step 2: check if there exists another shift with the same name and duration
@@ -82,7 +82,7 @@ class CleanShiftTypes extends Command
                 // to every schedule entry that used current shift type -> this will get us n-1 shift types for this combination.
                 
                 // Get a the first shift type with this combination of name&times
-                $alternative = JobType::where('jbtyp_title', '=', $shifttype->jbtyp_title)
+                $alternative = ShiftType::where('jbtyp_title', '=', $shifttype->jbtyp_title)
                                       ->where('jbtyp_time_start', '=', $shifttype->jbtyp_time_start)
                                       ->where('jbtyp_time_end', '=', $shifttype->jbtyp_time_end)
                                       ->first();
@@ -107,8 +107,8 @@ class CleanShiftTypes extends Command
                     $this->info(''); // new line
                     $this->info('Shift type deleted: "' . $shifttype->jbtyp_title . '" (id:' . $shifttype->id . '), it was not used in any schedule.');
                     
-                    // Now delete the jobtype
-                    JobType::destroy($shifttype->id);
+                    // Now delete the ShiftType
+                    ShiftType::destroy($shifttype->id);
 
 
                 }   // Else this is the only shifttype with this name&times combination -> do nothing.

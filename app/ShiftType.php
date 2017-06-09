@@ -19,12 +19,12 @@ class ShiftType extends Model
 
     /**
      * Get the corresponding schedule entries.
-     * Looks up in table schedule_entries for entries, which have the same jbtyp_id like id of Jobtype instance.
+     * Looks up in table shifts for entries, which have the same jbtyp_id like id of Jobtype instance.
      *
      * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasMany of type ClubEvent
      */
     public function getJob(){
-        return $this->hasMany('Lara\ScheduleEntry', 'jbtyp_id', 'id');
+        return $this->hasMany('Lara\Shift', 'jbtyp_id', 'id');
     }
 
     public function title() {
