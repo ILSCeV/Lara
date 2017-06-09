@@ -104,7 +104,7 @@ $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Lara\Jobtype::class, function(Faker\Generator $faker) {
+$factory->define(Lara\ShiftType::class, function(Faker\Generator $faker) {
     $types = ['Einlass', 'Bar', 'Tresen', 'AV', 'Disko', 'Licht'];
     $end = $faker->time();
     $start = $faker->time('H:i:s', $end);
@@ -127,12 +127,12 @@ $factory->define(Lara\Schedule::class, function(Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Lara\ScheduleEntry::class, function(Faker\Generator $faker) {
+$factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
     $end = $faker->time();
     $start = $faker->time('H:i:s', $end);
     return [
         'schdl_id' => Lara\Schedule::inRandomOrder()->first()->id,
-        'jbtyp_id' => Lara\Jobtype::inRandomOrder()->first()->id,
+        'jbtyp_id' => Lara\ShiftType::inRandomOrder()->first()->id,
         'prsn_id' => Lara\Person::inRandomOrder()->first()->id,
         'entry_user_comment' => $faker->sentence,
         'entry_time_start' => $start,
