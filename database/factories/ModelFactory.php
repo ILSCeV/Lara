@@ -134,7 +134,7 @@ $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
         'schedule_id' => Lara\Schedule::inRandomOrder()->first()->id,
         'shifttype_id' => Lara\ShiftType::inRandomOrder()->first()->id,
         'person_id' => Lara\Person::inRandomOrder()->first()->id,
-        'entry_user_comment' => $faker->sentence,
+        'comment' => $faker->sentence,
         'entry_time_start' => $start,
         'entry_time_end' => $end,
         'entry_statistical_weight' => 1

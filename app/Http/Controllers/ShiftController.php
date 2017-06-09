@@ -42,7 +42,7 @@ class ShiftController extends Controller
             'prsn_ldap_id'      => $ldapId,
             'prsn_status'       => $status,
             'clb_title'         => $clubTitle,
-            'entry_user_comment'=> $shift->entry_user_comment,
+            'comment'=> $shift->comment,
             'entry_time_start'  => $shift->entry_time_start,
             'entry_time_end'    => $shift->entry_time_end,
             'updated_at'        => $shift->updated_at,
@@ -115,7 +115,7 @@ class ShiftController extends Controller
 
         // Remember old value for logging
         $oldPerson = $shift->getPerson;
-        $oldComment = $shift->entry_user_comment;
+        $oldComment = $shift->comment;
 
         // Check if that schedule needs a password and validate hashes
         if ($shift->getSchedule->schdl_password !== ''
@@ -239,12 +239,12 @@ class ShiftController extends Controller
         // Case ADDED:   Comment was empty, new comment entered                 -> add new data
         // Case DELETED: Comment was not empty, comment is empty now            -> delete old data
         // Case CHANGED: Comment was not empty, new comment entered             -> delete old data, then add new data
-        if( empty($shift->entry_user_comment) )
+        if( empty($shift->comment) )
         {
             if ( !$userComment == '' )
             {
                 // Case ADDED: Comment was empty, new comment entered -> add new data
-                $shift->entry_user_comment = $userComment;
+                $shift->comment = $userComment;
                 $shift->save();
                 ScheduleController::logRevision($shift->getSchedule,                    // schedule object
                     $shift,                             // shift object
@@ -261,7 +261,7 @@ class ShiftController extends Controller
         }
         else
         {
-            if( $shift->entry_user_comment == $userComment )
+            if( $shift->comment == $userComment )
             {
                 // Case SAME: Comment was not empty, but same comment is there -> do nothing
             }
@@ -270,7 +270,7 @@ class ShiftController extends Controller
                 if ( $userComment == '' )
                 {
                     // Case DELETED: Comment was not empty, comment is empty now -> delete old data
-                    $shift->entry_user_comment = null;
+                    $shift->comment = null;
                     $shift->save();
                     ScheduleController::logRevision($shift->getSchedule,                // schedule object
                         $shift,                             // shift object
@@ -283,7 +283,7 @@ class ShiftController extends Controller
                 else
                 {
                     // Case CHANGED: Comment was not empty, new comment entered -> delete old data, then add new data
-                    $shift->entry_user_comment = $userComment;
+                    $shift->comment = $userComment;
                     $shift->save();
                     ScheduleController::logRevision($shift->getSchedule,                // schedule object
                         $shift,                             // shift object
@@ -307,7 +307,7 @@ class ShiftController extends Controller
             "userName"          => is_null( $shift->getPerson()->first() ) ? "" : $shift->getPerson()->first()->prsn_name,
             "ldapId"            => $prsn_ldap_id,
             "userClub"          => is_null( $shift->getPerson()->first() ) ? "" : $shift->getPerson()->first()->getClub->clb_title,
-            "userComment"       => $shift->entry_user_comment,
+            "userComment"       => $shift->comment,
             "timestamp"         => $timestamp,
             "is_current_user"   => $prsn_ldap_id == Session::get('userId')
         ], 200);

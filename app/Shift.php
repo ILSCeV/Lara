@@ -12,7 +12,7 @@ class Shift extends Model
         'schedule_id',
         'shifttype_id',
         'person_id',
-        'entry_user_comment',
+        'comment',
         'entry_time_start',
         'entry_time_end',
         'entry_statistical_weight',
@@ -20,7 +20,7 @@ class Shift extends Model
     ];
 
     public function comment() {
-        return $this->entry_user_comment;
+        return $this->comment;
     }
 
 

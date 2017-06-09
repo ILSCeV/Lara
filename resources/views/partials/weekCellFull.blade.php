@@ -114,7 +114,7 @@
 
 					{{-- SMALL COMMENT ICON --}}
 					<div class="col-xs-1 col-md-1 no-padding">
-				        @if( $entry->entry_user_comment == "" )
+				        @if( $entry->comment == "" )
 				            <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
 				                <i class="fa fa-comment-o"></i>
 				            </button>
@@ -128,7 +128,7 @@
 					{{-- Hidden comment field to be opened after the click on the icon
 						 see vedst-scripts "Show/hide comments" function --}}
 					{!! Form::text('comment' . $entry->id,
-					               $entry->entry_user_comment,
+					               $entry->comment,
 					               array('placeholder'=>Lang::get('mainLang.addCommentHere'),
 					                     'id'=>'comment' . $entry->id,
 					                     'name'=>'comment' . $entry->id,

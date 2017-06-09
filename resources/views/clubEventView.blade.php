@@ -299,12 +299,12 @@
 						{{-- COMMENT SECTION --}}
 						<div class="col-md-6 col-sm-6 col-xs-12 hidden-print word-break no-margin">
 						    <span class="pull-left">
-						    	{!! $entry->entry_user_comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
+						    	{!! $entry->comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
 						    	&nbsp;&nbsp;
 						    </span>
 
 						    <span class="col-md-10 col-sm-10 col-xs-10 no-padding no-margin">
-							    {!! !empty($entry->entry_user_comment) ? $entry->entry_user_comment : "-" !!}
+							    {!! !empty($entry->comment) ? $entry->comment : "-" !!}
 							</span>
 						</div>
 
@@ -327,12 +327,12 @@
 						<br class="visible-print hidden-md hidden-sm hidden-xs">
 						<div class="col-md-6 col-sm-12 col-xs-12 no-margin">
 						    <span class="pull-left">
-						    	{!! $entry->entry_user_comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
+						    	{!! $entry->comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
 						    	&nbsp;&nbsp;
 						    </span>
 
 						    {!! Form::text('comment' . $entry->id,
-					                   $entry->entry_user_comment,
+					                   $entry->comment,
 					                   array('placeholder'=>Lang::get('mainLang.addCommentHere'),
 					                         'id'=>'comment' . $entry->id,
 			                     			 'name'=>'comment' . $entry->id,

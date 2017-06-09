@@ -130,7 +130,7 @@
 							{{-- ENTRY COMMENT --}}
 							{{-- Show only the icon first --}}
 							<div class="col-xs-1 col-md-1 no-padding">      
-							    @if( $entry->entry_user_comment == "" )
+							    @if( $entry->comment == "" )
 							        <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
 							            <i class="fa fa-comment-o"></i>
 							        </button>
@@ -146,7 +146,7 @@
 							<div id="{!! 'comment' . $entry->id !!}"
 							     class="col-xs-10 col-md-10 hidden-print hide col-md-offset-1 word-break"
 							     name="{!! 'comment' . $entry->id !!}">
-							    {!! !empty($entry->entry_user_comment) ? $entry->entry_user_comment : "-" !!}
+							    {!! !empty($entry->comment) ? $entry->comment : "-" !!}
 							</div>
 
 				        @else
@@ -163,7 +163,7 @@
 
 				            {{-- SMALL COMMENT ICON --}}
 				            <div class="col-xs-1 col-md-1 no-padding">      
-						        @if( $entry->entry_user_comment == "" )
+						        @if( $entry->comment == "" )
 						            <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
 						                <i class="fa fa-comment-o"></i>
 						            </button>
@@ -177,7 +177,7 @@
 							{{-- Hidden comment field to be opened after the click on the icon 
 								 see vedst-scripts "Show/hide comments" function --}}	     
 							{!! Form::text('comment' . $entry->id, 
-							               $entry->entry_user_comment, 
+							               $entry->comment,
 							               array('placeholder'=>Lang::get('mainLang.addCommentHere'),
 							                     'id'=>'comment' . $entry->id,
 							                     'class'=>'col-xs-10 col-md-10 hidden-print hide col-md-offset-1 col-xs-offset-1 word-break' )) 
