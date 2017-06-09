@@ -133,7 +133,7 @@ $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
     return [
         'schedule_id' => Lara\Schedule::inRandomOrder()->first()->id,
         'shifttype_id' => Lara\ShiftType::inRandomOrder()->first()->id,
-        'prsn_id' => Lara\Person::inRandomOrder()->first()->id,
+        'person_id' => Lara\Person::inRandomOrder()->first()->id,
         'entry_user_comment' => $faker->sentence,
         'entry_time_start' => $start,
         'entry_time_end' => $end,

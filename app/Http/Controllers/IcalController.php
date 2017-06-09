@@ -230,7 +230,7 @@ class IcalController extends Controller
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
             
-            $events = Shift::where('prsn_id', '=', $person->id)
+            $events = Shift::where('person_id', '=', $person->id)
                 ->with("schedule", "schedule.event.place", "schedule.event", "jobType")
                 ->get();
             

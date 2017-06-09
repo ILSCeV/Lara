@@ -11,7 +11,7 @@ class Shift extends Model
     protected $fillable = [
         'schedule_id',
         'shifttype_id',
-        'prsn_id',
+        'person_id',
         'entry_user_comment',
         'entry_time_start',
         'entry_time_end',
@@ -50,17 +50,17 @@ class Shift extends Model
 
     /**
      * Get the corresponding person, if existing.
-     * Looks up in table persons for that entry, which has the same id like prsn_id of ScheduleEntry instance.
+     * Looks up in table persons for that entry, which has the same id like person_id of ScheduleEntry instance.
      * If prsn_is is null, also null will be returned.
      *
      * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Person
      */
     public function getPerson() {
-        return $this->belongsTo('Lara\Person', 'prsn_id', 'id');
+        return $this->belongsTo('Lara\Person', 'person_id', 'id');
     }
 
     public function person() {
-        return $this->belongsTo('Lara\Person', 'prsn_id', 'id');
+        return $this->belongsTo('Lara\Person', 'person_id', 'id');
     }
 
     /**

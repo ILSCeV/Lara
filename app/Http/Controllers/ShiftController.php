@@ -136,7 +136,7 @@ class ShiftController extends Controller
         // Case DELETED:   Entry was not empty, shift is empty now          -> delete old data
         // Case CHANGED:   Entry was not empty, new name entered            -> delete old data, then add new data
 
-        if( !isset($shift->prsn_id) )
+        if( !isset($shift->person_id) )
         {
             if ( !$userName == '' )
             {
@@ -176,7 +176,7 @@ class ShiftController extends Controller
                 {
                     // Member entries (with LDAP ID provided) shouldn't change club id, so no need to do anything in that case either
                     if ( $shift->getPerson->prsn_name == $userName
-                        AND  Person::where('id', '=', $shift->prsn_id)->first()->prsn_ldap_id == $ldapId )
+                        AND  Person::where('id', '=', $shift->person_id)->first()->prsn_ldap_id == $ldapId )
                     {
                         // Possibility 1: same name, same ldap = same person
                         // Case SAME: Entry was not empty, but same person is there -> do nothing
@@ -355,10 +355,10 @@ class ShiftController extends Controller
     {
         if ( !isset($entry->getPerson->prsn_ldap_id) )
         {
-            Person::destroy($entry->prsn_id);
+            Person::destroy($entry->person_id);
         }
 
-        $entry->prsn_id = null;
+        $entry->person_id = null;
         $entry->save();
     }
 
@@ -422,7 +422,7 @@ class ShiftController extends Controller
         $person->updated_at = Carbon::now();
         $person->save();
 
-        $entry->prsn_id = $person->id;
+        $entry->person_id = $person->id;
         $entry->save();
     }
 
@@ -435,8 +435,8 @@ class ShiftController extends Controller
      * @return array $userStatus
      */
     private function updateStatus($entry) {
-        if ( !is_null($entry->prsn_id) ) {
-            switch (Person::where("id","=",$entry->prsn_id)->first()->prsn_status) {
+        if ( !is_null($entry->person_id) ) {
+            switch (Person::where("id","=",$entry->person_id)->first()->prsn_status) {
                 case 'candidate':
                     $userStatus = ["status"=>"fa fa-adjust", "style"=>"color:yellowgreen;", "title"=>"Kandidat"];
                     break;

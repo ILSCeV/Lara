@@ -78,7 +78,7 @@ class StatisticsController extends Controller
         $till->modify('next month')->modify('-1 day');
 
         // get all shifts in selected time window, for selected person, with their attributes
-        $shifts =  Shift::where('prsn_id', '=', $id)
+        $shifts =  Shift::where('person_id', '=', $id)
                                 ->whereHas('schedule.event', function ($query) use ($from, $till) {
                                     $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
                                 })
