@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shift extends Model
 {
-    protected $table = 'schedule_entries';
+    protected $table = 'shifts';
 
     protected $fillable = [
         'schdl_id',
