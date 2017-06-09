@@ -247,7 +247,7 @@ class IcalController extends Controller
                     $preparationNeeded = false;
                 }
                 
-                $stopHour = intval(substr($evt->entry_time_end, 0, 2));
+                $stopHour = intval(substr($evt->end, 0, 2));
                 $stop_date = "";
                 if ($stopHour > 18) {
                     $stop_date = $schedule->event->evnt_date_start;
@@ -260,7 +260,7 @@ class IcalController extends Controller
                 $start_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT,
                     "".$schedule->event->evnt_date_start." ".$start_time);
                 $stop_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT,
-                    "".$stop_date." ".$evt->entry_time_end);
+                    "".$stop_date." ".$evt->end);
                 
                 if ($start_date_time != false && $stop_date_time != false) {
                     $vEvent->setDtStart($start_date_time);
@@ -282,7 +282,7 @@ class IcalController extends Controller
                         .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
                         ."\n"
                         .trans('mainLang.shift').": ".$evt->type->title()."\n"
-                        .trans('mainLang.shiftTime').": ".substr($evt->start, 0, 5)." - ".substr($evt->entry_time_end, 0, 5)."\n"
+                        .trans('mainLang.shiftTime').": ".substr($evt->start, 0, 5)." - ".substr($evt->end, 0, 5)."\n"
                         ."\n"
                         ."---\n"
                         ."\n"

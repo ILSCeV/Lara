@@ -8,7 +8,7 @@
               data-placement="top" 
               title="{{ date("H:i", strtotime($entry->start)) .
               "-" . 
-              date("H:i", strtotime($entry->entry_time_end)) }}">
+              date("H:i", strtotime($entry->end)) }}">
                 <small>
                     <strong>
                         {{ $entry->type->title() }}
@@ -16,7 +16,7 @@
                     <div class="entry-time hide text-dark-grey">
                         {!! "(" . date("H:i", strtotime($entry->start))
                         . "-" .
-                        date("H:i", strtotime($entry->entry_time_end)) . ")" !!}
+                        date("H:i", strtotime($entry->end)) . ")" !!}
                     </div>
                 </small>
         </span>

@@ -14,7 +14,7 @@ class Shift extends Model
         'person_id',
         'comment',
         'start',
-        'entry_time_end',
+        'end',
         'entry_statistical_weight',
         'position'
     ];
@@ -131,7 +131,7 @@ class Shift extends Model
             foreach($entries as $entry)
             {
                 if ($entry->shifttype_id == $jobtypeId)
-                    return $entry->entry_time_end;
+                    return $entry->end;
             }
         }
 

@@ -9,7 +9,7 @@
 				@include('partials.events.shift', [
 					"title" => $shift->type->jbtyp_title,
 					"startTime" => $shift->start,
-					"endTime" => $shift->entry_time_end,
+					"endTime" => $shift->end,
 					"weight" => $shift->entry_statistical_weight,
 					"shiftId" => $shift->id,
 					'shiftTypeId' => $shift->type->id
