@@ -280,7 +280,7 @@ class ScheduleController extends Controller
         $inputShifts = Input::get("shifts");
         $amount = count($inputShifts["title"]);
 
-        Shift::where('schdl_id', $scheduleId)
+        Shift::where('schedule_id', $scheduleId)
             ->whereNotIn('id', $inputShifts["id"])
             ->get()
             ->each(function(Shift $shift) {
@@ -309,7 +309,7 @@ class ScheduleController extends Controller
                     $shiftType->save();
                 }
                 $shift->fill([
-                    "schdl_id" => $scheduleId,
+                    "schedule_id" => $scheduleId,
                     "entry_time_start" => $inputShifts["start"][$i],
                     "entry_time_end" => $inputShifts["end"][$i],
                     "entry_statistical_weight" => $inputShifts["weight"][$i],

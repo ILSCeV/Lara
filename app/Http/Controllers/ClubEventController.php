@@ -210,7 +210,7 @@ class ClubEventController extends Controller
 
         $schedule = Schedule::findOrFail($clubEvent->getSchedule->id);
 
-        $entries = Shift::where('schdl_id', '=', $schedule->id)
+        $entries = Shift::where('schedule_id', '=', $schedule->id)
                                 ->with('type',
                                        'getPerson',
                                        'getPerson.getClub')

@@ -81,7 +81,7 @@ class ClubEvent extends Model
      */
     public function hasShift($scheduleId,$userId) {
 
-        $entries = Shift::where('schdl_id', '=', $scheduleId)->with('getPerson')->get();
+        $entries = Shift::where('schedule_id', '=', $scheduleId)->with('getPerson')->get();
         foreach($entries as $entry) {
             if ( isset($entry->getPerson->prsn_ldap_id) AND $entry->getPerson->prsn_ldap_id ==  $userId){
                 return true;
@@ -91,6 +91,6 @@ class ClubEvent extends Model
     }
 
 	public function shifts() {
-		return $this->hasManyThrough('Lara\Shift', 'Lara\Schedule', 'evnt_id', 'schdl_id', 'id');
+		return $this->hasManyThrough('Lara\Shift', 'Lara\Schedule', 'evnt_id', 'schedule_id', 'id');
 	}
 }

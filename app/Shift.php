@@ -9,7 +9,7 @@ class Shift extends Model
     protected $table = 'shifts';
 
     protected $fillable = [
-        'schdl_id',
+        'schedule_id',
         'jbtyp_id',
         'prsn_id',
         'entry_user_comment',
@@ -65,12 +65,12 @@ class Shift extends Model
 
     /**
      * Get the corresponding schedule.
-     * Looks up in table schedule for that entry, which has the same id like schdl_id of ScheduleEntry instance.
+     * Looks up in table schedule for that entry, which has the same id like schedule_id of ScheduleEntry instance.
      *
      * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Schedule
      */
     public function getSchedule() {
-        return $this->belongsTo('Lara\Schedule', 'schdl_id', 'id');
+        return $this->belongsTo('Lara\Schedule', 'schedule_id', 'id');
     }
 
     /**
@@ -140,7 +140,7 @@ class Shift extends Model
 
     public function schedule()
     {
-        return $this->belongsTo('Lara\Schedule', 'schdl_id', 'id');
+        return $this->belongsTo('Lara\Schedule', 'schedule_id', 'id');
     }
 
     public static function sortByOrder($shifts) {
