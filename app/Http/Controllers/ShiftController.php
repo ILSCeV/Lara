@@ -449,6 +449,9 @@ class ShiftController extends Controller
                 case 'resigned':
                     $userStatus = ["status"=>"fa fa-star-o", "style"=>"color:gold;", "title"=>"ex-Mitglied"];
                     break;
+                case 'guest':
+                    $userStatus = ["status"=>"fa fa-star-o", "style"=>"color:lightgrey;", "title"=>"ex-Kandidat"];
+                    break;
                 case "":
                     $userStatus = ["status"=>"fa fa-circle", "style"=>"color:lightgrey;", "title"=>"Extern"];
                     break;

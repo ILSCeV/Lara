@@ -151,6 +151,18 @@ class ScheduleController extends Controller
     }
 
 
+    public static function logAction(Shift $shift, $action) {
+        $schedule = $shift->schedule;
+        $originalAttributes = $shift->getOriginal();
+        $currentAttributes = $shift->getAttributes();
+        if ($shift->isDirty()) {
+            foreach ($shift->getDirty() as $dirtyAttribute) {
+
+            }
+        }
+
+    }
+
     /**
      * Updates entry revision
      *
@@ -271,45 +283,52 @@ class ScheduleController extends Controller
     *
     * @return Collection scheduleEntries
     */
-    public static function createShifts()
+    public static function createShifts($scheduleId)
     {
-        $scheduleEntries = new Collection;
+        $inputShifts = Input::get("shifts");
+        $amount = count($inputShifts["title"]);
 
-        // parsing shiftType entries
-        for ($i=1; $i <= Input::get("counter"); $i++) {
+        Shift::where('schdl_id', $scheduleId)
+            ->whereNotIn('id', $inputShifts["id"])
+            ->get()
+            ->each(function(Shift $shift) {
+                $shift->delete();
+            });
 
-            // skip empty fields
-            if (!empty(Input::get("jbtyp_title" . $i))) 
-            {       
+        for ($i = 0; $i < $amount; ++$i) {
+            if ($inputShifts["title"][$i] !== "") {
+                // Cloned shifts have the "id" field set to "", so we will create a new model in this case
+                $shift = Shift::firstOrNew(["id" => $inputShifts["id"][$i]]);
 
-                // check if job type exists
-                $shiftType = ShiftType::where('jbtyp_title', '=', Input::get("jobType" . $i))
-                                  ->where('jbtyp_time_start', '=', Input::get("timeStart" . $i))
-                                  ->where('jbtyp_time_end', '=', Input::get("timeEnd" . $i))
-                                  ->first();
-                
-                // If not found - create new job type with data provided
-                if (is_null($shiftType))
-                {
-                    $shiftType = ShiftType::create([
-                        'jbtyp_title' => Input::get("jbtyp_title" . $i),
-                        'jbtyp_time_start' => Input::get('jbtyp_time_start' . $i),
-                        'jbtyp_time_end' => Input::get('jbtyp_time_end' . $i),
-                        'jbtyp_statistical_weight' => Input::get('jbtyp_statistical_weight' . $i),
-                        'jbtyp_needs_preparation' => 'true',
-                        'jbtyp_is_archived' => 'false'
+                // If there was a shifttype passed and one with the correct title exists, use this one
+                // Otherwise create a new model
+                $shiftType = ShiftType::firstOrNew([
+                    "id" => $inputShifts["type"][$i],
+                    "jbtyp_title" => $inputShifts["title"][$i]
+                ]);
+                // if the model was newly created, save the new shiftType
+                if (! $shiftType->exists) {
+                    $shiftType->fill([
+                        'jbtyp_time_start' => $inputShifts["start"][$i],
+                        'jbtyp_time_end' => $inputShifts["end"][$i],
+                        'jbtyp_statistical_weight' => $inputShifts["weight"][$i],
                     ]);
+                    $shiftType->save();
                 }
+                $shift->fill([
+                    "schdl_id" => $scheduleId,
+                    "entry_time_start" => $inputShifts["start"][$i],
+                    "entry_time_end" => $inputShifts["end"][$i],
+                    "entry_statistical_weight" => $inputShifts["weight"][$i],
+                    "jbtyp_id" => $shiftType->id,
+                    "position" => $i
+                ]);
 
-                $shift = new Shift;
-                $shift->jbtyp_id = $shiftType->id;
+                // TODO: Logging
 
-                // save changes
-                $scheduleEntries->add(ScheduleController::updateShift($shift, $shiftType->id, $i));
+                $shift->save();
             }
         }
-
-        return $scheduleEntries;
     }
 
 
@@ -321,99 +340,7 @@ class ScheduleController extends Controller
     */
     public static function editShifts($scheduleId)
     {
-        // get number of submitted entries
-        $numberOfSubmittedEntries = Input::get('counter');
-
-        // get old entries for this schedule
-        $shifts = Shift::where('schdl_id', '=', $scheduleId)->get();
-
-        // prepare a collection for updated entries
-        $newEntries = new Collection;
-
-        // Counter to traverse all inputs from 1 to N
-        $counterHelper = '1';
-
-        // check for changes in each shift
-        foreach ( $shifts as $shift )
-        {
-
-            // same job type as before - do nothing
-            if ( $shift->type == Input::get('jbtyp_title' . $counterHelper) )
-            {
-                // add to new collection
-                $newEntries->add(ScheduleController::updateShift($shift, $shift->type->id, $counterHelper));
-
-            } 
-            // job type empty - delete shift
-            elseif ( Input::get("jbtyp_title" . $counterHelper) == '' ) 
-            {
-                // log revision
-                ScheduleController::logRevision($shift->getSchedule,    // schedule object
-                                                $shift,                 // shift object
-                                                "Dienst gelöscht",      // action description
-                                                $shift->getPerson,      // old value
-                                                null,                   // new value
-                                                null,                   // old comment
-                                                null);                  // new comment
-
-                // proceed with deletion
-                $shift->delete();
-
-            } 
-            // some new job type added - change shift
-            else 
-            {       
-                $shiftType = ShiftType::firstOrCreate(array('jbtyp_title'=>Input::get("jbtyp_title" . $counterHelper)));
-                $shift->jbtyp_id = $shiftType->id;
-
-                // log revision
-                /*
-                ScheduleController::logRevision($shift->getSchedule,    // schedule object
-                                                $shift,                 // shift object
-                                                "Dienst aktualisiert",      // action description
-                                                $shift->getPerson,      // old value
-                                                $shift->getPerson);     // new value
-                */
-                // add to new collection
-                $newEntries->add(ScheduleController::updateShift($shift, $shiftType->id, $counterHelper));
-            }
-
-            // move to next input
-            $counterHelper++;
-        }
-
-        // At this point we changed all existing entries - have any new ones been added?
-
-        if ($numberOfSubmittedEntries > $counterHelper - 1) {
-            
-            // create some new fields
-            for ($i= $counterHelper; $i <= $numberOfSubmittedEntries; $i++) 
-            {
-                // skip empty fields, create new fields only if input not empty
-                if (!empty(Input::get("jbtyp_title" . $i))) 
-                {
-                    $shiftType = ShiftType::firstOrCreate(array('jbtyp_title'=>Input::get("jbtyp_title" . $i)));
-
-                    $newShift = new Shift;
-                    $newShift->jbtyp_id = $shiftType->id;
-                    $newShift->schdl_id = $scheduleId;
-
-                    // log revision
-                    ScheduleController::logRevision($newShift->getSchedule, // schedule object
-                                                    $newShift,              // shift object
-                                                    "Dienst erstellt",      // action description
-                                                    null,                   // old value
-                                                    null,                   // new value
-                                                    null,                   // old comment
-                                                    null);                  // new comment                   
-
-                    // add to new collection
-                    $newEntries->add(ScheduleController::updateShift($newShift, $shiftType->id, $i));
-                }
-            }
-        }
-
-        return $newEntries;
+        self::createShifts($scheduleId);
     }
 
     /**

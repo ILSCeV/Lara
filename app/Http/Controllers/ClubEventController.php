@@ -104,7 +104,7 @@ class ClubEventController extends Controller
         } else {
             // fill variables with no data if no template was chosen
             $activeTemplate = "";
-            $entries    = null;
+            $entries    = collect([]);
             $title      = null;
             $type       = null;
             $subtitle   = null;
@@ -169,7 +169,7 @@ class ClubEventController extends Controller
         $newSchedule->save();
 
         $newEntries = ScheduleController::createShifts($newSchedule->id);
-        foreach($newEntries as $newEntry)
+        foreach([]as $newEntry)
         {
             $newEntry->schdl_id = $newSchedule->id;
             $newEntry->save();
@@ -341,7 +341,7 @@ class ClubEventController extends Controller
 
         $schedule = (new ScheduleController)->update($event->getSchedule->id);
 
-        $entries = (new ScheduleController)->editShifts($schedule->id);
+        ScheduleController::editShifts($schedule->id);
 
         // log the action
         Log::info('Event edited: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
@@ -351,8 +351,7 @@ class ClubEventController extends Controller
         // save all data in the database
         $event->save();
         $schedule->save();
-        foreach($entries as $entry)
-            $entry->save();
+
         Utilities::clearIcalCache();
 
         // show event

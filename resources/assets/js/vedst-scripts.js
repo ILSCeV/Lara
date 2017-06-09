@@ -688,57 +688,17 @@ $(document).ready(function() {
     }; 
 
     // Add one more job with every click on "+"
-    $('.btnAdd').click(function() {            
-        
-        var temp = $(this).closest('.box');
-        var tempId = parseInt(temp.attr('id').substring(3,7));
-
-        // clone entry
-        temp.clone(true).insertAfter(temp);
-
-        // update fields for following entries
-        temp.nextUntil("br").each(function() {
-            $(this).attr('id', "box" + ++tempId);
-            $(this).find("[name^=jbtyp_title]").attr('id', "jbtyp_title" + tempId).attr('name', "jbtyp_title" + tempId);
-            $(this).find("[name^=jbtyp_time_start]").attr('id', "jbtyp_time_start" + tempId).attr('name', "jbtyp_time_start" + tempId);
-            $(this).find("[name^=jbtyp_time_end]").attr('id', "jbtyp_time_end" + tempId).attr('name', "jbtyp_time_end" + tempId);
-            $(this).find("[name^=jbtyp_statistical_weight]").attr('id', "jbtyp_statistical_weight" + tempId).attr('name', "jbtyp_statistical_weight" + tempId);
-        }); 
-
-        // update counter
-        iCnt = iCnt + 1;
-        $('#counter').val(iCnt);      
-
-        if (iCnt >> 1) {
-            $(".btnRemove").show();
-        };  
+    $('.btnAdd').click(function() {
+        var elementToCopy = $(this).closest('.box');
+        elementToCopy.find(".dropdown-menu").hide();
+        var clone = elementToCopy.clone(true);
+        clone.insertAfter(elementToCopy);
+        clone.find('.shiftId').val("");
     });
 
     // Remove selected job
-    $('.btnRemove').click(function(e) {            
-            var temp = $(this).closest('.box');
-            var tempId = parseInt(temp.attr('id').substring(3,7)) - 1;
-
-            // update fields for following entries
-            temp.nextUntil("br").each(function() {
-                $(this).attr('id', "box" + ++tempId);
-                $(this).find("[name^=jbtyp_title]").attr('id', "jbtyp_title" + tempId).attr('name', "jbtyp_title" + tempId);
-                $(this).find("[name^=jbtyp_time_start]").attr('id', "jbtyp_time_start" + tempId).attr('name', "jbtyp_time_start" + tempId);
-                $(this).find("[name^=jbtyp_time_end]").attr('id', "jbtyp_time_end" + tempId).attr('name', "jbtyp_time_end" + tempId);
-                $(this).find("[name^=jbtyp_statistical_weight]").attr('id', "jbtyp_statistical_weight" + tempId).attr('name', "jbtyp_statistical_weight" + tempId);
-            }); 
-
-            // delete entry
-            $(this).closest(".box").remove();
-            e.preventDefault();
-            
-            // update counter
-            iCnt = iCnt - 1; 
-            $('#counter').val(iCnt);
-
-            if (iCnt < 2) {
-                $(".btnRemove").hide();
-            }; 
+    $('.btnRemove').click(function(e) {
+        $(this).closest('.box').remove();
     });
 
     // populate from dropdown select
