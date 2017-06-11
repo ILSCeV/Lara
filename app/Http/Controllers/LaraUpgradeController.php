@@ -9,17 +9,20 @@
 namespace Lara\Http\Controllers;
 
 
+
 use Lara\Utilities;
 
+/** controller to handle lara upgrade directly */
 class LaraUpgradeController extends Controller
 {
+    /** handles the upgrade request */
     function startUpgradeProcess(){
+        /** if you are no admin, you will be redirected back */
         if(!Utilities::requirePermission('admin')){
             return \Redirect::back($status = 403);
         }
     
         $cmd = "php artisan lara:update &";
-    
         $descriptorspec = array(
             0 => array("pipe", "r"),   // stdin is a pipe that the child will read from
             1 => array("pipe", "w"),   // stdout is a pipe that the child will write to

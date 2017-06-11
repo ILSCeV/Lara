@@ -39,6 +39,10 @@ class Utilities
         Cache::forget(IcalController::ICAL_ACCESSOR);
     }
     
+    /** checks if a user has the permission to do what he want
+     * @param $permissions the permissions the user is needing
+     * @return true or false
+     */
     static function requirePermission($permissions)
     {
         if(!is_array($permissions)){
