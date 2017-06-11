@@ -33,7 +33,7 @@
 |--------------------------------------------------------------------------
 | Global Patterns
 |--------------------------------------------------------------------------
-*/ 
+*/
 Route::pattern('id', 	'[0-9]+');
 Route::pattern('year', 	'[2][0][0-9][0-9]');
 Route::pattern('month',	'[0][1-9]|[1][0-2]');
@@ -148,3 +148,6 @@ Route::get('/ical/events/user/{club_id}/{alarm?}', 				'IcalController@userSched
 // Route::get('/ical/links', 										'IcalController@generateLinks');
 Route::get('/ical/event/{evt_id}',								'IcalController@singleEvent');
 Route::get('/ical/event/{id}/publish', 							'IcalController@togglePublishState')->name("togglePublishState");
+
+// Lara Upgrade
+Route::get('/upgrade',                                         'LaraUpgradeController@startUpgradeProcess')->name('lara.upgrade');

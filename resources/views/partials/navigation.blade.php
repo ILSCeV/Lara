@@ -62,6 +62,10 @@
                     <li><a href="{{ asset('/logs') }}">Logs</a></li>
                 @endif
 
+{{-- LARA UPGRADE for admins user only --}}
+                @if(\Lara\Utilities::requirePermission('admin'))
+                    <li> <a href="{{route("lara.upgrade")}}"> Lara upgrade </a> </li>
+                @endif
 
 {{-- ICal feed links 
 Disabling iCal until fully functional.
