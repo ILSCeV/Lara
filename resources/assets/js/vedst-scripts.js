@@ -468,7 +468,7 @@ $( document ).ready( function() {
 
 // Default language is german
 $(function() {
-    localStorage["language"] = localStorage["language"] || "pirate";
+    localStorage["language"] = localStorage["language"] || "de";
 });
 
 
