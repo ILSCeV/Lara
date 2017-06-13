@@ -38,4 +38,4 @@ mix.sass('resources/assets/sass/app.scss', 'public/css')
         'resources/assets/js/surveyView-scripts.js'
 	], 'public/js/app.js')
 	.version()
-    .sourceMaps()
+    .sourceMaps();
