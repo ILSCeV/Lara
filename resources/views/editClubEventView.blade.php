@@ -322,7 +322,7 @@ AND (Session::get('userGroup') == 'marketing'
 	@include('partials.editSchedule')
 	<br>
 
-	{!! Form::submit('Änderungen speichern', array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
+	{!! Form::submit( trans('mainLang.update') , array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<br class="visible-xs"><br class="visible-xs">
 	<a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }} </a>
