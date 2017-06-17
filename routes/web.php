@@ -150,4 +150,4 @@ Route::get('/ical/event/{evt_id}',								'IcalController@singleEvent');
 Route::get('/ical/event/{id}/publish', 							'IcalController@togglePublishState')->name("togglePublishState");
 
 // Lara Upgrade
-Route::get('/upgrade',                                         'LaraUpgradeController@startUpgradeProcess')->name('lara.upgrade');
+Route::get('/upgrade',                                         'AdminController@startUpdateProcess')->name('lara.upgrade');

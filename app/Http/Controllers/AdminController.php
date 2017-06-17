@@ -13,10 +13,10 @@ namespace Lara\Http\Controllers;
 use Lara\Utilities;
 
 /** controller to handle lara upgrade directly */
-class LaraUpgradeController extends Controller
+class AdminController extends Controller
 {
     /** handles the upgrade request */
-    function startUpgradeProcess(){
+    function startUpdateProcess(){
         /** if you are no admin, you will be redirected back */
         if(!Utilities::requirePermission('admin')){
             return \Redirect::back($status = 403);
