@@ -858,9 +858,7 @@ $(document).ready(function() {
 // ICal //
 //////////
 
-/* 
- * Disabling iCal until fully functional.
- * 
+
 
 $('[name^=icalfeeds]').click(function () {
 
@@ -990,8 +988,6 @@ $('[name^=icalfeeds]').click(function () {
 
     });
 });
-
-Disabling iCal until fully functional. */
 
 
 

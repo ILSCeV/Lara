@@ -63,12 +63,8 @@
                 @endif
 
 
-{{-- ICal feed links 
-Disabling iCal until fully functional.
-
-                    <li><a href="#" name="icalfeeds"><i class="fa fa-calendar" aria-hidden="true"></i> {{ trans('mainLang.icalfeeds') }}</a></li>
-
---}} 
+{{-- ICal feed links --}}
+                <li><a href="#" name="icalfeeds"><i class="fa fa-calendar" aria-hidden="true"></i> {{ trans('mainLang.icalfeeds') }}</a></li>
 
 
 {{-- LANGUAGE SWITCHER / public --}}
