@@ -1,9 +1,4 @@
 <?php
-/**
- * User: fabian
- * Date: 31.01.17
- * Time: 00:06
- */
 
 namespace Lara\Http\Controllers;
 
@@ -22,6 +17,7 @@ use Log;
 use Redirect;
 use Session;
 use URL;
+use View;
 
 /** Controller for generating iCal feeds */
 class IcalController extends Controller
@@ -486,4 +482,8 @@ class IcalController extends Controller
         }
     }
     
+    function test() {
+        return View::make('icaltest');
+    }
+
 }

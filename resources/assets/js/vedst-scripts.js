@@ -991,6 +991,99 @@ $('[name^=icalfeeds]').click(function () {
 
 
 
+// Detecting and reporting user platform
+// As described here: https://stackoverflow.com/questions/21757105/javascript-how-to-check-user-agent-for-mobile-tablet
+
+$( document ).ready( function detectUserDevice() {
+    
+    // Gather info
+    var ua = navigator.userAgent;
+        
+    /* Additional variables - don't need them now, but saving for later use
+    
+    var browser = /Edge\/\d+/.test(ua) ? 'ed' : /MSIE 9/.test(ua) ? 'ie9' : /MSIE 10/.test(ua) ? 'ie10' : /MSIE 11/.test(ua) ? 'ie11' : /MSIE\s\d/.test(ua) ? 'ie?' : /rv\:11/.test(ua) ? 'ie11' : /Firefox\W\d/.test(ua) ? 'ff' : /Chrom(e|ium)\W\d|CriOS\W\d/.test(ua) ? 'gc' : /\bSafari\W\d/.test(ua) ? 'sa' : /\bOpera\W\d/.test(ua) ? 'op' : /\bOPR\W\d/i.test(ua) ? 'op' : typeof MSPointerEvent !== 'undefined' ? 'ie?' : '';
+    
+    var os = /Windows NT 10/.test(ua) ? "win10" : /Windows NT 6\.0/.test(ua) ? "winvista" : /Windows NT 6\.1/.test(ua) ? "win7" : /Windows NT 6\.\d/.test(ua) ? "win8" : /Windows NT 5\.1/.test(ua) ? "winxp" : /Windows NT [1-5]\./.test(ua) ? "winnt" : /Mac/.test(ua) ? "mac" : /Linux/.test(ua) ? "linux" : /X11/.test(ua) ? "nix" : "";
+        
+    var mobile = /IEMobile|Windows Phone|Lumia/i.test(ua) ? 'w' : /iPhone|iP[oa]d/.test(ua) ? 'i' : /Android/.test(ua) ? 'a' : /BlackBerry|PlayBook|BB10/.test(ua) ? 'b' : /Mobile Safari/.test(ua) ? 's' : /webOS|Mobile|Tablet|Opera Mini|\bCrMo\/|Opera Mobi/i.test(ua) ? 1 : 0;
+    
+    var tablet = /Tablet|iPad/i.test(ua);
+    
+    Legend:
+        os:
+            win7
+            win8
+            win9
+            win10
+            winvista
+            winxp
+            winnt
+            mac
+            linux
+            nix
+        mobile - including tablets:
+            0 = Not a mobile or tablet device
+            w = Windows Phone (Nokia Lumia)
+            i = iOS (iPhone iPad)
+            a = Android
+            b = Blackberry
+            s = Undetected mobile device running Safari
+            1 = Undetected mobile device
+        tablet:
+            true
+            false
+
+        browser:
+            ed = Microsoft Edge
+            ie9 = Explorer 9
+            ie10 = Explorer 10
+            ie11 = Explorer 11
+            ie? = Explorer 8 and below
+            ff = Firefox
+            gc = Google Chrome
+            sa = Safari
+            op = Opera
+*/
+
+    // Display results 
+    if ( /iPhone|iP[oa]d/.test(ua) ) {
+        // Show Apple instructions for iPhone and iPad
+        $('#user-platform').append('iPhone').attr("value", "i");
+        $('#other-platforms').append('<a href="#" onclick="overridePlatformSetting(\'a\'); return false;">Android</a> or <a href="#" onclick="overridePlatformSetting(\'d\'); return false;">Desktop</a>');
+    } else if ( /Android/.test(ua) ) {
+        // Show Android instructions
+        $('#user-platform').append('Android').attr("value", "a");
+        $('#other-platforms').append('<a href="#" onclick="overridePlatformSetting(\'i\'); return false;">iPhone</a> or <a href="#" onclick="overridePlatformSetting(\'d\'); return false;">Desktop</a>');
+    } else {
+        // Show standard instructions for everyone else
+        $('#user-platform').append('desktop').attr("value", "d");
+        $('#other-platforms').append('<a href="#" onclick="overridePlatformSetting(\'a\'); return false;">Android</a> or <a href="#" onclick="overridePlatformSetting(\'i\'); return false;">iPhone</a>');
+    }
+
+});
+
+function overridePlatformSetting(wish) {
+    if ( wish === "i" ) {
+        // Show Apple instructions for iPhone and iPad
+        $('#user-platform').empty().append('iPhone').attr("value", "i");
+        $('#other-platforms').empty().append('<a href="#" onclick="overridePlatformSetting(\'a\'); return false;">Android</a> or <a href="#" onclick="overridePlatformSetting(\'d\'); return false;">Desktop</a>');
+    } else if ( wish === "a" ) {
+        // Show Android instructions
+        $('#user-platform').empty().append('Android').attr("value", "a");
+        $('#other-platforms').empty().append('<a href="#" onclick="overridePlatformSetting(\'i\'); return false;">iPhone</a> or <a href="#" onclick="overridePlatformSetting(\'d\'); return false;">Desktop</a>');
+    } else if ( wish === "d" ) {
+        // Show standard instructions for everyone else
+        $('#user-platform').empty().append('desktop').attr("value", "d");
+        $('#other-platforms').empty().append('<a href="#" onclick="overridePlatformSetting(\'a\'); return false;">Android</a> or <a href="#" onclick="overridePlatformSetting(\'i\'); return false;">iPhone</a>');
+    } else {
+        return false;
+    }
+};
+
+
+
+
+
 //////////
 // AJAX //
 //////////
