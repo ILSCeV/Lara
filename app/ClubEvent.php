@@ -79,11 +79,11 @@ class ClubEvent extends Model
      *
      * @return Boolean
      */
-    public function hasShift($scheduleId,$userId) {
+    public function hasShift($scheduleId, $userId) {
 
-        $entries = Shift::where('schedule_id', '=', $scheduleId)->with('getPerson')->get();
-        foreach($entries as $entry) {
-            if ( isset($entry->getPerson->prsn_ldap_id) AND $entry->getPerson->prsn_ldap_id ==  $userId){
+        $shifts = Shift::where('schedule_id', '=', $scheduleId)->with('getPerson')->get();
+        foreach($shifts as $shift) {
+            if ( isset($shift->getPerson->prsn_ldap_id) && $shift->getPerson->prsn_ldap_id ==  $userId){
                 return true;
             }
         }
