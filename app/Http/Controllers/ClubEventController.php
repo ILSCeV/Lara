@@ -239,11 +239,16 @@ class ClubEventController extends Controller
             foreach ($revisions as $entry) {
                 unset($entry["from ip"]);
             }
+            // add LDAP-ID of the event creator - only this user + Marketing + CL will be able to edit
+            $created_by = $revisions[0]["user id"];
+            $creator_name = $revisions[0]["user name"];
         }
-
-        // add LDAP-ID of the event creator - only this user + Marketing + CL will be able to edit
-        $created_by = $revisions[0]["user id"];
-        $creator_name = $revisions[0]["user name"];
+        else {
+            // workaround for empty revision in development
+            $revisions = [];
+            $created_by = "";
+            $creator_name = "";
+        }
 
         // Filter - Workaround for older events: populate filter with event club
         if (empty($clubEvent->evnt_show_to_club) ) {
