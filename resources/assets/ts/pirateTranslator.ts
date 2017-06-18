@@ -10,12 +10,24 @@ String.prototype.replaceAll = function (search, replacement) {
     return target.split(search).join(replacement);
 };
 
+declare var enviroment: any;
+
 if ( typeof localStorage !== "undefined" && (localStorage.getItem("language") || 'de') === 'pirate') {
     $(window).on('load',
         function () {
             let navLogoField = $('#nav-logo-field');
             let srcfield  = navLogoField.attr('src');
-            navLogoField.attr('src', srcfield.replace(/logo-.*\.png/g,'logo-pirate.png'));
+
+            var logonSuffix;
+            if(enviroment === "development"){
+                logonSuffix = "dev";
+            } else if(enviroment === "berta"){
+                logonSuffix = "berta"
+            } else {
+                logonSuffix = "prod"
+            }
+
+            navLogoField.attr('src', srcfield.replace(/logo-.*\.png/g,'logo-' + logonSuffix + '-pirate.png'));
             navLogoField.attr('alt','LARRRRA');
 
             let arrifier = function (str) {
