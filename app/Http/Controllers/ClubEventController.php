@@ -89,7 +89,7 @@ class ClubEventController extends Controller
             $activeTemplate = $template->schdl_title;
 
             // get template data
-            $entries    = $template->shifts()->with('type')->orderBy('position')->get();
+            $entries    = $template->shifts()->with('type')->orderByRaw('position IS NULL, position ASC, id ASC')->get();
             $title      = $template->getClubEvent->evnt_title;
             $subtitle   = $template->getClubEvent->evnt_subtitle;
             $type       = $template->getClubEvent->evnt_type;
@@ -214,7 +214,7 @@ class ClubEventController extends Controller
                                 ->with('type',
                                        'getPerson',
                                        'getPerson.getClub')
-                                ->orderBy('position')
+                                ->orderByRaw('position IS NULL, position ASC, id ASC')
                                 ->get();
 
         $clubs = Club::orderBy('clb_title')->pluck('clb_title', 'id');
@@ -287,7 +287,7 @@ class ClubEventController extends Controller
         // put template data into entries
         $entries = $schedule->shifts()
                             ->with('type')
-                            ->orderBy('position')
+                            ->orderByRaw('position IS NULL, position ASC, id ASC')
                             ->get();
 
         // Filter - Workaround for older events: populate filter with event club
