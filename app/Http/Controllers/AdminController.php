@@ -21,7 +21,7 @@ class AdminController extends Controller
         if(!Utilities::requirePermission('admin')){
             return \Redirect::back($status = 403);
         }
-    
+    /*
         $cmd = "php artisan lara:update &";
         $descriptorspec = array(
             0 => array("pipe", "r"),   // stdin is a pipe that the child will read from
@@ -30,7 +30,9 @@ class AdminController extends Controller
         );
         
         proc_open($cmd, $descriptorspec, $pipes, realpath('../'), array());
-        
-        return \Redirect::back();
+      */
+      
+    return \View::make('update');
+    
     }
 }
