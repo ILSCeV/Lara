@@ -90,7 +90,7 @@ Disabling iCal until fully functional.
                     <i class="fa fa-diamond" aria-hidden="true"></i>&nbsp;<span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li> <a href="{{route("lara.upgrade")}}"> <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                    <li> <a href="{{route("lara.update")}}"> <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                             Lara update </a> </li>
                 </ul>
             </li>
