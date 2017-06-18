@@ -389,28 +389,28 @@
 					</th>
 				</thead>
 				<tbody>
-					@for ($i = 0; $i < count($revisions); $i++)
-					    <tr>
-					    	<td>
-					    		{{ $revisions[$i]["job type"] }}
-					    	</td>
-					    	<td>
-					    		{{ $revisions[$i]["action"] }}
-					    	</td>
-					    	<td>
-					    		{{ $revisions[$i]["old value"] }}
-					    	</td>
-					    	<td>
-					    		{{ $revisions[$i]["new value"] }}
-					    	</td>
-					    	<td>
-					    		{{ $revisions[$i]["user name"] }}
-					    	</td>
-					    	<td>
-					    		{{ $revisions[$i]["timestamp"] }}
-					    	</td>
-					    </tr>
-					@endfor
+					@foreach($revisions as $revision)
+						<tr>
+							<td>
+								{{ $revision["job type"] }}
+							</td>
+							<td>
+								{{ $revision["action"] }}
+							</td>
+							<td>
+								{{ $revision["old value"] }}
+							</td>
+							<td>
+								{{ $revision["new value"] }}
+							</td>
+							<td>
+								{{ $revision["user name"] }}
+							</td>
+							<td>
+								{{ $revision["timestamp"] }}
+							</td>
+						</tr>
+					@endforeach
 				</tbody>
 			</table>
 		</div>

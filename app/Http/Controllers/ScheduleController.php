@@ -247,21 +247,23 @@ class ScheduleController extends Controller
             $newName = "";
         }
         
+        $newRevision = [
+            "entry id" => $shift->id,
+            "job type" => $shift->type->title(),
+            "action" => $action,
+            "old id" => $oldId,
+            "old value" => $oldName,
+            "old comment" => $oldComment,
+            "new id" => $newId,
+            "new value" => $newName,
+            "new comment" => $newComment,
+            "user id" => Session::get('userId') != NULL ? Session::get('userId') : "",
+            "user name" => Session::get('userId') != NULL ? Session::get('userName') . ' (' . Session::get('userClub') . ')' : "Gast",
+            "from ip" => Request::getClientIp(),
+            "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
+        ];
         // append current change
-        array_push($revisions, ["entry id"    => $shift->id,
-                                "job type"    => $shift->type->title(),
-                                "action"      => $action,
-                                "old id"      => $oldId,
-                                "old value"   => $oldName,
-                                "old comment" => $oldComment,
-                                "new id"      => $newId,
-                                "new value"   => $newName,
-                                "new comment" => $newComment,
-                                "user id"     => Session::get('userId') != NULL ? Session::get('userId') : "",
-                                "user name"   => Session::get('userId') != NULL ? Session::get('userName') . ' (' . Session::get('userClub') . ')' : "Gast",
-                                "from ip"     => Request::getClientIp(),
-                                "timestamp"   => (new DateTime)->format('d.m.Y H:i:s') ]
-                    );      
+        array_push($revisions, $newRevision);
 
         // encode and save
         $schedule->entry_revisions = json_encode($revisions);
@@ -354,24 +356,4 @@ class ScheduleController extends Controller
         return response()->json($updated, 200);
     }
 
-
-    /**
-    * Update start and end time of $shift with input of gui elements
-    *
-    * @param Shift $shift
-    * @param int $jobtypeId
-    * @param int $counterValue
-    * @return Shift updates shift
-    */
-    private static function updateShift($shift, $jobtypeId, $counterValue)
-    {
-        $shift->start = Input::get('jbtyp_time_start' . $counterValue);
-
-        $shift->end = Input::get('jbtyp_time_end' . $counterValue);
-
-        $shift->statistical_weight = Input::get('jbtyp_statistical_weight' . $counterValue);
-
-        return $shift;
-    }
-    
 }
