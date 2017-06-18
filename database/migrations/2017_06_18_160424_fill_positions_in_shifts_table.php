@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddShiftOrderColumn extends Migration
+class FillPositionsInShiftsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddShiftOrderColumn extends Migration
      */
     public function up()
     {
-        Schema::table('schedule_entries', function ($table) {
-            $table->integer('position')->nullable();
+        Lara\ClubEvent::all()->each(function($event) {
+            $event->shifts()->get()->each(function($shift, $key){
+                $shift->position = $key;
+                $shift->save();
+            });
         });
     }
 
@@ -25,8 +28,9 @@ class AddShiftOrderColumn extends Migration
      */
     public function down()
     {
-        Schema::table('schedule_entries', function ($table) {
-            $table->dropColumn('position');
+        Lara\Shift::all()->each(function(Shift $shift) {
+            $shift->position = NULL;
+            $shift->save();
         });
     }
 }
