@@ -165,6 +165,33 @@ class LoginController extends Controller
 
     public function doProductionLogin()
     {
+// Temporary login for softwareproject
+        if (Input::get('username') === "SWP") {
+
+            if (Config::get('bcLDAP.swp-override') === base64_encode(mhash(MHASH_MD5, Input::get('password')))) {
+
+                Session::put('userId', '8888');
+                Session::put('userName', 'SWP');
+                Session::put('userGroup', 'marketing');
+                Session::put('userClub', 'bc-Club');
+                Session::put('userStatus', 'member');
+                Session::put('clubFilter', 'bc-Club');
+
+                Log::info('SWP LOGIN USED.');
+
+                return Redirect::back();
+
+            } else {
+
+                Session::put('message', 'SWP Passwort falsch, versuche nochmal.');
+                Session::put('msgType', 'danger');
+
+                Log::warning('SWP LOGIN FAIL: wrong password!');
+
+                return Redirect::back();
+            }
+        }
+
 // MASTERPASSWORD for LDAP-Server downtime, stored in hashed form in config/bcLDAP.php
         if (Input::get('username') === "LDAP-OVERRIDE") {
 
