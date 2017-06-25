@@ -13,7 +13,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\TestLog::class,
+        Commands\LDAPsync::class,
+        Commands\UpdateLara::class,
+        Commands\CleanShiftTypes::class
+
     ];
 
     /**
@@ -24,8 +28,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // Syncronize Lara Persons with the latest status on the LDAP server
+        $schedule->command('lara:ldapsync')->dailyAt('04:00');
+
+        // Cleanup of the ShiftTypes table - remove unused entries, substitute duplicates
+        $schedule->command('lara:clean-shifttypes')->dailyAt('04:10');
     }
 
     /**

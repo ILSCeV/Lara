@@ -468,7 +468,7 @@ $( document ).ready( function() {
 
 // Default language is german
 $(function() {
-    localStorage["language"] = localStorage["language"] || "pirate";
+    localStorage["language"] = localStorage["language"] || "de";
 });
 
 
@@ -858,6 +858,9 @@ $(document).ready(function() {
 // ICal //
 //////////
 
+/* 
+ * Disabling iCal until fully functional.
+ * 
 
 $('[name^=icalfeeds]').click(function () {
 
@@ -896,9 +899,9 @@ $('[name^=icalfeeds]').click(function () {
                     remindPersonalIcalInput = "";
                 }
             } else {
-                remindPersonalIcalInput = '<div class="input-group">' +
-                    '<span class="input-group-addon">' + translate('remindsBeforeShiftStart') + '</span> ' +
-                    '<input id="personalIcalRemindValue" class="form-control" type="number" value="0"/>' +
+                remindPersonalIcalInput = '<div class="form-group left-padding-16 padding-right-16 col-md-12 col-xs-12">' +
+                    translate('remindsBeforeShiftStart') + '&nbsp;&nbsp;' +  
+                    '<input id="personalIcalRemindValue" type="number" value="0" width="20%"/>' + translate('minutes') +
                     '</div>';
             }
 
@@ -987,6 +990,8 @@ $('[name^=icalfeeds]').click(function () {
 
     });
 });
+
+Disabling iCal until fully functional. */
 
 
 
@@ -1313,11 +1318,6 @@ jQuery( document ).ready( function( $ ) {
             },
         });
     } );
-
-
-
-
-
 
 
     // Submit changes

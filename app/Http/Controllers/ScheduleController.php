@@ -287,11 +287,10 @@ class ScheduleController extends Controller
             // skip empty fields
             if (!empty(Input::get("jbtyp_title" . $i))) 
             {       
-
                 // check if job type exists
-                $jobType = Jobtype::where('jbtyp_title', '=', Input::get("jobType" . $i))
-                                  ->where('jbtyp_time_start', '=', Input::get("timeStart" . $i))
-                                  ->where('jbtyp_time_end', '=', Input::get("timeEnd" . $i))
+                $jobType = Jobtype::where('jbtyp_title', '=', Input::get("jbtyp_title" . $i))
+                                  ->where('jbtyp_time_start', '=', Input::get("jbtyp_time_start" . $i))
+                                  ->where('jbtyp_time_end', '=', Input::get("jbtyp_time_end" . $i))
                                   ->first();
                 
                 // If not found - create new job type with data provided

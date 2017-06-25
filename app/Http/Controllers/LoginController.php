@@ -396,10 +396,12 @@ class LoginController extends Controller
             }
         }
 
+
 // SETTING ADMIN CREDENTIALS
 
-        // Hardcoded admin LDAP ID from the config file
-        if ($info[0]['uidnumber'][0] == Config::get('bcLDAP.admin-ldap-id')) {
+
+        // Checks if user LDAP ID is among hardcoded admin LDAP IDs from the config file
+        if (in_array($info[0]['uidnumber'][0], Config::get('bcLDAP.admin-ldap-id'))) {
             $userGroup = "admin";
         }
 

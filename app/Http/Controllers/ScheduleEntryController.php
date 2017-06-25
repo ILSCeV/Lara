@@ -131,9 +131,6 @@ class ScheduleEntryController extends Controller
             // Find the corresponding entry object 
             $entry = ScheduleEntry::where('id', '=', $request->get('entryId'))->first();
 
-
-            
-
             // Save old value for revision
             $oldJobtype = Jobtype::where('id', '=', $entry->jbtyp_id)->first()->jbtyp_title;
 
@@ -508,6 +505,9 @@ class ScheduleEntryController extends Controller
                     break;
                 case 'resigned':
                     $userStatus = ["status"=>"fa fa-star-o", "style"=>"color:gold;", "title"=>"ex-Mitglied"];
+                    break;
+                case 'guest':
+                    $userStatus = ["status"=>"fa fa-circle", "style"=>"color:lightgrey;", "title"=>"ex-Kandidat"];
                     break;
                 case "":
                     $userStatus = ["status"=>"fa fa-circle", "style"=>"color:lightgrey;", "title"=>"Extern"];

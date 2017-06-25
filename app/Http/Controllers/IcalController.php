@@ -62,13 +62,15 @@ class IcalController extends Controller
                 $vEvent->setSummary($evt->evnt_title);
                 
                 $eventLink = "".URL::route('event.show', $evt->id);
-                $eventTime = $evt->evnt_time_start;
+                $eventTimeStart = substr($evt->evnt_time_start, 0, 5);
+                $eventTimeEnd = substr($evt->evnt_time_end, 0, 5);
                 
                 $additionalInfo = $evt->evnt_public_info !== "" ? $evt->evnt_public_info : "(-)";
                 
                 $vEvent->setDescription("Link: ".$eventLink."\n"
                     ."\n"
-                    .trans('mainLang.begin').": ".$eventTime."\n"
+                    .trans('mainLang.begin').": ".$eventTimeStart."\n"
+                    .trans('mainLang.end').": ".$eventTimeEnd."\n"
                     ."\n"
                     .trans('mainLang.additionalInfo').":\n"
                     .$additionalInfo."\n");
@@ -148,13 +150,15 @@ class IcalController extends Controller
                 $start_time = "";
                 
                 $eventLink = "".URL::route('event.show', $evt->id);
-                $eventTime = $evt->evnt_time_start;
-                $preparationsTime = $schedule->schdl_time_preparation_start;
+                $eventTimeStart = substr($evt->evnt_time_start, 0, 5);
+                $eventTimeEnd = substr($evt->evnt_time_end, 0, 5);
+                $preparationsTime = substr($schedule->schdl_time_preparation_start, 0, 5);
                 $additionalInfo = $evt->evnt_public_info !== "" ? $evt->evnt_public_info : "(-)";
                 
                 $evtDescription = "Link: ".$eventLink."\n"
                     ."\n"
-                    .trans('mainLang.begin').": ".$eventTime."\n"
+                    .trans('mainLang.begin').": ".$eventTimeStart."\n"
+                    .trans('mainLang.end').": ".$eventTimeEnd."\n"
                     .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
                     ."\n"
                     ."---\n"
@@ -264,19 +268,21 @@ class IcalController extends Controller
                     $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->jobType->jbtyp_title));
                     
                     $eventLink = "".URL::route('event.show', $schedule->event->id);
-                    $eventTime = $evt->entry_time_start;
-                    $preparationsTime = $schedule->schdl_time_preparation_start;
+                    $eventTimeStart = substr($schedule->event->evnt_time_start, 0, 5);
+                    $eventTimeEnd = substr($schedule->event->evnt_time_end, 0, 5);
+                    $preparationsTime = substr($schedule->schdl_time_preparation_start, 0, 5);
                     
                     $additionalInfo = $schedule->event->evnt_public_info !== "" ? $schedule->event->evnt_public_info : "(-)";
                     $moreDetails = $schedule->event->evnt_private_details !== "" ? $schedule->event->evnt_private_details : "(-)";
                     
                     $vEvent->setDescription("Link: ".$eventLink."\n"
                         ."\n"
-                        .trans('mainLang.begin').": ".$eventTime."\n"
+                        .trans('mainLang.begin').": ".$eventTimeStart."\n"
+                        .trans('mainLang.end').": ".$eventTimeEnd."\n"
                         .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
                         ."\n"
                         .trans('mainLang.shift').": ".$evt->jobtype->jbtyp_title."\n"
-                        .trans('mainLang.shiftTime').": ".$evt->entry_time_start." - ".$evt->entry_time_end."\n"
+                        .trans('mainLang.shiftTime').": ".substr($evt->entry_time_start, 0, 5)." - ".substr($evt->entry_time_end, 0, 5)."\n"
                         ."\n"
                         ."---\n"
                         ."\n"
@@ -347,12 +353,14 @@ class IcalController extends Controller
                 $vEvent->setSummary($event->evnt_title);
                 
                 $eventLink = "".URL::route('event.show', $event->id);
-                $eventTime = $event->evnt_time_start;
+                $eventTimeStart = substr($event->evnt_time_start, 0, 5);
+                $eventTimeEnd = substr($event->evnt_time_end, 0, 5);
                 $additionalInfo = $event->evnt_public_info !== "" ? $event->evnt_public_info : "(-)";
                 
                 $vEvent->setDescription("Link: ".$eventLink."\n"
                     ."\n"
-                    .trans('mainLang.begin').": ".$eventTime."\n"
+                    .trans('mainLang.begin').": ".$eventTimeStart."\n"
+                    .trans('mainLang.end').": ".$eventTimeEnd."\n"
                     ."\n"
                     .trans('mainLang.additionalInfo').":\n"
                     .$additionalInfo."\n");

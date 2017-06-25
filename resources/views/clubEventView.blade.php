@@ -75,7 +75,7 @@
 								<i>{{ trans('mainLang.begin') }}:</i>
 							</td>
 							<td>
-								{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start)) }} um
+								{{ strftime("%a, %d. %b %Y", strtotime($clubEvent->evnt_date_start)) }} um
 								{{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
 							</td>
 						</tr>
@@ -84,7 +84,7 @@
 								<i>{{ trans('mainLang.end') }}:</i>
 							</td>
 							<td>
-								{{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_end)) }} um
+								{{ strftime("%a, %d. %b %Y", strtotime($clubEvent->evnt_date_end)) }} um
 								{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 							</td>
 						</tr>
@@ -106,6 +106,12 @@
 								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
 							</td>
 						</tr>
+
+						{{--
+
+						Disabling iCal until fully functional.
+
+
 						<tr>
 							<td width="20%" class="left-padding-16">
 								<i>{{ trans('mainLang.iCal') }}:</i>
@@ -120,39 +126,53 @@
 								@endif
 							</td>
 						</tr>
+
+						--}}
 					</table>
+
 				{{-- CRUD --}}
-				@if(Session::has('userGroup')
-					AND (Session::get('userGroup') == 'marketing'
-					OR Session::get('userGroup') == 'clubleitung'
-					OR Session::get('userGroup') == 'admin'
-					OR Session::get('userId') == $created_by))
+				@if(Session::get('userGroup') == 'marketing'
+				 OR Session::get('userGroup') == 'clubleitung'
+				 OR Session::get('userGroup') == 'admin'
+				 OR Session::get('userId') == $created_by)
 					<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">
 						<span class="pull-right">
-							<button  id="unPublishEventLnkBtn"
-								data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
-								class="btn btn-danger @if($clubEvent->evnt_is_published == 0) hidden @endif"
-								name="toggle-publish-state"
-							    data-toggle="tooltip"
-							    data-placement="bottom"
-							    title="{{trans("mainLang.unpublishEvent")}}"
-							    data-token="{{csrf_token()}}"
-								>
-								<i class="fa fa-bullhorn" aria-hidden="true"></i>
-							</button>
-							<button  id="pubishEventLnkBtn"
-								data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
-								class="btn btn-success @if($clubEvent->evnt_is_published == 1) hidden @endif"
-								name="toggle-publish-state"
-								data-toggle="tooltip"
-								data-placement="bottom"
-								title="{{trans("mainLang.publishEvent")}}"
-								data-token="{{csrf_token()}}"
-								>
-								<i class="fa fa-bullhorn" aria-hidden="true"></i>
+							{{-- Event publishing only for CL/marketing -> exclude creator 
 
-							</button>
-							&nbsp;&nbsp;
+							
+							Disabling iCal until fully functional.
+
+
+							@if(Session::get('userGroup') == 'marketing'
+							 OR Session::get('userGroup') == 'clubleitung'
+							 OR Session::get('userGroup') == 'admin')
+								<button  id="unPublishEventLnkBtn"
+									data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
+									class="btn btn-danger @if($clubEvent->evnt_is_published == 0) hidden @endif"
+									name="toggle-publish-state"
+								    data-toggle="tooltip"
+								    data-placement="bottom"
+								    title="{{trans("mainLang.unpublishEvent")}}"
+								    data-token="{{csrf_token()}}"
+									>
+									<i class="fa fa-bullhorn" aria-hidden="true"></i>
+								</button>
+								<button  id="pubishEventLnkBtn"
+									data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
+									class="btn btn-success @if($clubEvent->evnt_is_published == 1) hidden @endif"
+									name="toggle-publish-state"
+									data-toggle="tooltip"
+									data-placement="bottom"
+									title="{{trans("mainLang.publishEvent")}}"
+									data-token="{{csrf_token()}}"
+									>
+									<i class="fa fa-bullhorn" aria-hidden="true"></i>
+								</button>
+								&nbsp;&nbsp;
+							@endif
+
+							--}}
+
 							<a href="{{ URL::route('event.edit', $clubEvent->id) }}"
 							   class="btn btn-primary"
 							   data-toggle="tooltip"

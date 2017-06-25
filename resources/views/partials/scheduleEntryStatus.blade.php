@@ -46,6 +46,13 @@
            data-toggle="tooltip"
            data-placement="top"
            title="{{ trans('mainLang.ex-member') }}"></i>
+    @elseif ( $entry->getPerson->prsn_status === 'guest' )
+        <i class="fa fa-circle"
+           name="status-icon"
+           style="color:lightgrey;"
+           data-toggle="tooltip"
+           data-placement="top"
+           title="{{ trans('mainLang.ex-candidate') }}"></i>
     @elseif ( empty($entry->getPerson->prsn_status) )
         <i class="fa fa-circle"
            name="status-icon"
