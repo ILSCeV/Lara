@@ -395,7 +395,7 @@
 							{{ $revision["job type"] }}
 						</td>
 						<td>
-							{{ $revision["action"] }}
+							{{ trans($revision["action"]) }}
 						</td>
 						<td>
 							{{ $revision["old value"] }}

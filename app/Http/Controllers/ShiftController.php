@@ -7,6 +7,7 @@ use Hash;
 use Illuminate\Http\Request;
 use Input;
 use Session;
+use Lara\Logging;
 
 use Lara\Club;
 use Lara\Person;
@@ -81,13 +82,7 @@ class ShiftController extends Controller
             $shift->save();
 
             // Log changes
-            ScheduleController::logRevision($shift->getSchedule,    // schedule object
-                $shift,                             // shift object
-                "Diensttyp geändert",               // action description
-                null,                               // old value - TODO LATER
-                null,                               // new value - TODO LATER
-                null,                               // old comment - no change here
-                null);                              // new comment - no change here
+            ScheduleController::logAction($shift, "Diensttyp geändert");
 
             // Formulate the response
             return response()->json([
@@ -136,23 +131,14 @@ class ShiftController extends Controller
         // Case DELETED:   Entry was not empty, shift is empty now          -> delete old data
         // Case CHANGED:   Entry was not empty, new name entered            -> delete old data, then add new data
 
+
         if( !isset($shift->person_id) )
         {
             if ( !$userName == '' )
             {
                 // Case ADDED:   Entry was empty, new data entered -> add new data
                 $this->onAdd($shift, $userName, $ldapId, $userClub);
-                ScheduleController::logRevision($shift->getSchedule,                // schedule object
-                    $shift,                             // shift object
-                    "Dienst eingetragen",               // action description
-                    null,                               // old value
-                    $shift->getPerson()->first(),       // new value
-                    null,                               // old comment - no change here
-                    null);                              // new comment - no change here
-            }
-            else
-            {
-                // Case EMPTY: Entry was empty, shift is empty now -> do nothing
+                Logging::shiftChanged($shift, $oldPerson, $shift->person);
             }
         }
         else
@@ -161,13 +147,7 @@ class ShiftController extends Controller
             {
                 // Case DELETED: Entry was not empty, shift is empty now -> delete old data
                 $this->onDelete($shift);
-                ScheduleController::logRevision($shift->getSchedule,                // schedule object
-                    $shift,                             // shift object
-                    "Dienst ausgetragen",               // action description
-                    $oldPerson,                         // old value
-                    null,                               // new value
-                    null,                               // old comment - no change here
-                    null);                              // new comment - no change here
+                Logging::shiftChanged($shift, $oldPerson, $shift->person);
             }
             else
             {
@@ -181,21 +161,14 @@ class ShiftController extends Controller
                         // Possibility 1: same name, same ldap = same person
                         // Case SAME: Entry was not empty, but same person is there -> do nothing
                     }
-                    else
-                    {
+                    else {
                         // Possibility 2: same name, new/empty ldap  = another person
                         // Possibility 3: new name,  same ldap       = probably LDAP ID not cleared on save, assume another person
                         // Possibility 4: new name,  new/empty ldap  = another person
                         // Case CHANGED: Entry was not empty, new data entered -> delete old data, then add new data
                         $this->onDelete($shift);
                         $this->onAdd($shift, $userName, $ldapId, $userClub);
-                        ScheduleController::logRevision($shift->getSchedule,                // schedule object
-                            $shift,                             // shift object
-                            "Dienst geändert",                  // action description
-                            $oldPerson,                         // old value
-                            $shift->getPerson()->first(),       // new value
-                            null,                               // old comment - no change here
-                            null);                              // new comment - no change here
+                        Logging::shiftChanged($shift, $oldPerson, $shift->person);
                     }
                 }
                 else
@@ -220,13 +193,8 @@ class ShiftController extends Controller
                         // Case NAME CHANGED: Entry was not empty, new data entered -> delete old data, then add new data
                         $this->onDelete($shift);
                         $this->onAdd($shift, $userName, $ldapId, $userClub);
-                        ScheduleController::logRevision($shift->getSchedule,                // schedule object
-                            $shift,                             // shift object
-                            "Dienst geändert",                  // action description
-                            $oldPerson,                         // old value
-                            $shift->getPerson()->first(),       // new value
-                            null,                               // old comment - no change here
-                            null);                              // new comment - no change here
+
+                        Logging::shiftChanged($shift, $oldPerson, $shift->person);
                     }
                 }
             }
@@ -246,13 +214,7 @@ class ShiftController extends Controller
                 // Case ADDED: Comment was empty, new comment entered -> add new data
                 $shift->comment = $userComment;
                 $shift->save();
-                ScheduleController::logRevision($shift->getSchedule,                    // schedule object
-                    $shift,                             // shift object
-                    "Kommentar hinzugefügt",            // action description
-                    null,                               // old value (no need to log no change)
-                    null,                               // new value (no need to log no change)
-                    null,                               // old comment
-                    $userComment);                      // new comment
+                Logging::commentAdded($shift, $userComment);
             }
             else
             {
@@ -261,37 +223,21 @@ class ShiftController extends Controller
         }
         else
         {
-            if( $shift->comment == $userComment )
-            {
-                // Case SAME: Comment was not empty, but same comment is there -> do nothing
-            }
-            else
+            if( $shift->comment !== $userComment )
             {
                 if ( $userComment == '' )
                 {
                     // Case DELETED: Comment was not empty, comment is empty now -> delete old data
                     $shift->comment = null;
                     $shift->save();
-                    ScheduleController::logRevision($shift->getSchedule,                // schedule object
-                        $shift,                             // shift object
-                        "Kommentar gelöscht",               // action description
-                        null,                               // old value (no need to log no change)
-                        null,                               // new value (no need to log no change)
-                        $oldComment,                        // old comment
-                        null);                              // new comment
+                    Logging::commentDeleted($shift, $oldComment);
                 }
                 else
                 {
                     // Case CHANGED: Comment was not empty, new comment entered -> delete old data, then add new data
                     $shift->comment = $userComment;
                     $shift->save();
-                    ScheduleController::logRevision($shift->getSchedule,                // schedule object
-                        $shift,                             // shift object
-                        "Kommentar geändert",               // action description
-                        null,                               // old value (no need to log no change)
-                        null,                               // new value (no need to log no change)
-                        $oldComment,                        // old comment
-                        $userComment);                      // new comment
+                    Logging::commentChanged($shift, $oldComment, $userComment);
                 }
             }
         }

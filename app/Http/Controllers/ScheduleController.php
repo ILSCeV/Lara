@@ -7,6 +7,7 @@ use Request;
 use Session;
 use Input;
 use Hash;
+use Lara\Logging;
 use Illuminate\Database\Eloquent\Collection;
 
 use Lara\Schedule;
@@ -150,128 +151,6 @@ class ScheduleController extends Controller
         Schedule::destroy($id);
     }
 
-
-    public static function logAction(Shift $shift, $action) {
-        self::logRevision($shift->schedule, $shift, $action);
-    }
-
-    /**
-     * Updates entry revision
-     *
-     * @param Schedule $schedule     
-     * @param Shift $shift
-     * @param string $action
-     * @param string $old
-     * @param string $new
-     * @param string $oldComment
-     * @param string $newComment
-     * @return void
-     */
-    public static function logRevision($schedule, Shift $shift, $action, $old = null, $new = null, $oldComment = null, $newComment = null)
-    {
-        // workaround for older events where revision history is not present
-        if($schedule->entry_revisions == "")
-        {
-            $schedule->entry_revisions = json_encode(["0" => ["entry id"    => "",
-                                                              "job type"    => "",
-                                                              "action"      => "Keine frühere Änderungen vorhanden.",
-                                                              "old id"      => "",
-                                                              "old value"   => "",
-                                                              "old comment" => "",
-                                                              "new id"      => "",
-                                                              "new value"   => "",
-                                                              "user id"     => "",
-                                                              "user name"   => "",
-                                                              "new comment" => "",
-                                                              "from ip"     => "",
-                                                              "timestamp"   => (new DateTime)->format('d.m.Y H:i:s') ]
-                                                     ]);
-        }
-    
-        // decode revision history
-        $revisions = json_decode($schedule->entry_revisions, true);
-
-        // decode old values
-        if(!is_null($old)){
-            $oldId = $old->id;
-
-            switch ($old->prsn_status) {
-                case "candidate":
-                    $oldStatus = "(K)";
-                    break;
-                case "member":
-                    $oldStatus = "(A)";
-                    break;
-                case "veteran":
-                    $oldStatus = "(V)";
-                    break;
-                default: 
-                    $oldStatus = "";
-            }
-
-            $oldName = $old->prsn_name
-                     . $oldStatus 
-                     . "(" . $old->getClub->clb_title . ")";
-        }
-        else
-        {
-            $oldId = "";
-            $oldName = "";
-        }
-
-        // decode new values
-        if(!is_null($new)){
-            $newId = $new->id;
-            
-            switch ($new->prsn_status) {
-                case "candidate":
-                    $newStatus = "(K)";
-                    break;
-                case "member":
-                    $newStatus = "(A)";
-                    break;
-                case "veteran":
-                    $newStatus = "(V)";
-                    break;
-                default: 
-                    $newStatus = "";
-            }
-
-            $newName = $new->prsn_name 
-                     . $newStatus
-                     . "(" . $new->getClub->clb_title . ")";
-        }
-        else
-        {
-            $newId = "";
-            $newName = "";
-        }
-        
-        $newRevision = [
-            "entry id" => $shift->id,
-            "job type" => $shift->type->title(),
-            "action" => $action,
-            "old id" => $oldId,
-            "old value" => $oldName,
-            "old comment" => $oldComment,
-            "new id" => $newId,
-            "new value" => $newName,
-            "new comment" => $newComment,
-            "user id" => Session::get('userId') != NULL ? Session::get('userId') : "",
-            "user name" => Session::get('userId') != NULL ? Session::get('userName') . ' (' . Session::get('userClub') . ')' : "Gast",
-            "from ip" => Request::getClientIp(),
-            "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
-        ];
-        // append current change
-        array_push($revisions, $newRevision);
-
-        // encode and save
-        $schedule->entry_revisions = json_encode($revisions);
-                        
-        $schedule->save();
-    }
-
-
     /**
     * Create all new scheduleEntries with entered information.
     *
@@ -287,7 +166,7 @@ class ScheduleController extends Controller
             ->get()
             ->each(function(Shift $shift) {
                 $shift->delete();
-                self::logAction($shift, "Dienst gelöscht");
+                Logging::shiftDeleted();
             });
 
         for ($i = 0; $i < $amount; ++$i) {
@@ -320,7 +199,7 @@ class ScheduleController extends Controller
                 ]);
 
                 if (! $shift->exists) {
-                    self::logAction($shift, "Dienst erstellt");
+                    Logging::shiftCreated($shift);
                 }
 
                 $shift->save();
@@ -352,7 +231,7 @@ class ScheduleController extends Controller
      */
     public static function getUpdates($scheduleId, $timestamp) 
     {
-        $updated = Schedule::where("id", "=", $id)->first()->updated_at;
+        $updated = Schedule::where("id", "=",  $id)->first()->updated_at;
         return response()->json($updated, 200);
     }
 
