@@ -3,6 +3,8 @@
 return [
     'noOlderChanges' => "Keine früheren Änderungen vorhanden",
 
+    'eventCreated' => "Event erstellt",
+
     'commentChanged' => 'Geschwätz geändert',
     'commentAdded' => 'Geschwätzt',
     'commentDeleted' => 'Geschwätz erstummen lassen',

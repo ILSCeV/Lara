@@ -3,6 +3,8 @@
 return [
     'noOlderChanges' => "No older changes exist",
 
+    'eventCreated' => "Event created",
+
     'commentChanged' => 'Comment changed',
     'commentAdded' => 'Comment added',
     'commentDeleted' => 'Comment deleted',

@@ -3,6 +3,8 @@
 return [
     'noOlderChanges' => "Keine früheren Änderungen vorhanden",
 
+    'eventCreated' => "Event erstellt",
+
     'commentChanged' => 'Kommentar geändert',
     'commentAdded' => 'Kommentar hinzugefügt',
     'commentDeleted' => 'Kommentar gelöscht',

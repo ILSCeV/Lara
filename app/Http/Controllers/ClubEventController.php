@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Input;
 use Lara\Club;
 use Lara\ClubEvent;
+use Lara\Logging;
 use Lara\ShiftType;
 use Lara\Shift;
 use Lara\Person;
@@ -150,21 +151,7 @@ class ClubEventController extends Controller
         $newSchedule->evnt_id = $newEvent->id;
 
         // log revision
-        $newSchedule->entry_revisions = json_encode(array("0"=>
-                               ["entry id"    => null,
-                                "job type"    => null,
-                                "action"      => "Dienstplan erstellt",
-                                "old id"      => null,
-                                "old value"   => null,
-                                "old comment" => null,
-                                "new id"      => null,
-                                "new value"   => null,
-                                "new comment" => null,
-                                "user id"     => Session::get('userId') != NULL ? Session::get('userId') : "",
-                                "user name"   => Session::get('userId') != NULL ? Session::get('userName') . '(' . Session::get('userClub') . ')' : "Gast",
-                                "from ip"     => \Illuminate\Support\Facades\Request::getClientIp(),
-                                "timestamp"   => (new DateTime)->format('Y-m-d H:i:s')
-                                ]));
+        Logging::scheduleCreated($newSchedule);
 
         $newSchedule->save();
 

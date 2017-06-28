@@ -6,6 +6,12 @@ use Request;
 
 class Logging
 {
+
+    public static function scheduleCreated($schedule)
+    {
+        $schedule->entry_revisions = json_encode([self::prepareNewRevision(null, "revisions.eventCreated")]);
+    }
+
     public static function logRevision(Shift $shift, $action, $old = "", $new = "")
     {
         self::ensureShiftHasRevisions($shift);
@@ -13,17 +19,7 @@ class Logging
         $schedule = $shift->schedule;
         $revisions = json_decode($schedule->entry_revisions);
 
-        $newRevision = [
-            "entry id" => $shift->id,
-            "job type" => $shift->type->title(),
-            "action" => $action,
-            "old value" => $old,
-            "new value" => $new,
-            "user id" => Session::get('userId') != NULL ? Session::get('userId') : "",
-            "user name" => Session::get('userId') != NULL ? Session::get('userName') . ' (' . Session::get('userClub') . ')' : "Gast",
-            "from ip" => Request::getClientIp(),
-            "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
-        ];
+        $newRevision = self::prepareNewRevision($shift, $action, $old, $new);
         array_push($revisions, $newRevision);
 
         $schedule->entry_revisions = json_encode($revisions);
@@ -110,5 +106,27 @@ class Logging
     public static function shiftDeleted(Shift $shift)
     {
         self::logRevision($shift, "revisions.shiftDeleted");
+    }
+
+    /**
+     * @param Shift $shift
+     * @param $action
+     * @param $old
+     * @param $new
+     * @return array
+     */
+    public static function prepareNewRevision($shift, $action, $old = "", $new = "")
+    {
+        return [
+            "entry id" => is_null($shift) ?  "" : $shift->id,
+            "job type" => is_null($shift) ? "" : $shift->type->title(),
+            "action" => $action,
+            "old value" => $old,
+            "new value" => $new,
+            "user id" => Session::get('userId') != NULL ? Session::get('userId') : "",
+            "user name" => Session::get('userId') != NULL ? Session::get('userName') . ' (' . Session::get('userClub') . ')' : "Gast",
+            "from ip" => Request::getClientIp(),
+            "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
+        ];
     }
 }
