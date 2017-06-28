@@ -44,8 +44,8 @@ class Logging
 
         $schedule = $shift->schedule;
 
-        if ($schedule->revisions === "" || $schedule->revisions === null) {
-            $schedule->revisions = json_encode($defaultRevision);
+        if ($schedule->entry_revisions === "" || $schedule->entry_revisions === null) {
+            $schedule->entry_revisions = json_encode($defaultRevision);
             $schedule->save();
         }
     }
