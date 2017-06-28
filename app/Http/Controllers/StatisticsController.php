@@ -6,7 +6,7 @@ use DateTime;
 
 use Lara\Club;
 use Lara\Person;
-use Lara\Shift
+use Lara\Shift;
 use Redirect;
 use View;
 
