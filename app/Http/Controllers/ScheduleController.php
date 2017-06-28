@@ -176,6 +176,7 @@ class ScheduleController extends Controller
 
                 // If there was a shifttype passed and one with the correct title exists, use this one
                 // Otherwise create a new model
+                $oldShiftType = $shift->type;
                 $shiftType = ShiftType::firstOrNew([
                     "id" => $inputShifts["type"][$i],
                     "jbtyp_title" => $inputShifts["title"][$i]
@@ -200,6 +201,10 @@ class ScheduleController extends Controller
 
                 if (! $shift->exists) {
                     Logging::shiftCreated($shift);
+                }
+
+                if ($shift->isDirty('shifttype_id')) {
+                    Logging::shiftTypeChanged($shift, $oldShiftType, $shiftType);
                 }
 
                 $shift->save();

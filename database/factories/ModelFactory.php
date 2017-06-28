@@ -123,7 +123,8 @@ $factory->define(Lara\Schedule::class, function(Faker\Generator $faker) {
         'schdl_title' => $faker->word(),
         'schdl_time_preparation_start' => $faker->time(),
         'schdl_is_template' => 0,
-        'schdl_password' => ''
+        'schdl_password' => '',
+        'entry_revisions' => ''
     ];
 });
 

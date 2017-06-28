@@ -8,20 +8,11 @@ class Logging
 {
     public static function logRevision(Shift $shift, $action, $old = "", $new = "")
     {
-        $schedule = $shift->schedule;
-        $encodedRevisions = $schedule->entry_revisions;
-        $defaultRevision = [
-            [
-                "entry id" => "",
-                "job type" => "",
-                "action" => "Keine frühere Änderungen vorhanden.",
-                "old value" => "",
-                "new value" => "",
-                "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
-            ]
-        ];
+        self::ensureShiftHasRevisions($shift);
 
-        $revisions = $encodedRevisions === "" ? $defaultRevision : json_decode($encodedRevisions);
+        $schedule = $shift->schedule;
+        $revisions = json_decode($schedule->entry_revisions);
+
         $newRevision = [
             "entry id" => $shift->id,
             "job type" => $shift->type->title(),
@@ -38,6 +29,29 @@ class Logging
         $schedule->entry_revisions = json_encode($revisions);
 
         $schedule->save();
+    }
+
+    public static function ensureShiftHasRevisions(Shift $shift)
+    {
+        $defaultRevision = [
+            [
+                "entry id" => "",
+                "job type" => "",
+                "action" => "revisions.noOlderChanges",
+                "old value" => "",
+                "new value" => "",
+                "timestamp" => (new DateTime)->format('d.m.Y H:i:s'),
+                "user name" => "",
+                "user id" => ""
+            ]
+        ];
+
+        $schedule = $shift->schedule;
+
+        if ($schedule->revisions === "" || $schedule->revisions === null) {
+            $schedule->revisions = json_encode($defaultRevision);
+            $schedule->save();
+        }
     }
 
 
@@ -69,6 +83,21 @@ class Logging
                 self::logRevision($shift, "revisions.shiftChanged", $oldPerson->nameWithStatus(), $newPerson->nameWithStatus());
             } else {
                 self::logRevision($shift, "revisions.shiftSignedOut", $oldPerson->nameWithStatus(), "");
+            }
+        }
+    }
+
+    public static function shiftTypeChanged($shift, $oldShiftType, $newShiftType)
+    {
+        if (is_null($oldShiftType)) {
+            if (!is_null($newShiftType)) {
+                self::logRevision($shift, "revisions.shiftRenamed", "", $newShiftType->title());
+            }
+        } else {
+            if (!is_null($newShiftType)) {
+                self::logRevision($shift, "revisions.shiftRenamed", $oldShiftType->title(), $newShiftType->title());
+            } else {
+                self::logRevision($shift, "revisions.shiftRenamed", $oldShiftType->title(), "");
             }
         }
     }
