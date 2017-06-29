@@ -33,7 +33,7 @@ AND (Session::get('userGroup') == 'marketing'
 						</label>
 					@else
 						<label for="saveAsTemplate" class="col-md-12 col-sm-12 col-xs-12">
-							{!! "(Dieser Event ist nicht als Vorlage gespeichert.)" !!}
+							{!! "(Dieses Event ist nicht als Vorlage gespeichert.)" !!}
 						</label>
 					@endif
 
