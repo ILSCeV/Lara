@@ -474,9 +474,7 @@ $(function() {
 
 
 // Enable Tooltips
-$(function () { $("[data-toggle='tooltip']").tooltip(); });     
-
-
+$(function () { $("[data-toggle='tooltip']").tooltip({trigger: "hover"}); });
 
 // Automatically close notifications after 4 seconds (4000 milliseconds)
 window.setTimeout(function() {
