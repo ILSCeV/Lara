@@ -285,8 +285,14 @@ class ClubEventController extends Controller
 
         // add LDAP-ID of the event creator - only this user + Marketing + CL will be able to edit
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
-        $created_by = $revisions[0]["user id"];
-        $creator_name = $revisions[0]["user name"];
+        if (is_null($revisions)) {
+            $created_by = "";
+            $creator_name = "";
+        }
+        else {
+            $created_by = $revisions[0]["user id"];
+            $creator_name = $revisions[0]["user name"];
+        }
 
 
         return View::make('editClubEventView', compact('event',
@@ -453,11 +459,9 @@ class ClubEventController extends Controller
             $event->evnt_date_end = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));;
         }
 
-        // format: time; validate on filled value  
-        if(!empty(Input::get('beginTime'))) $event->evnt_time_start = Input::get('beginTime');
-        else $event->evnt_time_start = mktime(0, 0, 0);
-        if(!empty(Input::get('endTime'))) $event->evnt_time_end = Input::get('endTime');
-        else $event->evnt_time_end = mktime(0, 0, 0);
+        // format: time; validate on filled value
+        $event->evnt_time_start = !empty(Input::get('beginTime')) ? Input::get('beginTime') : mktime(0, 0, 0);
+        $event->evnt_time_end = !empty(Input::get('endTime')) ? Input::get('endTime') : mktime(0, 0, 0);
 
         // format: tinyInt; validate on filled value
         // reversed this: input=1 means "event is public", input=0 means "event is private"
@@ -476,6 +480,16 @@ class ClubEventController extends Controller
         if (Input::get('filterShowToClub2') == '1') { array_push($filter, 'bc-Club'); }
         if (Input::get('filterShowToClub3') == '1') { array_push($filter, 'bc-Café'); }
         $event->evnt_show_to_club = json_encode($filter, true);
+
+        // Logging
+
+        if ($event->isDirty('evnt_time_start')) {
+            Logging::eventStartChanged($event);
+        }
+
+        if ($event->isDirty('evnt_time_end')) {
+            Logging::eventEndChanged($event);
+        }
 
         return $event;
     }

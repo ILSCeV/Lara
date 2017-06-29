@@ -4,6 +4,8 @@ return [
     'noOlderChanges' => "Keine früheren Änderungen vorhanden",
 
     'eventCreated' => "Event erstellt",
+    'eventStartChanged' => "Startzeit des Events geändert",
+    'eventEndChanged' => "Endzeit des Events geändert",
 
     'commentChanged' => 'Kommentar geändert',
     'commentAdded' => 'Kommentar hinzugefügt',
