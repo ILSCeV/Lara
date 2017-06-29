@@ -1,5 +1,5 @@
 <div class="box">
-    <div class="fa fa-bars fa-2x"></div>
+    <div class="fa fa-bars"></div>
     <div class="input-append btn-group">
         <input type="text"
                name="shifts[title][]"
