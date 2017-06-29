@@ -6,6 +6,7 @@
                class="input"
                value="{{ $title }}"
                placeholder="{{ trans('mainLang.serviceTypeEnter') }}"
+               autocomplete="off"
         />
         <ul class="dropdown-menu dropdown-jobtypes" style="position: absolute;"/>
     </div>

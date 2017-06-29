@@ -1195,7 +1195,7 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.box' ).find("input[id^='jbtyp_title']").on( 'input', function() 
+    $( '.box' ).find("input[name^='shifts\[title\]']").on( 'input', function()
     {
         // do all the work here after AJAX response is received
         function ajaxCallBackClubs(response) { 
