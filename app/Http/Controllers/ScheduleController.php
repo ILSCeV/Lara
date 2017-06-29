@@ -213,6 +213,9 @@ class ScheduleController extends Controller
                 if ($shift->isDirty('shifttype_id')) {
                     Logging::shiftTypeChanged($shift, $oldShiftType, $shiftType);
                 }
+                if ($shift->isDirty('statistical_weight')) {
+                    Logging::statisticalWeightChanged($shift);
+                }
 
                 $shift->save();
             }

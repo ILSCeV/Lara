@@ -16,5 +16,6 @@ return [
     'shiftChanged' => 'Dienst geändert',
     'shiftRenamed' => 'Dienst umbenannt',
     'shiftCreated' => 'Dienst erstellt',
-    'shiftDeleted' => 'Dienst gelöscht'
+    'shiftDeleted' => 'Dienst gelöscht',
+    'shiftWeightChanged' => 'Gewichtung geändert'
 ];

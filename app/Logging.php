@@ -1,6 +1,7 @@
 <?php
 namespace Lara;
 use DateTime;
+use Illuminate\Database\Eloquent\Model;
 use Session;
 use Request;
 
@@ -160,22 +161,40 @@ class Logging
 
     public static function eventStartChanged($event)
     {
-        self::eventAttributeChanged($event, "evnt_time_start", "revisions.eventStartChanged");
+        self::attributeChanged($event, "evnt_time_start", "revisions.eventStartChanged");
     }
 
     public static function eventEndChanged($event)
     {
-        self::eventAttributeChanged($event, "evnt_time_end", "revisions.eventEndChanged");
+        self::attributeChanged($event, "evnt_time_end", "revisions.eventEndChanged");
     }
 
-    public static function eventAttributeChanged($event, $attribute, $action)
+    public static function statisticalWeightChanged($shift)
     {
-        $old = $event->getOriginal($attribute);
-        $new = $event->$attribute;
+        self::attributeChanged($shift, "statistical_weight", "revisions.shiftWeightChanged");
+    }
 
+    public static function attributeChanged($model, $attribute, $action)
+    {
+        $old = $model->getOriginal($attribute);
+        $new = $model->$attribute;
+
+        $logger = self::loggerForModel($model);
         if ($old != $new) {
-            self::logEventRevision($event, $action, $old, $new);
+            self::$logger($model, $action, $old, $new);
         }
     }
 
+    public static function loggerForModel(Model $model)
+    {
+        if ($model instanceof ClubEvent) {
+            return "logEventRevision";
+        }
+        if ($model instanceof Shift) {
+            return "logShiftRevision";
+        }
+        if ($model instanceof Schedule) {
+            return "logScheduleRevision";
+        }
+    }
 }
