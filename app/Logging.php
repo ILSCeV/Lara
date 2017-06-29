@@ -180,9 +180,19 @@ class Logging
     }
 
 
-    public static function statisticalWeightChanged($shift)
+    public static function shiftStatisticalWeightChanged($shift)
     {
         self::attributeChanged($shift, "statistical_weight", "revisions.shiftWeightChanged");
+    }
+
+    public static function shiftStartChanged($shift)
+    {
+        self::attributeChanged($shift, "start", "revisions.shiftStartChanged");
+    }
+
+    public static function shiftEndChanged($shift)
+    {
+        self::attributeChanged($shift, "end", "revisions.shiftEndChanged");
     }
 
     public static function attributeChanged($model, $attribute, $action)

@@ -19,5 +19,7 @@ return [
     'shiftSignedOut' => 'Shift signed out',
     'shiftCreated' => 'Shift created',
     'shiftDeleted' => 'Shift deleted',
-    'shiftWeightChanged' => 'Statistical weight changed'
+    'shiftWeightChanged' => 'Statistical weight changed',
+    'shiftStartChanged' => 'Start changed',
+    'shiftEndChanged' => 'End changed'
 ];
