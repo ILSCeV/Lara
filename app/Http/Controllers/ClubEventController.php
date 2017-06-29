@@ -487,6 +487,14 @@ class ClubEventController extends Controller
             Logging::eventStartChanged($event);
         }
 
+        if ($event->isDirty('evnt_title')) {
+            Logging::eventTitleChanged($event);
+        }
+
+        if ($event->isDirty('evnt_subtitle')) {
+            Logging::eventSubtitleChanged($event);
+        }
+
         if ($event->isDirty('evnt_time_end')) {
             Logging::eventEndChanged($event);
         }

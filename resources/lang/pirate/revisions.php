@@ -6,6 +6,8 @@ return [
     'eventCreated' => "Event erstellt",
     'eventStartChanged' => "Startzeit des Events geändert",
     'eventEndChanged' => "Endzeit des Events geändert",
+    'eventTitleChanged' => 'Titel geändert',
+    'eventSubtitleChanged' => 'Subtitel geändert',
 
     'commentChanged' => 'Geschwätz geändert',
     'commentAdded' => 'Geschwätzt',

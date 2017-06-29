@@ -169,6 +169,17 @@ class Logging
         self::attributeChanged($event, "evnt_time_end", "revisions.eventEndChanged");
     }
 
+    public static function eventTitleChanged($event)
+    {
+        self::attributeChanged($event, "evnt_title", "revisions.eventTitleChanged");
+    }
+
+    public static function eventSubtitleChanged($event)
+    {
+        self::attributeChanged($event, "evnt_subtitle", "revisions.eventSubtitleChanged");
+    }
+
+
     public static function statisticalWeightChanged($shift)
     {
         self::attributeChanged($shift, "statistical_weight", "revisions.shiftWeightChanged");
