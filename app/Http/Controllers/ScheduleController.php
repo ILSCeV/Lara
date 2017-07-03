@@ -209,22 +209,24 @@ class ScheduleController extends Controller
                 if (! $shift->exists) {
                     Logging::shiftCreated($shift);
                 }
+                else {
+                    if ($shift->isDirty('shifttype_id')) {
+                        Logging::shiftTypeChanged($shift, $oldShiftType, $shiftType);
+                    }
 
-                if ($shift->isDirty('shifttype_id')) {
-                    Logging::shiftTypeChanged($shift, $oldShiftType, $shiftType);
+                    if ($shift->isDirty('statistical_weight')) {
+                        Logging::shiftStatisticalWeightChanged($shift);
+                    }
+
+                    if ($shift->isDirty('start')) {
+                        Logging::shiftStartChanged($shift);
+                    }
+
+                    if ($shift->isDirty('end')) {
+                        Logging::shiftEndChanged($shift);
+                    }
                 }
 
-                if ($shift->isDirty('statistical_weight')) {
-                    Logging::shiftStatisticalWeightChanged($shift);
-                }
-
-                if ($shift->isDirty('start')) {
-                    Logging::shiftStartChanged($shift);
-                }
-
-                if ($shift->isDirty('end')) {
-                    Logging::shiftEndChanged($shift);
-                }
 
                 $shift->save();
             }
