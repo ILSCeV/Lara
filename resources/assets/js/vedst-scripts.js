@@ -1234,13 +1234,12 @@ jQuery( document ).ready( function( $ ) {
                 var selectedJobTypeTimeStart    = $(this).find('#jobTypeTimeStart').html();
                 var selectedJobTypeTimeEnd      = $(this).find('#jobTypeTimeEnd').html();
                 var selectedJobTypeWeight       = $(this).find('#jobTypeWeight').html();
-                var currentInputId              = $(this).closest(".box").attr("id").slice(3);
 
                 // update fields
-                $("input[id=jbtyp_title"                + currentInputId + "]").val(selectedJobTypeTitle);
-                $("input[id=jbtyp_time_start"           + currentInputId + "]").val(selectedJobTypeTimeStart);
-                $("input[id=jbtyp_time_end"             + currentInputId + "]").val(selectedJobTypeTimeEnd);
-                $("input[id=jbtyp_statistical_weight"   + currentInputId + "]").val(selectedJobTypeWeight);
+                $(this).parents(".box").find("[name^='shifts[title]']").val(selectedJobTypeTitle);
+                $(this).parents(".box").find("[name^='shifts[start]']").val(selectedJobTypeTimeStart);
+                $(this).parents(".box").find("[name^='shifts[end]']").val(selectedJobTypeTimeEnd);
+                $(this).parents(".box").find("[name^='shifts[weight]']").val(selectedJobTypeWeight);
 
                 // close dropdown afterwards
                 $(document).find('.dropdown-jobtypes').hide();
