@@ -71,7 +71,7 @@ class Logging
     {
         return [
             "entry id" => is_null($shift) ?  "" : $shift->id,
-            "job type" => is_null($shift) ? "" : is_null($shift->type) ? "" : $shift->type->title(),
+            "job type" => is_null($shift) ? "" : is_null($shift->shifttype_id) ? "" : ShiftType::find($shift->shifttype_id)->title(),
             "action" => $action,
             "old value" => $old,
             "new value" => $new,

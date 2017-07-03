@@ -160,7 +160,7 @@ class ScheduleController extends Controller
     *
     * @return Collection scheduleEntries
     */
-    public static function createShifts($scheduleId)
+    public static function createShifts($scheduleId, $isNewEvent = true)
     {
         $inputShifts = Input::get("shifts");
         $amount = count($inputShifts["title"]);
@@ -227,7 +227,10 @@ class ScheduleController extends Controller
                         Logging::shiftEndChanged($shift);
                     }
                 }
-
+                else if (!$isNewEvent){
+                    $shift->save();
+                    Logging::shiftCreated($shift);
+                }
 
                 $shift->save();
             }
@@ -243,7 +246,7 @@ class ScheduleController extends Controller
     */
     public static function editShifts($scheduleId)
     {
-        self::createShifts($scheduleId);
+        self::createShifts($scheduleId, false);
     }
 
     /**
