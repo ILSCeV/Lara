@@ -483,22 +483,25 @@ class ClubEventController extends Controller
 
         // Logging
 
-        if ($event->isDirty('evnt_time_start')) {
-            Logging::eventStartChanged($event);
-        }
+        if ($event->exists) {
+            //only log changes if the event already exists in the DB
+            if ($event->isDirty('evnt_time_start')) {
+                Logging::eventStartChanged($event);
+            }
 
-        if ($event->isDirty('evnt_title')) {
-            Logging::eventTitleChanged($event);
-        }
+            if ($event->isDirty('evnt_title')) {
+                Logging::eventTitleChanged($event);
+            }
 
-        if ($event->isDirty('evnt_subtitle')) {
-            Logging::eventSubtitleChanged($event);
-        }
+            if ($event->isDirty('evnt_subtitle')) {
+                Logging::eventSubtitleChanged($event);
+            }
 
-        if ($event->isDirty('evnt_time_end')) {
-            Logging::eventEndChanged($event);
-        }
+            if ($event->isDirty('evnt_time_end')) {
+                Logging::eventEndChanged($event);
+            }
 
+        }
         return $event;
     }
 }

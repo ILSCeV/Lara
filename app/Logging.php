@@ -99,7 +99,7 @@ class Logging
 
     public static function scheduleCreated($schedule)
     {
-        $schedule->entry_revisions = json_encode([self::newShiftRevision(null, "revisions.eventCreated")]);
+        $schedule->entry_revisions = json_encode([self::newScheduleRevision(null, "revisions.eventCreated")]);
     }
 
     public static function commentChanged($shift, $old, $new)
