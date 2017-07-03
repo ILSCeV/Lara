@@ -3,6 +3,8 @@
 return [
     'noOlderChanges' => "Keine früheren Änderungen vorhanden",
 
+    'preparationStartChanged' => "Dienstvorbereitung geändert",
+
     'eventCreated' => "Event erstellt",
     'eventStartChanged' => "Startzeit des Events geändert",
     'eventEndChanged' => "Endzeit des Events geändert",

@@ -195,6 +195,10 @@ class Logging
         self::attributeChanged($shift, "end", "revisions.shiftEndChanged");
     }
 
+    public static function preparationTimeChanged($schedule) {
+        self::attributeChanged($schedule, "schdl_time_preparation_start", "revisions.preparationStartChanged");
+    }
+
     public static function attributeChanged($model, $attribute, $action)
     {
         $old = $model->getOriginal($attribute);

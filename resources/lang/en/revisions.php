@@ -3,6 +3,8 @@
 return [
     'noOlderChanges' => "No older changes exist",
 
+    'preparationStartChanged' => "Preparation start changed",
+
     'eventCreated' => "Event created",
     'eventStartChanged' => "Start time changed",
     'eventEndChanged' => "End time changed",
