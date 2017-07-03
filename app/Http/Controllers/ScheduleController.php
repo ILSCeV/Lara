@@ -210,10 +210,7 @@ class ScheduleController extends Controller
                     "position" => $i
                 ]);
 
-                if (! $shift->exists) {
-                    Logging::shiftCreated($shift);
-                }
-                else {
+                if ($shift->exists) {
                     if ($shift->isDirty('shifttype_id')) {
                         Logging::shiftTypeChanged($shift, $oldShiftType, $shiftType);
                     }
