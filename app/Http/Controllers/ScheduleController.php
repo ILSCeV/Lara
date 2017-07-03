@@ -165,8 +165,8 @@ class ScheduleController extends Controller
             ->whereNotIn('id', $inputShifts["id"])
             ->get()
             ->each(function(Shift $shift) {
+                Logging::shiftDeleted($shift);
                 $shift->delete();
-                Logging::shiftDeleted();
             });
 
         for ($i = 0; $i < $amount; ++$i) {
