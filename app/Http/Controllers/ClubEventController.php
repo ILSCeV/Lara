@@ -500,6 +500,12 @@ class ClubEventController extends Controller
             if ($event->isDirty('evnt_time_end')) {
                 Logging::eventEndChanged($event);
             }
+            if ($event->isDirty('evnt_public_info')) {
+                Logging::logEventRevision($event, "revisions.eventPublicInfoChanged");
+            }
+            if ($event->isDirty('evnt_private_details')) {
+                Logging::logEventRevision($event, "revisions.eventPrivateDetailsChanged");
+            }
 
         }
         return $event;

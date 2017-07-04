@@ -10,6 +10,8 @@ return [
     'eventEndChanged' => "End time changed",
     'eventTitleChanged' => 'Title changed',
     'eventSubtitleChanged' => 'Subtitle changed',
+    'eventPublicInfoChanged' => "Additional details changed",
+    'eventPrivateDetailsChanged' => "Internal information changed",
 
     'commentChanged' => 'Comment changed',
     'commentAdded' => 'Comment added',

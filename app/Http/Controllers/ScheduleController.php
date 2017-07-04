@@ -122,8 +122,10 @@ class ScheduleController extends Controller
             $schedule->schdl_is_template = false;
         }
 
-        if ($schedule->exists && $schedule->isDirty('schdl_time_preparation_start')) {
-            Logging::preparationTimeChanged($schedule);
+        if ($schedule->exists) {
+            if ($schedule->isDirty('schdl_time_preparation_start')) {
+                Logging::preparationTimeChanged($schedule);
+            }
         }
 
         return $schedule;
