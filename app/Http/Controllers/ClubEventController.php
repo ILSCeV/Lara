@@ -500,9 +500,7 @@ class ClubEventController extends Controller
             $event->evnt_is_published = 0;
         }
         // Filter
-        $filter = [];
-        if (Input::get('filterShowToClub2') == '1') { array_push($filter, 'bc-Club'); }
-        if (Input::get('filterShowToClub3') == '1') { array_push($filter, 'bc-Café'); }
+        $filter = collect(Input::get("filter"))->keys()->toArray();
         $event->evnt_show_to_club = json_encode($filter, true);
 
         return $event;
