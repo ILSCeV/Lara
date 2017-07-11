@@ -65,7 +65,9 @@
             <br>
         </div>
 	</footer>
-
+<script>
+    var enviroment = '{{App::environment()}}';
+</script>
     <script src="{{ mix('js/app.js') }}"></script>
 	@yield('moreScripts')
   </body>
