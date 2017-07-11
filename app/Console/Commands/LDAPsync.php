@@ -2,10 +2,10 @@
 
 namespace Lara\Console\Commands;
 
-use Illuminate\Console\Command;
-use Log;
 use Config;
-use \Lara\Person;
+use Illuminate\Console\Command;
+use Lara\Person;
+use Log;
 
 class LDAPsync extends Command
 {
@@ -77,6 +77,10 @@ class LDAPsync extends Command
         foreach ($persons as $person) {
 
             $bar->advance();
+            // skip ldap override
+            if($person->prsn_ldap_id == '9999' ){
+                continue;
+            }
 
 // AUTHENTICATING BC-CLUB
 
