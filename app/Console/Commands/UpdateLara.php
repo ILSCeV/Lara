@@ -56,7 +56,7 @@ class UpdateLara extends Command
             'php artisan config:cache',
             'npm install',                          // JavaScript/TypeScript deployment
             'npm run dev',
-            'php artisan migrate',                  // Apply new database changes
+            'php artisan migrate --force',                  // Apply new database changes
             'php artisan up'                        // Exit maintenance mode
         ];
 
