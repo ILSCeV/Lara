@@ -48,8 +48,8 @@ class LDAPsync extends Command
         Log::info('Starting LDAP sync...');
         $this->info('Starting LDAP sync...');
 
-        // get a list of all persons saved in Lara
-        $persons = Person::whereNotNull('prsn_ldap_id')->get();
+        // get a list of all persons saved in Lara, except ldap-override
+        $persons = Person::whereNotNull('prsn_ldap_id')->whereNotIn('prsn_ldap_id', ['9999'])->get();
 
         // start counting time before processing every person
         $counterStart = microtime(true);
@@ -75,12 +75,7 @@ class LDAPsync extends Command
 // STARTING THE UPDATE
 
         foreach ($persons as $person) {
-
             $bar->advance();
-            // skip ldap override
-            if($person->prsn_ldap_id == '9999' ){
-                continue;
-            }
 
 // AUTHENTICATING BC-CLUB
 
