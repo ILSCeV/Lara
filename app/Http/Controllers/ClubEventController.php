@@ -171,7 +171,7 @@ class ClubEventController extends Controller
      * @param  int $id
      * @return view ClubEventView
      * @return ClubEvent $clubEvent
-     * @return Shifts[] $entries
+     * @return Shift[] $entries
      * @return RedirectResponse
      */
     public function show($id)
