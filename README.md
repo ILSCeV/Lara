@@ -28,6 +28,6 @@ Lara VedSt is based on:
 - [clipboardjs](https://clipboardjs.com/)
 - [SortableJS](https://github.com/RubaXa/Sortable)
 
-For further information about the current versions used, have a look at out [composer](composer.json) and [npm](package.json) files.
+For further information about the current versions used, have a look at [composer](composer.json) and [npm](package.json) files.
 
 (All licensed under [MIT License](http://opensource.org/licenses/MIT) or [GNU GPL v.3](http://opensource.org/licenses/GPL-3.0)).
