@@ -63,6 +63,7 @@
                 @endif
 
 
+
 {{-- ICal feed links 
 Disabling iCal until fully functional.
 
@@ -78,6 +79,22 @@ Disabling iCal until fully functional.
 
                 </ul>
             </li>
+
+            {{-- LARA Admin menu for admins user only --}}
+            @if(\Lara\Utilities::requirePermission('admin'))
+            <li class="dropdown">
+                <a href="#"
+                   class="dropdown-toggle"
+                   data-toggle="dropdown"
+                   role="button" aria-expanded="false">
+                    <i class="fa fa-diamond" aria-hidden="true"></i>&nbsp;<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li> <a href="{{route("lara.update")}}"> <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                            Lara update </a> </li>
+                </ul>
+            </li>
+            @endif
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
