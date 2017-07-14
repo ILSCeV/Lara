@@ -42,6 +42,11 @@ class ClubEventController extends Controller
      * @param  int $month
      * @param  int $day
      *
+     * @return view createClubEventView
+     * @return Place[] places
+     * @return Schedule[] templates
+     * @return Jobtype[] jobtypes
+     * @return string $date
      * @return \Illuminate\Http\Response
      */
     public function create($year = null, $month = null, $day = null, $templateId = null)
