@@ -1,8 +1,8 @@
-{{-- Needs variable: $current_shiftType, $shiftTypes, $entries --}}
+{{-- Needs variable: $current_shiftType, $shiftTypes, $shifts --}}
 @extends('layouts.master')
 
 @section('title')
-	{{ trans('mainLang.management') }}: #{{ $current_shiftType->id }} - {!! $current_shiftType->jbtyp_title !!} 
+	{{ trans('mainLang.management') }}: #{{ $current_shiftType->id }} - {!! $current_shiftType->jbtyp_title !!}
 @stop
 
 @section('content')
@@ -73,7 +73,7 @@
 					</tr>
 				{!! Form::close() !!}
 
-				@if( $entries->count() == 0 )
+				@if( $shifts->count() == 0 )
 					<tr>
 						<td width="100%" colspan="2" class="left-padding-16">
 							{{ trans('mainLang.shiftTypeNeverUsed') }}
@@ -120,37 +120,37 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($entries as $entry)
-										<tr class="{!! "shiftType-event-row" . $entry->id !!}" name="{!! "shiftType-event-row" . $entry->id !!}">
+									@foreach($shifts as $shift)
+										<tr class="{!! "shiftType-event-row" . $shift->id !!}" name="{!! "shiftType-event-row" . $shift->id !!}">
 											<td>
-										      	{!! $entry->schedule->event->id !!}
+										      	{!! $shift->schedule->event->id !!}
 											</td>
 											<td>						
-												<a href="/event/{!! $entry->schedule->event->id !!}">{!! $entry->schedule->event->evnt_title !!}</a>
+												<a href="/event/{!! $shift->schedule->event->id !!}">{!! $shift->schedule->event->evnt_title !!}</a>
 											</td>
 											<td>
-												{!! $entry->schedule->event->getPlace->plc_title !!}
+												{!! $shift->schedule->event->getPlace->plc_title !!}
 											</td>
 											<td>
-												{!! strftime("%a, %d. %b %Y", strtotime($entry->schedule->event->evnt_date_start)) !!} um  
-												{!! date("H:i", strtotime($entry->schedule->event->evnt_time_start)) !!}
+												{!! strftime("%a, %d. %b %Y", strtotime($shift->schedule->event->evnt_date_start)) !!} um
+												{!! date("H:i", strtotime($shift->schedule->event->evnt_time_start)) !!}
 											</td>
 											<td>
-												{!! Form::open(  array( 'route'  => ['entry.update', $entry->id],
-										                                'id' 	 => $entry->id,
+												{!! Form::open(  array( 'route'  => ['shift.update', $shift->id],
+										                                'id' 	 => $shift->id,
 										                                'method' => 'put',
 										                                'class'  => 'updateShiftType')  ) !!}
 
 									           		{{-- Fields to populate --}}
-											        <input type="text" id="{!! 'entry' . $entry->id !!}" name="{!!   'entry' . $entry->id !!}" value="" hidden />
-											        <input type="text" id="{!! 'shiftType' . $entry->id !!}" name="{!! 'shiftType' . $entry->id !!}" value="" hidden />
+											        <input type="text" id="{!! 'shift' . $shift->id !!}" name="{!!   'shift' . $shift->id !!}" value="" hidden />
+											        <input type="text" id="{!! 'shiftType' . $shift->id !!}" name="{!! 'shiftType' . $shift->id !!}" value="" hidden />
 
 									           		<div class="btn-group dropdown-shiftTypes">
 
 													  	<a href="#" 
 													  	   class="btn btn-small btn-default" 
-													  	   name={{ "dropdown" . $entry->id }}
-										           		   id={{   "dropdown" . $entry->id }}
+													  	   name={{ "dropdown" . $shift->id }}
+										           		   id={{   "dropdown" . $shift->id }}
 										           		   data-toggle="dropdown" 
 										           		   aria-expanded="true">
 										           		   		{{ trans('mainLang.substituteThisInstance') }}
@@ -162,9 +162,9 @@
 																@if($shiftType->id !== $current_shiftType->id)
 																	<li class="dropdown"> 
 																		<a href="javascript:void(0);" 
-																		   onClick="document.getElementById('{{ 'entry'. $entry->id }}').value='{{ $entry->id }}';
-																					document.getElementById('{{ 'shiftType'. $entry->id }}').value='{{ $shiftType->id }}';
-																					document.getElementById('{{ 'btn-submit-changes'. $entry->id }}').click();">
+																		   onClick="document.getElementById('{{ 'shift'. $shift->id }}').value='{{ $shift->id }}';
+																					document.getElementById('{{ 'shiftType'. $shift->id }}').value='{{ $shiftType->id }}';
+																					document.getElementById('{{ 'btn-submit-changes'. $shift->id }}').click();">
 																		   	(#{{ $shiftType->id }}) 
 																		   	{{  $shiftType->jbtyp_title }} 
 																		   	(<i class='fa fa-clock-o'></i>
@@ -178,7 +178,7 @@
 														</ul>
 
 													</div>
-												{!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $entry->id, 'hidden') ) !!}
+												{!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $shift->id, 'hidden') ) !!}
 							        			{!! Form::close() !!}
 											</td>
 										</tr>
@@ -194,7 +194,7 @@
 	</div>
 		
 	<center>
-		{{ $entries->links() }}
+		{{ $shifts->links() }}
 	</center>
 	
 	<br/>

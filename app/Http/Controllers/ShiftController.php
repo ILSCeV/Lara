@@ -82,7 +82,7 @@ class ShiftController extends Controller
             $shift->save();
 
             // Log changes
-            ScheduleController::logAction($shift, "Diensttyp geändert");
+            Logging::logShiftRevision($shift, "revisions.shiftTypeChanged");
 
             // Formulate the response
             return response()->json([

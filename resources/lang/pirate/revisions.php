@@ -18,6 +18,7 @@ return [
     'commentDeleted' => 'Geschwätz erstummen lassen',
 
     'shiftSignedIn' => 'Zum Deck schrubben bereit erklärt',
+    'shiftTypeChanged' => 'Diensttyp geändert',
     'shiftSignedOut' => 'Dienst verweigert',
     'shiftChanged' => 'Dienst geändert',
     'shiftRenamed' => 'Dienst umbenannt',

@@ -18,6 +18,7 @@ return [
     'commentDeleted' => 'Kommentar gelöscht',
 
     'shiftSignedIn' => 'Dienst eingetragen',
+    'shiftTypeChanged' => 'Diensttyp geändert',
     'shiftChanged' => 'Dienst geändert',
     'shiftRenamed' => 'Dienst umbenannt',
     'shiftSignedOut' => 'Dienst ausgetragen',

@@ -18,6 +18,7 @@ return [
     'commentDeleted' => 'Comment deleted',
 
     'shiftSignedIn' => 'Shift signed in',
+    'shiftTypeChanged' => 'Shift type changed',
     'shiftChanged' => 'Shift changed',
     'shiftRenamed' => 'Shift renamed',
     'shiftSignedOut' => 'Shift signed out',
