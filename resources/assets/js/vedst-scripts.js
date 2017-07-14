@@ -1218,7 +1218,7 @@ jQuery( document ).ready( function( $ ) {
                     + '</span>'
                     + '-'
                     + '<span id="shiftTypeTimeEnd">'
-                    + data.jbtyp_ime_end
+                    + data.jbtyp_time_end
                     + '</span>'
                     + '<span id="shiftTypeWeight" class="hidden">'
                     + data.jbtyp_statistical_weight
