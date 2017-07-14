@@ -150,7 +150,7 @@ class ScheduleController extends Controller
         }
         // Delete all corresponding entries first because of dependencies in database
         foreach ( $schedule->shifts->get() as $shift ) {
-            $result = (new ShiftController)->destroy($shift->id);
+            ShiftController::delete($shift);
         }
 
         // Delete the schedule

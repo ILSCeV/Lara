@@ -269,8 +269,15 @@ class ShiftController extends Controller
      */
     public function destroy($id)
     {
-        // Get all the data
         $shift = Shift::find($id);
+        self::delete($shift);
+    }
+
+    /**
+     * Deletes the shift from the database
+     * @param \Lara\Shift $shift
+     */
+    public static function delete($shift) {
 
         // Check if shift exists
         if ( is_null( $shift ) ) {
@@ -281,7 +288,7 @@ class ShiftController extends Controller
         Utilities::clearIcalCache();
 
         // Delete the shift
-        Shift::destroy($id);
+        $shift->delete();
     }
 
 
