@@ -242,13 +242,13 @@ $( document ).ready( function() {
         {
             if (localStorage.shiftTime == "show") 
             {   
-                $('.entry-time').removeClass("hide"); 
+                $('.shift-time').removeClass("hide"); 
                 $('#toggle-shift-time').addClass("btn-primary");
                 $('.isotope').isotope('layout');
             } 
             else if (localStorage.shiftTime == "hide") 
             {
-                $('.entry-time').addClass("hide");
+                $('.shift-time').addClass("hide");
                 $('#toggle-shift-time').removeClass("btn-primary");
                 $('.isotope').isotope('layout');                  
             }      
@@ -257,13 +257,13 @@ $( document ).ready( function() {
         // Filter buttons action
         $('#toggle-shift-time').click(function(e) 
         { 
-            if ($('.entry-time').is(":visible"))    // times are shown, intent to hide
+            if ($('.shift-time').is(":visible"))    // times are shown, intent to hide
             {
                 // save selection in local storage
                 if(typeof(Storage) !== "undefined") { localStorage.shiftTime = "hide"; }
 
                 // change state, change button
-                $('.entry-time').addClass("hide"); 
+                $('.shift-time').addClass("hide"); 
                 $('#toggle-shift-time').removeClass("btn-primary");
                 $('.isotope').isotope('layout');
             }
@@ -273,7 +273,7 @@ $( document ).ready( function() {
                 if(typeof(Storage) !== "undefined") { localStorage.shiftTime = "show"; }
 
                 // change state, change button
-                $('.entry-time').removeClass("hide");
+                $('.shift-time').removeClass("hide");
                 $('#toggle-shift-time').addClass("btn-primary");
                 $('.isotope').isotope('layout');
             };        
@@ -700,9 +700,9 @@ $(document).ready(function() {
     });
 
     // populate from dropdown select
-    $.fn.dropdownSelect = function(jobtype, timeStart, timeEnd, weight) {
+    $.fn.dropdownSelect = function(shiftType, timeStart, timeEnd, weight) {
         
-        $(this).closest('.box').find("[name^=jbtyp_title]").val(jobtype);
+        $(this).closest('.box').find("[name^=jbtyp_title]").val(shiftType);
         $(this).closest('.box').find("[name^=jbtyp_time_start]").val(timeStart);
         $(this).closest('.box').find("[name^=jbtyp_time_end]").val(timeEnd);   
         $(this).closest('.box').find("[name^=jbtyp_statistical_weight]").val(weight);
@@ -959,7 +959,7 @@ Disabling iCal until fully functional. */
 
 
 
-// Update schedule entries
+// Update shifts
 jQuery( document ).ready( function( $ ) {
 
 
@@ -968,7 +968,7 @@ jQuery( document ).ready( function( $ ) {
 /////////////////////////////
 
     // open username dropdown on input selection and show only "I'll do it!" button at the beginning
-    $( '.scheduleEntry' ).find('input').on( 'focus', function() {
+    $( '.shift' ).find('input').on( 'focus', function() {
         // remove all other dropdowns
         $(document).find('.dropdown-username').hide();
         // open dropdown for current input
@@ -982,18 +982,18 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.scheduleEntry' ).find("input[id^='userName'], input[id^=comment]").on('input', function() {
+    $( '.shift' ).find("input[id^='userName'], input[id^=comment]").on('input', function() {
         // show only current button
         $('[name^=btn-submit-change]')
             .addClass('hide')
             .removeClass('btn-primary');
-        $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]')
+        $(this).parents('.shift').find('[name^=btn-submit-change]')
             .removeClass('hide')
             .addClass('btn-primary');
 
         // hide only current icon
         $('[name^=status-icon]').removeClass('hide');
-        $(this).parents('.scheduleEntry').find('[name^=status-icon]').addClass('hide');
+        $(this).parents('.shift').find('[name^=status-icon]').addClass('hide');
 
         // do all the work here after AJAX response is received
         function ajaxCallBackUsernames(response) { 
@@ -1036,7 +1036,7 @@ jQuery( document ).ready( function( $ ) {
                 var currentLdapId = $(this).find('#currentLdapId').html();
                 var currentName = $(this).find('#currentName').html();
                 var currentClub = $(this).find('#currentClub').html();
-                var currentEntryId = $(this).closest(".scheduleEntry").attr("id");
+                var currentEntryId = $(this).closest(".shift").attr("id");
 
                 // update fields
                 $("input[id=userName" + currentEntryId + "]").val(currentName);
@@ -1089,7 +1089,7 @@ jQuery( document ).ready( function( $ ) {
 
 
     // open club dropdown on input selection
-    $( '.scheduleEntry' ).find('input').on( 'focus', function() {
+    $( '.shift' ).find('input').on( 'focus', function() {
         // remove all other dropdowns
         $(document).find('.dropdown-club').hide();
         // open dropdown for current input
@@ -1103,10 +1103,10 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.scheduleEntry' ).find("input[id^='club']").on( 'input', function() {
+    $( '.shift' ).find("input[id^='club']").on( 'input', function() {
         // Show save icon on form change
-        $(this).parents('.scheduleEntry').find('[name^=btn-submit-change]').removeClass('hide');
-        $(this).parents('.scheduleEntry').find("[name^=status-icon]").addClass('hide');
+        $(this).parents('.shift').find('[name^=btn-submit-change]').removeClass('hide');
+        $(this).parents('.shift').find("[name^=status-icon]").addClass('hide');
 
         // do all the work here after AJAX response is received
         function ajaxCallBackClubs(response) { 
@@ -1128,7 +1128,7 @@ jQuery( document ).ready( function( $ ) {
             $(document.activeElement).parent().parent().children('.dropdown-club').children('li').click(function(e){
 
                 var clubTitle = $(this).find('#clubTitle').html();
-                var currentEntryId = $(this).closest(".scheduleEntry").attr("id");
+                var currentEntryId = $(this).closest(".shift").attr("id");
 
                 // update fields
                 $("input[id=club"     + currentEntryId + "]").val(clubTitle);
@@ -1173,25 +1173,25 @@ jQuery( document ).ready( function( $ ) {
 
 
     ///////////////////////////
-    // AUTOCOMPLETE JOBTYPES //
+    // AUTOCOMPLETE SHIFTTYPES //
     ///////////////////////////
     
 
 
-    // open jobtype dropdown on input selection
+    // open shiftType dropdown on input selection
     $( '.box' ).find('input[type=text]').on( 'focus', function() 
     {
         // remove all other dropdowns
-        $(document).find('.dropdown-jobtypes').hide();
+        $(document).find('.dropdown-shiftTypes').hide();
         // open dropdown for current input
-        $(document.activeElement).next('.dropdown-jobtypes').show();
+        $(document.activeElement).next('.dropdown-shiftTypes').show();
     } );
 
     // hide all dropdowns on ESC keypress
     $(document).keyup(function(e) 
     {
       if (e.keyCode === 27) {
-        $(document).find('.dropdown-jobtypes').hide();
+        $(document).find('.dropdown-shiftTypes').hide();
       }
     });
 
@@ -1201,26 +1201,26 @@ jQuery( document ).ready( function( $ ) {
         function ajaxCallBackClubs(response) { 
 
             // clear array from previous results
-            $(document.activeElement).next('.dropdown-jobtypes').contents().remove();
+            $(document.activeElement).next('.dropdown-shiftTypes').contents().remove();
 
             // format data received
             response.forEach(function(data) {
 
-                // add found jobtypes and metadata to the dropdown
-                $(document.activeElement).next('.dropdown-jobtypes').append(
+                // add found shiftTypes and metadata to the dropdown
+                $(document.activeElement).next('.dropdown-shiftTypes').append(
                     '<li><a href="javascript:void(0);">' 
-                    + '<span id="jobTypeTitle">' 
+                    + '<span id="shiftTypeTitle">' 
                     + data.jbtyp_title 
                     + '</span>'
                     + ' (<i class="fa fa-clock-o"></i> '
-                    + '<span id="jobTypeTimeStart">'
+                    + '<span id="shiftTypeTimeStart">'
                     + data.jbtyp_time_start
                     + '</span>'
                     + '-'
-                    + '<span id="jobTypeTimeEnd">'
-                    + data.jbtyp_time_end
+                    + '<span id="shiftTypeTimeEnd">'
+                    + data.jbtyp_ime_end
                     + '</span>'
-                    + '<span id="jobTypeWeight" class="hidden">'
+                    + '<span id="shiftTypeWeight" class="hidden">'
                     + data.jbtyp_statistical_weight
                     + '</span>'
                     + ')' 
@@ -1228,25 +1228,25 @@ jQuery( document ).ready( function( $ ) {
             });  
 
             // process clicks inside the dropdown
-            $(document.activeElement).next('.dropdown-jobtypes').children('li').click(function(e)
+            $(document.activeElement).next('.dropdown-shiftTypes').children('li').click(function(e)
             {
-                var selectedJobTypeTitle        = decodeEntities($(this).find('#jobTypeTitle').html());     // decoding html entities in the process
-                var selectedJobTypeTimeStart    = $(this).find('#jobTypeTimeStart').html();
-                var selectedJobTypeTimeEnd      = $(this).find('#jobTypeTimeEnd').html();
-                var selectedJobTypeWeight       = $(this).find('#jobTypeWeight').html();
+                var selectedShiftTypeTitle        = decodeEntities($(this).find('#shiftTypeTitle').html());     // decoding html entities in the process
+                var selectedShiftTypeTimeStart    = $(this).find('#shiftTypeTimeStart').html();
+                var selectedShiftTypeTimeEnd      = $(this).find('#shiftTypeTimeEnd').html();
+                var selectedShiftTypeWeight       = $(this).find('#shiftTypeWeight').html();
 
                 // update fields
-                $(this).parents(".box").find("[name^='shifts[title]']").val(selectedJobTypeTitle);
-                $(this).parents(".box").find("[name^='shifts[start]']").val(selectedJobTypeTimeStart);
-                $(this).parents(".box").find("[name^='shifts[end]']").val(selectedJobTypeTimeEnd);
-                $(this).parents(".box").find("[name^='shifts[weight]']").val(selectedJobTypeWeight);
+                $(this).parents(".box").find("[name^='shifts[title]']").val(selectedShiftTypeTitle);
+                $(this).parents(".box").find("[name^='shifts[start]']").val(selectedShiftTypeTimeStart);
+                $(this).parents(".box").find("[name^='shifts[end]']").val(selectedShiftTypeTimeEnd);
+                $(this).parents(".box").find("[name^='shifts[weight]']").val(selectedShiftTypeWeight);
 
                 // close dropdown afterwards
-                $(document).find('.dropdown-jobtypes').hide();
+                $(document).find('.dropdown-shiftTypes').hide();
             });
 
             // reveal newly created dropdown
-            $(document.activeElement).next('.dropdown-jobtypes').show();
+            $(document.activeElement).next('.dropdown-shiftTypes').show();
 
         }
 
@@ -1257,7 +1257,7 @@ jQuery( document ).ready( function( $ ) {
         $.ajax({  
             type: $( this ).prop( 'method' ),  
 
-            url: "/jobtypes/" + $(this).val(),  
+            url: "/shiftTypes/" + $(this).val(),  
 
             data: {
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
@@ -1278,7 +1278,7 @@ jQuery( document ).ready( function( $ ) {
 
 
     // Submit changes
-    $( '.scheduleEntry' ).on( 'submit', function() {
+    $( '.shift' ).on( 'submit', function() {
 
         // For passworded schedules: check if a password field exists and is not empty
         // We will check correctness on the server side
@@ -1416,12 +1416,12 @@ jQuery( document ).ready( function( $ ) {
 
 
 ////////////////////////////////
-// MANAGEMENT: UPDATE JOBTYPE //
+// MANAGEMENT: UPDATE SHIFTTYPE //
 ////////////////////////////////
 
 
 
-    $( '.updateJobtype' ).on( 'submit', function() {
+    $( '.updateShiftType' ).on( 'submit', function() {
 
         $.ajax({  
             type: $( this ).prop( 'method' ),  
@@ -1434,7 +1434,7 @@ jQuery( document ).ready( function( $ ) {
 
                     // Actual data being sent below
                     "entryId":      $(this).closest("form").attr("id"), 
-                    "jobtypeId":    $(this).find("[name^=jobtype]").val(),
+                    "shiftTypeId":    $(this).find("[name^=shiftType]").val(),
 
                     // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
                     "_method": "put"
@@ -1454,11 +1454,11 @@ jQuery( document ).ready( function( $ ) {
 
             success: function(data) {  
                 //console.log("success");
-                // remove row to indicate successful renaming of the jobtype
-                $(".jobtype-event-row" + data["entryId"]).hide();
+                // remove row to indicate successful renaming of the shiftType
+                $(".shiftType-event-row" + data["entryId"]).hide();
 
-                // if all rows except table header were hidden (all jobtypes substituted withn other ones),
-                // refresh the page to get the delete button or show remaining jobtypes
+                // if all rows except table header were hidden (all shiftTypes substituted withn other ones),
+                // refresh the page to get the delete button or show remaining shiftTypes
                 if ($("#events-rows").children("tr:visible").length <= 1) {
                     // we remove arguments after "?" because otherwise user could land on a pagination page that is already empty
                     window.location = window.location.href.split("?")[0];
@@ -1477,8 +1477,8 @@ jQuery( document ).ready( function( $ ) {
 
     });
 
-    // Detect entry name change and remove LDAP id from the previous entry
-    $('.scheduleEntry').find("[name^=userName]").on('input propertychange paste', function() {
+    // Detect shift name change and remove LDAP id from the previous shift
+    $('.shift').find("[name^=userName]").on('input propertychange paste', function() {
         $(this).parent().find("[name^=ldapId]").val("");
     });
  

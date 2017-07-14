@@ -148,7 +148,7 @@ class ScheduleController extends Controller
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
-        // Delete all corresponding entries first because of dependencies in database
+        // Delete all corresponding shifts first because of dependencies in database
         foreach ( $schedule->shifts->get() as $shift ) {
             ShiftController::delete($shift);
         }
@@ -158,9 +158,9 @@ class ScheduleController extends Controller
     }
 
     /**
-    * Create all new scheduleEntries with entered information.
+    * Create all new shifts with entered information.
     *
-    * @return Collection scheduleEntries
+    * @return Collection shifts
     */
     public static function createShifts($scheduleId, $isNewEvent = true)
     {
@@ -241,10 +241,10 @@ class ScheduleController extends Controller
 
 
     /**
-    * Edit and/or delete scheduleEntries refered to $scheduleId.
+    * Edit and/or delete shifts refered to $scheduleId.
     *
     * @param Schedule $schedule
-    * @return Collection scheduleEntries
+    * @return Collection shifts
     */
     public static function editShifts($scheduleId)
     {
@@ -254,7 +254,7 @@ class ScheduleController extends Controller
     /**
      * Receives a timestamp, compares it to last update time of the schedule 
      * and returns either a false boolean for "no updates since timestamp provided"
-     * or a JSON array of updated schedule entries
+     * or a JSON array of updated shifts
      *
      * @param int $scheduleId
      * @param String $timestamp

@@ -44,7 +44,7 @@ class ShiftTypeController extends Controller
     {
         $shiftTypes = ShiftType::orderBy('jbtyp_title', 'ASC')->paginate(25);
 
-        return view('manageJobTypesView', ['jobtypes' => $shiftTypes]);
+        return view('manageShiftTypesView', ['shiftTypes' => $shiftTypes]);
     }
 
     /**
@@ -55,17 +55,17 @@ class ShiftTypeController extends Controller
      */
     public function show($id)
     {
-        // get selected jobtype
-        $current_jobtype = ShiftType::findOrFail($id);
+        // get selected shiftTypes
+        $current_shiftType = ShiftType::findOrFail($id);
 
         // get a list of all available job types
-        $jobtypes = ShiftType::orderBy('jbtyp_title', 'ASC')->get();
+        $shiftTypes = ShiftType::orderBy('jbtyp_title', 'ASC')->get();
 
-        $entries = Shift::where('shifttype_id', '=', $id)
+        $shifts = Shift::where('shifttype_id', '=', $id)
             ->with('schedule.event.getPlace')
             ->paginate(25);
 
-        return View::make('jobTypeView', compact('current_jobtype', 'jobtypes', 'entries'));
+        return View::make('shiftTypeView', compact('current_shiftType', 'shiftTypes', 'shifts'));
     }
 
     /**
@@ -88,8 +88,8 @@ class ShiftTypeController extends Controller
             return Redirect::back();
         }
 
-        // Get all the data (throws a 404 error if jobtype doesn't exist)
-        $jobtype = ShiftType::findOrFail($id);
+        // Get all the data (throws a 404 error if shiftType doesn't exist)
+        $shiftType = ShiftType::findOrFail($id);
 
         // Extract request data
         $newTitle       = $request->get('jbtyp_title'.$id);
@@ -121,16 +121,16 @@ class ShiftTypeController extends Controller
         // Log the action while we still have the data
         Log::info('ShiftType edited: ' .
             Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
-            ') changed shift type #' . $jobtype->id . ' from "' . $jobtype->jbtyp_title . '", start: ' . $jobtype->jbtyp_time_start . ', end: ' . $jobtype->jbtyp_time_end . ', weight: ' . $jobtype->jbtyp_statistical_weight . ' to "' . $newTitle . '" , start: ' . $newTimeStart . ', end: ' . $newTimeEnd . ', weight: ' . $newWeight . '. ');
+            ') changed shift type #' . $shiftType->id . ' from "' . $shiftType->jbtyp_title . '", start: ' . $shiftType->jbtyp_time_start . ', end: ' . $shiftType->jbtyp_time_end . ', weight: ' . $shiftType->jbtyp_statistical_weight . ' to "' . $newTitle . '" , start: ' . $newTimeStart . ', end: ' . $newTimeEnd . ', weight: ' . $newWeight . '. ');
 
         // Write and save changes
-        $jobtype->jbtyp_title               = $newTitle;
-        $jobtype->jbtyp_time_start          = $newTimeStart;
-        $jobtype->jbtyp_time_end            = $newTimeEnd;
-        $jobtype->jbtyp_statistical_weight  = $newWeight;
-        $jobtype->save();
+        $shiftType->jbtyp_title               = $newTitle;
+        $shiftType->jbtyp_time_start          = $newTimeStart;
+        $shiftType->jbtyp_time_end            = $newTimeEnd;
+        $shiftType->jbtyp_statistical_weight  = $newWeight;
+        $shiftType->save();
 
-        // Return to the jobtype page
+        // Return to the shiftType page
         Session::put('message', trans('mainLang.changesSaved'));
         Session::put('msgType', 'success');
         return Redirect::back();
@@ -156,28 +156,28 @@ class ShiftTypeController extends Controller
         }
 
         // Get all the data
-        // (throws a 404 error if jobtype doesn't exist)
-        $jobtype = ShiftType::findOrFail($id);
+        // (throws a 404 error if shiftType doesn't exist)
+        $shiftType = ShiftType::findOrFail($id);
 
         // Before deleting, check if this job type is in use in any existing schedule
-        if (  Shift::where('shifttype_id', '=', $jobtype->id)->count() > 0  ) {
+        if (  Shift::where('shifttype_id', '=', $shiftType->id)->count() > 0  ) {
             // CASE 1: job type still in use - let the user decide what to do in each case
 
             // Inform the user about the redirect and go to detailed info about the job type selected
-            Session::put('message', trans('mainLang.deleteFailedJobtypeInUse'));
+            Session::put('message', trans('mainLang.deleteFailedShiftTypeInUse'));
             Session::put('msgType', 'danger');
-            return Redirect::action( 'ShiftTypeController@show', ['id' => $jobtype->id] );
+            return Redirect::action( 'ShiftTypeController@show', ['id' => $shiftType->id] );
         }
         else
         {
             // CASE 2: job type is not used anywhere and can be remove without side effects
 
             // Log the action while we still have the data
-            Log::info('Jobtype deleted: ' .
+            Log::info('ShiftType deleted: ' .
                 Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
-                ') deleted "' . $jobtype->jbtyp_title .  '" (it was not used in any schedule).');
+                ') deleted "' . $shiftType->jbtyp_title .  '" (it was not used in any schedule).');
 
-            // Now delete the jobtype
+            // Now delete the shiftType
             ShiftType::destroy($id);
 
             // Return to the management page

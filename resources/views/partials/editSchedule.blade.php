@@ -3,9 +3,9 @@
 		<h4 class="panel-title">{{ trans('mainLang.adjustRoster') }}:</h4>
 	</div>
 	<div class="panel-body" id="main">
-	{{-- jobtype fields --}}
+	{{-- shiftType fields --}}
 	    <div id="shiftContainer" class="container shiftContainer">
-			@foreach($entries as $shift)
+			@foreach($shifts as $shift)
 				@include('partials.events.shift', [
 					"title" => $shift->type->jbtyp_title,
 					"startTime" => $shift->start,

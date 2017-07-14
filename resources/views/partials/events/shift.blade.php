@@ -8,7 +8,7 @@
                placeholder="{{ trans('mainLang.serviceTypeEnter') }}"
                autocomplete="off"
         />
-        <ul class="dropdown-menu dropdown-jobtypes" style="position: absolute;"/>
+        <ul class="dropdown-menu dropdown-shiftTypes" style="position: absolute;"/>
     </div>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <input type="time"

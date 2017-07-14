@@ -19,7 +19,7 @@ class ShiftController extends Controller
 {
     /**
      * Display the specified resource.
-     * Returns JSON-formated contents of a schedule entry.
+     * Returns JSON-formated contents of a shift.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -55,7 +55,7 @@ class ShiftController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * Changes contents of the entry specified by ID to contents in the REQUEST
+     * Changes contents of the shift specified by ID to contents in the REQUEST
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -70,15 +70,15 @@ class ShiftController extends Controller
 
         Utilities::clearIcalCache();
 
-        // If we only want to modify the jobtype via management pages - do it without evaluating the rest
-        if ( !empty($request->get('jobtypeId')) && is_numeric($request->get('jobtypeId')) ) {
+        // If we only want to modify the shiftType via management pages - do it without evaluating the rest
+        if ( !empty($request->get('shiftTypeId')) && is_numeric($request->get('shiftTypeId')) ) {
 
             // Find the corresponding shift object
             $shift = Shift::where('id', '=', $request->get('entryId'))
                 ->first();
 
             // Substitute values
-            $shift->shifttype_id = $request->get('jobtypeId');
+            $shift->shifttype_id = $request->get('shiftTypeId');
             $shift->save();
 
             // Log changes
@@ -87,7 +87,7 @@ class ShiftController extends Controller
             // Formulate the response
             return response()->json([
                 "entryId" => $shift->id,
-                "updatedJobtypeTitle" => ShiftType::where('id', '=', $shift->shifttype_id)->first()->jbtyp_title
+                "updatedShiftTypeTitle" => ShiftType::where('id', '=', $shift->shifttype_id)->first()->jbtyp_title
             ]);
         }
 
@@ -136,7 +136,7 @@ class ShiftController extends Controller
         {
             if ( !$userName == '' )
             {
-                // Case ADDED:   Entry was empty, new data entered -> add new data
+                // Case ADDED:   Shift was empty, new data entered -> add new data
                 $this->onAdd($shift, $userName, $ldapId, $userClub);
                 Logging::shiftChanged($shift, $oldPerson, $shift->person);
             }
@@ -145,27 +145,27 @@ class ShiftController extends Controller
         {
             if ( $userName == '' )
             {
-                // Case DELETED: Entry was not empty, shift is empty now -> delete old data
+                // Case DELETED: Shift was not empty, shift is empty now -> delete old data
                 $this->onDelete($shift);
                 Logging::shiftChanged($shift, $oldPerson, $shift->person);
             }
             else
             {
-                // Differentiate between entries with members or with guests
+                // Differentiate between shifts with members or with guests
                 if ( !is_null($shift->getPerson()->first()->prsn_ldap_id) )
                 {
-                    // Member entries (with LDAP ID provided) shouldn't change club id, so no need to do anything in that case either
+                    // Member shifts (with LDAP ID provided) shouldn't change club id, so no need to do anything in that case either
                     if ( $shift->getPerson->prsn_name == $userName
                         AND  Person::where('id', '=', $shift->person_id)->first()->prsn_ldap_id == $ldapId )
                     {
                         // Possibility 1: same name, same ldap = same person
-                        // Case SAME: Entry was not empty, but same person is there -> do nothing
+                        // Case SAME: Shift was not empty, but same person is there -> do nothing
                     }
                     else {
                         // Possibility 2: same name, new/empty ldap  = another person
                         // Possibility 3: new name,  same ldap       = probably LDAP ID not cleared on save, assume another person
                         // Possibility 4: new name,  new/empty ldap  = another person
-                        // Case CHANGED: Entry was not empty, new data entered -> delete old data, then add new data
+                        // Case CHANGED: Shift was not empty, new data entered -> delete old data, then add new data
                         $this->onDelete($shift);
                         $this->onAdd($shift, $userName, $ldapId, $userClub);
                         Logging::shiftChanged($shift, $oldPerson, $shift->person);
@@ -173,13 +173,13 @@ class ShiftController extends Controller
                 }
                 else
                 {
-                    // Guest entries may change club
+                    // Guest shifts may change club
                     if ( $shift->getPerson->prsn_name == $userName
                         AND  $shift->getPerson->getClub->clb_title == $userClub
                         AND  $ldapId == '' )
                     {
                         // Possibility 1: same name, same club, empty ldap  = do nothing
-                        // Case SAME: Entry was not empty, but same person is there -> do nothing
+                        // Case SAME: Shift was not empty, but same person is there -> do nothing
                     }
                     else
                     {
@@ -190,7 +190,7 @@ class ShiftController extends Controller
                         // Possibility 6: new name,  new club,  empty ldap  -> Case CHANGED
                         // Possibility 7: new name,  same club, new ldap    -> Case CHANGED
                         // Possibility 8: new name,  new club,  new ldap    -> Case CHANGED
-                        // Case NAME CHANGED: Entry was not empty, new data entered -> delete old data, then add new data
+                        // Case NAME CHANGED: Shift was not empty, new data entered -> delete old data, then add new data
                         $this->onDelete($shift);
                         $this->onAdd($shift, $userName, $ldapId, $userClub);
 
@@ -298,34 +298,34 @@ class ShiftController extends Controller
 
 
     /**
-     * Deletes a schedule entry.
+     * Deletes a shift.
      * Deletes the dataset in table Person if it's a guest (LDAP id = NULL), but doesn't touch club members.
      *
-     * @param  Shift $entry
+     * @param  Shift $shift
      * @return void
      */
-    private function onDelete($entry)
+    private function onDelete($shift)
     {
-        if ( !isset($entry->getPerson->prsn_ldap_id) )
+        if ( !isset($shift->getPerson->prsn_ldap_id) )
         {
-            Person::destroy($entry->person_id);
+            Person::destroy($shift->person_id);
         }
 
-        $entry->person_id = null;
-        $entry->save();
+        $shift->person_id = null;
+        $shift->save();
     }
 
 
     /**
-     * Adds new person to the schedule entry.
+     * Adds new person to the shift.
      *
-     * @param  Shift $entry
+     * @param  Shift $shift
      * @param  String $userName
      * @param  int $ldapId
      * @param  String $userClub
      * @return void
      */
-    private function onAdd($entry, $userName, $ldapId, $userClub)
+    private function onAdd($shift, $userName, $ldapId, $userClub)
     {
         // If no LDAP id provided - create new GUEST person
         if ( $ldapId == '' )
@@ -371,25 +371,25 @@ class ShiftController extends Controller
             $person->clb_id = $match->id;
         }
 
-        // Save changes to person and schedule entry
+        // Save changes to person and schedule shift
         $person->updated_at = Carbon::now();
         $person->save();
 
-        $entry->person_id = $person->id;
-        $entry->save();
+        $shift->person_id = $person->id;
+        $shift->save();
     }
 
 
     /**
-     * Checks what kind of person occupies entry after changes and sets the status
+     * Checks what kind of person occupies shift after changes and sets the status
      * to "free" or a person userStatus accordingly
      *
-     * @param  Shift $entry
+     * @param  Shift $shift
      * @return array $userStatus
      */
-    private function updateStatus($entry) {
-        if ( !is_null($entry->person_id) ) {
-            switch (Person::where("id","=",$entry->person_id)->first()->prsn_status) {
+    private function updateStatus($shift) {
+        if ( !is_null($shift->person_id) ) {
+            switch (Person::where("id","=",$shift->person_id)->first()->prsn_status) {
                 case 'candidate':
                     $userStatus = ["status"=>"fa fa-adjust", "style"=>"color:yellowgreen;", "title"=>"Kandidat"];
                     break;

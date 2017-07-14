@@ -272,7 +272,7 @@ return [
 
     //not translated the term 'logs'
     'manageClub'            => 'Manage clubs',
-    'manageJobType'         => 'Manage shift types',
+    'manageShiftType'         => 'Manage shift types',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
 
     'manageTemplate'        => 'Manage templates',
@@ -439,8 +439,8 @@ return [
     ////////////////
 
     'management'                    => 'Management',
-    'jobType'                       => 'Shift type',
-    'jobtypes'                      => 'Shift types',
+    'shiftType'                       => 'Shift type',
+    'shiftTypes'                      => 'Shift types',
     'shift'                         => 'Shift',
     'start'                         => 'Start',
     'end'                           => 'End',
@@ -449,13 +449,13 @@ return [
     'deleteConfirmation'            => 'Do you really want to delete this shift type:',
     'warningNotReversible'          => 'This action is not reversible!',
     'editDetails'                   => 'Edit details',
-    'deleteThisJobtype'             => 'Delete',
+    'deleteThisShiftType'             => 'Delete',
 
     'reset'                         => 'Reset',
     'update'                        => 'Save changes',
     'delete'                        => 'delete it',
-    'jobtypeNeverUsed'              => 'This shift type was never used... Quite sad, isn\'t it? Maybe you should just ',
-    'jobtypeUsedInFollowingEvents'  => 'This shift type is used in the following events. To remove it you should substitute each of its instances with another shift type.',
+    'shiftTypeNeverUsed'              => 'This shift type was never used... Quite sad, isn\'t it? Maybe you should just ',
+    'shiftTypeUsedInFollowingEvents'  => 'This shift type is used in the following events. To remove it you should substitute each of its instances with another shift type.',
     'event'                         => 'Event',
     'date'                          => 'Date',
     'substituteThisInstance'        => 'Substitute with...',
@@ -465,7 +465,7 @@ return [
     'nonNumericStats'               => 'Statistical weight must be entered with numbers ;)',
     'negativeStats'                 => 'Statistical weight can\'t be negative.',
     'changesSaved'                  => 'Changes saved successfully.',
-    'deleteFailedJobtypeInUse'      => 'Shift type was not deleted, because it\'s in use. Here you can change that.',
+    'deleteFailedShiftTypeInUse'      => 'Shift type was not deleted, because it\'s in use. Here you can change that.',
 
     //////////
     // ICal //

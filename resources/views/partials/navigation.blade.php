@@ -52,7 +52,7 @@
                 @if(Session::get('userGroup') == 'marketing'
                  OR Session::get('userGroup') == 'clubleitung'
                  OR Session::get('userGroup') == 'admin')
-                    <li><a href="{{ asset('jobtype') }}">{{ trans('mainLang.manageJobType') }}</a></li>
+                    <li><a href="{{ asset('shiftType') }}">{{ trans('mainLang.manageShiftType') }}</a></li>
                 @endif
 
 

@@ -53,7 +53,7 @@
             <?php $classString = ""; ?>
         @endif
 
-        {{-- highlight with cal-month-my-event class if the signed in user has an entry in this event --}}
+        {{-- highlight with cal-month-my-event class if the signed in user has an shift in this event --}}
         @if((Session::has('userId') && $clubEvent->hasShift($clubEvent->getSchedule->id, Session::get('userId'))))
             <?php $classString .= " cal-month-my-event"; ?>
         @endif

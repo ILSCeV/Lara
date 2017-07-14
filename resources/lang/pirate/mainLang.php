@@ -273,7 +273,7 @@ return [
     'week'                  => 'Trinkzeit',
     //not translated the term 'logs'
     'manageClub'            => 'Schiffe verwalten',
-    'manageJobType'         => 'Diensttypen verwalten', 
+    'manageShiftType'         => 'Diensttypen verwalten', 
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
     
     'manageTemplate'        => 'Vorlagen verwalten',
@@ -441,8 +441,8 @@ return [
     ////////////////
 
     'management'                    => 'Verwaltung',
-    'jobType'                       => 'Diensttyp',
-    'jobtypes'                      => 'Diensttypen',
+    'shiftType'                       => 'Diensttyp',
+    'shiftTypes'                      => 'Diensttypen',
     'shift'                         => 'Dienst',
     'start'                         => 'Beginn',
     'end'                           => 'Ende',
@@ -451,13 +451,13 @@ return [
     'deleteConfirmation'            => 'Möchtest du folgenden Diensttyp wirklich löschen:',
     'warningNotReversible'          => 'Diese Aktion kann man nicht rückgängig machen!',
     'editDetails'                   => 'Details anpassen',
-    'deleteThisJobtype'             => 'Entfernen',
+    'deleteThisShiftType'             => 'Entfernen',
 
     'reset'                         => 'Zurücksetzen',
     'update'                        => 'Änderungen speichern',
     'delete'                        => 'löschen',
-    'jobtypeNeverUsed'              => 'Dieser Diensttyp wird bei keinem einzigen Event benutzt... Traurig, so was... Vielleicht wäre es sinnvoll, ihn einfach zu',
-    'jobtypeUsedInFollowingEvents'  => 'Dieser Dienstyp wird bei folgenden Events eingesetzt. Um ihn zu entfernen, ersetze jede Instanz erst mit einem anderen Diensttyp.',
+    'shiftTypeNeverUsed'              => 'Dieser Diensttyp wird bei keinem einzigen Event benutzt... Traurig, so was... Vielleicht wäre es sinnvoll, ihn einfach zu',
+    'shiftTypeUsedInFollowingEvents'  => 'Dieser Dienstyp wird bei folgenden Events eingesetzt. Um ihn zu entfernen, ersetze jede Instanz erst mit einem anderen Diensttyp.',
     'event'                         => 'Event',
     'date'                          => 'Datum',
     'substituteThisInstance'        => 'Ersetzen durch...',
@@ -467,7 +467,7 @@ return [
     'nonNumericStats'               => 'Statistische Wertung muss man mit Ziffern eingeben ;)',
     'negativeStats'                 => 'Statistische Wertung darf nicht negativ sein.',
     'changesSaved'                  => 'Änderungen erfolgreich gespeichert.',
-    'deleteFailedJobtypeInUse'      => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
+    'deleteFailedShiftTypeInUse'      => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
     
     
     //////////

@@ -97,8 +97,8 @@ Route::get('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventContr
 Route::get('person/{query?}', 				'PersonController@index');
 Route::get('club/{query?}', 				'ClubController@index');
 Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson');
-Route::get('jobtypes/{query?}', 			'ShiftTypeController@find');
-Route::get('shifttypes/{query?}', 			'ShiftTypeController@find');
+Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
+Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
 
 // additional route to store a SurveyAnswer
 Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');
@@ -111,8 +111,9 @@ Route::get('lang', function() {
 });
 
 // RESTful RESOURCES
-Route::resource('jobtype', 	'ShiftTypeController');
-Route::resource('entry', 	'ShiftController', 	        ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
+Route::resource('shiftType', 	'ShiftTypeController');
+Route::resource('shiftType', 	'ShiftTypeController');
+Route::resource('shift', 	'ShiftController', 	        ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('schedule', 'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('event', 	'ClubEventController', 		['except' => ['index']]);
 Route::resource('person', 	'PersonController', 		['only'   => ['index']]);

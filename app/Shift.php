@@ -23,10 +23,9 @@ class Shift extends Model
         return $this->comment;
     }
 
-
     /**
      * Get the corresponding shift type.
-     * Looks up in table shifttypes for that entry, which has the same id like shifttype_id of ScheduleEntry instance.
+     * Looks up in table shiftTypes for that entry, which has the same id like shifttype_id of ScheduleEntry instance.
      *
      * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type ShiftType
      */
@@ -60,21 +59,21 @@ class Shift extends Model
     }
 
     /**
-     * Get quantity of $entries grouped by $jobtypeId.
+     * Get quantity of shifts grouped by $shiftTypeId.
      *
-     * @param Collection $entries
-     * @param int $jobtypeId
-     * @return int quantity of $entries grouped by $jobtypeId
+     * @param Collection $shifts
+     * @param int $shiftTypeId
+     * @return int quantity of $shifts grouped by $shiftTypeId
      */
-    public static function countGroupedBy($entries, $jobtypeId)
+    public static function countGroupedBy($shifts, $shiftTypeId)
     {
         $count = 0;
 
-        if (!is_null($entries))
+        if (!is_null($shifts))
         {
-            foreach($entries as $entry)
+            foreach($shifts as $shift)
             {
-                if ($entry->shifttype_id == $jobtypeId)
+                if ($shift->shifttype_id == $shiftTypeId)
                     $count++;
             }
         }
@@ -83,20 +82,20 @@ class Shift extends Model
     }
 
     /**
-     * Get start time of a scheduleEntry which has $jobtypeId.
+     * Get start time of a shift which has $shiftTypeId.
      *
-     * @param Collection $entries
-     * @param int $jobtypeId
+     * @param Collection $shifts
+     * @param int $shiftTypeId
      * @return time the start time
      */
-    public static function getTimeStart($entries, $jobtypeId)
+    public static function getTimeStart($shifts, $shiftTypeId)
     {
-        if (!is_null($entries))
+        if (!is_null($shifts))
         {
-            foreach($entries as $entry)
+            foreach($shifts as $shift)
             {
-                if ($entry->shifttype_id == $jobtypeId)
-                    return $entry->start;
+                if ($shift->shifttype_id == $shiftTypeId)
+                    return $shift->start;
             }
         }
 
@@ -104,20 +103,20 @@ class Shift extends Model
     }
 
     /**
-     * Get end time of a scheduleEntry which has $jobtypeId.
+     * Get end time of a shift which has $shiftTypeId.
      *
-     * @param Collection $entries
-     * @param int $jobtypeId
+     * @param Collection $shifts
+     * @param int $shiftTypeId
      * @return time the end time
      */
-    public static function getTimeEnd($entries, $jobtypeId)
+    public static function getTimeEnd($shifts, $shiftTypeId)
     {
-        if (!is_null($entries))
+        if (!is_null($shifts))
         {
-            foreach($entries as $entry)
+            foreach($shifts as $shift)
             {
-                if ($entry->shifttype_id == $jobtypeId)
-                    return $entry->end;
+                if ($shift->shifttype_id == $shiftTypeId)
+                    return $shift->end;
             }
         }
 

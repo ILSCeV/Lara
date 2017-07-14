@@ -45,7 +45,7 @@ class ClubEventController extends Controller
      * @return view createClubEventView
      * @return Place[] places
      * @return Schedule[] templates
-     * @return Jobtype[] jobtypes
+     * @return shiftTypes[] shiftTypes
      * @return string $date
      * @return \Illuminate\Http\Response
      */
@@ -82,7 +82,7 @@ class ClubEventController extends Controller
                              ->get();
 
         // get a list of available job types
-        $jobtypes = ShiftType::where('jbtyp_is_archived', '=', '0')
+        $shiftTypes = ShiftType::where('jbtyp_is_archived', '=', '0')
                            ->orderBy('jbtyp_title', 'ASC')
                            ->get();
 
@@ -95,7 +95,7 @@ class ClubEventController extends Controller
             $activeTemplate = $template->schdl_title;
 
             // get template data
-            $entries    = $template->shifts()->with('type')->orderByRaw('position IS NULL, position ASC, id ASC')->get();
+            $shifts     = $template->shifts()->with('type')->orderByRaw('position IS NULL, position ASC, id ASC')->get();
             $title      = $template->getClubEvent->evnt_title;
             $subtitle   = $template->getClubEvent->evnt_subtitle;
             $type       = $template->getClubEvent->evnt_type;
@@ -110,7 +110,7 @@ class ClubEventController extends Controller
         } else {
             // fill variables with no data if no template was chosen
             $activeTemplate = "";
-            $entries    = collect([]);
+            $shifts     = collect([]);
             $title      = null;
             $type       = null;
             $subtitle   = null;
@@ -124,8 +124,8 @@ class ClubEventController extends Controller
             $private    = null;
         }
 
-        return View::make('createClubEventView', compact('places', 'jobtypes', 'templates',
-                                                         'entries', 'title', 'subtitle', 'type',
+        return View::make('createClubEventView', compact('places', 'shiftTypes', 'templates',
+                                                         'shifts', 'title', 'subtitle', 'type',
                                                          'place', 'filter', 'timeStart', 'timeEnd',
                                                          'info', 'details', 'private', 'dv',
                                                          'activeTemplate',
@@ -176,7 +176,7 @@ class ClubEventController extends Controller
      * @param  int $id
      * @return view ClubEventView
      * @return ClubEvent $clubEvent
-     * @return Shift[] $entries
+     * @return Shifts[] $shifts
      * @return RedirectResponse
      */
     public function show($id)
@@ -202,7 +202,7 @@ class ClubEventController extends Controller
 
         $schedule = Schedule::findOrFail($clubEvent->getSchedule->id);
 
-        $entries = Shift::where('schedule_id', '=', $schedule->id)
+        $shifts = Shift::where('schedule_id', '=', $schedule->id)
                                 ->with('type',
                                        'getPerson',
                                        'getPerson.getClub')
@@ -248,7 +248,7 @@ class ClubEventController extends Controller
             $clubEvent->save();
         }
 
-        return View::make('clubEventView', compact('clubEvent', 'entries', 'clubs', 'persons', 'revisions', 'created_by', 'creator_name'));
+        return View::make('clubEventView', compact('clubEvent', 'shifts', 'clubs', 'persons', 'revisions', 'created_by', 'creator_name'));
     }
 
 
@@ -272,12 +272,12 @@ class ClubEventController extends Controller
 
 
         // get a list of available job types
-        $jobtypes = ShiftType::where('jbtyp_is_archived', '=', '0')
+        $shiftTypes = ShiftType::where('jbtyp_is_archived', '=', '0')
                            ->orderBy('jbtyp_title', 'ASC')
                            ->get();
 
-        // put template data into entries
-        $entries = $schedule->shifts()
+        // put template data into shifts
+        $shifts = $schedule->shifts()
                             ->with('type')
                             ->orderByRaw('position IS NULL, position ASC, id ASC')
                             ->get();
@@ -303,8 +303,8 @@ class ClubEventController extends Controller
         return View::make('editClubEventView', compact('event',
                                                        'schedule',
                                                        'places',
-                                                       'jobtypes',
-                                                       'entries',
+                                                       'shiftTypes',
+                                                       'shifts',
                                                        'created_by',
                                                        'creator_name'));
     }
@@ -349,7 +349,7 @@ class ClubEventController extends Controller
     }
 
     /**
-     * Delete an event specified by parameter $id with schedule and schedule entries.
+     * Delete an event specified by parameter $id with schedule and shifts
      *
      * @param  int  $id
      * @return RedirectResponse
@@ -387,7 +387,7 @@ class ClubEventController extends Controller
                  . Session::get('userGroup') . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         Utilities::clearIcalCache();
 
-        // Delete schedule with entries
+        // Delete schedule with shifts
         $result = (new ScheduleController)->destroy($event->getSchedule()->first()->id);
 
         // Now delete the event itself

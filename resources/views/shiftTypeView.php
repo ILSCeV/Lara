@@ -1,8 +1,8 @@
-{{-- Needs variable: $current_jobtype, $jobtypes, $entries --}}
+{{-- Needs variable: $current_shiftType, $shiftTypes, $entries --}}
 @extends('layouts.master')
 
 @section('title')
-	{{ trans('mainLang.management') }}: #{{ $current_jobtype->id }} - {!! $current_jobtype->jbtyp_title !!} 
+	{{ trans('mainLang.management') }}: #{{ $current_shiftType->id }} - {!! $current_shiftType->jbtyp_title !!} 
 @stop
 
 @section('content')
@@ -14,22 +14,22 @@
 
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			<h4 class="panel-title">#{{ $current_jobtype->id }}: "{!! $current_jobtype->jbtyp_title !!}" </h4>
+			<h4 class="panel-title">#{{ $current_shiftType->id }}: "{!! $current_shiftType->jbtyp_title !!}" </h4>
 		</div>
 		<div class="panel panel-body no-padding">
 			<table class="table table-hover">
-				{!! Form::open(  array( 'route' => ['jobtype.update', $current_jobtype->id],
-		                                'id' => $current_jobtype->id, 
+				{!! Form::open(  array( 'route' => ['shiftType.update', $current_shiftType->id],
+		                                'id' => $current_shiftType->id, 
 		                                'method' => 'PUT', 
-		                                'class' => 'jobType')  ) !!}
+		                                'class' => 'shiftType')  ) !!}
 					<tr>
 						<td width="20%" class="left-padding-16">
-							<i>{{ trans('mainLang.jobType') }}:</i>
+							<i>{{ trans('mainLang.shiftType') }}:</i>
 						</td>
 						<td>
-							{!! Form::text('jbtyp_title' . $current_jobtype->id, 
-							   $current_jobtype->jbtyp_title, 
-							   array('id'=>'jbtyp_title' . $current_jobtype->id)) !!}
+							{!! Form::text('jbtyp_title' . $current_shiftType->id, 
+							   $current_shiftType->jbtyp_title, 
+							   array('id'=>'jbtyp_title' . $current_shiftType->id)) !!}
 						</td>
 					</tr>
 					<tr>
@@ -37,9 +37,9 @@
 							<i>{{ trans('mainLang.begin') }}:</i>
 						</td>
 						<td>
-							{!! Form::input('time','jbtyp_time_start' . $current_jobtype->id, 
-							   $current_jobtype->jbtyp_time_start, 
-							   array('id'=>'jbtyp_time_start' . $current_jobtype->id)) !!}
+							{!! Form::input('time','jbtyp_time_start' . $current_shiftType->id, 
+							   $current_shiftType->jbtyp_time_start, 
+							   array('id'=>'jbtyp_time_start' . $current_shiftType->id)) !!}
 						</td>
 					</tr>
 					<tr>
@@ -47,9 +47,9 @@
 							<i>{{ trans('mainLang.end') }}:</i>
 						</td>
 						<td>
-							{!! Form::input('time','jbtyp_time_end' . $current_jobtype->id, 
-							   $current_jobtype->jbtyp_time_end, 
-							   array('id'=>'jbtyp_time_end' . $current_jobtype->id)) !!}
+							{!! Form::input('time','jbtyp_time_end' . $current_shiftType->id, 
+							   $current_shiftType->jbtyp_time_end, 
+							   array('id'=>'jbtyp_time_end' . $current_shiftType->id)) !!}
 						</td>
 					</tr>
 					<tr>
@@ -57,9 +57,9 @@
 							<i>{{ trans('mainLang.weight') }}:</i>
 						</td>
 						<td>
-							{!! Form::text('jbtyp_statistical_weight' . $current_jobtype->id, 
-							   $current_jobtype->jbtyp_statistical_weight, 
-							   array('id'=>'jbtyp_statistical_weight' . $current_jobtype->id)) !!} <br/>
+							{!! Form::text('jbtyp_statistical_weight' . $current_shiftType->id, 
+							   $current_shiftType->jbtyp_statistical_weight, 
+							   array('id'=>'jbtyp_statistical_weight' . $current_shiftType->id)) !!} <br/>
 						</td>
 					</tr>
 					<tr>
@@ -76,16 +76,16 @@
 				@if( $entries->count() == 0 )
 					<tr>
 						<td width="100%" colspan="2" class="left-padding-16">
-							{{ trans('mainLang.jobtypeNeverUsed') }}
-							<a href="../jobtype/{{ $current_jobtype->id }}"
+							{{ trans('mainLang.shiftTypeNeverUsed') }}
+							<a href="../shiftType/{{ $current_shiftType->id }}"
 							   class="btn btn-small btn-danger"
 							   data-toggle="tooltip"
 			                   data-placement="bottom"
-			                   title="&#39;&#39;{!! $current_jobtype->jbtyp_title !!}&#39;&#39; (#{{ $current_jobtype->id }}) löschen"
+			                   title="&#39;&#39;{!! $current_shiftType->jbtyp_title !!}&#39;&#39; (#{{ $current_shiftType->id }}) löschen"
 							   data-method="delete"
 							   data-token="{{csrf_token()}}"
 							   rel="nofollow"
-							   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_jobtype->jbtyp_title !!}&#39;&#39; (#{{ $current_jobtype->id }})? {{ trans('mainLang.warningNotReversible') }}">
+							   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_shiftType->jbtyp_title !!}&#39;&#39; (#{{ $current_shiftType->id }})? {{ trans('mainLang.warningNotReversible') }}">
 								   	{{ trans('mainLang.delete') }}
 							</a>
 							?
@@ -94,7 +94,7 @@
 				@else
 					<tr>
 						<td width="100%" colspan="2" class="left-padding-16">
-					      	{{ trans('mainLang.jobtypeUsedInFollowingEvents') }}
+					      	{{ trans('mainLang.shiftTypeUsedInFollowingEvents') }}
 					    </td>
 					</tr>
 					<tr>
@@ -121,7 +121,7 @@
 								</thead>
 								<tbody>
 									@foreach($entries as $entry)
-										<tr class="{!! "jobtype-event-row" . $entry->id !!}" name="{!! "jobtype-event-row" . $entry->id !!}">
+										<tr class="{!! "shiftType-event-row" . $entry->id !!}" name="{!! "shiftType-event-row" . $entry->id !!}">
 											<td>
 										      	{!! $entry->schedule->event->id !!}
 											</td>
@@ -139,13 +139,13 @@
 												{!! Form::open(  array( 'route'  => ['entry.update', $entry->id],
 										                                'id' 	 => $entry->id,
 										                                'method' => 'put',
-										                                'class'  => 'updateJobtype')  ) !!}
+										                                'class'  => 'updateShiftType')  ) !!}
 
 									           		{{-- Fields to populate --}}
 											        <input type="text" id="{!! 'entry' . $entry->id !!}" name="{!!   'entry' . $entry->id !!}" value="" hidden />
-											        <input type="text" id="{!! 'jobtype' . $entry->id !!}" name="{!! 'jobtype' . $entry->id !!}" value="" hidden />
+											        <input type="text" id="{!! 'shiftType' . $entry->id !!}" name="{!! 'shiftType' . $entry->id !!}" value="" hidden />
 
-									           		<div class="btn-group dropdown-jobtypes">
+									           		<div class="btn-group dropdown-shiftTypes">
 
 													  	<a href="#" 
 													  	   class="btn btn-small btn-default" 
@@ -158,19 +158,19 @@
 													  	</a>
 
 														<ul class="dropdown-menu">
-															@foreach($jobtypes as $jobtype)
-																@if($jobtype->id !== $current_jobtype->id)
+															@foreach($shiftTypes as $shiftType)
+																@if($shiftType->id !== $current_shiftType->id)
 																	<li class="dropdown"> 
 																		<a href="javascript:void(0);" 
 																		   onClick="document.getElementById('{{ 'entry'. $entry->id }}').value='{{ $entry->id }}';
-																					document.getElementById('{{ 'jobtype'. $entry->id }}').value='{{ $jobtype->id }}';
+																					document.getElementById('{{ 'shiftType'. $entry->id }}').value='{{ $shiftType->id }}';
 																					document.getElementById('{{ 'btn-submit-changes'. $entry->id }}').click();">
-																		   	(#{{ $jobtype->id }}) 
-																		   	{{  $jobtype->jbtyp_title }} 
+																		   	(#{{ $shiftType->id }}) 
+																		   	{{  $shiftType->jbtyp_title }} 
 																		   	(<i class='fa fa-clock-o'></i>
-																			{{  date("H:i", strtotime($jobtype->jbtyp_time_start))
+																			{{  date("H:i", strtotime($shiftType->jbtyp_time_start))
 																				. "-" .
-																			    date("H:i", strtotime($jobtype->jbtyp_time_end)) . ")" }}
+																			    date("H:i", strtotime($shiftType->jbtyp_time_end)) . ")" }}
 																		</a>
 																	</li>
 																@endif
