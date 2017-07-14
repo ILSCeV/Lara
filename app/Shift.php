@@ -25,15 +25,11 @@ class Shift extends Model
 
 
     /**
-     * Get the corresponding job type.
+     * Get the corresponding shift type.
      * Looks up in table shifttypes for that entry, which has the same id like shifttype_id of ScheduleEntry instance.
      *
      * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type ShiftType
      */
-    public function getJobType() {
-        return $this->belongsTo('Lara\ShiftType', 'shifttype_id', 'id');
-    }
-
     public function type() {
         return $this->belongsTo('Lara\ShiftType', 'shifttype_id', 'id');
     }

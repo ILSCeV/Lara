@@ -82,7 +82,7 @@ class StatisticsController extends Controller
                                 ->whereHas('schedule.event', function ($query) use ($from, $till) {
                                     $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
                                 })
-                                ->with('getJobType', 'schedule.event.place')
+                                ->with('type', 'schedule.event.place')
                                 ->get()
                                 ->sortBy('schedule.event.evnt_date_start');
 

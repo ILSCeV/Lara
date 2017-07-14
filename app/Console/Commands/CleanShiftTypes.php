@@ -49,7 +49,7 @@ class CleanShiftTypes extends Command
         $counterStart = microtime(true);
 
         // Retrieve all ShiftTypes,
-        // and sort them backwards to delete rarely used latest entries first and avoid costly DB queries on older ones that are used more
+        // and sort them backwards to delete rarely used latest shifts first and avoid costly DB queries on older ones that are used more
         $shifttypes = ShiftType::orderBy('id', 'desc')->get();
 
         // Initialize progress bar
@@ -58,10 +58,10 @@ class CleanShiftTypes extends Command
         // Iterate through all ShiftTypes, check if there is any shift it is used in, and if not - delete this ShiftType
         foreach ($shifttypes as $shifttype) {
 
-            // Get corresponding ScheduleEntries
-            $scheduleEntries = Shift::where('shifttype_id', '=', $shifttype->id)->get();
+            // Get corresponding Shift
+            $shifts = Shift::where('shifttype_id', '=', $shifttype->id)->get();
 
-            if (  $scheduleEntries->count() === 0  ) {
+            if (  $shifts->count() === 0  ) {
                 
                 // Step 1: if this shift type is not used anywhere it can be remove without side effects
                 
@@ -79,7 +79,7 @@ class CleanShiftTypes extends Command
                 // We started checking backwards, so if the first one we get has the same id, this shift is the only representation of 
                 // this name&times combination -> do nothing.
                 // If they mismatch, another one is found, we want to delete this one (the newest) and copy the id of the very first one 
-                // to every schedule entry that used current shift type -> this will get us n-1 shift types for this combination.
+                // to every shift that used current shift type -> this will get us n-1 shift types for this combination.
                 
                 // Get a the first shift type with this combination of name&times
                 $alternative = ShiftType::where('jbtyp_title', '=', $shifttype->jbtyp_title)
@@ -92,15 +92,15 @@ class CleanShiftTypes extends Command
                     // Another version exists
 
                     // Substitute this shift type for the alternative
-                    foreach ($scheduleEntries as $entry) {
-                        $entry->shifttype_id = $alternative->id;
-                        $entry->save();
+                    foreach ($shifts as $shift) {
+                        $shift->shifttype_id = $alternative->id;
+                        $shift->save();
                     }
 
                     // inform the user
                     $this->info(''); // new line
                     $this->info('Substituted "' . $shifttype->jbtyp_title . '" with id ' . $shifttype->id 
-                                . " for id " . $alternative->id . " in " . $scheduleEntries->count() . " shifts.");
+                                . " for id " . $alternative->id . " in " . $shifts->count() . " shifts.");
 
                     // This shift type is empty now - delete it
                     // Log the action while we still have the data
