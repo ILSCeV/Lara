@@ -55,17 +55,12 @@ class Schedule extends Model
 	/**
 	* Get names of shifttypes, which belongs to the schedule.
 	*
-	* @return string[] $jobNames
+	* @return string[] $shiftType titles
 	*/
 	public function getTemplateEntries() 
 	{
-		$jobNames = new Collection;
-
-		$shifts = $this->shifts;
-		foreach($shifts as $shift)
-		{
-			$jobNames->add($shift->type->jbtyp_title);
-		}
-		return $jobNames;
-	}	
+        return $this->shifts->map(function($shift) {
+		    return $shift->type->jbtyp_title;
+        });
+	}
 }
