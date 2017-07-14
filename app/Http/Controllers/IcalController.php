@@ -231,7 +231,7 @@ class IcalController extends Controller
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
             
             $events = Shift::where('person_id', '=', $person->id)
-                ->with("schedule", "schedule.event.place", "schedule.event", "jobType")
+                ->with("schedule", "schedule.event.place", "schedule.event", "type")
                 ->get();
             
             $vEvents = $events->map(function ($evt) use ($alarm) {
