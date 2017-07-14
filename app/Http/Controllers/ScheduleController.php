@@ -149,7 +149,7 @@ class ScheduleController extends Controller
             return Redirect::back();
         }
         // Delete all corresponding shifts first because of dependencies in database
-        foreach ( $schedule->shifts->get() as $shift ) {
+        foreach ( $schedule->shifts as $shift ) {
             ShiftController::delete($shift);
         }
 
