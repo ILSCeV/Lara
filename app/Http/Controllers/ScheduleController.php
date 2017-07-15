@@ -189,7 +189,7 @@ class ScheduleController extends Controller
 
             $position = $i;
 
-            ShiftController::makeShift($scheduleId, $isNewEvent, $title, $id, $type, $start, $end, $weight, $position);
+            ShiftController::makeShift($schedule, $isNewEvent, $title, $id, $type, $start, $end, $weight, $position);
         }
     }
 

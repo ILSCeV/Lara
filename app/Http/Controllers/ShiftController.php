@@ -292,7 +292,7 @@ class ShiftController extends Controller
     }
 
     /**
-     * @param $scheduleId
+     * @param $schedule
      * @param $isNewEvent
      * @param $title
      * @param $id
@@ -302,7 +302,7 @@ class ShiftController extends Controller
      * @param $weight
      * @param $position
      */
-    public static function makeShift($scheduleId, $isNewEvent, $title, $id, $type, $start, $end, $weight, $position)
+    public static function makeShift($schedule, $isNewEvent, $title, $id, $type, $start, $end, $weight, $position)
     {
         if ($title === "") {
             return;
@@ -330,7 +330,7 @@ class ShiftController extends Controller
 
         // if the model was newly created, save the new shiftType
         $shift->fill([
-            "schedule_id" => $scheduleId,
+            "schedule_id" => $schedule->id,
             "start" => $start,
             "end" => $end,
             "statistical_weight" => $weight,
