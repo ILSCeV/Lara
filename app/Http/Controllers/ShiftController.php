@@ -315,7 +315,12 @@ class ShiftController extends Controller
         $oldShiftType = $shift->type;
 
         // we need a raw statement for case sensitivity
-        $shiftType = ShiftType::whereRaw("BINARY `jbtyp_title`= ?", $title)->where('id', $type)
+        $shiftType = ShiftType::whereRaw("BINARY `jbtyp_title`= ?", $title)
+            ->where(function($query) use($type, $start, $end){
+                $query->where('id', $type);
+                $query->orWhere('jbtyp_time_start', $start);
+                $query->where('jbtyp_time_end', $end);
+            })
             ->first();
         if (is_null($shiftType)) {
             $shiftType = new ShiftType([
