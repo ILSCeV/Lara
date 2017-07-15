@@ -9,7 +9,7 @@
 
 @if( is_null($entry->getPerson) )
 
-    <i class="fa fa-circle-o"
+    <i class="fa fa-question"
        name="status-icon"
        style="color:lightgrey;"
        data-toggle="tooltip"
@@ -47,16 +47,16 @@
            data-placement="top"
            title="{{ trans('mainLang.ex-member') }}"></i>
     @elseif ( $entry->getPerson->prsn_status === 'guest' )
-        <i class="fa fa-circle"
+        <i class="fa fa-times-circle-o"
            name="status-icon"
-           style="color:lightgrey;"
+           style="color:yellowgreen;"
            data-toggle="tooltip"
            data-placement="top"
            title="{{ trans('mainLang.ex-candidate') }}"></i>
     @elseif ( empty($entry->getPerson->prsn_status) )
-        <i class="fa fa-circle"
+        <i class="fa fa-circle-o"
            name="status-icon"
-           style="color:lightgrey;"
+           style="color:yellowgreen;"
            data-toggle="tooltip"
            data-placement="top"
            title="{{ trans('mainLang.external') }}"></i>

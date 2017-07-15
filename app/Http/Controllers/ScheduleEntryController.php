@@ -507,16 +507,16 @@ class ScheduleEntryController extends Controller
                     $userStatus = ["status"=>"fa fa-star-o", "style"=>"color:gold;", "title"=>"ex-Mitglied"];
                     break;
                 case 'guest':
-                    $userStatus = ["status"=>"fa fa-circle", "style"=>"color:lightgrey;", "title"=>"ex-Kandidat"];
+                    $userStatus = ["status"=>"fa fa-times-circle-o", "style"=>"color:yellowgreen;", "title"=>"ex-Kandidat"];
                     break;
                 case "":
-                    $userStatus = ["status"=>"fa fa-circle", "style"=>"color:lightgrey;", "title"=>"Extern"];
+                    $userStatus = ["status"=>"fa fa-circle-o", "style"=>"color:yellowgreen;", "title"=>"Extern"];
                     break;
             }
         }
         else
         {
-            $userStatus = ["status"=>"fa fa-circle-o", "style"=>"color:lightgrey;", "title"=>"Dienst frei"];
+            $userStatus = ["status"=>"fa fa-question", "style"=>"color:lightgrey;", "title"=>"Dienst frei"];
         } 
 
         return $userStatus;
