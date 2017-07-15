@@ -19,11 +19,11 @@ class DatabaseSeeder extends Seeder
         // iSeed will store the calls for newly generated seeds here
         $this->call('PlacesTableSeeder');
         $this->call('ClubsTableSeeder');
-        $this->call('JobtypesTableSeeder');
+        $this->call('ShiftTypesTableSeeder');
         $this->call('PersonsTableSeeder');
         $this->call('ClubEventsTableSeeder');
         $this->call('SchedulesTableSeeder');
-        $this->call('ScheduleEntriesTableSeeder');
+        $this->call('ShiftsTableSeeder');
 
         $this->call('SurveysTableSeeder');
         $this->call('SurveyQuestionsTableSeeder');

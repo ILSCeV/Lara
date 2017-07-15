@@ -3,17 +3,13 @@
 namespace Lara\Http\Controllers;
 
 use DateTime;
-use Illuminate\Http\Request;
 
 use Lara\Club;
-use Lara\ClubEvent;
-use Lara\ScheduleEntry;
-use View;
 use Lara\Person;
-use Session;
+use Lara\Shift;
 use Redirect;
+use View;
 
-use Lara\Http\Requests;
 use Lara\StatisticsInformation;
 
 class StatisticsController extends Controller
@@ -30,7 +26,7 @@ class StatisticsController extends Controller
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next month')->modify('-1 day');
 
-        $shifts = ScheduleEntry::whereHas('schedule.event', function ($query) use ($from, $till) {
+        $shifts = Shift::whereHas('schedule.event', function ($query) use ($from, $till) {
             $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
         })->get();
         $clubs = Club::activeClubs()->with('activePersons')->get();
@@ -82,11 +78,11 @@ class StatisticsController extends Controller
         $till->modify('next month')->modify('-1 day');
 
         // get all shifts in selected time window, for selected person, with their attributes
-        $shifts =  ScheduleEntry::where('prsn_id', '=', $id)
+        $shifts =  Shift::where('person_id', '=', $id)
                                 ->whereHas('schedule.event', function ($query) use ($from, $till) {
                                     $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
                                 })
-                                ->with('getJobType', 'schedule.event.place')
+                                ->with('type', 'schedule.event.place')
                                 ->get()
                                 ->sortBy('schedule.event.evnt_date_start');
 
@@ -101,13 +97,13 @@ class StatisticsController extends Controller
             $clubsOfShift = json_decode($shift->schedule->event->evnt_show_to_club);
 
             $response[] = [ 'id'        =>$shift->id, 
-                            'shift'     =>$shift->getJobType->jbtyp_title, 
+                            'shift'     =>$shift->type->title(),
                             'event'     =>$shift->schedule->event->evnt_title, 
                             'event_id'  =>$shift->schedule->event->id,
                             'section'   =>$shift->schedule->event->place->plc_title,
                             'isOwnClub' =>in_array($ownClub, $clubsOfShift),
                             'date'      =>strftime("%d.%m.%Y (%a)", strtotime($shift->schedule->event->evnt_date_start)),
-                            'weight'    =>$shift->entry_statistical_weight];
+                            'weight'    =>$shift->statistical_weight];
         }
 
         return response()->json($response);        

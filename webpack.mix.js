@@ -15,6 +15,7 @@ mix.sass('resources/assets/sass/app.scss', 'public/css')
 	.scripts([
         // jQuery and Plugins
         'node_modules/jquery/dist/jquery.min.js',
+        'node_modules/sortablejs/Sortable.min.js',
 
         // Misc. js libraries
         'node_modules/isotope-layout/dist/isotope.pkgd.min.js',

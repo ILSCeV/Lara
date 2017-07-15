@@ -95,8 +95,8 @@ $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
         'evnt_show_to_club' => json_encode($faker->randomElements(['bc-Club', 'bc-Café'], $faker->numberBetween(1,2))),
         'evnt_date_start' => $start->format('Y-m-d'),
         'evnt_date_end' => $end->format('Y-m-d'),
-        'evnt_time_start' => $start->format('H:i:s'),
-        'evnt_time_end' => $end->format('H:i:s'),
+        'evnt_time_start' => $start->format('H:i'),
+        'evnt_time_end' => $end->format('H:i'),
         'evnt_public_info' => $faker->sentence(),
         'evnt_private_details' => $faker->sentence(),
         'evnt_is_private' => $faker->boolean(),
@@ -104,10 +104,10 @@ $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Lara\Jobtype::class, function(Faker\Generator $faker) {
+$factory->define(Lara\ShiftType::class, function(Faker\Generator $faker) {
     $types = ['Einlass', 'Bar', 'Tresen', 'AV', 'Disko', 'Licht'];
-    $end = $faker->time();
-    $start = $faker->time('H:i:s', $end);
+    $end = $faker->time('H:i');
+    $start = $faker->time('H:i', $end);
     return [
         'jbtyp_title' => $faker->randomElement($types),
         'jbtyp_time_start' => $start,
@@ -121,23 +121,26 @@ $factory->define(Lara\Jobtype::class, function(Faker\Generator $faker) {
 $factory->define(Lara\Schedule::class, function(Faker\Generator $faker) {
     return [
         'schdl_title' => $faker->word(),
-        'schdl_time_preparation_start' => $faker->time(),
+        'schdl_time_preparation_start' => $faker->time('H:i'),
         'schdl_is_template' => 0,
-        'schdl_password' => ''
+        'schdl_password' => '',
+        'entry_revisions' => ''
     ];
 });
 
-$factory->define(Lara\ScheduleEntry::class, function(Faker\Generator $faker) {
-    $end = $faker->time();
-    $start = $faker->time('H:i:s', $end);
+$factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
+    $end = $faker->time('H:i');
+    $start = $faker->time('H:i', $end);
+    $personId = $faker->randomElement([Lara\Person::inRandomOrder()->first()->id, ""]);
     return [
-        'schdl_id' => Lara\Schedule::inRandomOrder()->first()->id,
-        'jbtyp_id' => Lara\Jobtype::inRandomOrder()->first()->id,
-        'prsn_id' => Lara\Person::inRandomOrder()->first()->id,
-        'entry_user_comment' => $faker->sentence,
-        'entry_time_start' => $start,
-        'entry_time_end' => $end,
-        'entry_statistical_weight' => 1
+        'schedule_id' => Lara\Schedule::inRandomOrder()->first()->id,
+        'shifttype_id' => Lara\ShiftType::inRandomOrder()->first()->id,
+        'person_id' => $personId,
+        'comment' => $personId ? $faker->randomElement([$faker->sentence, ""]) : "",
+        'start' => $start,
+        'end' => $end,
+        'statistical_weight' => 1,
+        'position' => 0
     ];
 });
 

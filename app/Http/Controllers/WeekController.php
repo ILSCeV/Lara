@@ -81,8 +81,8 @@ class WeekController extends Controller {
         $events = ClubEvent::where('evnt_date_start','>=',$weekStart)
                            ->where('evnt_date_start','<=',$weekEnd)
                            ->with('getPlace',
-                           		  'getSchedule.getEntries.getJobType',
-                           		  'getSchedule.getEntries.getPerson.getClub')
+                           		  'getSchedule.shifts.type',
+                           		  'getSchedule.shifts.getPerson.getClub')
                            ->orderBy('evnt_date_start')
                            ->orderBy('evnt_time_start')
                            ->get();
@@ -107,7 +107,7 @@ class WeekController extends Controller {
 		$clubs = Club::orderBy('clb_title')->pluck('clb_title', 'id');
 
         return View::make('weekView', compact('events', 'schedules',  'date', 
-        									  'entries', 'weekStart', 'weekEnd', 
+        									  'weekStart', 'weekEnd', 
 											  'clubs', 'surveys', 'sections'));
 	}
 }

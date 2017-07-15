@@ -1,9 +1,9 @@
-{{-- Needs variables: jobtypes --}}
+{{-- Needs variables: shiftTypes --}}
 
 @extends('layouts.master')
 
 @section('title')
-	{{ trans('mainLang.management') }}: {{ trans('mainLang.jobtypes') }} 
+	{{ trans('mainLang.management') }}: {{ trans('mainLang.shiftTypes') }} 
 @stop
 
 @section('content')
@@ -15,7 +15,7 @@
 
 	<div class="panel panel-info col-xs-12 no-padding">
 		<div class="panel-heading">
-				<h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.jobtypes') }}</h4>
+				<h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.shiftTypes') }}</h4>
 		</div>	
 		<div class="panel panel-body no-padding">	
 			<table class="table info table-hover table-condensed">
@@ -41,38 +41,38 @@
 				<tbody>
 
 					<div class="container">
-						@foreach($jobtypes as $jobtype)
+						@foreach($shiftTypes as $shiftType)
 							<tr>
 								<td>
-									{!! $jobtype->id !!}
+									{!! $shiftType->id !!}
 								</td>
 								<td>
-							      	<a href="../jobtype/{{ $jobtype->id }}">
-							      		{!! $jobtype->jbtyp_title !!}
+							      	<a href="../shiftType/{{ $shiftType->id }}">
+							      		{!! $shiftType->jbtyp_title !!}
 							      	</a>
 								</td>
 								<td>						
-									{!! date("H:i", strtotime($jobtype->jbtyp_time_start)) !!}
+									{!! date("H:i", strtotime($shiftType->jbtyp_time_start)) !!}
 									-
-									{!! date("H:i", strtotime($jobtype->jbtyp_time_end)) !!}
+									{!! date("H:i", strtotime($shiftType->jbtyp_time_end)) !!}
 								</td>
 								<td>
-									{!! $jobtype->jbtyp_statistical_weight !!}
+									{!! $shiftType->jbtyp_statistical_weight !!}
 								</td>
 								<td>
-									<a href="../jobtype/{{ $jobtype->id }}"
+									<a href="../shiftType/{{ $shiftType->id }}"
 									   class="btn btn-small btn-success"
 									   rel="nofollow">
 									   	{{ trans('mainLang.editDetails') }}
 									</a>
 									&nbsp;&nbsp;
-									<a href="../jobtype/{{ $jobtype->id }}"
+									<a href="../shiftType/{{ $shiftType->id }}"
 									   class="btn btn-small btn-danger"
 									   data-method="delete"
 									   data-token="{{csrf_token()}}"
 									   rel="nofollow"
-									   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $jobtype->jbtyp_title !!}&#39;&#39; (#{{ $jobtype->id }})? {{ trans('mainLang.warningNotReversible') }}">
-									   	{{ trans('mainLang.deleteThisJobtype') }}
+									   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $shiftType->jbtyp_title !!}&#39;&#39; (#{{ $shiftType->id }})? {{ trans('mainLang.warningNotReversible') }}">
+									   	{{ trans('mainLang.deleteThisShiftType') }}
 									</a>
 								</td>
 							</tr>
@@ -84,7 +84,7 @@
 	</div>
 		
 	<center>
-		{{ $jobtypes->links() }}
+		{{ $shiftTypes->links() }}
 	</center>
 
 	<br/>

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ScheduleEntriesTableSeeder extends Seeder
+class ShiftsTableSeeder extends Seeder
 {
 
     /**
@@ -12,7 +12,7 @@ class ScheduleEntriesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('schedule_entries')->delete();
-        factory(Lara\ScheduleEntry::class, 500)->create();
+        DB::table('shifts')->delete();
+        factory(Lara\Shift::class, 500)->create();
     }
 }

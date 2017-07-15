@@ -3,18 +3,16 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use Lara\Http\Requests;
-use Lara\Http\Controllers\Controller;
-use Lara\Jobtype;
-use Lara\ScheduleEntry;
-use Lara\Schedule;
-use Session;
 use Log;
 use Redirect;
+use Session;
 use View;
 
-class JobtypeController extends Controller
+use Lara\Shift;
+use Lara\ShiftType;
+
+
+class ShiftTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,14 +23,16 @@ class JobtypeController extends Controller
     {
         if ( is_null($query) ) { $query = ""; } // if no parameter specified - empty means "show all"
 
-        $jobtypes =  \Lara\Jobtype::where('jbtyp_title', 'like', '%' . $query . '%')
-                                  ->orderBy('jbtyp_title')
-                                  ->get(['jbtyp_title', 
-                                         'jbtyp_time_start', 
-                                         'jbtyp_time_end', 
-                                         'jbtyp_statistical_weight']);
-                                                   
-        return response()->json($jobtypes);
+        $shiftTypes =  ShiftType::where('jbtyp_title', 'like', '%' . $query . '%')
+            ->orderBy('jbtyp_title')
+            ->get([
+                'jbtyp_title',
+                'jbtyp_time_start',
+                'jbtyp_time_end',
+                'jbtyp_statistical_weight'
+            ]);
+
+        return response()->json($shiftTypes);
     }
 
     /**
@@ -42,30 +42,9 @@ class JobtypeController extends Controller
      */
     public function index()
     {
-        $jobtypes = Jobtype::orderBy('jbtyp_title', 'ASC')->paginate(25);
+        $shiftTypes = ShiftType::orderBy('jbtyp_title', 'ASC')->paginate(25);
 
-        return view('manageJobTypesView', ['jobtypes' => $jobtypes]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('manageShiftTypesView', ['shiftTypes' => $shiftTypes]);
     }
 
     /**
@@ -76,15 +55,17 @@ class JobtypeController extends Controller
      */
     public function show($id)
     {
-        // get selected jobtype
-        $current_jobtype = Jobtype::findOrFail($id);
+        // get selected shiftTypes
+        $current_shiftType = ShiftType::findOrFail($id);
 
         // get a list of all available job types
-        $jobtypes = Jobtype::orderBy('jbtyp_title', 'ASC')->get();
+        $shiftTypes = ShiftType::orderBy('jbtyp_title', 'ASC')->get();
 
-        $entries = ScheduleEntry::where('jbtyp_id', '=', $id)->with('schedule.event.getPlace')->paginate(25);
+        $shifts = Shift::where('shifttype_id', '=', $id)
+            ->with('schedule.event.getPlace')
+            ->paginate(25);
 
-        return View::make('jobTypeView', compact('current_jobtype', 'jobtypes', 'entries'));
+        return View::make('shiftTypeView', compact('current_shiftType', 'shiftTypes', 'shifts'));
     }
 
     /**
@@ -108,7 +89,7 @@ class JobtypeController extends Controller
     public function update(Request $request, $id)
     {
         // Check credentials: you can only edit, if you have rights for marketing, section management or admin
-        if(!Session::has('userId') 
+        if(!Session::has('userId')
             OR (Session::get('userGroup') != 'marketing'
                 AND Session::get('userGroup') != 'clubleitung'
                 AND Session::get('userGroup') != 'admin'))
@@ -118,8 +99,8 @@ class JobtypeController extends Controller
             return Redirect::back();
         }
 
-        // Get all the data (throws a 404 error if jobtype doesn't exist)
-        $jobtype = Jobtype::findOrFail($id);
+        // Get all the data (throws a 404 error if shiftType doesn't exist)
+        $shiftType = ShiftType::findOrFail($id);
 
         // Extract request data
         $newTitle       = $request->get('jbtyp_title'.$id);
@@ -149,18 +130,18 @@ class JobtypeController extends Controller
         }
 
         // Log the action while we still have the data
-        Log::info('Jobtype edited: ' . 
-                  Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') . 
-                  ') changed shift type #' . $jobtype->id . ' from "' . $jobtype->jbtyp_title . '", start: ' . $jobtype->jbtyp_time_start . ', end: ' . $jobtype->jbtyp_time_end . ', weight: ' . $jobtype->jbtyp_statistical_weight . ' to "' . $newTitle . '" , start: ' . $newTimeStart . ', end: ' . $newTimeEnd . ', weight: ' . $newWeight . '. ');
+        Log::info('ShiftType edited: ' .
+            Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
+            ') changed shift type #' . $shiftType->id . ' from "' . $shiftType->jbtyp_title . '", start: ' . $shiftType->jbtyp_time_start . ', end: ' . $shiftType->jbtyp_time_end . ', weight: ' . $shiftType->jbtyp_statistical_weight . ' to "' . $newTitle . '" , start: ' . $newTimeStart . ', end: ' . $newTimeEnd . ', weight: ' . $newWeight . '. ');
 
         // Write and save changes
-        $jobtype->jbtyp_title               = $newTitle;
-        $jobtype->jbtyp_time_start          = $newTimeStart;
-        $jobtype->jbtyp_time_end            = $newTimeEnd;
-        $jobtype->jbtyp_statistical_weight  = $newWeight;
-        $jobtype->save();
+        $shiftType->jbtyp_title               = $newTitle;
+        $shiftType->jbtyp_time_start          = $newTimeStart;
+        $shiftType->jbtyp_time_end            = $newTimeEnd;
+        $shiftType->jbtyp_statistical_weight  = $newWeight;
+        $shiftType->save();
 
-        // Return to the jobtype page
+        // Return to the shiftType page
         Session::put('message', trans('mainLang.changesSaved'));
         Session::put('msgType', 'success');
         return Redirect::back();
@@ -175,7 +156,7 @@ class JobtypeController extends Controller
     public function destroy($id)
     {
         // Check credentials: you can only delete, if you have rights for marketing, section management or admin
-        if(!Session::has('userId') 
+        if(!Session::has('userId')
             OR (Session::get('userGroup') != 'marketing'
                 AND Session::get('userGroup') != 'clubleitung'
                 AND Session::get('userGroup') != 'admin'))
@@ -185,35 +166,35 @@ class JobtypeController extends Controller
             return Redirect::back();
         }
 
-        // Get all the data 
-        // (throws a 404 error if jobtype doesn't exist)
-        $jobtype = Jobtype::findOrFail($id);
+        // Get all the data
+        // (throws a 404 error if shiftType doesn't exist)
+        $shiftType = ShiftType::findOrFail($id);
 
         // Before deleting, check if this job type is in use in any existing schedule
-        if (  ScheduleEntry::where('jbtyp_id', '=', $jobtype->id)->count() > 0  ) {
-            // CASE 1: job type still in use - let the user decide what to do in each case    
-            
+        if (  Shift::where('shifttype_id', '=', $shiftType->id)->count() > 0  ) {
+            // CASE 1: job type still in use - let the user decide what to do in each case
+
             // Inform the user about the redirect and go to detailed info about the job type selected
-            Session::put('message', trans('mainLang.deleteFailedJobtypeInUse'));
+            Session::put('message', trans('mainLang.deleteFailedShiftTypeInUse'));
             Session::put('msgType', 'danger');
-            return Redirect::action( 'JobtypeController@show', ['id' => $jobtype->id] );
-        } 
-        else 
+            return Redirect::action( 'ShiftTypeController@show', ['id' => $shiftType->id] );
+        }
+        else
         {
             // CASE 2: job type is not used anywhere and can be remove without side effects
-            
-            // Log the action while we still have the data
-            Log::info('Jobtype deleted: ' . 
-                      Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') . 
-                      ') deleted "' . $jobtype->jbtyp_title .  '" (it was not used in any schedule).');
 
-            // Now delete the jobtype
-            Jobtype::destroy($id);
+            // Log the action while we still have the data
+            Log::info('ShiftType deleted: ' .
+                Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
+                ') deleted "' . $shiftType->jbtyp_title .  '" (it was not used in any schedule).');
+
+            // Now delete the shiftType
+            ShiftType::destroy($id);
 
             // Return to the management page
             Session::put('message', trans('mainLang.changesSaved'));
             Session::put('msgType', 'success');
-            return Redirect::action( 'JobtypeController@index' );
+            return Redirect::action( 'ShiftTypeController@index' );
         }
     }
 }
