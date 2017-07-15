@@ -131,11 +131,12 @@ $factory->define(Lara\Schedule::class, function(Faker\Generator $faker) {
 $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
     $end = $faker->time('H:i');
     $start = $faker->time('H:i', $end);
+    $personId = $faker->randomElement([Lara\Person::inRandomOrder()->first()->id, ""]);
     return [
         'schedule_id' => Lara\Schedule::inRandomOrder()->first()->id,
         'shifttype_id' => Lara\ShiftType::inRandomOrder()->first()->id,
-        'person_id' => Lara\Person::inRandomOrder()->first()->id,
-        'comment' => $faker->sentence,
+        'person_id' => $personId,
+        'comment' => $personId ? $faker->randomElement([$faker->sentence, ""]) : "",
         'start' => $start,
         'end' => $end,
         'statistical_weight' => 1,
