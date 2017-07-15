@@ -16,6 +16,7 @@ use Lara\ShiftType;
 
 class ScheduleController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -162,80 +163,33 @@ class ScheduleController extends Controller
     *
     * @return Collection shifts
     */
-    public static function createShifts($scheduleId, $isNewEvent = true)
+    public static function makeShiftsFromRequest($schedule, $isNewEvent = true)
     {
         $inputShifts = Input::get("shifts");
         $amount = count($inputShifts["title"]);
 
-        Shift::where('schedule_id', $scheduleId)
-            ->whereNotIn('id', $inputShifts["id"])
+        $currentShiftIds = $inputShifts["id"];
+        $schedule->shifts()
+            ->whereNotIn('id', $currentShiftIds)
             ->get()
             ->each(function(Shift $shift) {
                 Logging::shiftDeleted($shift);
                 $shift->delete();
             });
 
+
         for ($i = 0; $i < $amount; ++$i) {
-            if ($inputShifts["title"][$i] !== "") {
-                // Cloned shifts have the "id" field set to "", so we will create a new model in this case
-                $shift = Shift::firstOrNew(["id" => $inputShifts["id"][$i]]);
 
-                // If there was a shifttype passed and one with the correct title exists, use this one
-                // Otherwise create a new model
-                $oldShiftType = $shift->type;
-                
-                // we need a raw statement for case sensitivity
-                $shiftType = ShiftType::whereRaw("BINARY `jbtyp_title`= ?", $inputShifts["title"][$i])->where('id', $inputShifts["type"][$i])
-                    ->first();
-                if (is_null($shiftType)) {
-                    $shiftType = new ShiftType([
-                        "id" => $inputShifts["type"][$i],
-                        "jbtyp_title" => $inputShifts["title"][$i]
-                    ]);
-                }
+            $title = $inputShifts["title"][$i];
+            $id = $inputShifts["id"][$i];
+            $type = $inputShifts["type"][$i];
+            $start = $inputShifts["start"][$i];
+            $end = $inputShifts["end"][$i];
+            $weight = $inputShifts["weight"][$i];
 
-                // if the model was newly created, save the new shiftType
-                if (! $shiftType->exists) {
-                    $shiftType->fill([
-                        'jbtyp_time_start' => $inputShifts["start"][$i],
-                        'jbtyp_time_end' => $inputShifts["end"][$i],
-                        'jbtyp_statistical_weight' => $inputShifts["weight"][$i],
-                    ]);
-                    $shiftType->save();
-                }
-                $shift->fill([
-                    "schedule_id" => $scheduleId,
-                    "start" => $inputShifts["start"][$i],
-                    "end" => $inputShifts["end"][$i],
-                    "statistical_weight" => $inputShifts["weight"][$i],
-                    "shifttype_id" => $shiftType->id,
-                    "position" => $i
-                ]);
+            $position = $i;
 
-                if ($shift->exists) {
-                    if ($shift->isDirty('shifttype_id')) {
-                        Logging::shiftTypeChanged($shift, $oldShiftType, $shiftType);
-                    }
-
-                    if ($shift->isDirty('statistical_weight')) {
-                        Logging::shiftStatisticalWeightChanged($shift);
-                    }
-
-                    if ($shift->isDirty('start')) {
-                        Logging::shiftStartChanged($shift);
-                    }
-
-                    if ($shift->isDirty('end')) {
-                        Logging::shiftEndChanged($shift);
-                    }
-                }
-                else if (!$isNewEvent){
-                    $shift->save();
-                    Logging::shiftCreated($shift);
-                }
-
-                $shift->save();
-            }
+            ShiftController::makeShift($scheduleId, $isNewEvent, $title, $id, $type, $start, $end, $weight, $position);
         }
     }
 
@@ -246,9 +200,14 @@ class ScheduleController extends Controller
     * @param Schedule $schedule
     * @return Collection shifts
     */
-    public static function editShifts($scheduleId)
+    public static function editShifts($schedule)
     {
-        self::createShifts($scheduleId, false);
+        self::makeShiftsFromRequest($schedule, false);
+    }
+
+    public static function createShifts($schedule)
+    {
+        self::makeShiftsFromRequest($schedule, true);
     }
 
     /**

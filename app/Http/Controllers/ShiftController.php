@@ -291,6 +291,77 @@ class ShiftController extends Controller
         $shift->delete();
     }
 
+    /**
+     * @param $scheduleId
+     * @param $isNewEvent
+     * @param $title
+     * @param $id
+     * @param $type
+     * @param $start
+     * @param $end
+     * @param $weight
+     * @param $position
+     */
+    public static function makeShift($scheduleId, $isNewEvent, $title, $id, $type, $start, $end, $weight, $position)
+    {
+        if ($title === "") {
+            return;
+        }
+        // If no id is set, create a new Model
+        $shift = Shift::firstOrNew(["id" => $id]);
+
+        // If there was a shifttype passed and one with the correct title exists, use this one
+        // Otherwise create a new model
+        $oldShiftType = $shift->type;
+
+        // we need a raw statement for case sensitivity
+        $shiftType = ShiftType::whereRaw("BINARY `jbtyp_title`= ?", $title)->where('id', $type)
+            ->first();
+        if (is_null($shiftType)) {
+            $shiftType = new ShiftType([
+                "id" => $type,
+                "jbtyp_title" => $title,
+                'jbtyp_time_start' => $start,
+                'jbtyp_time_end' => $end,
+                'jbtyp_statistical_weight' => $weight
+            ]);
+            $shiftType->save();
+        }
+
+        // if the model was newly created, save the new shiftType
+        $shift->fill([
+            "schedule_id" => $scheduleId,
+            "start" => $start,
+            "end" => $end,
+            "statistical_weight" => $weight,
+            "shifttype_id" => $shiftType->id,
+            "position" => $position
+        ]);
+
+        if ($shift->exists) {
+            if ($shift->isDirty('shifttype_id')) {
+                Logging::shiftTypeChanged($shift, $oldShiftType, $shiftType);
+            }
+
+            if ($shift->isDirty('statistical_weight')) {
+                Logging::shiftStatisticalWeightChanged($shift);
+            }
+
+            if ($shift->isDirty('start')) {
+                Logging::shiftStartChanged($shift);
+            }
+
+            if ($shift->isDirty('end')) {
+                Logging::shiftEndChanged($shift);
+            }
+        }
+        else if (!$isNewEvent) {
+            $shift->save();
+            Logging::shiftCreated($shift);
+        }
+        $shift->save();
+    }
+
 
 
 //--------- PRIVATE FUNCTIONS ------------
@@ -417,5 +488,7 @@ class ShiftController extends Controller
 
         return $userStatus;
     }
+
+
 
 }

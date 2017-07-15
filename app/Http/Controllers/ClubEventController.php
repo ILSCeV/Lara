@@ -160,7 +160,7 @@ class ClubEventController extends Controller
 
         $newSchedule->save();
 
-        ScheduleController::createShifts($newSchedule->id);
+        ScheduleController::createShifts($newSchedule);
 
         // log the action
         Log::info('Event created: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
@@ -331,7 +331,7 @@ class ClubEventController extends Controller
 
         $schedule = (new ScheduleController)->update($event->getSchedule->id);
 
-        ScheduleController::editShifts($schedule->id);
+        ScheduleController::editShifts($schedule);
 
         // log the action
         Log::info('Event edited: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
