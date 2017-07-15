@@ -124,6 +124,9 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    // Line added to save last 30 days in logs instead of default 5 days
+    'log_max_files' => '30',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
