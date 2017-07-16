@@ -3,7 +3,7 @@
         "bootbox": "^4.4.0",
         "bootstrap": "^3.3.7",
         "laravel-mix": "^1.2.2",
-        "sortable-js": "^1.6.0"
+        "sortablejs": "^1.6.0"
     },
     "devDependencies": {
         "@types/bootbox": "^4.4.32",

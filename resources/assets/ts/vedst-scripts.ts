@@ -703,7 +703,7 @@ $(document).ready(function() {
     });
 
     // populate from dropdown select
-    $.fn.dropdownSelect = function(shiftType, timeStart, timeEnd, weight) {
+    (<any>$.fn).dropdownSelect = function(shiftType, timeStart, timeEnd, weight) {
         
         $(this).closest('.box').find("[name^=jbtyp_title]").val(shiftType);
         $(this).closest('.box').find("[name^=jbtyp_time_start]").val(timeStart);

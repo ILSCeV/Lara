@@ -50,6 +50,7 @@ mix.webpackConfig({
             new LiveReloadPlugin()
         ]
     })
+    .sass('resources/assets/sass/app.scss', 'public/')
     .ts('resources/assets/ts/lara.ts', 'public/')
     .extract(['jquery', 'bootstrap', 'bootbox'])
     .sourceMaps()
