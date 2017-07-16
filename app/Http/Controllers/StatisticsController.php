@@ -29,11 +29,11 @@ class StatisticsController extends Controller
         $shifts = Shift::whereHas('schedule.event', function ($query) use ($from, $till) {
             $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
         })->get();
-        $clubs = Club::activeClubs()->with('activePersons')->get();
+        $clubs = Club::activeClubs()->with('accountableForStatistics')->get();
 
         // array with key: clb_title and values: array of infos for user of the club
         $clubInfos = $clubs->flatMap(function($club) use($shifts) {
-            $infosForClub = $club->activePersons->map(function($person) use($shifts, $club)  {
+            $infosForClub = $club->accountableForStatistics->map(function($person) use($shifts, $club)  {
                 $info = new StatisticsInformation();
                 return $info->make($person, $shifts, $club);
             });

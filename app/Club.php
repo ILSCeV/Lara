@@ -36,9 +36,9 @@ class Club extends Model
         return $this->persons()->where('prsn_status', '=', 'candidate');
     }
 
-    public function activePersons()
+    public function accountableForStatistics()
     {
-        return $this->persons()->whereIn('prsn_status', ['member', 'candidate']);
+        return $this->persons()->whereIn('prsn_status', ['member', 'candidate', 'veteran']);
     }
 
     public static function activeClubs()
