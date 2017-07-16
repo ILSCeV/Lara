@@ -11,6 +11,7 @@ const  webpack  = require('webpack');
  | file for the application as well as bundling up all the JS files.
  |
  */
+
 mix//.sass('resources/assets/sass/app.scss', 'public/css')
     // see https://github.com/metafizzy/isotope/issues/979#issuecomment-215771272
     .webpackConfig({
@@ -45,6 +46,6 @@ mix//.sass('resources/assets/sass/app.scss', 'public/css')
         ]
     })
     .ts('resources/assets/ts/lara.ts', 'public/')
-	.version()
     .extract(['jquery', 'bootstrap'])
-    .sourceMaps();
+    .sourceMaps()
+    .version();
