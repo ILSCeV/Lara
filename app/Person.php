@@ -55,6 +55,16 @@ class Person extends Model
         return $this->prsn_name .  " " . $this->shortHand();
     }
 
+    public function shifts()
+    {
+        return $this->hasMany('Lara\Shift', 'person_id');
+    }
+
+    public function lastShift()
+    {
+        return $this->shifts()->orderBy('updated_at', 'desc')->first();
+    }
+
     public function shortHand()
     {
         switch ($this->prsn_status) {

@@ -10,6 +10,8 @@ use Lara\Shift;
 use Redirect;
 use View;
 
+use Carbon\Carbon;
+
 use Lara\StatisticsInformation;
 
 class StatisticsController extends Controller
@@ -32,11 +34,21 @@ class StatisticsController extends Controller
         $clubs = Club::activeClubs()->with('accountableForStatistics')->get();
 
         // array with key: clb_title and values: array of infos for user of the club
-        $clubInfos = $clubs->flatMap(function($club) use($shifts) {
-            $infosForClub = $club->accountableForStatistics->map(function($person) use($shifts, $club)  {
-                $info = new StatisticsInformation();
-                return $info->make($person, $shifts, $club);
-            });
+        $clubInfos = $clubs->flatMap(function($club) use($shifts, $year, $month) {
+            $infosForClub = $club->accountableForStatistics
+                ->filter(function($person) use ($year, $month) {
+                    $lastShift = $person->lastShift();
+                    if (is_null($lastShift)) {
+                        return;
+                    }
+                    // if members last shift was withing three months, display him. Otherwise don't
+                    return $lastShift->updated_at->diffInMonths(Carbon::create($year, $month)) < 3;
+
+                })
+                ->map(function($person) use($shifts, $club)  {
+                    $info = new StatisticsInformation();
+                    return $info->make($person, $shifts, $club);
+                });
             $maxShifts = $infosForClub->map(function($info){return $info->inOwnClub + $info->inOtherClubs;})->sort()->last();
 
             // avoid division by zero
