@@ -54,10 +54,6 @@ class ClubEvent extends Model
 	 *
 	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Section
 	 */
-	public function getSection() {
-		return $this->belongsTo('Lara\Section', 'plc_id', 'id');
-	}
-
 	public function section() {
         return $this->belongsTo('Lara\Section', 'plc_id', 'id');
     }

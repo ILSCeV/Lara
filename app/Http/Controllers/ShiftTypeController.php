@@ -62,7 +62,7 @@ class ShiftTypeController extends Controller
         $shiftTypes = ShiftType::orderBy('title', 'ASC')->get();
 
         $shifts = Shift::where('shifttype_id', '=', $id)
-            ->with('schedule.event.getSection')
+            ->with('schedule.event.section')
             ->paginate(25);
 
         return View::make('shiftTypeView', compact('current_shiftType', 'shiftTypes', 'shifts'));

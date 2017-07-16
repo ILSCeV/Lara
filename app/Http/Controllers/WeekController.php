@@ -80,7 +80,7 @@ class WeekController extends Controller {
 				       
         $events = ClubEvent::where('evnt_date_start','>=',$weekStart)
                            ->where('evnt_date_start','<=',$weekEnd)
-                           ->with('getSection',
+                           ->with('section',
                            		  'getSchedule.shifts.type',
                            		  'getSchedule.shifts.getPerson.getClub')
                            ->orderBy('evnt_date_start')
@@ -99,7 +99,7 @@ class WeekController extends Controller {
         // Filter - Workaround for older events: populate filter with event club
         foreach ($events as $clubEvent) {	        
 	        if (empty($clubEvent->evnt_show_to_club) ) {
-	            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->getSection->plc_title], true);
+	            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->section->plc_title], true);
 	            $clubEvent->save();
 	        } 
         }

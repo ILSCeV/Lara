@@ -181,7 +181,7 @@ class ClubEventController extends Controller
      */
     public function show($id)
     {
-        $clubEvent = ClubEvent::with('getSection')
+        $clubEvent = ClubEvent::with('section')
                               ->findOrFail($id);
 
         if(!Session::has('userId') && $clubEvent->evnt_is_private==1)
@@ -244,7 +244,7 @@ class ClubEventController extends Controller
 
         // Filter - Workaround for older events: populate filter with event club
         if (empty($clubEvent->evnt_show_to_club) ) {
-            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->getSection->plc_title], true);
+            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->section->plc_title], true);
             $clubEvent->save();
         }
 
@@ -284,7 +284,7 @@ class ClubEventController extends Controller
 
         // Filter - Workaround for older events: populate filter with event club
         if (empty($event->evnt_show_to_club) ) {
-            $event->evnt_show_to_club = json_encode([$event->getSection->plc_title], true);
+            $event->evnt_show_to_club = json_encode([$event->section->plc_title], true);
             $event->save();
         }
 

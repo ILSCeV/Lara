@@ -42,7 +42,7 @@ class YearController extends Controller {
 
         $events = ClubEvent::where('evnt_date_start','>=',$yearStart)
                            ->where('evnt_date_start','<=',$yearEnd)
-                           ->with('getSection')
+                           ->with('section')
                            ->orderBy('evnt_date_start')
                            ->orderBy('evnt_time_start')
                            ->paginate(15);

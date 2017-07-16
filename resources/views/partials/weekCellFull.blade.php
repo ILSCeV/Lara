@@ -13,9 +13,9 @@
 			<div class="{{ $classString }} calendar-internal-task white-text">
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 			<div class="{{ $classString }} calendar-internal-marketing white-text">
-		@elseif ($clubEvent->getSection->id == 1)
+		@elseif ($clubEvent->section->id == 1)
 			<div class="{{ $classString }} calendar-internal-event-bc-club white-text">
-		@elseif ($clubEvent->getSection->id == 2)
+		@elseif ($clubEvent->section->id == 2)
 			<div class="{{ $classString }} calendar-internal-event-bc-cafe white-text">
 		@else
 			{{-- DEFAULT --}}
@@ -28,9 +28,9 @@
 			<div class="{{ $classString }} calendar-public-task white-text">
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 			<div class="{{ $classString }} calendar-public-marketing white-text">
-		@elseif ($clubEvent->getSection->id == 1)
+		@elseif ($clubEvent->section->id == 1)
 			<div class="{{ $classString }} calendar-public-event-bc-club white-text">
-		@elseif ($clubEvent->getSection->id == 2)
+		@elseif ($clubEvent->section->id == 2)
 			<div class="{{ $classString }} calendar-public-event-bc-cafe white-text">
 		@else
 			{{-- DEFAULT --}}
@@ -62,7 +62,7 @@
 			-
 			{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 			&nbsp;
-			<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->getSection->plc_title }}
+			<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->section->plc_title }}
 
 		</div>
 

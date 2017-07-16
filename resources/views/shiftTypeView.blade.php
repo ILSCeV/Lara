@@ -129,7 +129,7 @@
 												<a href="/event/{!! $shift->schedule->event->id !!}">{!! $shift->schedule->event->evnt_title !!}</a>
 											</td>
 											<td>
-												{!! $shift->schedule->event->getSection->plc_title !!}
+												{!! $shift->schedule->event->section->plc_title !!}
 											</td>
 											<td>
 												{!! strftime("%a, %d. %b %Y", strtotime($shift->schedule->event->evnt_date_start)) !!} um
