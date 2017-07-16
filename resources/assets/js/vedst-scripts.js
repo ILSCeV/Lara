@@ -730,7 +730,8 @@ $(document).ready(function() {
         var dialog = bootbox.dialog({
             title: translate('listOfShiftsDone') + chosenPerson,
             size: 'large',
-            message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>'
+            message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
+            onEscape: function() {}
         });
 
        
