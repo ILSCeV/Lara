@@ -93,13 +93,13 @@ class WeekController extends Controller {
 							->get();
 		
 		$sections = Section::where('id', '>', 0)
-                         ->orderBy('plc_title')
-                         ->get(['id','plc_title']);
+                         ->orderBy('title')
+                         ->get(['id','title']);
 
         // Filter - Workaround for older events: populate filter with event club
         foreach ($events as $clubEvent) {	        
 	        if (empty($clubEvent->evnt_show_to_club) ) {
-	            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->section->plc_title], true);
+	            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->section->title], true);
 	            $clubEvent->save();
 	        } 
         }

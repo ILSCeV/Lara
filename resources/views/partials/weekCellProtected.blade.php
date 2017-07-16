@@ -38,13 +38,13 @@
 	@endif
 
 
-	@if ($clubEvent->section->plc_title == "bc-Club" AND $clubEvent->evnt_is_private )
+	@if ($clubEvent->section->title == "bc-Club" AND $clubEvent->evnt_is_private )
 		
-	@elseif ($clubEvent->section->plc_title == "bc-Café" AND $clubEvent->evnt_is_private)
+	@elseif ($clubEvent->section->title == "bc-Café" AND $clubEvent->evnt_is_private)
 		
-	@elseif ($clubEvent->section->plc_title == "bc-Club")
+	@elseif ($clubEvent->section->title == "bc-Club")
 		
-	@elseif ($clubEvent->section->plc_title == "bc-Café")
+	@elseif ($clubEvent->section->title == "bc-Café")
 		
 	@else
 		<div class="{{ $classString }} calendar-task white-text">
@@ -66,7 +66,7 @@
 			-
 			{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 			&nbsp;
-			<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->section->plc_title }}
+			<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->section->title }}
 
 		</div>
 

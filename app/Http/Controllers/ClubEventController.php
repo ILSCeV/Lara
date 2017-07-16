@@ -73,8 +73,8 @@ class ClubEventController extends Controller
 
         // get a list of possible clubs to create an event at, but without the id=0 (default value)
         $sections = Section::where("id", '>', 0)
-                       ->orderBy('plc_title', 'ASC')
-                       ->pluck('plc_title', 'id');
+                       ->orderBy('title', 'ASC')
+                       ->pluck('title', 'id');
 
         // get a list of available templates to choose from
         $templates = Schedule::where('schdl_is_template', '=', '1')
@@ -244,7 +244,7 @@ class ClubEventController extends Controller
 
         // Filter - Workaround for older events: populate filter with event club
         if (empty($clubEvent->evnt_show_to_club) ) {
-            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->section->plc_title], true);
+            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->section->title], true);
             $clubEvent->save();
         }
 
@@ -267,8 +267,8 @@ class ClubEventController extends Controller
         $schedule = $event->getSchedule;
 
         // get a list of possible clubs to create an event at
-        $sections = Section::orderBy('plc_title', 'ASC')
-                       ->pluck('plc_title', 'id');
+        $sections = Section::orderBy('title', 'ASC')
+                       ->pluck('title', 'id');
 
 
         // get a list of available job types
@@ -284,7 +284,7 @@ class ClubEventController extends Controller
 
         // Filter - Workaround for older events: populate filter with event club
         if (empty($event->evnt_show_to_club) ) {
-            $event->evnt_show_to_club = json_encode([$event->section->plc_title], true);
+            $event->evnt_show_to_club = json_encode([$event->section->title], true);
             $event->save();
         }
 
@@ -429,10 +429,10 @@ class ClubEventController extends Controller
         $event->evnt_type            = Input::get('evnt_type');
 
         // create new section
-        if (!Section::where('plc_title', '=', Input::get('section'))->first())
+        if (!Section::where('title', '=', Input::get('section'))->first())
         {
             $section = new Section;
-            $section->plc_title = Input::get('section');
+            $section->title = Input::get('section');
             $section->save();
 
             $event->plc_id = $section->id;
@@ -440,7 +440,7 @@ class ClubEventController extends Controller
         // use existing section
         else
         {
-            $event->plc_id = Section::where('plc_title', '=', Input::get('section'))->first()->id;
+            $event->plc_id = Section::where('title', '=', Input::get('section'))->first()->id;
         }
 
         // format: date; validate on filled value  

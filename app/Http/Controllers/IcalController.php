@@ -75,7 +75,7 @@ class IcalController extends Controller
                     .trans('mainLang.additionalInfo').":\n"
                     .$additionalInfo."\n");
                 
-                $section = $evt->section->plc_title;
+                $section = $evt->section->title;
                 $vEvent->setLocation($section, $section);
                 
                 return $vEvent;
@@ -121,7 +121,7 @@ class IcalController extends Controller
             if ($with_private_info > 0) {
                 $section = Section::where('section_uid', "=", $location)->first();
             } else {
-                $section = Section::where('plc_title', "=", $location)->first();
+                $section = Section::where('title', "=", $location)->first();
             }
             if (is_null($section)) {
                 return $vCalendar->render();
@@ -179,7 +179,7 @@ class IcalController extends Controller
                 
                 $vEvent->setDescription($evtDescription);
                 
-                $section = $evt->section->plc_title;
+                $section = $evt->section->title;
                 $vEvent->setLocation($section, $section);
                 
                 return $vEvent;
@@ -294,7 +294,7 @@ class IcalController extends Controller
                         .trans('mainLang.moreDetails').":\n"
                         .$moreDetails);
                     
-                    $section = $schedule->event->section->plc_title;
+                    $section = $schedule->event->section->title;
                     
                     $vEvent->setLocation($section, $section);
                     $vEvent->setUseTimezone(true);
@@ -365,7 +365,7 @@ class IcalController extends Controller
                     .trans('mainLang.additionalInfo').":\n"
                     .$additionalInfo."\n");
                 
-                $section = $event->section->plc_title;
+                $section = $event->section->title;
                 $vEvent->setLocation($section, $section);
                 $vCalendar->addComponent($vEvent);
             }
@@ -396,20 +396,20 @@ class IcalController extends Controller
         
         $result = [];
         
-        $sections = Section::where('plc_title', '<>', '-')->get();
+        $sections = Section::where('title', '<>', '-')->get();
         
         $result['allPublicEvents'] = URL::route('icalallevents');
         
         foreach ($sections as $section) {
             
             if (Session::has('userGroup')) {
-                $sectionLink = [$section->plc_title => URL::to('/').'/ical/feed/'.$section->section_uid."/1"];
+                $sectionLink = [$section->title => URL::to('/').'/ical/feed/'.$section->section_uid."/1"];
                 $result['location'][] = $sectionLink;
             }
-            $publicLinks = [$section->plc_title => URL::to('/')."/ical/location/".$section->plc_title];
+            $publicLinks = [$section->title => URL::to('/')."/ical/location/".$section->title];
             
             $result['locationPublic'][] = $publicLinks;
-            $result['locationName'][] = $section->plc_title;
+            $result['locationName'][] = $section->title;
         }
         
         if (!Session::has('userId')) {

@@ -100,7 +100,7 @@ class StatisticsController extends Controller
                             'shift'     =>$shift->type->title(),
                             'event'     =>$shift->schedule->event->evnt_title, 
                             'event_id'  =>$shift->schedule->event->id,
-                            'section'   =>$shift->schedule->event->section->plc_title,
+                            'section'   =>$shift->schedule->event->section->title,
                             'isOwnClub' =>in_array($ownClub, $clubsOfShift),
                             'date'      =>strftime("%d.%m.%Y (%a)", strtotime($shift->schedule->event->evnt_date_start)),
                             'weight'    =>$shift->statistical_weight];

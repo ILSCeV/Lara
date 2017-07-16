@@ -61,10 +61,10 @@
         {{-- Filter --}}
         @if ( empty($clubEvent->evnt_show_to_club) )
             {{-- Workaround for older events: if filter is empty - use event club data instead --}}
-            <div class="{!! $clubEvent->section->plc_title !!}  word-break">
+            <div class="{!! $clubEvent->section->title !!}  word-break">
         @else
             {{-- Normal scenario: add a css class according to filter data --}}
-            <div class="word-break section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach">
+            <div class="word-break section-filter @foreach($sections as $section) {!! in_array( $section->title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->title : false !!} @endforeach">
         @endif
 
             {{-- guests see private events as placeholders only, so check if user is logged in --}}

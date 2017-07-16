@@ -17,7 +17,7 @@
 		<i>{{ trans('mainLang.end') }}:</i> {{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_end)) }}
 		um {{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 		<br />
-		<i>{{ trans('mainLang.club') }}:</i> {{ $clubEvent->section->plc_title }}
+		<i>{{ trans('mainLang.club') }}:</i> {{ $clubEvent->section->title }}
 	</div>
 </div>
 @endif

@@ -62,7 +62,7 @@
 			-
 			{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 			&nbsp;
-			<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->section->plc_title }}
+			<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->section->title }}
 
 		</div>
 
