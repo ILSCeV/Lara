@@ -10,7 +10,7 @@ public/fonts/vendor/**/*
 
 public/js/app.*.js
 public/css/app.css
-public/*.js
+public/*.js*
 
 public/js/surveys.*.js
 public/css/app.*.css

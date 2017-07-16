@@ -1,41 +1,41 @@
 {
-  "devDependencies": {
-    "@types/bootbox": "^4.4.32",
-    "@types/bootstrap": "^3.3.32",
-    "@types/bootstrap-select": "^1.11.0",
-    "@types/clipboard": "^1.5.34",
-    "@types/es6-promise": "0.0.32",
-    "@types/isotope-layout": "^3.0.2",
-    "@types/jquery": "^2.0.41",
-    "@types/lodash": "^4.14.69",
-    "axios": "^0.15.2",
-    "bootbox": "^4.4.0",
-    "bootstrap": "^3.3.7",
-    "bootstrap-sass": "^3.3.7",
-    "bootstrap-select": "^1.12.2",
-    "clipboard": "^1.6.1",
-    "es6-promise": "^4.1.0",
-    "html5shiv": "^3.7.3",
-    "imports-loader": "^0.7.1",
-    "isotope-layout": "^3.0.3",
-    "jquery": "^3.1.0",
-    "laravel-mix": "^1.2.2",
-    "lodash": "^4.16.2",
-    "ts-loader": "^2.3.0",
-    "typescript": "^2.2.2",
-    "vue": "^2.0.1",
-    "webpack-livereload-plugin": "^0.11.0"
-  },
-  "private": true,
-  "scripts": {
-    "dev": "node node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "hot": "node  node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production": "node node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "node node_modules/webpack/bin/webpack.js --watch --watch-poll --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
-  },
-  "dependencies": {
-    "bootbox": "^4.4.0",
-    "bootstrap": "^3.3.7",
-    "laravel-mix": "^1.2.2"
-  }
+    "dependencies": {
+        "bootbox": "^4.4.0",
+        "bootstrap": "^3.3.7",
+        "laravel-mix": "^1.2.2"
+    },
+    "devDependencies": {
+        "@types/bootbox": "^4.4.32",
+        "@types/bootstrap": "^3.3.32",
+        "@types/bootstrap-select": "^1.11.0",
+        "@types/clipboard": "^1.5.34",
+        "@types/es6-promise": "0.0.32",
+        "@types/isotope-layout": "^3.0.2",
+        "@types/jquery": "^2.0.41",
+        "@types/lodash": "^4.14.69",
+        "axios": "^0.15.2",
+        "bootbox": "^4.4.0",
+        "bootstrap": "^3.3.7",
+        "bootstrap-sass": "^3.3.7",
+        "bootstrap-select": "^1.12.2",
+        "clipboard": "^1.6.1",
+        "es6-promise": "^4.1.0",
+        "html5shiv": "^3.7.3",
+        "imports-loader": "^0.7.1",
+        "isotope-layout": "^3.0.3",
+        "jquery": "^3.1.0",
+        "laravel-mix": "^1.2.2",
+        "lodash": "^4.16.2",
+        "ts-loader": "^2.3.0",
+        "typescript": "^2.2.2",
+        "vue": "^2.0.1",
+        "webpack-livereload-plugin": "^0.11.0"
+    },
+    "private": true,
+    "scripts": {
+        "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "hot": "NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --watch-poll --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    }
 }
