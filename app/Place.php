@@ -11,7 +11,7 @@ class Place extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'places';
+	protected $table = 'sections';
 
 	/**
 	 * The database columns used by the model.
