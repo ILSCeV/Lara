@@ -2,7 +2,7 @@
 @extends('layouts.master')
 
 @section('title')
-	{{ trans('mainLang.management') }}: #{{ $current_shiftType->id }} - {!! $current_shiftType->jbtyp_title !!}
+	{{ trans('mainLang.management') }}: #{{ $current_shiftType->id }} - {!! $current_shiftType->title !!}
 @stop
 
 @section('content')
@@ -14,7 +14,7 @@
 
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			<h4 class="panel-title">#{{ $current_shiftType->id }}: "{!! $current_shiftType->jbtyp_title !!}" </h4>
+			<h4 class="panel-title">#{{ $current_shiftType->id }}: "{!! $current_shiftType->title !!}" </h4>
 		</div>
 		<div class="panel panel-body no-padding">
 			<table class="table table-hover">
@@ -27,9 +27,9 @@
 							<i>{{ trans('mainLang.shiftType') }}:</i>
 						</td>
 						<td>
-							{!! Form::text('jbtyp_title' . $current_shiftType->id, 
-							   $current_shiftType->jbtyp_title, 
-							   array('id'=>'jbtyp_title' . $current_shiftType->id)) !!}
+							{!! Form::text('title' . $current_shiftType->id, 
+							   $current_shiftType->title, 
+							   array('id'=>'title' . $current_shiftType->id)) !!}
 						</td>
 					</tr>
 					<tr>
@@ -37,9 +37,9 @@
 							<i>{{ trans('mainLang.begin') }}:</i>
 						</td>
 						<td>
-							{!! Form::input('time','jbtyp_time_start' . $current_shiftType->id, 
-							   $current_shiftType->jbtyp_time_start, 
-							   array('id'=>'jbtyp_time_start' . $current_shiftType->id)) !!}
+							{!! Form::input('time','start' . $current_shiftType->id, 
+							   $current_shiftType->start, 
+							   array('id'=>'start' . $current_shiftType->id)) !!}
 						</td>
 					</tr>
 					<tr>
@@ -47,9 +47,9 @@
 							<i>{{ trans('mainLang.end') }}:</i>
 						</td>
 						<td>
-							{!! Form::input('time','jbtyp_time_end' . $current_shiftType->id, 
-							   $current_shiftType->jbtyp_time_end, 
-							   array('id'=>'jbtyp_time_end' . $current_shiftType->id)) !!}
+							{!! Form::input('time','end' . $current_shiftType->id, 
+							   $current_shiftType->end, 
+							   array('id'=>'end' . $current_shiftType->id)) !!}
 						</td>
 					</tr>
 					<tr>
@@ -57,9 +57,9 @@
 							<i>{{ trans('mainLang.weight') }}:</i>
 						</td>
 						<td>
-							{!! Form::text('jbtyp_statistical_weight' . $current_shiftType->id, 
-							   $current_shiftType->jbtyp_statistical_weight, 
-							   array('id'=>'jbtyp_statistical_weight' . $current_shiftType->id)) !!} <br/>
+							{!! Form::text('statistical_weight' . $current_shiftType->id, 
+							   $current_shiftType->statistical_weight, 
+							   array('id'=>'statistical_weight' . $current_shiftType->id)) !!} <br/>
 						</td>
 					</tr>
 					<tr>
@@ -81,11 +81,11 @@
 							   class="btn btn-small btn-danger"
 							   data-toggle="tooltip"
 			                   data-placement="bottom"
-			                   title="&#39;&#39;{!! $current_shiftType->jbtyp_title !!}&#39;&#39; (#{{ $current_shiftType->id }}) löschen"
+			                   title="&#39;&#39;{!! $current_shiftType->title !!}&#39;&#39; (#{{ $current_shiftType->id }}) löschen"
 							   data-method="delete"
 							   data-token="{{csrf_token()}}"
 							   rel="nofollow"
-							   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_shiftType->jbtyp_title !!}&#39;&#39; (#{{ $current_shiftType->id }})? {{ trans('mainLang.warningNotReversible') }}">
+							   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_shiftType->title !!}&#39;&#39; (#{{ $current_shiftType->id }})? {{ trans('mainLang.warningNotReversible') }}">
 								   	{{ trans('mainLang.delete') }}
 							</a>
 							?
@@ -166,11 +166,11 @@
 																					document.getElementById('{{ 'shiftType'. $shift->id }}').value='{{ $shiftType->id }}';
 																					document.getElementById('{{ 'btn-submit-changes'. $shift->id }}').click();">
 																		   	(#{{ $shiftType->id }}) 
-																		   	{{  $shiftType->jbtyp_title }} 
+																		   	{{  $shiftType->title }} 
 																		   	(<i class='fa fa-clock-o'></i>
-																			{{  date("H:i", strtotime($shiftType->jbtyp_time_start))
+																			{{  date("H:i", strtotime($shiftType->start))
 																				. "-" .
-																			    date("H:i", strtotime($shiftType->jbtyp_time_end)) . ")" }}
+																			    date("H:i", strtotime($shiftType->end)) . ")" }}
 																		</a>
 																	</li>
 																@endif

@@ -109,12 +109,12 @@ $factory->define(Lara\ShiftType::class, function(Faker\Generator $faker) {
     $end = $faker->time('H:i');
     $start = $faker->time('H:i', $end);
     return [
-        'jbtyp_title' => $faker->randomElement($types),
-        'jbtyp_time_start' => $start,
-        'jbtyp_time_end' => $end,
-        'jbtyp_needs_preparation' => $faker->boolean(),
-        'jbtyp_statistical_weight' => $faker->numberBetween(0, 4) * 0.5,
-        'jbtyp_is_archived' => 0
+        'title' => $faker->randomElement($types),
+        'start' => $start,
+        'end' => $end,
+        'needs_preparation' => $faker->boolean(),
+        'statistical_weight' => $faker->numberBetween(0, 4) * 0.5,
+        'is_archived' => 0
     ];
 });
 

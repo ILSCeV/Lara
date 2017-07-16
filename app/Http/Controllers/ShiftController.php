@@ -38,7 +38,7 @@ class ShiftController extends Controller
         $isCurrentUser = $ldapId == Session::get('userId');
         $response = [
             'id'                => $shift->id,
-            'jbtyp_title'       => $shift->type->title(),
+            'title'       => $shift->type->title(),
             'prsn_name'         => $name,
             'prsn_ldap_id'      => $ldapId,
             'prsn_status'       => $status,
@@ -87,7 +87,7 @@ class ShiftController extends Controller
             // Formulate the response
             return response()->json([
                 "entryId" => $shift->id,
-                "updatedShiftTypeTitle" => ShiftType::where('id', '=', $shift->shifttype_id)->first()->jbtyp_title
+                "updatedShiftTypeTitle" => ShiftType::where('id', '=', $shift->shifttype_id)->first()->title
             ]);
         }
 
@@ -315,20 +315,20 @@ class ShiftController extends Controller
         $oldShiftType = $shift->type;
 
         // we need a raw statement for case sensitivity
-        $shiftType = ShiftType::whereRaw("BINARY `jbtyp_title`= ?", $title)
+        $shiftType = ShiftType::whereRaw("BINARY `title`= ?", $title)
             ->where(function($query) use($type, $start, $end){
                 $query->where('id', $type);
-                $query->orWhere('jbtyp_time_start', $start);
-                $query->where('jbtyp_time_end', $end);
+                $query->orWhere('start', $start);
+                $query->where('end', $end);
             })
             ->first();
         if (is_null($shiftType)) {
             $shiftType = new ShiftType([
                 "id" => $type,
-                "jbtyp_title" => $title,
-                'jbtyp_time_start' => $start,
-                'jbtyp_time_end' => $end,
-                'jbtyp_statistical_weight' => $weight
+                "title" => $title,
+                'start' => $start,
+                'end' => $end,
+                'statistical_weight' => $weight
             ]);
             $shiftType->save();
         }

@@ -23,13 +23,13 @@ class ShiftTypeController extends Controller
     {
         if ( is_null($query) ) { $query = ""; } // if no parameter specified - empty means "show all"
 
-        $shiftTypes =  ShiftType::where('jbtyp_title', 'like', '%' . $query . '%')
-            ->orderBy('jbtyp_title')
+        $shiftTypes =  ShiftType::where('title', 'like', '%' . $query . '%')
+            ->orderBy('title')
             ->get([
-                'jbtyp_title',
-                'jbtyp_time_start',
-                'jbtyp_time_end',
-                'jbtyp_statistical_weight'
+                'title',
+                'start',
+                'end',
+                'statistical_weight'
             ]);
 
         return response()->json($shiftTypes);
@@ -42,7 +42,7 @@ class ShiftTypeController extends Controller
      */
     public function index()
     {
-        $shiftTypes = ShiftType::orderBy('jbtyp_title', 'ASC')->paginate(25);
+        $shiftTypes = ShiftType::orderBy('title', 'ASC')->paginate(25);
 
         return view('manageShiftTypesView', ['shiftTypes' => $shiftTypes]);
     }
@@ -59,7 +59,7 @@ class ShiftTypeController extends Controller
         $current_shiftType = ShiftType::findOrFail($id);
 
         // get a list of all available job types
-        $shiftTypes = ShiftType::orderBy('jbtyp_title', 'ASC')->get();
+        $shiftTypes = ShiftType::orderBy('title', 'ASC')->get();
 
         $shifts = Shift::where('shifttype_id', '=', $id)
             ->with('schedule.event.getPlace')
@@ -103,10 +103,10 @@ class ShiftTypeController extends Controller
         $shiftType = ShiftType::findOrFail($id);
 
         // Extract request data
-        $newTitle       = $request->get('jbtyp_title'.$id);
-        $newTimeStart   = $request->get('jbtyp_time_start'.$id);
-        $newTimeEnd     = $request->get('jbtyp_time_end'.$id);
-        $newWeight      = $request->get('jbtyp_statistical_weight'.$id);
+        $newTitle       = $request->get('title'.$id);
+        $newTimeStart   = $request->get('start'.$id);
+        $newTimeEnd     = $request->get('end'.$id);
+        $newWeight      = $request->get('statistical_weight'.$id);
 
         // Check for empty values
         if (empty($newTitle) || empty($newTimeStart) || empty($newTimeEnd)) {
@@ -132,13 +132,13 @@ class ShiftTypeController extends Controller
         // Log the action while we still have the data
         Log::info('ShiftType edited: ' .
             Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
-            ') changed shift type #' . $shiftType->id . ' from "' . $shiftType->jbtyp_title . '", start: ' . $shiftType->jbtyp_time_start . ', end: ' . $shiftType->jbtyp_time_end . ', weight: ' . $shiftType->jbtyp_statistical_weight . ' to "' . $newTitle . '" , start: ' . $newTimeStart . ', end: ' . $newTimeEnd . ', weight: ' . $newWeight . '. ');
+            ') changed shift type #' . $shiftType->id . ' from "' . $shiftType->title . '", start: ' . $shiftType->start . ', end: ' . $shiftType->end . ', weight: ' . $shiftType->statistical_weight . ' to "' . $newTitle . '" , start: ' . $newTimeStart . ', end: ' . $newTimeEnd . ', weight: ' . $newWeight . '. ');
 
         // Write and save changes
-        $shiftType->jbtyp_title               = $newTitle;
-        $shiftType->jbtyp_time_start          = $newTimeStart;
-        $shiftType->jbtyp_time_end            = $newTimeEnd;
-        $shiftType->jbtyp_statistical_weight  = $newWeight;
+        $shiftType->title               = $newTitle;
+        $shiftType->start          = $newTimeStart;
+        $shiftType->end            = $newTimeEnd;
+        $shiftType->statistical_weight  = $newWeight;
         $shiftType->save();
 
         // Return to the shiftType page
@@ -186,7 +186,7 @@ class ShiftTypeController extends Controller
             // Log the action while we still have the data
             Log::info('ShiftType deleted: ' .
                 Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
-                ') deleted "' . $shiftType->jbtyp_title .  '" (it was not used in any schedule).');
+                ') deleted "' . $shiftType->title .  '" (it was not used in any schedule).');
 
             // Now delete the shiftType
             ShiftType::destroy($id);

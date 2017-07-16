@@ -48,16 +48,16 @@
 								</td>
 								<td>
 							      	<a href="../shiftType/{{ $shiftType->id }}">
-							      		{!! $shiftType->jbtyp_title !!}
+							      		{!! $shiftType->title !!}
 							      	</a>
 								</td>
 								<td>						
-									{!! date("H:i", strtotime($shiftType->jbtyp_time_start)) !!}
+									{!! date("H:i", strtotime($shiftType->start)) !!}
 									-
-									{!! date("H:i", strtotime($shiftType->jbtyp_time_end)) !!}
+									{!! date("H:i", strtotime($shiftType->end)) !!}
 								</td>
 								<td>
-									{!! $shiftType->jbtyp_statistical_weight !!}
+									{!! $shiftType->statistical_weight !!}
 								</td>
 								<td>
 									<a href="../shiftType/{{ $shiftType->id }}"
@@ -71,7 +71,7 @@
 									   data-method="delete"
 									   data-token="{{csrf_token()}}"
 									   rel="nofollow"
-									   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $shiftType->jbtyp_title !!}&#39;&#39; (#{{ $shiftType->id }})? {{ trans('mainLang.warningNotReversible') }}">
+									   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $shiftType->title !!}&#39;&#39; (#{{ $shiftType->id }})? {{ trans('mainLang.warningNotReversible') }}">
 									   	{{ trans('mainLang.deleteThisShiftType') }}
 									</a>
 								</td>

@@ -60,7 +60,7 @@ class Schedule extends Model
 	public function getTemplateEntries() 
 	{
         return $this->shifts->map(function($shift) {
-		    return $shift->type->jbtyp_title;
+		    return $shift->type->title;
         });
 	}
 }

@@ -82,8 +82,8 @@ class ClubEventController extends Controller
                              ->get();
 
         // get a list of available job types
-        $shiftTypes = ShiftType::where('jbtyp_is_archived', '=', '0')
-                           ->orderBy('jbtyp_title', 'ASC')
+        $shiftTypes = ShiftType::where('is_archived', '=', '0')
+                           ->orderBy('title', 'ASC')
                            ->get();
 
         // if a template id was provided, load the schedule needed and extract job types
@@ -272,8 +272,8 @@ class ClubEventController extends Controller
 
 
         // get a list of available job types
-        $shiftTypes = ShiftType::where('jbtyp_is_archived', '=', '0')
-                           ->orderBy('jbtyp_title', 'ASC')
+        $shiftTypes = ShiftType::where('is_archived', '=', '0')
+                           ->orderBy('title', 'ASC')
                            ->get();
 
         // put template data into shifts

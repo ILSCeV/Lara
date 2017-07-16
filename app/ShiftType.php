@@ -9,12 +9,12 @@ class ShiftType extends Model
     protected $table = 'shifttypes';
 
     protected $fillable = [
-        'jbtyp_title',
-        'jbtyp_time_start',
-        'jbtyp_time_end',
-        'jbtyp_needs_preparation',
-        'jbtyp_statistical_weight',
-        'jbtyp_is_archived'
+        'title',
+        'start',
+        'end',
+        'needs_preparation',
+        'statistical_weight',
+        'is_archived'
     ];
 
     /**
@@ -28,26 +28,26 @@ class ShiftType extends Model
     }
 
     public function title() {
-        return $this->jbtyp_title;
+        return $this->title;
     }
 
     public function start() {
-        return $this->jbtyp_time_start;
+        return $this->start;
     }
 
     public function end() {
-        return $this->jbtyp_time_end;
+        return $this->end;
     }
 
     public function needsPreparation() {
-        return $this->jbtyp_needs_preparation;
+        return $this->needs_preparation;
     }
 
     public function weight() {
-        return $this->jbtyp_statistical_weight;
+        return $this->statistical_weight;
     }
 
     public function isArchived() {
-        return $this->jbtyp_is_archived;
+        return $this->is_archived;
     }
 }
