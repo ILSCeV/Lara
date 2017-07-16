@@ -43,7 +43,7 @@ class Club extends Model
 
     public static function activeClubs()
     {
-        return Club::whereIn('id', ['2', '3']);
+        return Club::whereIn('clb_title', Place::all()->pluck('plc_title'));
     }
 
 }
