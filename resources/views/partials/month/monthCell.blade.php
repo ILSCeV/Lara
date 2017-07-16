@@ -84,10 +84,8 @@
                         <div class="cal-event {{$classString}} calendar-public-task">
                     @elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
                         <div class="cal-event {{$classString}} calendar-public-marketing">
-                    @elseif ($clubEvent->getPlace->id == 1)
-                        <div class="cal-event {{$classString}} calendar-public-event-bc-club">
-                    @elseif ($clubEvent->getPlace->id == 2)
-                        <div class="cal-event {{$classString}} calendar-public-event-bc-cafe">
+                    @else
+                        <div class="cal-event {{$classString}} calendar-public-event-{{$clubEvent->place->plc_title}}">
                     @endif
                     @include("partials.event-marker", $clubEvent)
                     &nbsp;&nbsp;
@@ -109,10 +107,8 @@
                         <div class="cal-event {{$classString}} calendar-internal-task">
                     @elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
                         <div class="cal-event {{$classString}} calendar-internal-marketing">
-                    @elseif ($clubEvent->getPlace->id == 1)
-                        <div class="cal-event {{$classString}} calendar-internal-event-bc-club">
-                    @elseif ($clubEvent->getPlace->id == 2)
-                        <div class="cal-event {{$classString}} calendar-internal-event-bc-cafe">
+                    @elseif (!is_null($clubEvent->place))
+                        <div class="cal-event {{$classString}} calendar-internal-event-{{$clubEvent->place->plc_title}}">
                     @else
                         {{-- DEFAULT --}}
                         <div class="cal-event {{$classString}} dark-grey">
@@ -124,10 +120,8 @@
                         <div class="cal-event {{$classString}} calendar-public-task">
                     @elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
                         <div class="cal-event {{$classString}} calendar-public-marketing">
-                    @elseif ($clubEvent->getPlace->id == 1)
-                        <div class="cal-event {{$classString}} calendar-public-event-bc-club">
-                    @elseif ($clubEvent->getPlace->id == 2)
-                        <div class="cal-event {{$classString}} calendar-public-event-bc-cafe">
+                    @elseif (!is_null($clubEvent->place))
+                        <div class="cal-event {{$classString}} calendar-public-event-{{$clubEvent->place->plc_title}}">
                     @else
                         {{-- DEFAULT --}}
                         <div class="cal-event {{$classString}} dark-grey">

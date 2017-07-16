@@ -22,18 +22,10 @@
 					<div class="panel panel-heading calendar-internal-marketing white-text">
 				@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 					<div class="panel panel-heading calendar-public-marketing white-text">
-
-
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Club" AND $clubEvent->evnt_is_private )
-					<div class="panel panel-heading calendar-internal-event-bc-club white-text">
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Club")
-					<div class="panel panel-heading calendar-public-event-bc-club white-text">
-
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Café" AND $clubEvent->evnt_is_private)
-					<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Café")
-					<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
-
+				@elseif ($clubEvent->evnt_is_private && !is_null($clubEvent->place))
+					<div class="panel panel-heading calendar-internal-event-{{$clubEvent->place->plc_title}} white-text">
+				@elseif (!is_null($clubEvent->place))
+					<div class="panel panel-heading calendar-public-event-{{$clubEvent->place->plc_title}} white-text">
 				@else
 					{{-- DEFAULT --}}
 					<div class="panel panel-heading white-text">
