@@ -33,6 +33,7 @@
     "watch": "node node_modules/webpack/bin/webpack.js --watch --watch-poll --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "dependencies": {
+    "bootbox": "^4.4.0",
     "bootstrap": "^3.3.7",
     "laravel-mix": "^1.2.2"
   }

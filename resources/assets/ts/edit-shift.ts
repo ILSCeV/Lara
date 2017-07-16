@@ -1,5 +1,6 @@
 import * as $ from "jquery"
 import { translate } from "./Translate"
+import * as bootbox from "bootbox"
 
 
 var updatePublishEvent = function () {

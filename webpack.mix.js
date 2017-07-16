@@ -12,7 +12,7 @@ const  webpack  = require('webpack');
  |
  */
 
-mix//.sass('resources/assets/sass/app.scss', 'public/css')
+mix.sass('resources/assets/sass/app.scss', 'public/css')
     // see https://github.com/metafizzy/isotope/issues/979#issuecomment-215771272
     .webpackConfig({
         resolve: {
@@ -40,12 +40,16 @@ mix//.sass('resources/assets/sass/app.scss', 'public/css')
         },
         plugins: [
             new webpack.ProvidePlugin({
-                $: "jquery",
-                jQuery: "jquery"
+                'jQuery': 'jquery',
+                'window.jQuery': 'jquery',
+                'jquery': 'jquery',
+                'window.jquery': 'jquery',
+                '$'     : 'jquery',
+                'window.$'     : 'jquery'
             })
         ]
     })
     .ts('resources/assets/ts/lara.ts', 'public/')
-    .extract(['jquery', 'bootstrap'])
+    .extract(['jquery', 'bootstrap', 'bootbox'])
     .sourceMaps()
     .version();

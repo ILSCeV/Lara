@@ -1,6 +1,7 @@
 import * as $ from "jquery"
 import { translate } from "./Translate"
 import { getIdOfClub } from "./Utilities"
+import * as bootbox from "bootbox"
 
 // values of events that should trigger the selection of all clubs
 let internalEventValues = [
