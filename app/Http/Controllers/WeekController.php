@@ -17,7 +17,7 @@ use Lara\ClubEvent;
 use Lara\Schedule;
 use Lara\Person;
 use Lara\Club;
-use Lara\Place;
+use Lara\Section;
 
 class WeekController extends Controller {
 
@@ -80,7 +80,7 @@ class WeekController extends Controller {
 				       
         $events = ClubEvent::where('evnt_date_start','>=',$weekStart)
                            ->where('evnt_date_start','<=',$weekEnd)
-                           ->with('getPlace',
+                           ->with('getSection',
                            		  'getSchedule.shifts.type',
                            		  'getSchedule.shifts.getPerson.getClub')
                            ->orderBy('evnt_date_start')
@@ -92,14 +92,14 @@ class WeekController extends Controller {
 							->orderBy('deadline')
 							->get();
 		
-		$sections = Place::where('id', '>', 0)
+		$sections = Section::where('id', '>', 0)
                          ->orderBy('plc_title')
                          ->get(['id','plc_title']);
 
         // Filter - Workaround for older events: populate filter with event club
         foreach ($events as $clubEvent) {	        
 	        if (empty($clubEvent->evnt_show_to_club) ) {
-	            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->getPlace->plc_title], true);
+	            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->getSection->plc_title], true);
 	            $clubEvent->save();
 	        } 
         }

@@ -49,19 +49,19 @@ class ClubEvent extends Model
 								'evnt_is_published');
 
 	/**
-	 * Get the corresponding place.
-	 * Looks up in table places for that entry, which has the same id like plc_id of ClubEvent instance.
+	 * Get the corresponding section.
+	 * Looks up in table sections for that entry, which has the same id like plc_id of ClubEvent instance.
 	 *
-	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Place
+	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Section
 	 */
-	public function getPlace() {
-		return $this->belongsTo('Lara\Place', 'plc_id', 'id');
+	public function getSection() {
+		return $this->belongsTo('Lara\Section', 'plc_id', 'id');
 	}
 
-	public function place() {
-        return $this->belongsTo('Lara\Place', 'plc_id', 'id');
+	public function section() {
+        return $this->belongsTo('Lara\Section', 'plc_id', 'id');
     }
-	
+
 	/**
 	 * Get the corresponding schedule.
 	 * Looks up in table schedules for that entry, which has the same evnt_id like id of ClubEvent instance.

@@ -19,7 +19,7 @@
 		-
 		{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 		&nbsp;
-		<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->getPlace->plc_title }}
+		<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->getSection->plc_title }}
 	</div>
 	<div class="panel-body">
 		{{ trans('mainLang.moreDetailsAfterLogInMessage') }} {{-- <br /> --}}

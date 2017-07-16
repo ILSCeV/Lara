@@ -47,7 +47,7 @@ class DateController extends Controller {
         $date = strftime("%a, %d. %b %Y", strtotime($dateInput));
 
         $events = ClubEvent::where('evnt_date_start','=',$dateInput)
-                           ->with('getPlace')
+                           ->with('getSection')
                            ->paginate(15);
 
         return View::make('listView', compact('events', 'date'));

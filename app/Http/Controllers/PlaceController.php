@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
 
-class PlaceController extends Controller
+class SectionController extends Controller
 {
     /**
      * Display a listing of the resource.

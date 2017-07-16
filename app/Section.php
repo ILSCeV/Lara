@@ -4,7 +4,7 @@ namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Place extends Model
+class Section extends Model
 {
 	/**
 	 * The database table used by the model.
@@ -19,11 +19,11 @@ class Place extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('plc_title', 'place_uid');
+	protected $fillable = array('plc_title', 'section_uid');
 
 	/**
 	 * Get the corresponding club events.
-	 * Looks up in table club_events for entries, which have the same plc_id like id of Place instance.
+	 * Looks up in table club_events for entries, which have the same plc_id like id of Section instance.
 	 *
 	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasMany of type ClubEvent
 	 */

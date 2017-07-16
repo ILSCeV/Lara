@@ -175,28 +175,28 @@
 				@endif
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="place" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
+					<label for="section" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
 					<span class="col-md-10 col-sm-10 col-xs-12">	   	
-						@if($place == "1")
-							{!! Form::text('place', 'bc-Club', array('id'=>'place', 'readonly') ) !!}
-						@elseif($place == "2")
-							{!! Form::text('place', 'bc-Café', array('id'=>'place', 'readonly') ) !!}
+						@if($section == "1")
+							{!! Form::text('section', 'bc-Club', array('id'=>'section', 'readonly') ) !!}
+						@elseif($section == "2")
+							{!! Form::text('section', 'bc-Café', array('id'=>'section', 'readonly') ) !!}
 						@else
 							{{-- Set default values to the club the user is a member in. --}}
 							@if(Session::get('userClub') == 'bc-Club')
-								{!! Form::text('place', 'bc-Club', array('id'=>'place', 'readonly')) !!}
+								{!! Form::text('section', 'bc-Club', array('id'=>'section', 'readonly')) !!}
 							@elseif(Session::get('userClub') == 'bc-Café')
-								{!! Form::text('place', 'bc-Café', array('id'=>'place', 'readonly') ) !!}
+								{!! Form::text('section', 'bc-Café', array('id'=>'section', 'readonly') ) !!}
 							@endif 
 						@endif
 					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 					        <span class="caret"></span>
 					    </a>
 					    <ul class="dropdown-menu">
-						    @foreach($places as $place)
+						    @foreach($sections as $section)
 						        <li> 
 						        	<a href="javascript:void(0);" 
-						        	   onClick="document.getElementById('place').value='{{$place}}'">{{ $place }}</a>
+						        	   onClick="document.getElementById('section').value='{{$section}}'">{{ $section }}</a>
 						        </li>
 							@endforeach
 					    </ul>  	
