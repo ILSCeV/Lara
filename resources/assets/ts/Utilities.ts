@@ -1,4 +1,6 @@
-enum Club {
+import * as $ from "jquery"
+
+export enum Club {
     None,
     BcClub = 2,
     BcCafe,
@@ -7,7 +9,7 @@ enum Club {
     BiClub
 }
 
-function getIdOfClub (club: string): Club {
+export function getIdOfClub (club: string): Club {
     switch (club) {
         case "bc-Club":
             return Club.BcClub;

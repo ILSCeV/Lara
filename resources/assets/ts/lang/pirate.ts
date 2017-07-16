@@ -1,4 +1,4 @@
-var pirateTranslations = {
+export default {
     "shiftTime": "Deckzeit",
     "onlyEmpty": "Nur FREIe Dienste",
     "mondayToSunday": "Manendach - Sonnendach",
@@ -50,7 +50,6 @@ var pirateTranslations = {
     'Science Slam': 'Black Jack',
     'Frühstück': "Mahlzeit",
     'Nutzung Cafe Veteran': 'Passagierbeförderung: der Alte vom Café',
-    '<- Café bleibt zu': 'Café bleibt fest am Dock',
     '<- Café bleibt zu': 'Café bleibt fest am Dock',
     'Café bleibt zu': 'Café bleibt fest am Dock',
     'Mo-Cafeöffnung': 'Mo-Caféabenteuer',

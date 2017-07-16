@@ -1,4 +1,4 @@
-var enTranslations = {
+export default {
     "shiftTime": "Shift time",
     "onlyEmpty": "Only EMPTY shifts",
     "mondayToSunday": "Monday - Sunday",

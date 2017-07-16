@@ -1,4 +1,4 @@
-var deTranslations = {
+export default {
     "shiftTime": "Dienstzeit",
     "onlyEmpty": "Nur FREIe Dienste",
     "mondayToSunday": "Montag - Sonntag",

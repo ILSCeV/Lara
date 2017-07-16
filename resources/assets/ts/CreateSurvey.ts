@@ -1,3 +1,6 @@
+import * as $ from "jquery"
+import { translate } from "./Translate"
+
 $("#button-create-survey").click(() => {
     let errors = new Array<string>();
 

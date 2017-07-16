@@ -1,3 +1,5 @@
+import * as $ from "jquery"
+
 var questionIdCounter = 0;
 
 // Initialize State for questions and answers

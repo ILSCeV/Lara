@@ -1,4 +1,5 @@
 const { mix } = require('laravel-mix');
+const  webpack  = require('webpack');
 
 /*
  |--------------------------------------------------------------------------
@@ -10,32 +11,40 @@ const { mix } = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
-mix.sass('resources/assets/sass/app.scss', 'public/css')
-	.scripts([
-        // jQuery and Plugins
-        'node_modules/jquery/dist/jquery.min.js',
-
-        // Misc. js libraries
-        'node_modules/isotope-layout/dist/isotope.pkgd.min.js',
-        'node_modules/html5shiv/dist/html5shiv.min.js',
-        'node_modules/es6-promise/dist/es6-promise.min.js',
-        'node_modules/clipboard/dist/clipboard.min.js',
-
-        // bootstrap and related libraries
-        'node_modules/bootstrap/dist/js/bootstrap.min.js',
-        'node_modules/bootbox/bootbox.min.js',
-        'node_modules/bootstrap-select/dist/js/bootstrap-select.min.js',
-
-        // languages
-        'resources/assets/js/lang/*.js',
-
-        // Lara scripts
-        'resources/assets/js/vedst-scripts.js',
-
-        // Compiled typescript
-        'resources/assets/ts/bin/build.js',
-        'resources/assets/js/surveyView-scripts.js'
-	], 'public/js/app.js')
+mix//.sass('resources/assets/sass/app.scss', 'public/css')
+    // see https://github.com/metafizzy/isotope/issues/979#issuecomment-215771272
+    .webpackConfig({
+        resolve: {
+            alias: {
+                'masonry': 'masonry-layout',
+                'isotope': 'isotope-layout'
+            }
+        },
+        module : {
+            loaders: [
+                {
+                    test: /isotope\-|fizzy\-ui\-utils|desandro\-|masonry|outlayer|get\-size|doc\-ready|eventie|eventemitter/,
+                    loader: 'imports?define=>false&this=>window'
+                },
+                //bootstrap and bootbox need jQuery to be available, so make it available with the imports loader
+                {
+                    test: /bootstrap.+\.(jsx|js)$/,
+                    loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
+                },
+                {
+                    test: /bootbox.+\.(jsx|js)$/,
+                    loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
+                }
+            ]
+        },
+        plugins: [
+            new webpack.ProvidePlugin({
+                $: "jquery",
+                jQuery: "jquery"
+            })
+        ]
+    })
+    .ts('resources/assets/ts/lara.ts', 'public/')
 	.version()
+    .extract(['jquery', 'bootstrap'])
     .sourceMaps();

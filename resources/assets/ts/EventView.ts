@@ -1,3 +1,7 @@
+import * as $ from "jquery"
+import { translate } from "./Translate"
+
+
 /**
  * Created by fabian on 28.04.17.
  */

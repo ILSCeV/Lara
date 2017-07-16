@@ -1,13 +1,8 @@
-/**
- * Created by fabian on 31.03.17.
- */
+import * as $ from "jquery"
+import {translate} from "./Translate"
 
-interface String {
-    replaceAll: (search: string, replacement: string) => string
-}
-String.prototype.replaceAll = function (search, replacement) {
-    let target = this;
-    return target.split(search).join(replacement);
+function replaceAll(string, search, replacement) {
+    return string.split(search).join(replacement);
 };
 
 declare var enviroment: any;
@@ -40,7 +35,7 @@ if ( typeof localStorage !== "undefined" && (localStorage.getItem("language") ||
                 let translation = translate(oldText);
                 let newText = oldText;
                 if (translation.indexOf('Translation necessary:') === -1) {
-                    newText = $(elem).html().replaceAll(oldText, translation);
+                    newText = replaceAll($(elem).html(), oldText, translation);
                 }
                 let aRRRRifiedText = arrifier(newText);
                 $(elem).html(aRRRRifiedText);

@@ -1,3 +1,7 @@
+import * as $ from "jquery"
+import { translate } from "./Translate"
+
+
 var updatePublishEvent = function () {
     let $eventPublished = $('[name=evntIsPublished]');
     var evtPublished = $eventPublished.is(':checked');
