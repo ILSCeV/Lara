@@ -1,8 +1,6 @@
 import * as $ from "jquery"
 
-console.log("the import works");
 $(() => {
-    console.log("executed");
     $('#createAndPublishBtn').click(
         function () {
             $('input[name=evntIsPublished]').val('1');
