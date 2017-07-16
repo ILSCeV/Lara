@@ -32,7 +32,7 @@
            class="input"
            name="shifts[weight][]"
            value="{{ $weight }}"
-           onkeypress="return event.charCode >= 48"
+           onkeypress="return event.charCode >= 48 || event.charCode == 46"
            min="0"
            required
     />
