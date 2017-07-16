@@ -23,7 +23,8 @@
     "lodash": "^4.16.2",
     "ts-loader": "^2.3.0",
     "typescript": "^2.2.2",
-    "vue": "^2.0.1"
+    "vue": "^2.0.1",
+    "webpack-livereload-plugin": "^0.11.0"
   },
   "private": true,
   "scripts": {

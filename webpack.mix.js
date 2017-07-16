@@ -1,5 +1,6 @@
 const { mix } = require('laravel-mix');
 const  webpack  = require('webpack');
+const LiveReloadPlugin = require('webpack-livereload-plugin');
 
 /*
  |--------------------------------------------------------------------------
@@ -45,7 +46,8 @@ mix.webpackConfig({
                 'window.jquery': 'jquery',
                 '$'     : 'jquery',
                 'window.$'     : 'jquery'
-            })
+            }),
+            new LiveReloadPlugin()
         ]
     })
     .ts('resources/assets/ts/lara.ts', 'public/')
