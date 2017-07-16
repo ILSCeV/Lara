@@ -12,9 +12,8 @@ const  webpack  = require('webpack');
  |
  */
 
-mix.sass('resources/assets/sass/app.scss', 'public/css')
-    // see https://github.com/metafizzy/isotope/issues/979#issuecomment-215771272
-    .webpackConfig({
+// see https://github.com/metafizzy/isotope/issues/979#issuecomment-215771272
+mix.webpackConfig({
         resolve: {
             alias: {
                 'masonry': 'masonry-layout',
