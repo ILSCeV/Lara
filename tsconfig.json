@@ -13,6 +13,7 @@
       "bootstrap",
       "bootstrap-select",
       "bootbox",
+      "sortablejs",
       "es6-promise",
       "isotope-layout"
     ]

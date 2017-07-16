@@ -3,13 +3,13 @@
                    data-placement:"top"
                    title="Änderungen speichern"></i>', 
                 array('type' => 'submit', 
-                      'name' => 'btn-submit-change' . $entry->id,
-                      'id' => 'btn-submit-changes' . $entry->id, 
+                      'name' => 'btn-submit-change' . $shift->id,
+                      'id' => 'btn-submit-changes' . $shift->id, 
                       'class' => 'btn btn-small btn-success hide')) }}
 
-@if( is_null($entry->getPerson) )
+@if( is_null($shift->getPerson) )
 
-    <i class="fa fa-circle-o"
+    <i class="fa fa-question" 
        name="status-icon"
        style="color:lightgrey;"
        data-toggle="tooltip"
@@ -18,45 +18,45 @@
 
 @else
 
-    @if     ( $entry->getPerson->prsn_status === 'candidate' )
+    @if     ( $shift->getPerson->prsn_status === 'candidate' )
         <i class="fa fa-adjust"
            name="status-icon"
            style="color:yellowgreen;"
            data-toggle="tooltip"
            data-placement="top"
            title="{{ trans('mainLang.candidate') }}"></i>
-    @elseif ( $entry->getPerson->prsn_status === 'veteran' )
+    @elseif ( $shift->getPerson->prsn_status === 'veteran' )
         <i class="fa fa-star"
            name="status-icon"
            style="color:gold;"
            data-toggle="tooltip"
            data-placement="top"
            title="{{ trans('mainLang.veteran') }}"></i>
-    @elseif ( $entry->getPerson->prsn_status === 'member')
+    @elseif ( $shift->getPerson->prsn_status === 'member')
         <i class="fa fa-circle"
            name="status-icon"
            style="color:forestgreen;"
            data-toggle="tooltip"
            data-placement="top"
            title="{{ trans('mainLang.active') }}"></i>
-    @elseif ( $entry->getPerson->prsn_status === 'resigned' )
+    @elseif ( $shift->getPerson->prsn_status === 'resigned' )
         <i class="fa fa-star-o"
            name="status-icon"
            style="color:gold;"
            data-toggle="tooltip"
            data-placement="top"
            title="{{ trans('mainLang.ex-member') }}"></i>
-    @elseif ( $entry->getPerson->prsn_status === 'guest' )
-        <i class="fa fa-circle"
+    @elseif ( $shift->getPerson->prsn_status === 'guest' )
+        <i class="fa fa-times-circle-o" 
            name="status-icon"
-           style="color:lightgrey;"
+           style="color:yellowgreen;" 
            data-toggle="tooltip"
            data-placement="top"
            title="{{ trans('mainLang.ex-candidate') }}"></i>
-    @elseif ( empty($entry->getPerson->prsn_status) )
-        <i class="fa fa-circle"
+    @elseif ( empty($shift->getPerson->prsn_status) )
+        <i class="fa fa-circle-o" 
            name="status-icon"
-           style="color:lightgrey;"
+           style="color:yellowgreen;" 
            data-toggle="tooltip"
            data-placement="top"
            title="{{ trans('mainLang.external') }}"></i>

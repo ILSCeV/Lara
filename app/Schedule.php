@@ -48,30 +48,19 @@ class Schedule extends Model
         return $this->belongsTo('Lara\ClubEvent', 'evnt_id', 'id');
     }
 
-	/**
-	 * Get the corresponding schedule entries.
-	 * Looks up in table schedule_entries for those entries, which has the same schdl_id like id of schedule instance.
-	 *
-	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasMany of type ScheduleEntry
-	 */	
-	public function getEntries() {
-		return $this->hasMany('Lara\ScheduleEntry', 'schdl_id', 'id');
-	}	
+	public function shifts() {
+	    return $this->hasMany('Lara\Shift', 'schedule_id', 'id');
+    }
 	
 	/**
-	* Get names of jobtypes, which belongs to the schedule.
+	* Get names of shifttypes, which belongs to the schedule.
 	*
-	* @return string[] $jobNames
+	* @return string[] $shiftType titles
 	*/
 	public function getTemplateEntries() 
 	{
-		$jobNames = new Collection;
-		
-		$entries = $this->getEntries()->get();
-		foreach($entries as $entry)
-		{
-			$jobNames->add($entry->getJobType->jbtyp_title);
-		}
-		return $jobNames;
-	}	
+        return $this->shifts->map(function($shift) {
+		    return $shift->type->jbtyp_title;
+        });
+	}
 }

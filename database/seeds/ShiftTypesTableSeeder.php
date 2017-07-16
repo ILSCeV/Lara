@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class JobtypesTableSeeder extends Seeder
+class ShiftTypesTableSeeder extends Seeder
 {
 
     /**
@@ -12,8 +12,8 @@ class JobtypesTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('jobtypes')->delete();
+        \DB::table('shifttypes')->delete();
 
-        factory(Lara\Jobtype::class, 20)->create();
+        factory(Lara\ShiftType::class, 20)->create();
     }
 }

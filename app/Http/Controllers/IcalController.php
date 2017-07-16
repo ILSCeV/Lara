@@ -15,7 +15,7 @@ use Eluceo\iCal\Component\Timezone;
 use Lara\ClubEvent;
 use Lara\Person;
 use Lara\Place;
-use Lara\ScheduleEntry;
+use Lara\Shift;
 use Lara\Settings;
 use Lara\Utilities;
 use Log;
@@ -230,8 +230,8 @@ class IcalController extends Controller
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
             
-            $events = ScheduleEntry::where('prsn_id', '=', $person->id)
-                ->with("schedule", "schedule.event.place", "schedule.event", "jobType")
+            $events = Shift::where('person_id', '=', $person->id)
+                ->with("schedule", "schedule.event.place", "schedule.event", "type")
                 ->get();
             
             $vEvents = $events->map(function ($evt) use ($alarm) {
@@ -239,15 +239,15 @@ class IcalController extends Controller
                 
                 $start_time = "";
                 $preparationNeeded = false;
-                if ($schedule->event->evnt_time_start == $evt->entry_time_start) {
+                if ($schedule->event->evnt_time_start == $evt->start) {
                     $start_time = $schedule->schdl_time_preparation_start;
                     $preparationNeeded = true;
                 } else {
-                    $start_time = $evt->entry_time_start;
+                    $start_time = $evt->start;
                     $preparationNeeded = false;
                 }
                 
-                $stopHour = intval(substr($evt->entry_time_end, 0, 2));
+                $stopHour = intval(substr($evt->end, 0, 2));
                 $stop_date = "";
                 if ($stopHour > 18) {
                     $stop_date = $schedule->event->evnt_date_start;
@@ -260,12 +260,12 @@ class IcalController extends Controller
                 $start_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT,
                     "".$schedule->event->evnt_date_start." ".$start_time);
                 $stop_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT,
-                    "".$stop_date." ".$evt->entry_time_end);
+                    "".$stop_date." ".$evt->end);
                 
                 if ($start_date_time != false && $stop_date_time != false) {
                     $vEvent->setDtStart($start_date_time);
                     $vEvent->setDtEnd($stop_date_time);
-                    $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->jobType->jbtyp_title));
+                    $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->type->title()));
                     
                     $eventLink = "".URL::route('event.show', $schedule->event->id);
                     $eventTimeStart = substr($schedule->event->evnt_time_start, 0, 5);
@@ -281,8 +281,8 @@ class IcalController extends Controller
                         .trans('mainLang.end').": ".$eventTimeEnd."\n"
                         .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
                         ."\n"
-                        .trans('mainLang.shift').": ".$evt->jobtype->jbtyp_title."\n"
-                        .trans('mainLang.shiftTime').": ".substr($evt->entry_time_start, 0, 5)." - ".substr($evt->entry_time_end, 0, 5)."\n"
+                        .trans('mainLang.shift').": ".$evt->type->title()."\n"
+                        .trans('mainLang.shiftTime').": ".substr($evt->start, 0, 5)." - ".substr($evt->end, 0, 5)."\n"
                         ."\n"
                         ."---\n"
                         ."\n"
@@ -302,7 +302,7 @@ class IcalController extends Controller
                     if ($alarm > 0 && ($start_date_time > new \DateTime())) {
                         $vAlarm = new Alarm();
                         $vAlarm->setAction(Alarm::ACTION_DISPLAY);
-                        $vAlarm->setDescription($schedule->event->evnt_title." - ".($evt->jobType->jbtyp_title));
+                        $vAlarm->setDescription($schedule->event->evnt_title." - ".($evt->type->title()));
                         $vAlarm->setTrigger("-PT".$alarm."M");
                         $vEvent->addComponent($vAlarm);
                     }

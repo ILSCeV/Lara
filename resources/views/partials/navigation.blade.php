@@ -16,7 +16,7 @@
         <a class="navbar-brand" href="{{ asset('/') }}">
             @if (App::environment('development'))
                 <img id="nav-logo-field" src="{{  asset('/logos/lara-logo-dev.png') }}" alt="LARA dev">
-            @elseif (App::environment('beta'))
+            @elseif (App::environment('berta'))
                 <img id="nav-logo-field" src="{{  asset('/logos/lara-logo-berta.png') }}" alt="BERTA">
             @else
                <img id="nav-logo-field" src="{{  asset('/logos/lara-logo-prod.png') }}" alt="LARA">
@@ -52,7 +52,7 @@
                 @if(Session::get('userGroup') == 'marketing'
                  OR Session::get('userGroup') == 'clubleitung'
                  OR Session::get('userGroup') == 'admin')
-                    <li><a href="{{ asset('jobtype') }}">{{ trans('mainLang.manageJobType') }}</a></li>
+                    <li><a href="{{ asset('shiftType') }}">{{ trans('mainLang.manageShiftType') }}</a></li>
                 @endif
 
 
