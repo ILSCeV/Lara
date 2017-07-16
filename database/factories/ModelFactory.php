@@ -92,7 +92,7 @@ $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
         'evnt_title' => $faker->word(),
         'evnt_subtitle' => $faker->word(),
         'plc_id' => Lara\Section::inRandomOrder()->first()->id,
-        'evnt_show_to_club' => json_encode($faker->randomElements(['bc-Club', 'bc-Café'], $faker->numberBetween(1,2))),
+        'evnt_show_to_club' => json_encode($faker->randomElements(Lara\Section::all()->pluck('title')->toArray(), $faker->numberBetween(1,2))),
         'evnt_date_start' => $start->format('Y-m-d'),
         'evnt_date_end' => $end->format('Y-m-d'),
         'evnt_time_start' => $start->format('H:i'),
