@@ -1,19 +1,20 @@
+import * as $ from "jquery"
+import { translate } from "./Translate"
+import "isotope-layout"
+import * as Isotope  from "../../../node_modules/isotope-layout/js/isotope.js"
+import * as bootbox from "bootbox"
+
+const jQuery = $;
 /////////////
 // Filters //
 /////////////
 
 
-
-$( document ).ready( function() {
-
-
+$(function() {
     //////////////////////////////////////////////////////
     // Month view without Isotope, section filters only //
     //////////////////////////////////////////////////////
-    
-
-
-    if ($('#month-view-marker').length) 
+    if ($('#month-view-marker').length)
     {
         // Apply filters from local storage on page load
 
@@ -24,7 +25,7 @@ $( document ).ready( function() {
         var sections = [];
         $.each($('.section-filter-selector'), function(){ sections.push($(this).prop('id')); });
 
-        for (i = 0; i < sections.length; ++i ) 
+        for (let i = 0; i < sections.length; ++i )
         {
             // if "hide": filter exists and set to "hide" - no action needed
             // if "show": filter exists and set to "show" - show events, highlight button
@@ -62,9 +63,9 @@ $( document ).ready( function() {
                 $('.section-filter').hide();
                 
                 // go through local storage
-                for (i = 0; i < window.localStorage.length; i++) 
+                for ( let i = 0; i < window.localStorage.length; i++)
                 {
-                    key = window.localStorage.key(i);
+                    var key = window.localStorage.key(i);
 
                     // look for all entries starting with "filter-" prefix
                     if (key.slice(0,7) === "filter-") 
@@ -94,10 +95,12 @@ $( document ).ready( function() {
                 $("."+filterValue).show(); 
             }
         });
-    } 
-    else    
-    {
-
+    }
+})
+$(() => {
+    const isWeekView = $('.isotope').length > 0;
+    if (isWeekView) {
+        const isotope = new Isotope('.isotope');
 
         /////////////////////////////////////////////////////////
         // Week view with Isotope, section and feature filters //
@@ -106,30 +109,26 @@ $( document ).ready( function() {
 
 
         // init Isotope
-        var $container = $('.isotope').isotope(
-        {
+        isotope.arrange({
             itemSelector: '.element-item',
             layoutMode: 'masonry',
-            masonry: 
-            {
-                columnWidth: '.grid-sizer'
-            },
-            getSortData: 
-            {
-                name: '.name',
-                symbol: '.symbol',
-                number: '.number parseInt',
-                category: '[data-category]',
-                weight: function( itemElem ) 
+            masonry:
                 {
-                    var weight = $( itemElem ).find('.weight').text();
-                    return parseFloat( weight.replace( /[\(\)]/g, '') );
+                    columnWidth: '.grid-sizer'
+                },
+            getSortData:
+                {
+                    name: '.name',
+                    symbol: '.symbol',
+                    number: '.number parseInt',
+                    category: '[data-category]',
+                    weight: function( itemElem )
+                    {
+                        var weight = $( itemElem ).find('.weight').text();
+                        return parseFloat( weight.replace( /[\(\)]/g, '') );
+                    }
                 }
-            }   
         });
-
-
-
 
         /////////////////////
         // Section filters //
@@ -140,87 +139,87 @@ $( document ).ready( function() {
         // Apply filters from local storage on page load
 
         // first hide all sections
-        $('.section-filter').hide(); 
+        $('.section-filter').hide();
 
         // get all sections from buttons we created while rendering on the backend side
         var sections = [];
         $.each($('.section-filter-selector'), function(){ sections.push($(this).prop('id')); });
 
-        for (i = 0; i < sections.length; ++i ) 
+        for (var i = 0; i < sections.length; ++i )
         {
             // if "hide": filter exists and set to "hide" - no action needed
             // if "show": filter exists and set to "show" - show events, highlight button
             // if "null": filter doesn't exist - default to "show"
-            if ( localStorage.getItem(sections[i]) !== "hide" ) 
-            {   
+            if ( localStorage.getItem(sections[i]) !== "hide" )
+            {
                 // save section filter value
                 if(typeof(Storage) !== "undefined") { localStorage.setItem(sections[i], "show"); };
 
                 // show events from this section in view
                 $("."+sections[i].slice(7)).show();
-                $('.isotope').isotope('layout');
+                isotope.layout();
 
                 // set filter buttons to the saved state
                 $('#'+sections[i]).addClass('btn-primary');
-            } 
+            }
         }
-        
+
 
         // Filter buttons action
-        $('#section-filter').on( 'click', 'button', function() 
+        $('#section-filter').on( 'click', 'button', function()
         {
             // save current filter intent
             var filterValue = $( this ).attr('data-filter');
 
-            if ( $(this).hasClass('btn-primary') ) 
+            if ( $(this).hasClass('btn-primary') )
             {   // case 1: this section was shown, intent to hide
-                
+
                 // deactivate button
                 $(this).removeClass('btn-primary');
 
                 // save choice to local storage
                 if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'hide'); }
-                
+
                 // First hide all
                 $('.section-filter').hide();
-                
+
                 // go through local storage
-                for (i = 0; i < window.localStorage.length; i++) 
+                for (var i = 0; i < window.localStorage.length; i++)
                 {
-                    key = window.localStorage.key(i);
+                    var key = window.localStorage.key(i);
 
                     // look for all entries starting with "filter-" prefix
-                    if (key.slice(0,7) === "filter-") 
+                    if (key.slice(0,7) === "filter-")
                     {
                         // find what should be revealed
-                        if (window.localStorage.getItem(key) == "show") 
-                        { 
+                        if (window.localStorage.getItem(key) == "show")
+                        {
                             // show events
-                            $("."+key.slice(7)).show(); 
+                            $("."+key.slice(7)).show();
 
                             // set filter buttons to the saved state
                             $('#filter-'+key.slice(7)).addClass('btn-primary');
-                        };             
+                        };
                     }
                 }
-                $('.isotope').isotope('layout'); 
-            } 
-            else 
+                isotope.layout();
+            }
+            else
             {   //case 2: this section was hidden, intent to show
-                
+
                 // reactivate button
                 $(this).addClass('btn-primary');
 
                 // save choice to local storage
                 if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'show'); }
-                
+
                 // show events from this section in view
                 $("."+filterValue).show();
-                $('.isotope').isotope('layout');
+                isotope.layout();
             }
         });
 
-     
+
 
         /////////////////////
         // Feature filters //
@@ -238,20 +237,19 @@ $( document ).ready( function() {
         $('#toggle-shift-time').text(translate('shiftTime'));
 
         // Apply saved preferences from local storage on pageload
-        if(typeof(Storage) !== "undefined") 
+        if(typeof(Storage) !== "undefined")
         {
-            if (localStorage.shiftTime == "show") 
-            {   
-                $('.shift-time').removeClass("hide"); 
+            if (localStorage.getItem("shiftTime") == "show")
+            {
+                $('.entry-time').removeClass("hide");
                 $('#toggle-shift-time').addClass("btn-primary");
-                $('.isotope').isotope('layout');
-            } 
-            else if (localStorage.shiftTime == "hide") 
+            }
+            else if (localStorage.getItem("shiftTime") == "hide")
             {
                 $('.shift-time').addClass("hide");
                 $('#toggle-shift-time').removeClass("btn-primary");
-                $('.isotope').isotope('layout');                  
-            }      
+            }
+            isotope.layout();
         };
 
         // Filter buttons action
@@ -260,23 +258,27 @@ $( document ).ready( function() {
             if ($('.shift-time').is(":visible"))    // times are shown, intent to hide
             {
                 // save selection in local storage
-                if(typeof(Storage) !== "undefined") { localStorage.shiftTime = "hide"; }
+                if(typeof(Storage) !== "undefined") {
+                    localStorage.setItem("shiftTime", "hide");
+                }
 
                 // change state, change button
-                $('.shift-time').addClass("hide"); 
+                $('.shift-time').addClass("hide");
                 $('#toggle-shift-time').removeClass("btn-primary");
-                $('.isotope').isotope('layout');
+                isotope.layout();
             }
             else    // times are hidden, intent to show
             {
                 // save selection in local storage
-                if(typeof(Storage) !== "undefined") { localStorage.shiftTime = "show"; }
+                if(typeof(Storage) !== "undefined") {
+                    localStorage.setItem("shiftTime", "show");
+                }
 
                 // change state, change button
                 $('.shift-time').removeClass("hide");
                 $('#toggle-shift-time').addClass("btn-primary");
-                $('.isotope').isotope('layout');
-            };        
+                isotope.layout();
+            };
         });
 
 
@@ -290,45 +292,49 @@ $( document ).ready( function() {
         $('#toggle-taken-shifts').text(translate("onlyEmpty"));
 
         // Apply saved preferences from local storage on pageload
-        if(typeof(Storage) !== "undefined") 
+        if(typeof(Storage) !== "undefined")
         {
-            if (localStorage.onlyEmptyShifts == "true") 
-            {   
+            if (localStorage.getItem("onlyEmptyShifts") === "true")
+            {
                 $('div.green').closest('.row').addClass('hide');
                 $('#toggle-taken-shifts').addClass("btn-primary");
-                $('.isotope').isotope('layout');
-            } 
-            else if (localStorage.onlyEmptyShifts == "false") 
+                isotope.layout();
+            }
+            else if (localStorage.getItem("onlyEmptyShifts") == "false")
             {
                 $('div.green').closest('.row').removeClass('hide');
                 $('#toggle-taken-shifts').removeClass("btn-primary");
-                $('.isotope').isotope('layout');                  
-            }      
+                isotope.layout();
+            }
         };
 
         // Filter buttons action
-        $('#toggle-taken-shifts').click(function(e) 
-        { 
+        $('#toggle-taken-shifts').click(function(e)
+        {
             if ($('div.green').closest('.row').is(":visible"))    // all shifts are shown, intent to hide full shifts
             {
                 // save selection in local storage
-                if(typeof(Storage) !== "undefined") { localStorage.onlyEmptyShifts = "true"; }
+                if(typeof(Storage) !== "undefined") {
+                    localStorage.setItem("onlyEmptyShifts", "true");
+                }
 
                 // change state, change button
-                $('div.green').closest('.row').addClass('hide'); 
+                $('div.green').closest('.row').addClass('hide');
                 $('#toggle-taken-shifts').addClass("btn-primary");
-                $('.isotope').isotope('layout');
+                isotope.layout();
             }
             else    // only empty shifts shown, intent to show all shifts
             {
                 // save selection in local storage
-                if(typeof(Storage) !== "undefined") { localStorage.onlyEmptyShifts = "false"; }
+                if(typeof(Storage) !== "undefined") {
+                    localStorage.setItem("onlyEmptyShifts", "false");
+                }
 
                 // change state, change button
                 $('div.green').closest('.row').removeClass('hide');
                 $('#toggle-taken-shifts').removeClass("btn-primary");
-                $('.isotope').isotope('layout');
-            };        
+                isotope.layout();
+            };
         });
 
 
@@ -338,51 +344,53 @@ $( document ).ready( function() {
         ////////////////////////////
 
 
-        
+
 
         // Constraint: limits usage of this filter to week view only
-        if ($('#week-view-marker').length) 
+        if ($('#week-view-marker').length)
         {
             // Apply saved preferences from local storage on pageload
-            if(typeof(Storage) !== "undefined") 
+            if(typeof(Storage) !== "undefined")
             {
-                if (localStorage.allComments == "show") 
-                {   
-                    $('[name^=comment]').removeClass("hide"); 
+                if (localStorage.getItem("allComments") == "show")
+                {
+                    $('[name^=comment]').removeClass("hide");
                     $('#toggle-all-comments').addClass("btn-primary");
-                    $('.isotope').isotope('layout');
-                } 
-                else if (localStorage.allComments == "hide") 
+                    isotope.layout();
+                }
+                else if (localStorage.getItem("allComments") == "hide")
                 {
                     $('[name^=comment]').addClass("hide");
                     $('#toggle-all-comments').removeClass("btn-primary");
-                    $('.isotope').isotope('layout');                  
-                }      
+                    isotope.layout();
+                }
             };
 
             // Filter buttons action
-            $('#toggle-all-comments').click(function(e) 
-            { 
+            $('#toggle-all-comments').click(function(e)
+            {
                 if ($('[name^=comment]').is(":visible"))    // comments are shown, intent to hide
                 {
                     // save selection in local storage
-                    if(typeof(Storage) !== "undefined") { localStorage.allComments = "hide"; }
+                    if(typeof(Storage) !== "undefined") {
+                        localStorage.setItem("allComments", "hide");
+                    }
 
                     // change state, change button
-                    $('[name^=comment]').addClass("hide"); 
+                    $('[name^=comment]').addClass("hide");
                     $('#toggle-all-comments').removeClass("btn-primary");
-                    $('.isotope').isotope('layout');
+                    isotope.layout();
                 }
                 else    // comments are hidden, intent to show
                 {
                     // save selection in local storage
-                    if(typeof(Storage) !== "undefined") { localStorage.allComments = "show"; }
+                    if(typeof(Storage) !== "undefined") { localStorage.setItem("allComments", "show"); }
 
                     // change state, change button
                     $('[name^=comment]').removeClass("hide");
                     $('#toggle-all-comments').addClass("btn-primary");
-                    $('.isotope').isotope('layout');
-                };        
+                    isotope.layout();
+                };
             });
         };
 
@@ -398,9 +406,9 @@ $( document ).ready( function() {
         var weekWedTue = translate('wednesdayToTuesday');
 
         // Apply saved preferences from local storage on pageload
-        if(typeof(Storage) !== "undefined") 
+        if(typeof(Storage) !== "undefined")
         {
-            if (localStorage.weekStart === "wednesday") 
+            if (localStorage.getItem("weekStart") === "wednesday")
             {
                 // apply transformation, value already saved in storage
                 $('.week-mo-so').addClass('hide');
@@ -408,12 +416,12 @@ $( document ).ready( function() {
                 $('#toggle-week-start').removeClass("btn-primary");
                 $('#toggle-week-start').addClass("btn-success");
                 $('#toggle-week-start').text(weekWedTue);
-                $('.isotope').isotope('layout');                  
-            } 
+                isotope.layout();
+            }
             else // default to localStorage.weekStart == "monday" and save to storage
             {
                 // save or update selection in local storage
-                localStorage.weekStart = "monday";
+                localStorage.setItem("weekStart", "monday");
 
                 // apply transformation
                 $('.week-mo-so').removeClass('hide');
@@ -421,17 +429,17 @@ $( document ).ready( function() {
                 $('#toggle-week-start').addClass("btn-primary");
                 $('#toggle-week-start').removeClass("btn-success");
                 $('#toggle-week-start').text(weekMonSun);
-                $('.isotope').isotope('layout');
-            }     
+                isotope.layout();
+            }
         };
 
         // Filter buttons action
-        $('#toggle-week-start').click(function(e) 
-        { 
-            if (localStorage.weekStart === "monday")    // week starts monday, intent to start on wednesday
+        $('#toggle-week-start').click(function(e)
+        {
+            if (localStorage.getItem("weekStart") === "monday")    // week starts monday, intent to start on wednesday
             {
                 // save selection in local storage
-                if(typeof(Storage) !== "undefined") { localStorage.weekStart = "wednesday"; }
+                if(typeof(Storage) !== "undefined") { localStorage.setItem("weekStart", "wednesday"); }
 
                 // change state, change button
                 $('.week-mo-so').addClass('hide');
@@ -439,24 +447,48 @@ $( document ).ready( function() {
                 $('#toggle-week-start').removeClass("btn-primary");
                 $('#toggle-week-start').addClass("btn-success");
                 $('#toggle-week-start').text(weekWedTue);
-                $('.isotope').isotope('layout');
+                isotope.layout();
             }
             else    // localStorage.weekStart == "wednesday" -> week starts on wednesday, intent to start on monday
             {
                 // save selection in local storage
-                if(typeof(Storage) !== "undefined") { localStorage.weekStart = "monday"; }
+                if(typeof(Storage) !== "undefined") { localStorage.setItem("weekStart", "monday"); }
 
                 // change state, change button
                 $('.week-mo-so').removeClass('hide');
                 $('.week-mi-di').addClass('hide');
-                $('#toggle-week-start').addClass("btn-primary");
-                $('#toggle-week-start').removeClass("btn-success");
-                $('#toggle-week-start').text(weekMonSun);
-                $('.isotope').isotope('layout');
-            };        
+                $('#toggle-week-start')
+                    .addClass("btn-primary")
+                    .removeClass("btn-success")
+                    .text(weekMonSun);
+                isotope.layout();
+            };
         });
 
-    };
+        // Show/hide comments
+        $('.showhide').click(function(e) {
+            if ($(this).parent().next('[name^=comment]').is(":visible"))
+            {
+                // comment is shown, intent to hide
+                $(this).parent().next('[name^=comment]').addClass("hide");
+            }
+            else
+            {
+                // comment is hidden, intent to show
+                $(this).parent().next('[name^=comment]').removeClass("hide");
+            };
+            isotope.layout();
+        });
+
+        // button to remove events from week view - mostly for printing
+        $(function(){
+            $('.hide-event').click(function(e) {
+                // change state, change button
+                $(this).parent().parent().parent().parent().parent().addClass('hide');
+                isotope.layout();
+            });
+        });
+    }
 });
 
 
@@ -638,35 +670,6 @@ $(function(){
 
 
 
-// Show/hide comments
-$('.showhide').click(function(e) {
-    if ($(this).parent().next('[name^=comment]').is(":visible"))    
-    {
-        // comment is shown, intent to hide
-        $(this).parent().next('[name^=comment]').addClass("hide");
-    }
-    else
-    {
-        // comment is hidden, intent to show
-        $(this).parent().next('[name^=comment]').removeClass("hide");
-    };   
-    $('.isotope').isotope('layout');     
-});
-
-
-
-
-
-
-
-// button to remove events from week view - mostly for printing
-$(function(){
-    $('.hide-event').click(function(e) {
-        // change state, change button
-        $(this).parent().parent().parent().parent().parent().addClass('hide');
-        $('.isotope').isotope('layout')       
-    });
-});
 
 
 
@@ -700,7 +703,7 @@ $(document).ready(function() {
     });
 
     // populate from dropdown select
-    $.fn.dropdownSelect = function(shiftType, timeStart, timeEnd, weight) {
+    (<any>$.fn).dropdownSelect = function(shiftType, timeStart, timeEnd, weight) {
         
         $(this).closest('.box').find("[name^=jbtyp_title]").val(shiftType);
         $(this).closest('.box').find("[name^=jbtyp_time_start]").val(timeStart);
@@ -724,14 +727,15 @@ $(document).ready(function() {
 
 
 
+    declare var chosenPerson;
+    declare var chosenMonth, chosenYear;
     $('[name^=show-stats-person]').click(function() {
 
         // Initialise modal and show loading icon and message
-        var dialog = bootbox.dialog({
+        var dialog = <any> bootbox.dialog({
             title: translate('listOfShiftsDone') + chosenPerson,
             size: 'large',
-            message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
-            onEscape: function() {}
+            message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>'
         });
 
        
@@ -785,7 +789,7 @@ $(document).ready(function() {
         }
 
         // AJAX Request shifts for a person selected
-        $.ajax({  
+        $.ajax({
             type: $( this ).prop( 'method' ),  
 
             url: "/statistics/person/" + $(this).prop("id"),  
@@ -1056,7 +1060,7 @@ jQuery( document ).ready( function( $ ) {
         }
 
         // short delay to prevents double sending
-        $(this).delay('250');
+        $(this).delay(250);
 
         // Request autocompleted names
         $.ajax({  
@@ -1146,7 +1150,7 @@ jQuery( document ).ready( function( $ ) {
         }
 
         // short delay to prevents double sending
-        $(this).delay('250');
+        $(this).delay(250);
 
         // Request autocompleted names
         $.ajax({  
@@ -1210,19 +1214,19 @@ jQuery( document ).ready( function( $ ) {
                 // add found shiftTypes and metadata to the dropdown
                 $(document.activeElement).next('.dropdown-shiftTypes').append(
                     '<li><a href="javascript:void(0);">' 
-                    + '<span id="shiftTypeTitle">' 
-                    + data.title 
+                    + '<span id="shiftTypeTitle">'
+                    + data.jbtyp_title 
                     + '</span>'
                     + ' (<i class="fa fa-clock-o"></i> '
                     + '<span id="shiftTypeTimeStart">'
-                    + data.start
+                    + data.jbtyp_time_start
                     + '</span>'
                     + '-'
                     + '<span id="shiftTypeTimeEnd">'
-                    + data.end
+                    + data.jbtyp_time_end
                     + '</span>'
                     + '<span id="shiftTypeWeight" class="hidden">'
-                    + data.statistical_weight
+                    + data.jbtyp_statistical_weight
                     + '</span>'
                     + ')' 
                     + '</a></li>');
@@ -1252,13 +1256,13 @@ jQuery( document ).ready( function( $ ) {
         }
 
         // short delay to prevents double sending
-        $(this).delay('250');
+        $(this).delay(250);
 
         // Request autocompleted names
         $.ajax({  
             type: $( this ).prop( 'method' ),  
 
-            url: "/shiftTypes/" + $(this).val(),  
+            url: "/shiftTypes/" + $(this).val(),
 
             data: {
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
@@ -1288,7 +1292,7 @@ jQuery( document ).ready( function( $ ) {
         {
             var password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );      
         } else {
-            var password = $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
+            var password = <string> $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
         }
 
         // necessary for the ajax callbacks
@@ -1462,7 +1466,7 @@ jQuery( document ).ready( function( $ ) {
                 // refresh the page to get the delete button or show remaining shiftTypes
                 if ($("#events-rows").children("tr:visible").length <= 1) {
                     // we remove arguments after "?" because otherwise user could land on a pagination page that is already empty
-                    window.location = window.location.href.split("?")[0];
+                    (<any>window).location = window.location.href.split("?")[0];
                 }
                 
             },
@@ -1538,7 +1542,7 @@ Examples :
         },
 
         verifyConfirm: function(link) {
-            var confirm = new $.Deferred();
+            var confirm = $.Deferred();
             bootbox.confirm(link.data('confirm'), function(result){
                 if (result) {
                     confirm.resolve(link);

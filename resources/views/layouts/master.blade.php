@@ -13,7 +13,7 @@
         <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/font-awesome.min.css') }}" />
         <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/vedst.css') }}" />
         <link rel="stylesheet" media="print" type="text/css" href="{{ asset('/css/print.css') }}" />
-        <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ mix('/app.css') }}">
     	<link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-48x48.png') }}">
 
         @yield('moreStylesheets')
@@ -65,10 +65,9 @@
             <br>
         </div>
 	</footer>
-<script>
-    var enviroment = '{{App::environment()}}';
-</script>
-    <script src="{{ mix('js/app.js') }}"></script>
-	@yield('moreScripts')
-  </body>
+        <script> var enviroment = '{{App::environment()}}'; </script>
+        <script src="{{ mix('/manifest.js') }}"></script>
+        <script src="{{ mix('/vendor.js') }}"></script>
+        <script src="{{ mix('/lara.js') }}"></script>
+    </body>
 </html>

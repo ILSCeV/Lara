@@ -1,3 +1,8 @@
+import * as $ from "jquery"
+import { translate } from "./Translate"
+import * as bootbox from "bootbox"
+
+
 /**
  * Created by fabian on 28.04.17.
  */

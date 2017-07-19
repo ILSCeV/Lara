@@ -1,3 +1,7 @@
+import * as $ from "jquery"
+import * as bootbox from "bootbox"
+
+const jQuery = $;
 /*
     Scripts for surveyView
     Reaction to click on edit delete buttons
@@ -7,7 +11,7 @@ function getPasswordField() {
 }
 
 function promptForPassword() {
-    return new Promise(function(resolve, reject) {
+    return new Promise<string>(function(resolve, reject) {
         bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
             if (password) {
                 resolve(password);
@@ -98,7 +102,7 @@ $(".deleteRow").click(function () {
         }).then(doDeletion);
     }
     else {
-        confirmDeletion().then(doDeletion());
+        confirmDeletion().then(doDeletion);
     }
     return false;
 });
@@ -271,10 +275,8 @@ jQuery( document ).ready( function( $ ) {
 
 $(document).ready(function() {
 
-    window.onresize = resize_evaluation_heading();
-    function resize_evaluation_heading() {
+    window.onresize = () => {
         var height_evaluation = $('#evaluation').height();
-
         $(document).find('.evaluation_heading').attr('style', 'height:'+height_evaluation+'px;');
     }
 });
@@ -385,23 +387,23 @@ jQuery( document ).ready( function( $ ) {
 
                     if ($(this).attr('id') == 'radio' + column_counter + '-' + counter_ajax) {
                         if ($(this).find('input:checked').val() == 1) {
-                            var newContent = "Ja";
+                            var newContent = "Ja" as any;
                             $(this).text(newContent);
                         }
 
                         if ($(this).find('input:checked').val() == 0) {
-                            var newContent = "Nein";
+                            var newContent = "Nein" as any;
                             $(this).text(newContent);
                         }
 
                         if ($(this).find('input:checked').val() == -1) {
-                            var newContent = "keine Angabe";
+                            var newContent = "keine Angabe" as any;
                             $(this).text(newContent);
                         }
                     }
 
                     if ($(this).attr('id') == 'dropdown') {
-                        var skillsSelect = document.getElementById("" + column_counter);
+                        var skillsSelect = document.getElementById("" + column_counter) as any;
                         var newContent = skillsSelect.options[skillsSelect.selectedIndex].text;
                         $(this).text(newContent);
                     }
@@ -600,7 +602,7 @@ jQuery( document ).ready( function( $ ) {
                     $('#options' + i).find('option').each(function () {
 
                         var new_option = document.createElement("option");
-                        var options = document.createTextNode(document.getElementById('options' + i).options[x].innerHTML);
+                        var options = document.createTextNode((document.getElementById('options' + i) as any).options[x].innerHTML);
                         new_option.appendChild(options);
                         var dropdown = document.getElementById(""+i);
                         dropdown.appendChild(new_option);
@@ -609,17 +611,12 @@ jQuery( document ).ready( function( $ ) {
                     });
 
                     //Get select object
-                    var objSelect = document.getElementById(""+i);
+                    var objSelect = document.getElementById(""+i) as any;
 
                     //Set selected
-                    setSelectedValue(objSelect, selected_answer_dropdown);
-
-                    function setSelectedValue(selectObj, valueToSet) {
-                        for (var i = 0; i < selectObj.options.length; i++) {
-                            if (selectObj.options[i].text== valueToSet) {
-                                selectObj.options[i].selected = true;
-                                return;
-                            }
+                    for (var i = 0; i < objSelect.options.length; i++) {
+                        if (objSelect.options[i].text == selected_answer_dropdown) {
+                            objSelect.options[i].selected = true;
                         }
                     }
                 }
@@ -648,9 +645,9 @@ jQuery( document ).ready( function( $ ) {
                         new_radio.setAttribute('data-id', 'radio' + i + '-' + radio_counter);
                         new_radio.setAttribute('id', '' + i);
                         new_radio.setAttribute('name', 'answers[' + question_counter + ']-edit');
-                        var radio_text = document.createTextNode(document.getElementById('radio' + i + '-' + y).value);
+                        var radio_text = document.createTextNode((document.getElementById('radio' + i + '-' + y) as any).value);
 
-                        new_radio.setAttribute('value', document.getElementById('radio' + i + '-' + y).value);
+                        new_radio.setAttribute('value', (document.getElementById('radio' + i + '-' + y) as any).value);
                         new_radio.appendChild(radio_text);
                         var radio = document.getElementById('radio'+i+ '-' + answer_number);
                         radio.appendChild(new_radio);
@@ -688,14 +685,14 @@ jQuery( document ).ready( function( $ ) {
                 }
 
                 if ($(this).attr('id') == 'radio' + question_counter + '-' + answer_number) {
-                    if ($(this).find('input:checked').after().val() == 1) {
-                        var answers = "Ja";
+                    if ($(this).find('input:checked').after([]).val() == 1) {
+                        var answers = "Ja" as any;
                     }
-                    if ($(this).find('input:checked').after().val() == 0) {
-                        var answers = "Nein";
+                    if ($(this).find('input:checked').after([]).val() == 0) {
+                        var answers = "Nein" as any;
                     }
-                    if ($(this).find('input:checked').after().val() == -1) {
-                        var answers = "keine Angabe";
+                    if ($(this).find('input:checked').after([]).val() == -1) {
+                        var answers = "keine Angabe" as any;
                     }
 
                     oldContent.push(answers);
@@ -722,7 +719,7 @@ jQuery( document ).ready( function( $ ) {
 // handles expandable table-rows (for exampled in surveyView change-history)
 function toggle(row, rowCount) {
     // change arrow icon
-    arrowIcon = document.getElementById("arrow-icon"+row);
+    var arrowIcon = document.getElementById("arrow-icon"+row);
     if(arrowIcon.className == "fa fa-caret-right"){
         // if table is fold
         arrowIcon.className = "fa fa-sort-desc";
@@ -731,8 +728,8 @@ function toggle(row, rowCount) {
         arrowIcon.className = "fa fa-caret-right";
     }
     // display columns
-    for (i=0;i<rowCount;i++) {
-        currentTr = document.getElementById("tr-data-"+row+i);
+    for (var i=0;i<rowCount;i++) {
+        var currentTr = document.getElementById("tr-data-"+row+i);
         if(currentTr.style.display == "") {
             // fold
             currentTr.style.display = "none";

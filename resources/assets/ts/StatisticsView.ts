@@ -1,3 +1,5 @@
+import * as $ from "jquery"
+
 function getRowName(a: string | HTMLElement) {
     return $(a).children("td").eq(0).text();
 }

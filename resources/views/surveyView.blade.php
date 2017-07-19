@@ -106,8 +106,6 @@ $userCanEditDueToRole
             }
     </style>
 @stop
-@section('moreScripts'){{--collection of used java script functions to clean up the code--}}
-@stop
 @section('content')
 
     <div class="panel no-padding">

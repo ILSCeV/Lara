@@ -1,3 +1,7 @@
+import * as $ from "jquery"
+import { translate } from "./Translate"
+import * as bootbox from "bootbox"
+
 $("#button-create-survey").click(() => {
     let errors = new Array<string>();
 
