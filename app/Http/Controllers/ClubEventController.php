@@ -95,7 +95,14 @@ class ClubEventController extends Controller
             $activeTemplate = $template->schdl_title;
 
             // get template data
-            $shifts     = $template->shifts()->with('type')->orderByRaw('position IS NULL, position ASC, id ASC')->get();
+            $shifts     = $template->shifts()
+                ->with('type')
+                ->orderByRaw('position IS NULL, position ASC, id ASC')
+                ->get()
+                ->map(function(Shift $shift) {
+                    // copy all except person_id and schedule_id and comment
+                    return $shift->replicate(['person_id', 'schedule_id', 'comment']);
+                });
             $title      = $template->getClubEvent->evnt_title;
             $subtitle   = $template->getClubEvent->evnt_subtitle;
             $type       = $template->getClubEvent->evnt_type;
