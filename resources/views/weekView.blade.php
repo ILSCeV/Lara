@@ -66,11 +66,6 @@
 		{{-- weekdays --}}
 		@if (count($events)>0)
 			<div class="isotope">
-				{{-- hack: empty day at the beginning,
-					 prevents isotope collapsing to a single column if the very first element is hidden
-					 by creating an invisible block and putting it out of the way via negative margin --}}
-				<div class="grid-sizer" style="margin-bottom: -34px;"></div>
-				{{-- end of hack --}}
 
 				@foreach($events as $clubEvent)
 					{{-- Filter: we add a css class later below if a club is mentioned in filter data --}}
@@ -160,22 +155,25 @@
 					@endif
 				@endforeach
 
-				@if(count($surveys)>0)
-					@foreach($surveys as $survey)
-						@if ( date('W', strtotime($survey->deadline)) === $date['week']
-			             AND  date('N', strtotime($survey->deadline)) < 3 )
-							<div class="element-item section-filter bc-Club bc-Café week-mo-so ">
-						@elseif ( date("W", strtotime($survey->deadline) ) === date("W", strtotime("next Week".$weekStart))
-			             AND      date('N', strtotime($survey->deadline)) < 3 )
-							<div class="element-item section-filter bc-Club bc-Café week-mi-di hide">
-						@else
-							<div class="element-item section-filter bc-Club bc-Café">
-						@endif
-							@include('partials.weekCellSurvey')
-						</div>
-					@endforeach
-				@endif
+                @foreach($surveys as $survey)
+                    @if ( date('W', strtotime($survey->deadline)) === $date['week']
+                     AND  date('N', strtotime($survey->deadline)) < 3 )
+                        <div class="element-item section-filter bc-Club bc-Café week-mo-so ">
+                    @elseif ( date("W", strtotime($survey->deadline) ) === date("W", strtotime("next Week".$weekStart))
+                     AND      date('N', strtotime($survey->deadline)) < 3 )
+                        <div class="element-item section-filter bc-Club bc-Café week-mi-di hide">
+                    @else
+                        <div class="element-item section-filter bc-Club bc-Café">
+                    @endif
+                        @include('partials.weekCellSurvey')
+                    </div>
+                @endforeach
 
+                    {{-- hack: empty day at the beginning,
+                         prevents isotope collapsing to a single column if the very first element is hidden
+                         by creating an invisible block and putting it out of the way via negative margin --}}
+                    <div class="grid-sizer" style="margin-bottom: -34px;"></div>
+                    {{-- end of hack --}}
 				</div>
 			</div>
 		</div>
@@ -190,11 +188,6 @@
 			</div>
 
 			<div class="isotope" style="margin: 6px;">
-				{{-- hack: empty day at the beginning,
-					 prevents isotope collapsing to a single column if the very first element is hidden
-					 by creating an invisible block and putting it out of the way via negative margin --}}
-				<div class="grid-sizer" style="margin-bottom: -34px;"></div>
-				{{-- end of hack --}}
 				@if(count($surveys)>0)
 					@foreach($surveys as $survey)
 						@if ( date('W', strtotime($survey->deadline)) === $date['week']
@@ -210,6 +203,11 @@
 						</div>
 					@endforeach
 				@endif
+                {{-- hack: empty day at the beginning,
+                     prevents isotope collapsing to a single column if the very first element is hidden
+                     by creating an invisible block and putting it out of the way via negative margin --}}
+                <div class="grid-sizer" style="margin-bottom: -34px;"></div>
+                {{-- end of hack --}}
 			</div>
 
 		@endif
