@@ -76,6 +76,10 @@ class LDAPsync extends Command
 
         foreach ($persons as $person) {
             $bar->advance();
+            // skip ldap override
+            if($person->prsn_ldap_id == '9999' ){
+                continue;
+            }
 
 // AUTHENTICATING BC-CLUB
 
