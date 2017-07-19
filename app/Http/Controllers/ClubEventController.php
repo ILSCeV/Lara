@@ -15,7 +15,7 @@ use Lara\Logging;
 use Lara\ShiftType;
 use Lara\Shift;
 use Lara\Person;
-use Lara\Place;
+use Lara\Section;
 use Lara\Schedule;
 use Lara\Utilities;
 use Log;
@@ -43,7 +43,7 @@ class ClubEventController extends Controller
      * @param  int $day
      *
      * @return view createClubEventView
-     * @return Place[] places
+     * @return Section[] sections
      * @return Schedule[] templates
      * @return shiftTypes[] shiftTypes
      * @return string $date
@@ -72,9 +72,9 @@ class ClubEventController extends Controller
         $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
 
         // get a list of possible clubs to create an event at, but without the id=0 (default value)
-        $places = Place::where("id", '>', 0)
-                       ->orderBy('plc_title', 'ASC')
-                       ->pluck('plc_title', 'id');
+        $sections = Section::where("id", '>', 0)
+                       ->orderBy('title', 'ASC')
+                       ->pluck('title', 'id');
 
         // get a list of available templates to choose from
         $templates = Schedule::where('schdl_is_template', '=', '1')
@@ -82,8 +82,8 @@ class ClubEventController extends Controller
                              ->get();
 
         // get a list of available job types
-        $shiftTypes = ShiftType::where('jbtyp_is_archived', '=', '0')
-                           ->orderBy('jbtyp_title', 'ASC')
+        $shiftTypes = ShiftType::where('is_archived', '=', '0')
+                           ->orderBy('title', 'ASC')
                            ->get();
 
         // if a template id was provided, load the schedule needed and extract job types
@@ -99,7 +99,7 @@ class ClubEventController extends Controller
             $title      = $template->getClubEvent->evnt_title;
             $subtitle   = $template->getClubEvent->evnt_subtitle;
             $type       = $template->getClubEvent->evnt_type;
-            $place      = $template->getClubEvent->plc_id;
+            $section      = $template->getClubEvent->plc_id;
             $filter     = $template->getClubEvent->evnt_show_to_club;
             $dv         = $template->schdl_time_preparation_start;
             $timeStart  = $template->getClubEvent->evnt_time_start;
@@ -114,7 +114,7 @@ class ClubEventController extends Controller
             $title      = null;
             $type       = null;
             $subtitle   = null;
-            $place      = null;
+            $section      = null;
             $filter     = null;
             $dv         = null;
             $timeStart  = null;
@@ -124,9 +124,9 @@ class ClubEventController extends Controller
             $private    = null;
         }
 
-        return View::make('createClubEventView', compact('places', 'shiftTypes', 'templates',
+        return View::make('createClubEventView', compact('sections', 'shiftTypes', 'templates',
                                                          'shifts', 'title', 'subtitle', 'type',
-                                                         'place', 'filter', 'timeStart', 'timeEnd',
+                                                         'section', 'filter', 'timeStart', 'timeEnd',
                                                          'info', 'details', 'private', 'dv',
                                                          'activeTemplate',
                                                          'date'));
@@ -181,7 +181,7 @@ class ClubEventController extends Controller
      */
     public function show($id)
     {
-        $clubEvent = ClubEvent::with('getPlace')
+        $clubEvent = ClubEvent::with('section')
                               ->findOrFail($id);
 
         if(!Session::has('userId') && $clubEvent->evnt_is_private==1)
@@ -244,7 +244,7 @@ class ClubEventController extends Controller
 
         // Filter - Workaround for older events: populate filter with event club
         if (empty($clubEvent->evnt_show_to_club) ) {
-            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->getPlace->plc_title], true);
+            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->section->title], true);
             $clubEvent->save();
         }
 
@@ -267,13 +267,13 @@ class ClubEventController extends Controller
         $schedule = $event->getSchedule;
 
         // get a list of possible clubs to create an event at
-        $places = Place::orderBy('plc_title', 'ASC')
-                       ->pluck('plc_title', 'id');
+        $sections = Section::orderBy('title', 'ASC')
+                       ->pluck('title', 'id');
 
 
         // get a list of available job types
-        $shiftTypes = ShiftType::where('jbtyp_is_archived', '=', '0')
-                           ->orderBy('jbtyp_title', 'ASC')
+        $shiftTypes = ShiftType::where('is_archived', '=', '0')
+                           ->orderBy('title', 'ASC')
                            ->get();
 
         // put template data into shifts
@@ -284,7 +284,7 @@ class ClubEventController extends Controller
 
         // Filter - Workaround for older events: populate filter with event club
         if (empty($event->evnt_show_to_club) ) {
-            $event->evnt_show_to_club = json_encode([$event->getPlace->plc_title], true);
+            $event->evnt_show_to_club = json_encode([$event->section->title], true);
             $event->save();
         }
 
@@ -302,7 +302,7 @@ class ClubEventController extends Controller
 
         return View::make('editClubEventView', compact('event',
                                                        'schedule',
-                                                       'places',
+                                                       'sections',
                                                        'shiftTypes',
                                                        'shifts',
                                                        'created_by',
@@ -428,19 +428,19 @@ class ClubEventController extends Controller
         $event->evnt_private_details = Input::get('privateDetails');
         $event->evnt_type            = Input::get('evnt_type');
 
-        // create new place
-        if (!Place::where('plc_title', '=', Input::get('place'))->first())
+        // create new section
+        if (!Section::where('title', '=', Input::get('section'))->first())
         {
-            $place = new Place;
-            $place->plc_title = Input::get('place');
-            $place->save();
+            $section = new Section;
+            $section->title = Input::get('section');
+            $section->save();
 
-            $event->plc_id = $place->id;
+            $event->plc_id = $section->id;
         }
-        // use existing place
+        // use existing section
         else
         {
-            $event->plc_id = Place::where('plc_title', '=', Input::get('place'))->first()->id;
+            $event->plc_id = Section::where('title', '=', Input::get('section'))->first()->id;
         }
 
         // format: date; validate on filled value  

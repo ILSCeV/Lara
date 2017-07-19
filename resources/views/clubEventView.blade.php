@@ -24,14 +24,14 @@
 					<div class="panel panel-heading calendar-public-marketing white-text">
 
 
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Club" AND $clubEvent->evnt_is_private )
+				@elseif ($clubEvent->section->title == "bc-Club" AND $clubEvent->evnt_is_private )
 					<div class="panel panel-heading calendar-internal-event-bc-club white-text">
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Club")
+				@elseif ($clubEvent->section->title == "bc-Club")
 					<div class="panel panel-heading calendar-public-event-bc-club white-text">
 
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Café" AND $clubEvent->evnt_is_private)
+				@elseif ($clubEvent->section->title == "bc-Café" AND $clubEvent->evnt_is_private)
 					<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Café")
+				@elseif ($clubEvent->section->title == "bc-Café")
 					<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
 
 				@else
@@ -101,7 +101,7 @@
 								<i>{{ trans('mainLang.club') }}:</i>
 							</td>
 							<td>
-								{{ $clubEvent->getPlace->plc_title }}
+								{{ $clubEvent->section->title }}
 								&nbsp;&nbsp;<br class="visible-xs">
 								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
 							</td>

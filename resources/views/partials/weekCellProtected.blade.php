@@ -12,9 +12,9 @@
 			<div class="{{ $classString }} calendar-internal-task white-text">
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 			<div class="{{ $classString }} calendar-internal-marketing white-text">
-		@elseif ($clubEvent->getPlace->id == 1)
+		@elseif ($clubEvent->section->id == 1)
 			<div class="{{ $classString }} calendar-internal-event-bc-club white-text">
-		@elseif ($clubEvent->getPlace->id == 2)
+		@elseif ($clubEvent->section->id == 2)
 			<div class="{{ $classString }} calendar-internal-event-bc-cafe white-text">
 		@else
 			{{-- DEFAULT --}}
@@ -27,9 +27,9 @@
 			<div class="{{ $classString }} calendar-public-task white-text">
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 			<div class="{{ $classString }} calendar-public-marketing white-text">
-		@elseif ($clubEvent->getPlace->id == 1)
+		@elseif ($clubEvent->section->id == 1)
 			<div class="{{ $classString }} calendar-public-event-bc-club white-text">
-		@elseif ($clubEvent->getPlace->id == 2)
+		@elseif ($clubEvent->section->id == 2)
 			<div class="{{ $classString }} calendar-public-event-bc-cafe white-text">
 		@else
 			{{-- DEFAULT --}}
@@ -38,13 +38,13 @@
 	@endif
 
 
-	@if ($clubEvent->getPlace->plc_title == "bc-Club" AND $clubEvent->evnt_is_private )
+	@if ($clubEvent->section->title == "bc-Club" AND $clubEvent->evnt_is_private )
 		
-	@elseif ($clubEvent->getPlace->plc_title == "bc-Café" AND $clubEvent->evnt_is_private)
+	@elseif ($clubEvent->section->title == "bc-Café" AND $clubEvent->evnt_is_private)
 		
-	@elseif ($clubEvent->getPlace->plc_title == "bc-Club")
+	@elseif ($clubEvent->section->title == "bc-Club")
 		
-	@elseif ($clubEvent->getPlace->plc_title == "bc-Café")
+	@elseif ($clubEvent->section->title == "bc-Café")
 		
 	@else
 		<div class="{{ $classString }} calendar-task white-text">
@@ -66,7 +66,7 @@
 			-
 			{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 			&nbsp;
-			<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->getPlace->plc_title }}
+			<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->section->title }}
 
 		</div>
 

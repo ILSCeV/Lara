@@ -14,7 +14,7 @@ use View;
 
 use Lara\ClubEvent;
 use Lara\Schedule;
-use Lara\Place;
+use Lara\Section;
 
 
 class MonthController extends Controller {
@@ -94,9 +94,9 @@ class MonthController extends Controller {
 
         $mondays = new DatePeriod($firstDay, new DateInterval('P1W'), $lastDay->modify('+1 day'));
 
-        $sections = Place::where('id', '>', 0)
-                         ->orderBy('plc_title')
-                         ->get(['id','plc_title']);
+        $sections = Section::where('id', '>', 0)
+                         ->orderBy('title')
+                         ->get(['id','title']);
 
 		return View::make('monthView', compact('events', 'date', 'surveys', 'firstDay', 'lastDay', 'mondays', 'sections'));
 	}

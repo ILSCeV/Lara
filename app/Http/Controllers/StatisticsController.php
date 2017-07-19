@@ -94,7 +94,7 @@ class StatisticsController extends Controller
                                 ->whereHas('schedule.event', function ($query) use ($from, $till) {
                                     $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
                                 })
-                                ->with('type', 'schedule.event.place')
+                                ->with('type', 'schedule.event.section')
                                 ->get()
                                 ->sortBy('schedule.event.evnt_date_start');
 
@@ -112,7 +112,7 @@ class StatisticsController extends Controller
                             'shift'     =>$shift->type->title(),
                             'event'     =>$shift->schedule->event->evnt_title, 
                             'event_id'  =>$shift->schedule->event->id,
-                            'section'   =>$shift->schedule->event->place->plc_title,
+                            'section'   =>$shift->schedule->event->section->title,
                             'isOwnClub' =>in_array($ownClub, $clubsOfShift),
                             'date'      =>strftime("%d.%m.%Y (%a)", strtotime($shift->schedule->event->evnt_date_start)),
                             'weight'    =>$shift->statistical_weight];

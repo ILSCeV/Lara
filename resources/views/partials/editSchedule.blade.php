@@ -7,7 +7,7 @@
 	    <div id="shiftContainer" class="container shiftContainer">
 			@foreach($shifts as $shift)
 				@include('partials.events.shift', [
-					"title" => $shift->type->jbtyp_title,
+					"title" => $shift->type->title,
 					"startTime" => $shift->start,
 					"endTime" => $shift->end,
 					"weight" => $shift->statistical_weight,

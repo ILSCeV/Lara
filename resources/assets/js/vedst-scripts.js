@@ -1211,18 +1211,18 @@ jQuery( document ).ready( function( $ ) {
                 $(document.activeElement).next('.dropdown-shiftTypes').append(
                     '<li><a href="javascript:void(0);">' 
                     + '<span id="shiftTypeTitle">' 
-                    + data.jbtyp_title 
+                    + data.title 
                     + '</span>'
                     + ' (<i class="fa fa-clock-o"></i> '
                     + '<span id="shiftTypeTimeStart">'
-                    + data.jbtyp_time_start
+                    + data.start
                     + '</span>'
                     + '-'
                     + '<span id="shiftTypeTimeEnd">'
-                    + data.jbtyp_time_end
+                    + data.end
                     + '</span>'
                     + '<span id="shiftTypeWeight" class="hidden">'
-                    + data.jbtyp_statistical_weight
+                    + data.statistical_weight
                     + '</span>'
                     + ')' 
                     + '</a></li>');

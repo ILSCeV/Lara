@@ -3,7 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class PlacesTableSeeder extends Seeder
+class SectionsTableSeeder extends Seeder
 {
 
     /**
@@ -15,19 +15,23 @@ class PlacesTableSeeder extends Seeder
     {
         
 
-        \DB::table('places')->delete();
+        \DB::table('sections')->delete();
         
-        \DB::table('places')->insert([
+        \DB::table('sections')->insert([
             0 => [
-                'id' => 1,
-                'plc_title' => 'bc-Club',
+                'title' => 'bc-Club',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'place_uid' => hash("sha512", uniqid())
             ],
             1 => [
-                'id' => 2,
-                'plc_title' => 'bc-Café',
+                'title' => 'bc-Café',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'place_uid' => hash("sha512", uniqid())
+            ],
+            2 => [
+                'title' => 'bd-Club',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'place_uid' => hash("sha512", uniqid())

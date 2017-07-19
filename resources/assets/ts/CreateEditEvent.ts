@@ -52,7 +52,7 @@ $(() => {
         else {
             // reset all checkboxes
             $("#filter").find("input[type=checkbox]").prop("checked", false);
-            let clubName = $(document).find("#place").val();
+            let clubName = $(document).find("#section").val();
             let clubId = getIdOfClub(clubName);
 
             if (clubId !== -1) {

@@ -91,8 +91,8 @@ $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
         'evnt_type' => $faker->numberBetween(0,9),
         'evnt_title' => $faker->word(),
         'evnt_subtitle' => $faker->word(),
-        'plc_id' => Lara\Place::inRandomOrder()->first()->id,
-        'evnt_show_to_club' => json_encode($faker->randomElements(['bc-Club', 'bc-Café'], $faker->numberBetween(1,2))),
+        'plc_id' => Lara\Section::inRandomOrder()->first()->id,
+        'evnt_show_to_club' => json_encode($faker->randomElements(Lara\Section::all()->pluck('title')->toArray(), $faker->numberBetween(1,2))),
         'evnt_date_start' => $start->format('Y-m-d'),
         'evnt_date_end' => $end->format('Y-m-d'),
         'evnt_time_start' => $start->format('H:i'),
@@ -109,12 +109,12 @@ $factory->define(Lara\ShiftType::class, function(Faker\Generator $faker) {
     $end = $faker->time('H:i');
     $start = $faker->time('H:i', $end);
     return [
-        'jbtyp_title' => $faker->randomElement($types),
-        'jbtyp_time_start' => $start,
-        'jbtyp_time_end' => $end,
-        'jbtyp_needs_preparation' => $faker->boolean(),
-        'jbtyp_statistical_weight' => $faker->numberBetween(0, 4) * 0.5,
-        'jbtyp_is_archived' => 0
+        'title' => $faker->randomElement($types),
+        'start' => $start,
+        'end' => $end,
+        'needs_preparation' => $faker->boolean(),
+        'statistical_weight' => $faker->numberBetween(0, 4) * 0.5,
+        'is_archived' => 0
     ];
 });
 

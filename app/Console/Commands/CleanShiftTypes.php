@@ -67,7 +67,7 @@ class CleanShiftTypes extends Command
                 
                 // Log the action while we still have the data
                 $this->info(''); // new line
-                $this->info('Shift type deleted: "' . $shifttype->jbtyp_title . '" (id:' . $shifttype->id . '), it was not used in any schedule.');
+                $this->info('Shift type deleted: "' . $shifttype->title . '" (id:' . $shifttype->id . '), it was not used in any schedule.');
                 
                 // Now delete the ShiftType
                 ShiftType::destroy($shifttype->id);
@@ -82,9 +82,9 @@ class CleanShiftTypes extends Command
                 // to every shift that used current shift type -> this will get us n-1 shift types for this combination.
                 
                 // Get a the first shift type with this combination of name&times
-                $alternative = ShiftType::where('jbtyp_title', '=', $shifttype->jbtyp_title)
-                                      ->where('jbtyp_time_start', '=', $shifttype->jbtyp_time_start)
-                                      ->where('jbtyp_time_end', '=', $shifttype->jbtyp_time_end)
+                $alternative = ShiftType::where('title', '=', $shifttype->title)
+                                      ->where('start', '=', $shifttype->start)
+                                      ->where('end', '=', $shifttype->end)
                                       ->first();
 
                 // Check if we have found current shift type or another one
@@ -99,13 +99,13 @@ class CleanShiftTypes extends Command
 
                     // inform the user
                     $this->info(''); // new line
-                    $this->info('Substituted "' . $shifttype->jbtyp_title . '" with id ' . $shifttype->id 
+                    $this->info('Substituted "' . $shifttype->title . '" with id ' . $shifttype->id 
                                 . " for id " . $alternative->id . " in " . $shifts->count() . " shifts.");
 
                     // This shift type is empty now - delete it
                     // Log the action while we still have the data
                     $this->info(''); // new line
-                    $this->info('Shift type deleted: "' . $shifttype->jbtyp_title . '" (id:' . $shifttype->id . '), it was not used in any schedule.');
+                    $this->info('Shift type deleted: "' . $shifttype->title . '" (id:' . $shifttype->id . '), it was not used in any schedule.');
                     
                     // Now delete the ShiftType
                     ShiftType::destroy($shifttype->id);
