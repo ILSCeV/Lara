@@ -48,23 +48,20 @@ $(() => {
     $("[name='evnt_type']").click(function () {
         let prop = $(this).val();
         let isInternalEvent = internalEventValues.indexOf(prop) !== -1;
+        const $filterCheckboxes = $("#filter").find("input[type=checkbox]");
         if (!hasUserChangedClubs) {
-            let $filterCheckboxes = $("#filter").find("input[type=checkbox]");
             if (isInternalEvent) {
                 $filterCheckboxes.prop("checked", true);
             }
         }
         else {
             // reset all checkboxes
-            $("#filter").find("input[type=checkbox]").prop("checked", false);
+            $filterCheckboxes.prop("checked", false);
             let clubName = $(document).find("#section").val();
-            let clubId = getIdOfClub(clubName);
-
-                if (clubName) {
-                    let showToClubCheckbox = $(document).find("[name='filter[" + clubName +"]']");
-                    showToClubCheckbox.prop("checked", true);
-                }
-        }
+            if (clubName) {
+                let showToClubCheckbox = $(document).find("[name='filter[" + clubName +"]']");
+                showToClubCheckbox.prop("checked", true);
+            }
         }
     });
 });
