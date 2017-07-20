@@ -208,15 +208,15 @@
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						@if(is_null($filter) OR $filter == "")
 							{{-- Set default values to the club the user is a member in.--}}
-							@foreach(Lara\Place::all() as $section)
-                                {{ Form::checkbox("filter[" . $section->plc_title ."]", "1", $section->plc_title === Session::get("userClub")) }}
-									{{ $section->plc_title }}
+							@foreach(Lara\Section::all() as $section)
+                                {{ Form::checkbox("filter[" . $section->title ."]", "1", $section->title === Session::get("userClub")) }}
+									{{ $section->title }}
                                 	&nbsp;
 							@endforeach
 						@else
-							@foreach(Lara\Place::all() as $section)
-								{{ Form::checkbox("filter[" . $section->plc_title ."]", "1", in_array($section->plc_title, json_decode($filter))) }}
-								{{ $section->plc_title }}
+							@foreach(Lara\Section::all() as $section)
+								{{ Form::checkbox("filter[" . $section->title ."]", "1", in_array($section->title, json_decode($filter))) }}
+								{{ $section->title }}
 								&nbsp;
 							@endforeach
 						@endif
