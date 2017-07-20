@@ -12,7 +12,7 @@ let internalEventValues = [
     "9"  // other
 ];
 $(() => {
-    $("#button-create-submit").add("#button-edit-submit").click(function () {
+    $("#createAndPublishBtn").add("#createUnpublishedBtn").add("#button-edit-submit").click(function () {
 
         let beginDate = new Date($("[name='beginDate']").prop("value") + " " + $("[name='beginTime']").prop("value"));
         let endDate = new Date($("[name='endDate']").prop("value") + " " + $("[name='endTime']").prop("value"));
