@@ -1012,11 +1012,6 @@ jQuery( document ).ready( function( $ ) {
             // format data received
             response.forEach(function(data) {
 
-                // now we convert our data to meaningful text - could have done it on server side, but this is easier for now:
-                // convert club_id to text
-                if (data.clb_id == 2) { data.clb_id = "bc-Club" }
-                if (data.clb_id == 3) { data.clb_id = "bc-Café" }
-
                 // convert person_status to text
                 if ( data.prsn_status == 'candidate' ) { data.prsn_status = " (K)" }
                 else if ( data.prsn_status == 'veteran' ) { data.prsn_status = " (V)" }
@@ -1029,7 +1024,7 @@ jQuery( document ).ready( function( $ ) {
                     + '<span id="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
                     + '<span id="currentName">' + data.prsn_name + '</span>'
                     + data.prsn_status
-                    + '(<span id="currentClub">' + data.clb_id + '</span>)'
+                    + '(<span id="currentClub">' + data.club.clb_title + '</span>)'
                     + '</a></li>');
             });  
 

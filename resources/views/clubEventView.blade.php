@@ -22,18 +22,10 @@
 					<div class="panel panel-heading calendar-internal-marketing white-text">
 				@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 					<div class="panel panel-heading calendar-public-marketing white-text">
-
-
-				@elseif ($clubEvent->section->title == "bc-Club" AND $clubEvent->evnt_is_private )
-					<div class="panel panel-heading calendar-internal-event-bc-club white-text">
-				@elseif ($clubEvent->section->title == "bc-Club")
-					<div class="panel panel-heading calendar-public-event-bc-club white-text">
-
-				@elseif ($clubEvent->section->title == "bc-Café" AND $clubEvent->evnt_is_private)
-					<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
-				@elseif ($clubEvent->section->title == "bc-Café")
-					<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
-
+				@elseif ($clubEvent->evnt_is_private && !is_null($clubEvent->section))
+					<div class="panel panel-heading calendar-internal-event-{{$clubEvent->section->title}} white-text">
+				@elseif (!is_null($clubEvent->section))
+					<div class="panel panel-heading calendar-public-event-{{$clubEvent->section->title}} white-text">
 				@else
 					{{-- DEFAULT --}}
 					<div class="panel panel-heading white-text">
@@ -257,7 +249,7 @@
 				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
 				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) AND Session::has('userId') AND $shift->getPerson->prsn_ldap_id == Session::get('userId')) ? "my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
-			                                'id' => $shift->id, 
+			                                'id' => $shift->id,
 			                                'method' => 'PUT', 
 			                                'class' => 'shift')  ) !!}
 

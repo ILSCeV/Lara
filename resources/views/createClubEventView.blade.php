@@ -208,33 +208,17 @@
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						@if(is_null($filter) OR $filter == "")
 							{{-- Set default values to the club the user is a member in.--}}
-							@if(Session::get('userClub') == 'bc-Club')
-								<div id="filter">
-									{!! Form::checkbox('filterShowToClub2', '1', true) !!}
-										bc-Club
-									&nbsp;&nbsp;&nbsp;&nbsp;
-									{!! Form::checkbox('filterShowToClub3', '1', false) !!}
-										bc-Café
-								</div>
-							@elseif(Session::get('userClub') == 'bc-Café')
-								<div id="filter">
-									{!! Form::checkbox('filterShowToClub2', '1', false) !!}
-										bc-Club
-									&nbsp;&nbsp;&nbsp;&nbsp;
-									{!! Form::checkbox('filterShowToClub3', '1', true) !!}
-										bc-Café
-								</div>
-							@endif 	  
+							@foreach(Lara\Place::all() as $section)
+                                {{ Form::checkbox("filter[" . $section->plc_title ."]", "1", $section->plc_title === Session::get("userClub")) }}
+									{{ $section->plc_title }}
+                                	&nbsp;
+							@endforeach
 						@else
-							<div id="filter">
-								{!! Form::checkbox('filterShowToClub2', '1', 
-										in_array( "bc-Club", json_decode($filter) ) ? true : false ) !!}
-									bc-Club
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								{!! Form::checkbox('filterShowToClub3', '1', 
-										in_array("bc-Café", json_decode($filter)) ? true : false ) !!}
-									bc-Café
-							</div>	 	
+							@foreach(Lara\Place::all() as $section)
+								{{ Form::checkbox("filter[" . $section->plc_title ."]", "1", in_array($section->plc_title, json_decode($filter))) }}
+								{{ $section->plc_title }}
+								&nbsp;
+							@endforeach
 						@endif
 				    </div>
 			   	</div>

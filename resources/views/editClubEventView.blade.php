@@ -221,14 +221,12 @@ AND (Session::get('userGroup') == 'marketing'
 					<label for="filter" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.showFor') }}: &nbsp;</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						<div id="filter">
-							{!! Form::checkbox('filterShowToClub2', '1', 
-									in_array( "bc-Club", json_decode($event->evnt_show_to_club) ) ? true : false ) !!}
-								bc-Club
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							{!! Form::checkbox('filterShowToClub3', '1', 
-									in_array("bc-Café", json_decode($event->evnt_show_to_club)) ? true : false ) !!}
-								bc-Café
-						</div>	   	
+							@foreach(Lara\Place::all() as $section)
+								{{ Form::checkbox("filter[" . $section->plc_title ."]", "1", in_array( $section->plc_title, json_decode($event->evnt_show_to_club))) }}
+								{{ $section->plc_title }}
+								&nbsp;
+							@endforeach
+						</div>
 				    </div>
 			   	</div>
 

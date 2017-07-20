@@ -65,9 +65,9 @@ table {
 }
 
 @media (max-width: 1000px) {
-  .no-padding-xs {
-    padding: 0px 0px 0px 0px;
-  }
+    .no-padding-xs {
+        padding: 0px 0px 0px 0px;
+    }
 }
 
 .panel-group {
@@ -173,7 +173,7 @@ input[type=number],
 }
 
 .past-eventOrSurvey, .past-event {
-  opacity:0.3;
+    opacity:0.3;
 }
 
 .today-marker {
@@ -212,20 +212,27 @@ input[type=number],
     background-color: #ddad69 !important;
 }
 
-.calendar-public-event-bc-club {
+.calendar-public-event-bc-Club {
     background-color: #e54545 !important;
 }
 
-.calendar-public-event-bc-cafe {
+.calendar-public-event-bc-Café {
     background-color: #268ac3 !important;
 }
+.calendar-public-event-bd-Club {
+    background-color: #38c32e !important;
+}
 
-.calendar-internal-event-bc-club {
+.calendar-internal-event-bc-Club {
     background-color: #e98383 !important;
 }
 
-.calendar-internal-event-bc-cafe {
+.calendar-internal-event-bc-Café {
     background-color: #52aadc !important;
+}
+
+.calendar-internal-event-bd-Club {
+    background-color: #68c365 !important;
 }
 
 .light-grey {
@@ -506,3 +513,4 @@ input[type=number],
 .bc-Café-section-highlight {
     border-left: 5px #52aadc solid !important;
 }
+

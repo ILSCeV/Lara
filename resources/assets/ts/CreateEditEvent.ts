@@ -37,10 +37,10 @@ $(() => {
     });
     // if set, internal events will trigger selection of all clubs
     // if user sets the club manually, we want to keep his selection
-    let autoSelectAllClubs = true;
+    let hasUserChangedClubs = false;
     let allClubCheckBoxes = $("#filter").find("input[type=checkbox]");
     allClubCheckBoxes.click(() => {
-        autoSelectAllClubs = false;
+        hasUserChangedClubs = true;
     });
 
     // important to use function() (anonymous function) here an not an arrow function
@@ -48,9 +48,10 @@ $(() => {
     $("[name='evnt_type']").click(function () {
         let prop = $(this).val();
         let isInternalEvent = internalEventValues.indexOf(prop) !== -1;
-        if (isInternalEvent) {
-            if (autoSelectAllClubs) {
-                $("#filter").find("input[type=checkbox]").prop("checked", true);
+        if (!hasUserChangedClubs) {
+            let $filterCheckboxes = $("#filter").find("input[type=checkbox]");
+            if (isInternalEvent) {
+                $filterCheckboxes.prop("checked", true);
             }
         }
         else {
@@ -59,10 +60,11 @@ $(() => {
             let clubName = $(document).find("#section").val();
             let clubId = getIdOfClub(clubName);
 
-            if (clubId !== -1) {
-                let showToClubCheckbox = $(document).find("[name=filterShowToClub" + clubId + "]");
-                showToClubCheckbox.prop("checked", true);
-            }
+                if (clubName) {
+                    let showToClubCheckbox = $(document).find("[name='filter[" + clubName +"]']");
+                    showToClubCheckbox.prop("checked", true);
+                }
+        }
         }
     });
 });
