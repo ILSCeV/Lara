@@ -55,7 +55,7 @@ class UpdateLara extends Command
             'php artisan view:clear',               // Clear and update cache
             'php artisan config:cache',
             'npm install',                          // JavaScript/TypeScript deployment
-            'npm run dev',
+            'npm run production',
             'php artisan migrate --force',          // Apply new database changes
             'php artisan up'                        // Exit maintenance mode
         ];
