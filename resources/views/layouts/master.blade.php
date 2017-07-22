@@ -8,12 +8,7 @@
         <meta http-equiv="Cache-control" content="no-cache">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="{{ asset('/css/bootstrap-select.min.css') }}">
-        <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/bootstrap-bootswatch-paper.min.css') }}" />
-        <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/font-awesome.min.css') }}" />
-        <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/vedst.css') }}" />
-        <link rel="stylesheet" media="print" type="text/css" href="{{ asset('/css/print.css') }}" />
-        <link rel="stylesheet" type="text/css" href="{{ mix('/app.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ mix('/lara.css') }}">
     	<link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-48x48.png') }}">
 
         @yield('moreStylesheets')

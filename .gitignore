@@ -9,8 +9,9 @@ public/gitrevision.txt
 public/fonts/vendor/**/*
 
 public/js/app.*.js
-public/css/app.css
+public/lara.css
 public/*.js*
+public/fonts
 
 public/js/surveys.*.js
 public/css/app.*.css
