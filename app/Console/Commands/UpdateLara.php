@@ -49,7 +49,9 @@ class UpdateLara extends Command
         // List of instructions to execute
         $instructions = [
             'php artisan down',                     // Enter maintenance mode
-            'git pull',                             // Download latest changes from GitHub
+            'git reset --hard',                     // reset repo to avoid conflicts
+            'git pull --rebase',                    // Download latest changes from GitHub
+            'rm package-lock.json || true',          // remove package-lock, makes sure that you will get the stuff from package.json
             'sh git-create-revisioninfo-hook.sh',   // Update version info in the footer
             'composer install',                     // Install and update dependencies
             'php artisan view:clear',               // Clear and update cache
