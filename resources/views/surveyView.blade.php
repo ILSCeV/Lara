@@ -13,7 +13,7 @@ $userCanEditDueToRole
     {{$survey->title}}
 @stop
 @section('moreStylesheets')
-    <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/surveyViewStyles.css') }}"/>
+    <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/surveys.css') }}"/>
     <style>
         #dropdown_name {
             position: absolute;
