@@ -44,28 +44,28 @@ class SectionController extends Controller
             'title' => 'required',
             'color' => 'required'
         );
-
         $validator = Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
             //TODO: Error handling
         }
-
         $title = Input::get("title");
 
-        $existingSection = Section::where('title', '=', $title)->first();
-        
-        if (!is_null($existingSection)) {
-            //TODO: Error handling
-        }
-
         if(is_null(Input::get("id"))){
+            $existingSection = Section::where('title', '=', $title)->first();
+            if (!is_null($existingSection)) {
+                //TODO: Error handling
+            }
             $section = new Section();
+            $section->section_uid = hash("sha512", uniqid());
         } else {
             $section = Section::where('id','=',Input::get("id"))->first();
         }
 
         $section->title = $title;
+        $section->color = Input::get("color");
+
+        $section->save();
     }
 
     /**

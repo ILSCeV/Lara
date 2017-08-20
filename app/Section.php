@@ -4,6 +4,13 @@ namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Representation of a section, like bc-club
+ *
+ * @property string title
+ * @property string color
+ * @property string section_uid
+ */
 class Section extends Model
 {
 	/**
