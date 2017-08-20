@@ -64,14 +64,14 @@ class SectionController extends Controller
         $title = Input::get("title");
         $id = Input::get("id");
         $color = Input::get("color");
-        $isNew = isset($id);
+        $isNew = strlen($id) == 0;
 
 
         if ($validator->fails()) {
            return Redirect::back()->withErrors($validator);
         }
 
-        if (!$isNew) {
+        if ($isNew) {
             $existingSection = Section::where('title', '=', $title)->first();
             if (!is_null($existingSection)) {
                 // Return to the section management page

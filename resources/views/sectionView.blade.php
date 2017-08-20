@@ -16,7 +16,7 @@
 
 		<div class="panel panel-body no-padding">
 			<table class="table table-hover">
-                @if($current_section->id == null)
+                @if(!isset($current_section->id))
                 {!! Form::open(  array( 'route' => ['section.store', $current_section->id],
 		                                'id' => $current_section->id,
 		                                'method' => 'POST',
@@ -56,7 +56,7 @@
 							&nbsp;
 						</td>
 						<td>
-							@if($current_section->id != null)
+							@if(isset($current_section->id))
 							<a href="../section/{{ $current_section->id }}"
 							   class="btn btn-small btn-danger"
 							   data-toggle="tooltip"
@@ -70,7 +70,7 @@
 							</a>
 							@endif
 							<button type="reset" class="btn btn-small btn-default">{{ trans('mainLang.reset') }}</button>
-								@if($current_section->id == null)
+								@if(!isset($current_section->id))
 									<button type="submit" class="btn btn-small btn-success">{{ trans('mainLang.createSection') }}</button>
 								@else
 					    			<button type="submit" class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
