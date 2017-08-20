@@ -29,8 +29,7 @@
 						</th>
 					</tr>
 				</thead>
-				<tbody>
-					<div class="container">
+				<tbody class="container">
 						@foreach($sections as $section)
 							<tr>
 								<td>
@@ -46,15 +45,19 @@
 								</td>
 							</tr>
 						@endforeach
-					</div>
+				<tr>
+					<td></td>
+					<td> <a class="btn btn-success" href="{!! action('SectionController@create') !!}">{{ trans('mainLang.createSection') }}</a> </td>
+					<td></td>
+				</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
-		
-	<center>
+
+		<div class="text-center">
 		{{ $sections->links() }}
-	</center>
+		</div>
 
 	<br/>
 @else
