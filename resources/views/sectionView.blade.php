@@ -64,6 +64,16 @@
 					    	<button type="submit" class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
 						</td>
 					</tr>
+						@foreach ($errors->all() as $message)
+							<tr>
+								<td>
+									Error:
+								</td>
+								<td>
+									{{ $message }}
+								</td>
+							</tr>
+						@endforeach
 				{!! Form::close() !!}
 			</table>
 		</div>

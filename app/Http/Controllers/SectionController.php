@@ -43,7 +43,7 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Utilities::requirePermission("Admin")) {
+        if (!Utilities::requirePermission("admin")) {
             // Return to the section management page
             Session::put('message', trans('mainLang.adminsOnly'));
             Session::put('msgType', 'danger');
@@ -68,7 +68,7 @@ class SectionController extends Controller
         }
 
 
-        if ($isNew) {
+        if (!$isNew) {
             $existingSection = Section::where('title', '=', $title)->first();
             if (!is_null($existingSection)) {
                 // Return to the section management page
