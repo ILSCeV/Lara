@@ -467,6 +467,7 @@ return [
     'negativeStats'                 => 'Statistical weight can\'t be negative.',
     'changesSaved'                  => 'Changes saved successfully.',
     'deleteFailedShiftTypeInUse'      => 'Shift type was not deleted, because it\'s in use. Here you can change that.',
+    'adminsOnly'                    => 'Sorry, but this function can only used by Adminstrators',
 
     ////////////////////////
     // Section management //

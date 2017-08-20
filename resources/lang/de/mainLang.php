@@ -470,6 +470,7 @@ return [
     'negativeStats'                 => 'Statistische Wertung darf nicht negativ sein.',
     'changesSaved'                  => 'Änderungen erfolgreich gespeichert.',
     'deleteFailedShiftTypeInUse'    => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
+    'adminsOnly'                    => 'Sorry, aber das darf nur ein Adminstrator!',
 
     ////////////////////////
     // Section management //
