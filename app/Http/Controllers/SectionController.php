@@ -6,6 +6,7 @@ use Lara\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use View;
 
 class SectionController extends Controller
 {
@@ -17,7 +18,7 @@ class SectionController extends Controller
     public function index()
     {
         $sections = Section::orderBy('title', 'ASC')->paginate(25);
-        
+
         return view('manageSections', ['sections' => $sections]);
     }
 
@@ -43,13 +44,17 @@ class SectionController extends Controller
             'title' => 'required',
             'color' => 'required'
         );
+
         $validator = Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
             //TODO: Error handling
         }
+
         $title = Input::get("title");
+
         $existingSection = Section::where('title', '=', $title)->first();
+        
         if (!is_null($existingSection)) {
             //TODO: Error handling
         }
@@ -66,12 +71,15 @@ class SectionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Lara\Section  $section
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Section $section)
+    public function show($id)
     {
-        //
+        // get selected shiftTypes
+        $current_section = Section::findOrFail($id);
+
+        return View::make('sectionView', compact('current_section'));
     }
 
     /**

@@ -24,9 +24,9 @@
 						<th class="col-md-2 col-xs-2">
 							{{ trans('mainLang.section') }}
 						</th>
-						<!-- <th class="col-md-4 col-xs-4">
-							 trans("mainLang.color") }} 
-						</th> -->
+						<th class="col-md-4 col-xs-4">
+							{{ trans("mainLang.color") }} 
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -37,14 +37,13 @@
 									{!! $section->id !!}
 								</td>
 								<td>
-							      	<a href="../shiftType/{{ $section->id }}">
+							      	<a href="../section/{{ $section->id }}">
 							      		{!! $section->title !!}
 							      	</a>
 								</td>
-								<!--
 								<td>
-									$section->color !!}
-								</td> -->
+									{!! $section->color !!}
+								</td>
 							</tr>
 						@endforeach
 					</div>
