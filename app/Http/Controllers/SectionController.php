@@ -57,8 +57,8 @@ class SectionController extends Controller
             //TODO: Error handling
         }
         $title = Input::get("title");
-
-        if (is_null(Input::get("id"))) {
+        $id = Input::get("id");
+        if (is_null($id) || empty($id)) {
             $existingSection = Section::where('title', '=', $title)->first();
             if (!is_null($existingSection)) {
                 //TODO: Error handling
@@ -66,7 +66,7 @@ class SectionController extends Controller
             $section = new Section();
             $section->section_uid = hash("sha512", uniqid());
         } else {
-            $section = Section::where('id', '=', Input::get("id"))->first();
+            $section = Section::where('id', '=', $id)->first();
         }
 
         $section->title = $title;
@@ -114,7 +114,7 @@ class SectionController extends Controller
      */
     public function update(Request $request, Section $section)
     {
-        //
+        self::store();
     }
 
     /**
