@@ -60,10 +60,11 @@ class SectionController extends Controller
             dd("validation error");
         }
 
-        $title = Input::get("title");
-
         $id = Input::get("id");
-        if (is_null($id) || empty($id)) {
+        $title = Input::get("title");
+        $color = Input::get("color");
+
+        if (!isset($id)) {
             $existingSection = Section::where('title', '=', $title)->first();
             if (!is_null($existingSection)) {
                 //TODO: Error handling
@@ -76,8 +77,7 @@ class SectionController extends Controller
         }
 
         $section->title = $title;
-        $section->color = Input::get("color");
-
+        $section->color = $color;
         $section->save();
 
         // Return to the the section management page
@@ -120,7 +120,7 @@ class SectionController extends Controller
      */
     public function update(Request $request, Section $section)
     {
-        self::store($request);
+        return self::store($request);
     }
 
     /**
