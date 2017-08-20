@@ -476,6 +476,7 @@ return [
     // Section management //
     ////////////////////////
     'color'                         => 'Farbe',
+    'sectionExists'                 => 'Es gibt bereits eine Sektion mit diesem Namen, bitte gib einen anderen ein!',
 
     //////////
     // ICal //

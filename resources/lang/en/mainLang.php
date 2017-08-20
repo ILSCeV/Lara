@@ -469,11 +469,12 @@ return [
     'deleteFailedShiftTypeInUse'      => 'Shift type was not deleted, because it\'s in use. Here you can change that.',
     'adminsOnly'                    => 'Sorry, but this function can only used by Adminstrators',
 
+
     ////////////////////////
     // Section management //
     ////////////////////////
     'color'                         => 'Color',
-
+    'sectionExists'                 => 'A section with this name already exits, please enter a diffrent one!',
     //////////
     // ICal //
     //////////

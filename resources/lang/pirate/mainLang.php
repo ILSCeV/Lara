@@ -474,7 +474,7 @@ return [
     // Section management //
     ////////////////////////
     'color'                         => 'Farbe',
-    
+    'sectionExists'                 => 'Es it bereits ein Schiff mit diesem Namen vom Stapel gelaufen!',
     
     //////////
     // ICal //
