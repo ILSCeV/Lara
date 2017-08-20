@@ -45,7 +45,7 @@ class SectionController extends Controller
     {
         if (!Utilities::requirePermission("Admin")) {
             // Return to the section management page
-            Session::put('message', trans('mainLang.cantTouchThis'));
+            Session::put('message', trans('mainLang.adminsOnly'));
             Session::put('msgType', 'danger');
         }
 
@@ -57,6 +57,7 @@ class SectionController extends Controller
 
         $title = Input::get("title");
         $id = Input::get("id");
+        $color = Input::get("color");
         $isNew = isset($id);
 
 
@@ -68,8 +69,10 @@ class SectionController extends Controller
         if ($isNew) {
             $existingSection = Section::where('title', '=', $title)->first();
             if (!is_null($existingSection)) {
-                //TODO: Error handling
-
+                // Return to the section management page
+                Session::put('message', trans('mainLang.sectionExists'));
+                Session::put('msgType', 'danger');
+                return Redirect::back();
             }
             $section = new Section();
             $section->section_uid = hash("sha512", uniqid());
