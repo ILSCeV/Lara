@@ -40,6 +40,15 @@
 							   array('id'=>'color' . $current_section->id)) !!}
 						</td>
 					</tr>
+					<tr>
+						<td>
+							&nbsp;
+						</td>
+						<td>
+							<button type="reset" class="btn btn-small btn-default">{{ trans('mainLang.reset') }}</button>
+					    	<button type="submit" class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
+						</td>
+					</tr>
 				{!! Form::close() !!}
 			</table>
 		</div>
