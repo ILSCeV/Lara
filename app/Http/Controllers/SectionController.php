@@ -147,9 +147,9 @@ class SectionController extends Controller
      */
     public function destroy(Section $section)
     {
-        if (!Utilities::requirePermission("Admin")) {
+        if (!Utilities::requirePermission("admin")) {
             // Return to the section management page
-            Session::put('message', trans('mainLang.cantTouchThis'));
+            Session::put('message', trans('mainLang.adminsOnly'));
             Session::put('msgType', 'danger');
         }
 
