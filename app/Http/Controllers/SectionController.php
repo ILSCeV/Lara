@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Lara\Section;
 use Lara\Utilities;
-use Illuminate\Support\Facades\Session;
-use Illuminate\View\View;
-use Illuminate\Support\Facades\Redirect;
+use Session;
+use View;
+use Redirect;
 
 class SectionController extends Controller
 {
@@ -47,6 +47,8 @@ class SectionController extends Controller
             // Return to the section management page
             Session::put('message', trans('mainLang.adminsOnly'));
             Session::put('msgType', 'danger');
+
+            return Redirect::back();
         }
 
         $rules = array(
