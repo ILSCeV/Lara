@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Lara\Section;
 use Lara\Utilities;
+use Lara\ClubEvent;
 use Session;
 use View;
 use Redirect;
+use Log;
 
 class SectionController extends Controller
 {
@@ -66,7 +68,6 @@ class SectionController extends Controller
         if ($validator->fails()) {
            return Redirect::back()->withErrors($validator);
         }
-
 
         if (!$isNew) {
             $existingSection = Section::where('title', '=', $title)->first();
@@ -144,6 +145,34 @@ class SectionController extends Controller
      */
     public function destroy(Section $section)
     {
-        //
+        if (!Utilities::requirePermission("Admin")) {
+            // Return to the section management page
+            Session::put('message', trans('mainLang.cantTouchThis'));
+            Session::put('msgType', 'danger');
+        }
+
+        // Log the action while we still have the data
+        Log::info('Section removed: ' .
+            Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
+            ') deleted section "' . $section->title .  '". May Gods have mercy on their souls!');
+
+        $events = ClubEvent::where("plc_id", "=", $section->id)->get();
+
+        foreach ($events as $event) {
+             // Delete schedule with shifts
+            $result = (new ScheduleController)->destroy($event->getSchedule()->first()->id);
+
+            // Now delete the event itself
+            ClubEvent::destroy($event->id);
+        }
+
+        // Now delete the section
+        Section::destroy($section->id);
+
+        // Return to the management page
+        Session::put('message', trans('mainLang.changesSaved'));
+        Session::put('msgType', 'success');
+        return Redirect::action( 'SectionController@index' );
+        
     }
 }
