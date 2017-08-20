@@ -34,7 +34,9 @@ class SectionController extends Controller
      */
     public function create()
     {
-        //
+        $current_section = new Section();
+        $current_section->title= trans('mainlang.newSection');
+        return View::make('sectionView', compact('current_section'));
     }
 
     /**

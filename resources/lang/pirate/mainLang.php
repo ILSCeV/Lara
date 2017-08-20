@@ -475,7 +475,9 @@ return [
     ////////////////////////
     'color'                         => 'Farbe',
     'sectionExists'                 => 'Es it bereits ein Schiff mit diesem Namen vom Stapel gelaufen!',
-    
+    'newSection'                    => 'Neues Schiff',
+    'createSection'                 => 'Neues Schiff bauen',
+
     //////////
     // ICal //
     //////////

@@ -16,10 +16,17 @@
 
 		<div class="panel panel-body no-padding">
 			<table class="table table-hover">
+                @if($current_section->id == null)
+                {!! Form::open(  array( 'route' => ['section.store', $current_section->id],
+		                                'id' => $current_section->id,
+		                                'method' => 'POST',
+		                                'class' => 'section')  ) !!}
+                @else
 				{!! Form::open(  array( 'route' => ['section.update', $current_section->id],
 		                                'id' => $current_section->id, 
 		                                'method' => 'PUT', 
 		                                'class' => 'section')  ) !!}
+                @endif
 					<tr>
 						<td width="20%" class="left-padding-16">
 							<i>{{ trans('mainLang.section') }}:</i>
@@ -49,6 +56,7 @@
 							&nbsp;
 						</td>
 						<td>
+							@if($current_section->id != null)
 							<a href="../section/{{ $current_section->id }}"
 							   class="btn btn-small btn-danger"
 							   data-toggle="tooltip"
@@ -60,8 +68,13 @@
 							   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }})? {{ trans('mainLang.warningNotReversible') }}">
 								   	{{ trans('mainLang.delete') }}?
 							</a>
+							@endif
 							<button type="reset" class="btn btn-small btn-default">{{ trans('mainLang.reset') }}</button>
-					    	<button type="submit" class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
+								@if($current_section->id == null)
+									<button type="submit" class="btn btn-small btn-success">{{ trans('mainLang.createSection') }}</button>
+								@else
+					    			<button type="submit" class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
+								@endif
 						</td>
 					</tr>
 						@foreach ($errors->all() as $message)

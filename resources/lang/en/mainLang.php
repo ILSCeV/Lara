@@ -475,6 +475,8 @@ return [
     ////////////////////////
     'color'                         => 'Color',
     'sectionExists'                 => 'A section with this name already exits, please enter a diffrent one!',
+    'newSection'                    => 'new Section',
+    'createSection'                 => 'create Section',
     //////////
     // ICal //
     //////////

@@ -477,6 +477,8 @@ return [
     ////////////////////////
     'color'                         => 'Farbe',
     'sectionExists'                 => 'Es gibt bereits eine Sektion mit diesem Namen, bitte gib einen anderen ein!',
+    'newSection'                    => 'Neue Sektion',
+    'createSection'                 => 'neue Sektion anlegen',
 
     //////////
     // ICal //
