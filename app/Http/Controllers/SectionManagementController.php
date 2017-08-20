@@ -8,6 +8,19 @@ use Lara\Section;
 
 class SectionManagementController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $sections = Section::orderBy('title', 'ASC')->paginate(25);
+
+        return view('manageSections', ['sections' => $sections]);
+    }
+
+
     public function store()
     {
         $rules = array(
@@ -43,7 +56,4 @@ class SectionManagementController extends Controller
     {
     }
 
-    public function view()
-    {
-    }
 }

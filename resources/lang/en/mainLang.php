@@ -272,7 +272,8 @@ return [
 
     //not translated the term 'logs'
     'manageClub'            => 'Manage clubs',
-    'manageShiftType'         => 'Manage shift types',
+    'manageShiftType'       => 'Manage shift types', 
+    'manageSections'        => 'Sektionen verwalten',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
 
     'manageTemplate'        => 'Manage templates',
@@ -466,6 +467,11 @@ return [
     'negativeStats'                 => 'Statistical weight can\'t be negative.',
     'changesSaved'                  => 'Changes saved successfully.',
     'deleteFailedShiftTypeInUse'      => 'Shift type was not deleted, because it\'s in use. Here you can change that.',
+
+    ////////////////////////
+    // Section management //
+    ////////////////////////
+    'color'                         => 'Color',
 
     //////////
     // ICal //

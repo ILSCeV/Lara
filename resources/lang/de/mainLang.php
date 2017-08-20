@@ -274,7 +274,8 @@ return [
     'week'                  => 'Woche',
     //not translated the term 'logs'
     'manageClub'            => 'Clubs verwalten',
-    'manageShiftType'         => 'Diensttypen verwalten', 
+    'manageShiftType'       => 'Diensttypen verwalten', 
+    'manageSections'        => 'Sektionen verwalten',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
     
     'manageTemplate'        => 'Vorlagen verwalten',
@@ -468,7 +469,12 @@ return [
     'nonNumericStats'               => 'Statistische Wertung muss man mit Ziffern eingeben ;)',
     'negativeStats'                 => 'Statistische Wertung darf nicht negativ sein.',
     'changesSaved'                  => 'Änderungen erfolgreich gespeichert.',
-    'deleteFailedShiftTypeInUse'      => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
+    'deleteFailedShiftTypeInUse'    => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
+
+    ////////////////////////
+    // Section management //
+    ////////////////////////
+    'color'                         => 'Farbe',
 
     //////////
     // ICal //

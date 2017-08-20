@@ -111,15 +111,15 @@ Route::get('lang', function() {
 });
 
 // RESTful RESOURCES
-Route::resource('shiftType', 	'ShiftTypeController');
-Route::resource('shiftType', 	'ShiftTypeController');
-Route::resource('shift', 	'ShiftController', 	        ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
-Route::resource('schedule', 'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
-Route::resource('event', 	'ClubEventController', 		['except' => ['index']]);
-Route::resource('person', 	'PersonController', 		['only'   => ['index']]);
-Route::resource('club', 	'ClubController', 			['only'   => ['index']]);
-Route::resource('survey',	'SurveyController',			['except' => ['index']]);
-Route::resource('survey.answer', 'SurveyAnswerController', ['only' => ['show', 'store', 'update', 'destroy']]);
+Route::resource('shiftType', 		'ShiftTypeController');
+Route::resource('shift', 			'ShiftController', 	        ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
+Route::resource('schedule', 		'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
+Route::resource('event', 			'ClubEventController', 		['except' => ['index']]);
+Route::resource('person', 			'PersonController', 		['only'   => ['index']]);
+Route::resource('club', 			'ClubController', 			['only'   => ['index']]);
+Route::resource('survey',			'SurveyController',			['except' => ['index']]);
+Route::resource('survey.answer', 	'SurveyAnswerController', 	['only'   => ['show', 'store', 'update', 'destroy']]);
+Route::resource('section', 			'SectionManagementController');
 
 
 // STATISTICS

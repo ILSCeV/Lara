@@ -273,7 +273,8 @@ return [
     'week'                  => 'Trinkzeit',
     //not translated the term 'logs'
     'manageClub'            => 'Schiffe verwalten',
-    'manageShiftType'         => 'Diensttypen verwalten', 
+    'manageShiftType'       => 'Diensttypen verwalten', 
+    'manageSections'        => 'Mannschaften verwalten',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
     
     'manageTemplate'        => 'Vorlagen verwalten',
@@ -468,6 +469,11 @@ return [
     'negativeStats'                 => 'Statistische Wertung darf nicht negativ sein.',
     'changesSaved'                  => 'Änderungen erfolgreich gespeichert.',
     'deleteFailedShiftTypeInUse'      => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
+
+    ////////////////////////
+    // Section management //
+    ////////////////////////
+    'color'                         => 'Farbe',
     
     
     //////////
