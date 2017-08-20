@@ -25,9 +25,13 @@
 							<i>{{ trans('mainLang.section') }}:</i>
 						</td>
 						<td>
-							{!! Form::text('title' . $current_section->id, 
+							{!! Form::text('id', 
+							   $current_section->id, 
+							   array('id'=>'id', 'hidden')) !!}
+
+							{!! Form::text('title', 
 							   $current_section->title, 
-							   array('id'=>'title' . $current_section->id)) !!}
+							   array('id'=>'title')) !!}
 						</td>
 					</tr>
 					<tr>
@@ -35,9 +39,9 @@
 							<i>{{ trans('mainLang.color') }}:</i>
 						</td>
 						<td>
-							{!! Form::input('text','color' . $current_section->id, 
+							{!! Form::input('text','color', 
 							   $current_section->color, 
-							   array('id'=>'color' . $current_section->id)) !!}
+							   array('id'=>'color')) !!}
 						</td>
 					</tr>
 					<tr>
@@ -45,6 +49,17 @@
 							&nbsp;
 						</td>
 						<td>
+							<a href="../section/{{ $current_section->id }}"
+							   class="btn btn-small btn-danger"
+							   data-toggle="tooltip"
+			                   data-placement="bottom"
+			                   title="&#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }}) löschen"
+							   data-method="delete"
+							   data-token="{{csrf_token()}}"
+							   rel="nofollow"
+							   data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }})? {{ trans('mainLang.warningNotReversible') }}">
+								   	{{ trans('mainLang.delete') }}?
+							</a>
 							<button type="reset" class="btn btn-small btn-default">{{ trans('mainLang.reset') }}</button>
 					    	<button type="submit" class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
 						</td>

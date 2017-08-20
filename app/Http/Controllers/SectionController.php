@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Lara\Section;
 use Lara\Utilities;
+use Session;
 use View;
+use Redirect;
 
 class SectionController extends Controller
 {
@@ -39,7 +41,7 @@ class SectionController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
         if (!Utilities::requirePermission("Admin")) {
             // Return to the section management page
@@ -55,13 +57,17 @@ class SectionController extends Controller
 
         if ($validator->fails()) {
             //TODO: Error handling
+            dd("validation error");
         }
+
         $title = Input::get("title");
+
         $id = Input::get("id");
         if (is_null($id) || empty($id)) {
             $existingSection = Section::where('title', '=', $title)->first();
             if (!is_null($existingSection)) {
                 //TODO: Error handling
+                dd("duh!");
             }
             $section = new Section();
             $section->section_uid = hash("sha512", uniqid());
@@ -114,7 +120,7 @@ class SectionController extends Controller
      */
     public function update(Request $request, Section $section)
     {
-        self::store();
+        self::store($request);
     }
 
     /**
