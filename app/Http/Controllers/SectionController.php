@@ -78,6 +78,13 @@ class SectionController extends Controller
             $section->section_uid = hash("sha512", uniqid());
         } else {
             $section = Section::where('id', '=', $id)->first();
+            $existingSection = Section::where('title', '=', $title)->where('id', '!=', $id)->first();
+            if (!is_null($existingSection)) {
+                // Return to the section management page
+                Session::put('message', trans('mainLang.sectionExists'));
+                Session::put('msgType', 'danger');
+                return Redirect::back();
+            }
         }
 
         $section->title = $title;
