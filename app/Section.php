@@ -19,7 +19,7 @@ class Section extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('title', 'section_uid');
+	protected $fillable = array('title', 'section_uid', 'color');
 
 	/**
 	 * Get the corresponding club events.
