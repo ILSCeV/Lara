@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Lara\Section;
 use Lara\Utilities;
-use Session;
-use View;
-use Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Redirect;
 
 class SectionController extends Controller
 {
@@ -55,20 +55,21 @@ class SectionController extends Controller
         );
         $validator = Validator::make(Input::all(), $rules);
 
+        $title = Input::get("title");
+        $id = Input::get("id");
+        $isNew = isset($id);
+
+
         if ($validator->fails()) {
-            //TODO: Error handling
-            dd("validation error");
+           return Redirect::back()->withErrors($validator);
         }
 
-        $id = Input::get("id");
-        $title = Input::get("title");
-        $color = Input::get("color");
 
-        if (!isset($id)) {
+        if ($isNew) {
             $existingSection = Section::where('title', '=', $title)->first();
             if (!is_null($existingSection)) {
                 //TODO: Error handling
-                dd("duh!");
+
             }
             $section = new Section();
             $section->section_uid = hash("sha512", uniqid());
