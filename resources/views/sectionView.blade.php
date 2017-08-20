@@ -57,7 +57,7 @@
 						</td>
 						<td>
 							@if(isset($current_section->id))
-							<a href="../section/{{ $current_section->id }}"
+							<a href="{!! action('SectionController@destroy',$current_section->id) !!}"
 							   class="btn btn-small btn-danger"
 							   data-toggle="tooltip"
 			                   data-placement="bottom"
