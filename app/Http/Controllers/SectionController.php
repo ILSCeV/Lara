@@ -43,7 +43,7 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Utilities::requirePermission("Admin")) {
+        if (!Utilities::requirePermission("admin")) {
             // Return to the section management page
             Session::put('message', trans('mainLang.adminsOnly'));
             Session::put('msgType', 'danger');
