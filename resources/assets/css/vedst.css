@@ -482,6 +482,14 @@ input[type=number],
     padding-top: 6px;
 }
 
+.back-to-top {
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display:none;
+}
+
 /* my event */
 .cal-month-my-event {
     border: 3px solid #FFEA58;

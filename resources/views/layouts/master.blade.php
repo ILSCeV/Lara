@@ -34,9 +34,12 @@
 			@include('partials.message')
 		</div>
 
-    <section class="container containerNopadding">
+    <section class="container containerNopadding" id="masterSection">
         @yield('content')
     </section>
+
+    <!-- Back to Top button -->
+    <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top visible-xs visible-sm" role="button" title="{{ trans("mainLang.backToTop")  }}" data-toggle="tooltip" data-placement="right"><span class="glyphicon glyphicon-chevron-up"></span></a>
 
     <br>
  	<footer class="navbar-default navbar-static-bottom" id="footer">

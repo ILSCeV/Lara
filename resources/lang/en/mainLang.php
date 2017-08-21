@@ -32,6 +32,7 @@ return [
     //'moreInfos'           => 'More informations? Visit the ',
     //'projectsite'         => 'projectsite on GitHub',
     'moreInfosProjectsite'  => 'More informations? Visit the projectsite on GitHub',
+    'backToTop'             => 'Scroll back to top',
 
     //-----------------------------------------------------------------------------------------------------
 
