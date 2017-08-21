@@ -34,7 +34,7 @@
 			@include('partials.message')
 		</div>
 
-    <section class="container containerNopadding" id="masterSection">
+    <section class="container containerNopadding">
         @yield('content')
     </section>
 
