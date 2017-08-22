@@ -39,7 +39,7 @@
     </section>
 
     <!-- Back to Top button -->
-    <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top visible-xs visible-sm" role="button" title="{{ trans("mainLang.backToTop")  }}" data-toggle="tooltip" data-placement="right"><span class="glyphicon glyphicon-chevron-up"></span></a>
+    <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top hidden-print hidden-md hidden-lg" role="button" title="{{ trans("mainLang.backToTop")  }}" data-toggle="tooltip" data-placement="right"><span class="glyphicon glyphicon-chevron-up"></span></a>
 
     <br>
  	<footer class="navbar-default navbar-static-bottom" id="footer">
