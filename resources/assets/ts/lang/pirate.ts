@@ -9,6 +9,8 @@ export default {
     "forgotStartTime": "Die Startzeit vergessen!",
     "forgotEndTime": "Die Endzeit vergessen!",
     "descriptionTooLong": "Der Beschreibungstext ist zu lange! Der Text sollte weniger als 1500 Zeichen enthalten.",
+    "wrongShiftWeightFormat": "Das Format eines Schichtgewichts ist falsch! Das richtige Format ist 1234.5678.",
+
     "addCommentHere": "Blödsinn ausrufen",
 
     'loading': 'Der Schiff wird beladen...',

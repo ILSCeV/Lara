@@ -16,13 +16,19 @@ $(() => {
         let beginDate = new Date($("[name='beginDate']").prop("value") + " " + $("[name='beginTime']").prop("value"));
         let endDate = new Date($("[name='endDate']").prop("value") + " " + $("[name='endTime']").prop("value"));
 
+        // if one inputs an ill formatted number in the input (possible e.g. in Firefox)
+        // the  browser will catch this and empty the value before submitting the changes
+        // thus the weight will be empty, and we can check for that
+        const isSomeWeightIllFormatted = $("[name^='shifts[weight]']").toArray().some((e: HTMLElement) => e["value"] === "");
+        
         // contains the keys to translations to be shown if the condition is fulfilled
         let errorConditions: {[key: string]: boolean} = {
             'endBeforeStart': beginDate.getTime() > endDate.getTime(),
             'forgotFilter': $("#filter-checkboxes").find("input[type=checkbox]:checked").length === 0,
             'forgotPreparation': $('[name="preparationTime"]').val() === "",
             'forgotStartTime': $('[name="beginTime"]').val() === "",
-            'forgotEndTime': $('[name="endTime"]').val() === ""
+            'forgotEndTime': $('[name="endTime"]').val() === "",
+            'wrongShiftWeightFormat': isSomeWeightIllFormatted
         };
 
         let errors = Object.keys(errorConditions)
