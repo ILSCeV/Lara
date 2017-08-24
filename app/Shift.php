@@ -58,6 +58,10 @@ class Shift extends Model
         return $this->belongsTo('Lara\Schedule', 'schedule_id', 'id');
     }
 
+    public function event() {
+        return $this->getSchedule()->event();
+    }
+
     /**
      * Get quantity of shifts grouped by $shiftTypeId.
      *

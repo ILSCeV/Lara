@@ -3,6 +3,7 @@
 namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Club extends Model
 {
@@ -36,9 +37,19 @@ class Club extends Model
         return $this->persons()->where('prsn_status', '=', 'candidate');
     }
 
-    public function accountableForStatistics()
+    public function accountableForStatistics(Carbon $date)
     {
-        return $this->persons()->whereIn('prsn_status', ['member', 'candidate', 'veteran']);
+        $lowerLimit = $date->copy()->subMonth(3);
+        $upperLimit = $date->copy()->addMonth(1);
+        return $this->persons()->where(function($query) use ($lowerLimit, $upperLimit) {
+            $query->whereIn('prsn_status', ['member', 'candidate'])
+                ->orWhere(function ($query)  use($lowerLimit, $upperLimit) {
+                    $query->whereHas('shifts', function ($query) use ($lowerLimit, $upperLimit) {
+                        $query->whereDate('updated_at', '>=', $lowerLimit)
+                            ->whereDate('updated_at', '<=', $upperLimit);
+                    });
+                });
+        });
     }
 
     public static function activeClubs()

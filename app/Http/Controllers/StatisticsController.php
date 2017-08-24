@@ -31,20 +31,12 @@ class StatisticsController extends Controller
         $shifts = Shift::whereHas('schedule.event', function ($query) use ($from, $till) {
             $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
         })->get();
-        $clubs = Club::activeClubs()->with('accountableForStatistics')->get();
+        $clubs = Club::activeClubs()->get();
 
         // array with key: clb_title and values: array of infos for user of the club
         $clubInfos = $clubs->flatMap(function($club) use($shifts, $year, $month) {
-            $infosForClub = $club->accountableForStatistics
-                ->filter(function($person) use ($year, $month) {
-                    $lastShift = $person->lastShift();
-                    if (is_null($lastShift)) {
-                        return;
-                    }
-                    // if members last shift was withing three months, display him. Otherwise don't
-                    return $lastShift->updated_at->diffInMonths(Carbon::create($year, $month)) < 3;
-
-                })
+            $infosForClub = $club->accountableForStatistics(new Carbon($year . "-" . $month))
+                ->get()
                 ->map(function($person) use($shifts, $club)  {
                     $info = new StatisticsInformation();
                     return $info->make($person, $shifts, $club);

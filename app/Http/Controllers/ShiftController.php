@@ -132,7 +132,7 @@ class ShiftController extends Controller
         // Case CHANGED:   Entry was not empty, new name entered            -> delete old data, then add new data
 
 
-        if( !isset($shift->person_id) )
+        if( !isset($shift->person_id) || $shift->person_id == 0 )
         {
             if ( !$userName == '' )
             {
