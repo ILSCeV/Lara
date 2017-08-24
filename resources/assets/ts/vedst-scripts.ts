@@ -729,6 +729,7 @@ $(document).ready(function() {
 
     declare var chosenPerson;
     declare var chosenMonth, chosenYear;
+    declare var isMonthStatistic;
     $('[name^=show-stats-person]').click(function() {
 
         // Initialise modal and show loading icon and message
@@ -799,6 +800,7 @@ $(document).ready(function() {
                     // chosen date values from the view
                     "month": chosenMonth,
                     "year":  chosenYear,
+                    "isMonthStatistic": isMonthStatistic,
 
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
                     "_token": $(this).find( 'input[name=_token]' ).val(),

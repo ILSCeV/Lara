@@ -27,48 +27,27 @@ class StatisticsController extends Controller
         $from = new DateTime($year . '-' . $month . '-01');
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next month')->modify('-1 day');
-
-        $shifts = Shift::whereHas('schedule.event', function ($query) use ($from, $till) {
-            $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
-        })->get();
-        $clubs = Club::activeClubs()->with('accountableForStatistics')->get();
-
-        // array with key: clb_title and values: array of infos for user of the club
-        $clubInfos = $clubs->flatMap(function($club) use($shifts, $year, $month) {
-            $infosForClub = $club->accountableForStatistics
-                ->filter(function($person) use ($year, $month) {
-                    $lastShift = $person->lastShift();
-                    if (is_null($lastShift)) {
-                        return;
-                    }
-                    // if members last shift was withing three months, display him. Otherwise don't
-                    return $lastShift->updated_at->diffInMonths(Carbon::create($year, $month)) < 3;
-
-                })
-                ->map(function($person) use($shifts, $club)  {
-                    $info = new StatisticsInformation();
-                    return $info->make($person, $shifts, $club);
-                });
-            $maxShifts = $infosForClub->map(function($info){return $info->inOwnClub + $info->inOtherClubs;})->sort()->last();
-
-            // avoid division by zero
-            $maxShifts = max($maxShifts, 1);
-            $infosForClub = $infosForClub->sortBy('user.prsn_name')
-                ->map(function(StatisticsInformation $info) use($maxShifts) {
-                    $info->shiftsPercentIntern = $info->inOwnClub / ($maxShifts * 1.5) * 100;
-                    $info->shiftsPercentExtern = $info->inOtherClubs / ($maxShifts * 1.5) * 100;
-                    return $info;
-                });
-            return [$club->clb_title => $infosForClub];
-        });
-
-        $infos = $clubInfos->flatten();
+        $isMonthStatistic = true;
+        list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till, $isMonthStatistic);
         
-        return View::make('statisticsView', compact('infos', 'clubInfos', 'userId', 'year', 'month'));
+        return View::make('statisticsView', compact('infos', 'clubInfos', 'userId', 'year', 'month', 'isMonthStatistic'));
 
     }
 
-
+    public function showYearStatistics($year = null)
+    {
+        if (!isset($year)) {
+            $year = strftime('%Y');
+        }
+        $from = new DateTime($year . '-' . '01-01');
+        $till = new DateTime($from->format('Y-m-d'));
+        $till->modify('next year')->modify('-1 day');
+        $isMonthStatistic = false;
+        list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till, $isMonthStatistic);
+        $month = $till->format("m");
+    
+        return View::make('statisticsView', compact('infos', 'clubInfos', 'userId', 'year', 'month', 'isMonthStatistic'));
+    }
 
     /**
      * Returns list of all shifts a selected person did in a chosen month, with some associated metadata
@@ -83,12 +62,18 @@ class StatisticsController extends Controller
         if (!isset($id)) { return Redirect::action( 'StatisticsController@showStatistics'); }
         request("year") ? $year = request("year") : $year = strftime('%Y');
         request("month") ? $month = request("month") : $month = strftime('%m');
+        request("isMonthStatistic") ? $isMonthStatistic = request("isMonthStatistic") : $isMonthStatistic = true;
 
         // set the time window
-        $from = new DateTime($year . '-' . $month . '-01');
-        $till = new DateTime($from->format('Y-m-d'));
-        $till->modify('next month')->modify('-1 day');
-
+        if($isMonthStatistic) {
+            $from = new DateTime($year.'-'.$month.'-01');
+            $till = new DateTime($from->format('Y-m-d'));
+            $till->modify('next month')->modify('-1 day');
+        } else {
+            $from = new DateTime($year.'-'.'01-01');
+            $till = new DateTime($from->format('Y-m-d'));
+            $till->modify('next year')->modify('-1 day');
+        }
         // get all shifts in selected time window, for selected person, with their attributes
         $shifts =  Shift::where('person_id', '=', $id)
                                 ->whereHas('schedule.event', function ($query) use ($from, $till) {
@@ -119,5 +104,66 @@ class StatisticsController extends Controller
         }
 
         return response()->json($response);        
+    }
+    
+    /**
+     * @param bool $isMonthStatistic
+     * @param DateTime $from
+     * @param DateTime $till
+     * @return array
+     */
+    private function generateStatisticInformationForSections($from, $till, $isMonthStatistic)
+    {
+        $shifts = Shift::whereHas('schedule.event', function ($query) use ($from, $till) {
+            $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
+        })->get();
+        $clubs = Club::activeClubs()->with('accountableForStatistics')->get();
+        $year = $from->format("Y");
+        $month = $till->format("m");
+        
+        // array with key: clb_title and values: array of infos for user of the club
+        $clubInfos = $clubs->flatMap(function ($club) use ($shifts, $year, $month, $isMonthStatistic) {
+            
+            
+            $infosForClub = $club->accountableForStatistics
+                ->filter(function ($person) use ($year, $month, $isMonthStatistic) {
+                    $lastShift = $person->lastShift();
+                    if (is_null($lastShift)) {
+                        return;
+                    }
+                    if($isMonthStatistic) {
+                        // if members last shift was withing three months, display him. Otherwise don't
+                        return $lastShift->updated_at->diffInMonths(Carbon::create($year, $month)) < 3;
+                    } else {
+                        // if members last shift was in the current year, display him. Otherwise don't
+                        return $lastShift->updated_at->diffInYears(Carbon::create($year)) < 1;
+                    }
+                    
+                })
+                ->map(function ($person) use ($shifts, $club) {
+                    $info = new StatisticsInformation();
+                    
+                    return $info->make($person, $shifts, $club);
+                });
+            $maxShifts = $infosForClub->map(function ($info) {
+                return $info->inOwnClub + $info->inOtherClubs;
+            })->sort()->last();
+            
+            // avoid division by zero
+            $maxShifts = max($maxShifts, 1);
+            $infosForClub = $infosForClub->sortBy('user.prsn_name')
+                ->map(function (StatisticsInformation $info) use ($maxShifts) {
+                    $info->shiftsPercentIntern = $info->inOwnClub / ($maxShifts * 1.5) * 100;
+                    $info->shiftsPercentExtern = $info->inOtherClubs / ($maxShifts * 1.5) * 100;
+                    
+                    return $info;
+                });
+            
+            return [$club->clb_title => $infosForClub];
+        });
+        
+        $infos = $clubInfos->flatten();
+        
+        return [$clubInfos, $infos];
     }
 }
