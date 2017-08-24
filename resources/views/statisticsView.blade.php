@@ -85,7 +85,7 @@
         var chosenMonth = {{ $month }}; 
         var chosenYear = {{ $year }};
         var chosenPerson;
-        var isMonthStatistic = {{ $isMonthStatistic }} === 1;
+        var isMonthStatistic = {{ $isMonthStatistic }};
     </script>
 
 @else

@@ -27,7 +27,7 @@ class StatisticsController extends Controller
         $from = new DateTime($year . '-' . $month . '-01');
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next month')->modify('-1 day');
-        $isMonthStatistic = true;
+        $isMonthStatistic = 1;
         list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till, $isMonthStatistic);
         
         return View::make('statisticsView', compact('infos', 'clubInfos', 'userId', 'year', 'month', 'isMonthStatistic'));
@@ -42,7 +42,7 @@ class StatisticsController extends Controller
         $from = new DateTime($year . '-' . '01-01');
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next year')->modify('-1 day');
-        $isMonthStatistic = false;
+        $isMonthStatistic = 0;
         list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till, $isMonthStatistic);
         $month = $till->format("m");
     
@@ -62,10 +62,10 @@ class StatisticsController extends Controller
         if (!isset($id)) { return Redirect::action( 'StatisticsController@showStatistics'); }
         request("year") ? $year = request("year") : $year = strftime('%Y');
         request("month") ? $month = request("month") : $month = strftime('%m');
-        request("isMonthStatistic") ? $isMonthStatistic = request("isMonthStatistic") : $isMonthStatistic = true;
+        request("isMonthStatistic") == "0" ? $isMonthStatistic = 0 : $isMonthStatistic = 1;
 
         // set the time window
-        if($isMonthStatistic) {
+        if($isMonthStatistic == 1) {
             $from = new DateTime($year.'-'.$month.'-01');
             $till = new DateTime($from->format('Y-m-d'));
             $till->modify('next month')->modify('-1 day');
@@ -102,12 +102,11 @@ class StatisticsController extends Controller
                             'date'      =>strftime("%d.%m.%Y (%a)", strtotime($shift->schedule->event->evnt_date_start)),
                             'weight'    =>$shift->statistical_weight];
         }
-
         return response()->json($response);        
     }
     
     /**
-     * @param bool $isMonthStatistic
+     * @param int $isMonthStatistic
      * @param DateTime $from
      * @param DateTime $till
      * @return array
