@@ -17,7 +17,7 @@ class StatisticsInformation
 
     public function make(Person $person, $shifts, Club $club)
     {
-        $usersShifts = $shifts->where('person_id', $person->id);
+        $usersShifts = $shifts->filter(function ($shift) use($person) { return $shift->person_id == $person->id;});
 
         $totalWeight = $usersShifts->reduce(function($prev, $current) {
             return $current->statistical_weight + $prev;

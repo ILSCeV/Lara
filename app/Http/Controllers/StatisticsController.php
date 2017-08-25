@@ -2,17 +2,14 @@
 
 namespace Lara\Http\Controllers;
 
+use Carbon\Carbon;
 use DateTime;
-
 use Lara\Club;
 use Lara\Person;
 use Lara\Shift;
+use Lara\StatisticsInformation;
 use Redirect;
 use View;
-
-use Carbon\Carbon;
-
-use Lara\StatisticsInformation;
 
 class StatisticsController extends Controller
 {
@@ -24,48 +21,52 @@ class StatisticsController extends Controller
         if (!isset($month)) {
             $month = strftime('%m');
         }
-        $from = new DateTime($year . '-' . $month . '-01');
+        $from = new DateTime($year.'-'.$month.'-01');
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next month')->modify('-1 day');
         $isMonthStatistic = 1;
         list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till, $isMonthStatistic);
         
-        return View::make('statisticsView', compact('infos', 'clubInfos', 'userId', 'year', 'month', 'isMonthStatistic'));
-
+        return View::make('statisticsView',
+            compact('infos', 'clubInfos', 'userId', 'year', 'month', 'isMonthStatistic'));
+        
     }
-
+    
     public function showYearStatistics($year = null)
     {
         if (!isset($year)) {
             $year = strftime('%Y');
         }
-        $from = new DateTime($year . '-' . '01-01');
+        $from = new DateTime($year.'-'.'01-01');
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next year')->modify('-1 day');
         $isMonthStatistic = 0;
         list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till, $isMonthStatistic);
         $month = $till->format("m");
-    
-        return View::make('statisticsView', compact('infos', 'clubInfos', 'userId', 'year', 'month', 'isMonthStatistic'));
+        
+        return View::make('statisticsView',
+            compact('infos', 'clubInfos', 'userId', 'year', 'month', 'isMonthStatistic'));
     }
-
+    
     /**
      * Returns list of all shifts a selected person did in a chosen month, with some associated metadata
      *
-     * @param  int  $id
-     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function shiftsByPerson($id = null)
     {
         // fill empty parameters - no date selected means show current month and year
-        if (!isset($id)) { return Redirect::action( 'StatisticsController@showStatistics'); }
+        if (!isset($id)) {
+            return Redirect::action('StatisticsController@showStatistics');
+        }
         request("year") ? $year = request("year") : $year = strftime('%Y');
         request("month") ? $month = request("month") : $month = strftime('%m');
-        request("isMonthStatistic") == "0" ? $isMonthStatistic = 0 : $isMonthStatistic = 1;
-
+        $isMonthStatistic = request("isMonthStatistic") == 0 ? 0 : 1;
+        
         // set the time window
-        if($isMonthStatistic == 1) {
+        if ($isMonthStatistic) {
             $from = new DateTime($year.'-'.$month.'-01');
             $till = new DateTime($from->format('Y-m-d'));
             $till->modify('next month')->modify('-1 day');
@@ -75,71 +76,88 @@ class StatisticsController extends Controller
             $till->modify('next year')->modify('-1 day');
         }
         // get all shifts in selected time window, for selected person, with their attributes
-        $shifts =  Shift::where('person_id', '=', $id)
-                                ->whereHas('schedule.event', function ($query) use ($from, $till) {
-                                    $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
-                                })
-                                ->with('type', 'schedule.event.section')
-                                ->get()
-                                ->sortBy('schedule.event.evnt_date_start');
-
+        $shifts = Shift::where('person_id', '=', $id)
+            ->whereHas('schedule.event', function ($query) use ($from, $till) {
+                $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
+            })
+            ->with('type', 'schedule.event.section')
+            ->get()
+            ->sortBy('schedule.event.evnt_date_start');
+        
         // TODO: sort shifts by date
         
         // format the response
         $response = [];
         $ownClub = Person::find($id)->club->clb_title;
-
-
+        
+        
         foreach ($shifts as $shift) {
             $clubsOfShift = json_decode($shift->schedule->event->evnt_show_to_club);
-
-            $response[] = [ 'id'        =>$shift->id, 
-                            'shift'     =>$shift->type->title(),
-                            'event'     =>$shift->schedule->event->evnt_title, 
-                            'event_id'  =>$shift->schedule->event->id,
-                            'section'   =>$shift->schedule->event->section->title,
-                            'isOwnClub' =>in_array($ownClub, $clubsOfShift),
-                            'date'      =>strftime("%d.%m.%Y (%a)", strtotime($shift->schedule->event->evnt_date_start)),
-                            'weight'    =>$shift->statistical_weight];
+            
+            $response[] = [
+                'id'        => $shift->id,
+                'shift'     => $shift->type->title(),
+                'event'     => $shift->schedule->event->evnt_title,
+                'event_id'  => $shift->schedule->event->id,
+                'section'   => $shift->schedule->event->section->title,
+                'isOwnClub' => in_array($ownClub, $clubsOfShift),
+                'date'      => strftime("%d.%m.%Y (%a)", strtotime($shift->schedule->event->evnt_date_start)),
+                'weight'    => $shift->statistical_weight,
+            ];
         }
-        return response()->json($response);        
+        
+        return response()->json($response);
     }
     
     /**
-     * @param int $isMonthStatistic
+     * @param bool $isMonthStatistic
      * @param DateTime $from
      * @param DateTime $till
      * @return array
      */
     private function generateStatisticInformationForSections($from, $till, $isMonthStatistic)
     {
-        $shifts = Shift::whereHas('schedule.event', function ($query) use ($from, $till) {
-            $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
-        })->get();
-        $clubs = Club::activeClubs()->with('accountableForStatistics')->get();
         $year = $from->format("Y");
         $month = $till->format("m");
         
+        $clubs = Club::activeClubs()->with('accountableForStatistics')->get();
+        $persons = $clubs->flatMap(function ($club) {
+            return $club->accountableForStatistics;
+        });
+        if ($isMonthStatistic) {
+            $persons = $persons->filter(function ($person) use ($month, $year) {
+                $lastShift = $person->lastShift();
+                if (is_null($lastShift)) {
+                    return false;
+                }
+                
+                return $lastShift->updated_at->diffInMonths(Carbon::create($year,$month)) < 3;
+            });
+        } else {
+            $persons = $persons->filter(function ($person) use ($from, $till) {
+                return null !== $person->lastShift() && $person->shifts()->whereHas('schedule.event',
+                        function ($query) use ($from, $till) {
+                            $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
+                        })->get()->count() > 0;
+            });
+        }
+        $personIds = $persons->map(function ($prsn) {
+            return $prsn->id;
+        });
+        $shifts = Shift::whereHas('schedule.event', function ($query) use ($from, $till) {
+            $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
+        })->whereIn('person_id', $personIds)
+            ->with('schedule')->with('schedule.event')
+            ->get();
+        
+        
         // array with key: clb_title and values: array of infos for user of the club
-        $clubInfos = $clubs->flatMap(function ($club) use ($shifts, $year, $month, $isMonthStatistic) {
+        $clubInfos = $clubs->flatMap(function ($club) use ($shifts, $year, $month, $isMonthStatistic, $persons) {
             
             
-            $infosForClub = $club->accountableForStatistics
-                ->filter(function ($person) use ($year, $month, $isMonthStatistic) {
-                    $lastShift = $person->lastShift();
-                    if (is_null($lastShift)) {
-                        return false;
-                    }
-                    if($isMonthStatistic) {
-                        // if members last shift was withing three months, display him. Otherwise don't
-                        return $lastShift->updated_at->diffInMonths(Carbon::create($year, $month)) < 3;
-                    } else {
-                        // if members last shift was in the current year, display him. Otherwise don't
-                        return $lastShift->updated_at->diffInYears(Carbon::create($year)) < 1;
-                    }
-                    
-                })
-                ->map(function ($person) use ($shifts, $club) {
+            $infosForClub = $persons->filter(function ($person) use ($club) {
+                return $person->clb_id == $club->id;
+            })->map(function ($person) use ($shifts, $club) {
                     $info = new StatisticsInformation();
                     
                     return $info->make($person, $shifts, $club);
