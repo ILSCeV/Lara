@@ -309,6 +309,10 @@ return [
 
     // /resources/views/partials/clubStatistics.blade.php
     'infoFor'               => 'Mitgliederstatistik',
+    
+    // /resources/views/statisticsView.blade.php
+    'monthStatistic'       => 'Monatsstatistik',
+    'yearStatistic'       => 'Jahresstatistik',
 
     // /resources/views/partials/personalStatistics.blade.php
     //-----------------------------------------------------------------------------------------------------------

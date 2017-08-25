@@ -49,11 +49,11 @@
             <div class="form-inline">
                 @if($isMonthStatistic)
                 <div class="form-control">
-                    <a class="btn btn-primary form-control" href="{{ action("StatisticsController@showYearStatistics") }}" >Jahresstatistik</a>
+                    <a class="btn btn-primary form-control" href="{{ action("StatisticsController@showYearStatistics") }}" >{{ trans("mainLang.yearStatistic") }}</a>
                 </div>
                 @else
                     <div class="form-control">
-                        <a class="btn btn-primary form-control" href="{{ action("StatisticsController@showStatistics")  }}">Monatsstatistik</a>
+                        <a class="btn btn-primary form-control" href="{{ action("StatisticsController@showStatistics")  }}">{{ trans("mainLang.monthStatistic") }}</a>
                     </div>
                 @endif
             </div>
