@@ -128,7 +128,7 @@ class StatisticsController extends Controller
                 ->filter(function ($person) use ($year, $month, $isMonthStatistic) {
                     $lastShift = $person->lastShift();
                     if (is_null($lastShift)) {
-                        return;
+                        return false;
                     }
                     if($isMonthStatistic) {
                         // if members last shift was withing three months, display him. Otherwise don't
