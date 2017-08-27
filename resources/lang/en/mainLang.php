@@ -311,6 +311,10 @@ return [
     'infoFor'               => 'Member statistics',
 
     // /resources/views/partials/personalStatistics.blade.php
+    
+    // /resources/views/statisticsView.blade.php
+    'monthStatistic'       => 'monthly Statistics',
+    'yearStatistic'       => 'yearly Statistics',
 
     //-----------------------------------------------------------------------------------------------------------
 

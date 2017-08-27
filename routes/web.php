@@ -123,7 +123,8 @@ Route::resource('section', 			'SectionController');
 
 
 // STATISTICS
-Route::get('/statistics/{year?}/{month?}',	'StatisticsController@showStatistics');
+Route::get('/statistics/month/{year?}/{month?}',	'StatisticsController@showStatistics');
+Route::get('/statistics/year/{year?}',	'StatisticsController@showYearStatistics');
 
 
 // JSON EXPORT - RETURNS EVENTS METADATA

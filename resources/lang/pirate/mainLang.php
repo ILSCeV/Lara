@@ -313,6 +313,10 @@ return [
     // /resources/views/partials/personalStatistics.blade.php
     //-----------------------------------------------------------------------------------------------------------
     
+    // /resources/views/statisticsView.blade.php
+    'monthStatistic'       => 'Monatsabrechnung',
+    'yearStatistic'       => 'Jahresabrechnung',
+    
     // /resources/views/partials/surveyAnswerStatus.blade.php
     //no new strings
     
