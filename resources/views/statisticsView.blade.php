@@ -63,9 +63,9 @@
             @endif
         </div>
 
-        <br/>
-        <br class="hidden-xs">
-        <br class="hidden-xs">
+        <br>
+        <br>
+        <br class="visible-xs">
     </div>
 
 
