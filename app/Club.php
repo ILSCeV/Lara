@@ -38,7 +38,7 @@ class Club extends Model
 
     public function accountableForStatistics()
     {
-        return $this->persons()->whereNotNull('prsn_ldap_id');
+        return $this->persons()->whereNotNull('prsn_ldap_id')->where('prsn_ldap_id','<>','9999');
     }
 
     public static function activeClubs()
