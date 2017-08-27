@@ -2,25 +2,21 @@
 
 namespace Lara\Http\Controllers;
 
+use DateTime;
 use Request;
 use Session;
 use Input;
 use Hash;
+use Lara\Logging;
 use Illuminate\Database\Eloquent\Collection;
 
-use Lara\Jobtype;
 use Lara\Schedule;
-use Lara\ScheduleEntry;
-use Lara\ClubEvent;
-
-use Carbon\Carbon;
-use \Datetime;
-
-use Lara\Http\Requests;
-use Lara\Http\Controllers\Controller;
+use Lara\Shift;
+use Lara\ShiftType;
 
 class ScheduleController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -127,6 +123,12 @@ class ScheduleController extends Controller
             $schedule->schdl_is_template = false;
         }
 
+        if ($schedule->exists) {
+            if ($schedule->isDirty('schdl_time_preparation_start')) {
+                Logging::preparationTimeChanged($schedule);
+            }
+        }
+
         return $schedule;
     }
 
@@ -147,325 +149,81 @@ class ScheduleController extends Controller
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
-        // Delete all corresponding entries first because of dependencies in database
-        foreach ( $schedule->getEntries()->get() as $entry ) {
-            $result = (new ScheduleEntryController)->destroy($entry->id);
+        // Delete all corresponding shifts first because of dependencies in database
+        foreach ( $schedule->shifts as $shift ) {
+            ShiftController::delete($shift);
         }
 
         // Delete the schedule
         Schedule::destroy($id);
     }
 
-
     /**
-     * Updates entry revision
-     *
-     * @param Schedule $schedule     
-     * @param ScheduleEntry $entry
-     * @param string $action
-     * @param string $old
-     * @param string $new
-     * @param string $oldComment
-     * @param string $newComment
-     * @return void
-     */
-    public static function logRevision($schedule, $entry, $action, $old, $new, $oldComment, $newComment)
-    {
-        // workaround for older events where revision history is not present
-        if($schedule->entry_revisions == "")
-        {
-            $schedule->entry_revisions = json_encode(["0" => ["entry id"    => "",
-                                                              "job type"    => "",
-                                                              "action"      => "Keine frühere Änderungen vorhanden.",
-                                                              "old id"      => "",
-                                                              "old value"   => "",
-                                                              "old comment" => "",
-                                                              "new id"      => "",
-                                                              "new value"   => "",
-                                                              "user id"     => "",
-                                                              "user name"   => "",
-                                                              "new comment" => "",
-                                                              "from ip"     => "",
-                                                              "timestamp"   => (new DateTime)->format('d.m.Y H:i:s') ]
-                                                     ]);
-        }
-    
-        // decode revision history
-        $revisions = json_decode($schedule->entry_revisions, true);
-
-        // decode old values
-        if(!is_null($old)){
-            $oldId = $old->id;
-
-            switch ($old->prsn_status) {
-                case "candidate":
-                    $oldStatus = "(K)";
-                    break;
-                case "member":
-                    $oldStatus = "(A)";
-                    break;
-                case "veteran":
-                    $oldStatus = "(V)";
-                    break;
-                default: 
-                    $oldStatus = "";
-            }
-
-            $oldName = $old->prsn_name
-                     . $oldStatus 
-                     . "(" . $old->getClub->clb_title . ")";
-        }
-        else
-        {
-            $oldId = "";
-            $oldName = "";
-        }
-
-        // decode new values
-        if(!is_null($new)){
-            $newId = $new->id;
-            
-            switch ($new->prsn_status) {
-                case "candidate":
-                    $newStatus = "(K)";
-                    break;
-                case "member":
-                    $newStatus = "(A)";
-                    break;
-                case "veteran":
-                    $newStatus = "(V)";
-                    break;
-                default: 
-                    $newStatus = "";
-            }
-
-            $newName = $new->prsn_name 
-                     . $newStatus
-                     . "(" . $new->getClub->clb_title . ")";
-        }
-        else
-        {
-            $newId = "";
-            $newName = "";
-        }
-        
-        // append current change
-        array_push($revisions, ["entry id"    => $entry->id,
-                                "job type"    => $entry->getJobType->jbtyp_title,
-                                "action"      => $action,
-                                "old id"      => $oldId,
-                                "old value"   => $oldName,
-                                "old comment" => $oldComment,
-                                "new id"      => $newId,
-                                "new value"   => $newName,
-                                "new comment" => $newComment,
-                                "user id"     => Session::get('userId') != NULL ? Session::get('userId') : "",
-                                "user name"   => Session::get('userId') != NULL ? Session::get('userName') . ' (' . Session::get('userClub') . ')' : "Gast",
-                                "from ip"     => Request::getClientIp(),
-                                "timestamp"   => (new DateTime)->format('d.m.Y H:i:s') ]
-                    );      
-
-        // encode and save
-        $schedule->entry_revisions = json_encode($revisions);
-                        
-        $schedule->save();
-    }
-
-
-    /**
-    * Create all new scheduleEntries with entered information.
+    * Create all new shifts with entered information.
     *
-    * @return Collection scheduleEntries
+    * @return Collection shifts
     */
-    public static function createScheduleEntries()
+    public static function makeShiftsFromRequest($schedule, $isNewEvent = true)
     {
-        $scheduleEntries = new Collection;
+        $inputShifts = Input::get("shifts");
+        $amount = count($inputShifts["title"]);
 
-        // parsing jobtype entries
-        for ($i=1; $i <= Input::get("counter"); $i++) {
+        $currentShiftIds = $inputShifts["id"];
+        $schedule->shifts()
+            ->whereNotIn('id', $currentShiftIds)
+            ->get()
+            ->each(function(Shift $shift) {
+                Logging::shiftDeleted($shift);
+                $shift->delete();
+            });
 
-            // skip empty fields
-            if (!empty(Input::get("jbtyp_title" . $i))) 
-            {       
-                // check if job type exists
-                $jobType = Jobtype::where('jbtyp_title', '=', Input::get("jbtyp_title" . $i))
-                                  ->where('jbtyp_time_start', '=', Input::get("jbtyp_time_start" . $i))
-                                  ->where('jbtyp_time_end', '=', Input::get("jbtyp_time_end" . $i))
-                                  ->first();
-                
-                // If not found - create new job type with data provided
-                if (is_null($jobType))
-                {
-                    // TITLE
-                    $jobType = Jobtype::create(array('jbtyp_title' => Input::get("jbtyp_title" . $i)));
 
-                    // TIME START
-                    $jobType->jbtyp_time_start = Input::get('jbtyp_time_start' . $i);
+        for ($i = 0; $i < $amount; ++$i) {
 
-                    // TIME END
-                    $jobType->jbtyp_time_end = Input::get('jbtyp_time_end' . $i);
+            $title = $inputShifts["title"][$i];
+            $id = $inputShifts["id"][$i];
+            $type = $inputShifts["type"][$i];
+            $start = $inputShifts["start"][$i];
+            $end = $inputShifts["end"][$i];
+            $weight = $inputShifts["weight"][$i];
 
-                    // STATISTICAL WEIGHT
-                    $jobType->jbtyp_statistical_weight = Input::get('jbtyp_statistical_weight' . $i);
+            $position = $i;
 
-                    // NEEDS PREPARATION
-                    $jobType->jbtyp_needs_preparation = 'true';
-
-                    // ARCHIVED set to "false"
-                    $jobType->jbtyp_is_archived = 'false';
-
-                    $jobType->save();
-                }
-
-                $scheduleEntry = new ScheduleEntry;
-                $scheduleEntry->jbtyp_id = $jobType->id;
-
-                // save changes
-                $scheduleEntries->add(ScheduleController::updateScheduleEntry($scheduleEntry, $jobType->id, $i));
-            }
+            ShiftController::makeShift($schedule, $isNewEvent, $title, $id, $type, $start, $end, $weight, $position);
         }
-
-        return $scheduleEntries;
     }
 
 
     /**
-    * Edit and/or delete scheduleEntries refered to $scheduleId.
+    * Edit and/or delete shifts refered to $scheduleId.
     *
     * @param Schedule $schedule
-    * @return Collection scheduleEntries
+    * @return Collection shifts
     */
-    public static function editScheduleEntries($scheduleId)
+    public static function editShifts($schedule)
     {
-        // get number of submitted entries
-        $numberOfSubmittedEntries = Input::get('counter');
+        self::makeShiftsFromRequest($schedule, false);
+    }
 
-        // get old entries for this schedule
-        $scheduleEntries = ScheduleEntry::where('schdl_id', '=', $scheduleId)->get();
-
-        // prepare a collection for updated entries
-        $newEntries = new Collection;
-
-        // Counter to traverse all inputs from 1 to N
-        $counterHelper = '1';
-
-        // check for changes in each entry
-        foreach ( $scheduleEntries as $entry ) 
-        {
-
-            // same job type as before - do nothing
-            if ( $entry->getJobType == Input::get('jbtyp_title' . $counterHelper) )
-            {
-                // add to new collection
-                $newEntries->add(ScheduleController::updateScheduleEntry($entry, $jobtype->id, $counterHelper));
-
-            } 
-            // job type empty - delete entry
-            elseif ( Input::get("jbtyp_title" . $counterHelper) == '' ) 
-            {
-                // log revision
-                ScheduleController::logRevision($entry->getSchedule,    // schedule object
-                                                $entry,                 // entry object
-                                                "Dienst gelöscht",      // action description
-                                                $entry->getPerson,      // old value
-                                                null,                   // new value
-                                                null,                   // old comment
-                                                null);                  // new comment
-
-                // proceed with deletion
-                $entry->delete();
-
-            } 
-            // some new job type added - change entry
-            else 
-            {       
-                $jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jbtyp_title" . $counterHelper)));
-                $entry->jbtyp_id = $jobtype->id;
-
-                // log revision
-                /*
-                ScheduleController::logRevision($entry->getSchedule,    // schedule object
-                                                $entry,                 // entry object
-                                                "Dienst aktualisiert",      // action description
-                                                $entry->getPerson,      // old value
-                                                $entry->getPerson);     // new value
-                */
-                // add to new collection
-                $newEntries->add(ScheduleController::updateScheduleEntry($entry, $jobtype->id, $counterHelper));
-            }
-
-            // move to next input
-            $counterHelper++;
-        }
-
-        // At this point we changed all existing entries - have any new ones been added?
-
-        if ($numberOfSubmittedEntries > $counterHelper - 1) {
-            
-            // create some new fields
-            for ($i= $counterHelper; $i <= $numberOfSubmittedEntries; $i++) 
-            {
-                // skip empty fields, create new fields only if input not empty
-                if (!empty(Input::get("jbtyp_title" . $i))) 
-                {
-                    $jobtype = Jobtype::firstOrCreate(array('jbtyp_title'=>Input::get("jbtyp_title" . $i)));
-
-                    $newEntry = new ScheduleEntry;
-                    $newEntry->jbtyp_id = $jobtype->id;
-                    $newEntry->schdl_id = $scheduleId;
-
-                    // log revision
-                    ScheduleController::logRevision($newEntry->getSchedule, // schedule object
-                                                    $newEntry,              // entry object
-                                                    "Dienst erstellt",      // action description
-                                                    null,                   // old value
-                                                    null,                   // new value
-                                                    null,                   // old comment
-                                                    null);                  // new comment                   
-
-                    // add to new collection
-                    $newEntries->add(ScheduleController::updateScheduleEntry($newEntry, $jobtype->id, $i));
-                }
-            }
-        }
-
-        return $newEntries;
+    public static function createShifts($schedule)
+    {
+        self::makeShiftsFromRequest($schedule, true);
     }
 
     /**
      * Receives a timestamp, compares it to last update time of the schedule 
      * and returns either a false boolean for "no updates since timestamp provided"
-     * or a JSON array of updated schedule entries
+     * or a JSON array of updated shifts
      *
-     * @param int $scheduleId 
+     * @param int $scheduleId
      * @param String $timestamp
      *
      * @return \Illuminate\Http\Response 
      */
     public static function getUpdates($scheduleId, $timestamp) 
     {
-        $updated = Schedule::where("id", "=", $id)->first()->updated_at;
+        $updated = Schedule::where("id", "=",  $id)->first()->updated_at;
         return response()->json($updated, 200);
     }
 
-
-    /**
-    * Update start and end time of $newScheduleEntry with input of gui elements
-    *
-    * @param ScheduleEntry $scheduleEntry
-    * @param int $jobtypeId
-    * @param int $counterValue
-    * @return ScheduleEntry updates scheduleentry
-    */
-    private static function updateScheduleEntry($scheduleEntry, $jobtypeId, $counterValue)
-    {
-        $scheduleEntry->entry_time_start = Input::get('jbtyp_time_start' . $counterValue);
-
-        $scheduleEntry->entry_time_end = Input::get('jbtyp_time_end' . $counterValue);
-
-        $scheduleEntry->entry_statistical_weight = Input::get('jbtyp_statistical_weight' . $counterValue);
-
-        return $scheduleEntry;
-    }
-    
 }

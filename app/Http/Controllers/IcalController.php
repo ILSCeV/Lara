@@ -14,8 +14,8 @@ use Eluceo\iCal\Component\Event;
 use Eluceo\iCal\Component\Timezone;
 use Lara\ClubEvent;
 use Lara\Person;
-use Lara\Place;
-use Lara\ScheduleEntry;
+use Lara\Section;
+use Lara\Shift;
 use Lara\Settings;
 use Lara\Utilities;
 use Log;
@@ -75,8 +75,8 @@ class IcalController extends Controller
                     .trans('mainLang.additionalInfo').":\n"
                     .$additionalInfo."\n");
                 
-                $place = $evt->place->plc_title;
-                $vEvent->setLocation($place, $place);
+                $section = $evt->section->title;
+                $vEvent->setLocation($section, $section);
                 
                 return $vEvent;
             });
@@ -117,20 +117,20 @@ class IcalController extends Controller
             $startDate = $now->sub(new \DateInterval("P2M"));
             $stopDate = $now->add(new \DateInterval("P6M"));
             
-            $place = null;
+            $section = null;
             if ($with_private_info > 0) {
-                $place = Place::where('place_uid', "=", $location)->first();
+                $section = Section::where('section_uid', "=", $location)->first();
             } else {
-                $place = Place::where('plc_title', "=", $location)->first();
+                $section = Section::where('title', "=", $location)->first();
             }
-            if (is_null($place)) {
+            if (is_null($section)) {
                 return $vCalendar->render();
             }
             
             $eventsQuery = ClubEvent::where('evnt_date_start', ">=", $startDate->format(self::DATE_FORMAT))
                 ->where('evnt_date_start', "<=", $stopDate->format(self::DATE_FORMAT))
-                ->with('place', 'getSchedule')
-                ->where('plc_id', "=", $place->id);
+                ->with('section', 'getSchedule')
+                ->where('plc_id', "=", $section->id);
             
             if ($with_private_info == 0) {
                 $eventsQuery = $eventsQuery->where("evnt_is_private", "=", '0')->where('evnt_is_published', '=', '1');
@@ -179,8 +179,8 @@ class IcalController extends Controller
                 
                 $vEvent->setDescription($evtDescription);
                 
-                $place = $evt->place->plc_title;
-                $vEvent->setLocation($place, $place);
+                $section = $evt->section->title;
+                $vEvent->setLocation($section, $section);
                 
                 return $vEvent;
             });
@@ -230,8 +230,8 @@ class IcalController extends Controller
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
             
-            $events = ScheduleEntry::where('prsn_id', '=', $person->id)
-                ->with("schedule", "schedule.event.place", "schedule.event", "jobType")
+            $events = Shift::where('person_id', '=', $person->id)
+                ->with("schedule", "schedule.event.section", "schedule.event", "type")
                 ->get();
             
             $vEvents = $events->map(function ($evt) use ($alarm) {
@@ -239,15 +239,15 @@ class IcalController extends Controller
                 
                 $start_time = "";
                 $preparationNeeded = false;
-                if ($schedule->event->evnt_time_start == $evt->entry_time_start) {
+                if ($schedule->event->evnt_time_start == $evt->start) {
                     $start_time = $schedule->schdl_time_preparation_start;
                     $preparationNeeded = true;
                 } else {
-                    $start_time = $evt->entry_time_start;
+                    $start_time = $evt->start;
                     $preparationNeeded = false;
                 }
                 
-                $stopHour = intval(substr($evt->entry_time_end, 0, 2));
+                $stopHour = intval(substr($evt->end, 0, 2));
                 $stop_date = "";
                 if ($stopHour > 18) {
                     $stop_date = $schedule->event->evnt_date_start;
@@ -260,12 +260,12 @@ class IcalController extends Controller
                 $start_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT,
                     "".$schedule->event->evnt_date_start." ".$start_time);
                 $stop_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT,
-                    "".$stop_date." ".$evt->entry_time_end);
+                    "".$stop_date." ".$evt->end);
                 
                 if ($start_date_time != false && $stop_date_time != false) {
                     $vEvent->setDtStart($start_date_time);
                     $vEvent->setDtEnd($stop_date_time);
-                    $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->jobType->jbtyp_title));
+                    $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->type->title()));
                     
                     $eventLink = "".URL::route('event.show', $schedule->event->id);
                     $eventTimeStart = substr($schedule->event->evnt_time_start, 0, 5);
@@ -281,8 +281,8 @@ class IcalController extends Controller
                         .trans('mainLang.end').": ".$eventTimeEnd."\n"
                         .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
                         ."\n"
-                        .trans('mainLang.shift').": ".$evt->jobtype->jbtyp_title."\n"
-                        .trans('mainLang.shiftTime').": ".substr($evt->entry_time_start, 0, 5)." - ".substr($evt->entry_time_end, 0, 5)."\n"
+                        .trans('mainLang.shift').": ".$evt->type->title()."\n"
+                        .trans('mainLang.shiftTime').": ".substr($evt->start, 0, 5)." - ".substr($evt->end, 0, 5)."\n"
                         ."\n"
                         ."---\n"
                         ."\n"
@@ -294,15 +294,15 @@ class IcalController extends Controller
                         .trans('mainLang.moreDetails').":\n"
                         .$moreDetails);
                     
-                    $place = $schedule->event->place->plc_title;
+                    $section = $schedule->event->section->title;
                     
-                    $vEvent->setLocation($place, $place);
+                    $vEvent->setLocation($section, $section);
                     $vEvent->setUseTimezone(true);
                     
                     if ($alarm > 0 && ($start_date_time > new \DateTime())) {
                         $vAlarm = new Alarm();
                         $vAlarm->setAction(Alarm::ACTION_DISPLAY);
-                        $vAlarm->setDescription($schedule->event->evnt_title." - ".($evt->jobType->jbtyp_title));
+                        $vAlarm->setDescription($schedule->event->evnt_title." - ".($evt->type->title()));
                         $vAlarm->setTrigger("-PT".$alarm."M");
                         $vEvent->addComponent($vAlarm);
                     }
@@ -365,8 +365,8 @@ class IcalController extends Controller
                     .trans('mainLang.additionalInfo').":\n"
                     .$additionalInfo."\n");
                 
-                $place = $event->place->plc_title;
-                $vEvent->setLocation($place, $place);
+                $section = $event->section->title;
+                $vEvent->setLocation($section, $section);
                 $vCalendar->addComponent($vEvent);
             }
             
@@ -396,20 +396,20 @@ class IcalController extends Controller
         
         $result = [];
         
-        $places = Place::where('plc_title', '<>', '-')->get();
+        $sections = Section::where('title', '<>', '-')->get();
         
         $result['allPublicEvents'] = URL::route('icalallevents');
         
-        foreach ($places as $place) {
+        foreach ($sections as $section) {
             
             if (Session::has('userGroup')) {
-                $placeLink = [$place->plc_title => URL::to('/').'/ical/feed/'.$place->place_uid."/1"];
-                $result['location'][] = $placeLink;
+                $sectionLink = [$section->title => URL::to('/').'/ical/feed/'.$section->section_uid."/1"];
+                $result['location'][] = $sectionLink;
             }
-            $publicLinks = [$place->plc_title => URL::to('/')."/ical/location/".$place->plc_title];
+            $publicLinks = [$section->title => URL::to('/')."/ical/location/".$section->title];
             
             $result['locationPublic'][] = $publicLinks;
-            $result['locationName'][] = $place->plc_title;
+            $result['locationName'][] = $section->title;
         }
         
         if (!Session::has('userId')) {

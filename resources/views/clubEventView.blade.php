@@ -22,18 +22,10 @@
 					<div class="panel panel-heading calendar-internal-marketing white-text">
 				@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 					<div class="panel panel-heading calendar-public-marketing white-text">
-
-
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Club" AND $clubEvent->evnt_is_private )
-					<div class="panel panel-heading calendar-internal-event-bc-club white-text">
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Club")
-					<div class="panel panel-heading calendar-public-event-bc-club white-text">
-
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Café" AND $clubEvent->evnt_is_private)
-					<div class="panel panel-heading calendar-internal-event-bc-cafe white-text">
-				@elseif ($clubEvent->getPlace->plc_title == "bc-Café")
-					<div class="panel panel-heading calendar-public-event-bc-cafe white-text">
-
+				@elseif ($clubEvent->evnt_is_private && !is_null($clubEvent->section))
+					<div class="panel panel-heading calendar-internal-event-{{$clubEvent->section->title}} white-text">
+				@elseif (!is_null($clubEvent->section))
+					<div class="panel panel-heading calendar-public-event-{{$clubEvent->section->title}} white-text">
 				@else
 					{{-- DEFAULT --}}
 					<div class="panel panel-heading white-text">
@@ -101,7 +93,7 @@
 								<i>{{ trans('mainLang.club') }}:</i>
 							</td>
 							<td>
-								{{ $clubEvent->getPlace->plc_title }}
+								{{ $clubEvent->section->title }}
 								&nbsp;&nbsp;<br class="visible-xs">
 								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
 							</td>
@@ -253,45 +245,45 @@
 		@endif
 
 		<div class="panel-body no-padding ">
-			@foreach($entries as $entry)
-				{{-- highlight with my-shift class if the signed in user is the person to do the entry --}}
-				<div class="row paddingTop {!! ( isset($entry->getPerson->prsn_ldap_id) AND Session::has('userId') AND $entry->getPerson->prsn_ldap_id == Session::get('userId')) ? "my-shift" : false !!}">
-			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
-			                                'id' => $entry->id, 
+			@foreach($shifts as $shift)
+				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
+				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) AND Session::has('userId') AND $shift->getPerson->prsn_ldap_id == Session::get('userId')) ? "my-shift" : false !!}">
+			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
+			                                'id' => $shift->id,
 			                                'method' => 'PUT', 
-			                                'class' => 'scheduleEntry')  ) !!}
+			                                'class' => 'shift')  ) !!}
 
 			        {{-- SPAMBOT HONEYPOT - this field will be hidden, so if it's filled, then it's a bot or a user tampering with page source --}}
 			        <div id="welcome-to-our-mechanical-overlords">
 			            <small>If you can read this this - refresh the page to update CSS styles or switch CSS support on.</small>
-			            <input type="text" id="{!! 'website' . $entry->id !!}" name="{!! 'website' . $entry->id !!}" value="" />
+			            <input type="text" id="{!! 'website' . $shift->id !!}" name="{!! 'website' . $shift->id !!}" value="" />
 			        </div>
 
-			        {{-- ENTRY TITLE --}}
+			        {{-- SHIFT TITLE --}}
 			        <div class="col-md-2 col-sm-2 col-xs-4 left-padding-8">
-			            @include("partials.scheduleEntryTitle")
+			            @include("partials.shiftTitle")
 			        </div>
 
-			        {{-- show public events, but protect members' entries from being changed by guests --}}
-			        @if( isset($entry->getPerson->prsn_ldap_id) AND !Session::has('userId'))
+			        {{-- show public events, but protect members' shifts from being changed by guests --}}
+			        @if( isset($shift->getPerson->prsn_ldap_id) AND !Session::has('userId'))
 
 						<div class="col-md-2 col-sm-2 col-xs-4 input-append btn-group">
-						    {{-- ENTRY STATUS --}}
-						    <div class="col-md-3 col-sm-2 col-xs-3 no-padding" id="clubStatus{{ $entry->id }}">
-						        @include("partials.scheduleEntryStatus")
+						    {{-- SHIFT STATUS --}}
+						    <div class="col-md-3 col-sm-2 col-xs-3 no-padding" id="clubStatus{{ $shift->id }}">
+						        @include("partials.shiftStatus")
 						    </div>
 
-						    {{-- ENTRY USERNAME--}}
-						    <div id="{!! 'userName' . $entry->id !!}">
-						        {!! $entry->getPerson->prsn_name !!}
+						    {{-- Shift USERNAME--}}
+						    <div id="{!! 'userName' . $shift->id !!}">
+						        {!! $shift->getPerson->prsn_name !!}
 						    </div>
 
 						    {{-- no need to show LDAP ID or TIMESTAMP in this case --}}
 						</div>
 
-						{{-- ENTRY CLUB --}}
-						<div id="{!! 'club' . $entry->id !!}" class="col-md-2 col-xs-3 no-padding">
-						    {!! "(" . $entry->getPerson->getClub->clb_title . ")" !!}
+						{{-- SHIFT CLUB --}}
+						<div id="{!! 'club' . $shift->id !!}" class="col-md-2 col-xs-3 no-padding">
+						    {!! "(" . $shift->getPerson->getClub->clb_title . ")" !!}
 						</div>
 
 						<br class="visible-xs hidden-sm">
@@ -299,12 +291,12 @@
 						{{-- COMMENT SECTION --}}
 						<div class="col-md-6 col-sm-6 col-xs-12 hidden-print word-break no-margin">
 						    <span class="pull-left">
-						    	{!! $entry->entry_user_comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
+						    	{!! $shift->comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
 						    	&nbsp;&nbsp;
 						    </span>
 
 						    <span class="col-md-10 col-sm-10 col-xs-10 no-padding no-margin">
-							    {!! !empty($entry->entry_user_comment) ? $entry->entry_user_comment : "-" !!}
+							    {!! !empty($shift->comment) ? $shift->comment : "-" !!}
 							</span>
 						</div>
 
@@ -312,14 +304,14 @@
 			        {{-- show everything for members --}}
 					@else
 
-			        	{{-- ENTRY STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
+			        	{{-- SHIFT STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
 						<div class="col-md-2 col-sm-2 col-xs-5 input-append btn-group">      
-						    @include("partials.scheduleEntryName")
+						    @include("partials.shiftName")
 						</div>
 
-						{{-- ENTRY CLUB and DROPDOWN CLUB --}}
+						{{-- SHIFT CLUB and DROPDOWN CLUB --}}
 						<div class="col-md-2 col-sm-2 col-xs-3 no-padding">
-						    @include("partials.scheduleEntryClub")
+						    @include("partials.shiftClub")
 						</div>
 
 						{{-- COMMENT SECTION --}}
@@ -327,15 +319,15 @@
 						<br class="visible-print hidden-md hidden-sm hidden-xs">
 						<div class="col-md-6 col-sm-12 col-xs-12 no-margin">
 						    <span class="pull-left">
-						    	{!! $entry->entry_user_comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
+						    	{!! $shift->comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
 						    	&nbsp;&nbsp;
 						    </span>
 
-						    {!! Form::text('comment' . $entry->id,
-					                   $entry->entry_user_comment,
+						    {!! Form::text('comment' . $shift->id,
+					                   $shift->comment,
 					                   array('placeholder'=>Lang::get('mainLang.addCommentHere'),
-					                         'id'=>'comment' . $entry->id,
-			                     			 'name'=>'comment' . $entry->id,
+					                         'id'=>'comment' . $shift->id,
+			                     			 'name'=>'comment' . $shift->id,
 					                         'class'=>'col-md-11 col-sm-11 col-xs-10 no-padding no-margin')) 
 					    	!!}	
 						</div>
@@ -348,7 +340,7 @@
 				</div>
 
 				{{-- Show a line after each row except the last one --}}
-				@if($entry !== $entries->last() )
+				@if($shift !== $shifts->last() )
 					<hr class="col-md-12 col-md-12 col-xs-12 top-padding no-margin no-padding">
 				@endif
 
@@ -389,28 +381,28 @@
 					</th>
 				</thead>
 				<tbody>
-					@for ($i = 0; $i < count($revisions); $i++)
-					    <tr>
-					    	<td>
-					    		{{ $revisions[$i]["job type"] }}
-					    	</td>
-					    	<td>
-					    		{{ $revisions[$i]["action"] }}
-					    	</td>
-					    	<td>
-					    		{{ $revisions[$i]["old value"] }}
-					    	</td>
-					    	<td>
-					    		{{ $revisions[$i]["new value"] }}
-					    	</td>
-					    	<td>
-					    		{{ $revisions[$i]["user name"] }}
-					    	</td>
-					    	<td>
-					    		{{ $revisions[$i]["timestamp"] }}
-					    	</td>
-					    </tr>
-					@endfor
+				@foreach( $revisions as $revision )
+					<tr>
+						<td>
+							{{ $revision["job type"] }}
+						</td>
+						<td>
+							{{ trans($revision["action"]) }}
+						</td>
+						<td>
+							{{ $revision["old value"] }}
+						</td>
+						<td>
+							{{ $revision["new value"] }}
+						</td>
+						<td>
+							{{ $revision["user name"] }}
+						</td>
+						<td>
+							{{ $revision["timestamp"] }}
+						</td>
+					</tr>
+				@endforeach
 				</tbody>
 			</table>
 		</div>

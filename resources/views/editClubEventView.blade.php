@@ -33,7 +33,7 @@ AND (Session::get('userGroup') == 'marketing'
 						</label>
 					@else
 						<label for="saveAsTemplate" class="col-md-12 col-sm-12 col-xs-12">
-							{!! "(Dieser Event ist nicht als Vorlage gespeichert.)" !!}
+							{!! "(Dieses Event ist nicht als Vorlage gespeichert.)" !!}
 						</label>
 					@endif
 
@@ -200,17 +200,17 @@ AND (Session::get('userGroup') == 'marketing'
 				@endif
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="place" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
+					<label for="section" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
 					<span class="col-md-10 col-sm-10 col-xs-12">
-						{!! Form::text('place', $places[$event->plc_id], array('id'=>'place', 'readonly') ) !!}
+						{!! Form::text('section', $sections[$event->plc_id], array('id'=>'section', 'readonly') ) !!}
 					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 					        <span class="caret"></span>
 					    </a>
 					    <ul class="dropdown-menu">
-						    @foreach($places as $place)
+						    @foreach($sections as $section)
 						        <li> 
 						        	<a href="javascript:void(0);" 
-						        	   onClick="document.getElementById('place').value='{{$place}}'">{{ $place }}</a>
+						        	   onClick="document.getElementById('section').value='{{$section}}'">{{ $section }}</a>
 						        </li>
 							@endforeach
 					    </ul>  	
@@ -221,14 +221,12 @@ AND (Session::get('userGroup') == 'marketing'
 					<label for="filter" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.showFor') }}: &nbsp;</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						<div id="filter">
-							{!! Form::checkbox('filterShowToClub2', '1', 
-									in_array( "bc-Club", json_decode($event->evnt_show_to_club) ) ? true : false ) !!}
-								bc-Club
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							{!! Form::checkbox('filterShowToClub3', '1', 
-									in_array("bc-Café", json_decode($event->evnt_show_to_club)) ? true : false ) !!}
-								bc-Café
-						</div>	   	
+							@foreach(Lara\Section::all() as $section)
+								{{ Form::checkbox("filter[" . $section->title ."]", "1", in_array( $section->title, json_decode($event->evnt_show_to_club))) }}
+								{{ $section->title }}
+								&nbsp;
+							@endforeach
+						</div>
 				    </div>
 			   	</div>
 

@@ -1,41 +1,43 @@
+# Composer and npm dependencies
 /vendor
 /node_modules
 
-logo.psd
-public/logo.png
+# Text file containing information about the current branch
+gitrevision.txt
 
-public/gitrevision.txt
-
-public/fonts/vendor/**/*
-
-public/js/app.*.js
-public/js/surveys.*.js
-public/css/app.*.css
+# Webpack generated files
+public/lara.css
+public/surveys.css
+public/lara.js
+public/lara.js.map
+public/manifest.js
 public/mix-manifest.json
+public/manifest.js.map
+public/vendor.js
+public/vendor.js.map
+public/fonts
 
-resources/assets/ts/bin/**/*
-
+# Configuration files
 .htpasswd
 .env
 .env-prod
 .env-local
+
+# Composer specific files
 composer.phar
 composer.lock
 
+# Login stuff should not be public
 app/Http/Controllers/LoginController.php
 config/bcLDAP.php
 
-Homestead.yaml
-Homestead.json
-
+# IDE related files
 .idea/
 _ide_helper.php
 _ide_helper_models.php
 .phpstorm.meta.php
 
+# Misc
 .DS_Store
 Thumbs.db
-/selenium/
-/tests/acceptance/tests/
-/composer.lock
 

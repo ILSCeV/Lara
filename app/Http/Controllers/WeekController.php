@@ -17,7 +17,7 @@ use Lara\ClubEvent;
 use Lara\Schedule;
 use Lara\Person;
 use Lara\Club;
-use Lara\Place;
+use Lara\Section;
 
 class WeekController extends Controller {
 
@@ -80,9 +80,9 @@ class WeekController extends Controller {
 				       
         $events = ClubEvent::where('evnt_date_start','>=',$weekStart)
                            ->where('evnt_date_start','<=',$weekEnd)
-                           ->with('getPlace',
-                           		  'getSchedule.getEntries.getJobType',
-                           		  'getSchedule.getEntries.getPerson.getClub')
+                           ->with('section',
+                           		  'getSchedule.shifts.type',
+                           		  'getSchedule.shifts.getPerson.getClub')
                            ->orderBy('evnt_date_start')
                            ->orderBy('evnt_time_start')
                            ->get();
@@ -92,14 +92,14 @@ class WeekController extends Controller {
 							->orderBy('deadline')
 							->get();
 		
-		$sections = Place::where('id', '>', 0)
-                         ->orderBy('plc_title')
-                         ->get(['id','plc_title']);
+		$sections = Section::where('id', '>', 0)
+                         ->orderBy('title')
+                         ->get(['id','title']);
 
         // Filter - Workaround for older events: populate filter with event club
         foreach ($events as $clubEvent) {	        
 	        if (empty($clubEvent->evnt_show_to_club) ) {
-	            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->getPlace->plc_title], true);
+	            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->section->title], true);
 	            $clubEvent->save();
 	        } 
         }
@@ -107,7 +107,7 @@ class WeekController extends Controller {
 		$clubs = Club::orderBy('clb_title')->pluck('clb_title', 'id');
 
         return View::make('weekView', compact('events', 'schedules',  'date', 
-        									  'entries', 'weekStart', 'weekEnd', 
+        									  'weekStart', 'weekEnd', 
 											  'clubs', 'surveys', 'sections'));
 	}
 }

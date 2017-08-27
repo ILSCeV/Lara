@@ -8,13 +8,10 @@
         <meta http-equiv="Cache-control" content="no-cache">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="{{ asset('/css/bootstrap-select.min.css') }}">
-        <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/bootstrap-bootswatch-paper.min.css') }}" />
-        <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/font-awesome.min.css') }}" />
-        <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/vedst.css') }}" />
-        <link rel="stylesheet" media="print" type="text/css" href="{{ asset('/css/print.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ mix('/lara.css') }}">
     	<link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-48x48.png') }}">
-        @yield('moreStylesheets')
+
+        @yield('moreStylesheets') 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -41,22 +38,31 @@
         @yield('content')
     </section>
 
+    <!-- Back to Top button -->
+    <a id="back-to-top" 
+       href="#" 
+       class="btn btn-primary btn-lg back-to-top hidden-print hidden-md hidden-lg" 
+       role="button" 
+       title="{{ trans("mainLang.backToTop")  }}" 
+       data-toggle="tooltip" 
+       data-placement="right">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </a>
+
     <br>
  	<footer class="navbar-default navbar-static-bottom" id="footer">
         <div class="container">
             <br>
             <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
-                <small><a href="mailto:maxim.drachinskiy@bc-studentenclub.de"> {{ trans('mainLang.notWorkingMail',['Name' => 'Maxim']) }} </a></small>
+                <small><a href="mailto:lara@il-sc.de"> {{ trans('mainLang.notWorkingMail',['Name' => 'Lara']) }} </a></small>
             </span>
             <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
-                @if(File::exists("gitrevision.txt"))
-                    <small>{{File::get("gitrevision.txt")}}</small>
-                @else
-                    <small>&nbsp;</small>
-                @endif
+                <small>
+                    {{ File::exists("gitrevision.txt") ? File::get("gitrevision.txt") : "&nbsp;" }}
+                </small>
             </span>
             <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
-                <small><a href="https://github.com/ILSCeV/Lara">{{ trans('mainLang.moreInfosProjectsite') }}</a>.
+                <small><a href="https://github.com/ILSCeV/Lara">{{ trans('mainLang.moreInfosProjectsite') }}</a>
                 </small>
             </span>
             <br class="visible-xs visible-sm">
@@ -65,8 +71,9 @@
             <br>
         </div>
 	</footer>
-
-    <script src="{{ mix('js/app.js') }}"></script>
-	@yield('moreScripts')
-  </body>
+        <script> var enviroment = '{{App::environment()}}'; </script>
+        <script src="{{ mix('/manifest.js') }}"></script>
+        <script src="{{ mix('/vendor.js') }}"></script>
+        <script src="{{ mix('/lara.js') }}"></script>
+    </body>
 </html>

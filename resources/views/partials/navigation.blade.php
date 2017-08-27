@@ -16,7 +16,7 @@
         <a class="navbar-brand" href="{{ asset('/') }}">
             @if (App::environment('development'))
                 <img id="nav-logo-field" src="{{  asset('/logos/lara-logo-dev.png') }}" alt="LARA dev">
-            @elseif (App::environment('beta'))
+            @elseif (App::environment('berta'))
                 <img id="nav-logo-field" src="{{  asset('/logos/lara-logo-berta.png') }}" alt="BERTA">
             @else
                <img id="nav-logo-field" src="{{  asset('/logos/lara-logo-prod.png') }}" alt="LARA">
@@ -34,7 +34,7 @@
 
 {{-- MEMBER STATISTICS / members only --}}
             @if(Session::has('userId'))
-                <li><a href="{{ asset('/statistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
+                <li><a href="{{ action('StatisticsController@showStatistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
             @endif
             
 {{-- SETTINGS (GEAR ICON) --}}
@@ -52,7 +52,7 @@
                 @if(Session::get('userGroup') == 'marketing'
                  OR Session::get('userGroup') == 'clubleitung'
                  OR Session::get('userGroup') == 'admin')
-                    <li><a href="{{ asset('jobtype') }}">{{ trans('mainLang.manageJobType') }}</a></li>
+                    <li><a href="{{ asset('shiftType') }}">{{ trans('mainLang.manageShiftType') }}</a></li>
                 @endif
 
 
@@ -61,6 +61,7 @@
                  OR Session::get('userGroup') == 'admin')
                     <li><a href="{{ asset('/logs') }}">Logs</a></li>
                 @endif
+
 
 
 {{-- ICal feed links 
@@ -78,6 +79,29 @@ Disabling iCal until fully functional.
 
                 </ul>
             </li>
+
+            
+{{-- LARA ADMIN PANEL / admins only --}}
+            @if(\Lara\Utilities::requirePermission('admin'))
+                <li class="dropdown">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       role="button" aria-expanded="false">
+                        <i class="fa fa-diamond" aria-hidden="true"></i>&nbsp;<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="{{ asset('section') }}">{{ trans('mainLang.manageSections') }}</a>
+                        </li>
+                        <li> 
+                            <a href="{{route("lara.update")}}"> 
+                                <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                                Lara update </a> 
+                        </li>
+                    </ul>
+                </li>
+            @endif
         </ul>
 
         <ul class="nav navbar-nav navbar-right">

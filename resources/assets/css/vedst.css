@@ -1,0 +1,524 @@
+/**
+ *  Bootstrap overrides
+ */
+.containerPadding15Mobile {
+    margin: 18px;
+}
+
+@media (max-width: 768px) {
+    .containerPadding15Mobile {
+        padding: 0 15px 0 15px;
+    }
+}
+
+.containerPadding12Mobile {
+    padding-left: 0px;
+}
+
+@media (max-width: 768px) {
+    .containerPadding12Mobile {
+        padding: 0 12px 0 12px;
+    }
+}
+
+.containerNopadding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.navbar-toggle {
+    padding: 9px 0px 9px 10px;
+}
+
+body {
+    background-color: #f6f5f3;
+    padding-top: 80px;
+}
+
+table {
+    background-color: #ffffff;
+    margin-bottom: 0 !important;
+}
+
+.table-striped > tbody > tr:nth-child(odd) {
+    background-color: #fbfbfb;
+}
+
+.table-borderless td,
+.table-borderless th {
+    border: 0 !important;
+    padding: 0 !important;
+}
+
+.navbar-brand {
+    float: left;
+    padding: 8px 15px;
+    font-size: 17px;
+    line-height: 23px;
+    height: 44px;
+}
+
+@media (min-width: 768px) {
+    .navbar-right {
+        margin-right: -10px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .no-padding-xs {
+        padding: 0px 0px 0px 0px;
+    }
+}
+
+.panel-group {
+    margin-bottom: 8px;
+}
+
+.panel-heading {
+    padding: 15px 15px 8px 15px;
+}
+
+.panel-title {
+    line-height: 1.5;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+textarea,
+textarea.form-control,
+input.form-control,
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=number],
+[type=text].form-control,
+[type=password].form-control,
+[type=email].form-control,
+[type=tel].form-control {
+    font-size: 12px;
+}
+
+/**
+ * More / Less Button
+ */
+
+.more-info {
+    overflow: hidden;
+    height: auto;
+}
+
+.more-details {
+    overflow: hidden;
+    height: auto;
+}
+
+.btn-margin {
+    margin: 15px;
+}
+
+.moreshow {
+    overflow: visible;
+}
+
+/**
+ * Month view
+ */
+
+.move-to-bottom-left-corner {
+    position: relative;
+    margin-top: auto;
+    margin-right: -4px;
+    margin-bottom: 0;
+    margin-left: -11px;
+    float: left;
+}
+
+@media (max-width: 768px) {
+    .move-to-bottom-left-corner {
+        position: relative;
+        margin-top: 1px;
+        margin-right: -3px;
+        margin-bottom: 0;
+        margin-left: 7px;
+        float:left;
+    }
+}
+
+.white-ytext {
+    color: white;
+}
+
+.padleft {
+    padding-left: 8px;
+}
+
+.cal-event {
+    width: 100%;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    vertical-align: middle;
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+    line-height: normal;
+    word-break: break-all;
+    padding: 5%;
+    overflow: visible;
+    text-overflow: clip;
+    display: flex;
+    color: white;
+    white-space: normal;
+    word-break: break-word;
+    min-height: 42px;
+}
+
+.past-eventOrSurvey, .past-event {
+    opacity:0.3;
+}
+
+.today-marker {
+    background-color: #efefef !important;
+}
+
+.today-marker-today {
+    background-color: #cccccc !important;
+}
+
+.cal-event a {
+    color: #ffffff;
+}
+
+.calendar-public-task {
+    background-color: #519839 !important;
+}
+
+.calendar-internal-task {
+    background-color: #7eb36d !important;
+}
+
+.calendar-public-info {
+    background-color: #89609E !important;
+}
+
+.calendar-internal-info {
+    background-color: #a78ab7 !important;
+}
+
+.calendar-public-marketing {
+    background-color: #D29034 !important;
+}
+
+.calendar-internal-marketing {
+    background-color: #ddad69 !important;
+}
+
+.calendar-public-event-bc-Club {
+    background-color: #e54545 !important;
+}
+
+.calendar-public-event-bc-Café {
+    background-color: #268ac3 !important;
+}
+.calendar-public-event-bd-Club {
+    background-color: #38c32e !important;
+}
+
+.calendar-internal-event-bc-Club {
+    background-color: #e98383 !important;
+}
+
+.calendar-internal-event-bc-Café {
+    background-color: #52aadc !important;
+}
+
+.calendar-internal-event-bd-Club {
+    background-color: #68c365 !important;
+}
+
+.light-grey {
+    background-color: #efefef;
+}
+
+.dark-grey {
+    background-color: darkgrey;
+}
+
+.text-dark-grey {
+    color: darkgrey;
+}
+
+.white-text {
+    color: #ffffff !important;
+}
+
+.black-text {
+    color: #000000 !important;
+}
+
+.centered {
+    text-align: center;
+}
+
+/**
+ * Week view
+ */
+
+.hide {
+    overflow: hidden;
+    height: 0px;
+}
+
+.show {
+    overflow: visible;
+    height: auto;
+}
+
+.word-break {
+    word-break: break-all;
+}
+
+.panel {
+    margin-bottom: 0px !important;
+}
+
+.panel-title {
+    word-wrap: break-word;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.btn-small {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 0px 6px;
+    font-size: 10px;
+    line-height: 1.846;
+    border-radius: 3px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.panel-small {
+    margin-bottom: 0px;
+    padding: 5px;
+    background-color: #ffffff;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    vertical-align: top;
+}
+
+/**
+ * System messages
+ */
+
+#centerpoint {
+    left: 50%;
+    position: absolute;
+}
+
+.alert-centered {
+    position: relative;
+    width: 100%;
+    margin-left: -50%;
+    z-index: 999999;
+
+}
+
+/**
+ * ISOTOPE - animates the week view
+ */
+
+.isotope > * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* clear fix */
+.isotope:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.isotope:before {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.element-item,
+.grid-sizer {
+    position: relative;
+    float: left;
+    width: 360px;
+    margin: 10px;
+    padding: 0px;
+    white-space: normal;
+    display: inline-block;
+}
+
+@media screen and (max-width: 480px) {
+    .grid-sizer{
+        width: 98%;
+        padding: 0;
+        margin: 3px;
+    }
+
+    .element-item{
+        width: 100%;
+        padding: 0px 0px 15px 0px;
+        margin: 0;
+    }
+}
+
+/**
+ * Greeting our mechanical overlords
+ */
+#welcome-to-our-mechanical-overlords {
+    display: none;
+}
+
+/**
+ * Row margins
+ */
+.row {
+    margin: 8px !important;
+    padding: 0 -15px 0 -15px;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.paddingTop10Px{
+    padding-top: 10px;
+}
+
+.padding-right-minimal {
+    padding-right: 5px !important;
+}
+
+.padding-left-minimal {
+    padding-left: 5px !important;
+}
+
+.top-padding {
+    padding-bottom: 8px !important;
+}
+
+.bottom-padding {
+    padding-bottom: 8px !important;
+}
+
+.all-sides-padding-16 {
+    padding: 16px !important;
+}
+
+.left-padding-8 {
+    padding-left: 8px !important;
+}
+
+.left-padding-16 {
+    padding-left: 16px !important;
+}
+
+.padding-right-16 {
+    padding-right: 16px !important;
+}
+
+
+.displayDesktop {
+    display: block;
+}
+
+.displayMobile {
+    display: none;
+}
+
+@media screen and (max-width: 978px) {
+    .displayMobile {
+        display: block;
+    }
+
+    .displayDesktop {
+        display: none;
+        width: 0 !important;
+    }
+}
+
+/* On Event View */
+.panelEventView{
+    padding: 0px 15px 15px 15px;
+}
+
+.paddingTop{
+    padding-top: 6px;
+}
+
+.back-to-top {
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display:none;
+}
+
+/* my event */
+.cal-month-my-event {
+    border: 3px solid #FFEA58;
+    border-radius: 5px;
+}
+
+.my-shift {
+    margin: 0px !important;
+    background-color: #FFF89B;
+    padding: 8px !important;
+}
+
+.divider{
+    padding-bottom: 3pt;
+    border-bottom:1px #eeeeee solid;
+}
+
+.tooltip {
+    position: fixed
+}
+
+
+/* Statistics */
+
+.bc-Club-section-highlight {
+    border-left: 5px #e98383 solid !important;
+}
+
+.bc-Café-section-highlight {
+    border-left: 5px #52aadc solid !important;
+}
+

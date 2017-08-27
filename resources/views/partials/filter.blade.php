@@ -3,9 +3,9 @@
 	@foreach($sections as $section)
 		<button class="btn btn-xs section-filter-selector" 
 				type="button" 
-				id="filter-{!! $section["plc_title"] !!}" 
-				data-filter="{!! $section["plc_title"] !!}">
-			{!! $section["plc_title"] !!}
+				id="filter-{!! $section["title"] !!}" 
+				data-filter="{!! $section["title"] !!}">
+			{!! $section["title"] !!}
 		</button>
 	@endforeach
 </div>

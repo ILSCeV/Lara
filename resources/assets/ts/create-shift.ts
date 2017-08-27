@@ -1,6 +1,5 @@
-/**
- * Created by fabian on 25.04.17.
- */
+import * as $ from "jquery"
+
 $(() => {
     $('#createAndPublishBtn').click(
         function () {

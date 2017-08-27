@@ -27,11 +27,9 @@ return [
     //-----------------------------------------------------------------------------------------------------
 
     // /resources/views/layouts/master.blade.php
-    'notWorkingMail'        => 'Something is not working? Write :Name a mail.',
-    'mail'                  => ' a Mail.', //not used
-    //'moreInfos'           => 'More informations? Visit the ',
-    //'projectsite'         => 'projectsite on GitHub',
-    'moreInfosProjectsite'  => 'More informations? Visit the projectsite on GitHub',
+    'notWorkingMail'        => 'Something isn\'t working? Write :Name a mail.',
+    'moreInfosProjectsite'  => 'Want to know more? Visit the projectsite on GitHub.',
+    'backToTop'             => 'Back to top',
 
     //-----------------------------------------------------------------------------------------------------
 
@@ -272,7 +270,8 @@ return [
 
     //not translated the term 'logs'
     'manageClub'            => 'Manage clubs',
-    'manageJobType'         => 'Manage shift types',
+    'manageShiftType'       => 'Manage shift types', 
+    'manageSections'        => 'Sektionen verwalten',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
 
     'manageTemplate'        => 'Manage templates',
@@ -312,6 +311,10 @@ return [
     'infoFor'               => 'Member statistics',
 
     // /resources/views/partials/personalStatistics.blade.php
+    
+    // /resources/views/statisticsView.blade.php
+    'monthStatistic'       => 'monthly Statistics',
+    'yearStatistic'       => 'yearly Statistics',
 
     //-----------------------------------------------------------------------------------------------------------
 
@@ -379,7 +382,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
 
     // Controller  ToDo add these strings
-    // ScheduleEntryController
+    // ShiftController
     // action description
     'addedComment'              => 'Comment added',
     'deletedComment'            => 'Comment deleted',
@@ -420,7 +423,7 @@ return [
     'password'                      => 'Password',
     'logIn'                         => 'Login',
     'logOut'                        => 'Logout',
-    //ScheduleEntryName
+    //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
     //surveyForm
     'placeholderSurveyTitle'        => 'Title:',
@@ -439,8 +442,8 @@ return [
     ////////////////
 
     'management'                    => 'Management',
-    'jobType'                       => 'Shift type',
-    'jobtypes'                      => 'Shift types',
+    'shiftType'                       => 'Shift type',
+    'shiftTypes'                      => 'Shift types',
     'shift'                         => 'Shift',
     'start'                         => 'Start',
     'end'                           => 'End',
@@ -449,13 +452,13 @@ return [
     'deleteConfirmation'            => 'Do you really want to delete this shift type:',
     'warningNotReversible'          => 'This action is not reversible!',
     'editDetails'                   => 'Edit details',
-    'deleteThisJobtype'             => 'Delete',
+    'deleteThisShiftType'             => 'Delete',
 
     'reset'                         => 'Reset',
     'update'                        => 'Save changes',
     'delete'                        => 'delete it',
-    'jobtypeNeverUsed'              => 'This shift type was never used... Quite sad, isn\'t it? Maybe you should just ',
-    'jobtypeUsedInFollowingEvents'  => 'This shift type is used in the following events. To remove it you should substitute each of its instances with another shift type.',
+    'shiftTypeNeverUsed'              => 'This shift type was never used... Quite sad, isn\'t it? Maybe you should just ',
+    'shiftTypeUsedInFollowingEvents'  => 'This shift type is used in the following events. To remove it you should substitute each of its instances with another shift type.',
     'event'                         => 'Event',
     'date'                          => 'Date',
     'substituteThisInstance'        => 'Substitute with...',
@@ -465,8 +468,17 @@ return [
     'nonNumericStats'               => 'Statistical weight must be entered with numbers ;)',
     'negativeStats'                 => 'Statistical weight can\'t be negative.',
     'changesSaved'                  => 'Changes saved successfully.',
-    'deleteFailedJobtypeInUse'      => 'Shift type was not deleted, because it\'s in use. Here you can change that.',
+    'deleteFailedShiftTypeInUse'      => 'Shift type was not deleted, because it\'s in use. Here you can change that.',
+    'adminsOnly'                    => 'Sorry, but this function can only used by Adminstrators',
 
+
+    ////////////////////////
+    // Section management //
+    ////////////////////////
+    'color'                         => 'Color',
+    'sectionExists'                 => 'A section with this name already exits, please enter a diffrent one!',
+    'newSection'                    => 'new Section',
+    'createSection'                 => 'create Section',
     //////////
     // ICal //
     //////////

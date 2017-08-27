@@ -252,6 +252,7 @@ class SurveyController extends Controller
         //evaluation part that shows below the survey, a statistic of answers of the users who already took part in the survey
 
         //maybe sort questions by order here
+        $evaluation = [];
         foreach ($questions as $order => $question) {
 
             switch ($question->field_type) {
