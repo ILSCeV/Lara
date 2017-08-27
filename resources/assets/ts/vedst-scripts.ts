@@ -1580,6 +1580,11 @@ Examples :
 
 })(window, jQuery);
 
+
+////////////////////////
+// Back to top button //
+////////////////////////
+
 $(() => {
     $(document).ready(function(){
         $(window).scroll(function () {
