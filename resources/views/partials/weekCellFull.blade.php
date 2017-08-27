@@ -14,9 +14,9 @@
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 			<div class="{{ $classString }} calendar-internal-marketing white-text">
 		@elseif ($clubEvent->section->id == 1)
-			<div class="{{ $classString }} calendar-internal-event-bc-club white-text">
+			<div class="{{ $classString }} calendar-internal-event-bc-Club white-text">
 		@elseif ($clubEvent->section->id == 2)
-			<div class="{{ $classString }} calendar-internal-event-bc-cafe white-text">
+			<div class="{{ $classString }} calendar-internal-event-bc-Café white-text">
 		@else
 			{{-- DEFAULT --}}
 			<div class="cal-event dark-grey">
@@ -29,9 +29,9 @@
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 			<div class="{{ $classString }} calendar-public-marketing white-text">
 		@elseif ($clubEvent->section->id == 1)
-			<div class="{{ $classString }} calendar-public-event-bc-club white-text">
+			<div class="{{ $classString }} calendar-public-event-bc-Club white-text">
 		@elseif ($clubEvent->section->id == 2)
-			<div class="{{ $classString }} calendar-public-event-bc-cafe white-text">
+			<div class="{{ $classString }} calendar-public-event-bc-Café white-text">
 		@else
 			{{-- DEFAULT --}}
 			<div class="cal-event dark-grey">
