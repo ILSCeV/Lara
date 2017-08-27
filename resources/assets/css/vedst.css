@@ -488,6 +488,7 @@ input[type=number],
     bottom: 20px;
     right: 20px;
     display:none;
+    z-index: 1;
 }
 
 /* my event */
