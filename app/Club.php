@@ -38,7 +38,7 @@ class Club extends Model
 
     public function accountableForStatistics()
     {
-        return $this->persons()->whereIn('prsn_status', ['member', 'candidate', 'veteran']);
+        return $this->persons()->whereNotNull('prsn_ldap_id');
     }
 
     public static function activeClubs()
