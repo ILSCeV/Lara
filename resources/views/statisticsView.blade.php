@@ -44,22 +44,22 @@
            @endif
         </div>    
 
-        {{-- placeholder for more buttons --}}
-        <div class="col-xs-12 col-md-7 pull-right">
+        {{-- Month/year statstics selector --}}
+        <div class="col-xs-12 col-md-7 btn-group pull-right">
             @if(\Lara\Utilities::requirePermission(array("admin","clubleitung")))
-                <div class="form-inline">
                     @if($isMonthStatistic)
-                        <div class="form-control">
-                            <a class="btn btn-primary form-control"
-                               href="{{ action("StatisticsController@showYearStatistics") }}">{{ trans("mainLang.yearStatistic") }}</a>
-                        </div>
+                        <a class="btn btn-xs btn-primary pull-right"
+                           type="button"
+                           href="{{ action("StatisticsController@showYearStatistics") }}">
+                            {{ trans("mainLang.yearStatistic") }}
+                        </a>
                     @else
-                        <div class="form-control">
-                            <a class="btn btn-primary form-control"
-                               href="{{ action("StatisticsController@showStatistics")  }}">{{ trans("mainLang.monthStatistic") }}</a>
-                        </div>
+                        <a class="btn btn-xs btn-primary pull-right"
+                           type="button"
+                           href="{{ action("StatisticsController@showStatistics")  }}">
+                            {{ trans("mainLang.monthStatistic") }}
+                        </a>
                     @endif
-                </div>
             @endif
         </div>
 
