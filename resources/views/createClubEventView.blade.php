@@ -22,9 +22,9 @@
 			<div class="panel-body no-padding">
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="templateName" class="control-label col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.template') }}: &nbsp;</label>
+					<label for="templateName" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}: &nbsp;</label>
 					
-					<div class="col-md-6 col-sm-6 col-xs-9">
+					<div class="col-md-6 col-sm-6 col-xs-8">
 						@if (isset($activeTemplate))
 							{!! Form::text('templateName', $activeTemplate, array('id'=>'templateName', 'class'=>'col-xs-10 col-md-9') ) !!}
 						@else
@@ -47,9 +47,10 @@
 				    </div>
 			   	</div>
 
-			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding col-md-offset-2 col-sm-offset-2 col-xs-offset-1">			
+			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+			   		<span class="col-md-1 col-sm-1 col-xs-1">&nbsp;</span>			
 					{!! Form::checkbox('saveAsTemplate', '1', false, array('class'=>'col-md-1 col-sm-1 col-xs-1')) !!}
-					{{ trans('mainLang.templateNewSaveQ') }}
+					<span class="col-md-9 col-sm-9 col-xs-9">{{ trans('mainLang.templateNewSaveQ') }}</span>
 			   	</div>
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
@@ -393,6 +394,7 @@
 @else
 	@include('partials.accessDenied')
 @endif
+
 @stop
 
 

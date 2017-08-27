@@ -24,6 +24,7 @@ AND (Session::get('userGroup') == 'marketing'
 			<br>
 
 			<div class="panel-body no-padding">
+			
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">			
 					{!! Form::checkbox('saveAsTemplate', '1', $event->getSchedule->schdl_is_template, array('class'=>'col-md-1 col-sm-1 col-xs-1', 'hidden')) !!}
 
@@ -318,7 +319,7 @@ AND (Session::get('userGroup') == 'marketing'
 	</div>
 
 	<br>
-	
+
 	<div class="row">
 		@include('partials.editSchedule')
 		<br>
