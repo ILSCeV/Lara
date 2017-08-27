@@ -28,8 +28,7 @@
                 </a>
            @else
                 <a class="btn btn-default hidden-print"
-                   href="{{ Request::getBasePath() }}/yearstatistics/{{ date("Y",
-                                strtotime("previous year", mktime(0, 0, 0, $month, 1, $year))) }}">
+                   href="{{ action('StatisticsController@showYearStatistics', date("Y", strtotime("previous year", mktime(0, 0, 0, $month, 1, $year))))  }}">
                     &lt;&lt;
                 </a>
 
@@ -38,7 +37,8 @@
                 </span>
 
                 <a class="btn btn-default hidden-print pull-left"
-                   href="{{ Request::getBasePath() }}/yearstatistics/{{ date("Y", strtotime("next year", mktime(0, 0, 0, $month, 1, $year))) }}">
+                   href="{{
+                    action('StatisticsController@showYearStatistics', date("Y", strtotime("next year", mktime(0, 0, 0, $month, 1, $year)))) }}">
                     &gt;&gt;
                 </a>
            @endif
