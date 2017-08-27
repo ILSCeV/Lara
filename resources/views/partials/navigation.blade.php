@@ -34,7 +34,7 @@
 
 {{-- MEMBER STATISTICS / members only --}}
             @if(Session::has('userId'))
-                <li><a href="{{ asset('/statistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
+                <li><a href="{{ action('StatisticsController@showStatistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
             @endif
             
 {{-- SETTINGS (GEAR ICON) --}}

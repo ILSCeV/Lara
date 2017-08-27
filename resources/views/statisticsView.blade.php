@@ -13,7 +13,7 @@
         <div class="col-xs-12 col-md-5 btn-group no-padding">
             @if($isMonthStatistic)
                 <a class="btn btn-default hidden-print"
-                   href="{{ Request::getBasePath() }}/statistics/{{ date("Y/m",
+                   href="{{ action('StatisticsController@showStatistics') . date("/Y/m",
                                     strtotime("previous month", mktime(0, 0, 0, $month, 1, $year))) }}">
                     &lt;&lt;
                 </a>
@@ -23,7 +23,7 @@
                 </span>
 
                 <a class="btn btn-default hidden-print pull-left"
-                   href="{{ Request::getBasePath() }}/statistics/{{ date("Y/m", strtotime("next month", mktime(0, 0, 0, $month, 1, $year))) }}">
+                   href="{{ action('StatisticsController@showStatistics') . date("/Y/m", strtotime("next month", mktime(0, 0, 0, $month, 1, $year))) }}">
                     &gt;&gt;
                 </a>
            @else
