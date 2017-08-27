@@ -9,7 +9,7 @@ export default {
     "forgotStartTime": "You forgot the starting time",
     "forgotEndTime": "You forgot the end time.",
     "descriptionTooLong": "Your description is too long. The text should contain less than 1500 characters.",
-    "wrongShiftWeightFormat": "The format of a shift weight is wrong. The correct format is 1234.5678",
+    "wrongShiftWeightFormat": "The format of a shift weight is wrong. The correct format is \"1\", \"0.7\", \"1.4\" or similar.",
     "addCommentHere": "Add comment here",
 
     'loading': 'Loading...',

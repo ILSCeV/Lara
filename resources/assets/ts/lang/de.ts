@@ -8,7 +8,7 @@ export default {
     "forgotPreparation": "Die Dienstvorbereitungszeit vergessen!",
     "forgotStartTime": "Die Startzeit vergessen!",
     "forgotEndTime": "Die Endzeit vergessen!",
-    "wrongShiftWeightFormat": "Das Format eines Schichtgewichts ist falsch! Das richtige Format ist 1234.5678.",
+    "wrongShiftWeightFormat": "Das Format eines Schichtgewichts ist falsch! Das richtige Format ist z.B. \"1\", \"0.7\", \"1.4\" o.Ä.",
 
     "descriptionTooLong": "Der Beschreibungstext ist zu lange! Der Text sollte weniger als 1500 Zeichen enthalten.",
     "addCommentHere": "Kommentar hier hinzufügen",
