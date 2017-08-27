@@ -85,7 +85,7 @@ $factory->define(Lara\SurveyQuestion::class, function(Faker\Generator $faker){
 });
 
 $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
-    $start = $faker->dateTimeBetween('now', '+60 days');
+    $start = $faker->dateTimeBetween('-30 days', '+60 days');
     $end = $faker->dateTimeBetween($start, date("Y-m-d H:i:s", strtotime('+1 day', $start->getTimestamp())));
     return [
         'evnt_type' => $faker->numberBetween(0,9),
