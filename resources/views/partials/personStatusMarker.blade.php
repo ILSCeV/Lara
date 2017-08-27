@@ -26,7 +26,7 @@
        data-toggle="tooltip"
        data-placement="top"
        title="{{ trans('mainLang.ex-member') }}"></i>
-@elseif ( $shift->getPerson->prsn_status === 'guest' )
+@elseif ( $person->prsn_status === 'guest' )
     <i class="fa fa-times-circle-o"
        name="status-icon"
        style="color:yellowgreen;"
