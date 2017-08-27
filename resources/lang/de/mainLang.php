@@ -27,12 +27,9 @@ return [
     //-----------------------------------------------------------------------------------------------------
 
     // /resources/views/layouts/master.blade.php
-    'notWorkingMail'        => 'Etwas funktioniert nicht? Schreibe :Name eine Mail',
-    'mail'                  => ' eine Mail.', //not used
-    //'moreInfos'           => 'Mehr Infos? Besuche die ',
-    //'projectsite'         => 'Projektseite auf GitHub',
-    'moreInfosProjectsite'  => 'Mehr Infos? Besuche die Projektseite auf GitHub',
-    'backToTop'             => 'Zurück an den Seitenanfang scrollen',
+    'notWorkingMail'        => 'Etwas funktioniert nicht? Schreibe :Name eine Mail.',
+    'moreInfosProjectsite'  => 'Mehr Infos? Besuche die Projektseite auf GitHub.',
+    'backToTop'             => 'Zurück zum Seitenanfang',
     
     //-----------------------------------------------------------------------------------------------------
 

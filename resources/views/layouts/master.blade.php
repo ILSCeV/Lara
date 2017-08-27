@@ -54,7 +54,7 @@
         <div class="container">
             <br>
             <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
-                <small><a href="mailto:maxim.drachinskiy@bc-studentenclub.de"> {{ trans('mainLang.notWorkingMail',['Name' => 'Maxim']) }} </a></small>
+                <small><a href="mailto:lara@il-sc.de"> {{ trans('mainLang.notWorkingMail',['Name' => 'Lara']) }} </a></small>
             </span>
             <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
                 <small>
@@ -62,7 +62,7 @@
                 </small>
             </span>
             <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
-                <small><a href="https://github.com/ILSCeV/Lara">{{ trans('mainLang.moreInfosProjectsite') }}</a>.
+                <small><a href="https://github.com/ILSCeV/Lara">{{ trans('mainLang.moreInfosProjectsite') }}</a>
                 </small>
             </span>
             <br class="visible-xs visible-sm">

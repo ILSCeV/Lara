@@ -28,10 +28,8 @@ return [
 
     // /resources/views/layouts/master.blade.php
     'notWorkingMail'        => 'Eine Planke ist lose? Versende :Name eine Taube!',
-    //'moreInfos'           => 'Mehr Infos? Besuche die ',
-    //'projectsite'         => 'Projektseite auf GitHub',
-    'moreInfosProjectsite'  => 'Land in sicht? Kletter\' in den Mast!',
-    'backToTop'             => 'Ins Krähennest klettern',
+    'moreInfosProjectsite'  => 'Land in Sicht? Kletter\' in den Mast!',
+    'backToTop'             => 'Ins Krähennest klettern!',
     
     //-----------------------------------------------------------------------------------------------------
 

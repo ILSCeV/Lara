@@ -27,12 +27,9 @@ return [
     //-----------------------------------------------------------------------------------------------------
 
     // /resources/views/layouts/master.blade.php
-    'notWorkingMail'        => 'Something is not working? Write :Name a mail.',
-    'mail'                  => ' a Mail.', //not used
-    //'moreInfos'           => 'More informations? Visit the ',
-    //'projectsite'         => 'projectsite on GitHub',
-    'moreInfosProjectsite'  => 'More informations? Visit the projectsite on GitHub',
-    'backToTop'             => 'Scroll back to top',
+    'notWorkingMail'        => 'Something isn\'t working? Write :Name a mail.',
+    'moreInfosProjectsite'  => 'Want to know more? Visit the projectsite on GitHub.',
+    'backToTop'             => 'Back to top',
 
     //-----------------------------------------------------------------------------------------------------
 
