@@ -13,10 +13,10 @@
 			<div class="{{ $classString }} calendar-internal-task white-text">
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 			<div class="{{ $classString }} calendar-internal-marketing white-text">
-		@elseif ($clubEvent->getPlace->id == 1)
-			<div class="{{ $classString }} calendar-internal-event-bc-club white-text">
-		@elseif ($clubEvent->getPlace->id == 2)
-			<div class="{{ $classString }} calendar-internal-event-bc-cafe white-text">
+		@elseif ($clubEvent->section->id == 1)
+			<div class="{{ $classString }} calendar-internal-event-bc-Club white-text">
+		@elseif ($clubEvent->section->id == 2)
+			<div class="{{ $classString }} calendar-internal-event-bc-Café white-text">
 		@else
 			{{-- DEFAULT --}}
 			<div class="cal-event dark-grey">
@@ -28,10 +28,10 @@
 			<div class="{{ $classString }} calendar-public-task white-text">
 		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
 			<div class="{{ $classString }} calendar-public-marketing white-text">
-		@elseif ($clubEvent->getPlace->id == 1)
-			<div class="{{ $classString }} calendar-public-event-bc-club white-text">
-		@elseif ($clubEvent->getPlace->id == 2)
-			<div class="{{ $classString }} calendar-public-event-bc-cafe white-text">
+		@elseif ($clubEvent->section->id == 1)
+			<div class="{{ $classString }} calendar-public-event-bc-Club white-text">
+		@elseif ($clubEvent->section->id == 2)
+			<div class="{{ $classString }} calendar-public-event-bc-Café white-text">
 		@else
 			{{-- DEFAULT --}}
 			<div class="cal-event dark-grey">
@@ -62,7 +62,7 @@
 			-
 			{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 			&nbsp;
-			<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->getPlace->plc_title }}
+			<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->section->title }}
 
 		</div>
 
@@ -81,40 +81,40 @@
 
 		<div class="panel panel-body no-padding">
 
-			{{-- Show schedule entries --}}
-			@foreach($entries = $clubEvent->getSchedule->getEntries as $entry)
-				{{-- highlight with my-shift class if the signed in user is the person to do the entry --}}
+			{{-- Show shifts --}}
+			@foreach($shifts = $clubEvent->getSchedule->shifts as $shift)
+				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
                 {{-- add a divider if the shift is not the last one --}}
-			    <div class="row{!! $entry !== $entries->last() ? ' divider': false !!}{!! ( isset($entry->getPerson->prsn_ldap_id) AND Session::has('userId') AND $entry->getPerson->prsn_ldap_id == Session::get('userId')) ? " my-shift" : false !!}">
-			        {!! Form::open(  array( 'route' => ['entry.update', $entry->id],
-			                                'id' => $entry->id,
+			    <div class="row{!! $shift !== $shifts->last() ? ' divider': false !!}{!! ( isset($shift->getPerson->prsn_ldap_id) AND Session::has('userId') AND $shift->getPerson->prsn_ldap_id == Session::get('userId')) ? " my-shift" : false !!}">
+			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
+			                                'id' => $shift->id,
 			                                'method' => 'put',
-			                                'class' => 'scheduleEntry')  ) !!}
+			                                'class' => 'shift')  ) !!}
 
 			        {{-- SPAMBOT HONEYPOT - this field will be hidden, so if it's filled, then it's a bot or a user tampering with page source --}}
 			        <div id="welcome-to-our-mechanical-overlords">
 			            <small>If you can read this this - refresh the page to update CSS styles or switch CSS support on.</small>
-			            <input type="text" id="{!! 'website' . $entry->id !!}" name="{!! 'website' . $entry->id !!}" value="" />
+			            <input type="text" id="{!! 'website' . $shift->id !!}" name="{!! 'website' . $shift->id !!}" value="" />
 			        </div>
 
-			        {{-- ENTRY TITLE --}}
+			        {{-- Shift TITLE --}}
 			        <div class="col-xs-4 col-md-4 padding-right-minimal">
-			            @include("partials.scheduleEntryTitle")
+			            @include("partials.shiftTitle")
 			        </div>
 
-			        {{-- ENTRY STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
+			        {{-- SHIFT STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
 					<div class="col-xs-4 col-md-4 input-append btn-group padding-left-minimal">
-					    @include("partials.scheduleEntryName")
+					    @include("partials.shiftName")
 					</div>
 
-					{{-- ENTRY CLUB and DROPDOWN CLUB --}}
+					{{-- SHIFT CLUB and DROPDOWN CLUB --}}
 					<div class="col-xs-3 col-md-3 no-padding">
-					    @include("partials.scheduleEntryClub")
+					    @include("partials.shiftClub")
 					</div>
 
 					{{-- SMALL COMMENT ICON --}}
 					<div class="col-xs-1 col-md-1 no-padding">
-				        @if( $entry->entry_user_comment == "" )
+				        @if( $shift->comment == "" )
 				            <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
 				                <i class="fa fa-comment-o"></i>
 				            </button>
@@ -127,15 +127,15 @@
 
 					{{-- Hidden comment field to be opened after the click on the icon
 						 see vedst-scripts "Show/hide comments" function --}}
-					{!! Form::text('comment' . $entry->id,
-					               $entry->entry_user_comment,
+					{!! Form::text('comment' . $shift->id,
+					               $shift->comment,
 					               array('placeholder'=>Lang::get('mainLang.addCommentHere'),
-					                     'id'=>'comment' . $entry->id,
-					                     'name'=>'comment' . $entry->id,
+					                     'id'=>'comment' . $shift->id,
+					                     'name'=>'comment' . $shift->id,
 					                     'class'=>'col-xs-10 col-md-10 hidden-print hide col-md-offset-1 col-xs-offset-1 word-break' ))
 					!!}
 
-			        {!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $entry->id, 'hidden') ) !!}
+			        {!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $shift->id, 'hidden') ) !!}
 			        {!! Form::close() !!}
 			    </div>
 

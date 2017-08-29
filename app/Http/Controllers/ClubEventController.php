@@ -11,11 +11,12 @@ use Illuminate\Http\Request;
 use Input;
 use Lara\Club;
 use Lara\ClubEvent;
-use Lara\Jobtype;
+use Lara\Logging;
+use Lara\ShiftType;
+use Lara\Shift;
 use Lara\Person;
-use Lara\Place;
+use Lara\Section;
 use Lara\Schedule;
-use Lara\ScheduleEntry;
 use Lara\Utilities;
 use Log;
 use Redirect;
@@ -42,9 +43,9 @@ class ClubEventController extends Controller
      * @param  int $day
      *
      * @return view createClubEventView
-     * @return Place[] places
+     * @return Section[] sections
      * @return Schedule[] templates
-     * @return Jobtype[] jobtypes
+     * @return shiftTypes[] shiftTypes
      * @return string $date
      * @return \Illuminate\Http\Response
      */
@@ -71,9 +72,9 @@ class ClubEventController extends Controller
         $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
 
         // get a list of possible clubs to create an event at, but without the id=0 (default value)
-        $places = Place::where("id", '>', 0)
-                       ->orderBy('plc_title', 'ASC')
-                       ->pluck('plc_title', 'id');
+        $sections = Section::where("id", '>', 0)
+                       ->orderBy('title', 'ASC')
+                       ->pluck('title', 'id');
 
         // get a list of available templates to choose from
         $templates = Schedule::where('schdl_is_template', '=', '1')
@@ -81,8 +82,8 @@ class ClubEventController extends Controller
                              ->get();
 
         // get a list of available job types
-        $jobtypes = Jobtype::where('jbtyp_is_archived', '=', '0')
-                           ->orderBy('jbtyp_title', 'ASC')
+        $shiftTypes = ShiftType::where('is_archived', '=', '0')
+                           ->orderBy('title', 'ASC')
                            ->get();
 
         // if a template id was provided, load the schedule needed and extract job types
@@ -94,11 +95,18 @@ class ClubEventController extends Controller
             $activeTemplate = $template->schdl_title;
 
             // get template data
-            $entries    = $template->getEntries()->with('getJobType')->get();
+            $shifts     = $template->shifts()
+                ->with('type')
+                ->orderByRaw('position IS NULL, position ASC, id ASC')
+                ->get()
+                ->map(function(Shift $shift) {
+                    // copy all except person_id and schedule_id and comment
+                    return $shift->replicate(['person_id', 'schedule_id', 'comment']);
+                });
             $title      = $template->getClubEvent->evnt_title;
             $subtitle   = $template->getClubEvent->evnt_subtitle;
             $type       = $template->getClubEvent->evnt_type;
-            $place      = $template->getClubEvent->plc_id;
+            $section      = $template->getClubEvent->plc_id;
             $filter     = $template->getClubEvent->evnt_show_to_club;
             $dv         = $template->schdl_time_preparation_start;
             $timeStart  = $template->getClubEvent->evnt_time_start;
@@ -109,11 +117,11 @@ class ClubEventController extends Controller
         } else {
             // fill variables with no data if no template was chosen
             $activeTemplate = "";
-            $entries    = null;
+            $shifts     = collect([]);
             $title      = null;
             $type       = null;
             $subtitle   = null;
-            $place      = null;
+            $section      = null;
             $filter     = null;
             $dv         = null;
             $timeStart  = null;
@@ -123,9 +131,9 @@ class ClubEventController extends Controller
             $private    = null;
         }
 
-        return View::make('createClubEventView', compact('places', 'jobtypes', 'templates',
-                                                         'entries', 'title', 'subtitle', 'type',
-                                                         'place', 'filter', 'timeStart', 'timeEnd',
+        return View::make('createClubEventView', compact('sections', 'shiftTypes', 'templates',
+                                                         'shifts', 'title', 'subtitle', 'type',
+                                                         'section', 'filter', 'timeStart', 'timeEnd',
                                                          'info', 'details', 'private', 'dv',
                                                          'activeTemplate',
                                                          'date'));
@@ -155,39 +163,11 @@ class ClubEventController extends Controller
         $newSchedule->evnt_id = $newEvent->id;
 
         // log revision
-        $newSchedule->entry_revisions = json_encode(array("0"=>
-                               ["entry id"    => null,
-                                "job type"    => null,
-                                "action"      => "Dienstplan erstellt",
-                                "old id"      => null,
-                                "old value"   => null,
-                                "old comment" => null,
-                                "new id"      => null,
-                                "new value"   => null,
-                                "new comment" => null,
-                                "user id"     => Session::get('userId') != NULL ? Session::get('userId') : "",
-                                "user name"   => Session::get('userId') != NULL ? Session::get('userName') . '(' . Session::get('userClub') . ')' : "Gast",
-                                "from ip"     => \Illuminate\Support\Facades\Request::getClientIp(),
-                                "timestamp"   => (new DateTime)->format('Y-m-d H:i:s')
-                                ]));
+        Logging::scheduleCreated($newSchedule);
 
         $newSchedule->save();
 
-        $newEntries = ScheduleController::createScheduleEntries($newSchedule->id);
-        foreach($newEntries as $newEntry)
-        {
-            $newEntry->schdl_id = $newSchedule->id;
-            $newEntry->save();
-
-            // log revision
-            ScheduleController::logRevision($newEntry->getSchedule,     // schedule object
-                                            $newEntry,                  // entry object
-                                            "Dienst erstellt",          // action description
-                                            null,                       // old value
-                                            null,                       // new value
-                                            null,                       // old comment
-                                            null);                      // new comment
-        }
+        ScheduleController::createShifts($newSchedule);
 
         // log the action
         Log::info('Event created: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
@@ -203,12 +183,12 @@ class ClubEventController extends Controller
      * @param  int $id
      * @return view ClubEventView
      * @return ClubEvent $clubEvent
-     * @return ScheduleEntry[] $entries
+     * @return Shifts[] $shifts
      * @return RedirectResponse
      */
     public function show($id)
     {
-        $clubEvent = ClubEvent::with('getPlace')
+        $clubEvent = ClubEvent::with('section')
                               ->findOrFail($id);
 
         if(!Session::has('userId') && $clubEvent->evnt_is_private==1)
@@ -229,10 +209,11 @@ class ClubEventController extends Controller
 
         $schedule = Schedule::findOrFail($clubEvent->getSchedule->id);
 
-        $entries = ScheduleEntry::where('schdl_id', '=', $schedule->id)
-                                ->with('getJobType',
+        $shifts = Shift::where('schedule_id', '=', $schedule->id)
+                                ->with('type',
                                        'getPerson',
                                        'getPerson.getClub')
+                                ->orderByRaw('position IS NULL, position ASC, id ASC')
                                 ->get();
 
         $clubs = Club::orderBy('clb_title')->pluck('clb_title', 'id');
@@ -257,22 +238,24 @@ class ClubEventController extends Controller
             foreach ($revisions as $entry) {
                 unset($entry["from ip"]);
             }
+            // add LDAP-ID of the event creator - only this user + Marketing + CL will be able to edit
+            $created_by = $revisions[0]["user id"];
+            $creator_name = $revisions[0]["user name"];
         }
-
-        // add LDAP-ID of the event creator - only this user + Marketing + CL will be able to edit
-        $created_by = $revisions[0]["user id"];
-        $creator_name = $revisions[0]["user name"];
+        else {
+            // workaround for empty revision in development
+            $revisions = [];
+            $created_by = "";
+            $creator_name = "";
+        }
 
         // Filter - Workaround for older events: populate filter with event club
         if (empty($clubEvent->evnt_show_to_club) ) {
-            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->getPlace->plc_title], true);
+            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->section->title], true);
             $clubEvent->save();
         }
 
-
-
-
-        return View::make('clubEventView', compact('clubEvent', 'entries', 'clubs', 'persons', 'revisions', 'created_by', 'creator_name'));
+        return View::make('clubEventView', compact('clubEvent', 'shifts', 'clubs', 'persons', 'revisions', 'created_by', 'creator_name'));
     }
 
 
@@ -291,36 +274,44 @@ class ClubEventController extends Controller
         $schedule = $event->getSchedule;
 
         // get a list of possible clubs to create an event at
-        $places = Place::orderBy('plc_title', 'ASC')
-                       ->pluck('plc_title', 'id');
+        $sections = Section::orderBy('title', 'ASC')
+                       ->pluck('title', 'id');
 
 
         // get a list of available job types
-        $jobtypes = Jobtype::where('jbtyp_is_archived', '=', '0')
-                           ->orderBy('jbtyp_title', 'ASC')
+        $shiftTypes = ShiftType::where('is_archived', '=', '0')
+                           ->orderBy('title', 'ASC')
                            ->get();
 
-        // put template data into entries
-        $entries = $schedule->getEntries()
-                            ->with('getJobType')
+        // put template data into shifts
+        $shifts = $schedule->shifts()
+                            ->with('type')
+                            ->orderByRaw('position IS NULL, position ASC, id ASC')
                             ->get();
 
         // Filter - Workaround for older events: populate filter with event club
         if (empty($event->evnt_show_to_club) ) {
-            $event->evnt_show_to_club = json_encode([$event->getPlace->plc_title], true);
+            $event->evnt_show_to_club = json_encode([$event->section->title], true);
             $event->save();
         }
 
         // add LDAP-ID of the event creator - only this user + Marketing + CL will be able to edit
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
-        $created_by = $revisions[0]["user id"];
-        $creator_name = $revisions[0]["user name"];
+        if (is_null($revisions)) {
+            $created_by = "";
+            $creator_name = "";
+        }
+        else {
+            $created_by = $revisions[0]["user id"];
+            $creator_name = $revisions[0]["user name"];
+        }
+
 
         return View::make('editClubEventView', compact('event',
                                                        'schedule',
-                                                       'places',
-                                                       'jobtypes',
-                                                       'entries',
+                                                       'sections',
+                                                       'shiftTypes',
+                                                       'shifts',
                                                        'created_by',
                                                        'creator_name'));
     }
@@ -347,7 +338,7 @@ class ClubEventController extends Controller
 
         $schedule = (new ScheduleController)->update($event->getSchedule->id);
 
-        $entries = (new ScheduleController)->editScheduleEntries($schedule->id);
+        ScheduleController::editShifts($schedule);
 
         // log the action
         Log::info('Event edited: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
@@ -357,8 +348,7 @@ class ClubEventController extends Controller
         // save all data in the database
         $event->save();
         $schedule->save();
-        foreach($entries as $entry)
-            $entry->save();
+
         Utilities::clearIcalCache();
 
         // show event
@@ -366,7 +356,7 @@ class ClubEventController extends Controller
     }
 
     /**
-     * Delete an event specified by parameter $id with schedule and schedule entries.
+     * Delete an event specified by parameter $id with schedule and shifts
      *
      * @param  int  $id
      * @return RedirectResponse
@@ -404,7 +394,7 @@ class ClubEventController extends Controller
                  . Session::get('userGroup') . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         Utilities::clearIcalCache();
 
-        // Delete schedule with entries
+        // Delete schedule with shifts
         $result = (new ScheduleController)->destroy($event->getSchedule()->first()->id);
 
         // Now delete the event itself
@@ -445,19 +435,19 @@ class ClubEventController extends Controller
         $event->evnt_private_details = Input::get('privateDetails');
         $event->evnt_type            = Input::get('evnt_type');
 
-        // create new place
-        if (!Place::where('plc_title', '=', Input::get('place'))->first())
+        // create new section
+        if (!Section::where('title', '=', Input::get('section'))->first())
         {
-            $place = new Place;
-            $place->plc_title = Input::get('place');
-            $place->save();
+            $section = new Section;
+            $section->title = Input::get('section');
+            $section->save();
 
-            $event->plc_id = $place->id;
+            $event->plc_id = $section->id;
         }
-        // use existing place
+        // use existing section
         else
         {
-            $event->plc_id = Place::where('plc_title', '=', Input::get('place'))->first()->id;
+            $event->plc_id = Section::where('title', '=', Input::get('section'))->first()->id;
         }
 
         // format: date; validate on filled value  
@@ -481,11 +471,9 @@ class ClubEventController extends Controller
             $event->evnt_date_end = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));;
         }
 
-        // format: time; validate on filled value  
-        if(!empty(Input::get('beginTime'))) $event->evnt_time_start = Input::get('beginTime');
-        else $event->evnt_time_start = mktime(0, 0, 0);
-        if(!empty(Input::get('endTime'))) $event->evnt_time_end = Input::get('endTime');
-        else $event->evnt_time_end = mktime(0, 0, 0);
+        // format: time; validate on filled value
+        $event->evnt_time_start = !empty(Input::get('beginTime')) ? Input::get('beginTime') : mktime(0, 0, 0);
+        $event->evnt_time_end = !empty(Input::get('endTime')) ? Input::get('endTime') : mktime(0, 0, 0);
 
         // format: tinyInt; validate on filled value
         // reversed this: input=1 means "event is public", input=0 means "event is private"
@@ -500,11 +488,38 @@ class ClubEventController extends Controller
             $event->evnt_is_published = 0;
         }
         // Filter
-        $filter = [];
-        if (Input::get('filterShowToClub2') == '1') { array_push($filter, 'bc-Club'); }
-        if (Input::get('filterShowToClub3') == '1') { array_push($filter, 'bc-Café'); }
+        $filter = collect(Input::get("filter"))->keys()->toArray();
         $event->evnt_show_to_club = json_encode($filter, true);
 
+        // Logging
+
+        if ($event->exists) {
+            //only log changes if the event already exists in the DB
+            if ($event->isDirty('evnt_time_start')) {
+                Logging::eventStartChanged($event);
+            }
+
+            if ($event->isDirty('evnt_title')) {
+                Logging::eventTitleChanged($event);
+            }
+
+            if ($event->isDirty('evnt_subtitle')) {
+                Logging::eventSubtitleChanged($event);
+            }
+
+            if ($event->isDirty('evnt_time_end')) {
+                Logging::eventEndChanged($event);
+            }
+
+            if ($event->isDirty('evnt_public_info')) {
+                Logging::logEventRevision($event, "revisions.eventPublicInfoChanged");
+            }
+
+            if ($event->isDirty('evnt_private_details')) {
+                Logging::logEventRevision($event, "revisions.eventPrivateDetailsChanged");
+            }
+
+        }
         return $event;
     }
 }

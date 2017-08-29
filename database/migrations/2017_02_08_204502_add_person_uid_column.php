@@ -27,7 +27,11 @@ class AddPersonUidColumn extends Migration
             $person->prsn_uid = hash("sha512", uniqid());
             $person->save();
         }
-        $places = \Lara\Place::all();
+        // after new migration for places renaming, we can no longer use the
+        // old places model. When this migration is running, there is no "sections" table,
+        // rather the old places table still exists. For this migration to work, we have to
+        // use a raw statement here
+        $places = DB::table("places")->select('*')->get();
         foreach ($places as $place){
             $place->place_uid = hash("sha512", uniqid());
             $place->save();

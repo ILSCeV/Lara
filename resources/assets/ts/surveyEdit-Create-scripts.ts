@@ -1,3 +1,5 @@
+import * as $ from "jquery"
+
 var questionIdCounter = 0;
 
 // Initialize State for questions and answers
@@ -89,7 +91,8 @@ $('.btnRemoveQuestion').click(function() {
     setDeleteQuestionButtonStatus();
 });
 
-function updateQuestionDisplay (select) {
+
+export function updateQuestionDisplay (select) {
     var $typeSelect = $(select);
     var $question = $typeSelect.closest('[name^=question]');
     var $answerOptionsDiv = $question.find('.answ_option');
@@ -119,14 +122,14 @@ function updateAnswerOptionsIndices(question) {
     });
 }
 
-function addNewAnswerOption(button) {
+export function addNewAnswerOption(button) {
     var $clone = $(button).prev().clone(true, true).insertBefore(button);
     $clone.find('input').val('');
     updateAnswerOptionsIndices($(button).closest('[name^=question]'));
 }
 
 // Deleting answer options
-function removeAnswerOption(answer) {
+export function removeAnswerOption(answer) {
     var question = $(answer).closest('[name^=question]');
     if ($(question).find('.answ_option').children('div').length > 1) {
         $(answer).closest('.input-group').remove();
@@ -156,3 +159,6 @@ function getLastQuestionId() {
         return 0;
     }
 }
+
+window["updateQuestionDisplay"] = updateQuestionDisplay;
+window["addNewAnswerOption"] = addNewAnswerOption;

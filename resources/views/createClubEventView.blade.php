@@ -22,9 +22,9 @@
 			<div class="panel-body no-padding">
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="templateName" class="control-label col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.template') }}: &nbsp;</label>
+					<label for="templateName" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}: &nbsp;</label>
 					
-					<div class="col-md-6 col-sm-6 col-xs-9">
+					<div class="col-md-6 col-sm-6 col-xs-8">
 						@if (isset($activeTemplate))
 							{!! Form::text('templateName', $activeTemplate, array('id'=>'templateName', 'class'=>'col-xs-10 col-md-9') ) !!}
 						@else
@@ -47,9 +47,10 @@
 				    </div>
 			   	</div>
 
-			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding col-md-offset-2 col-sm-offset-2 col-xs-offset-1">			
+			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+			   		<span class="col-md-1 col-sm-1 col-xs-1">&nbsp;</span>			
 					{!! Form::checkbox('saveAsTemplate', '1', false, array('class'=>'col-md-1 col-sm-1 col-xs-1')) !!}
-					{{ trans('mainLang.templateNewSaveQ') }}
+					<span class="col-md-9 col-sm-9 col-xs-9">{{ trans('mainLang.templateNewSaveQ') }}</span>
 			   	</div>
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
@@ -175,28 +176,28 @@
 				@endif
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="place" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
+					<label for="section" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
 					<span class="col-md-10 col-sm-10 col-xs-12">	   	
-						@if($place == "1")
-							{!! Form::text('place', 'bc-Club', array('id'=>'place', 'readonly') ) !!}
-						@elseif($place == "2")
-							{!! Form::text('place', 'bc-Café', array('id'=>'place', 'readonly') ) !!}
+						@if($section == "1")
+							{!! Form::text('section', 'bc-Club', array('id'=>'section', 'readonly') ) !!}
+						@elseif($section == "2")
+							{!! Form::text('section', 'bc-Café', array('id'=>'section', 'readonly') ) !!}
 						@else
 							{{-- Set default values to the club the user is a member in. --}}
 							@if(Session::get('userClub') == 'bc-Club')
-								{!! Form::text('place', 'bc-Club', array('id'=>'place', 'readonly')) !!}
+								{!! Form::text('section', 'bc-Club', array('id'=>'section', 'readonly')) !!}
 							@elseif(Session::get('userClub') == 'bc-Café')
-								{!! Form::text('place', 'bc-Café', array('id'=>'place', 'readonly') ) !!}
+								{!! Form::text('section', 'bc-Café', array('id'=>'section', 'readonly') ) !!}
 							@endif 
 						@endif
 					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 					        <span class="caret"></span>
 					    </a>
 					    <ul class="dropdown-menu">
-						    @foreach($places as $place)
+						    @foreach($sections as $section)
 						        <li> 
 						        	<a href="javascript:void(0);" 
-						        	   onClick="document.getElementById('place').value='{{$place}}'">{{ $place }}</a>
+						        	   onClick="document.getElementById('section').value='{{$section}}'">{{ $section }}</a>
 						        </li>
 							@endforeach
 					    </ul>  	
@@ -208,33 +209,17 @@
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						@if(is_null($filter) OR $filter == "")
 							{{-- Set default values to the club the user is a member in.--}}
-							@if(Session::get('userClub') == 'bc-Club')
-								<div id="filter">
-									{!! Form::checkbox('filterShowToClub2', '1', true) !!}
-										bc-Club
-									&nbsp;&nbsp;&nbsp;&nbsp;
-									{!! Form::checkbox('filterShowToClub3', '1', false) !!}
-										bc-Café
-								</div>
-							@elseif(Session::get('userClub') == 'bc-Café')
-								<div id="filter">
-									{!! Form::checkbox('filterShowToClub2', '1', false) !!}
-										bc-Club
-									&nbsp;&nbsp;&nbsp;&nbsp;
-									{!! Form::checkbox('filterShowToClub3', '1', true) !!}
-										bc-Café
-								</div>
-							@endif 	  
+							@foreach(Lara\Section::all() as $section)
+                                {{ Form::checkbox("filter[" . $section->title ."]", "1", $section->title === Session::get("userClub")) }}
+									{{ $section->title }}
+                                	&nbsp;
+							@endforeach
 						@else
-							<div id="filter">
-								{!! Form::checkbox('filterShowToClub2', '1', 
-										in_array( "bc-Club", json_decode($filter) ) ? true : false ) !!}
-									bc-Club
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								{!! Form::checkbox('filterShowToClub3', '1', 
-										in_array("bc-Café", json_decode($filter)) ? true : false ) !!}
-									bc-Café
-							</div>	 	
+							@foreach(Lara\Section::all() as $section)
+								{{ Form::checkbox("filter[" . $section->title ."]", "1", in_array($section->title, json_decode($filter))) }}
+								{{ $section->title }}
+								&nbsp;
+							@endforeach
 						@endif
 				    </div>
 			   	</div>
@@ -346,7 +331,9 @@
 					</div>	
 				</div>
 			</div>
+
 			<br>
+			
 			<div class="panel">
 				<div class="panel-heading">
 					<h4 class="panel-title">{{ trans('mainLang.details') }}:</h4>({{ trans('mainLang.showOnlyIntern') }})
@@ -369,39 +356,45 @@
 			</div>
 		</div>
 	</div>
-
-	<br>
-	@include('partials.editSchedule')
+	
 	<br>
 	
-	{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'hidden', 'id'=>'button-create-submit')) !!}
-    <input class="hidden" name="evntIsPublished" type="text" value="0" />
-    
-    {{-- 
+	<div class="row">
+		@include('partials.editSchedule')
+		<br>
+		
+		{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'hidden', 'id'=>'button-create-submit')) !!}
+	    <input class="hidden" name="evntIsPublished" type="text" value="0" />
+	    
+	    {{-- 
 
-    Disabling iCal until fully functional -> remove "Publish" button, rename "create unpublished" to just "create"
+	    Disabling iCal until fully functional -> remove "Publish" button, rename "create unpublished" to just "create"
 
 
-    @if(Session::get('userGroup') == 'marketing' 
-     OR Session::get('userGroup') == 'clubleitung'  
-     OR Session::get('userGroup') == 'admin')
-		<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
+	    @if(Session::get('userGroup') == 'marketing' 
+	     OR Session::get('userGroup') == 'clubleitung'  
+	     OR Session::get('userGroup') == 'admin')
+			<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<br class="visible-xs">
+	    @endif
+
+	    --}}
+
+		<button class="btn btn-primary" id="createUnpublishedBtn">{{trans('mainLang.createNewEvent')}}</button>
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<br class="visible-xs">
-    @endif
+		<br class="visible-xs">
+		<a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
 
-    --}}
-
-	<button class="btn btn-primary" id="createUnpublishedBtn">{{trans('mainLang.createNewEvent')}}</button>
-	&nbsp;&nbsp;&nbsp;&nbsp;
-	<br class="visible-xs">
-	<a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
-
-	{!! Form::close() !!}
+		{!! Form::close() !!}
 	
+	</div>
+
 @else
 	@include('partials.accessDenied')
 @endif
+
 @stop
 
 

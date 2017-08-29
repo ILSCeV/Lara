@@ -19,12 +19,15 @@ Code published under [GNU GPL v.3](https://github.com/ILSCeV/Lara/blob/master/LI
 
 Lara VedSt is based on: 
 - [Laravel 5.4](http://laravel.com)
-- [Bootswatch 3.3.7](http://bootswatch.com)
-- [JQuery 2.1.3](http://jquery.com)
-- [Font Awesome 4.7.0](http://fortawesome.github.io/Font-Awesome) 
-- [Isotope 2.2.0](http://isotope.metafizzy.co/)
-- [Typescript 2.2](http://www.typescriptlang.org/)
-- [Bootbox.js 4.4.0](http://bootboxjs.com/)
-- [clipboardjs 1.6.1](https://clipboardjs.com/)
+- [Bootswatch](http://bootswatch.com)
+- [JQuery](http://jquery.com)
+- [Font Awesome](http://fortawesome.github.io/Font-Awesome) 
+- [Isotope](http://isotope.metafizzy.co/)
+- [Typescript](http://www.typescriptlang.org/)
+- [Bootbox.js](http://bootboxjs.com/)
+- [clipboardjs](https://clipboardjs.com/)
+- [SortableJS](https://github.com/RubaXa/Sortable)
+
+For further information about the current versions used, have a look at [composer](composer.json) and [npm](package.json) files.
 
 (All licensed under [MIT License](http://opensource.org/licenses/MIT) or [GNU GPL v.3](http://opensource.org/licenses/GPL-3.0)).

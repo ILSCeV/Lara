@@ -40,6 +40,7 @@ class PersonController extends Controller
         $persons =  \Lara\Person::whereNotNull( "prsn_ldap_id" )
                                 // Look for autofill
                                 ->where('prsn_name', 'like', '%' . $query . '%')
+                                ->with('club')
                                 ->orderBy('prsn_name')
                                 ->get(['prsn_name',
                                        'prsn_ldap_id',

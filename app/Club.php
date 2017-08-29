@@ -36,14 +36,14 @@ class Club extends Model
         return $this->persons()->where('prsn_status', '=', 'candidate');
     }
 
-    public function activePersons()
+    public function accountableForStatistics()
     {
-        return $this->persons()->whereIn('prsn_status', ['member', 'candidate']);
+        return $this->persons()->whereNotNull('prsn_ldap_id')->where('prsn_ldap_id','<>','9999');
     }
 
     public static function activeClubs()
     {
-        return Club::whereIn('id', ['2', '3']);
+        return Club::whereIn('clb_title', Section::all()->pluck('title'));
     }
 
 }

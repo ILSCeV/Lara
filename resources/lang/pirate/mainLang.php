@@ -28,9 +28,8 @@ return [
 
     // /resources/views/layouts/master.blade.php
     'notWorkingMail'        => 'Eine Planke ist lose? Versende :Name eine Taube!',
-    //'moreInfos'           => 'Mehr Infos? Besuche die ',
-    //'projectsite'         => 'Projektseite auf GitHub',
-    'moreInfosProjectsite'  => 'Land in sicht? Kletter\' in den Mast!',
+    'moreInfosProjectsite'  => 'Land in Sicht? Kletter\' in den Mast!',
+    'backToTop'             => 'Ins Krähennest klettern!',
     
     //-----------------------------------------------------------------------------------------------------
 
@@ -273,7 +272,8 @@ return [
     'week'                  => 'Trinkzeit',
     //not translated the term 'logs'
     'manageClub'            => 'Schiffe verwalten',
-    'manageJobType'         => 'Diensttypen verwalten', 
+    'manageShiftType'       => 'Diensttypen verwalten', 
+    'manageSections'        => 'Mannschaften verwalten',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
     
     'manageTemplate'        => 'Vorlagen verwalten',
@@ -312,6 +312,10 @@ return [
 
     // /resources/views/partials/personalStatistics.blade.php
     //-----------------------------------------------------------------------------------------------------------
+    
+    // /resources/views/statisticsView.blade.php
+    'monthStatistic'       => 'Monatsabrechnung',
+    'yearStatistic'       => 'Jahresabrechnung',
     
     // /resources/views/partials/surveyAnswerStatus.blade.php
     //no new strings
@@ -377,7 +381,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
     
     //Controller  ToDo add these strings
-    //ScheduleEntryController
+    //ShiftController
     //action description
     'addedComment'              => 'Kommentar hinzugefügt',
     'deletedComment'            => 'Kommentar gelöscht',
@@ -422,7 +426,7 @@ return [
     'password'                      => 'Das geheime Wort',
     'logIn'                         => 'An Bord gehen',
     'logOut'                        => 'Über Bord gehen',
-    //ScheduleEntryName
+    //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
     //surveyForm
     'placeholderSurveyTitle'        => 'Titel:',
@@ -441,8 +445,8 @@ return [
     ////////////////
 
     'management'                    => 'Verwaltung',
-    'jobType'                       => 'Diensttyp',
-    'jobtypes'                      => 'Diensttypen',
+    'shiftType'                       => 'Diensttyp',
+    'shiftTypes'                      => 'Diensttypen',
     'shift'                         => 'Dienst',
     'start'                         => 'Beginn',
     'end'                           => 'Ende',
@@ -451,13 +455,13 @@ return [
     'deleteConfirmation'            => 'Möchtest du folgenden Diensttyp wirklich löschen:',
     'warningNotReversible'          => 'Diese Aktion kann man nicht rückgängig machen!',
     'editDetails'                   => 'Details anpassen',
-    'deleteThisJobtype'             => 'Entfernen',
+    'deleteThisShiftType'             => 'Entfernen',
 
     'reset'                         => 'Zurücksetzen',
     'update'                        => 'Änderungen speichern',
     'delete'                        => 'löschen',
-    'jobtypeNeverUsed'              => 'Dieser Diensttyp wird bei keinem einzigen Event benutzt... Traurig, so was... Vielleicht wäre es sinnvoll, ihn einfach zu',
-    'jobtypeUsedInFollowingEvents'  => 'Dieser Dienstyp wird bei folgenden Events eingesetzt. Um ihn zu entfernen, ersetze jede Instanz erst mit einem anderen Diensttyp.',
+    'shiftTypeNeverUsed'              => 'Dieser Diensttyp wird bei keinem einzigen Event benutzt... Traurig, so was... Vielleicht wäre es sinnvoll, ihn einfach zu',
+    'shiftTypeUsedInFollowingEvents'  => 'Dieser Dienstyp wird bei folgenden Events eingesetzt. Um ihn zu entfernen, ersetze jede Instanz erst mit einem anderen Diensttyp.',
     'event'                         => 'Event',
     'date'                          => 'Datum',
     'substituteThisInstance'        => 'Ersetzen durch...',
@@ -467,9 +471,16 @@ return [
     'nonNumericStats'               => 'Statistische Wertung muss man mit Ziffern eingeben ;)',
     'negativeStats'                 => 'Statistische Wertung darf nicht negativ sein.',
     'changesSaved'                  => 'Änderungen erfolgreich gespeichert.',
-    'deleteFailedJobtypeInUse'      => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
-    
-    
+    'deleteFailedShiftTypeInUse'      => 'Diensttyp wurde NICHT gelöscht, weil er noch im Einsatz ist. Hier kannst du es ändern.',
+    'adminsOnly'                    => 'Sorry, aber das darf nur der Kapitän!',
+    ////////////////////////
+    // Section management //
+    ////////////////////////
+    'color'                         => 'Farbe',
+    'sectionExists'                 => 'Es it bereits ein Schiff mit diesem Namen vom Stapel gelaufen!',
+    'newSection'                    => 'Neues Schiff',
+    'createSection'                 => 'Neues Schiff bauen',
+
     //////////
     // ICal //
     //////////

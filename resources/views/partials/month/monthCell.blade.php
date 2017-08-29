@@ -53,7 +53,7 @@
             <?php $classString = ""; ?>
         @endif
 
-        {{-- highlight with cal-month-my-event class if the signed in user has an entry in this event --}}
+        {{-- highlight with cal-month-my-event class if the signed in user has an shift in this event --}}
         @if((Session::has('userId') && $clubEvent->hasShift($clubEvent->getSchedule->id, Session::get('userId'))))
             <?php $classString .= " cal-month-my-event"; ?>
         @endif
@@ -61,10 +61,10 @@
         {{-- Filter --}}
         @if ( empty($clubEvent->evnt_show_to_club) )
             {{-- Workaround for older events: if filter is empty - use event club data instead --}}
-            <div class="{!! $clubEvent->getPlace->plc_title !!}  word-break">
+            <div class="{!! $clubEvent->section->title !!}  word-break">
         @else
             {{-- Normal scenario: add a css class according to filter data --}}
-            <div class="word-break section-filter @foreach($sections as $section) {!! in_array( $section->plc_title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->plc_title : false !!} @endforeach">
+            <div class="word-break section-filter @foreach($sections as $section) {!! in_array( $section->title, json_decode($clubEvent->evnt_show_to_club) ) ? $section->title : false !!} @endforeach">
         @endif
 
             {{-- guests see private events as placeholders only, so check if user is logged in --}}
@@ -84,10 +84,8 @@
                         <div class="cal-event {{$classString}} calendar-public-task">
                     @elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
                         <div class="cal-event {{$classString}} calendar-public-marketing">
-                    @elseif ($clubEvent->getPlace->id == 1)
-                        <div class="cal-event {{$classString}} calendar-public-event-bc-club">
-                    @elseif ($clubEvent->getPlace->id == 2)
-                        <div class="cal-event {{$classString}} calendar-public-event-bc-cafe">
+                    @else
+                        <div class="cal-event {{$classString}} calendar-public-event-{{$clubEvent->section->title}}">
                     @endif
                     @include("partials.event-marker", $clubEvent)
                     &nbsp;&nbsp;
@@ -109,10 +107,8 @@
                         <div class="cal-event {{$classString}} calendar-internal-task">
                     @elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
                         <div class="cal-event {{$classString}} calendar-internal-marketing">
-                    @elseif ($clubEvent->getPlace->id == 1)
-                        <div class="cal-event {{$classString}} calendar-internal-event-bc-club">
-                    @elseif ($clubEvent->getPlace->id == 2)
-                        <div class="cal-event {{$classString}} calendar-internal-event-bc-cafe">
+                    @elseif (!is_null($clubEvent->section))
+                        <div class="cal-event {{$classString}} calendar-internal-event-{{$clubEvent->section->title}}">
                     @else
                         {{-- DEFAULT --}}
                         <div class="cal-event {{$classString}} dark-grey">
@@ -124,10 +120,8 @@
                         <div class="cal-event {{$classString}} calendar-public-task">
                     @elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
                         <div class="cal-event {{$classString}} calendar-public-marketing">
-                    @elseif ($clubEvent->getPlace->id == 1)
-                        <div class="cal-event {{$classString}} calendar-public-event-bc-club">
-                    @elseif ($clubEvent->getPlace->id == 2)
-                        <div class="cal-event {{$classString}} calendar-public-event-bc-cafe">
+                    @elseif (!is_null($clubEvent->section))
+                        <div class="cal-event {{$classString}} calendar-public-event-{{$clubEvent->section->title}}">
                     @else
                         {{-- DEFAULT --}}
                         <div class="cal-event {{$classString}} dark-grey">

@@ -1,14 +1,14 @@
+import deTranslations from "./lang/de"
+import enTranslations from "./lang/en"
+import pirateTranslations from "./lang/pirate"
+
 interface Translation {
     [key: string]: string;
 }
 
-declare const enTranslations: Translation;
-declare const deTranslations: Translation;
-declare const pirateTranslations: Translation;
-
 type Language = 'de' | 'en' | 'pirate'
 
-function translate(str: string) {
+export const translate = (str: string) => {
     const language = localStorage["language"];
     const translations = getTranslations(language);
     return translations[str] ? translations[str] : `!! Translation necessary: ${str} in language ${language} !!`;

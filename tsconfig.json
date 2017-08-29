@@ -1,16 +1,25 @@
 {
-    "compilerOptions": {
-        "outFile": "resources/assets/ts/bin/build.js",
-        "types": [
-            "jquery",
-            "bootstrap",
-            "bootstrap-select",
-            "bootbox",
-            "es6-promise"
-        ],
-		"sourceMap": true
-    },
-    "include": [
-        "resources/assets/ts/*.ts"
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "es5"
+    ],
+    "module": "es2015",
+    "sourceMap": true,
+    "allowJs": true,
+    "types": [
+      "jquery",
+      "bootstrap",
+      "bootstrap-select",
+      "bootbox",
+      "sortablejs",
+      "es6-promise",
+      "isotope-layout"
     ]
+  },
+  "exclude": [
+    "node_modules",
+    "vendor"
+  ]
 }

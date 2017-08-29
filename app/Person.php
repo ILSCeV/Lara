@@ -45,7 +45,37 @@ class Person extends Model
         return $this->prsn_name;
     }
 
-    public function isLoggedInUser() {
+    public function isLoggedInUser()
+    {
         return $this->prsn_ldap_id == Session::get('userId');
+    }
+
+    public function nameWithStatus()
+    {
+        return $this->prsn_name .  " " . $this->shortHand();
+    }
+
+    public function shifts()
+    {
+        return $this->hasMany('Lara\Shift', 'person_id');
+    }
+
+    public function lastShift()
+    {
+        return $this->shifts()->orderBy('updated_at', 'desc')->first();
+    }
+
+    public function shortHand()
+    {
+        switch ($this->prsn_status) {
+            case "candidate":
+                return "(K)";
+            case "member":
+                return "(A)";
+            case "veteran":
+                return "(V)";
+            default:
+                return "";
+        }
     }
 }
