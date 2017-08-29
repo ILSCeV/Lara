@@ -28,8 +28,7 @@
                onClick="document.getElementById('userName{{ ''. $shift->id }}').value='{{Session::get('userName')}}';
                        document.getElementById('club{{ ''. $shift->id }}').value='{{Session::get('userClub')}}';
                        document.getElementById('ldapId{{ ''. $shift->id }}').value='{{Session::get('userId')}}';
-                       document.getElementById('btn-submit-changes{{ ''. $shift->id }}').click();
-                       $(this).parents('.row').addClass('my-shift')">
+                       document.getElementById('btn-submit-changes{{ ''. $shift->id }}').click();">
                 <b>{{ trans('mainLang.IDoIt') }}</b>
             </a>
         </li>

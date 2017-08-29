@@ -1198,6 +1198,10 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
+    $('#yourself').on('click', function() {
+        $(this).parents('.row').addClass('my-shift');
+    });
+
     $( '.box' ).find("input[name^='shifts\[title\]']").on( 'input', function()
     {
         // do all the work here after AJAX response is received

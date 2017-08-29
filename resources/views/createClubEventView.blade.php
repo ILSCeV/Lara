@@ -22,9 +22,9 @@
 			<div class="panel-body no-padding">
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="templateName" class="control-label col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.template') }}: &nbsp;</label>
+					<label for="templateName" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}: &nbsp;</label>
 					
-					<div class="col-md-6 col-sm-6 col-xs-9">
+					<div class="col-md-6 col-sm-6 col-xs-8">
 						@if (isset($activeTemplate))
 							{!! Form::text('templateName', $activeTemplate, array('id'=>'templateName', 'class'=>'col-xs-10 col-md-9') ) !!}
 						@else
@@ -47,9 +47,10 @@
 				    </div>
 			   	</div>
 
-			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding col-md-offset-2 col-sm-offset-2 col-xs-offset-1">			
+			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+			   		<span class="col-md-1 col-sm-1 col-xs-1">&nbsp;</span>			
 					{!! Form::checkbox('saveAsTemplate', '1', false, array('class'=>'col-md-1 col-sm-1 col-xs-1')) !!}
-					{{ trans('mainLang.templateNewSaveQ') }}
+					<span class="col-md-9 col-sm-9 col-xs-9">{{ trans('mainLang.templateNewSaveQ') }}</span>
 			   	</div>
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
@@ -330,7 +331,9 @@
 					</div>	
 				</div>
 			</div>
+
 			<br>
+			
 			<div class="panel">
 				<div class="panel-heading">
 					<h4 class="panel-title">{{ trans('mainLang.details') }}:</h4>({{ trans('mainLang.showOnlyIntern') }})
@@ -353,39 +356,45 @@
 			</div>
 		</div>
 	</div>
-
-	<br>
-		@include('partials.editSchedule')
+	
 	<br>
 	
-	{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'hidden', 'id'=>'button-create-submit')) !!}
-    <input class="hidden" name="evntIsPublished" type="text" value="0" />
-    
-    {{-- 
+	<div class="row">
+		@include('partials.editSchedule')
+		<br>
+		
+		{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'hidden', 'id'=>'button-create-submit')) !!}
+	    <input class="hidden" name="evntIsPublished" type="text" value="0" />
+	    
+	    {{-- 
 
-    Disabling iCal until fully functional -> remove "Publish" button, rename "create unpublished" to just "create"
+	    Disabling iCal until fully functional -> remove "Publish" button, rename "create unpublished" to just "create"
 
 
-    @if(Session::get('userGroup') == 'marketing' 
-     OR Session::get('userGroup') == 'clubleitung'  
-     OR Session::get('userGroup') == 'admin')
-		<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
+	    @if(Session::get('userGroup') == 'marketing' 
+	     OR Session::get('userGroup') == 'clubleitung'  
+	     OR Session::get('userGroup') == 'admin')
+			<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<br class="visible-xs">
+	    @endif
+
+	    --}}
+
+		<button class="btn btn-primary" id="createUnpublishedBtn">{{trans('mainLang.createNewEvent')}}</button>
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<br class="visible-xs">
-    @endif
+		<br class="visible-xs">
+		<a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
 
-    --}}
-
-	<button class="btn btn-primary" id="createUnpublishedBtn">{{trans('mainLang.createNewEvent')}}</button>
-	&nbsp;&nbsp;&nbsp;&nbsp;
-	<br class="visible-xs">
-	<a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
-
-	{!! Form::close() !!}
+		{!! Form::close() !!}
 	
+	</div>
+
 @else
 	@include('partials.accessDenied')
 @endif
+
 @stop
 
 
