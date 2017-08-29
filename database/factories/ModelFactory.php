@@ -131,7 +131,7 @@ $factory->define(Lara\Schedule::class, function(Faker\Generator $faker) {
 $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
     $end = $faker->time('H:i');
     $start = $faker->time('H:i', $end);
-    $personId = $faker->randomElement([Lara\Person::inRandomOrder()->first()->id, ""]);
+    $personId = $faker->randomElement([Lara\Person::inRandomOrder()->first()->id, NULL]);
     return [
         'schedule_id' => Lara\Schedule::inRandomOrder()->first()->id,
         'shifttype_id' => Lara\ShiftType::inRandomOrder()->first()->id,
