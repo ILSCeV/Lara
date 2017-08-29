@@ -4,10 +4,6 @@
     {{ $date['monthName'] . " " . $date['year'] }}
 @stop
 
-@section('moreStylesheets')
-    <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/css/monthViewResponsive.css') }}"/>
-@stop
-
 @section('content')
     <!-- prev/next month -->
     <div class="col-xs-12 col-md-12">
