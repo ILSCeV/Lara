@@ -2,7 +2,6 @@
 
 namespace Lara\Http\Controllers;
 
-use Carbon\Carbon;
 use DateTime;
 use Lara\Club;
 use Lara\Person;
@@ -124,23 +123,13 @@ class StatisticsController extends Controller
         $persons = $clubs->flatMap(function ($club) {
             return $club->accountableForStatistics;
         });
-        if ($isMonthStatistic) {
-            $persons = $persons->filter(function ($person) use ($month, $year) {
-                $lastShift = $person->lastShift();
-                if (is_null($lastShift)) {
-                    return false;
-                }
-                
-                return $lastShift->updated_at->diffInMonths(Carbon::create($year,$month)) < 3;
-            });
-        } else {
-            $persons = $persons->filter(function ($person) use ($from, $till) {
-                return null !== $person->lastShift() && $person->shifts()->whereHas('schedule.event',
-                        function ($query) use ($from, $till) {
-                            $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
-                        })->get()->count() > 0;
-            });
-        }
+        $persons = $persons->filter(function ($person) use ($from, $till) {
+            return null !== $person->lastShift() && $person->shifts()->whereHas('schedule.event',
+                    function ($query) use ($from, $till) {
+                        $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
+                    })->get()->count() > 0;
+        });
+        
         $personIds = $persons->map(function ($prsn) {
             return $prsn->id;
         });
@@ -158,10 +147,10 @@ class StatisticsController extends Controller
             $infosForClub = $persons->filter(function ($person) use ($club) {
                 return $person->clb_id == $club->id;
             })->map(function ($person) use ($shifts, $club) {
-                    $info = new StatisticsInformation();
-                    
-                    return $info->make($person, $shifts, $club);
-                });
+                $info = new StatisticsInformation();
+                
+                return $info->make($person, $shifts, $club);
+            });
             $maxShifts = $infosForClub->map(function ($info) {
                 return $info->inOwnClub + $info->inOtherClubs;
             })->sort()->last();
