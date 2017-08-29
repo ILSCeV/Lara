@@ -12,7 +12,7 @@ class UpdateLara extends Command
      *
      * @var string
      */
-    protected $signature = 'lara:update';
+    protected $signature = 'lara:update {--server-mode}';
 
     /**
      * The console command description.
@@ -42,6 +42,13 @@ class UpdateLara extends Command
         $this->info(''); // new line
         Log::info('Starting Lara update...');
         $this->info('Starting Lara update...');
+        
+        $serverMode = $this->option('server-mode');
+        if($serverMode){
+            $extraCommand = 'git reset --hard';
+        } else {
+            $extraCommand = '#nothing to do';
+        }
 
         // start counting time before processing every person
         $counterStart = microtime(true);
@@ -49,7 +56,7 @@ class UpdateLara extends Command
         // List of instructions to execute
         $instructions = [
             'php artisan down',                     // Enter maintenance mode
-            'git reset --hard',                     // reset repo to avoid conflicts
+            $extraCommand,                     // reset repo to avoid conflicts
             'git pull --rebase',                    // Download latest changes from GitHub
             'rm package-lock.json || true',          // remove package-lock, makes sure that you will get the stuff from package.json
             'sh git-create-revisioninfo-hook.sh',   // Update version info in the footer
