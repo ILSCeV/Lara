@@ -90,7 +90,7 @@
                     @include("partials.event-marker", $clubEvent)
                     &nbsp;&nbsp;
                     <a href="{{ URL::route('event.show', $clubEvent->id) }}"
-                       data-toggle="tooltip" 
+                       data-toggle="tooltip"
                        data-placement="right"
                        title="{{ trans('mainLang.showDetails')}}">
                         {{ $clubEvent->evnt_title }}
@@ -126,28 +126,26 @@
                         {{-- DEFAULT --}}
                         <div class="cal-event {{$classString}} dark-grey">
                     @endif
-            @endif
-            @include("partials.event-marker", $clubEvent)
+                @endif
+                @include("partials.event-marker", $clubEvent)
 
-            {{--
+                {{--
 
-            Disabling iCal until fully functional.
+                Disabling iCal until fully functional.
 
-            @include("partials.publishStateIndicator")
+                @include("partials.publishStateIndicator")
 
-            --}}
-            &nbsp;&nbsp;
-            <a href="{{ URL::route('event.show', $clubEvent->id) }}"
-               data-toggle="tooltip" 
-               data-placement="right"
-               title="{{ trans('mainLang.showDetails')}}">
-                {{ $clubEvent->evnt_title }}
-            </a>
-
-        </div>
-
-    @endif
-</div>
+                --}}
+                &nbsp;&nbsp;
+                <a href="{{ URL::route('event.show', $clubEvent->id) }}"
+                   data-toggle="tooltip"
+                   data-placement="right"
+                   title="{{ trans('mainLang.showDetails')}}">
+                    {{ $clubEvent->evnt_title }}
+                </a>
+            </div>
+        @endif
+    </div>
 @endif
 @endforeach
 
