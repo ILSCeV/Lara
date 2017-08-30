@@ -3,19 +3,8 @@ import {translate} from "./Translate"
 import * as bootbox from "bootbox"
 import {ToggleButton} from "./ToggleButton";
 import {makeClassToggleAction, makeLocalStorageAction} from "./ToggleAction";
+import {safeGetLocalStorage} from "./Utilities";
 
-export const safeSetLocalStorage = (key: string, prop: any) => {
-    if (typeof(Storage) !== "undefined") {
-        localStorage.setItem(key, prop);
-    }
-}
-
-export const safeGetLocalStorage = (key: string) => {
-    if (typeof(Storage) !== "undefined") {
-        return localStorage.getItem(key);
-    }
-    return undefined;
-}
 
 const isWeekView = $('.isotope').length > 0;
 $(() => {

@@ -7,13 +7,15 @@ export class ToggleButton {
     private isActive: () => boolean;
 
     private activeStyle: string;
+    private inactiveStyle: string;
 
     private actions: Array<ToggleAction> = [];
 
-    constructor(buttonId, isActive: () => boolean, activeStyle = "btn-primary") {
+    constructor(buttonId, isActive: () => boolean, activeStyle = "btn-primary", inactiveStyle = "") {
         this.$button = $(`#${buttonId}`);
         this.isActive = isActive;
         this.activeStyle = activeStyle;
+        this.inactiveStyle = inactiveStyle;
 
         this.$button.toggleClass("btn-primary", this.isActive());
     }
@@ -37,7 +39,9 @@ export class ToggleButton {
 
     public setToggleStatus(active: boolean) {
         this.actions.forEach(action => action(!active));
-        this.$button.toggleClass(this.activeStyle, active);
+        this.$button
+            .toggleClass(this.activeStyle, active)
+            .toggleClass(this.inactiveStyle, !active);
         return this;
     }
 
