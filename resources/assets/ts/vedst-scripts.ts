@@ -3,6 +3,9 @@ import { translate } from "./Translate"
 import "isotope-layout"
 import * as Isotope  from "../../../node_modules/isotope-layout/js/isotope.js"
 import * as bootbox from "bootbox"
+import {ToggleButton} from "./ToggleButton";
+import {makeLocalStorageAction, makeClassToggleAction} from "./ToggleAction";
+import {safeGetLocalStorage} from "./EventView";
 
 const jQuery = $;
 /////////////
@@ -14,99 +17,45 @@ $(function() {
     //////////////////////////////////////////////////////
     // Month view without Isotope, section filters only //
     //////////////////////////////////////////////////////
-    if ($('#month-view-marker').length)
-    {
-        // Apply filters from local storage on page load
-
-        // first hide all sections
-        $('.section-filter').hide(); 
-
-        // get all sections from buttons we created while rendering on the backend side
-        var sections = [];
-        $.each($('.section-filter-selector'), function(){ sections.push($(this).prop('id')); });
-
-        for (let i = 0; i < sections.length; ++i )
-        {
-            // if "hide": filter exists and set to "hide" - no action needed
-            // if "show": filter exists and set to "show" - show events, highlight button
-            // if "null": filter doesn't exist - default to "show"
-            if ( localStorage.getItem(sections[i]) !== "hide" ) 
-            {   
-                // save section filter value
-                if(typeof(Storage) !== "undefined") { localStorage.setItem(sections[i], "show"); };
-
-                // show events from this section in view
-                $("."+sections[i].slice(7)).show();
-
-                // set filter buttons to the saved state
-                $('#'+sections[i]).addClass('btn-primary');
-            } 
-        }
+    const isMonthView = $('#month-view-marker').length;
+    const isWeekView = $('.isotope').length > 0;
 
 
-        // Filter buttons action
-        $('#section-filter').on( 'click', 'button', function() 
-        {
-            // save current filter intent
-            var filterValue = $( this ).attr('data-filter');
+    const initializeSectionFilters = (isotope: typeof Isotope = null) => {
+        let sectionFilters = [];
+        $.each($('.section-filter-selector'), function () {
+            sectionFilters.push($(this).prop('id'));
+        });
 
-            if ( $(this).hasClass('btn-primary') ) 
-            {   // case 1: this section was shown, intent to hide
-                
-                // deactivate button
-                $(this).removeClass('btn-primary');
+        const showAllActiveSections = () => {
+            $(".section-filter").hide();
+            sectionFilters
+                .filter(filter => safeGetLocalStorage(filter) !== "hide")
+                .forEach(filter => $(`.${filter.slice(7)}`).show())
+        };
 
-                // save choice to local storage
-                if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'hide'); }
-                
-                // First hide all
-                $('.section-filter').hide();
-                
-                // go through local storage
-                for ( let i = 0; i < window.localStorage.length; i++)
-                {
-                    var key = window.localStorage.key(i);
+        sectionFilters.forEach((filterName) => {
+            const sectionButton = new ToggleButton(filterName, () => $(`#${filterName}`).hasClass("btn-primary"));
 
-                    // look for all entries starting with "filter-" prefix
-                    if (key.slice(0,7) === "filter-") 
-                    {
-                        // find what should be revealed
-                        if (window.localStorage.getItem(key) == "show") 
-                        { 
-                            // show events
-                            $("."+key.slice(7)).show(); 
-
-                            // set filter buttons to the saved state
-                            $('#filter-'+key.slice(7)).addClass('btn-primary');
-                        };             
-                    }
-                }
-            } 
-            else 
-            {   //case 2: this section was hidden, intent to show
-                
-                // reactivate button
-                $(this).addClass('btn-primary');
-
-                // save choice to local storage
-                if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'show'); }
-                
-                // show events from this section in view
-                $("."+filterValue).show(); 
-            }
+            sectionButton.addActions([
+                makeLocalStorageAction(filterName, "show", "hide"),
+                showAllActiveSections,
+                () => isotope ? isotope.layout() : null
+            ])
+                .setToggleStatus(safeGetLocalStorage(filterName) !== "hide");
         });
     }
-})
-$(() => {
-    const isWeekView = $('.isotope').length > 0;
+
+    if (isMonthView || isWeekView) {
+        initializeSectionFilters();
+    }
+
     if (isWeekView) {
         const isotope = new Isotope('.isotope');
 
         /////////////////////////////////////////////////////////
         // Week view with Isotope, section and feature filters //
         /////////////////////////////////////////////////////////
-
-
 
         // init Isotope
         isotope.arrange({
@@ -134,265 +83,51 @@ $(() => {
         // Section filters //
         /////////////////////
 
-
-
-        // Apply filters from local storage on page load
-
-        // first hide all sections
-        $('.section-filter').hide();
-
         // get all sections from buttons we created while rendering on the backend side
-        var sections = [];
-        $.each($('.section-filter-selector'), function(){ sections.push($(this).prop('id')); });
-
-        for (var i = 0; i < sections.length; ++i )
-        {
-            // if "hide": filter exists and set to "hide" - no action needed
-            // if "show": filter exists and set to "show" - show events, highlight button
-            // if "null": filter doesn't exist - default to "show"
-            if ( localStorage.getItem(sections[i]) !== "hide" )
-            {
-                // save section filter value
-                if(typeof(Storage) !== "undefined") { localStorage.setItem(sections[i], "show"); };
-
-                // show events from this section in view
-                $("."+sections[i].slice(7)).show();
-                isotope.layout();
-
-                // set filter buttons to the saved state
-                $('#'+sections[i]).addClass('btn-primary');
-            }
-        }
-
-
-        // Filter buttons action
-        $('#section-filter').on( 'click', 'button', function()
-        {
-            // save current filter intent
-            var filterValue = $( this ).attr('data-filter');
-
-            if ( $(this).hasClass('btn-primary') )
-            {   // case 1: this section was shown, intent to hide
-
-                // deactivate button
-                $(this).removeClass('btn-primary');
-
-                // save choice to local storage
-                if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'hide'); }
-
-                // First hide all
-                $('.section-filter').hide();
-
-                // go through local storage
-                for (var i = 0; i < window.localStorage.length; i++)
-                {
-                    var key = window.localStorage.key(i);
-
-                    // look for all entries starting with "filter-" prefix
-                    if (key.slice(0,7) === "filter-")
-                    {
-                        // find what should be revealed
-                        if (window.localStorage.getItem(key) == "show")
-                        {
-                            // show events
-                            $("."+key.slice(7)).show();
-
-                            // set filter buttons to the saved state
-                            $('#filter-'+key.slice(7)).addClass('btn-primary');
-                        };
-                    }
-                }
-                isotope.layout();
-            }
-            else
-            {   //case 2: this section was hidden, intent to show
-
-                // reactivate button
-                $(this).addClass('btn-primary');
-
-                // save choice to local storage
-                if(typeof(Storage) !== "undefined") { localStorage.setItem("filter-"+filterValue, 'show'); }
-
-                // show events from this section in view
-                $("."+filterValue).show();
-                isotope.layout();
-            }
-        });
-
-
+        initializeSectionFilters(isotope);
 
         /////////////////////
         // Feature filters //
         /////////////////////
 
-
-
         //////////////////////////////
         // Show/hide time of shifts //
         //////////////////////////////
+        const shiftTimes = new ToggleButton("toggle-shift-time", () => $('.shift-time').is(":visible"));
 
-
-
-        // set translated strings
-        $('#toggle-shift-time').text(translate('shiftTime'));
-
-        // Apply saved preferences from local storage on pageload
-        if(typeof(Storage) !== "undefined")
-        {
-            if (localStorage.getItem("shiftTime") == "show")
-            {
-                $('.entry-time').removeClass("hide");
-                $('#toggle-shift-time').addClass("btn-primary");
-            }
-            else if (localStorage.getItem("shiftTime") == "hide")
-            {
-                $('.shift-time').addClass("hide");
-                $('#toggle-shift-time').removeClass("btn-primary");
-            }
-            isotope.layout();
-        };
-
-        // Filter buttons action
-        $('#toggle-shift-time').click(function(e) 
-        { 
-            if ($('.shift-time').is(":visible"))    // times are shown, intent to hide
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") {
-                    localStorage.setItem("shiftTime", "hide");
-                }
-
-                // change state, change button
-                $('.shift-time').addClass("hide");
-                $('#toggle-shift-time').removeClass("btn-primary");
-                isotope.layout();
-            }
-            else    // times are hidden, intent to show
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") {
-                    localStorage.setItem("shiftTime", "show");
-                }
-
-                // change state, change button
-                $('.shift-time').removeClass("hide");
-                $('#toggle-shift-time').addClass("btn-primary");
-                isotope.layout();
-            };
-        });
-
-
-
+        shiftTimes.addActions([
+            makeLocalStorageAction("shiftTime", "show", "hide"),
+            makeClassToggleAction(".shift-time", "hide", false),
+            () => isotope.layout()
+        ])
+            .setToggleStatus(safeGetLocalStorage("shiftTime") == "show")
+            .setText(translate("shiftTime"));
         ////////////////////////////
         // Show/hide taken shifts //
         ////////////////////////////
-
-
-
-        $('#toggle-taken-shifts').text(translate("onlyEmpty"));
-
-        // Apply saved preferences from local storage on pageload
-        if(typeof(Storage) !== "undefined")
-        {
-            if (localStorage.getItem("onlyEmptyShifts") === "true")
-            {
-                $('div.green').closest('.row').addClass('hide');
-                $('#toggle-taken-shifts').addClass("btn-primary");
-                isotope.layout();
-            }
-            else if (localStorage.getItem("onlyEmptyShifts") == "false")
-            {
-                $('div.green').closest('.row').removeClass('hide');
-                $('#toggle-taken-shifts').removeClass("btn-primary");
-                isotope.layout();
-            }
-        };
-
-        // Filter buttons action
-        $('#toggle-taken-shifts').click(function(e)
-        {
-            if ($('div.green').closest('.row').is(":visible"))    // all shifts are shown, intent to hide full shifts
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") {
-                    localStorage.setItem("onlyEmptyShifts", "true");
-                }
-
-                // change state, change button
-                $('div.green').closest('.row').addClass('hide');
-                $('#toggle-taken-shifts').addClass("btn-primary");
-                isotope.layout();
-            }
-            else    // only empty shifts shown, intent to show all shifts
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") {
-                    localStorage.setItem("onlyEmptyShifts", "false");
-                }
-
-                // change state, change button
-                $('div.green').closest('.row').removeClass('hide');
-                $('#toggle-taken-shifts').removeClass("btn-primary");
-                isotope.layout();
-            };
-        });
-
-
-
+        const takenShifts = new ToggleButton("toggle-taken-shifts", () => $('div.green').closest('.row').hasClass("hide"));
+        takenShifts.addActions([
+            makeLocalStorageAction("onlyEmptyShifts", "true", "false"),
+            makeClassToggleAction($('div.green').closest('.row'), "hide", true),
+            () => isotope.layout()
+        ])
+            .setToggleStatus(safeGetLocalStorage("onlyEmptyShifts") == "true")
+            .setText(translate("onlyEmpty"));
         ////////////////////////////
         // Show/hide all comments //
         ////////////////////////////
 
-
-
-
         // Constraint: limits usage of this filter to week view only
-        if ($('#week-view-marker').length)
-        {
-            // Apply saved preferences from local storage on pageload
-            if(typeof(Storage) !== "undefined")
-            {
-                if (localStorage.getItem("allComments") == "show")
-                {
-                    $('[name^=comment]').removeClass("hide");
-                    $('#toggle-all-comments').addClass("btn-primary");
-                    isotope.layout();
-                }
-                else if (localStorage.getItem("allComments") == "hide")
-                {
-                    $('[name^=comment]').addClass("hide");
-                    $('#toggle-all-comments').removeClass("btn-primary");
-                    isotope.layout();
-                }
-            };
+        if ($('#week-view-marker').length) {
+            const allComments = new ToggleButton("toggle-all-comments", () => ! $('[name^=comment]').hasClass("hide"));
 
-            // Filter buttons action
-            $('#toggle-all-comments').click(function(e)
-            {
-                if ($('[name^=comment]').is(":visible"))    // comments are shown, intent to hide
-                {
-                    // save selection in local storage
-                    if(typeof(Storage) !== "undefined") {
-                        localStorage.setItem("allComments", "hide");
-                    }
-
-                    // change state, change button
-                    $('[name^=comment]').addClass("hide");
-                    $('#toggle-all-comments').removeClass("btn-primary");
-                    isotope.layout();
-                }
-                else    // comments are hidden, intent to show
-                {
-                    // save selection in local storage
-                    if(typeof(Storage) !== "undefined") { localStorage.setItem("allComments", "show"); }
-
-                    // change state, change button
-                    $('[name^=comment]').removeClass("hide");
-                    $('#toggle-all-comments').addClass("btn-primary");
-                    isotope.layout();
-                };
-            });
-        };
+            allComments.addActions([
+                makeLocalStorageAction("allComments", "show", "hide"),
+                makeClassToggleAction("[name^=comment]", "hide", false),
+                () => isotope.layout()
+            ])
+                .setToggleStatus(safeGetLocalStorage("allComments") == "show");
+        }
 
 
         ///////////////////////////////////////////////
@@ -467,16 +202,8 @@ $(() => {
 
         // Show/hide comments
         $('.showhide').click(function(e) {
-            if ($(this).parent().next('[name^=comment]').is(":visible"))
-            {
-                // comment is shown, intent to hide
-                $(this).parent().next('[name^=comment]').addClass("hide");
-            }
-            else
-            {
-                // comment is hidden, intent to show
-                $(this).parent().next('[name^=comment]').removeClass("hide");
-            };
+            const comment = $(this).parent().next('[name^=comment]');
+            comment.toggleClass("hide", comment.is(":visible"));
             isotope.layout();
         });
 
