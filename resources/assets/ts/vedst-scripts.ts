@@ -5,7 +5,7 @@ import * as Isotope  from "../../../node_modules/isotope-layout/js/isotope.js"
 import * as bootbox from "bootbox"
 import {ToggleButton} from "./ToggleButton";
 import {makeLocalStorageAction, makeClassToggleAction} from "./ToggleAction";
-import {safeGetLocalStorage} from "./EventView";
+import {safeGetLocalStorage} from "./Utilities";
 
 const jQuery = $;
 /////////////
@@ -93,7 +93,7 @@ $(function() {
         //////////////////////////////
         // Show/hide time of shifts //
         //////////////////////////////
-        const shiftTimes = new ToggleButton("toggle-shift-time", () => $('.shift-time').is(":visible"));
+        const shiftTimes = new ToggleButton("toggle-shift-time", () => $(".shift-time").is(":visible"));
 
         shiftTimes.addActions([
             makeLocalStorageAction("shiftTime", "show", "hide"),
@@ -105,10 +105,10 @@ $(function() {
         ////////////////////////////
         // Show/hide taken shifts //
         ////////////////////////////
-        const takenShifts = new ToggleButton("toggle-taken-shifts", () => $('div.green').closest('.row').hasClass("hide"));
+        const takenShifts = new ToggleButton("toggle-taken-shifts", () => $("div.green").closest(".row").hasClass("hide"));
         takenShifts.addActions([
             makeLocalStorageAction("onlyEmptyShifts", "true", "false"),
-            makeClassToggleAction($('div.green').closest('.row'), "hide", true),
+            makeClassToggleAction($("div.green").closest(".row"), "hide", true),
             () => isotope.layout()
         ])
             .setToggleStatus(safeGetLocalStorage("onlyEmptyShifts") == "true")
@@ -135,70 +135,20 @@ $(function() {
         ///////////////////////////////////////////////
 
 
-
         // set translated strings
-        var weekMonSun = translate('mondayToSunday');
-        var weekWedTue = translate('wednesdayToTuesday');
+        const weekMonSun = translate('mondayToSunday');
+        const weekWedTue = translate('wednesdayToTuesday');
 
-        // Apply saved preferences from local storage on pageload
-        if(typeof(Storage) !== "undefined")
-        {
-            if (localStorage.getItem("weekStart") === "wednesday")
-            {
-                // apply transformation, value already saved in storage
-                $('.week-mo-so').addClass('hide');
-                $('.week-mi-di').removeClass('hide');
-                $('#toggle-week-start').removeClass("btn-primary");
-                $('#toggle-week-start').addClass("btn-success");
-                $('#toggle-week-start').text(weekWedTue);
-                isotope.layout();
-            }
-            else // default to localStorage.weekStart == "monday" and save to storage
-            {
-                // save or update selection in local storage
-                localStorage.setItem("weekStart", "monday");
+        const weekStart = new ToggleButton("toggle-week-start", () => safeGetLocalStorage("weekStart") == "monday", "btn-primary", "btn-success");
 
-                // apply transformation
-                $('.week-mo-so').removeClass('hide');
-                $('.week-mi-di').addClass('hide');
-                $('#toggle-week-start').addClass("btn-primary");
-                $('#toggle-week-start').removeClass("btn-success");
-                $('#toggle-week-start').text(weekMonSun);
-                isotope.layout();
-            }
-        };
-
-        // Filter buttons action
-        $('#toggle-week-start').click(function(e)
-        {
-            if (localStorage.getItem("weekStart") === "monday")    // week starts monday, intent to start on wednesday
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") { localStorage.setItem("weekStart", "wednesday"); }
-
-                // change state, change button
-                $('.week-mo-so').addClass('hide');
-                $('.week-mi-di').removeClass('hide');
-                $('#toggle-week-start').removeClass("btn-primary");
-                $('#toggle-week-start').addClass("btn-success");
-                $('#toggle-week-start').text(weekWedTue);
-                isotope.layout();
-            }
-            else    // localStorage.weekStart == "wednesday" -> week starts on wednesday, intent to start on monday
-            {
-                // save selection in local storage
-                if(typeof(Storage) !== "undefined") { localStorage.setItem("weekStart", "monday"); }
-
-                // change state, change button
-                $('.week-mo-so').removeClass('hide');
-                $('.week-mi-di').addClass('hide');
-                $('#toggle-week-start')
-                    .addClass("btn-primary")
-                    .removeClass("btn-success")
-                    .text(weekMonSun);
-                isotope.layout();
-            };
-        });
+        weekStart.addActions([
+            makeLocalStorageAction("weekStart", "monday", "wednesday"),
+            makeClassToggleAction(".week-mo-so", "hide", true),
+            makeClassToggleAction(".week-mi-di", "hide", false),
+            (isActive: boolean) => weekStart.setText(isActive ? weekMonSun : weekWedTue),
+            () => isotope.layout()
+        ])
+            .setToggleStatus(safeGetLocalStorage("weekStart") == "monday");
 
         // Show/hide comments
         $('.showhide').click(function(e) {
@@ -208,12 +158,9 @@ $(function() {
         });
 
         // button to remove events from week view - mostly for printing
-        $(function(){
-            $('.hide-event').click(function(e) {
-                // change state, change button
-                $(this).parent().parent().parent().parent().parent().addClass('hide');
-                isotope.layout();
-            });
+        $('.hide-event').click(function(e) {
+            $(this).parents(".element-item").eq(0).addClass("hide");
+            isotope.layout();
         });
     }
 });
