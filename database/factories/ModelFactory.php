@@ -99,7 +99,7 @@ $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
         'evnt_time_end' => $end->format('H:i'),
         'evnt_public_info' => $faker->sentence(),
         'evnt_private_details' => $faker->sentence(),
-        'evnt_is_private' => $faker->boolean(),
+        'evnt_is_private' => $faker->boolean(10),
         'evnt_is_published' => 0
     ];
 });
