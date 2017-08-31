@@ -1,5 +1,4 @@
 @if(Session::has("userId") || ! $clubEvent->evnt_is_private)
-
     @include("partials.event-marker", $clubEvent)
     {{--
 

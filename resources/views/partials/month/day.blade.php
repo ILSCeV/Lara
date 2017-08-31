@@ -26,6 +26,6 @@
         </small>
     </div>
     <div class="cell90">
-        @include( 'partials.month.monthCell')
+        @include('partials.month.monthCell')
     </div>
 </div>
