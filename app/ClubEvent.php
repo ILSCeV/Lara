@@ -93,4 +93,9 @@ class ClubEvent extends Model
 	public function shifts() {
 		return $this->hasManyThrough('Lara\Shift', 'Lara\Schedule', 'evnt_id', 'schedule_id', 'id');
 	}
+
+	public function sectionsToShowTo() {
+        $titles = json_decode($this->evnt_show_to_club);
+        return Section::whereIn('title', $titles)->get();
+    }
 }
