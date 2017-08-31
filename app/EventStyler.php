@@ -24,13 +24,14 @@ class EventStyler
 
     public function eventClassString()
     {
+        $this->classString = "";
         $this->calendarEvent();
 
         $this->pastEvent();
         $this->ownShift();
-        //$this->eventType();
+        $this->eventType();
 
-        $this->sectionsBackground();
+       // $this->sectionsBackground();
 
         return $this->classString;
     }
@@ -71,9 +72,7 @@ class EventStyler
             $this->addClass("dark-grey");
         }
         else {
-            $classForType = "calendar-";
-            $classForType .= $this->event->evnt_is_private ? "internal-" : "public-";
-            $classForType .= $this->eventTypeToClass($classForType);
+            $classForType = $this->eventTypeToClass();
             $this->addClass($classForType);
         }
     }
@@ -83,19 +82,21 @@ class EventStyler
      */
     public function eventTypeToClass()
     {
+        $prefix = "calendar-";
+        $prefix .= $this->event->evnt_is_private ? "internal-" : "public-";
         switch ($this->event->evnt_type) {
             case 1:
-                return "info";
+                return $prefix . "info";
             case 6:
-                return "task";
+                return $prefix . "task";
             case 7:
-                return "marketing";
+                return $prefix . "marketing";
             case 8:
-                return "marketing";
+                return $prefix . "marketing";
             case 9:
-                return "task";
+                return $prefix . "task";
             default:
-                return "event-" . $this->event->section->title;
+                return "calendar-Event-" . $this->event->section->color;
         }
     }
 

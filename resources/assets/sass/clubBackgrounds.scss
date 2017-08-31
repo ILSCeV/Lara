@@ -1,45 +1,9 @@
 @import "../../../node_modules/google-material-color/dist/palette";
 
-@mixin backgroundGradientTwoColors($first, $second) {
-  background: -webkit-linear-gradient(90deg, $first 90%, $second 10%);
-  background: -o-linear-gradient(110deg, $first 50%, $second 50%);
-  background: -moz-linear-gradient(110deg, $first 50%, $second 50%);
-  background: linear-gradient(90deg, $first 90%, $second 90%);
-}
+$colors : map-keys($palette);
 
-@mixin backgroundGradientThreeColors($first, $second, $third) {
-  background: -webkit-linear-gradient(110deg, $first 33%, rgba(0, 0, 0, 0) 33%), -webkit-linear-gradient(110deg, $second 66%, $third 66%);
-  background: -o-linear-gradient(110deg, $first 33%, rgba(0, 0, 0, 0) 33%), -o-linear-gradient(110deg, $second 66%, $third 66%);
-  background: -moz-linear-gradient(110deg, $first 33%, rgba(0, 0, 0, 0) 33%), -moz-linear-gradient(110deg, $second 66%, $third 66%);
-  background: linear-gradient(to right, $first 80%, $second 80%, $second 90%, $third 90%)
-}
-
-@function str-replace($string, $search, $replace: '') {
-  $index: str-index($string, $search);
-  @if $index {
-    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
-  }
-  @return $string;
-}
-
-$colors : Red Blue Green;//map-keys($palette);
-
-@each $first in $colors {
-  .calendar-1-Event-#{$first} {
-    background-color: palette($first);
-  }
-  @each $second in $colors {
-    @if ($first != $second) {
-      .calendar-2-Event-#{$first}-#{$second} {
-        @include backgroundGradientTwoColors(palette($first), palette($second));
-      }
-      @each $third in $colors {
-        @if ($first != $third && $second != $third) {
-          .calendar-3-Event-#{$first}-#{$second}-#{$third} {
-            @include backgroundGradientThreeColors(palette($first), palette($second), palette($third));
-          }
-        }
-      }
-    }
+@each $color in $colors {
+  .calendar-Event-#{$color} {
+    background-color: palette($color);
   }
 }
