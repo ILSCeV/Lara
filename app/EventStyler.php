@@ -28,7 +28,9 @@ class EventStyler
 
         $this->pastEvent();
         $this->ownShift();
-        $this->eventType();
+        //$this->eventType();
+
+        $this->sectionsBackground();
 
         return $this->classString;
     }
@@ -100,6 +102,24 @@ class EventStyler
     public function calendarEvent()
     {
         $this->addClass("cal-event");
+    }
+
+    public function sectionsBackground()
+    {
+        $relevantSections = $this->event->sectionsToShowTo();
+        $amountOfSections = $relevantSections->count();
+        $event = $this->event;
+        $colors = $relevantSections->sortBy(function($section) use($event) {
+            if ($section->id === $event->section->id) {
+                return 0;
+            }
+            return $section->id;
+        })
+            ->map(function ($section) {
+                return $section->color;
+            })
+            ->implode("-");
+        $this->addClass("calendar-" . $amountOfSections . "-Event-" . $colors);
     }
 
 }
