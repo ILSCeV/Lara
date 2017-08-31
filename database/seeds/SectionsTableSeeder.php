@@ -22,19 +22,23 @@ class SectionsTableSeeder extends Seeder
                 'title' => 'bc-Club',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                'section_uid' => hash("sha512", uniqid())
+                'section_uid' => hash("sha512", uniqid()),
+                'color' => "Red"
+
             ],
             1 => [
                 'title' => 'bc-Café',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                'section_uid' => hash("sha512", uniqid())
+                'section_uid' => hash("sha512", uniqid()),
+                'color' => "Blue"
             ],
             2 => [
                 'title' => 'bd-Club',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                'section_uid' => hash("sha512", uniqid())
+                'section_uid' => hash("sha512", uniqid()),
+                "color" => "Green"
             ]
         ]);
         
