@@ -68,6 +68,19 @@ class ClubEventController extends Controller
             $templateId = 0;    // 0 = no template
         }
 
+
+        // validate date, see
+        // https://stackoverflow.com/questions/19271381/correctly-determine-if-date-string-is-a-valid-date-in-that-format
+        $dateString = $year . "-" . $month . "-" . $day;
+        $d = DateTime::createFromFormat('Y-m-d', $dateString);
+        $isDateFormatValid = $d && $d->format('Y-m-d') === $dateString;
+
+        if ( !$isDateFormatValid) {
+            Session::put('message', trans("messages.invalidDate", compact('day', 'month', 'year')));
+            Session::put('msgType', 'danger');
+            return Redirect::to('/');
+        }
+
         // prepare correct date format to be used in the forms
         $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
 
