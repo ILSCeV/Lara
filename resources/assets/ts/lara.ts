@@ -22,5 +22,8 @@ import "./scrollToTopButton"
 import "./SubmitWithToken"
 import "./Language"
 
+import "./views/Month"
+import "./views/Event"
+
 // disabled for now
 // import "./Ical"
