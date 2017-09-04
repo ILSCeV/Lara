@@ -207,11 +207,6 @@ function decodeEntities(encodedString) {
     return textArea.value;
 }
 
-
-
-
-
-
 //////////
 // AJAX //
 //////////
@@ -220,7 +215,6 @@ function decodeEntities(encodedString) {
 
 // Update shifts
 jQuery( document ).ready( function( $ ) {
-
 
 /////////////////////////////
 // AUTOCOMPELETE USERNAMES //
