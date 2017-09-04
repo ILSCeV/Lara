@@ -19,3 +19,4 @@ import "./Utilities"
 import "./vedst-scripts"
 
 import "./scrollToTopButton"
+import "./SubmitWithToken"
