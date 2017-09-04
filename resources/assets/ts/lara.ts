@@ -20,3 +20,4 @@ import "./vedst-scripts"
 
 import "./scrollToTopButton"
 import "./SubmitWithToken"
+import "./Language"

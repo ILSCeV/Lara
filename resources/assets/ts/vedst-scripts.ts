@@ -172,13 +172,6 @@ $(function() {
 // All views //
 ///////////////
 
-// Default language is german
-$(function() {
-    localStorage["language"] = localStorage["language"] || "de";
-});
-
-
-
 // Enable Tooltips
 $(function () { $("[data-toggle='tooltip']").tooltip({trigger: "hover"}); });
 
@@ -196,9 +189,7 @@ $('[name^=btn-submit-change]').click(function() {
     $(this).parents('.row').removeClass('my-shift');
 });
 
-
-
-// Dropdown hiding fix 
+// Dropdown hiding fix
 $('input').focusout(function() {
     if ($(this).prop('placeholder') === '=FREI=') {
         // hack to allow for click to register before focusout is called
@@ -207,16 +198,6 @@ $('input').focusout(function() {
         }, 200);
     }
 });
-
-
-
-// Language switcher 
-$('.languageSwitcher').find('a').click(function() {
-    var language = $(this).data('language');
-    localStorage.setItem('language', language);
-});
-
-
 
 // conversion of html entities to text (e.g. "&" as "&amp;")
 // ref: https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery
@@ -336,17 +317,6 @@ $(function(){
     });
 });
 
-
-
-///////////////
-// Week view //
-///////////////
-
-
-
-
-
-
 //////////////////////
 // Create/edit view //
 //////////////////////
@@ -395,103 +365,104 @@ $(document).ready(function() {
 
 
 
-    ///////////////////////////////////////
-    // Show shifts for a selected person //
-    ///////////////////////////////////////
+///////////////////////////////////////
+// Show shifts for a selected person //
+///////////////////////////////////////
 
 
 
-    declare var chosenPerson;
-    declare var chosenMonth, chosenYear;
-    declare var isMonthStatistic;
-    $('[name^=show-stats-person]').click(function() {
+declare var chosenPerson;
+declare var chosenMonth, chosenYear;
+declare var isMonthStatistic;
 
-        // Initialise modal and show loading icon and message
-        var dialog = <any> bootbox.dialog({
-            title: translate('listOfShiftsDone') + chosenPerson,
-            size: 'large',
-            message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
-            onEscape: () => {}
-        });
+$('[name^=show-stats-person]').click(function() {
 
-       
-        // Do all the work here after AJAX response is received
-        function ajaxCallBackPersonStats(response) { 
-
-            // Parse and show response
-            dialog.init(function(){
-
-                // Initialise table structure
-                dialog.find('.modal-body').addClass("no-padding").html(
-                    "<table id=\"person-shifts-overview\" class=\"table table-hover no-padding\">"
-                        + "<thead>"
-                        + "<tr>"
-                        + "<th>#</th>"
-                        + "<th>" + translate('shift') + "</th>" 
-                        + "<th>" + translate('event') + "</th>" 
-                        + "<th>" + translate('section') + "</th>" 
-                        + "<th>" + translate('date') + "</th>" 
-                        + "<th>" + translate('weight') + "</th>"
-                        + "</tr>"
-                        + "</thead>"
-                    +"</table>"
-                );
-
-                // check for empty response
-                if (response.length === 0) 
-                {
-                    $("#person-shifts-overview").append("<tr><td colspan=6>"  + translate('noShiftsInThisPeriod') + "</td></tr>");
-                }
-
-                // Fill with data received 
-                for (var i = 0; i < response.length; i++)
-                {
-                    $("#person-shifts-overview").append(
-                        "<tbody>" 
-                        // Change background for shifts in other sections
-                        + "<tr" + (!response[i]["isOwnClub"] ? " class=\"active text-muted\"" : "") + ">" 
-                        + "<td>"  + (1+i) + "</td>" 
-                        + "<td>" + response[i]["shift"] + "</td>"
-                        + "<td>" + "<a href=\"../../event/" + response[i]["event_id"] + "\">" + response[i]["event"] + "</a>" + "</td>"
-                        // Color-coding for different sections 
-                        + "<td class=\"" + response[i]["section"]+ "-section-highlight\">" + response[i]["section"] + "</td>"
-                        + "<td>" + response[i]["date"] + "</td>" 
-                        + "<td>" + response[i]["weight"] + "</td>"
-                        + "</tr>"
-                        + "</tbody>");
-                }
-
-            }); 
-        }
-
-        // AJAX Request shifts for a person selected
-        $.ajax({
-            type: $( this ).prop( 'method' ),  
-
-            url: "/statistics/person/" + $(this).prop("id"),  
-
-            data: {
-                    // chosen date values from the view
-                    "month": chosenMonth,
-                    "year":  chosenYear,
-                    "isMonthStatistic": isMonthStatistic,
-
-                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-                    "_token": $(this).find( 'input[name=_token]' ).val(),
-
-                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
-                    "_method": "get"
-            },  
-
-            dataType: 'json',
-
-            success: function(response){
-                // external function handles the response
-                ajaxCallBackPersonStats(response);
-            },
-        });
-
+    // Initialise modal and show loading icon and message
+    var dialog = <any> bootbox.dialog({
+        title: translate('listOfShiftsDone') + chosenPerson,
+        size: 'large',
+        message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
+        onEscape: () => {}
     });
+
+
+    // Do all the work here after AJAX response is received
+    function ajaxCallBackPersonStats(response) {
+
+        // Parse and show response
+        dialog.init(function(){
+
+            // Initialise table structure
+            dialog.find('.modal-body').addClass("no-padding").html(
+                "<table id=\"person-shifts-overview\" class=\"table table-hover no-padding\">"
+                + "<thead>"
+                + "<tr>"
+                + "<th>#</th>"
+                + "<th>" + translate('shift') + "</th>"
+                + "<th>" + translate('event') + "</th>"
+                + "<th>" + translate('section') + "</th>"
+                + "<th>" + translate('date') + "</th>"
+                + "<th>" + translate('weight') + "</th>"
+                + "</tr>"
+                + "</thead>"
+                +"</table>"
+            );
+
+            // check for empty response
+            if (response.length === 0)
+            {
+                $("#person-shifts-overview").append("<tr><td colspan=6>"  + translate('noShiftsInThisPeriod') + "</td></tr>");
+            }
+
+            // Fill with data received
+            for (var i = 0; i < response.length; i++)
+            {
+                $("#person-shifts-overview").append(
+                    "<tbody>"
+                    // Change background for shifts in other sections
+                    + "<tr" + (!response[i]["isOwnClub"] ? " class=\"active text-muted\"" : "") + ">"
+                    + "<td>"  + (1+i) + "</td>"
+                    + "<td>" + response[i]["shift"] + "</td>"
+                    + "<td>" + "<a href=\"../../event/" + response[i]["event_id"] + "\">" + response[i]["event"] + "</a>" + "</td>"
+                    // Color-coding for different sections
+                    + "<td class=\"" + response[i]["section"]+ "-section-highlight\">" + response[i]["section"] + "</td>"
+                    + "<td>" + response[i]["date"] + "</td>"
+                    + "<td>" + response[i]["weight"] + "</td>"
+                    + "</tr>"
+                    + "</tbody>");
+            }
+
+        });
+    }
+
+    // AJAX Request shifts for a person selected
+    $.ajax({
+        type: $( this ).prop( 'method' ),
+
+        url: "/statistics/person/" + $(this).prop("id"),
+
+        data: {
+            // chosen date values from the view
+            "month": chosenMonth,
+            "year":  chosenYear,
+            "isMonthStatistic": isMonthStatistic,
+
+            // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+            "_token": $(this).find( 'input[name=_token]' ).val(),
+
+            // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+            "_method": "get"
+        },
+
+        dataType: 'json',
+
+        success: function(response){
+            // external function handles the response
+            ajaxCallBackPersonStats(response);
+        },
+    });
+
+});
 
 
 //////////
@@ -502,136 +473,136 @@ $(document).ready(function() {
  * Disabling iCal until fully functional.
  * 
 
-$('[name^=icalfeeds]').click(function () {
+ $('[name^=icalfeeds]').click(function () {
 
-    var clipboard = null;
-    // Initialise modal and show loading icon and message
-    var dialog = bootbox.dialog({
-        title: translate("icalfeeds"),
-        size: 'large',
-        message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
-        callback: function () {
-            if (clipboard !== null) {
-                clipboard.destroy();
-            }
-        }
-    });
+ var clipboard = null;
+ // Initialise modal and show loading icon and message
+ var dialog = bootbox.dialog({
+ title: translate("icalfeeds"),
+ size: 'large',
+ message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
+ callback: function () {
+ if (clipboard !== null) {
+ clipboard.destroy();
+ }
+ }
+ });
 
 
-    $.ajax({
-        url: "/ical/links/",
+ $.ajax({
+ url: "/ical/links/",
 
-        data: {
-            // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-            "_token": $(this).find('input[name=_token]').val(),
+ data: {
+ // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+ "_token": $(this).find('input[name=_token]').val(),
 
-        },
+ },
 
-        dataType: 'json',
+ dataType: 'json',
 
-        success: function (response) {
-            // we don't need to show this field, if the person does not exists, instead we show a warning
-            var remindPersonalIcalInput;
-            if ((typeof response['personal'] === 'undefined' || response['personal'] === null)) {
-                if (typeof response['isPublic'] !== 'undefined' && response['isPublic'] !== true) {
-                    remindPersonalIcalInput = '<div class="alert alert-warning"> <span class="glyphicon glyphicon-warning-sign"></span> ' + translate("noPrivateCalendarWarn") + ' </div>';
-                } else {
-                    remindPersonalIcalInput = "";
-                }
-            } else {
-                remindPersonalIcalInput = '<div class="form-group left-padding-16 padding-right-16 col-md-12 col-xs-12">' +
-                    translate('remindsBeforeShiftStart') + '&nbsp;&nbsp;' +  
-                    '<input id="personalIcalRemindValue" type="number" value="0" width="20%"/>' + translate('minutes') +
-                    '</div>';
-            }
+ success: function (response) {
+ // we don't need to show this field, if the person does not exists, instead we show a warning
+ var remindPersonalIcalInput;
+ if ((typeof response['personal'] === 'undefined' || response['personal'] === null)) {
+ if (typeof response['isPublic'] !== 'undefined' && response['isPublic'] !== true) {
+ remindPersonalIcalInput = '<div class="alert alert-warning"> <span class="glyphicon glyphicon-warning-sign"></span> ' + translate("noPrivateCalendarWarn") + ' </div>';
+ } else {
+ remindPersonalIcalInput = "";
+ }
+ } else {
+ remindPersonalIcalInput = '<div class="form-group left-padding-16 padding-right-16 col-md-12 col-xs-12">' +
+ translate('remindsBeforeShiftStart') + '&nbsp;&nbsp;' +
+ '<input id="personalIcalRemindValue" type="number" value="0" width="20%"/>' + translate('minutes') +
+ '</div>';
+ }
 
-            var legend = "";
-            if (typeof response['isPublic'] !== 'undefined' && response['isPublic'] !== true) {
-                legend = '<div class="all-sides-padding-16">' + translate('legend') + ': <span class="bg-warning" style="border: 1px solid black;"> <span class="glyphicon">&nbsp;</span></span> ' + translate("internalUsageOnly") + '</div>  ';
-            }
+ var legend = "";
+ if (typeof response['isPublic'] !== 'undefined' && response['isPublic'] !== true) {
+ legend = '<div class="all-sides-padding-16">' + translate('legend') + ': <span class="bg-warning" style="border: 1px solid black;"> <span class="glyphicon">&nbsp;</span></span> ' + translate("internalUsageOnly") + '</div>  ';
+ }
 
-            dialog.find('.modal-body').addClass("no-padding").html("" +
-                remindPersonalIcalInput +
-                legend +
-                "<table class='table table-hover'>" +
-                "<thead><tr>" +
-                "<th></th>" +
-                "<th> " + translate('iCalendarlink') + " </th>" +
-                "</tr></thead>" +
-                "<tbody id='icalTbody'></tbody>" +
-                "</table>"
-            );
+ dialog.find('.modal-body').addClass("no-padding").html("" +
+ remindPersonalIcalInput +
+ legend +
+ "<table class='table table-hover'>" +
+ "<thead><tr>" +
+ "<th></th>" +
+ "<th> " + translate('iCalendarlink') + " </th>" +
+ "</tr></thead>" +
+ "<tbody id='icalTbody'></tbody>" +
+ "</table>"
+ );
 
-            var icalTbody = $('#icalTbody');
+ var icalTbody = $('#icalTbody');
 
-            if (!(typeof response['personal'] === 'undefined' || response['personal'] === null)) {
-                icalTbody.append('<tr class="warning">' +
-                    '<td> ' + translate('personalFeed') + '<span id="ical_personal_link" class="hidden">' + response['personal'] + '</span>  </td>' +
-                    '<td> ' +
-                    '<div class="input-group"> ' +
-                    '<input class="form-control " id="ical_personal_input" type="text" value="' + response['personal'] + '"/>' +
-                    '<span class="input-group-btn">' +
-                    '<button type="button" class=" icalinput btn btn-small" data-clipboard-target="#ical_personal_input" ><span class="fa fa-clipboard"></span> </button> ' +
-                    '</span> ' +
-                    '</div>' +
-                    '</td>' +
-                    '</tr>')
-            }
+ if (!(typeof response['personal'] === 'undefined' || response['personal'] === null)) {
+ icalTbody.append('<tr class="warning">' +
+ '<td> ' + translate('personalFeed') + '<span id="ical_personal_link" class="hidden">' + response['personal'] + '</span>  </td>' +
+ '<td> ' +
+ '<div class="input-group"> ' +
+ '<input class="form-control " id="ical_personal_input" type="text" value="' + response['personal'] + '"/>' +
+ '<span class="input-group-btn">' +
+ '<button type="button" class=" icalinput btn btn-small" data-clipboard-target="#ical_personal_input" ><span class="fa fa-clipboard"></span> </button> ' +
+ '</span> ' +
+ '</div>' +
+ '</td>' +
+ '</tr>')
+ }
 
-            var allPublicEvents = response['allPublicEvents'];
-            var locationsNames = response['locationName'];
-            var locations = response['location'];
-            var locationsPublic = response['locationPublic'];
+ var allPublicEvents = response['allPublicEvents'];
+ var locationsNames = response['locationName'];
+ var locations = response['location'];
+ var locationsPublic = response['locationPublic'];
 
-            icalTbody.append('<tr>' +
-                '<td></td>' +
-                '<td>' +
-                '<div class="input-group"> ' +
-                '<input class="form-control " id="icalAllPublicEvents" type="text" value="' + allPublicEvents + '"/>' +
-                '<span class="input-group-btn">' +
-                '<button type="button" class=" icalinput btn btn-small" data-clipboard-target="#icalAllPublicEvents" ><span class="fa fa-clipboard"></span> </button> ' +
-                '</span>' +
-                '</div>' + '</td>' +
-                '</tr>');
+ icalTbody.append('<tr>' +
+ '<td></td>' +
+ '<td>' +
+ '<div class="input-group"> ' +
+ '<input class="form-control " id="icalAllPublicEvents" type="text" value="' + allPublicEvents + '"/>' +
+ '<span class="input-group-btn">' +
+ '<button type="button" class=" icalinput btn btn-small" data-clipboard-target="#icalAllPublicEvents" ><span class="fa fa-clipboard"></span> </button> ' +
+ '</span>' +
+ '</div>' + '</td>' +
+ '</tr>');
 
-            locationsNames.forEach(function (element, idx) {
-                icalTbody.append('<tr>' +
-                    '<td>' + element + '</td>' +
-                    '<td>' +
-                    '<div class="input-group"> ' +
-                    '<input class="form-control " type="text" id="locationPublic' + idx + '" value="' + locationsPublic[idx][element] + '"/>' +
-                    '<span class="input-group-btn">' +
-                    '<button type="button" class=" icalinput btn btn-small" data-clipboard-target="#locationPublic' + idx + '" ><span class="fa fa-clipboard"></span> </button> ' +
-                    '</span>' +
-                    '</div>' +
-                    '</td>' +
-                    '</tr>');
-            });
-            if (typeof response['isPublic'] !== 'undefined' && response['isPublic'] !== true) {
-                locationsNames.forEach(function (element, idx) {
-                    icalTbody.append('<tr class="warning">' +
-                        '<td> private ' + element + '</td>' +
-                        '<td>' +
-                        '<div class="input-group"> ' +
-                        '<input class="form-control " type="text" id="location' + idx + '" value="' + locations[idx][element] + '"/>' +
-                        '<span class="input-group-btn">' +
-                        '<button type="button" class=" icalinput btn btn-small" data-clipboard-target="#location' + idx + '"  ><span class="fa fa-clipboard"></span> </button> ' +
-                        '</span>' +
-                        '</div>' +
-                        '</td>' +
-                        '</tr>');
-                });
-            }
-            $('#personalIcalRemindValue').change(function () {
-                $('#ical_personal_input').val($('#ical_personal_link').text() + $('#personalIcalRemindValue').val());
-            });
-            clipboard = new Clipboard('.icalinput');
-        }
+ locationsNames.forEach(function (element, idx) {
+ icalTbody.append('<tr>' +
+ '<td>' + element + '</td>' +
+ '<td>' +
+ '<div class="input-group"> ' +
+ '<input class="form-control " type="text" id="locationPublic' + idx + '" value="' + locationsPublic[idx][element] + '"/>' +
+ '<span class="input-group-btn">' +
+ '<button type="button" class=" icalinput btn btn-small" data-clipboard-target="#locationPublic' + idx + '" ><span class="fa fa-clipboard"></span> </button> ' +
+ '</span>' +
+ '</div>' +
+ '</td>' +
+ '</tr>');
+ });
+ if (typeof response['isPublic'] !== 'undefined' && response['isPublic'] !== true) {
+ locationsNames.forEach(function (element, idx) {
+ icalTbody.append('<tr class="warning">' +
+ '<td> private ' + element + '</td>' +
+ '<td>' +
+ '<div class="input-group"> ' +
+ '<input class="form-control " type="text" id="location' + idx + '" value="' + locations[idx][element] + '"/>' +
+ '<span class="input-group-btn">' +
+ '<button type="button" class=" icalinput btn btn-small" data-clipboard-target="#location' + idx + '"  ><span class="fa fa-clipboard"></span> </button> ' +
+ '</span>' +
+ '</div>' +
+ '</td>' +
+ '</tr>');
+ });
+ }
+ $('#personalIcalRemindValue').change(function () {
+ $('#ical_personal_input').val($('#ical_personal_link').text() + $('#personalIcalRemindValue').val());
+ });
+ clipboard = new Clipboard('.icalinput');
+ }
 
-    });
-});
+ });
+ });
 
-Disabling iCal until fully functional. */
+ Disabling iCal until fully functional. */
 
 
 
@@ -659,9 +630,9 @@ jQuery( document ).ready( function( $ ) {
 
     // hide all dropdowns on ESC keypress
     $(document).keyup(function(e) {
-      if (e.keyCode === 27) {
-        $(document).find('.dropdown-username').hide();
-      }
+        if (e.keyCode === 27) {
+            $(document).find('.dropdown-username').hide();
+        }
     });
 
     $( '.shift' ).find("input[id^='userName'], input[id^=comment]").on('input', function() {
@@ -678,7 +649,7 @@ jQuery( document ).ready( function( $ ) {
         $(this).parents('.shift').find('[name^=status-icon]').addClass('hide');
 
         // do all the work here after AJAX response is received
-        function ajaxCallBackUsernames(response) { 
+        function ajaxCallBackUsernames(response) {
 
             // clear array from previous results, but leave first element with current user's data
             $(document.activeElement).parent().children('.dropdown-username').contents().filter(function () {
@@ -692,17 +663,17 @@ jQuery( document ).ready( function( $ ) {
                 if ( data.prsn_status == 'candidate' ) { data.prsn_status = " (K)" }
                 else if ( data.prsn_status == 'veteran' ) { data.prsn_status = " (V)" }
                 else if ( data.prsn_status == 'resigned' ) { data.prsn_status = " (ex)" }
-                else { data.prsn_status = "" } 
+                else { data.prsn_status = "" }
 
                 // add found persons to the array
                 $(document.activeElement).parent().children('.dropdown-username').append(
-                    '<li><a href="javascript:void(0);">' 
+                    '<li><a href="javascript:void(0);">'
                     + '<span id="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
                     + '<span id="currentName">' + data.prsn_name + '</span>'
                     + data.prsn_status
                     + '(<span id="currentClub">' + data.club.clb_title + '</span>)'
                     + '</a></li>');
-            });  
+            });
 
             // process clicks inside the dropdown
             $(document.activeElement).parent().children('.dropdown-username').children('li').click(function(e){
@@ -735,18 +706,18 @@ jQuery( document ).ready( function( $ ) {
         $(this).delay(250);
 
         // Request autocompleted names
-        $.ajax({  
-            type: $( this ).prop( 'method' ),  
+        $.ajax({
+            type: $( this ).prop( 'method' ),
 
-            url: "/person/" + $(this).val(),  
+            url: "/person/" + $(this).val(),
 
             data: {
-                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-                    "_token": $(this).find( 'input[name=_token]' ).val(),
+                // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                "_token": $(this).find( 'input[name=_token]' ).val(),
 
-                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
-                    "_method": "get"
-            },  
+                // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+                "_method": "get"
+            },
 
             dataType: 'json',
 
@@ -775,9 +746,9 @@ jQuery( document ).ready( function( $ ) {
 
     // hide all dropdowns on ESC keypress
     $(document).keyup(function(e) {
-      if (e.keyCode === 27) {
-        $(document).find('.dropdown-club').hide();
-      }
+        if (e.keyCode === 27) {
+            $(document).find('.dropdown-club').hide();
+        }
     });
 
     $( '.shift' ).find("input[id^='club']").on( 'input', function() {
@@ -786,7 +757,7 @@ jQuery( document ).ready( function( $ ) {
         $(this).parents('.shift').find("[name^=status-icon]").addClass('hide');
 
         // do all the work here after AJAX response is received
-        function ajaxCallBackClubs(response) { 
+        function ajaxCallBackClubs(response) {
 
             // clear array from previous results, but leave first element with current user's data
             $(document.activeElement).parent().parent().children('.dropdown-club').contents().remove();
@@ -796,10 +767,10 @@ jQuery( document ).ready( function( $ ) {
 
                 // add found clubs to the array$(document.activeElement).parent().children('.dropdown-club')
                 $(document.activeElement).parent().parent().children('.dropdown-club').append(
-                    '<li><a href="javascript:void(0);">' 
+                    '<li><a href="javascript:void(0);">'
                     + '<span id="clubTitle">' + data.clb_title + '</span>'
                     + '</a></li>');
-            });  
+            });
 
             // process clicks inside the dropdown
             $(document.activeElement).parent().parent().children('.dropdown-club').children('li').click(function(e){
@@ -825,18 +796,18 @@ jQuery( document ).ready( function( $ ) {
         $(this).delay(250);
 
         // Request autocompleted names
-        $.ajax({  
-            type: $( this ).prop( 'method' ),  
+        $.ajax({
+            type: $( this ).prop( 'method' ),
 
-            url: "/club/" + $(this).val(),  
+            url: "/club/" + $(this).val(),
 
             data: {
-                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-                    "_token": $(this).find( 'input[name=_token]' ).val(),
+                // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                "_token": $(this).find( 'input[name=_token]' ).val(),
 
-                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
-                    "_method": "get"
-            },  
+                // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+                "_method": "get"
+            },
 
             dataType: 'json',
 
@@ -852,11 +823,11 @@ jQuery( document ).ready( function( $ ) {
     ///////////////////////////
     // AUTOCOMPLETE SHIFTTYPES //
     ///////////////////////////
-    
+
 
 
     // open shiftType dropdown on input selection
-    $( '.box' ).find('input[type=text]').on( 'focus', function() 
+    $( '.box' ).find('input[type=text]').on( 'focus', function()
     {
         // remove all other dropdowns
         $(document).find('.dropdown-shiftTypes').hide();
@@ -865,11 +836,11 @@ jQuery( document ).ready( function( $ ) {
     } );
 
     // hide all dropdowns on ESC keypress
-    $(document).keyup(function(e) 
+    $(document).keyup(function(e)
     {
-      if (e.keyCode === 27) {
-        $(document).find('.dropdown-shiftTypes').hide();
-      }
+        if (e.keyCode === 27) {
+            $(document).find('.dropdown-shiftTypes').hide();
+        }
     });
 
     $('#yourself').on('click', function() {
@@ -879,7 +850,7 @@ jQuery( document ).ready( function( $ ) {
     $( '.box' ).find("input[name^='shifts\[title\]']").on( 'input', function()
     {
         // do all the work here after AJAX response is received
-        function ajaxCallBackClubs(response) { 
+        function ajaxCallBackClubs(response) {
 
             // clear array from previous results
             $(document.activeElement).next('.dropdown-shiftTypes').contents().remove();
@@ -889,7 +860,7 @@ jQuery( document ).ready( function( $ ) {
 
                 // add found shiftTypes and metadata to the dropdown
                 $(document.activeElement).next('.dropdown-shiftTypes').append(
-                    '<li><a href="javascript:void(0);">' 
+                    '<li><a href="javascript:void(0);">'
                     + '<span id="shiftTypeTitle">'
                     + data.title
                     + '</span>'
@@ -904,9 +875,9 @@ jQuery( document ).ready( function( $ ) {
                     + '<span id="shiftTypeWeight" class="hidden">'
                     + data.statistical_weight
                     + '</span>'
-                    + ')' 
+                    + ')'
                     + '</a></li>');
-            });  
+            });
 
             // process clicks inside the dropdown
             $(document.activeElement).next('.dropdown-shiftTypes').children('li').click(function(e)
@@ -935,18 +906,18 @@ jQuery( document ).ready( function( $ ) {
         $(this).delay(250);
 
         // Request autocompleted names
-        $.ajax({  
-            type: $( this ).prop( 'method' ),  
+        $.ajax({
+            type: $( this ).prop( 'method' ),
 
             url: "/shiftTypes/" + $(this).val(),
 
             data: {
-                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-                    "_token": $(this).find( 'input[name=_token]' ).val(),
+                // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                "_token": $(this).find( 'input[name=_token]' ).val(),
 
-                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
-                    "_method": "get"
-            },  
+                // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+                "_method": "get"
+            },
 
             dataType: 'json',
 
@@ -964,9 +935,9 @@ jQuery( document ).ready( function( $ ) {
         // For passworded schedules: check if a password field exists and is not empty
         // We will check correctness on the server side
         if ( $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").length
-          && !$(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val() ) 
+            && !$(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val() )
         {
-            var password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );      
+            var password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );
         } else {
             var password = <string> $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
         }
@@ -974,35 +945,35 @@ jQuery( document ).ready( function( $ ) {
         // necessary for the ajax callbacks
         var currentId = $(this).attr('id');
 
-        $.ajax({  
-            type: $( this ).prop( 'method' ),  
+        $.ajax({
+            type: $( this ).prop( 'method' ),
 
-            url: $( this ).prop( 'action' ),  
+            url: $( this ).prop( 'action' ),
 
             data: JSON.stringify({
-                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-                    "_token":       $(this).find( 'input[name=_token]' ).val(),
+                // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                "_token":       $(this).find( 'input[name=_token]' ).val(),
 
-                    // Actual data being sent below
-                    "entryId":      $(this).closest("form").attr("id"), 
-                    "userName":     $(this).find("[name^=userName]").val(),
-                    "ldapId":       $(this).find("[name^=ldapId]").val(),
-                    "timestamp":    $(this).find("[name^=timestamp]").val(),
-                    "userClub":     $(this).find("[name^=club]").val(),
-                    "userComment":  $(this).find("[name^=comment]").val(),
-                    "password":     password, 
+                // Actual data being sent below
+                "entryId":      $(this).closest("form").attr("id"),
+                "userName":     $(this).find("[name^=userName]").val(),
+                "ldapId":       $(this).find("[name^=ldapId]").val(),
+                "timestamp":    $(this).find("[name^=timestamp]").val(),
+                "userClub":     $(this).find("[name^=club]").val(),
+                "userComment":  $(this).find("[name^=comment]").val(),
+                "password":     password,
 
-                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
-                    "_method": "put"
-                }),  
+                // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+                "_method": "put"
+            }),
 
             dataType: 'json',
 
             contentType: 'application/json',
-            
+
             beforeSend: function() {
                 // console.log("beforesend");
-                
+
                 // hide dropdowns because they aren't no longer needed
                 $(document).find('.dropdown-username').hide();
                 $(document).find('.dropdown-club').hide();
@@ -1017,14 +988,14 @@ jQuery( document ).ready( function( $ ) {
                     .attr("data-original-title", "In Arbeit...")
                     .css("color", "darkgrey");
             },
-            
+
             complete: function() {
                 // console.log('complete');
             },
 
-            success: function(data) {  
+            success: function(data) {
                 // console.log("success");
-                
+
                 // COMMENT:
                 // we update to server response instead of just saving user input
                 // for the case when an entry has been updated recently by other user, 
@@ -1084,13 +1055,13 @@ jQuery( document ).ready( function( $ ) {
                 // We make changes on success anyway, so the following state is only achieved 
                 // when a response from server was received, but errors occured - so let's inform the user
                 $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!");
-              }
+            }
 
 
         });
 
         // Prevent the form from actually submitting in browser
-        return false; 
+        return false;
 
     });
 
@@ -1104,36 +1075,36 @@ jQuery( document ).ready( function( $ ) {
 
     $( '.updateShiftType' ).on( 'submit', function() {
 
-        $.ajax({  
-            type: $( this ).prop( 'method' ),  
+        $.ajax({
+            type: $( this ).prop( 'method' ),
 
-            url: $( this ).prop( 'action' ),  
+            url: $( this ).prop( 'action' ),
 
             data: JSON.stringify({
-                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-                    "_token":       $(this).find( 'input[name=_token]' ).val(),
+                // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                "_token":       $(this).find( 'input[name=_token]' ).val(),
 
-                    // Actual data being sent below
-                    "entryId":      $(this).closest("form").attr("id"), 
-                    "shiftTypeId":    $(this).find("[name^=shiftType]").val(),
+                // Actual data being sent below
+                "entryId":      $(this).closest("form").attr("id"),
+                "shiftTypeId":    $(this).find("[name^=shiftType]").val(),
 
-                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
-                    "_method": "put"
-                }),  
+                // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+                "_method": "put"
+            }),
 
             dataType: 'json',
 
             contentType: 'application/json',
-            
+
             beforeSend: function() {
                 // console.log("beforesend");
             },
-            
+
             complete: function() {
                 // console.log('complete');
             },
 
-            success: function(data) {  
+            success: function(data) {
                 //console.log("success");
                 // remove row to indicate successful renaming of the shiftType
                 $(".shiftType-event-row" + data["entryId"]).hide();
@@ -1144,7 +1115,7 @@ jQuery( document ).ready( function( $ ) {
                     // we remove arguments after "?" because otherwise user could land on a pagination page that is already empty
                     (<any>window).location = window.location.href.split("?")[0];
                 }
-                
+
             },
 
             error: function (xhr, ajaxOptions, thrownError) {
@@ -1154,7 +1125,7 @@ jQuery( document ).ready( function( $ ) {
         });
 
         // Prevent the form from actually submitting in browser
-        return false; 
+        return false;
 
     });
 
@@ -1162,5 +1133,8 @@ jQuery( document ).ready( function( $ ) {
     $('.shift').find("[name^=userName]").on('input propertychange paste', function() {
         $(this).parent().find("[name^=ldapId]").val("");
     });
- 
+
 });
+
+
+
