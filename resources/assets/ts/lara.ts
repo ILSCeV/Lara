@@ -17,3 +17,5 @@ import "./surveyView-scripts"
 import "./Translate"
 import "./Utilities"
 import "./vedst-scripts"
+
+import "./scrollToTopButton"

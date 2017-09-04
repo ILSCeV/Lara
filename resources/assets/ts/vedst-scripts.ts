@@ -1183,7 +1183,7 @@ Examples :
 <a href="posts/2" data-method="delete" data-token="{{csrf_token()}}" data-confirm="Are you sure?">
 */
 
-(function(window, $, undefined) {
+(function(window, $) {
 
     var Laravel = {
         initialize: function() {
@@ -1257,31 +1257,4 @@ Examples :
     };
 
     Laravel.initialize();
-
 })(window, jQuery);
-
-
-////////////////////////
-// Back to top button //
-////////////////////////
-
-$(() => {
-    $(document).ready(function(){
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 50) {
-                $('#back-to-top').fadeIn();
-            } else {
-                $('#back-to-top').fadeOut();
-            }
-        });
-        // scroll body to 0px on click
-        $('#back-to-top').click(function () {
-            $('#back-to-top').tooltip('hide');
-            $('body,html').animate({
-                scrollTop: 0
-            }, 800);
-            return false;
-        });
-
-    });
-});
