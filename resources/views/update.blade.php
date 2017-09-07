@@ -7,8 +7,7 @@
 @section('content')
 <pre>
     <?php
-$stream = fopen('php://output', 'w');
-\Artisan::call('lara:update', array(), new \Symfony\Component\Console\Output\StreamOutput($stream));
+passthru('cd .. && php artisan lara:update')
 ?>
 </pre>
 <p>DONE</p>
