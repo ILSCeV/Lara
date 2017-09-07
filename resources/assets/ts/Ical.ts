@@ -1,6 +1,6 @@
 import * as $ from "jquery"
 import * as bootbox from "bootbox"
-import translate from "Translate"
+import { translate } from "Translate"
 import * as Clipboard from "clipboard";
 
 //////////

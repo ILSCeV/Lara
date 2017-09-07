@@ -1,5 +1,5 @@
 import * as $ from "jquery"
-import translate from "../Translate"
+import { translate } from "../Translate"
 
 ///////////////////////////////////////
 // Show shifts for a selected person //
