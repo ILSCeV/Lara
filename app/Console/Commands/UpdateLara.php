@@ -56,7 +56,6 @@ class UpdateLara extends Command
         // List of instructions to execute
         $instructions = [
             'php artisan down',
-            'pwd',
             // Enter maintenance mode
             $extraCommand,
             // reset repo to avoid conflicts
