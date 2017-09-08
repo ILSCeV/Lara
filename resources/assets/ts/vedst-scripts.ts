@@ -172,9 +172,6 @@ $(function() {
 // All views //
 ///////////////
 
-
-
-
 // Own shift highlighting 
 $('[name^=btn-submit-change]').click(function() {
     $(this).parents('.row').removeClass('my-shift');
