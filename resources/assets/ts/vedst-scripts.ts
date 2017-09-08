@@ -2,10 +2,11 @@ import * as $ from "jquery"
 import { translate } from "./Translate"
 import "isotope-layout"
 import * as Isotope  from "../../../node_modules/isotope-layout/js/isotope.js"
-import * as bootbox from "bootbox"
+
 import {ToggleButton} from "./ToggleButton";
 import {makeLocalStorageAction, makeClassToggleAction} from "./ToggleAction";
 import {safeGetLocalStorage, decodeEntities} from "./Utilities";
+import {initializeSectionFilters} from "./views/master";
 
 const jQuery = $;
 /////////////
@@ -21,30 +22,6 @@ $(function() {
     const isWeekView = $('.isotope').length > 0;
 
 
-    const initializeSectionFilters = (isotope: typeof Isotope = null) => {
-        let sectionFilters = [];
-        $.each($('.section-filter-selector'), function () {
-            sectionFilters.push($(this).prop('id'));
-        });
-
-        const showAllActiveSections = () => {
-            $(".section-filter").hide();
-            sectionFilters
-                .filter(filter => safeGetLocalStorage(filter) !== "hide")
-                .forEach(filter => $(`.${filter.slice(7)}`).show())
-        };
-
-        sectionFilters.forEach((filterName) => {
-            const sectionButton = new ToggleButton(filterName, () => $(`#${filterName}`).hasClass("btn-primary"));
-
-            sectionButton.addActions([
-                makeLocalStorageAction(filterName, "show", "hide"),
-                showAllActiveSections,
-                () => isotope ? isotope.layout() : null
-            ])
-                .setToggleStatus(safeGetLocalStorage(filterName) !== "hide");
-        });
-    }
 
     if (isMonthView || isWeekView) {
         initializeSectionFilters();

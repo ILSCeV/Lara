@@ -22,8 +22,8 @@ import "./scrollToTopButton"
 import "./SubmitWithToken"
 import "./Language"
 
-import "./views/Month"
-import "./views/Event"
+import "./views/month"
+import "./views/event"
 import "./views/master"
 
 // disabled for now
