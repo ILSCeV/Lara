@@ -27,13 +27,15 @@ export const initializeSectionFilters = (isotope: typeof Isotope = null) => {
             .forEach(filter => $(`.${filter.slice(7)}`).show())
     };
 
+    const rebuildIsotopeLayout = () => isotope ? isotope.layout() : null;
+    
     sectionFilters.forEach((filterName) => {
         const sectionButton = new ToggleButton(filterName, () => $(`#${filterName}`).hasClass("btn-primary"));
 
         sectionButton.addActions([
             makeLocalStorageAction(filterName, "show", "hide"),
             showAllActiveSections,
-            () => isotope ? isotope.layout() : null
+            rebuildIsotopeLayout
         ])
             .setToggleStatus(safeGetLocalStorage(filterName) !== "hide");
     });

@@ -18,15 +18,7 @@ $(function() {
     //////////////////////////////////////////////////////
     // Month view without Isotope, section filters only //
     //////////////////////////////////////////////////////
-    const isMonthView = $('#month-view-marker').length;
     const isWeekView = $('.isotope').length > 0;
-
-
-
-    if (isMonthView || isWeekView) {
-        initializeSectionFilters();
-    }
-
     if (isWeekView) {
         const isotope = new Isotope('.isotope');
 
