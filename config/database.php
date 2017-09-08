@@ -50,7 +50,7 @@ return [
             'collation' => 'utf8mb4_unicode_ci',    // default: utf8mb4_unicode_ci , Laravel 5.3: utf8_unicode_ci
             'prefix' => '',
             'strict' => false,  // default: true
-            'engine' => null,
+            'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
         ],
 
         'pgsql' => [
