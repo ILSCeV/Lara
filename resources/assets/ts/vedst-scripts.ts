@@ -5,7 +5,7 @@ import * as Isotope  from "../../../node_modules/isotope-layout/js/isotope.js"
 import * as bootbox from "bootbox"
 import {ToggleButton} from "./ToggleButton";
 import {makeLocalStorageAction, makeClassToggleAction} from "./ToggleAction";
-import {safeGetLocalStorage} from "./Utilities";
+import {safeGetLocalStorage, decodeEntities} from "./Utilities";
 
 const jQuery = $;
 /////////////
@@ -199,13 +199,6 @@ $('input').focusout(function() {
     }
 });
 
-// conversion of html entities to text (e.g. "&" as "&amp;")
-// ref: https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery
-function decodeEntities(encodedString) {
-    var textArea = document.createElement('textarea');
-    textArea.innerHTML = encodedString;
-    return textArea.value;
-}
 
 //////////
 // AJAX //
@@ -733,5 +726,4 @@ jQuery( document ).ready( function( $ ) {
     $('.shift').find("[name^=userName]").on('input propertychange paste', function() {
         $(this).parent().find("[name^=ldapId]").val("");
     });
-
 });
