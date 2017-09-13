@@ -5,6 +5,7 @@ namespace Lara\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use Lara\Club;
 use Lara\Section;
 use Lara\Utilities;
 use Lara\ClubEvent;
@@ -81,6 +82,7 @@ class SectionController extends Controller
             }
             $section = new Section();
             $section->section_uid = hash("sha512", uniqid());
+            $club = new Club();
         } else {
             $section = Section::where('id', '=', $id)->first();
             $existingSection = Section::where('title', '=', $title)->where('id', '!=', $id)->first();
@@ -90,11 +92,17 @@ class SectionController extends Controller
                 Session::put('msgType', 'danger');
                 return Redirect::back();
             }
+            $club = Club::where('clb_title','=',$section->title)->first();
+            if(is_null($club)){
+                $club = new Club();
+            }
         }
 
         $section->title = $title;
         $section->color = $color;
         $section->save();
+        $club->clb_title = $title;
+        $club->save();
 
         // Return to the the section management page
         Session::put('message', trans('mainLang.changesSaved'));
@@ -159,13 +167,19 @@ class SectionController extends Controller
             ') deleted section "' . $section->title .  '". May Gods have mercy on their souls!');
 
         $events = ClubEvent::where("plc_id", "=", $section->id)->get();
-
+        /* @var $event ClubEvent */
         foreach ($events as $event) {
              // Delete schedule with shifts
-            $result = (new ScheduleController)->destroy($event->getSchedule()->first()->id);
+            (new ScheduleController)->destroy($event->getSchedule()->first()->id);
 
             // Now delete the event itself
             ClubEvent::destroy($event->id);
+        }
+        
+        //find according clubs
+        $clubs=Club::where('clb_title','=',$section->title)->get();
+        foreach ($clubs as $club){
+            Club::destroy($club->id);
         }
 
         // Now delete the section
