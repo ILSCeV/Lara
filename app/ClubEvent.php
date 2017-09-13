@@ -10,12 +10,15 @@ namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property array evnt_show_to_club
+ */
 class ClubEvent extends Model
 {
 	/**
 	 * The database table used by the model.
 	 *
-	 * @var string
+	 * @var $table string
 	 */
 	protected $table = 'club_events';
 	
@@ -23,7 +26,7 @@ class ClubEvent extends Model
 	 * The database columns used by the model.
 	 * This attributes are mass assignable.
 	 *
-	 * @var array
+	 * @var $fillable array
 	 */
 	protected $fillable = array('evnt_type',			// 0 -> default -> "normales Programm"
 														// 1 -> info only
