@@ -223,7 +223,7 @@ AND (Session::get('userGroup') == 'marketing'
 						<div class="col-md-10 col-sm-10 col-xs-12">
 							<div id="filter">
 								@foreach(Lara\Section::all() as $section)
-									{{ Form::checkbox("filter[" . $section->title ."]", "1", in_array( $section->title, json_decode($event->evnt_show_to_club))) }}
+									{{ Form::checkbox("filter[" . $section->title ."]", "1", in_array( $section->title, $event->showToSectionNames())) }}
 									{{ $section->title }}
 									&nbsp;
 								@endforeach

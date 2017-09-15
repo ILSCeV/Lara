@@ -10,9 +10,6 @@ namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * @property array evnt_show_to_club
- */
 class ClubEvent extends Model
 {
 	/**
@@ -96,4 +93,14 @@ class ClubEvent extends Model
 	public function shifts() {
 		return $this->hasManyThrough('Lara\Shift', 'Lara\Schedule', 'evnt_id', 'schedule_id', 'id');
 	}
+	
+	public function showToSection() {
+        return $this->belongsToMany('Lara\Section');
+    }
+    
+    public function showToSectionNames() {
+        return $this->showToSection()->get()->map(function($section) {
+            return $section->title;
+        })->toArray();
+    }
 }

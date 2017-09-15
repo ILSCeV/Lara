@@ -95,7 +95,7 @@
 							<td>
 								{{ $clubEvent->section->title }}
 								&nbsp;&nbsp;<br class="visible-xs">
-								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
+								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", $clubEvent->showToSectionNames()) }})</i>
 							</td>
 						</tr>
 

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Lara\Club;
 use Lara\ClubEvent;
+use Lara\EventsSections;
+use Lara\Section;
 
 class CreateOneToManyClubToEventShowToClub extends Migration
 {
@@ -16,33 +18,28 @@ class CreateOneToManyClubToEventShowToClub extends Migration
      */
     public function up()
     {
-        Schema::create('join_events_to_club', function (Blueprint $table) {
-            $table->bigInteger('club_id');
-            $table->bigInteger('event_id');
+        Schema::create('club_event_section', function (Blueprint $table) {
+            $table->integer('club_event_id')->unsigned()->index();
+            $table->integer('section_id')->unsigned()->index();
+            
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
+            $table->foreign('club_event_id')->references('id')->on('club_events')->onDelete('cascade');
         });
         
         $clubEvents = ClubEvent::all();
         
-        /* @var $clubs \Illuminate\Support\Collection */
-        $clubs = Club::activeClubs()->get();
+        /* @var $sections \Illuminate\Support\Collection */
+        $sections = Section::all();
         
         /* @var $clubEvent ClubEvent */
-        $joinClubsToEvents = $clubEvents->flatMap(function($clubEvent) use ($clubs) {
+        $clubEvents->each(function($clubEvent) use ($sections) {
            $showToClubs = json_decode($clubEvent->evnt_show_to_club);
-           return $clubs->filter(function($club) use ($showToClubs){
-             return in_array($club->clb_title, $showToClubs);
-            })->map(function($club) use ($clubEvent) {
-              $joinClubToEvent = new \Lara\JoinEventClub();
-              $joinClubToEvent->club_id=$club->id;
-              $joinClubToEvent->event_id=$clubEvent->id;
-              return $joinClubToEvent;
+           return $sections->filter(function($section) use ($showToClubs){
+             return in_array($section->title, $showToClubs);
+            })->each(function($section) use ($clubEvent) {
+              DB::table('club_event_section')->insert(array('club_event_id' => $clubEvent->id, 'section_id'=>$section->id));
            });
         });
-        
-        /* @var $joinClubToEvent \Lara\JoinEventClub */
-        foreach ($joinClubsToEvents as $joinClubToEvent){
-            $joinClubToEvent->save();
-        }
     }
     
     /**
@@ -52,6 +49,6 @@ class CreateOneToManyClubToEventShowToClub extends Migration
      */
     public function down()
     {
-        Schema::drop('join_events_to_club');
+        Schema::drop('club_event_section');
     }
 }
