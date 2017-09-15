@@ -85,6 +85,7 @@ class MonthController extends Controller {
 						   ->where('evnt_date_start','<=', $lastDay->format("Y-m-d"))
 						   ->orderBy('evnt_date_start')
 						   ->orderBy('evnt_time_start')
+                           ->with('showToSection')
 						   ->get();
 
 		$surveys = Survey::where('deadline','>=', $firstDay->format("Y-m-d"))
