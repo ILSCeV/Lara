@@ -26,7 +26,7 @@ class CreateOneToManyClubToEventShowToClub extends Migration
             $table->foreign('club_event_id')->references('id')->on('club_events')->onDelete('cascade');
         });
         
-        $clubEvents = ClubEvent::all();
+        $clubEvents = DB::table('club_events')->select('club_events.id','club_events.evnt_show_to_club','sections.title')->join('sections','club_events.plc_id','=','sections.id')->get();
         
         /* @var $sections \Illuminate\Support\Collection */
         $sections = Section::all();
@@ -34,6 +34,9 @@ class CreateOneToManyClubToEventShowToClub extends Migration
         /* @var $clubEvent ClubEvent */
         $clubEvents->each(function($clubEvent) use ($sections) {
            $showToClubs = json_decode($clubEvent->evnt_show_to_club);
+           if(is_null($showToClubs)){
+               $showToClubs=[$clubEvent->title];
+           }
            return $sections->filter(function($section) use ($showToClubs){
              return in_array($section->title, $showToClubs);
             })->each(function($section) use ($clubEvent) {

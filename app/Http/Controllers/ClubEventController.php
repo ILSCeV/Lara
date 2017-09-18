@@ -120,7 +120,7 @@ class ClubEventController extends Controller
             $subtitle   = $template->getClubEvent->evnt_subtitle;
             $type       = $template->getClubEvent->evnt_type;
             $section      = $template->getClubEvent->plc_id;
-            $filter     = $template->getClubEvent->evnt_show_to_club;
+            $filter     = $template->getClubEvent->showToSectionNames;
             $dv         = $template->schdl_time_preparation_start;
             $timeStart  = $template->getClubEvent->evnt_time_start;
             $timeEnd    = $template->getClubEvent->evnt_time_end;
@@ -201,6 +201,7 @@ class ClubEventController extends Controller
      */
     public function show($id)
     {
+        /* @var $clubEvent ClubEvent */
         $clubEvent = ClubEvent::with('section')
                               ->findOrFail($id);
 
@@ -263,8 +264,8 @@ class ClubEventController extends Controller
         }
 
         // Filter - Workaround for older events: populate filter with event club
-        if (empty($clubEvent->evnt_show_to_club) ) {
-            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->section->title], true);
+        if ($clubEvent->showToSection->isEmpty() ) {
+            $clubEvent->showToSection()->sync([$clubEvent->section->id]);
             $clubEvent->save();
         }
 
@@ -281,6 +282,7 @@ class ClubEventController extends Controller
     public function edit($id)
     {
         // find event
+        /* @var $event ClubEvent */
         $event = ClubEvent::findOrFail($id);
 
         // find schedule
@@ -303,8 +305,8 @@ class ClubEventController extends Controller
                             ->get();
 
         // Filter - Workaround for older events: populate filter with event club
-        if (empty($event->evnt_show_to_club) ) {
-            $event->evnt_show_to_club = json_encode([$event->section->title], true);
+        if ($event->showToSection->isEmpty() ) {
+            $event->showToSection()->sync([$event->section->id]);
             $event->save();
         }
 
@@ -503,8 +505,9 @@ class ClubEventController extends Controller
             $event->evnt_is_published = 0;
         }
         // Filter
-        $filter = collect(Input::get("filter"))->keys()->toArray();
-        $event->evnt_show_to_club = json_encode($filter, true);
+        $filter = collect(Input::get("filter"))->values()->toArray();
+        $event->save();
+        $event->showToSection()->sync($filter);
 
         // Logging
 
