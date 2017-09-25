@@ -9,7 +9,16 @@
 namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
-
+/**
+ * @property int evnt_type
+ * @property string evnt_title
+ * @property string evnt_subtitle
+ * @property \DateTime evnt_date_start
+ * @property \DateTime evnt_date_end
+ * @property \DateTime evnt_time_start
+ * @property \DateTime evnt_time_end
+ * @property string external_id
+ */
 class ClubEvent extends Model
 {
 	/**
