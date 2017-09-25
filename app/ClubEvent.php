@@ -45,7 +45,8 @@ class ClubEvent extends Model
 								'evnt_public_info',
 								'evnt_private_details',
 								'evnt_is_private',
-								'evnt_is_published');
+								'evnt_is_published',
+                                'external_id');
 
 	/**
 	 * Get the corresponding section.
