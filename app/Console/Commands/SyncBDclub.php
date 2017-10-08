@@ -10,6 +10,7 @@ use Lara\Club;
 use Lara\ClubEvent;
 use Lara\Schedule;
 use Lara\Section;
+use Lara\Shift;
 
 /**
  * To work with this, you need a file named bd_credentials.php in the config folder
@@ -26,6 +27,8 @@ use Lara\Section;
  */
 class SyncBDclub extends Command
 {
+    const BD_TEMPLATE_NAME = 'BD Template';
+    
     /**
      * The name and signature of the console command.
      *
@@ -98,6 +101,9 @@ class SyncBDclub extends Command
         
         //$this->info($this->formatDateTime($from));
         $events = $caldavClient->getEvents($this->formatDateTime($from), $this->formatDateTime($until));
+        /* @var $template Schedule */
+        $template = Schedule::where('schdl_title', '=', self::BD_TEMPLATE_NAME)->first();
+        
         
         //$this->info(var_dump($events));
         foreach ($events as $event) {
@@ -142,12 +148,21 @@ class SyncBDclub extends Command
                 $schedule->schdl_time_preparation_start = '20:00:00';
                 
                 $schedule->save();
-                
+                if($schedule->shifts->isEmpty()) {
+                    $shifts = $template->shifts()
+                        ->with('type')
+                        ->orderByRaw('position IS NULL, position ASC, id ASC')
+                        ->get()
+                        ->map(function (Shift $shift) use ($schedule) {
+                            // copy all except person_id and schedule_id and comment
+                            return $shift->replicate()->fill(['schedule_id' => $schedule->id]);
+                        });
+                    foreach ($shifts as $shift) {
+                        $shift->save();
+                    }
+                }
                 $clubEvent->save();
-                $this->info(var_dump($extraData));
-                //     $this->info(var_dump($clubEvent));
             }
-            // $this->info(var_dump($ical->events()));
         }
     }
     
