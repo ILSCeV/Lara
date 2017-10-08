@@ -4,5 +4,6 @@ return [
     'host'     =>
         'www.example.com',
     'user'     => 'foo',
-    'password' => 'bar'
+    'password' => 'bar',
+    'calendarName' =>'foobar'
 ];
