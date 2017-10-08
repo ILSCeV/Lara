@@ -2,12 +2,14 @@
 
 namespace Lara\Console\Commands;
 
+use Carbon\Carbon;
 use ICal\Event;
 use ICal\ICal;
 use Illuminate\Console\Command;
 use it\thecsea\simple_caldav_client\SimpleCalDAVClient;
 use Lara\Club;
 use Lara\ClubEvent;
+use Lara\Person;
 use Lara\Schedule;
 use Lara\Section;
 use Lara\Shift;
@@ -148,7 +150,8 @@ class SyncBDclub extends Command
                 $schedule->schdl_time_preparation_start = '20:00:00';
                 
                 $schedule->save();
-                if($schedule->shifts->isEmpty()) {
+                $shifts = $schedule->shifts;
+                if ($shifts->isEmpty()) {
                     $shifts = $template->shifts()
                         ->with('type')
                         ->orderByRaw('position IS NULL, position ASC, id ASC')
@@ -157,14 +160,28 @@ class SyncBDclub extends Command
                             // copy all except person_id and schedule_id and comment
                             return $shift->replicate()->fill(['schedule_id' => $schedule->id]);
                         });
-                    foreach ($shifts as $shift) {
-                        $shift->save();
+                }
+                /* @var $shift Shift */
+                foreach ($shifts as $shift) {
+                    if ($shift->type->title == 'AV' && !is_null($extraData->responsible) && $extraData->responsible!='') {
+                        $person = $this->createGuestAccount();
+                        $person->prsn_name = $extraData->responsible;
+                        $person->save();
+                        $shift->person_id = $person->id;
                     }
+                    if ($shift->type->title == 'Musik' && !is_null($extraData->music) && $extraData->music!= '') {
+                        $person = $this->createGuestAccount();
+                        $person->prsn_name = $extraData->music;
+                        $person->save();
+                        $shift->person_id = $person->id;
+                    }
+                    $shift->save();
                 }
                 $clubEvent->save();
             }
         }
     }
+    
     
     /** @param $date \DateTime
      * @return string
@@ -172,5 +189,18 @@ class SyncBDclub extends Command
     private function formatDateTime($date)
     {
         return $date->format(self::DATE_TIME_FORMAT_PREFIX).'T'.$date->format(self::DATE_TIME_FORMAT_SUFFIX).'Z';
+    }
+    
+    /**
+     * @return Person
+     */
+    private function createGuestAccount()
+    {
+        $personClub = Club::where('clb_title', '=', self::BD_SECTION_NAME)->firstOrCreate(array('clb_title' => self::BD_SECTION_NAME) );
+        $person = Person::create(['prsn_ldap_id' => null]);
+        $person->prsn_status = "";
+        $person->clb_id = $personClub->id;
+        $person->updated_at = Carbon::now();
+        return $person;
     }
 }
