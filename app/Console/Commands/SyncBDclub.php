@@ -6,6 +6,7 @@ use ICal\Event;
 use ICal\ICal;
 use Illuminate\Console\Command;
 use it\thecsea\simple_caldav_client\SimpleCalDAVClient;
+use Lara\Club;
 use Lara\ClubEvent;
 use Lara\Schedule;
 use Lara\Section;
@@ -43,7 +44,7 @@ class SyncBDclub extends Command
     
     const DATE_TIME_FORMAT_SUFFIX = 'His';
     
-    const BD_SECTION_NAME = 'BD Club';
+    const BD_SECTION_NAME = 'BD-Club';
     
     /**
      * Create a new command instance.
@@ -70,6 +71,9 @@ class SyncBDclub extends Command
             $section->title = self::BD_SECTION_NAME;
             $section->section_uid = hash("sha512", uniqid());
             $section->save();
+            $club = new Club();
+            $club->clb_title = $section->title;
+            $club->save();
         }
         
         
