@@ -18,7 +18,8 @@ use Lara\Section;
  * 'host'=>
  * 'example.com',
  * 'user' => 'foo',
- * 'password' => 'bar'
+ * 'password' => 'bar',
+ * 'calendarName' =>'foobar'
  * ];
  * </code>
  */
@@ -29,7 +30,7 @@ class SyncBDclub extends Command
      *
      * @var string
      */
-    protected $signature = 'sync:bd-club';
+    protected $signature = 'lara:sync-bd-club';
     
     /**
      * The console command description.
@@ -41,6 +42,8 @@ class SyncBDclub extends Command
     const DATE_TIME_FORMAT_PREFIX = 'Ymd';
     
     const DATE_TIME_FORMAT_SUFFIX = 'His';
+    
+    const BD_SECTION_NAME = 'bd-Club';
     
     /**
      * Create a new command instance.
@@ -61,10 +64,10 @@ class SyncBDclub extends Command
     {
         //
         
-        $section = Section::where('title', '=', 'bd-club')->first();
+        $section = Section::where('title', '=', self::BD_SECTION_NAME)->first();
         if (is_null($section)) {
             $section = new Section();
-            $section->title = 'bd-club';
+            $section->title = self::BD_SECTION_NAME;
             $section->section_uid = hash("sha512", uniqid());
             $section->save();
         }
@@ -76,7 +79,7 @@ class SyncBDclub extends Command
         $caldavClient->connect(config('bd_credentials.host'),
             config('bd_credentials.user'), config('bd_credentials.password'));
         $arrayOfCalenars = $caldavClient->findCalendars();
-        $caldavClient->setCalendar($arrayOfCalenars['bd-cloud_shared_by_BD-Cloud']);
+        $caldavClient->setCalendar($arrayOfCalenars[config('bd_credentials.calendarName')]);
         // $this->info(var_dump($arrayOfCalenars));
         $gmt = new \DateTimeZone('GMT');
         $year = strftime('%Y');
@@ -116,11 +119,11 @@ class SyncBDclub extends Command
                 
                 $clubEvent->evnt_title = $icevt->summary;
                 $clubEvent->external_id = $icevt->uid;
-                $clubEvent->evnt_is_private = $extraData->isactive == 'on';
+                $clubEvent->evnt_is_private = !(!is_null($extraData->isactive) && $extraData->isactive == 'on');
                 $clubEvent->evnt_date_start = (new \DateTime($icevt->dtstart))->format('Y-m-d');
                 $clubEvent->evnt_date_end = (new \DateTime($icevt->dtend))->format('Y-m-d');
-                $clubEvent->evnt_time_start = (new \DateTime($icevt->dtend))->format('H:i:s');
-                $clubEvent->evnt_time_end = (new \DateTime($icevt->dtend))->format('H:i:s');
+                $clubEvent->evnt_time_start = '22:00:00';
+                $clubEvent->evnt_time_end = '01:00:00';
                 $clubEvent->plc_id = $section->id;
                 $clubEvent->save();
                 $clubEvent->showToSection()->sync($section->id);
@@ -132,6 +135,7 @@ class SyncBDclub extends Command
                 }
                 $schedule->evnt_id = $clubEvent->id;
                 $schedule->schdl_title = $clubEvent->evnt_title;
+                $schedule->schdl_time_preparation_start = '21:00:00';
                 
                 $schedule->save();
                 
