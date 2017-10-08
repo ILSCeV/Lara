@@ -43,7 +43,7 @@ class SyncBDclub extends Command
     
     const DATE_TIME_FORMAT_SUFFIX = 'His';
     
-    const BD_SECTION_NAME = 'bd-Club';
+    const BD_SECTION_NAME = 'BD Club';
     
     /**
      * Create a new command instance.
@@ -122,7 +122,7 @@ class SyncBDclub extends Command
                 $clubEvent->evnt_is_private = !(!is_null($extraData->isactive) && $extraData->isactive == 'on');
                 $clubEvent->evnt_date_start = (new \DateTime($icevt->dtstart))->format('Y-m-d');
                 $clubEvent->evnt_date_end = (new \DateTime($icevt->dtend))->format('Y-m-d');
-                $clubEvent->evnt_time_start = '22:00:00';
+                $clubEvent->evnt_time_start = '21:00:00';
                 $clubEvent->evnt_time_end = '01:00:00';
                 $clubEvent->plc_id = $section->id;
                 $clubEvent->save();
@@ -135,7 +135,7 @@ class SyncBDclub extends Command
                 }
                 $schedule->evnt_id = $clubEvent->id;
                 $schedule->schdl_title = $clubEvent->evnt_title;
-                $schedule->schdl_time_preparation_start = '21:00:00';
+                $schedule->schdl_time_preparation_start = '20:00:00';
                 
                 $schedule->save();
                 
