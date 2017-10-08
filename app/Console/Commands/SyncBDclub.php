@@ -160,23 +160,24 @@ class SyncBDclub extends Command
                             // copy all except person_id and schedule_id and comment
                             return $shift->replicate()->fill(['schedule_id' => $schedule->id]);
                         });
-                }
-                /* @var $shift Shift */
-                foreach ($shifts as $shift) {
-                    if ($shift->type->title == 'AV' && !is_null($extraData->responsible) && $extraData->responsible!='') {
-                        $person = $this->createGuestAccount();
-                        $person->prsn_name = $extraData->responsible;
-                        $person->save();
-                        $shift->person_id = $person->id;
+                    /* @var $shift Shift */
+                    foreach ($shifts as $shift) {
+                        if ($shift->type->title == 'AV' && !is_null($extraData->responsible) && $extraData->responsible != '') {
+                            $person = $this->createGuestAccount();
+                            $person->prsn_name = $extraData->responsible;
+                            $person->save();
+                            $shift->person_id = $person->id;
+                        }
+                        if ($shift->type->title == 'Musik' && !is_null($extraData->music) && $extraData->music != '') {
+                            $person = $this->createGuestAccount();
+                            $person->prsn_name = $extraData->music;
+                            $person->save();
+                            $shift->person_id = $person->id;
+                        }
+                        $shift->save();
                     }
-                    if ($shift->type->title == 'Musik' && !is_null($extraData->music) && $extraData->music!= '') {
-                        $person = $this->createGuestAccount();
-                        $person->prsn_name = $extraData->music;
-                        $person->save();
-                        $shift->person_id = $person->id;
-                    }
-                    $shift->save();
                 }
+                
                 $clubEvent->save();
             }
         }
@@ -196,11 +197,13 @@ class SyncBDclub extends Command
      */
     private function createGuestAccount()
     {
-        $personClub = Club::where('clb_title', '=', self::BD_SECTION_NAME)->firstOrCreate(array('clb_title' => self::BD_SECTION_NAME) );
+        $personClub = Club::where('clb_title', '=',
+            self::BD_SECTION_NAME)->firstOrCreate(['clb_title' => self::BD_SECTION_NAME]);
         $person = Person::create(['prsn_ldap_id' => null]);
         $person->prsn_status = "";
         $person->clb_id = $personClub->id;
         $person->updated_at = Carbon::now();
+        
         return $person;
     }
 }
