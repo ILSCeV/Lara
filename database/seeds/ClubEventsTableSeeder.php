@@ -19,7 +19,10 @@ class ClubEventsTableSeeder extends Seeder
             ->each(function(Lara\ClubEvent $event) {
                 // create a schedule for each event
                 $event->getSchedule()->save(factory(Lara\Schedule::class)->make());
-                $event->showToSection()->sync($event->plc_id,Lara\Section::inRandomOrder()->first()->id);
+                $event->showToSection()->sync([
+                    $event->plc_id,
+                    Lara\Section::whereNot('id', $event->plc_id)->inRandomOrder()->first()->id
+                ]);
                 $event->save();
             });
     }
