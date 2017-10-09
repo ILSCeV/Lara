@@ -21,7 +21,7 @@ class ClubEventsTableSeeder extends Seeder
                 $event->getSchedule()->save(factory(Lara\Schedule::class)->make());
                 $event->showToSection()->sync([
                     $event->plc_id,
-                    Lara\Section::whereNot('id', $event->plc_id)->inRandomOrder()->first()->id
+                    Lara\Section::where('id', '!=', $event->plc_id)->inRandomOrder()->first()->id
                 ]);
                 $event->save();
             });
