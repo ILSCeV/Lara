@@ -117,6 +117,7 @@ class SyncBDclub extends Command
                 $this->info($icevt->summary);
                 //$this->info($icevt->comment);
                 $extraData = json_decode($icevt->comment);
+                $this->info("extradata:".$icevt->comment);
                 //$this->info(var_dump($extraData));
                 $this->info($icevt->uid);
                 
@@ -139,6 +140,12 @@ class SyncBDclub extends Command
                 $clubEvent->plc_id = $section->id;
                 $clubEvent->save();
                 $clubEvent->showToSection()->sync($section->id);
+                
+                $clubEvent->facebook_done = $extraData->facedone!=null && $extraData->facedone == "on";
+                $clubEvent->facebook_event_url = $extraData->face;
+                $flyerDone = "Flyer erledigt: " . ($extraData->flyerdone != null ? "Ja":"Nein");
+                
+                $clubEvent->evnt_private_details = $flyerDone . "\n\n" . $extraData->notes;
                 
                 /* @var $schedule Schedule */
                 $schedule = $clubEvent->schedule;
