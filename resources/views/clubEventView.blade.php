@@ -97,6 +97,7 @@
 								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", $clubEvent->showToSectionNames()) }})</i>
 							</td>
 						</tr>
+						@if(Session::has('userId'))
 						<tr>
 							<td width="20%" class="left-padding-16">
 								<i>{{ trans('mainLang.faceDone') }}:</i>
@@ -115,11 +116,11 @@
 							</td>
 							<td>
 								@if($clubEvent->facebook_event_url!=null && $clubEvent->facebook_event_url!="")
-									<a href="{{ $clubEvent->facebook_event_url }}">{{$clubEvent->facebook_event_url}}</a>
+									<a target="_blank" href="{{ $clubEvent->facebook_event_url }}">{{$clubEvent->facebook_event_url}}</a>
 								@endif
 							</td>
 						</tr>
-
+						@endif
 						{{--
 
 						Disabling iCal until fully functional.
