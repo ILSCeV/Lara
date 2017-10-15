@@ -405,8 +405,8 @@ input[type=number],
  * Row margins
  */
 .row {
-    margin: 8px !important;
-    padding: 0 -15px 0 -15px;
+    margin: 0px !important;
+    padding: 8px 8px 8px 8px;
 }
 
 .no-padding {

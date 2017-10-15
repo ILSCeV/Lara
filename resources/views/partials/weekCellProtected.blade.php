@@ -74,7 +74,7 @@
 
 				{{-- Show shifts --}}
 				@foreach($shifts = $clubEvent->getSchedule->shifts as $shift)
-				    <div class="row">
+				    <div class="row{!! $shift !== $shifts->last() ? ' divider': false !!}">
 				        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 				                                'id' => $shift->id, 
 				                                'method' => 'put', 
@@ -177,10 +177,7 @@
 
 				    </div>
 
-				    {{-- Show a line after each row except the last one --}}
-					@if($shift !== $shifts->last() ) 
-						<hr class="col-md-12 col-xs-12 top-padding no-margin">
-					@endif
+		
 
 				@endforeach
 
