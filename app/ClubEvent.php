@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTime evnt_time_start
  * @property \DateTime evnt_time_end
  * @property string external_id
+ * @property boolean facebook_done
+ * @property string facebook_event_url
  */
 class ClubEvent extends Model
 {
@@ -55,7 +57,9 @@ class ClubEvent extends Model
 								'evnt_private_details',
 								'evnt_is_private',
 								'evnt_is_published',
-                                'external_id');
+                                'external_id',
+                                'facebook_done',
+                                'facebook_event_url');
 
 	/**
 	 * Get the corresponding section.
