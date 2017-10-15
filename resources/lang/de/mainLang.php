@@ -49,6 +49,8 @@ return [
     'marketingFlyersPlacard'=> 'Marketing / Flyer / Plakate', //used in legend.blade.php
     'preSale'               => 'Vorverkauf',
     'others'                => 'Sonstiges',
+    'faceDone'                  => 'Facebook Event erledigt',
+    'facebookEventUrl'          => 'Facebook Event Url',
     
     //----------------------------------------------
     
