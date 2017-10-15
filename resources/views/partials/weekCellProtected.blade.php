@@ -37,19 +37,6 @@
 		@endif
 	@endif
 
-
-	@if ($clubEvent->section->title == "bc-Club" AND $clubEvent->evnt_is_private )
-		
-	@elseif ($clubEvent->section->title == "bc-Café" AND $clubEvent->evnt_is_private)
-		
-	@elseif ($clubEvent->section->title == "bc-Club")
-		
-	@elseif ($clubEvent->section->title == "bc-Café")
-		
-	@else
-		<div class="{{ $classString }} calendar-task white-text">
-	@endif
-
 			<h4 class="panel-title">
 				@include("partials.event-marker")
 				&nbsp;
