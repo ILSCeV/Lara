@@ -1,5 +1,4 @@
 @extends('layouts.master')
-
 @section('title')
 	{{ $clubEvent->evnt_title }}
 @stop
@@ -96,6 +95,28 @@
 								{{ $clubEvent->section->title }}
 								&nbsp;&nbsp;<br class="visible-xs">
 								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", $clubEvent->showToSectionNames()) }})</i>
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" class="left-padding-16">
+								<i>{{ trans('mainLang.faceDone') }}:</i>
+							</td>
+							<td>
+								@if($clubEvent->facebook_done==true)
+									<i class="text-success fa fa-smile-o" aria-hidden="true"></i>
+								@else
+									<i class="text-danger fa fa-frown-o" aria-hidden="true"></i>
+								@endif
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" class="left-padding-16">
+								<i>{{ trans('mainLang.facebookEventUrl') }}:</i>
+							</td>
+							<td>
+								@if($clubEvent->facebook_event_url!=null && $clubEvent->facebook_event_url!="")
+									<a href="{{ $clubEvent->facebook_event_url }}">{{$clubEvent->facebook_event_url}}</a>
+								@endif
 							</td>
 						</tr>
 
