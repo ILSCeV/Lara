@@ -47,6 +47,7 @@ class CreateBdTemplate extends Migration
         /* @var $shiftType ShiftType */
         $shifts = $shiftTypes->flatMap(function ($shiftType) use ($template) {
             $shiftCount = $shiftType->title == 'AV' || $shiftType->title == 'Musik' ? 1 : 2;
+            
             return collect(range(1, $shiftCount))->map(function ($sc) use ($shiftType, $template) {
                 $shift = new Shift();
                 $shift->fill([
@@ -56,10 +57,11 @@ class CreateBdTemplate extends Migration
                     'end'                => $shiftType->end,
                     'statistical_weight' => $shiftType->statistical_weight,
                 ]);
+                
                 return $shift;
             });
         });
-        foreach ($shifts as $shift){
+        foreach ($shifts as $shift) {
             $shift->save();
         }
     }
@@ -74,7 +76,7 @@ class CreateBdTemplate extends Migration
         $shiftTypeEnd = '01:00:00';
         $shiftTimeRange = ['start' => $shiftTypeStart, 'end' => $shiftTypeEnd];
         /* @var $shiftType ShiftType */
-        $shiftType = ShiftType::where('title', '=', $shiftName)->first()->replicate();
+        $shiftType = ShiftType::where('title', '=', $shiftName)->firstOrNew(['title'=>$shiftName])->replicate();
         $shiftType->fill($shiftTimeRange);
         
         return $shiftType;
@@ -89,12 +91,16 @@ class CreateBdTemplate extends Migration
     {
         //
         /* @var $template Schedule */
-        $template = Schedule::where('schdl_title','=',self::BD_TEMPLATE_NAME)->first();
+        $template = Schedule::where('schdl_title', '=', self::BD_TEMPLATE_NAME)->first();
         $shifts = $template->shifts;
-        foreach ($shifts as $shift){
-            $shift->delete();
+        if ($shifts != null) {
+            foreach ($shifts as $shift) {
+                $shift->delete();
+            }
         }
-        $template->delete();
+        if ($template != null) {
+            $template->delete();
+        }
         
         $shiftTypeStart = '20:00:00';
         $shiftTypeEnd = '01:00:00';
@@ -102,7 +108,7 @@ class CreateBdTemplate extends Migration
         $shiftTypeNames = ['AV', 'Disco', 'Tresen', 'Bar', 'Einlass'];
         $shiftTypes = ShiftType::whereIn('title', $shiftTypeNames)
             ->where('start', '=', $shiftTypeStart)
-            ->where('stop', '=', $shiftTypeEnd)->get();
+            ->where('end', '=', $shiftTypeEnd)->get();
         /* @var $shiftType ShiftType */
         foreach ($shiftTypes as $shiftType) {
             $shiftType->delete();
