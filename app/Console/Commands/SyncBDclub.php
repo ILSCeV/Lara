@@ -138,6 +138,10 @@ class SyncBDclub extends Command
                 $clubEvent->evnt_time_start = '21:00:00';
                 $clubEvent->evnt_time_end = '01:00:00';
                 $clubEvent->plc_id = $section->id;
+                $clubEvent->price_normal = $extraData->price_ak_n;
+                $clubEvent->price_external = $extraData->price_ak_v;
+                $clubEvent->price_tickets_external = $extraData->price_vk_v;
+                $clubEvent->price_tickets_normal = $extraData->price_vk_n;
                 $clubEvent->save();
                 $clubEvent->showToSection()->sync($section->id);
                 
