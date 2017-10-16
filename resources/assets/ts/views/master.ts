@@ -28,7 +28,7 @@ export const initializeSectionFilters = (isotope: typeof Isotope = null) => {
     };
 
     const rebuildIsotopeLayout = () => isotope ? isotope.layout() : null;
-    
+
     sectionFilters.forEach((filterName) => {
         const sectionButton = new ToggleButton(filterName, () => $(`#${filterName}`).hasClass("btn-primary"));
 

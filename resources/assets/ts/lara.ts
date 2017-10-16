@@ -26,6 +26,7 @@ import "./views/month"
 import "./views/event"
 import "./views/master"
 import "./views/week"
+import "./views/management"
 
 // disabled for now
 // import "./Ical"
