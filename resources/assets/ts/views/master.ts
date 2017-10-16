@@ -5,7 +5,7 @@ import {makeLocalStorageAction} from "../ToggleAction";
 import * as Isotope  from "../../../../node_modules/isotope-layout/js/isotope.js"
 
 // Enable Tooltips
-$(function () { $("[data-toggle='tooltip']").tooltip({trigger: "hover"}); });
+$("[data-toggle='tooltip']").tooltip({trigger: "hover"})
 
 // Automatically close notifications after 4 seconds (4000 milliseconds)
 window.setTimeout(function() {
