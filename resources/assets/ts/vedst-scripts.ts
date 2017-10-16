@@ -1,22 +1,10 @@
 import * as $ from "jquery"
 import { translate } from "./Translate"
 import "isotope-layout"
-import * as Isotope  from "../../../node_modules/isotope-layout/js/isotope.js"
 
-import {ToggleButton} from "./ToggleButton";
-import {makeLocalStorageAction, makeClassToggleAction} from "./ToggleAction";
-import {safeGetLocalStorage, decodeEntities} from "./Utilities";
-import {initializeSectionFilters} from "./views/master";
+import {decodeEntities} from "./Utilities";
 
 const jQuery = $;
-/////////////
-// Filters //
-/////////////
-
-
-
-
-
 
 ///////////////
 // All views //
