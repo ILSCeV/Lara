@@ -446,13 +446,17 @@ class ClubEventController extends Controller
         }
 
         // format: strings; no validation needed
-        $event->evnt_title           = Input::get('title');
-        $event->evnt_subtitle        = Input::get('subtitle');
-        $event->evnt_public_info     = Input::get('publicInfo');
-        $event->evnt_private_details = Input::get('privateDetails');
-        $event->evnt_type            = Input::get('evnt_type');
-        $event->facebook_done        = Input::get('facebookDone',"0") == "1";
-        $event->event_url            = Input::get('eventUrl',"");
+        $event->evnt_title             = Input::get('title');
+        $event->evnt_subtitle          = Input::get('subtitle');
+        $event->evnt_public_info       = Input::get('publicInfo');
+        $event->evnt_private_details   = Input::get('privateDetails');
+        $event->evnt_type              = Input::get('evnt_type');
+        $event->facebook_done          = Input::get('facebookDone',"0") == "1";
+        $event->event_url              = Input::get('eventUrl',"");
+        $event->price_tickets_normal   = Input::get('priceTicketsNormal');
+        $event->price_tickets_external = Input::get('priceTicketsExternal');
+        $event->price_normal           = Input::get('priceNormal');
+        $event->price_external         = Input::get('priceExternal');
 
         // create new section
         if (!Section::where('title', '=', Input::get('section'))->first())
