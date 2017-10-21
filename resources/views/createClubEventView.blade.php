@@ -231,7 +231,22 @@
 						@endif
 				    </div>
 			   	</div>
-
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
+					<label for="priceTickets" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.priceTickets') }}: &nbsp;</label>
+					<div id="priceTickets" class="col-md-5 col-sm-5 col-xs-12 input-group">
+						<input class="form-control" type="number" name="priceTicketsNormal" step="0.1" placeholder="Student" value=""/>
+						<span class="input-group-addon">/</span>
+						<input class="form-control" type="number" name="priceTicketsExternal" step="0.1" placeholder="Extern" value=""/>
+					</div>
+				</div>
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
+					<label for="priceTickets" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.price') }}: &nbsp;</label>
+					<div id="priceTickets" class="col-md-5 col-sm-5 col-xs-12 input-group">
+						<input class="form-control" type="number" name="priceNormal" step="0.1" placeholder="Student" value=""/>
+						<span class="input-group-addon">/</span>
+						<input class="form-control" type="number" name="priceExternal" step="0.1" placeholder="Extern" value=""/>
+					</div>
+				</div>
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 					<label for="preparationTime" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.DV-Time') }}:</label>
 					<div class="col-md-3 col-sm-3 col-xs-3">

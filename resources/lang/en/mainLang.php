@@ -50,8 +50,8 @@ return [
     'others'                    => 'Others',
     'faceDone'                  => 'Facebook event done',
     'eventUrl'                  => 'event Url',
-    'priceTickets'              => 'Price Tickets student/extern',
-    'price'                     => 'Price student/extern',
+    'priceTickets'              => 'Price Tickets student / extern',
+    'price'                     => 'Price student / extern',
 
     //----------------------------------------------
 

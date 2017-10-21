@@ -51,8 +51,8 @@ return [
     'others'                => 'Sonstiges',
     'faceDone'              => 'Facebook Event erledigt',
     'eventUrl'              => 'Event Seite',
-    'priceTickets'          => 'Preis Vorverkauf Student/Extern',
-    'price'                 => 'Preis Student/Extern',
+    'priceTickets'          => 'Preis Vorverkauf Student / Extern',
+    'price'                 => 'Preis Student / Extern',
     
     //----------------------------------------------
     
