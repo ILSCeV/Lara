@@ -76,7 +76,7 @@ class CreateBdTemplate extends Migration
         $shiftTypeEnd = '01:00:00';
         $shiftTimeRange = ['start' => $shiftTypeStart, 'end' => $shiftTypeEnd];
         /* @var $shiftType ShiftType */
-        $shiftType = ShiftType::where('title', '=', $shiftName)->firstOrNew(['title'=>$shiftName])->replicate();
+        $shiftType = ShiftType::where('title', '=', $shiftName)->firstOrNew(['title'=>$shiftName, 'statistical_weight'=>1])->replicate();
         $shiftType->fill($shiftTimeRange);
         
         return $shiftType;
