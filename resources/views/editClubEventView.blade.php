@@ -69,8 +69,8 @@ AND (Session::get('userGroup') == 'marketing'
 							{!! Form::checkbox('facebookDone', '1', $event->facebook_done == true, array('class'=>'col-md-1 col-sm-1 col-xs-1')) !!}
 						</div>
 						<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-							<label for="facebookEventUrl" class="col-md-2 col-sm-2 col-xs-3">{{trans('mainLang.facebookEventUrl')}}</label>
-							{!! Form::text('facebookEventUrl', $event->facebook_event_url, array('class'=>'col-md-9 col-sm-9 col-xs-9','style'=>'cursor: auto')) !!}
+							<label for="eventUrl" class="col-md-2 col-sm-2 col-xs-3">{{trans('mainLang.eventUrl')}}</label>
+							{!! Form::text('eventUrl', $event->event_url, array('class'=>'col-md-9 col-sm-9 col-xs-9','style'=>'cursor: auto')) !!}
 						</div>
 					    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 					     	<label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.type') }}:</label>
