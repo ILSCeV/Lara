@@ -120,6 +120,22 @@
 								@endif
 							</td>
 						</tr>
+						<tr>
+							<td width="20%" class="left-padding-16">
+								<i>{{ trans('mainLang.priceTickets') }}:</i>
+							</td>
+							<td>
+								{{  $clubEvent->price_tickets_normal!=null?$clubEvent->price_tickets_normal:'--' }} / {{ $clubEvent->price_tickets_external!=null?$clubEvent->price_tickets_external:'--' }}
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" class="left-padding-16">
+								<i>{{ trans('mainLang.price') }}:</i>
+							</td>
+							<td>
+								{{  $clubEvent->price_normal!=null?$clubEvent->price_normal:'--' }} / {{ $clubEvent->price_tickets_external!=null?$clubEvent->price_tickets_external:'--' }}
+							</td>
+						</tr>
 						@endif
 						{{--
 
