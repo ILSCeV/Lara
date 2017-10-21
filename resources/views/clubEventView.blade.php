@@ -112,11 +112,11 @@
 						</tr>
 						<tr>
 							<td width="20%" class="left-padding-16">
-								<i>{{ trans('mainLang.facebookEventUrl') }}:</i>
+								<i>{{ trans('mainLang.eventUrl') }}:</i>
 							</td>
 							<td>
-								@if($clubEvent->facebook_event_url!=null && $clubEvent->facebook_event_url!="")
-									<a target="_blank" href="{{ $clubEvent->facebook_event_url }}">{{$clubEvent->facebook_event_url}}</a>
+								@if($clubEvent->event_url!=null && $clubEvent->event_url!="")
+									<a target="_blank" href="{{ $clubEvent->event_url }}">{{$clubEvent->event_url}}</a>
 								@endif
 							</td>
 						</tr>

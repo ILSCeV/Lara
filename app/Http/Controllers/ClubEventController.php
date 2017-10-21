@@ -452,7 +452,7 @@ class ClubEventController extends Controller
         $event->evnt_private_details = Input::get('privateDetails');
         $event->evnt_type            = Input::get('evnt_type');
         $event->facebook_done        = Input::get('facebookDone',"0") == "1";
-        $event->facebook_event_url   = Input::get('facebookEventUrl',"");
+        $event->event_url            = Input::get('eventUrl',"");
 
         // create new section
         if (!Section::where('title', '=', Input::get('section'))->first())

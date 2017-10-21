@@ -146,7 +146,7 @@ class SyncBDclub extends Command
                 $clubEvent->showToSection()->sync($section->id);
                 
                 $clubEvent->facebook_done = $extraData->facedone!=null && $extraData->facedone == "on";
-                $clubEvent->facebook_event_url = $extraData->face;
+                $clubEvent->event_url = $extraData->face;
                 $flyerDone = "Flyer erledigt: " . ($extraData->flyerdone != null ? "Ja":"Nein");
                 
                 $clubEvent->evnt_private_details = $flyerDone . "\n\n" . $extraData->notes;

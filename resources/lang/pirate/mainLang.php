@@ -49,8 +49,8 @@ return [
     'marketingFlyersPlacard'=> 'Anhoyern', //used in legend.blade.php
     'preSale'               => 'Seelenverkäufer',
     'others'                => 'Sonstiges',
-    'faceDone'                  => 'Facebook Event erledigt',
-    'facebookEventUrl'          => 'Facebook Event Url',
+    'faceDone'              => 'Facebook Event erledigt',
+    'eventUrl'              => 'Event Seite',
     
     //----------------------------------------------
     

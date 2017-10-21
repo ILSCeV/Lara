@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTime evnt_time_end
  * @property string external_id
  * @property boolean facebook_done
- * @property string facebook_event_url
+ * @property string event_url
  * @property double price_tickets_normal
  * @property double price_tickets_external
  * @property double price_normal
@@ -67,7 +67,7 @@ class ClubEvent extends Model
                                 'price_normal',
                                 'price_external',
                                 'facebook_done',
-                                'facebook_event_url');
+                                'event_url');
 
 	/**
 	 * Get the corresponding section.

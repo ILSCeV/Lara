@@ -49,7 +49,7 @@ return [
     'preSale'                   => 'Tickets presale',
     'others'                    => 'Others',
     'faceDone'                  => 'Facebook event done',
-    'facebookEventUrl'          => 'Facebook event Url',
+    'eventUrl'                  => 'event Url',
 
     //----------------------------------------------
 

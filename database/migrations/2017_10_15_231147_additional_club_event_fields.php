@@ -15,7 +15,7 @@ class AdditionalClubEventFields extends Migration
     {
         Schema::table('club_events', function (Blueprint $table) {
             $table->boolean("facebook_done")->default(false);
-            $table->mediumText("facebook_event_url")->default("");
+            $table->mediumText("event_url")->default("");
             $table->float("price_tickets_normal");
             $table->float("price_tickets_external");
             $table->float("price_normal");
@@ -32,7 +32,7 @@ class AdditionalClubEventFields extends Migration
     {
         Schema::table('club_events', function (Blueprint $table) {
             $table->dropColumn('facebook_done');
-            $table->dropColumn('facebook_event_url');
+            $table->dropColumn('event_url');
     
             $table->dropColumn('price_tickets_normal');
             $table->dropColumn('price_tickets_external');
