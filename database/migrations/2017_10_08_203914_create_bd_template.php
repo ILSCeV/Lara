@@ -105,7 +105,7 @@ class CreateBdTemplate extends Migration
         $shiftTypeStart = '20:00:00';
         $shiftTypeEnd = '01:00:00';
         
-        $shiftTypeNames = ['AV', 'Disco', 'Tresen', 'Bar', 'Einlass'];
+        $shiftTypeNames = ['AV', 'Musik', 'Bier', 'Bar', 'Einlass'];
         $shiftTypes = ShiftType::whereIn('title', $shiftTypeNames)
             ->where('start', '=', $shiftTypeStart)
             ->where('end', '=', $shiftTypeEnd)->get();
