@@ -99,7 +99,14 @@ $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
         'evnt_public_info' => $faker->sentence(),
         'evnt_private_details' => $faker->sentence(),
         'evnt_is_private' => $faker->boolean(10),
-        'evnt_is_published' => 0
+        'evnt_is_published' => 0,
+        'price_tickets_normal'=> $faker->numberBetween(0,5),
+        'price_tickets_external'=>$faker->numberBetween(0,10),
+        'price_normal' => $faker->randomFloat(2,0,1),
+        'price_external' => $faker->randomFloat(2,1,2),
+        'facebook_done' => $faker->boolean(50),
+        'event_url' => $faker->url(),
+        'external_id'=> $faker->word()
     ];
 });
 
