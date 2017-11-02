@@ -49,7 +49,7 @@ class SyncBDclub extends Command
     
     const DATE_TIME_FORMAT_SUFFIX = 'His';
     
-    const BD_SECTION_NAME = 'BD-Club';
+    const BD_SECTION_NAME = 'bd-Club';
     
     /**
      * Create a new command instance.
