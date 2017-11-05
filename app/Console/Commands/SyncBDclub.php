@@ -116,8 +116,12 @@ class SyncBDclub extends Command
             foreach ($icalEvents as $icevt) {
                 $this->info($icevt->summary);
                 //$this->info($icevt->comment);
-                $extraData = json_decode($icevt->comment);
-                $this->info("extradata:".$icevt->comment);
+                if(isset($icevt->comment)) {
+                    $extraData = json_decode($icevt->comment);
+                } else {
+                    $extraData = json_decode("{\"isactive\":null,\"responsible\":\"\",\"music\":\"\",\"flyer\":\"\",\"flyerdone\":null,\"face\":\"\",\"facedone\":null,\"price_ak_n\":\"\",\"price_ak_v\":\"\",\"price_vk_n\":\"\",\"price_vk_v\":\"\",\"notes\":\"\"}");
+                }
+                $this->info("extradata:".json_encode($extraData));
                 //$this->info(var_dump($extraData));
                 $this->info($icevt->uid);
                 
