@@ -379,6 +379,8 @@ class ClubEventController extends Controller
         // Get all the data
         $event = ClubEvent::find($id);
 
+        $date = new DateTime($event->evnt_date_start);
+
 
         // Check if event exists
         if ( is_null($event) ) {
@@ -387,7 +389,7 @@ class ClubEventController extends Controller
             return Redirect::back();
         }
         
-        // Check credentials: you can only delete, if you have rights for marketing or management. 
+        // Check credentials: you can only delete, if you have rights for marketing or management.
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
         $created_by = $revisions[0]["user id"];
         if(!Session::has('userId')
@@ -416,8 +418,8 @@ class ClubEventController extends Controller
         // show current month afterwards
         Session::put('message', Config::get('messages_de.event-delete-ok'));
         Session::put('msgType', 'success');
-        return Redirect::action( 'MonthController@showMonth', ['year' => date("Y"),
-                                                               'month' => date('m')] );
+        return Redirect::action( 'MonthController@showMonth', ['year' => $date->format('Y'),
+                                                               'month' => $date->format('m')] );
     }
 
 
