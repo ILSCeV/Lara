@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Carbon\Carbon;
 use Request;
 use Redirect;
 use View;
@@ -44,13 +45,18 @@ class DateController extends Controller {
     {
         $dateInput = $year.$month.$day;
 
+        $carbonDate = Carbon::createFromTimestamp(strtotime($dateInput));
+
+        $yesterday = $carbonDate->subDays(1)->format('Y/m/d');
+        $tomorrow = $carbonDate->addDays(2)->format('Y/m/d');
+
         $date = strftime("%a, %d. %b %Y", strtotime($dateInput));
 
         $events = ClubEvent::where('evnt_date_start','=',$dateInput)
                            ->with('section')
                            ->paginate(15);
 
-        return View::make('listView', compact('events', 'date'));
+        return View::make('listView', compact('events', 'date', 'yesterday', 'tomorrow'));
     }
 
 }

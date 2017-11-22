@@ -12,14 +12,18 @@
         
         
         @if(count($events)==0)
-                <div class="panel">
-                        <div class="panel-heading">
-                                <h5>{{ trans('mainLang.noEventsOn') }} {{ $date }}</h5>
-                        </div>
-                </div>
+                <h3>
+                        <a href="/calendar/{{$yesterday}}" class="btn btn-default hidden-print"> << </a>
+                        {{ trans('mainLang.noEventsOn') }} {{ $date }}
+                        <a href="/calendar/{{$tomorrow}}" class="btn btn-default hidden-print"> >> </a>
+                </h3>
         @else
-                <h3> {{ trans('mainLang.EventsFor') }} {{ $date }}</h3>
-                
+                <h3>
+                        <a href="/calendar/{{$yesterday}}" class="btn btn-default hidden-print"> << </a>
+                        {{ trans('mainLang.EventsFor') }} {{ $date }}
+                        <a href="/calendar/{{$tomorrow}}" class="btn btn-default hidden-print"> >> </a>
+                </h3>
+
                 <center>{!! $events->render() !!}</center>
 
                 @foreach($events as $clubEvent)
