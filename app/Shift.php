@@ -128,6 +128,11 @@ class Shift extends Model
         return $this->belongsTo('Lara\Schedule', 'schedule_id', 'id');
     }
 
+    public function event()
+    {
+        return $this->schedule->getClubEvent();
+    }
+
     public static function sortByOrder($shifts) {
     }
 }
