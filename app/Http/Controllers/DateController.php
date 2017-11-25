@@ -47,8 +47,8 @@ class DateController extends Controller {
 
         $carbonDate = Carbon::createFromTimestamp(strtotime($dateInput));
 
-        $yesterday = $carbonDate->subDays(1)->format('Y/m/d');
-        $tomorrow = $carbonDate->addDays(2)->format('Y/m/d');
+        $previous = $carbonDate->subDays(1)->format('Y/m/d');
+        $next = $carbonDate->addDays(2)->format('Y/m/d');
 
         $date = strftime("%a, %d. %b %Y", strtotime($dateInput));
 
@@ -56,7 +56,7 @@ class DateController extends Controller {
                            ->with('section')
                            ->paginate(15);
 
-        return View::make('listView', compact('events', 'date', 'yesterday', 'tomorrow'));
+        return View::make('listView', compact('events', 'date', 'previous', 'next'));
     }
 
 }
