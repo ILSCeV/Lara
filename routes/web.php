@@ -126,6 +126,8 @@ Route::resource('section', 			'SectionController');
 Route::get('/statistics/month/{year?}/{month?}',	'StatisticsController@showStatistics');
 Route::get('/statistics/year/{year?}',	'StatisticsController@showYearStatistics');
 
+Route::get('/shiftStatistics/{shift}/{timeFrame?}', 'ShiftStatisticsController@statisticsForTimeFrame');
+
 
 // JSON EXPORT - RETURNS EVENTS METADATA
 Route::get('export/{clb_id}/{date_start}/{nr_of_events}', function($clb_id, $date_start, $nr_of_events) {
