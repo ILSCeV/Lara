@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Input;
 use Lara\Club;
 use Lara\ClubEvent;
+use Lara\Console\Commands\SyncBDclub;
 use Lara\Logging;
 use Lara\ShiftType;
 use Lara\Shift;
@@ -91,6 +92,9 @@ class ClubEventController extends Controller
 
         // get a list of available templates to choose from
         $templates = Schedule::where('schdl_is_template', '=', '1')
+                            ->whereHas('event', function ($query) {
+                                $query->where('evnt_title','<>',SyncBDclub::BD_TEMPLATE_NAME);
+                            })
                              ->orderBy('schdl_title', 'ASC')
                              ->get();
 
@@ -473,7 +477,7 @@ class ClubEventController extends Controller
             $event->plc_id = Section::where('title', '=', Input::get('section'))->first()->id;
         }
 
-        // format: date; validate on filled value  
+        // format: date; validate on filled value
         if(!empty(Input::get('beginDate')))
         {
             $newBeginDate = new DateTime(Input::get('beginDate'), new DateTimeZone(Config::get('app.timezone')));
