@@ -131,9 +131,9 @@
 									<i>{{ trans('mainLang.priceTickets') }}:</i>
 								</td>
 								<td>
-									{{  $clubEvent->price_tickets_normal!=null?$clubEvent->price_tickets_normal:'--' }} € 
+									{{  $clubEvent->price_tickets_normal !== null ? $clubEvent->price_tickets_normal : '--' }} € 
 									/ 
-									{{ $clubEvent->price_tickets_external!=null?$clubEvent->price_tickets_external:'--' }} €
+									{{ $clubEvent->price_tickets_external !== null ? $clubEvent->price_tickets_external : '--' }} €
 									&nbsp;&nbsp;
 									({{ trans('mainLang.studentExtern') }})
 								</td>
@@ -143,9 +143,9 @@
 									<i>{{ trans('mainLang.price') }}:</i>
 								</td>
 								<td>
-									{{  $clubEvent->price_normal!=null?$clubEvent->price_normal:'--' }} € 
+									{{  $clubEvent->price_normal !== null ? $clubEvent->price_normal : '--' }} € 
 									/ 
-									{{ $clubEvent->price_tickets_external!=null?$clubEvent->price_tickets_external:'--' }} €
+									{{ $clubEvent->price_external !== null ? $clubEvent->price_external : '--' }} €
 									&nbsp;&nbsp;
 									({{ trans('mainLang.studentExtern') }})
 								</td>
