@@ -141,7 +141,7 @@ class LoginController extends Controller
         $userName = $input[$userId];
 
         // get user club
-        $inputClub = array("bc-Club", "bc-Café");
+        $inputClub = array("bc-Club", "bc-Café", "BD-Club");
         $userClubId = array_rand($inputClub, 1);
         $userClub = $inputClub[$userClubId];
         $userStatus = "member";
