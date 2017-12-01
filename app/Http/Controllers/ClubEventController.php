@@ -463,7 +463,8 @@ class ClubEventController extends Controller
         $event->price_external         = Input::get('priceExternal');
 
         // Check if event URL is properly formatted: if the protocol is missing, we have to add it.
-        if(parse_url($event->event_url, PHP_URL_SCHEME) === null) {
+        if( $event->event_url !== ""
+        and parse_url($event->event_url, PHP_URL_SCHEME) === null) {
             $event->event_url = 'https://' . $event->event_url;
         }
 
