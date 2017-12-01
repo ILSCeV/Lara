@@ -48,10 +48,11 @@ return [
     'marketingFlyersPlacard'    => 'Marketing / Flyer / Posters', //used in legend.blade.php
     'preSale'                   => 'Tickets presale',
     'others'                    => 'Others',
-    'faceDone'                  => 'Facebook event done',
-    'eventUrl'                  => 'event Url',
-    'priceTickets'              => 'Price Tickets student / extern',
-    'price'                     => 'Price student / extern',
+    'faceDone'                  => 'Facebook event created',
+    'eventUrl'                  => 'Facebook link',
+    'priceTickets'              => 'Presales price',
+    'price'                     => 'Entrance fee',
+    'studentExtern'             => 'Student / Full price',
 
     //----------------------------------------------
 

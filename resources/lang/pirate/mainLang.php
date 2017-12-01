@@ -49,10 +49,11 @@ return [
     'marketingFlyersPlacard'=> 'Anhoyern', //used in legend.blade.php
     'preSale'               => 'Seelenverkäufer',
     'others'                => 'Sonstiges',
-    'faceDone'              => 'Facebook Event erledigt',
-    'eventUrl'              => 'Event Seite',
-    'priceTickets'          => 'Preis Vorverkauf Student / Extern',
-    'price'                 => 'Preis Student / Extern',
+    'faceDone'              => 'Schon im Gesichtsbuch',
+    'eventUrl'              => 'Gesichtsbuch-Kajüte',
+    'priceTickets'          => 'Vorausbuchung',
+    'price'                 => 'Beförderungsentgelt',
+    'studentExtern'         => 'Seeleute / Landratten',
     
     //----------------------------------------------
     
@@ -171,9 +172,9 @@ return [
     'addMe'                 => 'Anhoyern!',
     
     //Answers
-    'yes'                   => 'Ja',
-    'no'                    => 'Nein',
-    'noInformation'         => 'keine Angabe',
+    'yes'                   => 'Aaay!',
+    'no'                    => 'Neey!',
+    'noInformation'         => 'mmmh...',
     
     'noClub'                => 'Extern',
     

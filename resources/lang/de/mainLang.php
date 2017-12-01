@@ -49,10 +49,11 @@ return [
     'marketingFlyersPlacard'=> 'Marketing / Flyer / Plakate', //used in legend.blade.php
     'preSale'               => 'Vorverkauf',
     'others'                => 'Sonstiges',
-    'faceDone'              => 'Facebook Event erledigt',
-    'eventUrl'              => 'Event Seite',
-    'priceTickets'          => 'Preis Vorverkauf Student / Extern',
-    'price'                 => 'Preis Student / Extern',
+    'faceDone'              => 'Facebook Event erstellt',
+    'eventUrl'              => 'Facebook-URL',
+    'priceTickets'          => 'Vorverkaufspreis',
+    'price'                 => 'Eintrittspreis',
+    'studentExtern'         => 'Student / Vollzahler',
     
     //----------------------------------------------
     
