@@ -11,9 +11,9 @@ class SectionPreferencesTableSeeder extends Seeder
      */
     public function run()
     {
-        $bc_club = Lara\Section::find(1);
-        $bc_cafe = Lara\Section::find(2);
-        $bd_club = Lara\Section::find(3);
+        $bc_club = Lara\Section::where('title', 'bc-Club')->first();
+        $bc_cafe = Lara\Section::where('title', 'bc-Cafe')->first();
+        $bd_club = Lara\Section::where('title', 'bd-Club')->first();
 
         $bc_club->fill([
             'preparationTime' => '20:00',
