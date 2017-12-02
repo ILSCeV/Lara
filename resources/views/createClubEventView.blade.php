@@ -83,12 +83,12 @@
 			    
 			    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung' OR Session::get('userGroup') == 'admin')
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-						<label for="facebookDone" class="col-md-2 col-sm-2 col-xs-3">{{trans('mainLang.faceDone')}}</label>
-						{!! Form::checkbox('facebookDone', '1', false, array('class'=>'col-md-1 col-sm-1 col-xs-1')) !!}
+						<label for="facebookDone" class="col-md-4 col-sm-4 col-xs-7">{{trans('mainLang.faceDone')}}?</label>
+						{!! Form::checkbox('facebookDone', '1', false, array('class'=>'col-md-8 col-sm-8 col-xs-5')) !!}
 					</div>
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-						<label for="eventUrl" class="col-md-2 col-sm-2 col-xs-3">{{trans('mainLang.eventUrl')}}</label>
-						{!! Form::text('eventUrl', '', array('class'=>'col-md-9 col-sm-9 col-xs-9','style'=>'cursor: auto')) !!}
+						<label for="eventUrl" class="col-md-3 col-sm-3 col-xs-5">{{trans('mainLang.eventUrl')}}:</label>
+						{!! Form::text('eventUrl', '', array('class'=>'col-md-8 col-sm-8 col-xs-6','style'=>'cursor: auto')) !!}
 					</div>
 				    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 				     	<label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">Typ:</label>
@@ -183,6 +183,10 @@
 				    </div>					
 				@endif
 
+
+				{{-- REFACTORING NEEDED IN THE NEXT SECTION BEFORE BD CLUB INTEGRATION --}}
+
+
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="section" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
 					<span class="col-md-10 col-sm-10 col-xs-12">	   	
@@ -190,12 +194,16 @@
 							{!! Form::text('section', 'bc-Club', array('id'=>'section', 'readonly') ) !!}
 						@elseif($section == "2")
 							{!! Form::text('section', 'bc-Café', array('id'=>'section', 'readonly') ) !!}
+						@elseif($section == "3")
+							{!! Form::text('section', 'bd-Club', array('id'=>'section', 'readonly') ) !!}
 						@else
 							{{-- Set default values to the club the user is a member in. --}}
 							@if(Session::get('userClub') == 'bc-Club')
 								{!! Form::text('section', 'bc-Club', array('id'=>'section', 'readonly')) !!}
 							@elseif(Session::get('userClub') == 'bc-Café')
 								{!! Form::text('section', 'bc-Café', array('id'=>'section', 'readonly') ) !!}
+							@elseif(Session::get('userClub') == 'BD-Club')
+								{!! Form::text('section', 'bd-Club', array('id'=>'section', 'readonly') ) !!}
 							@endif 
 						@endif
 					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
@@ -231,22 +239,41 @@
 						@endif
 				    </div>
 			   	</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
-					<label for="priceTickets" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.priceTickets') }}: &nbsp;</label>
-					<div id="priceTickets" class="col-md-5 col-sm-5 col-xs-12 input-group">
+
+
+			   	{{-- END OF REFACTORING NEEDED ZONE --}}
+
+
+				<div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
+					<label for="priceTickets" class="control-label col-md-4 col-sm-4 col-xs-12 no-padding">
+						{{ trans('mainLang.priceTickets') }}:  <br>
+						({{ trans('mainLang.studentExtern') }})</label>
+					<div id="priceTickets" class="input-group col-md-5 col-sm-5 col-xs-12">
 						<input class="form-control" type="number" name="priceTicketsNormal" step="0.1" placeholder="Student" value=""/>
+						<span class="input-group-addon">€</span>
 						<span class="input-group-addon">/</span>
 						<input class="form-control" type="number" name="priceTicketsExternal" step="0.1" placeholder="Extern" value=""/>
+						<span class="input-group-addon">€</span>
 					</div>
 				</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
-					<label for="priceTickets" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.price') }}: &nbsp;</label>
-					<div id="priceTickets" class="col-md-5 col-sm-5 col-xs-12 input-group">
+
+				<div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
+					<label for="price" class="control-label col-md-4 col-sm-4 col-xs-12 no-padding">
+						{{ trans('mainLang.price') }}:   <br>
+						({{ trans('mainLang.studentExtern') }})</label>
+					<div id="price" class="input-group col-md-5 col-sm-5 col-xs-12">
 						<input class="form-control" type="number" name="priceNormal" step="0.1" placeholder="Student" value=""/>
+						<span class="input-group-addon">€</span>
 						<span class="input-group-addon">/</span>
 						<input class="form-control" type="number" name="priceExternal" step="0.1" placeholder="Extern" value=""/>
+						<span class="input-group-addon">€</span>
 					</div>
 				</div>
+
+
+{{-- REFACTORING NEEDED BEFORE BD INTEGRATION --}}
+
+
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 					<label for="preparationTime" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.DV-Time') }}:</label>
 					<div class="col-md-3 col-sm-3 col-xs-3">
@@ -306,6 +333,10 @@
 						@endif
 					</div>
 			    </div>
+
+
+{{-- END OF REFACTORING ZONE --}}
+
 
 			    <div class="col-md-12 col-sm-12 col-xs-12">
 			    	&nbsp;
