@@ -15,7 +15,7 @@ return [
 	"colors" => [
 		"Red", 
 		"Pink", 
-		"Purple", 
+		// "Purple",      // RESERVED for Info events
 		"Deep-Purple", 
 		"Indigo", 
 		"Blue", 
@@ -29,9 +29,9 @@ return [
 		"Amber", 
 		"Orange", 
 		"Deep-Orange", 
-		"Brown",          // Doesn't have shades: A100, A200, A400, A700
-		"Grey",           // Doesn't have shades: A100, A200, A400, A700
-		"Blue-Grey"       // Doesn't have shades: A100, A200, A400, A700
+		// "Brown",          // Doesn't have shades: A100, A200, A400, A700
+		// "Grey",           // Doesn't have shades: A100, A200, A400, A700      // RESERVED for Hidden events
+		// "Blue-Grey"       // Doesn't have shades: A100, A200, A400, A700      // RESERVED for Hidden surveys
 	],
 
     // Note that not all color have all the shades

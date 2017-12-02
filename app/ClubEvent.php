@@ -42,16 +42,16 @@ class ClubEvent extends Model
      * @var $fillable array
      */
     protected $fillable = [
-        'evnt_type',            // 0 -> default -> "normales Programm"
-                                // 1 -> info only
-                                // 2 -> highlight / special
-                                // 3 -> live band / DJ / reading
-                                // 4 -> internal event
-                                // 5 -> private party -> "Nutzung"
-                                // 6 -> cleaning -> "Fluten"
-                                // 7 -> flyer / poster
-                                // 8 -> tickets -> "Vorverkauf"
-                                // 9 -> internal task -> everything else
+        'evnt_type',            // 0 -> default -> "normales Programm"          Shade:     700
+                                // 1 -> info only                               Shade:    500, always purple
+                                // 2 -> highlight / special                     Shade:       900
+                                // 3 -> live band / DJ / reading                Shade:       900
+                                // 4 -> internal event                          Shade:    500
+                                // 5 -> private party -> "Nutzung"              Shade:    500
+                                // 6 -> cleaning -> "Fluten"                    Shade:    500
+                                // 7 -> flyer / poster                          Shade:  300
+                                // 8 -> tickets -> "Vorverkauf"                 Shade:  300
+                                // 9 -> internal task -> everything else        Shade:    500
         'evnt_title',
         'evnt_subtitle',
         'plc_id',
