@@ -15,8 +15,8 @@ return [
 	"colors" => [
 		"Red", 
 		"Pink", 
-		// "Purple",      // RESERVED for Info events
-		"Deep-Purple", 
+		// "Purple",      // RESERVED for Info events and Surveys
+		"Deep-Purple",
 		"Indigo", 
 		"Blue", 
 		"Light-Blue", 
