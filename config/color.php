@@ -16,22 +16,22 @@ return [
 		"Red", 
 		"Pink", 
 		"Purple", 
-		"Deep Purple", 
+		"Deep-Purple", 
 		"Indigo", 
 		"Blue", 
-		"Light Blue", 
+		"Light-Blue", 
 		"Cyan", 
 		"Teal", 
 		"Green", 
-		"Light Green", 
+		"Light-Green", 
 		"Lime", 
 		"Yellow", 
 		"Amber", 
 		"Orange", 
-		"Deep Orange", 
+		"Deep-Orange", 
 		"Brown",          // Doesn't have shades: A100, A200, A400, A700
 		"Grey",           // Doesn't have shades: A100, A200, A400, A700
-		"Blue Grey"       // Doesn't have shades: A100, A200, A400, A700
+		"Blue-Grey"       // Doesn't have shades: A100, A200, A400, A700
 	],
 
     // Note that not all color have all the shades
