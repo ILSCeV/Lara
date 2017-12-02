@@ -62,10 +62,13 @@ class SectionController extends Controller
         );
         $validator = Validator::make(Input::all(), $rules);
 
-        $title = Input::get("title");
-        $id = Input::get("id");
-        $color = Input::get("color");
-        $isNew = strlen($id) == 0;
+        $title =            Input::get("title");
+        $id =               Input::get("id");
+        $color =            Input::get("color");
+        $preparationTime =  Input::get("preparationTime");
+        $startTime =        Input::get("startTime");
+        $endTime =          Input::get("endTime");
+        $isNew =            strlen($id) == 0;
 
 
         if ($validator->fails()) {
@@ -98,16 +101,20 @@ class SectionController extends Controller
             }
         }
 
-        $section->title = $title;
-        $section->color = $color;
+        $section->title =           $title;
+        $section->color =           $color;
+        $section->preparationTime = $preparationTime;
+        $section->startTime =       $startTime;
+        $section->endTime =         $endTime;
         $section->save();
-        $club->clb_title = $title;
+
+        $club->clb_title =          $title;
         $club->save();
 
         // Return to the the section management page
         Session::put('message', trans('mainLang.changesSaved'));
         Session::put('msgType', 'success');
-        return Redirect::back();
+        return Redirect::action( 'SectionController@index' );
     }
 
     /**
