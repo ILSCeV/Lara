@@ -58,6 +58,7 @@ return [
 
     'begin'                 => 'Start',
     'end'                   => 'End',
+    'eventDefaults'         => 'Default values for events:',
 
     'DV-Time'               => 'Preparations',
     'club'                  => 'Club',

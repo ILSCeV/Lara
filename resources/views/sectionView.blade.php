@@ -27,6 +27,7 @@
 		                                'method' => 'PUT', 
 		                                'class' => 'section')  ) !!}
                 @endif
+{{-- Title --}}
 					<tr>
 						<td width="20%" class="left-padding-16">
 							<i>{{ trans('mainLang.section') }}:</i>
@@ -41,6 +42,7 @@
 							   array('id'=>'title')) !!}
 						</td>
 					</tr>
+{{-- Color --}}
 					<tr class="form-group">
 						<td width="20%" class="left-padding-16">
 							<label for="color">
@@ -69,6 +71,52 @@
 						    </span>
 						</td>
 					</tr>
+{{-- Event defaults --}}
+					<tr>
+						<td colspan="2">
+							{{ trans('mainLang.eventDefaults')}}
+						</td>
+					</tr>
+{{-- Event DV time --}}
+					<tr class="form-group">
+						<td width="20%" class="left-padding-16">
+							<label for="preparationTime">
+								<i>{{ trans('mainLang.DV-Time') }}:</i>
+							</label>
+						</td>
+						<td>
+							<span class="col-md-12 col-sm-12 col-xs-12 no-padding">
+								{!! Form::input('time', 'preparationTime', $current_section->preparationTime) !!}
+						    </span>
+						</td>
+					</tr>
+{{-- Event start time --}}
+					<tr class="form-group">
+						<td width="20%" class="left-padding-16">
+							<label for="startTime">
+								<i>{{ trans('mainLang.begin') }}:</i>
+							</label>
+						</td>
+						<td>
+							<span class="col-md-12 col-sm-12 col-xs-12 no-padding">
+								{!! Form::input('time', 'startTime', $current_section->startTime) !!}
+						    </span>
+						</td>
+					</tr>
+{{-- Event end time --}}
+					<tr class="form-group">
+						<td width="20%" class="left-padding-16">
+							<label for="endTime">
+								<i>{{ trans('mainLang.end') }}:</i>
+							</label>
+						</td>
+						<td>
+							<span class="col-md-12 col-sm-12 col-xs-12 no-padding">
+								{!! Form::input('time', 'endTime', $current_section->endTime) !!}
+						    </span>
+						</td>
+					</tr>
+{{-- CRUD --}}
 					<tr>
 						<td>
 							&nbsp;
