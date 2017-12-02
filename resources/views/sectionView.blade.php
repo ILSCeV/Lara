@@ -49,7 +49,7 @@
 						</td>
 						<td>
 							<span class="col-md-12 col-sm-12 col-xs-12 no-padding">
-								{!! Form::text('color', $current_section->color, array('id'=>'color', 'readonly') ) !!}
+								{!! Form::text('color', $current_section->color, array('id'=>'color', 'readonly', 'class'=>'palette-'.$current_section->color.'-500-Primary bg') ) !!}
 							 	<a class="btn-small btn-primary dropdown-toggle" 
 							 	   data-toggle="dropdown" 
 							 	   href="javascript:void(0);">
