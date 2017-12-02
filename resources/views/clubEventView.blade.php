@@ -6,29 +6,24 @@
     <div class="panelEventView">
 		<div class="row no-margin">
 			<div class="panel col-xs-12 col-md-6 no-padding">
-				@if	($clubEvent->evnt_type === 1 AND $clubEvent->evnt_is_private)
-					<div class="panel panel-heading calendar-internal-info white-text">
-				@elseif     ($clubEvent->evnt_type === 1)
-					<div class="panel panel-heading calendar-public-info white-text">
-
-				@elseif (($clubEvent->evnt_type === 6 OR $clubEvent->evnt_type === 9) AND $clubEvent->evnt_is_private)
-					<div class="panel panel-heading calendar-internal-task white-text">
-				@elseif ($clubEvent->evnt_type === 6 OR $clubEvent->evnt_type === 9)
-					<div class="panel panel-heading calendar-public-task white-text">
-
-
-				@elseif (($clubEvent->evnt_type === 7 OR $clubEvent->evnt_type === 8) AND $clubEvent->evnt_is_private)
-					<div class="panel panel-heading calendar-internal-marketing white-text">
-				@elseif ($clubEvent->evnt_type === 7 OR $clubEvent->evnt_type === 8)
-					<div class="panel panel-heading calendar-public-marketing white-text">
-				@elseif ($clubEvent->evnt_is_private && !is_null($clubEvent->section))
-					<div class="panel panel-heading calendar-internal-event-{{$clubEvent->section->title}} white-text">
-				@elseif (!is_null($clubEvent->section))
-					<div class="panel panel-heading calendar-public-event-{{$clubEvent->section->title}} white-text">
-				@else
-					{{-- DEFAULT --}}
-					<div class="panel panel-heading white-text">
-				@endif
+				{{-- Set panel color --}}
+				@if     ($clubEvent->evnt_type == 0)
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-700 bg">
+			    @elseif ($clubEvent->evnt_type == 1)
+			        <div class="panel panel-heading palette-Purple-500 bg">
+			    @elseif ($clubEvent->evnt_type == 2 
+			    	  OR $clubEvent->evnt_type == 3)
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-900 bg">
+			    @elseif ($clubEvent->evnt_type == 4 
+			          OR $clubEvent->evnt_type == 5 
+			          OR $clubEvent->evnt_type == 6)
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg white-text">
+			    @elseif ($clubEvent->evnt_type == 7 
+			          OR $clubEvent->evnt_type == 8)
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-300 bg white-text">
+			    @elseif ($clubEvent->evnt_type == 9)
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg white-text">
+			    @endif
 					<h4 class="panel-title">@include("partials.event-marker")&nbsp;{{ $clubEvent->evnt_title }}</h4>
 					<h5 class="panel-title">{{ $clubEvent->evnt_subtitle }}</h5>
 				</div>
