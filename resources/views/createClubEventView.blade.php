@@ -183,10 +183,6 @@
 				    </div>					
 				@endif
 
-
-				{{-- REFACTORING NEEDED IN THE NEXT SECTION BEFORE BD CLUB INTEGRATION --}}
-
-
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="section" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
 					<span class="col-md-10 col-sm-10 col-xs-12">
@@ -229,10 +225,6 @@
 				    </div>
 			   	</div>
 
-
-			   	{{-- END OF REFACTORING NEEDED ZONE --}}
-
-
 				<div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
 					<label for="priceTickets" class="control-label col-md-4 col-sm-4 col-xs-12 no-padding">
 						{{ trans('mainLang.priceTickets') }}:  <br>
@@ -259,73 +251,29 @@
 					</div>
 				</div>
 
-
-{{-- REFACTORING NEEDED BEFORE BD INTEGRATION --}}
-
-
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 					<label for="preparationTime" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.DV-Time') }}:</label>
 					<div class="col-md-3 col-sm-3 col-xs-3">
-						@if(is_null($dv))
-							{{-- Set default values to the club the user is a member in.
-							 	 This saves time retyping event start/end times, etc. --}}
-							@if(Session::get('userClub') == 'bc-Club')
-								<span class="hidden-xs">&nbsp;&nbsp;</span>
-								{!! Form::input('time', 'preparationTime', '20:00' ) !!}
-							@elseif(Session::get('userClub') == 'bc-Café')
-								<span class="hidden-xs">&nbsp;&nbsp;</span>
-								{!! Form::input('time', 'preparationTime', '10:45' ) !!}
-							@endif
-						@else
-							<span class="hidden-xs">&nbsp;&nbsp;</span>
-							{!! Form::input('time', 'preparationTime', $dv ) !!}
-						@endif
+						<span class="hidden-xs">&nbsp;&nbsp;</span>
+						{!! Form::input('time', 'preparationTime', $dv) !!}
 					</div>
 			    </div>
 			    
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 					<label for="beginDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.begin') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						@if(is_null($timeStart))
-							{{-- Set default values to the club the user is a member in.
-							 	 This saves time retyping event start/end times, etc. --}}
-							@if(Session::get('userClub') == 'bc-Club')
-								{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
-								{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', '21:00') !!}
-							@elseif(Session::get('userClub') == 'bc-Café')
-								{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
-								{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', '12:00') !!}
-							@endif
-						@else
-							{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
-							{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', $timeStart) !!}
-						@endif
+						{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
+						{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', $timeStart) !!}
 					</div>
 			    </div>
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="endDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.end') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						@if(is_null($timeEnd))
-							{{-- Set default values to the club the user is a member in.
-							 	 This saves time retyping event start/end times, etc. --}}
-							@if(Session::get('userClub') == 'bc-Club')
-								{!! Form::input('date', 'endDate', date("Y-m-d", strtotime("+1 day", strtotime($date)))) !!}
-								{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', '01:00') !!}
-							@elseif(Session::get('userClub') == 'bc-Café')
-								{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($date))) !!}
-								{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', '17:00') !!}
-							@endif
-						@else
-							{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($date))) !!}
-							{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $timeEnd) !!}
-						@endif
+						{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($date))) !!}
+						{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $timeEnd) !!}
 					</div>
 			    </div>
-
-
-{{-- END OF REFACTORING ZONE --}}
-
 
 			    <div class="col-md-12 col-sm-12 col-xs-12">
 			    	&nbsp;

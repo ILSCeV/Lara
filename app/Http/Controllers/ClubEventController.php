@@ -138,11 +138,11 @@ class ClubEventController extends Controller
             $title      = null;
             $type       = null;
             $subtitle   = null;
-            $section      = null;
+            $section    = Section::sectionOfCurrentUser();
             $filter     = null;
-            $dv         = null;
-            $timeStart  = null;
-            $timeEnd    = null;
+            $dv         = $section->preparationTime;
+            $timeStart  = $section->startTime;
+            $timeEnd    = $section->endTime;
             $info       = null;
             $details    = null;
             $private    = null;
