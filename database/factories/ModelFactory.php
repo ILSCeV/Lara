@@ -31,7 +31,7 @@ $factory->define(Lara\Person::class, function (Faker\Generator $faker) {
         'prsn_ldap_id' => $faker->numberBetween(2000, 9999),
         'prsn_status' => $faker->randomElement(['member', 'veteran', 'candidate']),
         'prsn_uid' => hash("sha512", uniqid()),
-        'clb_id' => $faker->randomElement([1,2, Lara\Club::inRandomOrder()->first()->id])
+        'clb_id' => $faker->randomElement([1, 2, 3, Lara\Club::inRandomOrder()->first()->id])
     ];
 });
 
