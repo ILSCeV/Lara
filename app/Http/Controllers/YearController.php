@@ -38,6 +38,9 @@ class YearController extends Controller {
         $yearStart = $year.'01'.'01';
         $yearEnd = $year.'12'.'31';
 
+        $previous = $year - 1;
+        $next = $year + 1;
+
         $date = date("Y", strtotime($yearStart));
 
         $events = ClubEvent::where('evnt_date_start','>=',$yearStart)
@@ -47,6 +50,6 @@ class YearController extends Controller {
                            ->orderBy('evnt_time_start')
                            ->paginate(15);
 
-        return View::make('listView', compact('events','date'));
+        return View::make('listView', compact('events','date', 'previous', 'next'));
     }
 }

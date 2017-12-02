@@ -82,6 +82,14 @@
 			    </div>
 			    
 			    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung' OR Session::get('userGroup') == 'admin')
+					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+						<label for="facebookDone" class="col-md-4 col-sm-4 col-xs-7">{{trans('mainLang.faceDone')}}?</label>
+						{!! Form::checkbox('facebookDone', '1', false, array('class'=>'col-md-8 col-sm-8 col-xs-5')) !!}
+					</div>
+					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+						<label for="eventUrl" class="col-md-3 col-sm-3 col-xs-5">{{trans('mainLang.eventUrl')}}:</label>
+						{!! Form::text('eventUrl', '', array('class'=>'col-md-8 col-sm-8 col-xs-6','style'=>'cursor: auto')) !!}
+					</div>
 				    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 				     	<label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">Typ:</label>
 				     	<div class="col-md-10 col-sm-10 col-xs-10">
@@ -177,18 +185,11 @@
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="section" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
-					<span class="col-md-10 col-sm-10 col-xs-12">	   	
-						@if($section == "1")
-							{!! Form::text('section', 'bc-Club', array('id'=>'section', 'readonly') ) !!}
-						@elseif($section == "2")
-							{!! Form::text('section', 'bc-Café', array('id'=>'section', 'readonly') ) !!}
-						@else
-							{{-- Set default values to the club the user is a member in. --}}
-							@if(Session::get('userClub') == 'bc-Club')
-								{!! Form::text('section', 'bc-Club', array('id'=>'section', 'readonly')) !!}
-							@elseif(Session::get('userClub') == 'bc-Café')
-								{!! Form::text('section', 'bc-Café', array('id'=>'section', 'readonly') ) !!}
-							@endif 
+					<span class="col-md-10 col-sm-10 col-xs-12">
+						@if (!is_null($section))
+							{!! Form::text('section', $section->title, array('id'=>'section', 'readonly') ) !!}
+						@elseif(!is_null(Session::get('userClub')))
+							{!! Form::text('section', Session::get('userClub'), array('id'=>'section', 'readonly')) !!}
 						@endif
 					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 					        <span class="caret"></span>
@@ -210,13 +211,13 @@
 						@if(is_null($filter) OR $filter == "")
 							{{-- Set default values to the club the user is a member in.--}}
 							@foreach(Lara\Section::all() as $section)
-                                {{ Form::checkbox("filter[" . $section->title ."]", "1", $section->title === Session::get("userClub")) }}
+                                {{ Form::checkbox("filter[" . $section->title ."]", $section->id, $section->title === Session::get("userClub")) }}
 									{{ $section->title }}
                                 	&nbsp;
 							@endforeach
 						@else
 							@foreach(Lara\Section::all() as $section)
-								{{ Form::checkbox("filter[" . $section->title ."]", "1", in_array($section->title, json_decode($filter))) }}
+								{{ Form::checkbox("filter[" . $section->title ."]", $section->id, in_array($section->title, $filter)) }}
 								{{ $section->title }}
 								&nbsp;
 							@endforeach
@@ -224,63 +225,53 @@
 				    </div>
 			   	</div>
 
+				<div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
+					<label for="priceTickets" class="control-label col-md-4 col-sm-4 col-xs-12 no-padding">
+						{{ trans('mainLang.priceTickets') }}:  <br>
+						({{ trans('mainLang.studentExtern') }})</label>
+					<div id="priceTickets" class="input-group col-md-5 col-sm-5 col-xs-12">
+						<input class="form-control" type="number" name="priceTicketsNormal" step="0.1" placeholder="Student" value=""/>
+						<span class="input-group-addon">€</span>
+						<span class="input-group-addon">/</span>
+						<input class="form-control" type="number" name="priceTicketsExternal" step="0.1" placeholder="Extern" value=""/>
+						<span class="input-group-addon">€</span>
+					</div>
+				</div>
+
+				<div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
+					<label for="price" class="control-label col-md-4 col-sm-4 col-xs-12 no-padding">
+						{{ trans('mainLang.price') }}:   <br>
+						({{ trans('mainLang.studentExtern') }})</label>
+					<div id="price" class="input-group col-md-5 col-sm-5 col-xs-12">
+						<input class="form-control" type="number" name="priceNormal" step="0.1" placeholder="Student" value=""/>
+						<span class="input-group-addon">€</span>
+						<span class="input-group-addon">/</span>
+						<input class="form-control" type="number" name="priceExternal" step="0.1" placeholder="Extern" value=""/>
+						<span class="input-group-addon">€</span>
+					</div>
+				</div>
+
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 					<label for="preparationTime" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.DV-Time') }}:</label>
 					<div class="col-md-3 col-sm-3 col-xs-3">
-						@if(is_null($dv))
-							{{-- Set default values to the club the user is a member in.
-							 	 This saves time retyping event start/end times, etc. --}}
-							@if(Session::get('userClub') == 'bc-Club')
-								<span class="hidden-xs">&nbsp;&nbsp;</span>
-								{!! Form::input('time', 'preparationTime', '20:00' ) !!}
-							@elseif(Session::get('userClub') == 'bc-Café')
-								<span class="hidden-xs">&nbsp;&nbsp;</span>
-								{!! Form::input('time', 'preparationTime', '10:45' ) !!}
-							@endif
-						@else
-							<span class="hidden-xs">&nbsp;&nbsp;</span>
-							{!! Form::input('time', 'preparationTime', $dv ) !!}
-						@endif
+						<span class="hidden-xs">&nbsp;&nbsp;</span>
+						{!! Form::input('time', 'preparationTime', $dv) !!}
 					</div>
 			    </div>
 			    
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
 					<label for="beginDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.begin') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						@if(is_null($timeStart))
-							{{-- Set default values to the club the user is a member in.
-							 	 This saves time retyping event start/end times, etc. --}}
-							@if(Session::get('userClub') == 'bc-Club')
-								{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
-								{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', '21:00') !!}
-							@elseif(Session::get('userClub') == 'bc-Café')
-								{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
-								{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', '12:00') !!}
-							@endif
-						@else
-							{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
-							{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', $timeStart) !!}
-						@endif
+						{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
+						{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', $timeStart) !!}
 					</div>
 			    </div>
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="endDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.end') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						@if(is_null($timeEnd))
-							{{-- Set default values to the club the user is a member in.
-							 	 This saves time retyping event start/end times, etc. --}}
-							@if(Session::get('userClub') == 'bc-Club')
-								{!! Form::input('date', 'endDate', date("Y-m-d", strtotime("+1 day", strtotime($date)))) !!}
-								{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', '01:00') !!}
-							@elseif(Session::get('userClub') == 'bc-Café')
-								{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($date))) !!}
-								{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', '17:00') !!}
-							@endif
-						@else
-							{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($date))) !!}
-							{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $timeEnd) !!}
-						@endif
+						{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($timeStart) < strtotime($timeEnd) ? strtotime($date) : strtotime("+1 day", strtotime($date)))) !!}
+						{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $timeEnd) !!}
 					</div>
 			    </div>
 

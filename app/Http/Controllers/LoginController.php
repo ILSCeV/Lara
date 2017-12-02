@@ -5,6 +5,7 @@ namespace Lara\Http\Controllers;
 use Config;
 use Illuminate\Support\Facades\App;
 use Input;
+use Lara\Section;
 use Lara\Settings;
 use Log;
 use Redirect;
@@ -45,7 +46,7 @@ class LoginController extends Controller
     {
         Session::flush();
 
-        return Redirect::back();
+        return Redirect::to('/');
     }
 
     /**
@@ -141,7 +142,7 @@ class LoginController extends Controller
         $userName = $input[$userId];
 
         // get user club
-        $inputClub = array("bc-Club", "bc-Café");
+        $inputClub = Section::all()->map(function(Section $section) {return $section->title;})->toArray();
         $userClubId = array_rand($inputClub, 1);
         $userClub = $inputClub[$userClubId];
         $userStatus = "member";

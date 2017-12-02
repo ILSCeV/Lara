@@ -3,6 +3,7 @@
 namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Representation of a section, like bc-club
@@ -26,7 +27,14 @@ class Section extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('title', 'section_uid', 'color');
+	protected $fillable = [
+        'title',
+        'section_uid',
+        'color',
+        'preparationTime',
+        'startTime',
+        'endTime'
+    ];
 
 	/**
 	 * Get the corresponding club events.
@@ -37,4 +45,12 @@ class Section extends Model
 	public function getClubEvent() {
 		return $this->hasMany('Lara\ClubEvent', 'plc_id', 'id');
 	}
+
+	public static function sectionOfCurrentUser() {
+        $sectionName = Session::get('userClub');
+        if (is_null($sectionName)) {
+	        return null;
+        }
+        return Section::where('title', $sectionName)->first();
+    }
 }

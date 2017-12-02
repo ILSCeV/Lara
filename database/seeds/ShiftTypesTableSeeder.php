@@ -12,7 +12,16 @@ class ShiftTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('shifttypes')->delete();
+        $shiftTypeStart = '20:00:00';
+        $shiftTypeEnd = '01:00:00';
+        $shiftTypeNames = ['AV', 'Musik', 'Bier', 'Bar', 'Einlass'];
+        $shiftTypes = \DB::table('shifttypes')->select('shifttypes.id')->whereIn('title', $shiftTypeNames)
+            ->where('start', '=', $shiftTypeStart)
+            ->where('end', '=', $shiftTypeEnd)->get()->map(function ($type){
+                return $type->id;
+            })->toArray();
+        var_dump($shiftTypes);
+        \DB::table('shifttypes')->whereNotIn('id',$shiftTypes)->delete();
 
         factory(Lara\ShiftType::class, 20)->create();
     }

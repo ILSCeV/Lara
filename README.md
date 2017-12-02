@@ -20,6 +20,7 @@ Code published under [GNU GPL v.3](https://github.com/ILSCeV/Lara/blob/master/LI
 Lara VedSt is based on: 
 - [Laravel 5.4](http://laravel.com)
 - [Bootswatch](http://bootswatch.com)
+- [Google Material Color implementation](https://github.com/danlevan/google-material-color)
 - [JQuery](http://jquery.com)
 - [Font Awesome](http://fortawesome.github.io/Font-Awesome) 
 - [Isotope](http://isotope.metafizzy.co/)
