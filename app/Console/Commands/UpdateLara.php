@@ -45,9 +45,14 @@ class UpdateLara extends Command
         
         $serverMode = $this->option('server-mode');
         if ($serverMode) {
-            $extraCommand = 'git reset --hard';
+            $avoidSourseConflictCommand = 'git reset --hard';
         } else {
-            $extraCommand = '#nothing to do';
+            $avoidSourseConflictCommand = 'git stash';
+        }
+        if(!$serverMode){
+            $reApplyChangesCommand = 'git stash pop';
+        } else {
+            $reApplyChangesCommand = '# nothing to do';
         }
         
         // start counting time before processing every person
@@ -57,7 +62,7 @@ class UpdateLara extends Command
         $instructions = [
             'php artisan down',
             // Enter maintenance mode
-            $extraCommand,
+            $avoidSourseConflictCommand,
             // reset repo to avoid conflicts
             'git pull --rebase',
             // Download latest changes from GitHub
@@ -74,6 +79,7 @@ class UpdateLara extends Command
             // JavaScript/TypeScript deployment
             'npm run production',
             'php artisan migrate --force',
+            $reApplyChangesCommand,
             // Apply new database changes
             'php artisan up'
             // Exit maintenance mode
