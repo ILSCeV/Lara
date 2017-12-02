@@ -32,7 +32,7 @@
 					<h4 class="panel-title">@include("partials.event-marker")&nbsp;{{ $clubEvent->evnt_title }}</h4>
 					<h5 class="panel-title">{{ $clubEvent->evnt_subtitle }}</h5>
 				</div>
-					<table class="table table-hover table-with-border-bottom">
+					<table class="table table-hover">
 						<tr>
 							<td width="20%" class="left-padding-16 text-align-right">
 								<i>{{ trans('mainLang.type') }}:</i>
@@ -122,7 +122,9 @@
 										<i>{{ trans('mainLang.eventUrl') }}:</i>
 									</td>
 									<td>
-										<a target="_blank" href="{{ $clubEvent->event_url }}">{{$clubEvent->event_url}}</a>
+										<a target="_blank" href="{{ $clubEvent->event_url }}"  style="word-break: break-all;">
+											{{$clubEvent->event_url}}
+										</a>
 									</td>
 								</tr>
 							@endif
@@ -135,6 +137,7 @@
 									/ 
 									{{ $clubEvent->price_tickets_external !== null ? $clubEvent->price_tickets_external : '--' }} €
 									&nbsp;&nbsp;
+									<br class="visible-xs">
 									({{ trans('mainLang.studentExtern') }})
 								</td>
 							</tr>
@@ -147,6 +150,7 @@
 									/ 
 									{{ $clubEvent->price_external !== null ? $clubEvent->price_external : '--' }} €
 									&nbsp;&nbsp;
+									<br class="visible-xs">
 									({{ trans('mainLang.studentExtern') }})
 								</td>
 							</tr>
