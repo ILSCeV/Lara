@@ -46,7 +46,7 @@ class LoginController extends Controller
     {
         Session::flush();
 
-        return Redirect::back();
+        return Redirect::to('/');
     }
 
     /**
