@@ -50,7 +50,7 @@ class UpdateLara extends Command
             $avoidSourseConflictCommand = 'git stash';
         }
         if(!$serverMode){
-            $reApplyChangesCommand = 'git stash pop';
+            $reApplyChangesCommand = 'git stash pop || true';
         } else {
             $reApplyChangesCommand = '# nothing to do';
         }
