@@ -1,8 +1,8 @@
-@if(!Session::has('userId') AND $survey->is_private == 0)
-    {{-- no userId means this a guest account, so he gets blocked here--}}
+@if(!Session::has('userId') AND $survey->is_private === 1)
+    {{-- Hide internal surveys from guests --}}
     <div class="panel panel-warning">
 
-        <div class="panel dark-grey white-text" 
+        <div class="panel palette-Grey-500 bg white-text" 
              style="padding: 15px 15px 8px 15px;">
             <h4 class="panel-title">
                 <i class="fa fa-bar-chart-o white-text"></i>
@@ -17,12 +17,11 @@
         </div>
     </div>
 @else 
-    {{-- so session has a valid user OR the guest can see this survey because it isn't private--}}
+    {{-- Show everything to memebers --}}
     <div class="panel panel-warning">
 
-        <div class="panel panel-heading calendar-public-info white-text">
+        <div class="panel panel-heading palette-Purple-900 bg white-text">
             <h4 class="panel-title">
-                {{-- provide a URL to the survey --}}
                 <a href="{{ URL::route('survey.show', $survey->id) }}">
                     <i class="fa fa-bar-chart-o white-text"></i>
                     &nbsp;

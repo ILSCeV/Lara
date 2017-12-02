@@ -27,7 +27,7 @@
         @else
             {{-- meaning Session::has'userId' OR !$survey->is_private == 0--}}
             {{-- so session has a valid user OR the guest can see this survey because it isn't private--}}
-            <div class="cal-event {{$classString}} palette-Grey-500 bg calendar-internal-info">
+            <div class="cal-event {{$classString}} palette-Purple-900 bg">
                 <i class="fa fa-bar-chart-o white-text"></i>
                 &nbsp;&nbsp;
                 {{-- provide a URL to the survey --}}
@@ -84,16 +84,18 @@
                         <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
                     @elseif ($clubEvent->evnt_type == 1)
                         <div class="cal-event {{$classString}} palette-Purple-500 bg">
-                    @elseif ($clubEvent->evnt_type == 2 OR $clubEvent->evnt_type == 3)
+                    @elseif ($clubEvent->evnt_type == 2 
+                          OR $clubEvent->evnt_type == 3)
                         <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
                     @elseif ($clubEvent->evnt_type == 4 
                           OR $clubEvent->evnt_type == 5 
-                          OR $clubEvent->evnt_type == 6 
-                          OR $clubEvent->evnt_type == 9)
+                          OR $clubEvent->evnt_type == 6)
                         <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
                     @elseif ($clubEvent->evnt_type == 7 
                           OR $clubEvent->evnt_type == 8)
                         <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg">
+                    @elseif ($clubEvent->evnt_type == 9)
+                    <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
                     @endif
                     @include("partials.event-marker", $clubEvent)
                     &nbsp;&nbsp;
@@ -113,16 +115,18 @@
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
                 @elseif ($clubEvent->evnt_type == 1)
                     <div class="cal-event {{$classString}} palette-Purple-500 bg">
-                @elseif ($clubEvent->evnt_type == 2 OR $clubEvent->evnt_type == 3)
+                @elseif ($clubEvent->evnt_type == 2 
+                      OR $clubEvent->evnt_type == 3)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
                 @elseif ($clubEvent->evnt_type == 4 
                       OR $clubEvent->evnt_type == 5 
-                      OR $clubEvent->evnt_type == 6 
-                      OR $clubEvent->evnt_type == 9)
+                      OR $clubEvent->evnt_type == 6)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
                 @elseif ($clubEvent->evnt_type == 7 
                       OR $clubEvent->evnt_type == 8)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg">
+                @elseif ($clubEvent->evnt_type == 9)
+                    <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
                 @endif
 
                 @include("partials.event-marker", $clubEvent)
