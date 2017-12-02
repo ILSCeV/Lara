@@ -123,7 +123,7 @@ class ClubEventController extends Controller
             $title      = $template->getClubEvent->evnt_title;
             $subtitle   = $template->getClubEvent->evnt_subtitle;
             $type       = $template->getClubEvent->evnt_type;
-            $section      = $template->getClubEvent->plc_id;
+            $section    = $template->getClubEvent->section;
             $filter     = $template->getClubEvent->showToSectionNames();
             $dv         = $template->schdl_time_preparation_start;
             $timeStart  = $template->getClubEvent->evnt_time_start;

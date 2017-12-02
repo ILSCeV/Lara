@@ -189,22 +189,11 @@
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="section" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
-					<span class="col-md-10 col-sm-10 col-xs-12">	   	
-						@if($section == "1")
-							{!! Form::text('section', 'bc-Club', array('id'=>'section', 'readonly') ) !!}
-						@elseif($section == "2")
-							{!! Form::text('section', 'bc-Café', array('id'=>'section', 'readonly') ) !!}
-						@elseif($section == "3")
-							{!! Form::text('section', 'bd-Club', array('id'=>'section', 'readonly') ) !!}
-						@else
-							{{-- Set default values to the club the user is a member in. --}}
-							@if(Session::get('userClub') == 'bc-Club')
-								{!! Form::text('section', 'bc-Club', array('id'=>'section', 'readonly')) !!}
-							@elseif(Session::get('userClub') == 'bc-Café')
-								{!! Form::text('section', 'bc-Café', array('id'=>'section', 'readonly') ) !!}
-							@elseif(Session::get('userClub') == 'BD-Club')
-								{!! Form::text('section', 'bd-Club', array('id'=>'section', 'readonly') ) !!}
-							@endif 
+					<span class="col-md-10 col-sm-10 col-xs-12">
+						@if (!is_null($section))
+							{!! Form::text('section', $section->title, array('id'=>'section', 'readonly') ) !!}
+						@elseif(!is_null(Session::get('userClub')))
+							{!! Form::text('section', Session::get('userClub'), array('id'=>'section', 'readonly')) !!}
 						@endif
 					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 					        <span class="caret"></span>
