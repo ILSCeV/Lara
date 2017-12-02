@@ -8,7 +8,7 @@ return [
     |
     | Main language lines sorted by files
     | Lines are used multiple times, when they are similar in different views.
-    | That means that new lines in this file only appear, when they appeared 
+    | That means that new lines in this file only appear, when they appeared
     | for the first time while locating the files.
     |
     | -Structure,etc. can be changed, but remember to change all trans() and strings accordingly
@@ -50,7 +50,7 @@ return [
     'preSale'               => 'Seelenverkäufer',
     'others'                => 'Sonstiges',
     'faceDone'              => 'Schon im Gesichtsbuch',
-    'eventUrl'              => 'Gesichtsbuch-Kajüte',
+    'eventUrl'              => 'Gesichtsbuch - Kajüte',
     'priceTickets'          => 'Vorausbuchung',
     'price'                 => 'Beförderungsentgelt',
     'studentExtern'         => 'Seeleute / Landratten',
@@ -157,7 +157,7 @@ return [
     // resources/views/surveyView.blade.php
     'description'           => 'Beschreibung',
     'surveyDeadlineTo'      => 'Die Umfrage läuft noch bis',
-    'um'                    => 'um', //better translation needed 
+    'um'                    => 'um', //better translation needed
     
     //result messages; can be changed with pluralization
     'noPersonAnswered'      => 'Es hat noch keine Person abgestimmt.',
@@ -277,7 +277,7 @@ return [
     'week'                  => 'Trinkzeit',
     //not translated the term 'logs'
     'manageClub'            => 'Schiffe verwalten',
-    'manageShiftType'       => 'Diensttypen verwalten', 
+    'manageShiftType'       => 'Diensttypen verwalten',
     'manageSections'        => 'Mannschaften verwalten',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
     
@@ -356,8 +356,8 @@ return [
     
     // /resources/views/partials/weekCellHidden.blade.php
     'moreDetailsAfterLogInMessage'      => 'Darüber reden wir erst wenn du an Bord gehst!',
-    // 'moreDetailsAfterLogInMessage2'  => 'nach dem Einloggen zugänglich.', 
-    // Merged with line above but there is now way to break the line (format is still ok) 
+    // 'moreDetailsAfterLogInMessage2'  => 'nach dem Einloggen zugänglich.',
+    // Merged with line above but there is now way to break the line (format is still ok)
     // ToDo find a solution
 
     //-----------------------------------------------------------------------------------------------------------
@@ -412,7 +412,7 @@ return [
     //ClubEvent
     'addCommentHere'                => 'Blödsinn ausrufen',
     'enterPasswordHere'             => 'Passwort hier eingeben',
-    'placeholderTitleWineEvening'   => 'z.B. Weinabend', 
+    'placeholderTitleWineEvening'   => 'z.B. Weinabend',
     //'placeholderTitleWineEvening'
     
     'placeholderSubTitleWineEvening'=> 'z.B. Das Leben ist zu kurz, um schlechten Grogg zu trinken',
