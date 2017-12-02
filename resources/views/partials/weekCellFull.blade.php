@@ -1,42 +1,30 @@
 <div class="panel panel-warning">
-		<?php $classString = "panel panel-heading";?>
-		{{--Check if the event is still going on--}}
-		@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
-			{{-- The event is already over --}}
-			<?php $classString .= " past-event";?>
-		@endif
-
-	@if($clubEvent->evnt_is_private)
-		@if     ($clubEvent->evnt_type == 1)
-			<div class="{{ $classString }} calendar-internal-info white-text">
-		@elseif ($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9)
-			<div class="{{ $classString }} calendar-internal-task white-text">
-		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
-			<div class="{{ $classString }} calendar-internal-marketing white-text">
-		@elseif ($clubEvent->section->id == 1)
-			<div class="{{ $classString }} calendar-internal-event-bc-Club white-text">
-		@elseif ($clubEvent->section->id == 2)
-			<div class="{{ $classString }} calendar-internal-event-bc-Café white-text">
-		@else
-			{{-- DEFAULT --}}
-			<div class="cal-event dark-grey">
-		@endif
-	@else
-		@if     ($clubEvent->evnt_type == 1)
-			<div class="{{ $classString }} calendar-public-info white-text">
-		@elseif ($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9)
-			<div class="{{ $classString }} calendar-public-task white-text">
-		@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
-			<div class="{{ $classString }} calendar-public-marketing white-text">
-		@elseif ($clubEvent->section->id == 1)
-			<div class="{{ $classString }} calendar-public-event-bc-Club white-text">
-		@elseif ($clubEvent->section->id == 2)
-			<div class="{{ $classString }} calendar-public-event-bc-Café white-text">
-		@else
-			{{-- DEFAULT --}}
-			<div class="cal-event dark-grey">
-		@endif
+	
+	{{--Check if the event is still going on--}}
+	<?php $classString = "panel panel-heading";?>
+	@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
+		{{-- The event is already over --}}
+		<?php $classString .= " past-event";?>
 	@endif
+
+	{{-- Set panel color --}}
+	@if     ($clubEvent->evnt_type == 0)
+        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
+    @elseif ($clubEvent->evnt_type == 1)
+        <div class="{{$classString}} palette-Purple-500 bg">
+    @elseif ($clubEvent->evnt_type == 2 
+    	  OR $clubEvent->evnt_type == 3)
+        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
+    @elseif ($clubEvent->evnt_type == 4 
+          OR $clubEvent->evnt_type == 5 
+          OR $clubEvent->evnt_type == 6)
+        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg white-text">
+    @elseif ($clubEvent->evnt_type == 7 
+          OR $clubEvent->evnt_type == 8)
+        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg white-text">
+    @elseif ($clubEvent->evnt_type == 9)
+        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg white-text">
+    @endif
 
 			<h4 class="panel-title">
 				@include("partials.event-marker")

@@ -81,6 +81,7 @@ class WeekController extends Controller {
         $events = ClubEvent::where('evnt_date_start','>=',$weekStart)
                            ->where('evnt_date_start','<=',$weekEnd)
                            ->with('section',
+                           		  'showToSection',
                            		  'getSchedule.shifts.type',
                            		  'getSchedule.shifts.getPerson.getClub')
                            ->orderBy('evnt_date_start')
@@ -97,16 +98,17 @@ class WeekController extends Controller {
                          ->get(['id','title']);
 
         // Filter - Workaround for older events: populate filter with event club
-        foreach ($events as $clubEvent) {	        
-	        if (empty($clubEvent->evnt_show_to_club) ) {
-	            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->section->title], true);
+        /* @var $clubEvent ClubEvent */
+        foreach ($events as $clubEvent) {
+	        if ($clubEvent->showToSection->isEmpty()) {
+	            $clubEvent->showToSection()->sync([$clubEvent->section->id]);
 	            $clubEvent->save();
 	        } 
         }
 
 		$clubs = Club::orderBy('clb_title')->pluck('clb_title', 'id');
-
-        return View::make('weekView', compact('events', 'schedules',  'date', 
+        
+        return View::make('weekView', compact('events', 'schedules',  'date',
         									  'weekStart', 'weekEnd', 
 											  'clubs', 'surveys', 'sections'));
 	}

@@ -50,7 +50,7 @@
     </a>
 
     <br>
- 	<footer class="navbar-default navbar-static-bottom" id="footer">
+ 	<footer class="navbar-default navbar-static-bottom hidden-print" id="footer">
         <div class="container">
             <br>
             <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">

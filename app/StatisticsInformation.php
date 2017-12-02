@@ -24,7 +24,7 @@ class StatisticsInformation
         });
 
         $shiftsInOwnClub = $usersShifts->filter(function ($shift) use ($club) {
-            $visibleClubs = json_decode($shift->schedule->event->evnt_show_to_club);
+            $visibleClubs = $shift->schedule->event->showToSectionNames();
             return in_array($club->clb_title, $visibleClubs);
         });
 

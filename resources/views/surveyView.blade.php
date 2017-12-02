@@ -280,7 +280,7 @@ $userCanEditDueToRole
                                             @else
                                                 <td class="singleAnswer">
                                                     @endif
-                                                    {{$cell->answer}}
+                                                    {{trans($cell->answer)}}
                                                 </td>
                                                 @endforeach
                                                 @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
