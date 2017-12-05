@@ -276,7 +276,7 @@ return [
     //not translated the term 'logs'
     'manageClub'            => 'Manage clubs',
     'manageShiftType'       => 'Manage shift types',
-    'manageSections'        => 'Sektionen verwalten',
+    'manageSections'        => 'Manage sections',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
 
     'manageTemplate'        => 'Manage templates',
