@@ -452,7 +452,7 @@ $(document).ready(function() {
                         + "<tr" + (!response[i]["isOwnClub"] ? " class=\"active text-muted\"" : "") + ">" 
                         + "<td>"  + (1+i) + "</td>" 
                         + "<td>" + response[i]["shift"] + "</td>"
-                        + "<td>" + "<a href=\"../../event/" + response[i]["event_id"] + "\">" + response[i]["event"] + "</a>" + "</td>"
+                        + "<td>" + "<a href=\"/event/" + response[i]["event_id"] + "\">" + response[i]["event"] + "</a>" + "</td>"
                         // Color-coding for different sections 
                         + "<td class=\"" + response[i]["section"]+ "-section-highlight\">" + response[i]["section"] + "</td>"
                         + "<td>" + response[i]["date"] + "</td>" 
