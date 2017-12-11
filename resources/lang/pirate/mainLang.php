@@ -59,6 +59,7 @@ return [
     
     'begin'                 => 'Beginn',
     'end'                   => 'Ende',
+    'eventDefaults'         => 'Was der Kapitän gesagt hat:',
     
     'DV-Time'               => 'An Bord sein',
     'club'                  => 'Schiff',

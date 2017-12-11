@@ -59,6 +59,7 @@ return [
     
     'begin'                 => 'Beginn',
     'end'                   => 'Ende',
+    'eventDefaults'         => 'Standardwerte für Events:',
     
     'DV-Time'               => 'DV-Zeit',
     'club'                  => 'Verein',
