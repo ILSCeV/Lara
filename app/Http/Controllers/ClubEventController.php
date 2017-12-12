@@ -93,6 +93,9 @@ class ClubEventController extends Controller
         // get a list of available templates to choose from
         $templates = Schedule::where('schdl_is_template', '=', '1')
                             ->whereHas('event', function ($query) {
+                                /** this is to avoid usage of this template, its just technical and needed  for bd event sync
+                                 * its not designed for nomal usage
+                                 */
                                 $query->where('evnt_title','<>',SyncBDclub::BD_TEMPLATE_NAME);
                             })
                              ->orderBy('schdl_title', 'ASC')
@@ -394,7 +397,7 @@ class ClubEventController extends Controller
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
-        
+
         // Check credentials: you can only delete, if you have rights for marketing or management.
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
         $created_by = $revisions[0]["user id"];
@@ -512,7 +515,7 @@ class ClubEventController extends Controller
         // reversed this: input=1 means "event is public", input=0 means "event is private"
         $event->evnt_is_private = (Input::get('isPrivate') == '1') ? 0 : 1;
         $eventIsPublished = Input::get('evntIsPublished');
-        
+
         if (!is_null($eventIsPublished)) {
             //event is pubished
             $event->evnt_is_published = (int)$eventIsPublished;
