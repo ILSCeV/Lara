@@ -84,6 +84,9 @@ class CreateTemplatesTable extends Migration
             $type = $event->evnt_type;
 
             if ($title != self::BD_TEMPLATE_NAME) {
+                if( $title == '' ){
+                    $title = $event->evnt_title;
+                }
                 $filter = $event->showToSection()->get();
                 $section = $event->section;
             } else {
