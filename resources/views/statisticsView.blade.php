@@ -46,20 +46,18 @@
 
         {{-- Month/year statstics selector --}}
         <div class="col-xs-12 col-md-7 btn-group pull-right">
-            @if(\Lara\Utilities::requirePermission(array("admin","clubleitung")))
-                    @if($isMonthStatistic)
-                        <a class="btn btn-xs btn-primary pull-right"
-                           type="button"
-                           href="{{ action("StatisticsController@showYearStatistics") }}">
-                            {{ trans("mainLang.yearStatistic") }}
-                        </a>
-                    @else
-                        <a class="btn btn-xs btn-primary pull-right"
-                           type="button"
-                           href="{{ action("StatisticsController@showStatistics")  }}">
-                            {{ trans("mainLang.monthStatistic") }}
-                        </a>
-                    @endif
+            @if($isMonthStatistic)
+                <a class="btn btn-xs btn-primary pull-right"
+                   type="button"
+                   href="{{ action("StatisticsController@showYearStatistics") }}">
+                    {{ trans("mainLang.yearStatistic") }}
+                </a>
+            @else
+                <a class="btn btn-xs btn-primary pull-right"
+                   type="button"
+                   href="{{ action("StatisticsController@showStatistics")  }}">
+                    {{ trans("mainLang.monthStatistic") }}
+                </a>
             @endif
         </div>
 
