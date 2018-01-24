@@ -74,7 +74,15 @@ $(() => {
     liveSearch:true
   });
   $('#templateSelector').change(() => {
-    window.location.href = $('#templateSelector').val();
+    var selectedValue = $('#templateSelector').val();
+    if(selectedValue === "-1"){
+      $('form').each( (i,elem) =>{
+        var form = <HTMLFormElement>elem;
+        form.reset();
+      } );
+    } else {
+      window.location.href = $('#templateSelector').val();
+    }
   });
 });
 
