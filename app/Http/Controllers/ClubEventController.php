@@ -18,6 +18,7 @@ use Lara\Shift;
 use Lara\Person;
 use Lara\Section;
 use Lara\Schedule;
+use Lara\Template;
 use Lara\Utilities;
 use Log;
 use Redirect;
@@ -91,16 +92,14 @@ class ClubEventController extends Controller
                        ->pluck('title', 'id');
 
         // get a list of available templates to choose from
-        $templates = Schedule::where('schdl_is_template', '=', '1')
-                            ->whereHas('event', function ($query) {
-                                /** this is to avoid usage of this template, its just technical and needed  for bd event sync
-                                 * its not designed for nomal usage
-                                 */
-                                $query->where('evnt_title','<>',SyncBDclub::BD_TEMPLATE_NAME);
-                            })
-                             ->orderBy('schdl_title', 'ASC')
-                             ->get();
-
+        $userClub = Session::get('userClub');
+        if(Utilities::requirePermission("admin")) {
+            $templates = Template::all()->sortBy('title');
+        } else {
+            $templates = Template::whereHas('section', function ($query) use ($userClub) {
+                $query->where('title', '=', $userClub);
+            })->get()->sortBy('title');
+        }
         // get a list of available job types
         $shiftTypes = ShiftType::where('is_archived', '=', '0')
                            ->orderBy('title', 'ASC')
@@ -108,11 +107,12 @@ class ClubEventController extends Controller
 
         // if a template id was provided, load the schedule needed and extract job types
         if ( $templateId != 0 ) {
-            $template = Schedule::where('id', '=', $templateId)
+            /** @var Template $template */
+            $template = Template::where('id', '=', $templateId)
                                 ->first();
 
             // put name of the active template for further use
-            $activeTemplate = $template->schdl_title;
+            $activeTemplate = $template->title;
 
             // get template data
             $shifts     = $template->shifts()
@@ -123,17 +123,17 @@ class ClubEventController extends Controller
                     // copy all except person_id and schedule_id and comment
                     return $shift->replicate(['person_id', 'schedule_id', 'comment']);
                 });
-            $title      = $template->getClubEvent->evnt_title;
-            $subtitle   = $template->getClubEvent->evnt_subtitle;
-            $type       = $template->getClubEvent->evnt_type;
-            $section    = $template->getClubEvent->section;
-            $filter     = $template->getClubEvent->showToSectionNames();
-            $dv         = $template->schdl_time_preparation_start;
-            $timeStart  = $template->getClubEvent->evnt_time_start;
-            $timeEnd    = $template->getClubEvent->evnt_time_end;
-            $info       = $template->getClubEvent->evnt_public_info;
-            $details    = $template->getClubEvent->evnt_private_details;
-            $private    = $template->getClubEvent->evnt_is_private;
+            $title      = $template->title;
+            $subtitle   = $template->subtitle;
+            $type       = $template->type;
+            $section    = $template->section;
+            $filter     = $template->showToSectionNames();
+            $dv         = $template->time_preparation_start;
+            $timeStart  = $template->time_start;
+            $timeEnd    = $template->time_end;
+            $info       = $template->public_info;
+            $details    = $template->private_details;
+            $private    = $template->is_private;
         } else {
             // fill variables with no data if no template was chosen
             $activeTemplate = "";
@@ -156,7 +156,7 @@ class ClubEventController extends Controller
                                                          'section', 'filter', 'timeStart', 'timeEnd',
                                                          'info', 'details', 'private', 'dv',
                                                          'activeTemplate',
-                                                         'date'));
+                                                         'date', 'templateId'));
     }
 
 

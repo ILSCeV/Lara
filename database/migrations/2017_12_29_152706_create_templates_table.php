@@ -97,7 +97,7 @@ class CreateTemplatesTable extends Migration
                     $club->clb_title = $section->title;
                     $club->save();
                 }
-                $filter = collect([]);
+                $filter = collect([$section]);
             }
             $dv = $template->schdl_time_preparation_start;
             $timeStart = $event->evnt_time_start;

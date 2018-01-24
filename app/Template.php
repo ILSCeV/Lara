@@ -76,6 +76,16 @@ class Template extends Model
     }
 
     /**
+     * @return array/String
+     */
+    public function showToSectionNames()
+    {
+        return $this->showToSection()->get()->map(function ($section) {
+            return $section->title;
+        })->toArray();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany/Shift
      */
     public function shifts(){

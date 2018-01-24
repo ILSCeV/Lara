@@ -53,6 +53,6 @@ mix.webpackConfig({
     .sass('resources/assets/sass/lara.scss', 'public/')
     .sass('resources/assets/sass/surveys.scss', 'public/')
     .ts('resources/assets/ts/lara.ts', 'public/')
-    .extract(['jquery', 'bootstrap', 'bootbox'])
+    .extract(['jquery', 'bootstrap', 'bootbox','bootstrap-select'])
     .sourceMaps()
     .version();
