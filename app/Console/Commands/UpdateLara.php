@@ -13,14 +13,14 @@ class UpdateLara extends Command
      * @var string
      */
     protected $signature = 'lara:update {--server-mode}';
-    
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Enter maintenance mode, pull latests changes from assigned branch, clear cache and views, apply migrations, go live again.';
-    
+
     /**
      * Create a new command instance.
      *
@@ -30,7 +30,7 @@ class UpdateLara extends Command
     {
         parent::__construct();
     }
-    
+
     /**
      * Execute the console command.
      *
@@ -42,7 +42,7 @@ class UpdateLara extends Command
         $this->info(''); // new line
         Log::info('Starting Lara update...');
         $this->info('Starting Lara update...');
-        
+
         $serverMode = $this->option('server-mode');
         if ($serverMode) {
             $avoidSourseConflictCommand = 'git reset --hard';
@@ -54,10 +54,10 @@ class UpdateLara extends Command
         } else {
             $reApplyChangesCommand = '# nothing to do';
         }
-        
+
         // start counting time before processing every person
         $counterStart = microtime(true);
-        
+
         // List of instructions to execute
         $instructions = [
             'php artisan down',
@@ -66,6 +66,8 @@ class UpdateLara extends Command
             // reset repo to avoid conflicts
             'git pull --rebase',
             // Download latest changes from GitHub
+            'rm composer.lock || true',
+            // remove composer.lock, makes sure that you will get the stuff from composer.json
             'rm package-lock.json || true',
             // remove package-lock, makes sure that you will get the stuff from package.json
             'sh git-create-revisioninfo-hook.sh',
@@ -84,17 +86,17 @@ class UpdateLara extends Command
             'php artisan up'
             // Exit maintenance mode
         ];
-        
+
         // initialize progress bar
         $bar = $this->output->createProgressBar(count($instructions));
-        
+
         // perform the update
         foreach ($instructions as $step) {
-            
+
             // log what you are doing
             $this->info(''); // new line
             $this->info('Executing "'.$step.'"...');
-            
+
             // perform the instruction
             passthru($step, $result);
             $this->info('result: '.$result);
@@ -105,16 +107,16 @@ class UpdateLara extends Command
             $bar->advance();
             $this->info(''); // new line
         }
-        
+
         // finish progress bar and end counter
         $bar->finish();
         $counterEnd = microtime(true);
-        
+
         // Inform the users
         $this->info(''); // new line
         $this->info(''); // new line
         Log::info('Finished Lara update after '.($counterEnd - $counterStart).' seconds.');
         $this->info('Finished Lara update after '.($counterEnd - $counterStart).' seconds.');
-        
+
     }
 }
