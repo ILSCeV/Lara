@@ -86,16 +86,16 @@ class SurveyAnswerController extends Controller
                     break;
                 case QuestionType::Checkbox :
                     if ($input->answers[$key] == -1) {
-                        $survey_answer_cell->answer = "keine Angabe";
+                        $survey_answer_cell->answer = "surveys.noAnswer";
                     } elseif ($input->answers[$key] == 0) {
-                        $survey_answer_cell->answer = "Nein";
+                        $survey_answer_cell->answer = "surveys.no";
                     } elseif ($input->answers[$key] == 1) {
-                        $survey_answer_cell->answer = "Ja";
+                        $survey_answer_cell->answer = "surveys.yes";
                     }
                     break;
                 case QuestionType::Dropdown :
                     if ($input->answers[$key] == -1) {
-                        $survey_answer_cell->answer = "keine Angabe";
+                        $survey_answer_cell->answer = "surveys.noAnswer";
                     } else {
                         $survey_answer_cell->answer = $input->answers[$key];
                     }

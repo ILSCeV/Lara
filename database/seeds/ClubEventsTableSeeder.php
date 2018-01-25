@@ -14,11 +14,16 @@ class ClubEventsTableSeeder extends Seeder
     public function run()
     {
         \DB::table('club_events')->delete();
-        \DB::table('schedules')->delete();
+        \DB::table('schedules')->where('schdl_title','!=','BD Template')->delete();
         factory(Lara\ClubEvent::class, 100)->create()
             ->each(function(Lara\ClubEvent $event) {
                 // create a schedule for each event
                 $event->getSchedule()->save(factory(Lara\Schedule::class)->make());
+                $event->showToSection()->sync([
+                    $event->plc_id,
+                    Lara\Section::where('id', '!=', $event->plc_id)->inRandomOrder()->first()->id
+                ]);
+                $event->save();
             });
     }
 }

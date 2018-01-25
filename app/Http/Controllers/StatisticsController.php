@@ -82,16 +82,13 @@ class StatisticsController extends Controller
             ->with('type', 'schedule.event.section')
             ->get()
             ->sortBy('schedule.event.evnt_date_start');
-        
-        // TODO: sort shifts by date
-        
         // format the response
         $response = [];
         $ownClub = Person::find($id)->club->clb_title;
         
         
         foreach ($shifts as $shift) {
-            $clubsOfShift = json_decode($shift->schedule->event->evnt_show_to_club);
+            $clubsOfShift = $shift->schedule->event->showToSectionNames();
             
             $response[] = [
                 'id'        => $shift->id,

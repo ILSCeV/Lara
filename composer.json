@@ -33,13 +33,15 @@
     "license": "GPL-3.0",
     "name": "ILSCeV/Lara",
     "require": {
+        "php": ">=5.6.4",
         "barryvdh/laravel-ide-helper": "^2.2",
+        "johngrogg/ics-parser": "^2",
+        "eluceo/ical": "^0.11.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.3.0",
-        "php": ">=5.6.4",
         "rap2hpoutre/laravel-log-viewer": "^0.8.0",
-        "eluceo/ical": "^0.11.0"
+        "thecsea/simple-caldav-client": "^0.1.5"
     },
     "require-dev": {
         "doctrine/dbal": "~2.3",

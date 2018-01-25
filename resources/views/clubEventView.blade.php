@@ -1,5 +1,4 @@
 @extends('layouts.master')
-
 @section('title')
 	{{ $clubEvent->evnt_title }}
 @stop
@@ -7,57 +6,52 @@
     <div class="panelEventView">
 		<div class="row no-margin">
 			<div class="panel col-xs-12 col-md-6 no-padding">
-				@if	($clubEvent->evnt_type == 1 AND $clubEvent->evnt_is_private)
-					<div class="panel panel-heading calendar-internal-info white-text">
-				@elseif     ($clubEvent->evnt_type == 1)
-					<div class="panel panel-heading calendar-public-info white-text">
-
-				@elseif (($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9) AND $clubEvent->evnt_is_private)
-					<div class="panel panel-heading calendar-internal-task white-text">
-				@elseif ($clubEvent->evnt_type == 6 OR $clubEvent->evnt_type == 9)
-					<div class="panel panel-heading calendar-public-task white-text">
-
-
-				@elseif (($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8) AND $clubEvent->evnt_is_private)
-					<div class="panel panel-heading calendar-internal-marketing white-text">
-				@elseif ($clubEvent->evnt_type == 7 OR $clubEvent->evnt_type == 8)
-					<div class="panel panel-heading calendar-public-marketing white-text">
-				@elseif ($clubEvent->evnt_is_private && !is_null($clubEvent->section))
-					<div class="panel panel-heading calendar-internal-event-{{$clubEvent->section->title}} white-text">
-				@elseif (!is_null($clubEvent->section))
-					<div class="panel panel-heading calendar-public-event-{{$clubEvent->section->title}} white-text">
-				@else
-					{{-- DEFAULT --}}
-					<div class="panel panel-heading white-text">
-				@endif
+				{{-- Set panel color --}}
+				@if     ($clubEvent->evnt_type == 0)
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-700 bg">
+			    @elseif ($clubEvent->evnt_type == 1)
+			        <div class="panel panel-heading palette-Purple-500 bg">
+			    @elseif ($clubEvent->evnt_type == 2 
+			    	  OR $clubEvent->evnt_type == 3)
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-900 bg">
+			    @elseif ($clubEvent->evnt_type == 4 
+			          OR $clubEvent->evnt_type == 5 
+			          OR $clubEvent->evnt_type == 6)
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg white-text">
+			    @elseif ($clubEvent->evnt_type == 7 
+			          OR $clubEvent->evnt_type == 8)
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-300 bg white-text">
+			    @elseif ($clubEvent->evnt_type == 9)
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg white-text">
+			    @endif
 					<h4 class="panel-title">@include("partials.event-marker")&nbsp;{{ $clubEvent->evnt_title }}</h4>
 					<h5 class="panel-title">{{ $clubEvent->evnt_subtitle }}</h5>
 				</div>
 					<table class="table table-hover">
 						<tr>
-							<td width="20%" class="left-padding-16">
+							<td width="20%" class="left-padding-16 text-align-right">
 								<i>{{ trans('mainLang.type') }}:</i>
 							</td>
 							<td>
-								@if( $clubEvent->evnt_type == 0)
+								@if( $clubEvent->evnt_type === 0)
 									{{ trans('mainLang.normalProgramm') }}
-								@elseif( $clubEvent->evnt_type == 1)
+								@elseif( $clubEvent->evnt_type === 1)
 									{{ trans('mainLang.information') }}
-								@elseif( $clubEvent->evnt_type == 2)
+								@elseif( $clubEvent->evnt_type === 2)
 									{{ trans('mainLang.special') }}
-								@elseif( $clubEvent->evnt_type == 3)
+								@elseif( $clubEvent->evnt_type === 3)
 									{{ trans('mainLang.LiveBandDJ') }}
-								@elseif( $clubEvent->evnt_type == 4)
+								@elseif( $clubEvent->evnt_type === 4)
 									{{ trans('mainLang.internalEvent') }}
-								@elseif( $clubEvent->evnt_type == 5)
+								@elseif( $clubEvent->evnt_type === 5)
 									{{ trans('mainLang.utilization') }}
-								@elseif( $clubEvent->evnt_type == 6)
+								@elseif( $clubEvent->evnt_type === 6)
 									{{ trans('mainLang.flooding') }}
-								@elseif( $clubEvent->evnt_type == 7)
+								@elseif( $clubEvent->evnt_type === 7)
 									{{ trans('mainLang.flyersPlacard') }}
-								@elseif( $clubEvent->evnt_type == 8)
+								@elseif( $clubEvent->evnt_type === 8)
 									{{ trans('mainLang.preSale') }}
-								@elseif( $clubEvent->evnt_type == 9)
+								@elseif( $clubEvent->evnt_type === 9)
 									{{ trans('mainLang.others') }}
 								@endif
 							</td>
@@ -95,38 +89,96 @@
 							<td>
 								{{ $clubEvent->section->title }}
 								&nbsp;&nbsp;<br class="visible-xs">
-								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", json_decode($clubEvent->evnt_show_to_club, true)) }})</i>
+								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", $clubEvent->showToSectionNames()) }})</i>
 							</td>
 						</tr>
-
-						{{--
-
-						Disabling iCal until fully functional.
-
-
-						<tr>
-							<td width="20%" class="left-padding-16">
-								<i>{{ trans('mainLang.iCal') }}:</i>
-							</td>
-							<td>
-								@if($clubEvent->evnt_is_published == "1")
-									<i class="fa fa-check-square-o" aria-hidden="true"></i>
-									&nbsp;&nbsp;{{trans('mainLang.eventIsPublished')}}
-								@else
-									<i class="fa fa-square-o" aria-hidden="true"></i>
-									&nbsp;&nbsp;{{trans('mainLang.eventIsUnpublished')}}
-								@endif
-							</td>
-						</tr>
-
-						--}}
 					</table>
 
+					<hr class="no-margin no-padding">
+					
+					{{-- Internat event metadata --}}
+					@if(Session::has('userId'))
+						<table class="table table-hover">
+							<tr>
+								<td width="33%" class="left-padding-16">
+									<i>{{ trans('mainLang.faceDone') }}?</i>
+								</td>
+								<td>
+									@if($clubEvent->facebook_done === 1)
+										<i class="text-success" aria-hidden="true">{{ trans('mainLang.yes') }}</i>
+									@else
+										<i class="text-danger" aria-hidden="true">{{ trans('mainLang.no') }}</i>
+									@endif
+								</td>
+							</tr>
+							@if($clubEvent->event_url!=null && $clubEvent->event_url!="")
+								<tr>
+									<td width="33%" class="left-padding-16">
+										<i>{{ trans('mainLang.eventUrl') }}:</i>
+									</td>
+									<td>
+										<a target="_blank" href="{{ $clubEvent->event_url }}"  style="word-break: break-all;">
+											{{$clubEvent->event_url}}
+										</a>
+									</td>
+								</tr>
+							@endif
+							<tr>
+								<td width="33%" class="left-padding-16">
+									<i>{{ trans('mainLang.priceTickets') }}:</i>
+								</td>
+								<td>
+									{{  $clubEvent->price_tickets_normal !== null ? $clubEvent->price_tickets_normal : '--' }} € 
+									/ 
+									{{ $clubEvent->price_tickets_external !== null ? $clubEvent->price_tickets_external : '--' }} €
+									&nbsp;&nbsp;
+									<br class="visible-xs">
+									({{ trans('mainLang.studentExtern') }})
+								</td>
+							</tr>
+							<tr>
+								<td width="33%" class="left-padding-16">
+									<i>{{ trans('mainLang.price') }}:</i>
+								</td>
+								<td>
+									{{  $clubEvent->price_normal !== null ? $clubEvent->price_normal : '--' }} € 
+									/ 
+									{{ $clubEvent->price_external !== null ? $clubEvent->price_external : '--' }} €
+									&nbsp;&nbsp;
+									<br class="visible-xs">
+									({{ trans('mainLang.studentExtern') }})
+								</td>
+							</tr>
+							
+							{{--
+
+							Disabling iCal until fully functional.
+
+
+							<tr>
+								<td width="20%" class="left-padding-16">
+									<i>{{ trans('mainLang.iCal') }}:</i>
+								</td>
+								<td>
+									@if($clubEvent->evnt_is_published === "1")
+										<i class="fa fa-check-square-o" aria-hidden="true"></i>
+										&nbsp;&nbsp;{{trans('mainLang.eventIsPublished')}}
+									@else
+										<i class="fa fa-square-o" aria-hidden="true"></i>
+										&nbsp;&nbsp;{{trans('mainLang.eventIsUnpublished')}}
+									@endif
+								</td>
+							</tr>
+
+							--}}
+						</table>
+					@endif
+
 				{{-- CRUD --}}
-				@if(Session::get('userGroup') == 'marketing'
-				 OR Session::get('userGroup') == 'clubleitung'
-				 OR Session::get('userGroup') == 'admin'
-				 OR Session::get('userId') == $created_by)
+				@if(Session::get('userGroup') === 'marketing'
+				 OR Session::get('userGroup') === 'clubleitung'
+				 OR Session::get('userGroup') === 'admin'
+				 OR Session::get('userId') === $created_by)
 					<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">
 						<span class="pull-right">
 							{{-- Event publishing only for CL/marketing -> exclude creator 
@@ -135,12 +187,12 @@
 							Disabling iCal until fully functional.
 
 
-							@if(Session::get('userGroup') == 'marketing'
-							 OR Session::get('userGroup') == 'clubleitung'
-							 OR Session::get('userGroup') == 'admin')
+							@if(Session::get('userGroup') === 'marketing'
+							 OR Session::get('userGroup') === 'clubleitung'
+							 OR Session::get('userGroup') === 'admin')
 								<button  id="unPublishEventLnkBtn"
 									data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
-									class="btn btn-danger @if($clubEvent->evnt_is_published == 0) hidden @endif"
+									class="btn btn-danger @if($clubEvent->evnt_is_published === 0) hidden @endif"
 									name="toggle-publish-state"
 								    data-toggle="tooltip"
 								    data-placement="bottom"
@@ -151,7 +203,7 @@
 								</button>
 								<button  id="pubishEventLnkBtn"
 									data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
-									class="btn btn-success @if($clubEvent->evnt_is_published == 1) hidden @endif"
+									class="btn btn-success @if($clubEvent->evnt_is_published === 1) hidden @endif"
 									name="toggle-publish-state"
 									data-toggle="tooltip"
 									data-placement="bottom"
@@ -247,7 +299,7 @@
 		<div class="panel-body no-padding ">
 			@foreach($shifts as $shift)
 				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
-				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) AND Session::has('userId') AND $shift->getPerson->prsn_ldap_id == Session::get('userId')) ? "my-shift" : false !!}">
+				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) AND Session::has('userId') AND $shift->getPerson->prsn_ldap_id === Session::get('userId')) ? "my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 			                                'id' => $shift->id,
 			                                'method' => 'PUT', 
@@ -291,7 +343,7 @@
 						{{-- COMMENT SECTION --}}
 						<div class="col-md-6 col-sm-6 col-xs-12 hidden-print word-break no-margin">
 						    <span class="pull-left">
-						    	{!! $shift->comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
+						    	{!! $shift->comment === "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
 						    	&nbsp;&nbsp;
 						    </span>
 
@@ -319,7 +371,7 @@
 						<br class="visible-print hidden-md hidden-sm hidden-xs">
 						<div class="col-md-6 col-sm-12 col-xs-12 no-margin">
 						    <span class="pull-left">
-						    	{!! $shift->comment == "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
+						    	{!! $shift->comment === "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
 						    	&nbsp;&nbsp;
 						    </span>
 

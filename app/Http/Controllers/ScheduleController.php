@@ -168,7 +168,7 @@ class ScheduleController extends Controller
         $inputShifts = Input::get("shifts");
         $amount = count($inputShifts["title"]);
 
-        $currentShiftIds = $inputShifts["id"];
+        $currentShiftIds = $inputShifts["id"] ? $inputShifts["id"] : [];
         $schedule->shifts()
             ->whereNotIn('id', $currentShiftIds)
             ->get()
