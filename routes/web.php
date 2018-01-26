@@ -12,20 +12,20 @@
 |--------------------------------------------------------------------------
 | Default Laravel routes for reference
 |--------------------------------------------------------------------------
-| 
+|
 | Route::get('/', function () {
 |     return view('welcome');
 |  });
 |
 | Route::get('/', 'WelcomeController@index');
-| 
+|
 | Route::get('home', 'HomeController@index');
-| 
+|
 | Route::controllers([
 | 	'auth' => 'Auth\AuthController',
 | 	'password' => 'Auth\PasswordController',
 | 	]);
-| 
+|
 */
 
 
@@ -154,3 +154,6 @@ Route::get('/ical/event/{id}/publish', 							'IcalController@togglePublishState
 
 // Lara Upgrade
 Route::get('/update',                                         'AdminController@startUpdateProcess')->name('lara.update');
+
+//Templates
+Route::get('/templates',                                      'TemplateController@index')->name('template.overview');

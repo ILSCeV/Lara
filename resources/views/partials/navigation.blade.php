@@ -54,6 +54,10 @@
                  OR Session::get('userGroup') == 'clubleitung'
                  OR Session::get('userGroup') == 'admin')
                     <li><a href="{{ asset('shiftType') }}">{{ trans('mainLang.manageShiftType') }}</a></li>
+                    <li><a href="{{route('template.overview')}}"> <i class="fa fa-magic" aria-hidden="true"></i>
+                            {{ trans('mainLang.manageTemplate')  }}
+                        </a>
+                    </li>
                 @endif
 
 
