@@ -12,6 +12,17 @@ class DefaultColorsForSections extends Migration
      */
     public function up()
     {
+        $section = Section::where('title', '=', 'bd-Club')->first();
+        if (is_null($section)) {
+            $section = new Section();
+            $section->title = self::BD_SECTION_NAME;
+            $section->section_uid = hash("sha512", uniqid());
+            $section->save();
+            $club = new Club();
+            $club->clb_title = $section->title;
+            $club->save();
+        }
+
         /** @var sections \Illuminate\Database\Eloquent\Collection[Section] */
         $sections = Section::all();
         foreach ($sections as $section) {
@@ -27,7 +38,7 @@ class DefaultColorsForSections extends Migration
             $section->update();
         }
     }
-    
+
     /**
      * Reverse the migrations.
      *
