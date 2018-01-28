@@ -502,5 +502,11 @@ return [
     'eventIsUnpublished'            =>  'Event ist nicht veröffentlicht ist im Kalendarfeed nicht sichtbar',
     'confirmPublishingEvent'        =>  'Möchtest du dieses Event wirklich zum Kalenderfeed hinzufügen?',
     'confirmUnpublishingEvent'      =>  'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
-    'iCal'                          =>  'iCal'
+    'iCal'                          =>  'iCal',
+
+    //////////
+    // Template management //
+    //////////
+
+    'filter'                        => 'Filter'
 ];

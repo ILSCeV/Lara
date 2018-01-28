@@ -6,9 +6,10 @@
 
 @section('content')
 
-    <div class="col-md-12">
-        <div class="form-inline fa-border">
-            <input type="text" class="form-control" id="templateOverviewFilter">
+    <div class="col-md-12 panel">
+        <div class="form-inline fa-border has-feedback">
+           <label for="templateOverviewFilter"> {{ trans('mainLang.filter') }} </label>
+           <input type="text" class="form-control" id="templateOverviewFilter">
         </div>
         <table class="table table-hover table-striped">
             <thead>

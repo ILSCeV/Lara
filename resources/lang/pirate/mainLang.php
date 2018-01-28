@@ -501,6 +501,12 @@ return [
     'eventIsUnpublished'            =>  'Schleichfahrt - dieses Abenteuer wird von Barden nicht erwähnt',
     'confirmPublishingEvent'        =>  'Möchtest du dieses Event wirklich zum Kalenderfeed hinzufügen?',
     'confirmUnpublishingEvent'      =>  'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
-    'iCal'                          =>  'iCal'
+    'iCal'                          =>  'iCal',
+
+    //////////
+    // Template management //
+    //////////
+
+    'filter'                        => 'Filter'
 
 ];
