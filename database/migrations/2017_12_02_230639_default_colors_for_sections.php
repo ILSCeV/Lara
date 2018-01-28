@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Lara\Club;
 use Lara\Section;
 
 class DefaultColorsForSections extends Migration
