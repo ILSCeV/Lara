@@ -15,7 +15,7 @@ class TemplatesTableSeeder extends Seeder
         $bdSectionId = \DB::table('sections')->select('id')->where('title', '=', 'bd-Club')->first();
         \DB::table('section_template')->where('template_id','=',$bdId->id)->update(['section_id'=>$bdSectionId->id]);
 
-        \DB::table('section_template')->where('template_id', "!=", $bdId->id)->delete();
+        \DB::table('section_template')->delete();
         \DB::table('templates')->where('title', '!=', 'BD Template')->delete();
         factory(Lara\Template::class, 100)->create()
             ->each(function (Lara\Template $event) {
@@ -25,6 +25,10 @@ class TemplatesTableSeeder extends Seeder
                     Lara\Section::where('id', '!=', $event->plc_id)->inRandomOrder()->first()->id
                 ]);
                 $event->save();
+                $shifts = \Lara\Shift::inRandomOrder()->take(10)->get();
+                $event->shifts()->sync($shifts->map(function (\Lara\Shift $shift){
+                    return $shift->id;
+                })->toArray());
             });
     }
 }
