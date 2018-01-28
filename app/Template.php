@@ -53,7 +53,11 @@ class Template extends Model
         'time_end',
         'public_info',
         'private_details',
-        'is_private'
+        'is_private',
+        'price_tickets_normal',
+        'price_tickets_external',
+        'price_normal',
+        'price_external'
     ];
 
     /**

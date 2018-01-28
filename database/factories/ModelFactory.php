@@ -128,7 +128,6 @@ $factory->define(Lara\Schedule::class, function(Faker\Generator $faker) {
     return [
         'schdl_title' => $faker->word(),
         'schdl_time_preparation_start' => $faker->time('H:i'),
-        'schdl_is_template' => 0,
         'schdl_password' => '',
         'entry_revisions' => ''
     ];
@@ -139,7 +138,7 @@ $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
     $start = $faker->time('H:i', $end);
     $personId = $faker->randomElement([Lara\Person::inRandomOrder()->first()->id, NULL]);
     return [
-        'schedule_id' => Lara\Schedule::where('schdl_is_template', false)->inRandomOrder()->first()->id,
+        'schedule_id' => Lara\Schedule::inRandomOrder()->first()->id,
         'shifttype_id' => Lara\ShiftType::inRandomOrder()->first()->id,
         'person_id' => $personId,
         'comment' => $personId ? $faker->randomElement([$faker->sentence, ""]) : "",
@@ -153,5 +152,25 @@ $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
 $factory->define(Lara\Club::class, function(Faker\Generator $faker) {
     return [
         'clb_title' => $faker->word(),
+    ];
+});
+
+$factory->define(Lara\Template::class, function(Faker\Generator $faker) {
+    $start = $faker->dateTimeBetween('-30 days', '+60 days');
+    $end = $faker->dateTimeBetween($start, date("Y-m-d H:i:s", strtotime('+1 day', $start->getTimestamp())));
+    return [
+        'type' => $faker->numberBetween(0,9),
+        'title' => $faker->word(),
+        'subtitle' => $faker->word(),
+        'section_id' => Lara\Section::inRandomOrder()->first()->id,
+        'time_start' => $start->format('H:i'),
+        'time_end' => $end->format('H:i'),
+        'public_info' => $faker->sentence(),
+        'private_details' => $faker->sentence(),
+        'is_private' => $faker->boolean(10),
+        'price_tickets_normal'=> $faker->numberBetween(0,5),
+        'price_tickets_external'=>$faker->numberBetween(0,10),
+        'price_normal' => $faker->randomFloat(2,0,1),
+        'price_external' => $faker->randomFloat(2,1,2),
     ];
 });

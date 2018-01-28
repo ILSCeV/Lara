@@ -20,7 +20,6 @@ class ShiftTypesTableSeeder extends Seeder
             ->where('end', '=', $shiftTypeEnd)->get()->map(function ($type){
                 return $type->id;
             })->toArray();
-        var_dump($shiftTypes);
         \DB::table('shifttypes')->whereNotIn('id',$shiftTypes)->delete();
 
         factory(Lara\ShiftType::class, 20)->create();

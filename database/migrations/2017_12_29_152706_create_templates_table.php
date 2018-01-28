@@ -35,6 +35,10 @@ class CreateTemplatesTable extends Migration
             $table->longText('public_info');
             $table->longText('private_details');
             $table->boolean('is_private');
+            $table->float("price_tickets_normal")->nullable();
+            $table->float("price_tickets_external")->nullable();
+            $table->float("price_normal")->nullable();
+            $table->float("price_external")->nullable();
         });
 
         Schema::create('shift_template', function (Blueprint $table) {
@@ -66,7 +70,7 @@ class CreateTemplatesTable extends Migration
                 ->with('type')
                 ->orderByRaw('position IS NULL, position ASC, id ASC')
                 ->get();
-
+            /** @var $event \Lara\ClubEvent*/
             $event = $template->getClubEvent;
             if (is_null($event)) {
                 $event = new \Lara\ClubEvent();
@@ -108,6 +112,10 @@ class CreateTemplatesTable extends Migration
             $info = $event->evnt_public_info;
             $details = $event->evnt_private_details;
             $private = $event->evnt_is_private;
+            $priceTicketsNormal =$event->price_tickets_normal;
+            $priceTicketsExternal = $event->price_tickets_external;
+            $priceNormal = $event->price_normal;
+            $priceExternal = $event->price_external;
 
             $result = new \Lara\Template();
             $result->fill([
@@ -120,7 +128,11 @@ class CreateTemplatesTable extends Migration
                 'time_end' => $timeEnd,
                 'public_info' => $info,
                 'private_details' => $details,
-                'is_private' => $private
+                'is_private' => $private,
+                'price_tickets_normal' => $priceTicketsNormal,
+                'price_tickets_external' => $priceTicketsExternal,
+                'price_normal' => $priceNormal,
+                'price_external' => $priceExternal
             ]);
             $result->save();
 
