@@ -15,7 +15,7 @@ class DefaultColorsForSections extends Migration
         $section = Section::where('title', '=', 'bd-Club')->first();
         if (is_null($section)) {
             $section = new Section();
-            $section->title = self::BD_SECTION_NAME;
+            $section->title = 'bd-Club';
             $section->section_uid = hash("sha512", uniqid());
             $section->save();
             $club = new Club();
