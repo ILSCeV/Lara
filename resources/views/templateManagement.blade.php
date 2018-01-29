@@ -24,7 +24,7 @@
             @foreach($templates as $template)
                 <tr>
                     <td class="text-center" > {{ \Lara\Utilities::getEventTypeTranslation($template->type)  }} </td>
-                    <td class="text-center" > {{ $template->title }} </td>
+                    <td class="text-center" > <a href="{{ route('template.edit', $template) }}"> {{ $template->title }} </a> </td>
                     <td class="text-center" > {{ $template->time_start }} </td>
                     <td class="text-center" > {{ $template->time_end }} </td>
                 </tr>

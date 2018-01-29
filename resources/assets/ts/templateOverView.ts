@@ -6,4 +6,8 @@ $(()=>{
       $(elem).toggle($(elem).text().toLowerCase().indexOf(value) > -1)
     });
   });
+  $('.selectpicker').selectpicker({
+    style: 'btn btn-default',
+    liveSearch:true
+  });
 });

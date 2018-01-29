@@ -121,7 +121,6 @@ Route::resource('survey',			'SurveyController',			['except' => ['index']]);
 Route::resource('survey.answer', 	'SurveyAnswerController', 	['only'   => ['show', 'store', 'update', 'destroy']]);
 Route::resource('section', 			'SectionController');
 
-
 // STATISTICS
 Route::get('/statistics/month/{year?}/{month?}',	'StatisticsController@showStatistics');
 Route::get('/statistics/year/{year?}',	'StatisticsController@showYearStatistics');
@@ -157,3 +156,6 @@ Route::get('/update',                                         'AdminController@s
 
 //Templates
 Route::get('/templates',                                      'TemplateController@index')->name('template.overview');
+Route::get('/template/{id}',                                  'TemplateController@show')->name('template.edit');
+Route::post('/template/{id}',                                  'TemplateController@store')->name('template.update');
+

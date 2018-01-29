@@ -21,6 +21,9 @@ class CreateTemplatesTable extends Migration
      */
     public function up()
     {
+        Schema::table("shifts", function(Blueprint $table) {
+           $table->integer('schedule_id')->unsigned()->nullable()->change();
+        });
         Schema::create('templates', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
@@ -54,7 +57,6 @@ class CreateTemplatesTable extends Migration
             $table->integer('section_id')->unsigned()->index();
 
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('cascade');
-            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
         });
 
         DB::table('schedules')->where('schdl_title', '=', self::BD_TEMPLATE_NAME)
@@ -174,6 +176,9 @@ class CreateTemplatesTable extends Migration
         Schema::drop('section_template');
         Schema::drop('shift_template');
         Schema::drop('templates');
+        Schema::table("shifts", function(Blueprint $table) {
+            $table->integer('schedule_id')->unsigned()->nullable(false)->change();
+        });
 
     }
 }
