@@ -105,7 +105,7 @@
                                         <i>{{ trans('mainLang.faceDone') }}?</i>
                                     </td>
                                     <td>
-                                        @if($clubEvent->facebook_done === 1)
+                                        @if($clubEvent->facebook_done == 1)
                                             <i class="text-success" aria-hidden="true">{{ trans('mainLang.yes') }}</i>
                                         @else
                                             <i class="text-danger" aria-hidden="true">{{ trans('mainLang.no') }}</i>
