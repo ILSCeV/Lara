@@ -33,25 +33,25 @@
 								<i>{{ trans('mainLang.type') }}:</i>
 							</td>
 							<td>
-								@if( $clubEvent->evnt_type === 0)
+								@if( $clubEvent->evnt_type == 0)
 									{{ trans('mainLang.normalProgramm') }}
-								@elseif( $clubEvent->evnt_type === 1)
+								@elseif( $clubEvent->evnt_type == 1)
 									{{ trans('mainLang.information') }}
-								@elseif( $clubEvent->evnt_type === 2)
+								@elseif( $clubEvent->evnt_type == 2)
 									{{ trans('mainLang.special') }}
-								@elseif( $clubEvent->evnt_type === 3)
+								@elseif( $clubEvent->evnt_type == 3)
 									{{ trans('mainLang.LiveBandDJ') }}
-								@elseif( $clubEvent->evnt_type === 4)
+								@elseif( $clubEvent->evnt_type == 4)
 									{{ trans('mainLang.internalEvent') }}
-								@elseif( $clubEvent->evnt_type === 5)
+								@elseif( $clubEvent->evnt_type == 5)
 									{{ trans('mainLang.utilization') }}
-								@elseif( $clubEvent->evnt_type === 6)
+								@elseif( $clubEvent->evnt_type == 6)
 									{{ trans('mainLang.flooding') }}
-								@elseif( $clubEvent->evnt_type === 7)
+								@elseif( $clubEvent->evnt_type == 7)
 									{{ trans('mainLang.flyersPlacard') }}
-								@elseif( $clubEvent->evnt_type === 8)
+								@elseif( $clubEvent->evnt_type == 8)
 									{{ trans('mainLang.preSale') }}
-								@elseif( $clubEvent->evnt_type === 9)
+								@elseif( $clubEvent->evnt_type == 9)
 									{{ trans('mainLang.others') }}
 								@endif
 							</td>
