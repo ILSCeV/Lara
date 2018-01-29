@@ -43,7 +43,11 @@ class Club extends Model
 
     public static function activeClubs()
     {
-        return Club::whereIn('clb_title', Section::all()->pluck('title'));
+        $sectionTitles = Section::all()->pluck('title')->toArray();
+        $clubs = Club::whereIn('clb_title', $sectionTitles)->get()->filter(function (Club $club) use ($sectionTitles) {
+            return in_array($club->clb_title, $sectionTitles);
+        });
+        return Club::whereIn('id',$clubs->map(function (Club $club){ return $club->id; })->toArray());
     }
 
 }
