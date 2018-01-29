@@ -460,10 +460,10 @@ class ClubEventController extends Controller
         $event->evnt_type              = Input::get('evnt_type');
         $event->facebook_done          = Input::get('facebookDone',"0") == "1";
         $event->event_url              = Input::get('eventUrl',"");
-        $event->price_tickets_normal   = Input::get('priceTicketsNormal');
-        $event->price_tickets_external = Input::get('priceTicketsExternal');
-        $event->price_normal           = Input::get('priceNormal');
-        $event->price_external         = Input::get('priceExternal');
+        $event->price_tickets_normal   = $this->getOrNullNumber('priceTicketsNormal');
+        $event->price_tickets_external = $this->getOrNullNumber('priceTicketsExternal');
+        $event->price_normal           = $this->getOrNullNumber('priceNormal');
+        $event->price_external         = $this->getOrNullNumber('priceExternal');
 
         // Check if event URL is properly formatted: if the protocol is missing, we have to add it.
         if( $event->event_url !== ""
@@ -560,6 +560,15 @@ class ClubEventController extends Controller
 
         }
         return $event;
+    }
+
+    private function getOrNullNumber($query){
+        $num = Input::get($query);
+        if(intval($num)>0){
+            return $num;
+        } else {
+            return null;
+        }
     }
 }
 
