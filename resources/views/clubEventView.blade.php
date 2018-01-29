@@ -11,14 +11,14 @@
 			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-700 bg">
 			    @elseif ($clubEvent->evnt_type == 1)
 			        <div class="panel panel-heading palette-Purple-500 bg">
-			    @elseif ($clubEvent->evnt_type == 2 
+			    @elseif ($clubEvent->evnt_type == 2
 			    	  OR $clubEvent->evnt_type == 3)
 			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-900 bg">
-			    @elseif ($clubEvent->evnt_type == 4 
-			          OR $clubEvent->evnt_type == 5 
+			    @elseif ($clubEvent->evnt_type == 4
+			          OR $clubEvent->evnt_type == 5
 			          OR $clubEvent->evnt_type == 6)
 			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg white-text">
-			    @elseif ($clubEvent->evnt_type == 7 
+			    @elseif ($clubEvent->evnt_type == 7
 			          OR $clubEvent->evnt_type == 8)
 			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-300 bg white-text">
 			    @elseif ($clubEvent->evnt_type == 9)
@@ -95,22 +95,24 @@
 					</table>
 
 					<hr class="no-margin no-padding">
-					
+
 					{{-- Internat event metadata --}}
 					@if(Session::has('userId'))
 						<table class="table table-hover">
-							<tr>
-								<td width="33%" class="left-padding-16">
-									<i>{{ trans('mainLang.faceDone') }}?</i>
-								</td>
-								<td>
-									@if($clubEvent->facebook_done === 1)
-										<i class="text-success" aria-hidden="true">{{ trans('mainLang.yes') }}</i>
-									@else
-										<i class="text-danger" aria-hidden="true">{{ trans('mainLang.no') }}</i>
-									@endif
-								</td>
-							</tr>
+                            @if(isset($clubEvent->facebook_done))
+                                <tr>
+                                    <td width="33%" class="left-padding-16">
+                                        <i>{{ trans('mainLang.faceDone') }}?</i>
+                                    </td>
+                                    <td>
+                                        @if($clubEvent->facebook_done === 1)
+                                            <i class="text-success" aria-hidden="true">{{ trans('mainLang.yes') }}</i>
+                                        @else
+                                            <i class="text-danger" aria-hidden="true">{{ trans('mainLang.no') }}</i>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endif
 							@if($clubEvent->event_url!=null && $clubEvent->event_url!="")
 								<tr>
 									<td width="33%" class="left-padding-16">
@@ -123,33 +125,37 @@
 									</td>
 								</tr>
 							@endif
-							<tr>
-								<td width="33%" class="left-padding-16">
-									<i>{{ trans('mainLang.priceTickets') }}:</i>
-								</td>
-								<td>
-									{{  $clubEvent->price_tickets_normal !== null ? $clubEvent->price_tickets_normal : '--' }} € 
-									/ 
-									{{ $clubEvent->price_tickets_external !== null ? $clubEvent->price_tickets_external : '--' }} €
-									&nbsp;&nbsp;
-									<br class="visible-xs">
-									({{ trans('mainLang.studentExtern') }})
-								</td>
-							</tr>
-							<tr>
-								<td width="33%" class="left-padding-16">
-									<i>{{ trans('mainLang.price') }}:</i>
-								</td>
-								<td>
-									{{  $clubEvent->price_normal !== null ? $clubEvent->price_normal : '--' }} € 
-									/ 
-									{{ $clubEvent->price_external !== null ? $clubEvent->price_external : '--' }} €
-									&nbsp;&nbsp;
-									<br class="visible-xs">
-									({{ trans('mainLang.studentExtern') }})
-								</td>
-							</tr>
-							
+                            @if(isset($clubEvent->price_tickets_normal))
+                                <tr>
+                                    <td width="33%" class="left-padding-16">
+                                        <i>{{ trans('mainLang.priceTickets') }}:</i>
+                                    </td>
+                                    <td>
+                                        {{  $clubEvent->price_tickets_normal !== null ? $clubEvent->price_tickets_normal : '--' }} €
+                                        /
+                                        {{ $clubEvent->price_tickets_external !== null ? $clubEvent->price_tickets_external : '--' }} €
+                                        &nbsp;&nbsp;
+                                        <br class="visible-xs">
+                                        ({{ trans('mainLang.studentExtern') }})
+                                    </td>
+                                </tr>
+                            @endif
+                            @if(isset($clubEvent->price_normal))
+                                <tr>
+                                    <td width="33%" class="left-padding-16">
+                                        <i>{{ trans('mainLang.price') }}:</i>
+                                    </td>
+                                    <td>
+                                        {{  $clubEvent->price_normal !== null ? $clubEvent->price_normal : '--' }} €
+                                        /
+                                        {{ $clubEvent->price_external !== null ? $clubEvent->price_external : '--' }} €
+                                        &nbsp;&nbsp;
+                                        <br class="visible-xs">
+                                        ({{ trans('mainLang.studentExtern') }})
+                                    </td>
+                                </tr>
+                            @endif
+
 							{{--
 
 							Disabling iCal until fully functional.
@@ -181,9 +187,9 @@
 				 OR Session::get('userId') === $created_by)
 					<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">
 						<span class="pull-right">
-							{{-- Event publishing only for CL/marketing -> exclude creator 
+							{{-- Event publishing only for CL/marketing -> exclude creator
 
-							
+
 							Disabling iCal until fully functional.
 
 
@@ -278,10 +284,10 @@
         {{-- show time button Ger.: Zeiten einblenden --}}
 		&nbsp;&nbsp;
 		<button class="btn btn-xs hidden-print"  type="button" id="toggle-shift-time">{{ trans('mainLang.hideTimes') }}</button>
-	
+
 		{{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
 		<button class="btn btn-xs hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button>
-	</div>	
+	</div>
 
 
 	<div class="panel panel-warning">
@@ -302,7 +308,7 @@
 				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) AND Session::has('userId') AND $shift->getPerson->prsn_ldap_id === Session::get('userId')) ? "my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 			                                'id' => $shift->id,
-			                                'method' => 'PUT', 
+			                                'method' => 'PUT',
 			                                'class' => 'shift')  ) !!}
 
 			        {{-- SPAMBOT HONEYPOT - this field will be hidden, so if it's filled, then it's a bot or a user tampering with page source --}}
@@ -357,7 +363,7 @@
 					@else
 
 			        	{{-- SHIFT STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-						<div class="col-md-2 col-sm-2 col-xs-5 input-append btn-group">      
+						<div class="col-md-2 col-sm-2 col-xs-5 input-append btn-group">
 						    @include("partials.shiftName")
 						</div>
 
@@ -380,8 +386,8 @@
 					                   array('placeholder'=>Lang::get('mainLang.addCommentHere'),
 					                         'id'=>'comment' . $shift->id,
 			                     			 'name'=>'comment' . $shift->id,
-					                         'class'=>'col-md-11 col-sm-11 col-xs-10 no-padding no-margin')) 
-					    	!!}	
+					                         'class'=>'col-md-11 col-sm-11 col-xs-10 no-padding no-margin'))
+					    	!!}
 						</div>
 						<br class="visible-print hidden-md hidden-sm hidden-xs">
 
