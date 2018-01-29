@@ -48,7 +48,7 @@ return [
     'marketingFlyersPlacard'    => 'Marketing / Flyer / Posters', //used in legend.blade.php
     'preSale'                   => 'Tickets presale',
     'others'                    => 'Others',
-    'faceDone'                  => 'Facebook event created',
+    'faceDone'                  => 'Facebook event done',
     'eventUrl'                  => 'Event link',
     'priceTickets'              => 'Presales price',
     'price'                     => 'Entrance fee',
@@ -317,7 +317,7 @@ return [
     'infoFor'               => 'Member statistics',
 
     // /resources/views/partials/personalStatistics.blade.php
-    
+
     // /resources/views/statisticsView.blade.php
     'monthStatistic'       => 'monthly Statistics',
     'yearStatistic'       => 'yearly Statistics',
