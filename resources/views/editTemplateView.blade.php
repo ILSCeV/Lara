@@ -75,7 +75,7 @@
                         <div id="filter" class="input-group">
                             @foreach($sections as $section)
                                 <label>
-                                    {{ Form::checkbox("filter[" . $section->title ."]", "1", in_array( $section->title, $template->showToSectionNames())) }}
+                                    {{ Form::checkbox("filter[" . $section->title ."]", $section->id, in_array( $section->title, $template->showToSectionNames())) }}
                                     {{ $section->title }}
                                 </label>
                             @endforeach
