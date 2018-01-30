@@ -85,6 +85,7 @@ class TemplateController extends Controller
         $preparationTime = Input::get('preparationTime');
         $publicInfo = Input::get('publicInfo');
         $privateDetails = Input::get('privateDetails');
+        $facebookNeeded = Input::get('facebookNeeded');
         /** @var $template Template*/
         $template = Template::firstOrNew(["id" => $templateId]);
         $inputShifts = Input::get("shifts");
@@ -111,7 +112,8 @@ class TemplateController extends Controller
             'priceExternal' => $priceExternal,
             'preparationTime' => $preparationTime,
             'publicInfo' => $publicInfo,
-            'privateDetails' => $privateDetails]);
+            'privateDetails' => $privateDetails,
+            'facebook_needed' => $facebookNeeded]);
         $template->save();
 
         $template->showToSection()->sync($filter);

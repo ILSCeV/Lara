@@ -507,6 +507,7 @@ return [
     // Template management //
     //////////
 
-    'filter'                        => 'Filter'
+    'filter'                        => 'Filter',
+    'faceNeeded'                    => 'Piratenbuch benötigt'
 
 ];

@@ -120,10 +120,14 @@ class CreateTemplatesTable extends Migration
             $priceTicketsExternal = $event->price_tickets_external;
             $priceNormal = $event->price_normal;
             $priceExternal = $event->price_external;
-            if($section->title != 'bc-Café'){
+            if($section->title == 'bc-Café'){
                 $facebookNeeded = false;
-            } else {
+                /* normal event, special, band */
+            } elseif ($type == 0 || $type == 2 || $type == 3) {
                 $facebookNeeded = true;
+                /* non public events */
+            } else {
+                $facebookNeeded = false;
             }
 
             $result = new \Lara\Template();

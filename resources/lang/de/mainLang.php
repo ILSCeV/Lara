@@ -508,5 +508,6 @@ return [
     // Template management //
     //////////
 
-    'filter'                        => 'Filter'
+    'filter'                        => 'Filter',
+    'faceNeeded'                    => 'Facebook benötigt'
 ];

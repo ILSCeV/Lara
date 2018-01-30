@@ -123,32 +123,34 @@ class ClubEventController extends Controller
                     // copy all except person_id and schedule_id and comment
                     return $shift->replicate(['person_id', 'schedule_id', 'comment']);
                 });
-            $title      = $template->title;
-            $subtitle   = $template->subtitle;
-            $type       = $template->type;
-            $section    = $template->section;
-            $filter     = $template->showToSectionNames();
-            $dv         = $template->time_preparation_start;
-            $timeStart  = $template->time_start;
-            $timeEnd    = $template->time_end;
-            $info       = $template->public_info;
-            $details    = $template->private_details;
-            $private    = $template->is_private;
+            $title          = $template->title;
+            $subtitle       = $template->subtitle;
+            $type           = $template->type;
+            $section        = $template->section;
+            $filter         = $template->showToSectionNames();
+            $dv             = $template->time_preparation_start;
+            $timeStart      = $template->time_start;
+            $timeEnd        = $template->time_end;
+            $info           = $template->public_info;
+            $details        = $template->private_details;
+            $private        = $template->is_private;
+            $facebookNeeded = $template->facebook_needed;
         } else {
             // fill variables with no data if no template was chosen
             $activeTemplate = "";
-            $shifts     = collect([]);
-            $title      = null;
-            $type       = null;
-            $subtitle   = null;
-            $section    = Section::sectionOfCurrentUser();
-            $filter     = null;
-            $dv         = $section->preparationTime;
-            $timeStart  = $section->startTime;
-            $timeEnd    = $section->endTime;
-            $info       = null;
-            $details    = null;
-            $private    = null;
+            $shifts         = collect([]);
+            $title          = null;
+            $type           = null;
+            $subtitle       = null;
+            $section        = Section::sectionOfCurrentUser();
+            $filter         = null;
+            $dv             = $section->preparationTime;
+            $timeStart      = $section->startTime;
+            $timeEnd        = $section->endTime;
+            $info           = null;
+            $details        = null;
+            $private        = null;
+            $facebookNeeded = false;
         }
 
         return View::make('createClubEventView', compact('sections', 'shiftTypes', 'templates',
@@ -156,7 +158,7 @@ class ClubEventController extends Controller
                                                          'section', 'filter', 'timeStart', 'timeEnd',
                                                          'info', 'details', 'private', 'dv',
                                                          'activeTemplate',
-                                                         'date', 'templateId'));
+                                                         'date', 'templateId','facebookNeeded'));
     }
 
 
@@ -458,7 +460,7 @@ class ClubEventController extends Controller
         $event->evnt_public_info       = Input::get('publicInfo');
         $event->evnt_private_details   = Input::get('privateDetails');
         $event->evnt_type              = Input::get('evnt_type');
-        $event->facebook_done          = Input::get('facebookDone',"0") == "1";
+        $event->facebook_done          = $this->getFacebookDoneValue();
         $event->event_url              = Input::get('eventUrl',"");
         $event->price_tickets_normal   = $this->getOrNullNumber('priceTicketsNormal');
         $event->price_tickets_external = $this->getOrNullNumber('priceTicketsExternal');
@@ -568,6 +570,16 @@ class ClubEventController extends Controller
             return $num;
         } else {
             return null;
+        }
+    }
+
+    private function getFacebookDoneValue() {
+        $inputVal = Input::get('facebookDone') ;
+        switch ($inputVal){
+            case "1": return true;
+            case "0": return false;
+            case "-1" :
+            default:null;
         }
     }
 }

@@ -42,7 +42,7 @@
                             @for($i = 0;$i<10;$i++)
                                 <div class="radio">
                                     <label>
-                                        {{ Form::radio('type', $i, $template->evnt_type == $i) }}
+                                        {{ Form::radio('type', $i, $template->type == $i) }}
                                         {{ \Lara\Utilities::getEventTypeTranslation($i) }}
                                     </label>
                                 </div>
@@ -52,12 +52,31 @@
                     </div>
                     <br>
                     <div class="form-group">
-                        <label>
+                        <label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2"> &nbsp; </label>
+                        <label class="col-md-8 col-sm-8 col-xs-8">
                             {!! Form::checkbox('isPrivate', '1', ($template->is_private + 1)%2,['class'=>'form-control']) !!}
                             {{ trans('mainLang.showExtern') }}
                         </label>
                     </div>
                     <br/>
+                    <div class="form-group">
+                        <label for="evnt_type" class="col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.faceNeeded') }}: </label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <label>
+                            {{ Form::radio('facebookNeeded',true,$template->facebook_needed == true, ['class'=>'form-control']) }}
+                                    {{ trans('mainLang.yes')  }}
+                                </label>
+                            </span>
+                            <span class="input-group-addon">
+                                <label>
+                            {{ Form::radio('facebookNeeded',false,$template->facebook_needed == false, ['class'=>'form-control']) }}
+                                {{ trans('mainLang.no')  }}
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                    <br>
                     <div class="form-group ">
                         <label for="section" class="control-label">{{ trans('mainLang.section') }}: &nbsp;</label>
                         <select id="section" class="selectpicker" name="section"
