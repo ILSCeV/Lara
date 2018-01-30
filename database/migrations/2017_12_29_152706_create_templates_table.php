@@ -42,6 +42,7 @@ class CreateTemplatesTable extends Migration
             $table->float("price_tickets_external")->nullable();
             $table->float("price_normal")->nullable();
             $table->float("price_external")->nullable();
+            $table->boolean('facebook_needed')->default(false);
         });
 
         Schema::create('shift_template', function (Blueprint $table) {
@@ -105,6 +106,7 @@ class CreateTemplatesTable extends Migration
                     $club = new Club();
                     $club->clb_title = $section->title;
                     $club->save();
+                    $event->section = $section;
                 }
                 $filter = collect([$section]);
             }
@@ -118,6 +120,11 @@ class CreateTemplatesTable extends Migration
             $priceTicketsExternal = $event->price_tickets_external;
             $priceNormal = $event->price_normal;
             $priceExternal = $event->price_external;
+            if($section->title != 'bc-Café'){
+                $facebookNeeded = false;
+            } else {
+                $facebookNeeded = true;
+            }
 
             $result = new \Lara\Template();
             $result->fill([
@@ -134,7 +141,8 @@ class CreateTemplatesTable extends Migration
                 'price_tickets_normal' => $priceTicketsNormal,
                 'price_tickets_external' => $priceTicketsExternal,
                 'price_normal' => $priceNormal,
-                'price_external' => $priceExternal
+                'price_external' => $priceExternal,
+                'facebook_needed' => $facebookNeeded
             ]);
             $result->save();
 

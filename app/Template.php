@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string public_info
  * @property string private_details
  * @property bool is_private
+ * @property bool facebook_needed
  *
  */
 class Template extends Model
@@ -57,7 +58,8 @@ class Template extends Model
         'price_tickets_normal',
         'price_tickets_external',
         'price_normal',
-        'price_external'
+        'price_external',
+        'facebook_needed'
     ];
 
     /**
@@ -92,7 +94,8 @@ class Template extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany/Shift
      */
-    public function shifts(){
+    public function shifts()
+    {
         return $this->belongsToMany('Lara\Shift');
     }
 

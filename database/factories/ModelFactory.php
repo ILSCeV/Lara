@@ -172,5 +172,6 @@ $factory->define(Lara\Template::class, function(Faker\Generator $faker) {
         'price_tickets_external'=>$faker->numberBetween(0,10),
         'price_normal' => $faker->randomFloat(2,0,1),
         'price_external' => $faker->randomFloat(2,1,2),
+        'facebook_needed' => $faker->boolean(40),
     ];
 });
