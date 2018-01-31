@@ -564,7 +564,7 @@ class ClubEventController extends Controller
 
     private function getOrNullNumber($query){
         $num = Input::get($query);
-        if(intval($num)>0){
+        if(doubleval($num)>0){
             return $num;
         } else {
             return null;
