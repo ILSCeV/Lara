@@ -77,10 +77,9 @@
                         </div>
                     </div>
                     <br>
-                    <div class="form-group ">
+                    <div class="form-group @if(!\Lara\Utilities::requirePermission("admin")) hidden @endif>">
                         <label for="section" class="control-label">{{ trans('mainLang.section') }}: &nbsp;</label>
-                        <select id="section" class="selectpicker" name="section"
-                                @if(!\Lara\Utilities::requirePermission("admin")) disabled @endif>
+                        <select id="section" class="selectpicker" name="section" >
                             @foreach($sections as $section)
                                 <option value="{{$section->id}}"
                                         data-content="<span class='palette-{!! $section->color !!}-900 bg'> {{$section->title}} </span>"
