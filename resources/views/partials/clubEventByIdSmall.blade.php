@@ -1,6 +1,4 @@
-@if(count($clubEvent)==0)
-	<h2>{{ trans('mainLang.noResults') }}</h2>
-@else
+
 <div class="panel">
 	<div class="panel panel-heading">
 		{{-- show only a placeholder for private events --}}
@@ -20,4 +18,4 @@
 		<i>{{ trans('mainLang.club') }}:</i> {{ $clubEvent->section->title }}
 	</div>
 </div>
-@endif
+

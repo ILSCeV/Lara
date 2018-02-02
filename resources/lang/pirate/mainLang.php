@@ -30,7 +30,7 @@ return [
     'notWorkingMail'        => 'Eine Planke ist lose? Versende :Name eine Taube!',
     'moreInfosProjectsite'  => 'Land in Sicht? Kletter\' in den Mast!',
     'backToTop'             => 'Ins Krähennest klettern!',
-    
+
     //-----------------------------------------------------------------------------------------------------
 
     // resources/views
@@ -54,35 +54,35 @@ return [
     'priceTickets'          => 'Vorausbuchung',
     'price'                 => 'Beförderungsentgelt',
     'studentExtern'         => 'Seeleute / Landratten',
-    
+
     //----------------------------------------------
-    
+
     'begin'                 => 'Beginn',
     'end'                   => 'Ende',
     'eventDefaults'         => 'Was der Kapitän gesagt hat:',
-    
+
     'DV-Time'               => 'An Bord sein',
     'club'                  => 'Schiff',
     'internalEventP'        => 'Feirn im engsten Kreise', // Placeholder string
     'internEventP'          => 'Feirn im engsten Kreise', // Placeholder string for example used in monthCell.blade.php
-    
+
     'willShowFor'           => 'Ahoi an',
-    
+
     'changeEvent'           => 'Veranstaltung ändern',
     'deleteEvent'           => 'Veranstaltung löschen',
     'confirmDeleteEvent'    => 'Diese Veranstaltung wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden!',
-    
+
     'additionalInfo'        => 'Flaschenpost',
     'moreDetails'           => 'Ansagen vom Kapitän',
-    
+
     //Button
     'showMore'              => 'Mehr!',
     'showLess'              => 'Verschwinde!',
-    
+
     'hideTimes'             => 'Gläser wegpacken',
-    
+
     'addComment'            => 'Blödsinn ausrufen',  //not used Line ClubEventView ~270 Placeholder message and similar
-    
+
     //List of Changes
     'listChanges'           => 'Schiffsregister',
 
@@ -94,7 +94,7 @@ return [
     'whenWasIt'             => 'Wann war das?',
 
     //-------------------------------------------------------------------------------------------------------
-    
+
     // resources/views/createClubEventView.blade.php
     'createNewVEvent'       => 'Neue Veranstaltung erstellen',
     'createNewEvent'        => 'Neues Event erstellen',
@@ -103,7 +103,7 @@ return [
     'title'                 => 'Titel',
     'subTitle'              => 'Subtitel',
     'error'                 => 'Fehler',
-    
+
     'showExtern'            => 'Für Externe sichtbar machen?',
 
     'survey'                => 'Umfrage',
@@ -115,7 +115,7 @@ return [
 
     'section'               => 'Abteil',
     'showFor'               => 'Zeige für',
-    
+
     'passwordEntry'         => 'Passwort zum Eintragen',
     'passwordRepeat'        => 'Passwort wiederholen',
     'passwordDeleteMessage' => 'Um das Passwort zu löschen trage in beide Felder "delete" ein (ohne Anführungszeichen).',
@@ -124,14 +124,14 @@ return [
     'public'                => 'öffentlich',
     'details'               => 'Interne Information',
     'showOnlyIntern'        => 'nur intern sichtbar',
-    
+
     'backWithoutChange'     => 'Ohne Änderung zurück',
-    
+
     //---------------------------------------------------------------------------------------------------------
-    
+
     // resources/views/editClubEventView.blade.php
     'changeEventJob'        => 'Veranstaltung/Aufgabe ändern',
-    
+
     //Lines for editing only with permission
     'noNotThisWay'          => 'Ne, das geht so nicht...',
     'onlyThe'               => 'Nur die',
@@ -141,53 +141,53 @@ return [
     'marketingManager'      => 'Smutje',
     'canChangeEventJob'     => 'dürfen diese Veranstaltung/Aufgabe ändern.',
     'commaThe'              => ', die ', //line number ~332
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // resources/views/createSurveyView.blade.php
     'createNewSurvey'       => 'Neue Umfrage erstellen',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // resources/views/editSurveyView.blade.php
     'editSurvey'            => 'Umfrage editieren',
     'confirmDeleteSurvey'   => 'Möchtest du die Umfrage ":title" wirklich löschen?',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // resources/views/surveyView.blade.php
     'description'           => 'Beschreibung',
     'surveyDeadlineTo'      => 'Die Umfrage läuft noch bis',
     'um'                    => 'um', //better translation needed
-    
+
     //result messages; can be changed with pluralization
     'noPersonAnswered'      => 'Es hat noch keine Person abgestimmt.',
     'onePersonAnswered'     => 'Es hat bereits eine Person abgestimmt.',
     'fewPersonAnswered1'    => 'Es haben bereits',
     'fewPersonAnswered2'    => 'Personen abgestimmt.',
-    
+
     //tableau (head)
     'name'                  => 'Name',
     'myClub'                => 'Schiff',
 
     'addMe'                 => 'Anhoyern!',
-    
+
     //Answers
     'yes'                   => 'Aaay!',
     'no'                    => 'Neey!',
     'noInformation'         => 'mmmh...',
-    
+
     'noClub'                => 'Extern',
-    
+
     'confirmDeleteAnswer'   => 'Möchtest Du diese Antwort wirklich löschen?',
-    
+
     //evaluation; can be changed with pluralization
     'evaluation'            => 'Auswertung',
     'personDidNotAnswer'    => 'Person wollte keine Angaben machen.',
     'personsDidNotAnswer'   => 'Personen wollten keine Angaben machen.',
     'personAnswered'        => 'Person stimmte für',
     'personsAnswered'       => 'Personen stimmten für',
-    
+
     //List of Changes
     'who'                   => 'Wer',
     'summary'               => 'Zusammenfassung',
@@ -195,9 +195,9 @@ return [
     'oldValue'              => 'Alter Wert',
     'newValue'              => 'Neuer Wert',
     'when'                  => 'Wann',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // resources/views/monthView.blade.php
     //short weekdays + CW
     'Cw' => 'KW',
@@ -221,59 +221,60 @@ return [
 
     // resources/views/monthView.blade.php
     'showWeek' => 'Detaillierte Ansicht dieser Woche anzeigen',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // resources/views/createSurveyView.blade.php
     'noEventsThisWeek'  => 'Keine Veranstaltungen diese Woche',
     'noSurveysThisWeek' => 'Keine Umfragen diese Woche',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // resources/views/listView.blade.php
     'for'               => 'Für',
     'noEventsPlanned'   => 'sind keine Veranstaltungen geplant',
     'noEventsOn'        => 'Keine Veranstaltungen am',
     'EventsFor'         => 'Veranstaltungen für',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // resources/views/log.blade.php
     // not translated - international view
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/partials
     // /resources/views/partials/clubEventByIdSmall.blade.php
     'noResults'             => 'Keine Treffer',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/partials/editSchedule.blade.php
     'adjustRoster'          => 'Dienstplan anpassen',
     'serviceTypeEnter'      => 'Diensttyp hier eingeben',
     'weight'                => 'Gewicht (für Statistik)',
     'statisticalEvaluation' => 'Kombüse',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/partials/filter.blade.php
     'allSections'           => 'Alle Schiffe',
     'comments'              => 'Ausrufe',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/partials/legend.blade.php
     //handled in the event type part in the /resources/views/clubEventView.blade.php part
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/partials/monthCell.blade.php
     'internalSurvey'        => 'Interne Umfrage',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/partials/navigation.blade.php
+    'today'                 => 'Tag',
     'month'                 => 'Jahreszwölftel',
     'week'                  => 'Trinkzeit',
     //not translated the term 'logs'
@@ -281,13 +282,13 @@ return [
     'manageShiftType'       => 'Diensttypen verwalten',
     'manageSections'        => 'Mannschaften verwalten',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
-    
+
     'manageTemplate'        => 'Vorlagen verwalten',
-    
+
     //create button text
     'createNewEvent'           => 'Neue Fahrt ansagen',
     'createNewSurvey'          => 'Die Mannschaft fragen',
-    
+
     //Member types
     'candidate'             => 'Frischling',
     'veteran'               => 'Seebär',
@@ -295,12 +296,12 @@ return [
     'ex-candidate'          => 'Deserteur',
     'active'                => 'Matrose',
     'external'              => 'Landratte',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/partials/scheduleEntryName.blade.php
     'IDoIt'                 => 'Anhoyern!', //Ich mach's!
-    
+
     // /resources/views/partials/scheduleEntryStatus.blade.php
     'jobFree'               => 'Dienst frei',
 
@@ -318,43 +319,43 @@ return [
 
     // /resources/views/partials/personalStatistics.blade.php
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/statisticsView.blade.php
     'monthStatistic'       => 'Monatsabrechnung',
     'yearStatistic'       => 'Jahresabrechnung',
-    
+
     // /resources/views/partials/surveyAnswerStatus.blade.php
     //no new strings
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/partials/surveyForm.blade.php
     'showOnlyForLoggedInMember' => 'nur für Crewmitglieder sichtbar',
     'showResultsOnlyForCreator' => 'Ergebnisse sind nur für den Umfragenersteller sichtbar',
     'showResultsAfterFillOut'   => 'Ergebnisse sind erst nach dem Ausfüllen sichtbar',
-    
+
     'passwordSetOptional'       => 'Das Setzen eines Passworts ist optional',
-    
+
     //Answer and Question options
     'answerOption'              => 'Antwortmöglichkeit',
     'question'                  => 'Frage',
-    
+
     //Questionoptions
     'freeText'                  => 'Freitext',
     'checkbox'                  => 'Checkbox',
     'dropdown'                  => 'Dropdown',
-    
+
     'required'                  => 'erforderlich',
     'addAnswerOption'           => 'Antwortmöglichkeit hinzufügen',
     'addQuestion'               => 'Frage hinzufügen',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/partials/weekCellFull.blade.php
     'hide' => 'Ausblenden',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/partials/weekCellHidden.blade.php
     'moreDetailsAfterLogInMessage'      => 'Darüber reden wir erst wenn du an Bord gehst!',
     // 'moreDetailsAfterLogInMessage2'  => 'nach dem Einloggen zugänglich.',
@@ -362,17 +363,17 @@ return [
     // ToDo find a solution
 
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/partials/weekCellProtected.blade.php
     //no new strings
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /resources/views/partials/weekCellSurvey.blade.php
     //no new strings
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     // /public/js ToDo add these strings
     // Maybe To do translate Javascript, tricky, " " can throw error messages
     // /public/js/vedst-script.js
@@ -380,12 +381,12 @@ return [
     'errorMessageEnterPasswordForShiftPlan' => 'Bitte noch das Passwort für diesen Dienstplan eingeben:',
     'shiftTime'                             => 'Deckzeit',
     //'hideTimes' already exists
-    
+
     'weekStart'                             => 'Manendach - Sonnendach',
     'hideTakenShifts'                       => 'Nur FREIe Dienste',
-    
+
     //-----------------------------------------------------------------------------------------------------------
-    
+
     //Controller  ToDo add these strings
     //ShiftController
     //action description
@@ -403,29 +404,29 @@ return [
     'messageSuccessfulDeleted'  => 'Erfolgreich gelöscht!',
 
     //-----------------------------------------------------------------------------------------------------------
-    
+
     //placeholder strings (e.g. used in buttons or text fields)
-    
+
     /*
     | instead of { trans('message.key' }} use  Lang::get('message.key') in the view
     */
-    
+
     //ClubEvent
     'addCommentHere'                => 'Blödsinn ausrufen',
     'enterPasswordHere'             => 'Passwort hier eingeben',
     'placeholderTitleWineEvening'   => 'z.B. Weinabend',
     //'placeholderTitleWineEvening'
-    
+
     'placeholderSubTitleWineEvening'=> 'z.B. Das Leben ist zu kurz, um schlechten Grogg zu trinken',
     //'placeholderSubTitleWineEvening'
-    
+
     'placeholderPublicInfo'         => 'z.B. Karten nur im Vorverkauf',
     'placeholderPrivateDetails'     => 'z.B. DJ-Tisch wird gebraucht',
-    
+
     //Survey
     'addAnswerHere'                 => 'Antwort hier hinzufügen',
     'createSurvey'                  => 'Umfrage erstellen', //Button text
-    
+
     //Partials
     //Navigation
     'clubNumber'                    => 'Matrose',
@@ -439,7 +440,7 @@ return [
     'placeholderTitleSurvey'        => 'z.B. Teilnahme an der Clubfahrt',
     'placeholderDescription'        => 'Beschreibung:',
     'placeholderActiveUntil'        => 'Aktiv bis:',
-    
+
     // Misc.
     'guest'                         => 'Passagier',
     'accessDenied'                  => 'Moment mal... Nur eingeloggte Crewmitglieder mit ausreichendem Rang dürfen hier rein! Logge dich ein, oder komm zur nächsten Versammlung und heuer an.',
@@ -490,7 +491,7 @@ return [
     //////////
     // ICal //
     //////////
-    
+
     'icalfeeds'                     =>  'Kalenderfeed im iCal-Format',
     'publishEvent'                  =>  'Event veröffentlichen',
     'unpublishEvent'                =>  'War alles nur Seemansgarn',

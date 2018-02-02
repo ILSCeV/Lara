@@ -271,6 +271,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
 
     // /resources/views/partials/navigation.blade.php
+    'today'                 => 'Day',
     'month'                 => 'Month',
     'week'                  => 'Week',
 
