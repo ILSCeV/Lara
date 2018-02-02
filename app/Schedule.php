@@ -80,7 +80,11 @@ class Schedule extends Model
         });
 
         $template   = $this;
+        $event = $template->event()->first();
         $title      = $template->schdl_title;
+        if(is_null($title)){
+            $title = $event->evnt_title;
+        }
         $subtitle   = $template->getClubEvent->evnt_subtitle;
         $type       = $template->getClubEvent->evnt_type;
         $section    = $template->getClubEvent->section;
@@ -91,6 +95,16 @@ class Schedule extends Model
         $info       = $template->getClubEvent->evnt_public_info;
         $details    = $template->getClubEvent->evnt_private_details;
         $private    = $template->getClubEvent->evnt_is_private;
+        $facebookNeeded = $template->facebook_needed;
+        if(is_null($facebookNeeded)) {
+            $facebookNeeded = 0;
+        } else {
+            $facebookNeeded = 1;
+        }
+        $priceTicketsNormal = $event->price_tickets_normal;
+        $priceTicketsExternal = $event->price_tickets_external;
+        $priceNormal = $event->price_normal;
+        $priceExternal = $event->price_external;
 
         $result->fill([
             'title' => $title,
@@ -102,7 +116,12 @@ class Schedule extends Model
             'time_end'=>$timeEnd,
             'public_info'=> $info,
             'private_details'=>$details,
-            'is_private'=>$private
+            'is_private'=>$private,
+            'price_tickets_normal' => $priceTicketsNormal,
+            'price_tickets_external'=> $priceTicketsExternal,
+            'price_normal' => $priceNormal,
+            'price_external' => $priceExternal,
+            'facebook_needed'=>$facebookNeeded
         ]);
         $result->save();
 
