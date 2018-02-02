@@ -274,6 +274,7 @@ return [
     //-----------------------------------------------------------------------------------------------------------
 
     // /resources/views/partials/navigation.blade.php
+    'today'                 => 'Tag',
     'month'                 => 'Monat',
     'week'                  => 'Woche',
     //not translated the term 'logs'
