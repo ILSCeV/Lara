@@ -118,7 +118,7 @@ class LoginController extends Controller
      */
     public function doDevelopmentLogin()
     {
-        $isLDAPLogin = request('email') === '';
+        $isLDAPLogin = request('loginType') === 'LDAP';
         if (!$isLDAPLogin) {
             return $this->doLaraLogin();
         }
@@ -239,7 +239,7 @@ class LoginController extends Controller
 
         }
 
-        $isLDAPLogin = request('email') === "";
+        $isLDAPLogin = request('loginType') === 'LDAP';
         if ($isLDAPLogin) {
             return $this->doLDAPLogin();
         }
@@ -259,9 +259,9 @@ class LoginController extends Controller
                 $person->club->clb_title,
                 $person->prsn_status
             );
+            return Redirect::back();
         }
-
-        return Redirect::back();
+        return $this->loginFailed();
     }
     public function doLDAPLogin()
     {
@@ -483,12 +483,9 @@ class LoginController extends Controller
             return Redirect::back();
         }
 
-        Session::put('message', Config::get('messages_de.login-fail'));
-        Session::put('msgType', 'danger');
-
         Log::info('Auth fail: ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] . ', ' . $userGroup . ') used wrong password.');
 
-        return Redirect::back();
+        return $this->loginFailed();
     }
 
     public function setCurrentUserInSession($id, $name, $group, $club, $status)
@@ -498,6 +495,17 @@ class LoginController extends Controller
         Session::put('userGroup', $group);
         Session::put('userClub', $club);
         Session::put('userStatus', $status);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function loginFailed()
+    {
+        Session::put('message', Config::get('messages_de.login-fail'));
+        Session::put('msgType', 'danger');
+
+        return Redirect::back();
     }
 
 }

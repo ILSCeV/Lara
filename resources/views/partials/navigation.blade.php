@@ -210,42 +210,7 @@ Disabling iCal until fully functional.
 
 {{-- LOGIN FORM / public --}}
                     <li>
-                        {!! Form::open( array('url'    => 'login',
-                                              'method' => 'POST',
-                                              'class'  => 'form-horizontal navbar-right') ) !!}
-
-                            <div class="navbar-form form-horizontal">
-                                {!! Form::text( 'email',
-                                                Input::old( 'email' ),
-                                                array('placeholder'  => 'Email',
-                                                      'class'        => 'form-control',
-                                                      'autocomplete' => 'on',
-                                                      'style'        => 'cursor: auto') ) !!}
-
-                                <br class="visible-xs">
-                                {!! Form::text( 'username',
-                                                Input::old( 'username' ),
-                                                array('placeholder'  => Lang::get('mainLang.clubNumber'),
-                                                      'class'        => 'form-control',
-                                                      'autocomplete' => 'on',
-                                                      'style'        => 'cursor: auto') ) !!}
-
-                                <br class="visible-xs">
-
-                                {!! Form::password( 'password',
-                                                   ['placeholder'  => Lang::get('mainLang.password' ),
-                                                    'class'        => 'form-control',
-                                                    'autocomplete' => 'off',
-                                                    'style'        => 'cursor: auto'] ) !!}
-
-                                <br class="visible-xs">
-
-                                {!! Form::submit( Lang::get('mainLang.logIn'),
-                                                  array('class' => ' btn btn-primary btn-sm') ) !!}
-
-                                <br class="visible-xs">
-                            </div>
-                        {!! Form::close() !!}
+                        @include('partials/login')
                     </li>
 
                 @endif
