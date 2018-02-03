@@ -57,11 +57,11 @@ Route::get('/calendar/',						'MonthController@currentMonth');
 
 
 // AUTHENTIFICATION
-Route::get('login',								'MonthController@currentMonth');
-Route::get('logout', 							'LoginController@doLogout');
+Route::get('login',								'MonthController@currentMonth')->name('login');
+Route::get('logout', 							'LoginController@doLogout')->name('logout');
 
-Route::post('login', 							'LoginController@doLogin');
-Route::post('logout', 							'LoginController@doLogout');
+Route::post('login', 							'LoginController@doLogin')->name('login.post');
+Route::post('logout', 							'LoginController@doLogout')->name('logout.post');
 
 
 // TIMESTAMP
@@ -168,3 +168,13 @@ Route::post('/completeOverrideShiftType',                       'ShiftTypeContro
 Route::get('/shiftTypeSearch/{filter?}',                               'ShiftTypeController@index')->name('shiftTypeSearch');
 Route::post('/seachShiftType/',                                 'ShiftTypeController@search')->name('searchShiftType');
 
+
+
+Route::get('register', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm']);
+Route::post('register', ['as' => 'register.post', 'uses' => 'Auth\RegisterController@register']);
+
+// Password Reset Routes...
+Route::get('password/reset', ['as' => 'password.reset', 'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm']);
+Route::post('password/email', ['as' => 'password.email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
+Route::get('password/reset/{token}', ['as' => 'password.reset.token', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
+Route::post('password/reset', ['as' => 'password.reset.post', 'uses' => 'Auth\ResetPasswordController@reset']);

@@ -3,6 +3,9 @@
 namespace Lara\Http\Controllers\Auth;
 
 use Lara\User;
+use Lara\Person;
+use Lara\Section;
+
 use Lara\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -27,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -36,7 +39,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -51,6 +54,7 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'section' => 'required'
         ]);
     }
 
@@ -62,10 +66,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // workaround, since most of the legacy depends on an LDAP id being present
+        $newLDAPId = Person::max('prsn_ldap_id') + 1;
+        $person = new Person([
+            'prsn_name' => $data['name'],
+            'prsn_ldap_id' => $newLDAPId,
+            'prsn_status' => 'member',
+            'clb_id' => Section::find($data['section'])->club()->id,
+            'prsn_uid' => hash("sha512", uniqid())
+        ]);
+        $person->save();
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            // default to member, can change permissions later
+            'status' => 'member',
+            'section_id' => $data['section'],
+            'group' => Section::find($data['section'])->title,
+            'person_id' => $person->id
         ]);
     }
 }
