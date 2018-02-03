@@ -21,7 +21,7 @@ class AddExtraUserColumns extends Migration
         });
 
         foreach (Lara\Person::all() as $person) {
-            $user = User::create([
+            User::create([
                 'name' => $person->prsn_name,
                 'email' => '',
                 'section_id' => $person->club->section(),
