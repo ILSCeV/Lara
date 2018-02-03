@@ -470,6 +470,9 @@ class LoginController extends Controller
         if ($info[0]['userpassword'][0] === $password) {
             $this->setCurrentUserInSession($info[0]['uidnumber'][0], $userName, $userGroup, $userClub, $userStatus);
 
+            $user = Person::where('prsn_ldap_id', $info[0]['uidnumber'][0])->first();
+            Auth::login($user);
+
             Log::info('Auth success: ' .
                 $info[0]['cn'][0] .
                 ' (' .
