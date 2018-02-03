@@ -60,7 +60,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('template.overview')}}"> 
+                        <a href="{{route('template.overview')}}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>
@@ -215,6 +215,14 @@ Disabling iCal until fully functional.
                                               'class'  => 'form-horizontal navbar-right') ) !!}
 
                             <div class="navbar-form form-horizontal">
+                                {!! Form::text( 'email',
+                                                Input::old( 'email' ),
+                                                array('placeholder'  => 'Email',
+                                                      'class'        => 'form-control',
+                                                      'autocomplete' => 'on',
+                                                      'style'        => 'cursor: auto') ) !!}
+
+                                <br class="visible-xs">
                                 {!! Form::text( 'username',
                                                 Input::old( 'username' ),
                                                 array('placeholder'  => Lang::get('mainLang.clubNumber'),

@@ -15,7 +15,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        // authentication related
         'name', 'email', 'password',
+        // Lara related
+        'section_id', 'person_id', 'status', 'group'
     ];
 
     /**
@@ -26,4 +29,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function person()
+    {
+        return $this->belongsTo('Lara\Person');
+    }
+
+    public function section()
+    {
+        return $this->belongsTo('Lara\Section');
+    }
 }

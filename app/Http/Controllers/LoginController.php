@@ -4,13 +4,16 @@ namespace Lara\Http\Controllers;
 
 use Config;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Input;
+use Lara\Person;
 use Lara\Section;
 use Lara\Settings;
 use Log;
 use Redirect;
 use Session;
 
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 /* 
 --------------------------------------------------------------------------
@@ -35,7 +38,7 @@ use Session;
 
 class LoginController extends Controller
 {
-
+    use AuthenticatesUsers;
 
     /**
      * Logout current user, delete relevant session data.
@@ -45,7 +48,9 @@ class LoginController extends Controller
     public function doLogout()
     {
         Session::flush();
-
+        if (Auth::user()) {
+            return $this->logout();
+        }
         return Redirect::to('/');
     }
 
@@ -113,6 +118,10 @@ class LoginController extends Controller
      */
     public function doDevelopmentLogin()
     {
+        $isLDAPLogin = request('email') === '';
+        if (!$isLDAPLogin) {
+            return $this->doLaraLogin();
+        }
         $inputUserName = Input::get('username');
 
         $inputGroup = ["marketing", "bc-Club", "bc-Café", "clubleitung", "admin"];
@@ -147,11 +156,7 @@ class LoginController extends Controller
         $userClub = $inputClub[$userClubId];
         $userStatus = "member";
 
-        Session::put('userId', $userId);
-        Session::put('userName', $userName);
-        Session::put('userGroup', $userGroup);
-        Session::put('userClub', $userClub);
-        Session::put('userStatus', $userStatus);
+        $this->setCurrentUserInSession($userId, $userName, $userGroup, $userClub, $userStatus);
 
         Log::info('Auth success: ' . $userName . ' (' . $userId . ', ' . $userGroup . ') just logged in.');
 
@@ -234,9 +239,33 @@ class LoginController extends Controller
 
         }
 
-// CONNECTING TO LDAP SERVER
+        $isLDAPLogin = request('email') === "";
+        if ($isLDAPLogin) {
+            return $this->doLDAPLogin();
+        }
+        return $this->doLaraLogin();
 
+    }
 
+    public function doLaraLogin()
+    {
+        if ($this->attemptLogin(request())) {
+            $user = $this->guard()->user();
+            $person = $user->person;
+            $this->setCurrentUserInSession(
+                $person->prsn_ldap_id,
+                $person->prsn_name,
+                $user->group,
+                $person->club->clb_title,
+                $person->prsn_status
+            );
+        }
+
+        return Redirect::back();
+    }
+    public function doLDAPLogin()
+    {
+        // CONNECTING TO LDAP SERVER
         $ldapConn = ldap_connect(Config::get('bcLDAP.server'), Config::get('bcLDAP.port'));
 
         // Set some ldap options for talking to AD
@@ -251,7 +280,7 @@ class LoginController extends Controller
             Config::get('bcLDAP.admin-password'));
 
 
-// INPUT VALIDATION AND ERROR HANDLING 
+// INPUT VALIDATION AND ERROR HANDLING
 
 
         // Request UID if none entered
@@ -434,15 +463,12 @@ class LoginController extends Controller
         // Hashing password input
         $password = '{md5}' . base64_encode(mhash(MHASH_MD5, Input::get('password')));
 
+        // end ldapConnection
+        ldap_unbind($ldapConn);
+
         // Compare password in LDAP with hashed input.
         if ($info[0]['userpassword'][0] === $password) {
-            ldap_unbind($ldapConn);
-
-            Session::put('userId', $info[0]['uidnumber'][0]);
-            Session::put('userName', $userName);
-            Session::put('userGroup', $userGroup);
-            Session::put('userClub', $userClub);
-            Session::put('userStatus', $userStatus);
+            $this->setCurrentUserInSession($info[0]['uidnumber'][0], $userName, $userGroup, $userClub, $userStatus);
 
             Log::info('Auth success: ' .
                 $info[0]['cn'][0] .
@@ -455,16 +481,23 @@ class LoginController extends Controller
                 ') just logged in.');
 
             return Redirect::back();
-        } else {
-            ldap_unbind($ldapConn);
-
-            Session::put('message', Config::get('messages_de.login-fail'));
-            Session::put('msgType', 'danger');
-
-            Log::info('Auth fail: ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] . ', ' . $userGroup . ') used wrong password.');
-
-            return Redirect::back();
         }
+
+        Session::put('message', Config::get('messages_de.login-fail'));
+        Session::put('msgType', 'danger');
+
+        Log::info('Auth fail: ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] . ', ' . $userGroup . ') used wrong password.');
+
+        return Redirect::back();
+    }
+
+    public function setCurrentUserInSession($id, $name, $group, $club, $status)
+    {
+        Session::put('userId', $id);
+        Session::put('userName', $name);
+        Session::put('userGroup', $group);
+        Session::put('userClub', $club);
+        Session::put('userStatus', $status);
     }
 
 }
