@@ -354,7 +354,6 @@
 	<div class="row">
 		@include('partials.editSchedule')
 		<br>
-
 		{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'hidden', 'id'=>'button-create-submit')) !!}
 	    <input class="hidden" name="evntIsPublished" type="text" value="0" />
 
@@ -372,8 +371,12 @@
 	    @endif
 
 	    --}}
+        @if($createClubEvent)
+		    <button class="btn btn-primary" id="createUnpublishedBtn">{{trans('mainLang.createNewEvent')}}</button>
+        @else
+            {!! Form::submit( trans('mainLang.update') , array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
+        @endif
 
-		<button class="btn btn-primary" id="createUnpublishedBtn">{{trans('mainLang.createNewEvent')}}</button>
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<br class="visible-xs">
 		<br class="visible-xs">
