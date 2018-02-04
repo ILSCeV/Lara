@@ -89,7 +89,7 @@ class ClubEventController extends Controller
         // get a list of possible clubs to create an event at, but without the id=0 (default value)
         $sections = Section::where("id", '>', 0)
                        ->orderBy('title', 'ASC')
-                       ->pluck('title', 'id');
+                       ->get();
 
         // get a list of available templates to choose from
         $userClub = Session::get('userClub');
@@ -305,8 +305,9 @@ class ClubEventController extends Controller
         $schedule = $event->getSchedule;
 
         // get a list of possible clubs to create an event at
-        $sections = Section::orderBy('title', 'ASC')
-                       ->pluck('title', 'id');
+        $sections = Section::where("id", '>', 0)
+                        ->orderBy('title', 'ASC')
+                       ->get();
 
 
         // get a list of available job types

@@ -39,13 +39,23 @@
 					<label for="templateSelector" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}: &nbsp;</label>
                     <div class="col-md-6 col-sm-6 col-xs-8">
                         <select name="template" id="templateSelector" class="selectpicker" data-live-search="true">
-                            <option value="-1" ></option>
-                            @foreach($templates as $template)
-                                <option value="{{ Request::getBasePath() }}/event/{{ substr($date, 6, 4) }}/{{ substr($date, 3, 2) }}/{{ substr($date, 0, 2) }}/{{ $template->id }}/create"
-                                @if($template->id == $templateId )
-                                    selected
-                                @endif
-                                >{{  $template->title }}</option>
+                            <optgroup label="">
+                                <option value="-1" ></option>
+                            </optgroup>
+                            @foreach($sections as $section)
+                                <optgroup label="{{ $section->title }}">
+                                    @foreach( $templates->filter(function ($template) use ($section) { return $template->section_id == $section->id; }) as $template )
+                                        <option value="{{ Request::getBasePath() }}/event/{{ substr($date, 6, 4) }}/{{ substr($date, 3, 2) }}/{{ substr($date, 0, 2) }}/{{ $template->id }}/create"
+                                                @if($template->id == $templateId )
+                                                selected
+                                            @endif
+                                       data-content="<span> {{  $template->title }} {{trans('mainLang.begin')}}: {{$template->time_start}}
+                                            {{trans('mainLang.end')}}: {{$template->time_end}}  </span>"
+                                        title="{{ $template->title }}"
+                                        >{{  $template->title }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
                         </select>
                     </div>
@@ -222,7 +232,7 @@
 						    @foreach($sections as $section)
 						        <li>
 						        	<a href="javascript:void(0);"
-						        	   onClick="document.getElementById('section').value='{{$section}}'">{{ $section }}</a>
+						        	   onClick="document.getElementById('section').value='{{$section->title}}'">{{ $section->title }}</a>
 						        </li>
 							@endforeach
 					    </ul>
