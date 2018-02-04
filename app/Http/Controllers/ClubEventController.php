@@ -154,7 +154,7 @@ class ClubEventController extends Controller
         }
         $createClubEvent = true;
 
-        return View::make('createClubEventView', compact('sections', 'shiftTypes', 'templates',
+        return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
                                                          'shifts', 'title', 'subtitle', 'type',
                                                          'section', 'filter', 'timeStart', 'timeEnd',
                                                          'info', 'details', 'private', 'dv',
@@ -283,7 +283,7 @@ class ClubEventController extends Controller
             $clubEvent->save();
         }
 
-        return View::make('clubEventView', compact('clubEvent', 'shifts', 'clubs', 'persons', 'revisions', 'created_by', 'creator_name'));
+        return View::make('clubevent.clubEventView', compact('clubEvent', 'shifts', 'clubs', 'persons', 'revisions', 'created_by', 'creator_name'));
     }
 
 
@@ -357,13 +357,17 @@ class ClubEventController extends Controller
                                                        'shifts',
                                                        'created_by',
                                                        'creator_name','createClubEvent')); */
-        return View::make('createClubEventView', compact('sections', 'shiftTypes', 'templates',
-            'shifts', 'title', 'subtitle', 'type',
-            'section', 'filter', 'timeStart', 'timeEnd',
-            'info', 'details', 'private', 'dv',
-            'activeTemplate',
-            'date', 'templateId','facebookNeeded','createClubEvent','created_by',
-            'creator_name','event'));
+       if(Utilities::requirePermission(["marketing","clubleitung","admin"]) || Session::get('userId') == $created_by) {
+           return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
+               'shifts', 'title', 'subtitle', 'type',
+               'section', 'filter', 'timeStart', 'timeEnd',
+               'info', 'details', 'private', 'dv',
+               'activeTemplate',
+               'date', 'templateId', 'facebookNeeded', 'createClubEvent',
+               'event'));
+       } else {
+           return response()->view('clubevent.notAllowedToEdit',compact('created_by','creator_name'),403);
+       }
     }
 
     /**
