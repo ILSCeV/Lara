@@ -60,6 +60,11 @@ class CreateTemplatesTable extends Migration
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('cascade');
         });
 
+        Schema::table("club_events", function(Blueprint $table) {
+            $table->integer('template_id')->unsigned()->nullable();
+            $table->foreign('template_id')->references('id')->on('templates');
+        });
+
         DB::table('schedules')->where('schdl_title', '=', self::BD_TEMPLATE_NAME)
             ->update(['schdl_is_template' => '1']);
 
@@ -174,6 +179,10 @@ class CreateTemplatesTable extends Migration
      */
     public function down()
     {
+        Schema::table("club_events", function(Blueprint $table) {
+           $table->dropColumn('template_id');
+        });
+
         Schema::table("schedules", function (Blueprint $table) {
             $table->boolean("schdl_is_template");
         });

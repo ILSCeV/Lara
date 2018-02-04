@@ -197,7 +197,9 @@ class ClubEventController extends Controller
                  . Session::get('userGroup') . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
         Utilities::clearIcalCache();
         if (Input::get('saveAsTemplate') == true){
-            $newSchedule->toTemplate();
+            $template = $newSchedule->toTemplate();
+            $newEvent->template_id = $template->id;
+            $newEvent->save();
         }
 
         // show new event
@@ -348,15 +350,14 @@ class ClubEventController extends Controller
         $private        = $event->evnt_is_private;
         $facebookNeeded = $event->facebook_done;
         $date = $event->evnt_date_start;
+        if(!is_null($event->template_id)) {
+            $baseTemplate = $event->template;
+        } else {
+            $baseTemplate = null;
+        }
 
         $createClubEvent = false;
-       /* return View::make('editClubEventView', compact('event',
-                                                       'schedule',
-                                                       'sections',
-                                                       'shiftTypes',
-                                                       'shifts',
-                                                       'created_by',
-                                                       'creator_name','createClubEvent')); */
+
        if(Utilities::requirePermission(["marketing","clubleitung","admin"]) || Session::get('userId') == $created_by) {
            return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
                'shifts', 'title', 'subtitle', 'type',
@@ -364,7 +365,7 @@ class ClubEventController extends Controller
                'info', 'details', 'private', 'dv',
                'activeTemplate',
                'date', 'templateId', 'facebookNeeded', 'createClubEvent',
-               'event'));
+               'event','baseTemplate'));
        } else {
            return response()->view('clubevent.notAllowedToEdit',compact('created_by','creator_name'),403);
        }
@@ -404,6 +405,11 @@ class ClubEventController extends Controller
         $schedule->save();
 
         Utilities::clearIcalCache();
+        if (Input::get('saveAsTemplate') == true){
+            $template = $schedule->toTemplate();
+            $event->template_id = $template->id;
+            $event->save();
+        }
 
         // show event
         return Redirect::action('ClubEventController@show', array('id' => $id));
@@ -496,6 +502,7 @@ class ClubEventController extends Controller
         $event->price_tickets_external = $this->getOrNullNumber('priceTicketsExternal');
         $event->price_normal           = $this->getOrNullNumber('priceNormal');
         $event->price_external         = $this->getOrNullNumber('priceExternal');
+        $event->template_id            = $this->getTemplateId();
 
         // Check if event URL is properly formatted: if the protocol is missing, we have to add it.
         if( $event->event_url !== ""
@@ -611,6 +618,17 @@ class ClubEventController extends Controller
             case "-1" :
             default:null;
         }
+    }
+
+    private function getTemplateId() {
+        $templateValue = Input::get('template',-1);
+        if($templateValue == -1){
+            return null;
+        }
+        $reverse = strrev($templateValue);
+        $pos = strpos($reverse,"/",7);
+        $result = substr($templateValue, strlen($templateValue)-$pos);
+        return str_replace("/create",'',$result);
     }
 }
 

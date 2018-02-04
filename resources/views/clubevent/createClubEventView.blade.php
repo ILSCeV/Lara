@@ -21,7 +21,14 @@
 		<div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
 
 			<div class="panel-heading">
-				<h4 class="panel-title">{{ trans('mainLang.createNewEvent') }}:</h4>
+				<h4 class="panel-title">
+                    @if($createClubEvent)
+                        {{ trans('mainLang.createNewEvent') }}
+                    @else
+                        {{ trans('mainLang.changeEventJob') }}
+                    @endif
+                    :
+                </h4>
 			</div>
 
 			<br>
@@ -31,7 +38,7 @@
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="templateSelector" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}: &nbsp;</label>
                     <div class="col-md-6 col-sm-6 col-xs-8">
-                        <select id="templateSelector" class="selectpicker" data-live-search="true">
+                        <select name="template" id="templateSelector" class="selectpicker" data-live-search="true">
                             <option value="-1" ></option>
                             @foreach($templates as $template)
                                 <option value="{{ Request::getBasePath() }}/event/{{ substr($date, 6, 4) }}/{{ substr($date, 3, 2) }}/{{ substr($date, 0, 2) }}/{{ $template->id }}/create"
@@ -43,6 +50,22 @@
                         </select>
                     </div>
 			   	</div>
+                @elseIf(isset($baseTemplate) && !is_null($baseTemplate))
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}: &nbsp;</label>
+                        <div class="col-md-6 col-sm-6 col-xs-8">
+                            <div class="row">
+                                {{ $baseTemplate->title }}
+                            </div>
+                            <div class="row">
+                                {{ trans('mainLang.begin') }}: {{ $baseTemplate->time_start }}
+                            </div>
+                            <div class="row">
+                                {{ trans('mainLang.end') }}: {{$baseTemplate->time_end}}
+                            </div>
+                        </div>
+
+                    </div>
                 @endif
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 			   		<span class="col-md-1 col-sm-1 col-xs-1">&nbsp;</span>
