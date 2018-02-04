@@ -1,14 +1,21 @@
 @extends('layouts.master')
 
 @section('title')
-	{{ trans('mainLang.createNewVEvent') }}
+        @if($createClubEvent)
+        	{{ trans('mainLang.createNewVEvent') }}
+        @else
+            {{ trans('mainLang.changeEventJob') }}
+        @endif
 @stop
 
 @section('content')
 
 @if(Session::has('userId'))
-
-	{!! Form::open(['method' => 'POST', 'route' => ['event.store']]) !!}
+    @if($createClubEvent)
+	    {!! Form::open(['method' => 'POST', 'route' => ['event.store']]) !!}
+    @else
+        {!! Form::open(['method' => 'PUT', 'route' => ['event.update', $event->id]]) !!}
+    @endif
 
 	<div class="row">
 		<div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
@@ -20,7 +27,7 @@
 			<br>
 
 			<div class="panel-body no-padding">
-
+                @if($createClubEvent)
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="templateSelector" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}: &nbsp;</label>
                     <div class="col-md-6 col-sm-6 col-xs-8">
@@ -36,7 +43,7 @@
                         </select>
                     </div>
 			   	</div>
-
+                @endif
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 			   		<span class="col-md-1 col-sm-1 col-xs-1">&nbsp;</span>
 					{!! Form::checkbox('saveAsTemplate', '1', false, array('class'=>'col-md-1 col-sm-1 col-xs-1')) !!}

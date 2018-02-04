@@ -152,13 +152,14 @@ class ClubEventController extends Controller
             $private        = null;
             $facebookNeeded = false;
         }
+        $createClubEvent = true;
 
         return View::make('createClubEventView', compact('sections', 'shiftTypes', 'templates',
                                                          'shifts', 'title', 'subtitle', 'type',
                                                          'section', 'filter', 'timeStart', 'timeEnd',
                                                          'info', 'details', 'private', 'dv',
                                                          'activeTemplate',
-                                                         'date', 'templateId','facebookNeeded'));
+                                                         'date', 'templateId','facebookNeeded','createClubEvent'));
     }
 
 
@@ -334,14 +335,35 @@ class ClubEventController extends Controller
             $creator_name = $revisions[0]["user name"];
         }
 
+        $title          = $event->evnt_title;
+        $type           = $event->evnt_type;
+        $subtitle       = $event->evnt_subtitle;
+        $section        = $event->section;
+        $filter         = $event->showToSectionNames();
+        $dv             = $schedule->schdl_time_preparation_start;
+        $timeStart      = $event->evnt_time_start;
+        $timeEnd        = $event->evnt_time_end;
+        $info           = $event->evnt_public_info;
+        $details        = $event->evnt_private_details;
+        $private        = $event->evnt_is_private;
+        $facebookNeeded = $event->facebook_done;
+        $date = $event->evnt_date_start;
 
-        return View::make('editClubEventView', compact('event',
+        $createClubEvent = false;
+       /* return View::make('editClubEventView', compact('event',
                                                        'schedule',
                                                        'sections',
                                                        'shiftTypes',
                                                        'shifts',
                                                        'created_by',
-                                                       'creator_name'));
+                                                       'creator_name','createClubEvent')); */
+        return View::make('createClubEventView', compact('sections', 'shiftTypes', 'templates',
+            'shifts', 'title', 'subtitle', 'type',
+            'section', 'filter', 'timeStart', 'timeEnd',
+            'info', 'details', 'private', 'dv',
+            'activeTemplate',
+            'date', 'templateId','facebookNeeded','createClubEvent','created_by',
+            'creator_name','event'));
     }
 
     /**
