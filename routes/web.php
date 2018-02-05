@@ -157,5 +157,6 @@ Route::get('/update',                                         'AdminController@s
 //Templates
 Route::get('/templates',                                      'TemplateController@index')->name('template.overview');
 Route::get('/template/{id}',                                  'TemplateController@show')->name('template.edit');
-Route::post('/template/{id}',                                  'TemplateController@store')->name('template.update');
+Route::post('/template/{id}',                                 'TemplateController@store')->name('template.update');
+Route::post('/delete/template/{id}',                          'TemplateController@destroy')->name('template.delete');
 

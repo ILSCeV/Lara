@@ -6,6 +6,7 @@ namespace Lara\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Lara\ClubEvent;
 use Lara\Logging;
 use Lara\Section;
 use Lara\Shift;
@@ -254,6 +255,29 @@ class TemplateController extends Controller
      */
     public function destroy(Template $template)
     {
+        if (!(Session::has('userId')
+            && (Session::get('userGroup') == 'marketing'
+                || Session::get('userGroup') == 'clubleitung'
+                || Session::get('userGroup') == 'admin'))) {
+            Session::put('message', trans("messages.notAllowed"));
+            Session::put('msgType', 'danger');
+            return redirect('/');
+        }
+
         //
+        $clubEvents = ClubEvent::where('template_id','=',$template->id)->get();
+        /** @var ClubEvent $clubEvent */
+        foreach ($clubEvents as $clubEvent){
+            $clubEvent->template_id = null;
+            $clubEvent->save();
+        }
+
+        $shifts = $template->shifts()->get();
+        foreach ($shifts as $shift){
+            $shift->delete();
+        }
+        Template::destroy($template->id);
+
+        return redirect()->route('template.overview');
     }
 }
