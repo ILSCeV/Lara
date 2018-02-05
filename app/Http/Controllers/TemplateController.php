@@ -253,7 +253,7 @@ class TemplateController extends Controller
      * @param  \Lara\Template $template
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Template $template)
+    public function destroy($templateId)
     {
         if (!(Session::has('userId')
             && (Session::get('userGroup') == 'marketing'
@@ -264,6 +264,8 @@ class TemplateController extends Controller
             return redirect('/');
         }
 
+        $template = Template::where('id', $templateId)->with('shifts')->first();
+
         //
         $clubEvents = ClubEvent::where('template_id','=',$template->id)->get();
         /** @var ClubEvent $clubEvent */
@@ -272,11 +274,14 @@ class TemplateController extends Controller
             $clubEvent->save();
         }
 
-        $shifts = $template->shifts()->get();
+        $shifts = $template->shifts;
         foreach ($shifts as $shift){
             $shift->delete();
         }
-        Template::destroy($template->id);
+        $template->delete();
+
+        Session::put('message', trans("mainLang.messageSuccessfulDeleted"));
+        Session::put('msgType', 'success');
 
         return redirect()->route('template.overview');
     }

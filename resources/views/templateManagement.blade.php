@@ -30,8 +30,8 @@
                     <td class="text-center" > <a href="{{ route('template.edit', $template) }}"> {{ $template->title }} </a> </td>
                     <td class="text-center" > {{ $template->time_start }} </td>
                     <td class="text-center" > {{ $template->time_end }} </td>
-                    <td class="text-center" > <button data-id="{{$template->id}}" class="btn btn-danger delete-template"> <span class="glyphicon glyphicon-trash"></span> </button>
-                        <form id="delete-template-{{$template->id}}" method="POST" class="hidden" action="{{route('template.delete', $template)}}">
+                    <td class="text-center" > <button data-id="{{$template->id}}" data-templatename="{{$template->title}}" class="btn btn-danger delete-template"> <span class="glyphicon glyphicon-trash"></span> </button>
+                        <form id="delete-template-{{$template->id}}" method="POST" class="hidden" action="{{route('template.delete', $template->id)}}">
                             {{ csrf_field() }}
                         <button  class="hidden" type="submit"></button>
                         </form>

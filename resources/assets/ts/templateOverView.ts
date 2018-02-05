@@ -16,12 +16,13 @@ $(()=>{
 
   $('.delete-template').on('click', (event) =>  {
     let templateId = $(event.target).data('id');
+    let templateName = $(event.target).data('templatename');
 
     // Initialise modal and show loading icon and message
     var dialog = <any> bootbox.confirm({
-      title: '<h4 class="alert alert-danger">' + translate('deleteTemplate') + '</h4>',
+      title: '<h4 class="alert alert-danger text-center">' + translate('deleteTemplate') + '</h4>',
       size: 'large',
-      message: '<p>' + translate('deleteTemplateMessage') +  '</p>',
+      message: '<p>' + translate('deleteTemplateMessage') +  '</p><p class="text-danger">'+ templateName + '</p>',
       buttons: {
         confirm: {
           label:'<span class="glyphicon glyphicon-ok" ></span>',
