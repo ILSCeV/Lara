@@ -5,7 +5,11 @@
 @stop
 
 @section('content')
-    {!! Form::open(['method' => 'POST', 'route' => ['template.update', $template->id], 'class'=> 'form-inline']) !!}
+    @if($template->id == null)
+        {!! Form::open(['method' => 'POST', 'route' => ['template.update', 0], 'class'=> 'form-inline']) !!}
+    @else
+        {!! Form::open(['method' => 'POST', 'route' => ['template.update', $template->id], 'class'=> 'form-inline']) !!}
+    @endif
     <div class="row">
         <div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
             <div class="panel-heading">
@@ -136,6 +140,20 @@
                         <label for="preparationTime" class="control-label ">{{ trans('mainLang.DV-Time') }}:</label>
                         {!! Form::input('time', 'preparationTime', $template->time_preparation_start, ['class'=>'form-control']) !!}
                     </div>
+                    <br />
+                    <div class="form-group ">
+                        <label for="beginDate" class="control-label">{{ trans('mainLang.begin') }}:</label>
+                        <div class="col-md-10 col-sm-10 col-xs-12">
+                            <span class="visible-xs"><br></span>{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', $template->time_start) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endDate" class="control-label">{{ trans('mainLang.end') }}:</label>
+                        <div class="col-md-10 col-sm-10 col-xs-12">
+                            <span class="visible-xs"><br></span>{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $template->time_end) !!}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -177,7 +195,11 @@
     <div class="row">
         @include('partials.editSchedule')
         <br>
-        {!! Form::submit( trans('mainLang.update') , array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
+        @if($template->id == null)
+            {!! Form::submit( trans('mainLang.createTemplate') , array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
+        @else
+            {!! Form::submit( trans('mainLang.update') , array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
+        @endif
         &nbsp;&nbsp;&nbsp;&nbsp;
         <br class="visible-xs">
         <br class="visible-xs">

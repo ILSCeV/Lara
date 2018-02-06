@@ -508,6 +508,7 @@ return [
     //////////
 
     'filter'                        => 'Filter',
-    'faceNeeded'                    => 'Piratenbuch benötigt'
+    'faceNeeded'                    => 'Piratenbuch benötigt',
+    'createTemplate'                => 'Kaperplan erstellen'
 
 ];

@@ -509,5 +509,6 @@ return [
     //////////
 
     'filter'                        => 'Filter',
-    'faceNeeded'                    => 'Facebook benötigt'
+    'faceNeeded'                    => 'Facebook benötigt',
+    'createTemplate'                => 'Vorlage erstellen'
 ];

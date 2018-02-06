@@ -506,5 +506,6 @@ return [
     //////////
 
     'filter'                        => 'Filter',
-    'faceNeeded'                    => 'Facebook needed'
+    'faceNeeded'                    => 'Facebook needed',
+    'createTemplate'                => 'create template'
 ];

@@ -52,7 +52,7 @@ class TemplateController extends Controller
      */
     public function create()
     {
-        //
+        return $this->show(null);
     }
 
     /**
@@ -87,6 +87,8 @@ class TemplateController extends Controller
         $publicInfo = Input::get('publicInfo');
         $privateDetails = Input::get('privateDetails');
         $facebookNeeded = Input::get('facebookNeeded');
+        $timeStart = Input::get('beginTime');
+        $timeEnd = Input::get('endTime');
         /** @var $template Template*/
         $template = Template::firstOrNew(["id" => $templateId]);
         $inputShifts = Input::get("shifts");
@@ -114,7 +116,10 @@ class TemplateController extends Controller
             'preparationTime' => $preparationTime,
             'publicInfo' => $publicInfo,
             'privateDetails' => $privateDetails,
-            'facebook_needed' => $facebookNeeded]);
+            'facebook_needed' => $facebookNeeded,
+            'time_start' => $timeStart,
+            'time_stop' => $timeEnd
+            ]);
         $template->save();
 
         $template->showToSection()->sync($filter);
@@ -212,8 +217,19 @@ class TemplateController extends Controller
             return redirect('/');
         }
 
-        $template = Template::where('id', $templateId)->with('section')->first();
+        /** @var Template $template */
+        $template = Template::with('section')->firstOrNew(['id' => $templateId]);
         $sections = Section::all();
+        if($template->id==null){
+            /** @var Section $usersection */
+           $usersection = Section::where('title','=',Session::get('userClub'))->firstOrFail();;
+
+           $template->section_id = $usersection->id;
+           $template->section = $usersection;
+           $template->time_preparation_start = $usersection->preparationTime;
+           $template->time_start=$usersection->startTime;
+           $template->time_end=$usersection->endTime;
+        }
         $shifts = $template->shifts()->get();
         // get a list of available job types
         $shiftTypes = ShiftType::where('is_archived', '=', '0')

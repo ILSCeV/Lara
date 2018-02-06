@@ -11,6 +11,9 @@
            <label for="templateOverviewFilter"> {{ trans('mainLang.filter') }} </label>
            <input type="text" class="form-control" id="templateOverviewFilter">
         </div>
+        <div class="form-inline fa-border">
+            <a class="btn-small btn btn-primary" href="{{route('template.create')}}"><span class="glyphicon glyphicon-plus"></span></a>
+        </div>
         <table class="table table-hover table-striped">
             <thead>
             <tr>
