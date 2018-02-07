@@ -367,6 +367,72 @@ class ShiftController extends Controller
         $shift->save();
     }
 
+    /**
+     * @param $isNewEvent
+     * @param $title
+     * @param $id
+     * @param $type
+     * @param $start
+     * @param $end
+     * @param $weight
+     * @param $position
+     */
+    public static function createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position) {
+        $shift = Shift::firstOrNew(["id" => $id]);
+
+        // If there was a shifttype passed and one with the correct title exists, use this one
+        // Otherwise create a new model
+        $oldShiftType = $shift->type;
+
+        // we need a raw statement for case sensitivity
+        $shiftType = ShiftType::whereRaw("BINARY `title`= ?", $title)
+            ->where(function($query) use($type, $start, $end){
+                $query->where('id', $type);
+                $query->orWhere('start', $start);
+                $query->where('end', $end);
+            })
+            ->first();
+        if (is_null($shiftType)) {
+            $shiftType = new ShiftType([
+                "id" => $type,
+                "title" => $title,
+                'start' => $start,
+                'end' => $end,
+                'statistical_weight' => $weight
+            ]);
+            $shiftType->save();
+        }
+
+        // if the model was newly created, save the new shiftType
+        $shift->fill([
+            "start" => $start,
+            "end" => $end,
+            "statistical_weight" => $weight,
+            "shifttype_id" => $shiftType->id,
+            "position" => $position
+        ]);
+
+        if ($shift->exists) {
+            if ($shift->isDirty('shifttype_id')) {
+                Logging::shiftTypeChanged($shift, $oldShiftType, $shiftType);
+            }
+
+            if ($shift->isDirty('statistical_weight')) {
+                Logging::shiftStatisticalWeightChanged($shift);
+            }
+
+            if ($shift->isDirty('start')) {
+                Logging::shiftStartChanged($shift);
+            }
+
+            if ($shift->isDirty('end')) {
+                Logging::shiftEndChanged($shift);
+            }
+        }
+        $shift->save();
+        return $shift;
+    }
+
 
 
 //--------- PRIVATE FUNCTIONS ------------
@@ -482,13 +548,13 @@ class ShiftController extends Controller
                     $userStatus = ["status"=>"fa fa-times-circle-o", "style"=>"color:yellowgreen;", "title"=>"ex-Kandidat"];
                     break;
                 case "":
-                    $userStatus = ["status"=>"fa fa-circle-o", "style"=>"color:yellowgreen;", "title"=>"Extern"]; 
+                    $userStatus = ["status"=>"fa fa-circle-o", "style"=>"color:yellowgreen;", "title"=>"Extern"];
                     break;
             }
         }
         else
         {
-            $userStatus = ["status"=>"fa fa-question", "style"=>"color:lightgrey;", "title"=>"Dienst frei"]; 
+            $userStatus = ["status"=>"fa fa-question", "style"=>"color:lightgrey;", "title"=>"Dienst frei"];
         }
 
         return $userStatus;

@@ -5,7 +5,6 @@ namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
 use Lara\ClubEvent;
 use Lara\Logging;
 use Lara\Section;
@@ -89,7 +88,7 @@ class TemplateController extends Controller
         $facebookNeeded = Input::get('facebookNeeded');
         $timeStart = Input::get('beginTime');
         $timeEnd = Input::get('endTime');
-        /** @var $template Template*/
+        /** @var $template Template */
         $template = Template::firstOrNew(["id" => $templateId]);
         $inputShifts = Input::get("shifts");
         $amount = count($inputShifts["title"]);
@@ -119,17 +118,18 @@ class TemplateController extends Controller
             'facebook_needed' => $facebookNeeded,
             'time_start' => $timeStart,
             'time_stop' => $timeEnd
-            ]);
+        ]);
         $template->save();
 
         $template->showToSection()->sync($filter);
-        $shiftIds = $this->createShifts($inputShifts,$amount);
+        $shiftIds = $this->createShifts($inputShifts, $amount);
         $template->shifts()->sync($shiftIds);
 
         return redirect()->route('template.overview');
     }
 
-    private function createShifts($inputShifts,$amount){
+    private function createShifts($inputShifts, $amount)
+    {
         $results = [];
         for ($i = 0; $i < $amount; ++$i) {
 
@@ -141,59 +141,8 @@ class TemplateController extends Controller
             $weight = $inputShifts["weight"][$i];
 
             $position = $i;
+            $shift = ShiftController::createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position);
 
-            $shift = Shift::firstOrNew(["id" => $id]);
-
-            // If there was a shifttype passed and one with the correct title exists, use this one
-            // Otherwise create a new model
-            $oldShiftType = $shift->type;
-
-            // we need a raw statement for case sensitivity
-            $shiftType = ShiftType::whereRaw("BINARY `title`= ?", $title)
-                ->where(function($query) use($type, $start, $end){
-                    $query->where('id', $type);
-                    $query->orWhere('start', $start);
-                    $query->where('end', $end);
-                })
-                ->first();
-            if (is_null($shiftType)) {
-                $shiftType = new ShiftType([
-                    "id" => $type,
-                    "title" => $title,
-                    'start' => $start,
-                    'end' => $end,
-                    'statistical_weight' => $weight
-                ]);
-                $shiftType->save();
-            }
-
-            // if the model was newly created, save the new shiftType
-            $shift->fill([
-                "start" => $start,
-                "end" => $end,
-                "statistical_weight" => $weight,
-                "shifttype_id" => $shiftType->id,
-                "position" => $position
-            ]);
-
-            if ($shift->exists) {
-                if ($shift->isDirty('shifttype_id')) {
-                    Logging::shiftTypeChanged($shift, $oldShiftType, $shiftType);
-                }
-
-                if ($shift->isDirty('statistical_weight')) {
-                    Logging::shiftStatisticalWeightChanged($shift);
-                }
-
-                if ($shift->isDirty('start')) {
-                    Logging::shiftStartChanged($shift);
-                }
-
-                if ($shift->isDirty('end')) {
-                    Logging::shiftEndChanged($shift);
-                }
-            }
-            $shift->save();
             array_push($results, $shift->id);
         }
         return $results;
@@ -220,15 +169,15 @@ class TemplateController extends Controller
         /** @var Template $template */
         $template = Template::with('section')->firstOrNew(['id' => $templateId]);
         $sections = Section::all();
-        if($template->id==null){
+        if ($template->id == null) {
             /** @var Section $usersection */
-           $usersection = Section::where('title','=',Session::get('userClub'))->firstOrFail();;
+            $usersection = Section::where('title', '=', Session::get('userClub'))->firstOrFail();;
 
-           $template->section_id = $usersection->id;
-           $template->section = $usersection;
-           $template->time_preparation_start = $usersection->preparationTime;
-           $template->time_start=$usersection->startTime;
-           $template->time_end=$usersection->endTime;
+            $template->section_id = $usersection->id;
+            $template->section = $usersection;
+            $template->time_preparation_start = $usersection->preparationTime;
+            $template->time_start = $usersection->startTime;
+            $template->time_end = $usersection->endTime;
         }
         $shifts = $template->shifts()->get();
         // get a list of available job types
@@ -283,15 +232,15 @@ class TemplateController extends Controller
         $template = Template::where('id', $templateId)->with('shifts')->first();
 
         //
-        $clubEvents = ClubEvent::where('template_id','=',$template->id)->get();
+        $clubEvents = ClubEvent::where('template_id', '=', $template->id)->get();
         /** @var ClubEvent $clubEvent */
-        foreach ($clubEvents as $clubEvent){
+        foreach ($clubEvents as $clubEvent) {
             $clubEvent->template_id = null;
             $clubEvent->save();
         }
 
         $shifts = $template->shifts;
-        foreach ($shifts as $shift){
+        foreach ($shifts as $shift) {
             $shift->delete();
         }
         $template->delete();
