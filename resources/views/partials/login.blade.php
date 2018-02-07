@@ -24,6 +24,7 @@
 
     <br class="visible-xs">
 
+
     {!! Form::password( 'password',
                        ['placeholder'  => Lang::get('mainLang.password' ),
                         'class'        => 'form-control',
@@ -32,6 +33,14 @@
 
     <br class="visible-xs">
 
+    @dev
+    <select name="userGroup" id="userGroup" class="btn btn-mini">
+        <option value="member"> Member </option>
+        <option value="marketing"> Marketing </option>
+        <option value="clubleitung"> CL </option>
+        <option value="admin"> Admin </option>
+    </select>
+    @enddev
     {!! Form::submit( Lang::get('mainLang.logIn'),
                       array('class' => ' btn btn-primary btn-sm') ) !!}
 

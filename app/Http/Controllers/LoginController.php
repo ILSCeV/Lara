@@ -138,6 +138,8 @@ class LoginController extends Controller
         } else {
           $userGroup = $inputGroup[array_rand($inputGroup, 1)];
         }
+
+        $userGroup = Input::get('userGroup');
         $input = array("1001" => "Neo", "1002" => "Morpheus", "1003" => "Trinity", "1004" => "Cypher",
             "1005" => "Tank", "1006" => "Hawkeye", "1007" => "Blackwidow", "1008" => "Deadpool",
             "1009" => "Taskmaster", "1010" => "nicht-FREI", "1011" => "Venom", "1012" => "Superman",
@@ -159,7 +161,7 @@ class LoginController extends Controller
 
         $this->setCurrentUserInSession($userId, $userName, $userGroup, $userClub, $userStatus);
 
-        $this->loginPersonAsUser($userId);
+        //$this->loginPersonAsUser($userId);
         Log::info('Auth success: ' . $userName . ' (' . $userId . ', ' . $userGroup . ') just logged in.');
 
         return Redirect::back();

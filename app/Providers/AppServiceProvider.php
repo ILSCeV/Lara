@@ -4,6 +4,9 @@ namespace Lara\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\App;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -13,7 +16,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::if('dev', function() {
+            return App::environment('development');
+        });
+
+        Blade::if('berta', function() {
+            return App::environment('berta');
+        });
     }
 
     /**
