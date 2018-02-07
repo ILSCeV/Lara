@@ -78,4 +78,10 @@ class Person extends Model
                 return "";
         }
     }
+
+    public function user()
+    {
+        $user = $this->hasOne('Lara\User')->get();
+        return $user ?: User::createFromPerson($this);
+    }
 }

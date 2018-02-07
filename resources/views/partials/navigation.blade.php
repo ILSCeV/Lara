@@ -34,10 +34,9 @@
             <li><a href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
 
 {{-- MEMBER STATISTICS / members only --}}
-            @if(Session::has('userId'))
+            @auth
                 <li><a href="{{ action('StatisticsController@showStatistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
-            @endif
-
+            @endauth
 {{-- SETTINGS (GEAR ICON) --}}
             <li class="dropdown">
                 <a href="#"

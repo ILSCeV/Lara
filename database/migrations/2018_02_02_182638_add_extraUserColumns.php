@@ -20,17 +20,9 @@ class AddExtraUserColumns extends Migration
             $table->string('group');
         });
 
-        foreach (Lara\Person::all() as $person) {
-            User::create([
-                'name' => $person->prsn_name,
-                'email' => '',
-                'section_id' => $person->club->section(),
-                'person_id' => $person->id,
-                'status' => $person->prsn_status,
-                'group' => $person->club->clb_title
-            ]);
-        }
-
+        Lara\Person::all()->each(function(Person $person) {
+            User::createFromPerson($person);
+        });
     }
 
     /**

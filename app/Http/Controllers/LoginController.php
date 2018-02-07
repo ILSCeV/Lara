@@ -9,6 +9,7 @@ use Input;
 use Lara\Person;
 use Lara\Section;
 use Lara\Settings;
+use Lara\User;
 use Log;
 use Redirect;
 use Session;
@@ -158,6 +159,7 @@ class LoginController extends Controller
 
         $this->setCurrentUserInSession($userId, $userName, $userGroup, $userClub, $userStatus);
 
+        $this->loginPersonAsUser($userId);
         Log::info('Auth success: ' . $userName . ' (' . $userId . ', ' . $userGroup . ') just logged in.');
 
         return Redirect::back();
@@ -470,8 +472,7 @@ class LoginController extends Controller
         if ($info[0]['userpassword'][0] === $password) {
             $this->setCurrentUserInSession($info[0]['uidnumber'][0], $userName, $userGroup, $userClub, $userStatus);
 
-            $user = Person::where('prsn_ldap_id', $info[0]['uidnumber'][0])->first();
-            Auth::login($user);
+            $this->loginPersonAsUser($info[0]['uidnumber'][0]);
 
             Log::info('Auth success: ' .
                 $info[0]['cn'][0] .
@@ -509,6 +510,15 @@ class LoginController extends Controller
         Session::put('msgType', 'danger');
 
         return Redirect::back();
+    }
+
+    /**
+     * @param $ldapId
+     */
+    public function loginPersonAsUser($ldapId)
+    {
+        $person = Person::where('prsn_ldap_id', $ldapId)->first();
+        Auth::login($person->user());
     }
 
 }
