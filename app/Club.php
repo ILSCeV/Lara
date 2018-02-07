@@ -50,7 +50,7 @@ class Club extends Model
         return Club::whereIn('id',$clubs->map(function (Club $club){ return $club->id; })->toArray());
     }
 
-    public static function section()
+    public function section()
     {
         return Section::where('title', $this->clb_title)->first();
     }
