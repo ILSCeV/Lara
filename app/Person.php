@@ -81,7 +81,7 @@ class Person extends Model
 
     public function user()
     {
-        $user = $this->hasOne('Lara\User')->get();
-        return $user ?: User::createFromPerson($this);
+        $userRelationship = $this->hasOne('Lara\User');
+        return $userRelationship->exists() ? $userRelationship->first() : User::createFromPerson($this);
     }
 }

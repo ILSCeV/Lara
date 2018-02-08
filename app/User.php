@@ -3,7 +3,7 @@
 namespace Lara;
 
 use Illuminate\Notifications\Notifiable;
-use Person;
+use Lara\Person;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -46,7 +46,7 @@ class User extends Authenticatable
     {
         return User::create([
             'name' => $person->prsn_name,
-            'email' => '',
+            'email' => $person->prsn_name . '@lara.il-sc.de',
             'section_id' => $person->club->section()->id,
             'person_id' => $person->id,
             'status' => $person->prsn_status,
