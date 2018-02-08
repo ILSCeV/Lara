@@ -308,59 +308,9 @@ class ShiftController extends Controller
             return;
         }
         // If no id is set, create a new Model
-        $shift = Shift::firstOrNew(["id" => $id]);
-
-        // If there was a shifttype passed and one with the correct title exists, use this one
-        // Otherwise create a new model
-        $oldShiftType = $shift->type;
-
-        // we need a raw statement for case sensitivity
-        $shiftType = ShiftType::whereRaw("BINARY `title`= ?", $title)
-            ->where(function($query) use($type, $start, $end){
-                $query->where('id', $type);
-                $query->orWhere('start', $start);
-                $query->where('end', $end);
-            })
-            ->first();
-        if (is_null($shiftType)) {
-            $shiftType = new ShiftType([
-                "id" => $type,
-                "title" => $title,
-                'start' => $start,
-                'end' => $end,
-                'statistical_weight' => $weight
-            ]);
-            $shiftType->save();
-        }
-
-        // if the model was newly created, save the new shiftType
-        $shift->fill([
-            "schedule_id" => $schedule->id,
-            "start" => $start,
-            "end" => $end,
-            "statistical_weight" => $weight,
-            "shifttype_id" => $shiftType->id,
-            "position" => $position
-        ]);
-
-        if ($shift->exists) {
-            if ($shift->isDirty('shifttype_id')) {
-                Logging::shiftTypeChanged($shift, $oldShiftType, $shiftType);
-            }
-
-            if ($shift->isDirty('statistical_weight')) {
-                Logging::shiftStatisticalWeightChanged($shift);
-            }
-
-            if ($shift->isDirty('start')) {
-                Logging::shiftStartChanged($shift);
-            }
-
-            if ($shift->isDirty('end')) {
-                Logging::shiftEndChanged($shift);
-            }
-        }
-        else if (!$isNewEvent) {
+        $shift = self::createShiftsFromEditSchedule($id,$title,$type,$start,$end,$weight,$position);
+        $shift->schedule_id = $schedule->id;
+        if (!$isNewEvent) {
             $shift->save();
             Logging::shiftCreated($shift);
         }
@@ -376,8 +326,14 @@ class ShiftController extends Controller
      * @param $end
      * @param $weight
      * @param $position
+     * @return Shift
      */
     public static function createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position) {
+
+        if ($title === "") {
+            return;
+        }
+
         $shift = Shift::firstOrNew(["id" => $id]);
 
         // If there was a shifttype passed and one with the correct title exists, use this one
