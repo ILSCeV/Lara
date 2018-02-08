@@ -153,15 +153,17 @@ class LoginController extends Controller
         }
         $userName = $input[$userId];
 
+        $person = Person::inRandomOrder()->first();
         // get user club
-        $inputClub = Section::all()->map(function(Section $section) {return $section->title;})->toArray();
-        $userClubId = array_rand($inputClub, 1);
-        $userClub = $inputClub[$userClubId];
-        $userStatus = "member";
+        $this->setCurrentUserInSession(
+            $person->prsn_ldap_id,
+            $person->prsn_name,
+            $userGroup,
+            $person->club->clb_title,
+            $person->prsn_status
+        );
 
-        $this->setCurrentUserInSession($userId, $userName, $userGroup, $userClub, $userStatus);
-
-        //$this->loginPersonAsUser($userId);
+        $this->loginPersonAsUser($person->prsn_ldap_id);
         Log::info('Auth success: ' . $userName . ' (' . $userId . ', ' . $userGroup . ') just logged in.');
 
         return Redirect::back();
