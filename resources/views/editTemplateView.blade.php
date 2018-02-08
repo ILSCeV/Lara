@@ -95,12 +95,21 @@
                     <div class="form-group " id="filter-checkboxes">
                         <label for="filter" class="control-label ">{{ trans('mainLang.showFor') }}: &nbsp;</label>
                         <div id="filter" class="input-group">
-                            @foreach($sections as $section)
-                                <label>
-                                    {{ Form::checkbox("filter[" . $section->title ."]", $section->id, in_array( $section->title, $template->showToSectionNames())) }}
-                                    {{ $section->title }}
-                                </label>
-                            @endforeach
+                            @if($template->id == null)
+                                @foreach($sections as $section)
+                                    <label>
+                                        {{ Form::checkbox("filter[" . $section->title ."]", $section->id, $section->title === Session::get("userClub")) }}
+                                        {{ $section->title }}
+                                    </label>
+                                @endforeach
+                            @else
+                                @foreach($sections as $section)
+                                    <label>
+                                        {{ Form::checkbox("filter[" . $section->title ."]", $section->id, in_array( $section->title, $template->showToSectionNames())) }}
+                                        {{ $section->title }}
+                                    </label>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                     <div class="form-group">
