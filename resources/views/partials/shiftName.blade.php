@@ -25,7 +25,7 @@
     <ul class="dropdown-menu dropdown-username" style="position: absolute;">
         <li id="yourself">
             <a href="javascript:void(0);"
-               onClick="document.getElementById('userName{{ ''. $shift->id }}').value='{{Session::get('userName')}}';
+               onClick="document.getElementById('userName{{ ''. $shift->id }}').value='{{Auth::user()->name}}';
                        document.getElementById('club{{ ''. $shift->id }}').value='{{Session::get('userClub')}}';
                        document.getElementById('ldapId{{ ''. $shift->id }}').value='{{Session::get('userId')}}';
                        document.getElementById('btn-submit-changes{{ ''. $shift->id }}').click();">

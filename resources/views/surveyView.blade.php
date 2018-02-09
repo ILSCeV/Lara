@@ -162,7 +162,7 @@ $userCanEditDueToRole
                 <div id="survey-answer" class="table-responsive-custom">
 
                     <input hidden id="get_row" value="">
-                    <input type="hidden" id="hdnSession_userName" value="{{Session::get('userName')}}">
+                    <input type="hidden" id="hdnSession_userName" value="{{Auth::user()->name}}">
                     <input type="hidden" id="hdnSession_userClub" value="{{Session::get('userClub')}}">
                     <input type="hidden" id="hdnSession_userID" value="{{Session::get('userId')}}">
                     <input type="hidden" id="hdnSession_oldContent" name="hidden_oldContent[]" value="">
@@ -191,7 +191,7 @@ $userCanEditDueToRole
                                     <ul id="dropdown-menu_name" class="dropdown-menu dropdown-username">
                                         <li id="yourself">
                                             <a href="javascript:void(0);"
-                                               onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
+                                               onClick="document.getElementById('newName').value='{{Auth::user()->name}}';
                                                        document.getElementById('club').value='{{Session::get('userClub')}}';
                                                        document.getElementById('ldapId').value='{{Session::get('userId')}}'">
                                                 <b>{{ trans('mainLang.addMe') }}</b>

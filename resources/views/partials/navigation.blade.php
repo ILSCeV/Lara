@@ -194,7 +194,7 @@ Disabling iCal until fully functional.
                                                 {{ Session::get('userClub') }}
                                             @endif
                                           ">
-                                        {{ Session::get('userName') }}
+                                        {{ Auth::user()->name }}
                                     </span>
                                 </strong>
                                 &nbsp;&nbsp;&nbsp;&nbsp;

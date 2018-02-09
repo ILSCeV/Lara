@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Auth;
 use Cache;
 use Config;
 use DateInterval;
@@ -193,8 +194,8 @@ class ClubEventController extends Controller
         ScheduleController::createShifts($newSchedule);
 
         // log the action
-        Log::info('Event created: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
-                 . Session::get('userGroup') . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
+        Log::info('Event created: ' . Auth::user()->name . ' (' . Auth::user()->person->prsn_ldap_id . ', '
+                 . Auth::user()->group . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
         Utilities::clearIcalCache();
         if (Input::get('saveAsTemplate')){
             $template = $newSchedule->toTemplate();
@@ -397,7 +398,7 @@ class ClubEventController extends Controller
         ScheduleController::editShifts($schedule);
 
         // log the action
-        Log::info('Event edited: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
+        Log::info('Event edited: ' . Auth::user()->name . ' (' . Session::get('userId') . ', '
                  . Session::get('userGroup') . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
 
 
@@ -453,7 +454,7 @@ class ClubEventController extends Controller
         }
 
         // Log the action while we still have the data
-        Log::info('Event deleted: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
+        Log::info('Event deleted: ' . Auth::user()->name . ' (' . Session::get('userId') . ', '
                  . Session::get('userGroup') . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         Utilities::clearIcalCache();
 

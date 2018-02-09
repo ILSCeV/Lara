@@ -1,5 +1,7 @@
 <?php
 namespace Lara;
+
+use Auth;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Session;
@@ -76,7 +78,7 @@ class Logging
             "old value" => $old,
             "new value" => $new,
             "user id" => Session::get('userId') != NULL ? Session::get('userId') : "",
-            "user name" => Session::get('userId') != NULL ? Session::get('userName') . ' (' . Session::get('userClub') . ')' : "Gast",
+            "user name" => Session::get('userId') != NULL ? Auth::user()->name . ' (' . Session::get('userClub') . ')' : "Gast",
             "from ip" => Request::getClientIp(),
             "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
         ];
@@ -91,7 +93,7 @@ class Logging
             "old value" => $old,
             "new value" => $new,
             "user id" => Session::get('userId') != NULL ? Session::get('userId') : "",
-            "user name" => Session::get('userId') != NULL ? Session::get('userName') . ' (' . Session::get('userClub') . ')' : "Gast",
+            "user name" => Session::get('userId') != NULL ? Auth::user()->name . ' (' . Session::get('userClub') . ')' : "Gast",
             "from ip" => Request::getClientIp(),
             "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
         ];

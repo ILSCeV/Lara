@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Log;
 use Redirect;
@@ -131,7 +132,7 @@ class ShiftTypeController extends Controller
 
         // Log the action while we still have the data
         Log::info('ShiftType edited: ' .
-            Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
+            Auth::user()->name . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
             ') changed shift type #' . $shiftType->id . ' from "' . $shiftType->title . '", start: ' . $shiftType->start . ', end: ' . $shiftType->end . ', weight: ' . $shiftType->statistical_weight . ' to "' . $newTitle . '" , start: ' . $newTimeStart . ', end: ' . $newTimeEnd . ', weight: ' . $newWeight . '. ');
 
         // Write and save changes
@@ -185,7 +186,7 @@ class ShiftTypeController extends Controller
 
             // Log the action while we still have the data
             Log::info('ShiftType deleted: ' .
-                Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
+                Auth::user()->name . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
                 ') deleted "' . $shiftType->title .  '" (it was not used in any schedule).');
 
             // Now delete the shiftType

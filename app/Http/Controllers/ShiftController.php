@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Auth;
 use Carbon\Carbon;
 use Hash;
 use Illuminate\Http\Request;
@@ -450,7 +451,7 @@ class ShiftController extends Controller
             if ($person->prsn_ldap_id == Session::get('userId'))
             {
                 $person->prsn_status = Session::get('userStatus');
-                $person->prsn_name = Session::get('userName');
+                $person->prsn_name = Auth::user()->name;
             }
 
         }
