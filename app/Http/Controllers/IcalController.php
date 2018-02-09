@@ -391,7 +391,7 @@ class IcalController extends Controller
     /** generate links for ui */
     public function generateLinks()
     {
-        $userId = Session::get('userId');
+        $userId = Auth::user()->person->prsn_ldap_id;
         
         $person = Person::where('prsn_ldap_id', '=', $userId)->first();
         
@@ -440,9 +440,9 @@ class IcalController extends Controller
         
         // Check credentials: you can only delete, if you have rights for marketing or management. 
         if (!Session::has('userId')
-            OR (Session::get('userGroup') != 'marketing'
-                AND Session::get('userGroup') != 'clubleitung'
-                AND Session::get('userGroup') != 'admin')
+            OR (Auth::user()->group != 'marketing'
+                AND Auth::user()->group != 'clubleitung'
+                AND Auth::user()->group != 'admin')
         ) {
             Session::put('message',
                 'Du darfst dieses Event nicht veröffentlichen! Frage die Clubleitung oder Markleting ;)');
@@ -459,8 +459,8 @@ class IcalController extends Controller
             Utilities::clearIcalCache();
             
             // Log the action while we still have the data
-            Log::info('Event unpublished: '.Auth::user()->name.' ('.Session::get('userId').', '
-                .Session::get('userGroup').') unpublished event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
+            Log::info('Event unpublished: '.Auth::user()->name.' ('.Auth::user()->person->prsn_ldap_id.', '
+                .Auth::user()->group.') unpublished event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
             
             // Inform the user
             Session::put('message', "Dieses Event wurde erfolgreich aus dem Kalenderfeed entfernt.");
@@ -476,8 +476,8 @@ class IcalController extends Controller
             Utilities::clearIcalCache();
             
             // Log the action while we still have the data
-            Log::info('Event published: '.Auth::user()->name.' ('.Session::get('userId').', '
-                .Session::get('userGroup').') published event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
+            Log::info('Event published: '.Auth::user()->name.' ('.Auth::user()->person->prsn_ldap_id.', '
+                .Auth::user()->group.') published event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
             
             // Inform the user
             Session::put('message', "Dieses Event wurde erfolgreich zum Kalenderfeed hinzugefügt.");

@@ -164,7 +164,7 @@ $userCanEditDueToRole
                     <input hidden id="get_row" value="">
                     <input type="hidden" id="hdnSession_userName" value="{{Auth::user()->name}}">
                     <input type="hidden" id="hdnSession_userClub" value="{{Session::get('userClub')}}">
-                    <input type="hidden" id="hdnSession_userID" value="{{Session::get('userId')}}">
+                    <input type="hidden" id="hdnSession_userID" value="{{Auth::user()->person->prsn_ldap_id)}}">
                     <input type="hidden" id="hdnSession_oldContent" name="hidden_oldContent[]" value="">
 
                     <table class="table table-striped table-bordered table-condensed table-responsive-custom">
@@ -193,7 +193,7 @@ $userCanEditDueToRole
                                             <a href="javascript:void(0);"
                                                onClick="document.getElementById('newName').value='{{Auth::user()->name}}';
                                                        document.getElementById('club').value='{{Session::get('userClub')}}';
-                                                       document.getElementById('ldapId').value='{{Session::get('userId')}}'">
+                                                       document.getElementById('ldapId').value='{{Auth::user()->person->prsn_ldap_id)}}'">
                                                 <b>{{ trans('mainLang.addMe') }}</b>
                                             </a>
                                         </li>

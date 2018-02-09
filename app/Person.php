@@ -2,6 +2,7 @@
 
 namespace Lara;
 
+use Auth;
 use Session;
 use Illuminate\Database\Eloquent\Model;
 
@@ -47,7 +48,7 @@ class Person extends Model
 
     public function isLoggedInUser()
     {
-        return $this->prsn_ldap_id == Session::get('userId');
+        return $this->prsn_ldap_id == Auth::user()->person->prsn_ldap_id;
     }
 
     public function nameWithStatus()

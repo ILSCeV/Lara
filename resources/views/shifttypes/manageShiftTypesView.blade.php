@@ -9,9 +9,9 @@
 @section('content')
 
 @if(Session::has('userGroup')
-	AND (Session::get('userGroup') == 'marketing'
-	OR Session::get('userGroup') == 'clubleitung'
-	OR Session::get('userGroup') == 'admin'))
+	AND (Auth::user()->group == 'marketing'
+	OR Auth::user()->group == 'clubleitung'
+	OR Auth::user()->group == 'admin'))
 
 	<div class="panel panel-info col-xs-12 no-padding">
 		<div class="panel-heading">

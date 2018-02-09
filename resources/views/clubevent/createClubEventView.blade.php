@@ -123,7 +123,7 @@
 			      	@endif
 			    </div>
 
-			    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung' OR Session::get('userGroup') == 'admin')
+			    @if(Auth::user()->group == 'marketing' OR Auth::user()->group == 'clubleitung' OR Auth::user()->group == 'admin')
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 						<label for="facebookDone" class="col-md-4 col-sm-4 col-xs-7">{{trans('mainLang.faceDone')}}?</label>
                         <select class="selectpicker" name="facebookDone" id="facebookDone">
@@ -407,9 +407,9 @@
 	    Disabling iCal until fully functional -> remove "Publish" button, rename "create unpublished" to just "create"
 
 
-	    @if(Session::get('userGroup') == 'marketing'
-	     OR Session::get('userGroup') == 'clubleitung'
-	     OR Session::get('userGroup') == 'admin')
+	    @if(Auth::user()->group == 'marketing'
+	     OR Auth::user()->group == 'clubleitung'
+	     OR Auth::user()->group == 'admin')
 			<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<br class="visible-xs">

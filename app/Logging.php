@@ -77,8 +77,8 @@ class Logging
             "action" => $action,
             "old value" => $old,
             "new value" => $new,
-            "user id" => Session::get('userId') != NULL ? Session::get('userId') : "",
-            "user name" => Session::get('userId') != NULL ? Auth::user()->name . ' (' . Session::get('userClub') . ')' : "Gast",
+            "user id" => Auth::user()->person->prsn_ldap_id != NULL ? Session::get('userId') : "",
+            "user name" => Auth::user()->person->prsn_ldap_id != NULL ? Auth::user()->name . ' (' . Session::get('userClub') . ')' : "Gast",
             "from ip" => Request::getClientIp(),
             "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
         ];
@@ -92,8 +92,8 @@ class Logging
             "action" => $action,
             "old value" => $old,
             "new value" => $new,
-            "user id" => Session::get('userId') != NULL ? Session::get('userId') : "",
-            "user name" => Session::get('userId') != NULL ? Auth::user()->name . ' (' . Session::get('userClub') . ')' : "Gast",
+            "user id" => Auth::user()->person->prsn_ldap_id != NULL ? Session::get('userId') : "",
+            "user name" => Auth::user()->person->prsn_ldap_id != NULL ? Auth::user()->name . ' (' . Session::get('userClub') . ')' : "Gast",
             "from ip" => Request::getClientIp(),
             "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
         ];

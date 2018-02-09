@@ -49,9 +49,9 @@
 
 {{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
 
-                @if(Session::get('userGroup') == 'marketing'
-                 OR Session::get('userGroup') == 'clubleitung'
-                 OR Session::get('userGroup') == 'admin')
+                @if(Auth::user()->group == 'marketing'
+                 OR Auth::user()->group == 'clubleitung'
+                 OR Auth::user()->group == 'admin')
                     <li>
                         <a href="{{ asset('shiftType') }}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
@@ -68,8 +68,8 @@
 
 
 {{-- LARA LOGS / section management or admins only --}}
-                @if(Session::get('userGroup') == 'clubleitung'
-                 OR Session::get('userGroup') == 'admin')
+                @if(Auth::user()->group == 'clubleitung'
+                 OR Auth::user()->group == 'admin')
                     <li><a href="{{ asset('/logs') }}">Logs</a></li>
                 @endif
 
@@ -184,11 +184,11 @@ Disabling iCal until fully functional.
                                     <span data-toggle="tooltip"
                                           data-placement="bottom"
                                           title="
-                                            @if(Session::get('userGroup') == 'marketing')
+                                            @if(Auth::user()->group == 'marketing')
                                                 {{ Session::get('userClub') . " / Marketing" }}
-                                            @elseif (Session::get('userGroup') == 'clubleitung')
+                                            @elseif (Auth::user()->group == 'clubleitung')
                                                 {{ Session::get('userClub') . " / Clubleitung" }}
-                                            @elseif (Session::get('userGroup') == 'admin')
+                                            @elseif (Auth::user()->group == 'admin')
                                                 {{ Session::get('userClub') . " / Admin" }}
                                             @else
                                                 {{ Session::get('userClub') }}

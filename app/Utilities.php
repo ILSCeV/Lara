@@ -3,6 +3,8 @@
 
 namespace Lara;
 
+use Auth;
+use Session;
 use Illuminate\Support\Facades\Cache;
 use Lara\Http\Controllers\IcalController;
 
@@ -50,7 +52,7 @@ class Utilities
         }
         $isAllowed = false;
         foreach ($permissions as $permission) {
-            $isAllowed = $isAllowed || (\Session::get('userGroup') == $permission);
+            $isAllowed = $isAllowed || (Session::get('userGroup') == $permission);
         }
         return $isAllowed;
     }

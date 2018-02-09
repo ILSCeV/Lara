@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -170,7 +171,7 @@ class SectionController extends Controller
 
         // Log the action while we still have the data
         Log::info('Section removed: ' .
-            Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
+            Session::get('userName') . ' (' . Auth::user()->person->prsn_ldap_id . ', ' . Auth::user()->group .
             ') deleted section "' . $section->title .  '". May Gods have mercy on their souls!');
 
         $events = ClubEvent::where("plc_id", "=", $section->id)->get();
