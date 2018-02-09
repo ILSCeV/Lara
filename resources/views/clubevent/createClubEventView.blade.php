@@ -11,8 +11,63 @@
 @section('content')
 
 @if(Session::has('userId'))
+    <div class="row">
+        <div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
+            @if($createClubEvent)
+                {!! Form::open(['method' => 'POST', 'class'=>'form-inline','id'=>'templateSelectorForm']) !!}
+                <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <label for="templateSelector"
+                           class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}:
+                        &nbsp;</label>
+                    <div class="col-md-6 col-sm-6 col-xs-8">
+                        <select name="template" id="templateSelector" class="selectpicker" data-live-search="true">
+                            <optgroup label="">
+                                <option value="-1"></option>
+                            </optgroup>
+                            @foreach($sections as $section)
+                                <optgroup label="{{ $section->title }}">
+                                    @foreach( $templates->filter(function ($template) use ($section) { return $template->section_id == $section->id; }) as $template )
+                                        <option
+                                            value="{{ Request::getBasePath() }}/event/{{ substr($date, 6, 4) }}/{{ substr($date, 3, 2) }}/{{ substr($date, 0, 2) }}/{{ $template->id }}/create"
+                                            @if($template->id == $templateId )
+                                            selected
+                                            @endif
+                                            data-content="<span> {{  $template->title }} {{trans('mainLang.begin')}}: {{$template->time_start}}
+                                            {{trans('mainLang.end')}}: {{$template->time_end}}  </span>"
+                                            title="{{ $template->title }}"
+                                        >{{  $template->title }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach
+                        </select>
+                        <button class="hidden" type="submit"></button>
+                    </div>
+                </div>
+                {!! Form::close() !!}
+            @elseIf(isset($baseTemplate) && !is_null($baseTemplate))
+                <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <label class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}:
+                        &nbsp;</label>
+                    <div class="col-md-6 col-sm-6 col-xs-8">
+                        <div class="row">
+                            {{ $baseTemplate->title }}
+                        </div>
+                        <div class="row">
+                            {{ trans('mainLang.begin') }}: {{ $baseTemplate->time_start }}
+                        </div>
+                        <div class="row">
+                            {{ trans('mainLang.end') }}: {{$baseTemplate->time_end}}
+                        </div>
+                    </div>
+
+                </div>
+            @endif
+        </div>
+    </div>
     @if($createClubEvent)
 	    {!! Form::open(['method' => 'POST', 'route' => ['event.store']]) !!}
+        <input class="hidden" id="templateValue" name="template" />
     @else
         {!! Form::open(['method' => 'PUT', 'route' => ['event.update', $event->id]]) !!}
     @endif
@@ -34,49 +89,6 @@
 			<br>
 
 			<div class="panel-body no-padding">
-                @if($createClubEvent)
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="templateSelector" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}: &nbsp;</label>
-                    <div class="col-md-6 col-sm-6 col-xs-8">
-                        <select name="template" id="templateSelector" class="selectpicker" data-live-search="true">
-                            <optgroup label="">
-                                <option value="-1" ></option>
-                            </optgroup>
-                            @foreach($sections as $section)
-                                <optgroup label="{{ $section->title }}">
-                                    @foreach( $templates->filter(function ($template) use ($section) { return $template->section_id == $section->id; }) as $template )
-                                        <option value="{{ Request::getBasePath() }}/event/{{ substr($date, 6, 4) }}/{{ substr($date, 3, 2) }}/{{ substr($date, 0, 2) }}/{{ $template->id }}/create"
-                                                @if($template->id == $templateId )
-                                                selected
-                                            @endif
-                                       data-content="<span> {{  $template->title }} {{trans('mainLang.begin')}}: {{$template->time_start}}
-                                            {{trans('mainLang.end')}}: {{$template->time_end}}  </span>"
-                                        title="{{ $template->title }}"
-                                        >{{  $template->title }}
-                                        </option>
-                                    @endforeach
-                                </optgroup>
-                            @endforeach
-                        </select>
-                    </div>
-			   	</div>
-                @elseIf(isset($baseTemplate) && !is_null($baseTemplate))
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-                        <label class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}: &nbsp;</label>
-                        <div class="col-md-6 col-sm-6 col-xs-8">
-                            <div class="row">
-                                {{ $baseTemplate->title }}
-                            </div>
-                            <div class="row">
-                                {{ trans('mainLang.begin') }}: {{ $baseTemplate->time_start }}
-                            </div>
-                            <div class="row">
-                                {{ trans('mainLang.end') }}: {{$baseTemplate->time_end}}
-                            </div>
-                        </div>
-
-                    </div>
-                @endif
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 			   		<span class="col-md-1 col-sm-1 col-xs-1">&nbsp;</span>
 					{!! Form::checkbox('saveAsTemplate', '1', false, array('class'=>'col-md-1 col-sm-1 col-xs-1')) !!}

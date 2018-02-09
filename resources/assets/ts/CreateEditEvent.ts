@@ -75,14 +75,11 @@ $(() => {
   });
   $('#templateSelector').change(() => {
     var selectedValue = $('#templateSelector').val();
-    if(selectedValue === "-1"){
-      $('form').each( (i,elem) =>{
-        var form = <HTMLFormElement>elem;
-        form.reset();
-      } );
-    } else {
-      window.location.href = $('#templateSelector').val();
-    }
+    $('#templateSelectorForm').attr('action',selectedValue).submit();
   });
+});
+
+$(window).on('load',()=>{
+  $('#templateValue').val($('#templateSelector').val());
 });
 

@@ -91,6 +91,7 @@ Route::get('/calendar/{year}/{month}/{day}',	'DateController@showDate');
 
 // CREATE
 Route::get('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventController@create');
+Route::post('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventController@create');
 
 
 // AJAX calls
