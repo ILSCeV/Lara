@@ -45,8 +45,8 @@
   <body>
     {{-- only allow logs to be seen by admin and management --}}
     @if   (Session::has('userGroup')
-    AND (Session::get('userGroup') == 'admin'
-    OR   Session::get('userGroup') == 'clubleitung'))
+    AND (Auth::user()->group == 'admin'
+    OR   Auth::user()->group == 'clubleitung'))
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
@@ -92,7 +92,7 @@
           </table>
           @endif
           <div>
-            @if(Session::get('userGroup') == 'admin')
+            @if(Auth::user()->group == 'admin')
               -
               <a id="delete-log" href="?del={{ base64_encode($current_file) }}"><span class="glyphicon glyphicon-trash"></span> Delete file</a>
             @endif

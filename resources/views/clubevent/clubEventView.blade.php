@@ -181,10 +181,10 @@
 					@endif
 
 				{{-- CRUD --}}
-				@if(Session::get('userGroup') === 'marketing'
-				 OR Session::get('userGroup') === 'clubleitung'
-				 OR Session::get('userGroup') === 'admin'
-				 OR Session::get('userId') === $created_by)
+				@if(Auth::user()->group === 'marketing'
+				 OR Auth::user()->group === 'clubleitung'
+				 OR Auth::user()->group === 'admin'
+				 OR Auth::user()->person->prsn_ldap_id) === $created_by)
 					<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">
 						<span class="pull-right">
 							{{-- Event publishing only for CL/marketing -> exclude creator
@@ -193,9 +193,9 @@
 							Disabling iCal until fully functional.
 
 
-							@if(Session::get('userGroup') === 'marketing'
-							 OR Session::get('userGroup') === 'clubleitung'
-							 OR Session::get('userGroup') === 'admin')
+							@if(Auth::user()->group === 'marketing'
+							 OR Auth::user()->group === 'clubleitung'
+							 OR Auth::user()->group === 'admin')
 								<button  id="unPublishEventLnkBtn"
 									data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
 									class="btn btn-danger @if($clubEvent->evnt_is_published === 0) hidden @endif"
@@ -305,7 +305,7 @@
 		<div class="panel-body no-padding ">
 			@foreach($shifts as $shift)
 				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
-				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) AND Session::has('userId') AND $shift->getPerson->prsn_ldap_id === Session::get('userId')) ? "my-shift" : false !!}">
+				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) AND Session::has('userId') AND $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id)) ? "my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 			                                'id' => $shift->id,
 			                                'method' => 'PUT',

@@ -398,8 +398,8 @@ class ClubEventController extends Controller
         ScheduleController::editShifts($schedule);
 
         // log the action
-        Log::info('Event edited: ' . Auth::user()->name . ' (' . Session::get('userId') . ', '
-                 . Session::get('userGroup') . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        Log::info('Event edited: ' . Auth::user()->name . ' (' . Auth::user()->person->prsn_ldap_id . ', '
+                 . Auth::user()->group . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
 
 
         // save all data in the database
@@ -442,10 +442,10 @@ class ClubEventController extends Controller
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
         $created_by = $revisions[0]["user id"];
         if(!Session::has('userId')
-            OR (Session::get('userGroup') != 'marketing'
-                AND Session::get('userGroup') != 'clubleitung'
-                AND Session::get('userGroup') != 'admin'
-                AND Session::get('userId') != $created_by))
+            OR (Auth::user()->group != 'marketing'
+                AND Auth::user()->group != 'clubleitung'
+                AND Auth::user()->group != 'admin'
+                AND Auth::user()->person->prsn_ldap_id != $created_by))
         {
             Session::put('message', 'Du darfst diese Veranstaltung/Aufgabe nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
             Session::put('msgType', 'danger');
@@ -454,8 +454,8 @@ class ClubEventController extends Controller
         }
 
         // Log the action while we still have the data
-        Log::info('Event deleted: ' . Auth::user()->name . ' (' . Session::get('userId') . ', '
-                 . Session::get('userGroup') . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        Log::info('Event deleted: ' . Auth::user()->name . ' (' . Auth::user()->person->prsn_ldap_id . ', '
+                 . Auth::user()->group . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         Utilities::clearIcalCache();
 
         // Delete schedule with shifts
@@ -560,7 +560,7 @@ class ClubEventController extends Controller
         if (!is_null($eventIsPublished)) {
             //event is pubished
             $event->evnt_is_published = (int)$eventIsPublished;
-        } elseif (Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung'  OR Session::get('userGroup') == 'admin'){
+        } elseif (Auth::user()->group == 'marketing' OR Session::get('userGroup') == 'clubleitung'  OR Session::get('userGroup') == 'admin'){
             // event was unpublished
             $event->evnt_is_published = 0;
         }

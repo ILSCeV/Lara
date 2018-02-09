@@ -7,7 +7,7 @@
 
 @section('content')
 
-@if(Session::has('userGroup') AND Session::get('userGroup') == 'admin')
+@if(Session::has('userGroup') AND Auth::user()->group == 'admin')
 
 	<div class="panel panel-info">
 		<div class="panel-heading">

@@ -91,9 +91,9 @@ class ShiftTypeController extends Controller
     {
         // Check credentials: you can only edit, if you have rights for marketing, section management or admin
         if(!Session::has('userId')
-            OR (Session::get('userGroup') != 'marketing'
-                AND Session::get('userGroup') != 'clubleitung'
-                AND Session::get('userGroup') != 'admin'))
+            OR (Auth::user()->group != 'marketing'
+                AND Auth::user()->group != 'clubleitung'
+                AND Auth::user()->group != 'admin'))
         {
             Session::put('message', trans('mainLang.cantTouchThis'));
             Session::put('msgType', 'danger');
@@ -132,7 +132,7 @@ class ShiftTypeController extends Controller
 
         // Log the action while we still have the data
         Log::info('ShiftType edited: ' .
-            Auth::user()->name . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
+            Auth::user()->name . ' (' . Auth::user()->person->prsn_ldap_id . ', ' . Auth::user()->group .
             ') changed shift type #' . $shiftType->id . ' from "' . $shiftType->title . '", start: ' . $shiftType->start . ', end: ' . $shiftType->end . ', weight: ' . $shiftType->statistical_weight . ' to "' . $newTitle . '" , start: ' . $newTimeStart . ', end: ' . $newTimeEnd . ', weight: ' . $newWeight . '. ');
 
         // Write and save changes
@@ -158,9 +158,9 @@ class ShiftTypeController extends Controller
     {
         // Check credentials: you can only delete, if you have rights for marketing, section management or admin
         if(!Session::has('userId')
-            OR (Session::get('userGroup') != 'marketing'
-                AND Session::get('userGroup') != 'clubleitung'
-                AND Session::get('userGroup') != 'admin'))
+            OR (Auth::user()->group != 'marketing'
+                AND Auth::user()->group != 'clubleitung'
+                AND Auth::user()->group != 'admin'))
         {
             Session::put('message', trans('mainLang.cantTouchThis'));
             Session::put('msgType', 'danger');
@@ -186,7 +186,7 @@ class ShiftTypeController extends Controller
 
             // Log the action while we still have the data
             Log::info('ShiftType deleted: ' .
-                Auth::user()->name . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
+                Auth::user()->name . ' (' . Auth::user()->person->prsn_ldap_id . ', ' . Auth::user()->group .
                 ') deleted "' . $shiftType->title .  '" (it was not used in any schedule).');
 
             // Now delete the shiftType

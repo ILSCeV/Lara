@@ -106,7 +106,7 @@ class LoginController extends Controller
         } else {
             $result = $this->doProductionLogin();
         }
-        $userSettings = Settings::where('userId','=',Session::get('userId'))->first();
+        $userSettings = Settings::where('userId','=',Auth::user()->person->prsn_ldap_id)->first();
         if(isset($userSettings)){
             Session::put('applocale', $userSettings->language);
         }

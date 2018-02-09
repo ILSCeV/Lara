@@ -36,7 +36,7 @@ class ShiftController extends Controller
         $name = !is_null($shift->getPerson) ? $shift->getPerson->prsn_name : "=FREI=";
         $status = !is_null($shift->getPerson) ? $shift->getPerson->prsn_status : "";
         $clubTitle = !is_null($shift->getPerson) ? $shift->getPerson->getClub->clb_title : "";
-        $isCurrentUser = $ldapId == Session::get('userId');
+        $isCurrentUser = $ldapId == Auth::user()->person->prsn_ldap_id;
         $response = [
             'id'                => $shift->id,
             'title'       => $shift->type->title(),
@@ -256,7 +256,7 @@ class ShiftController extends Controller
             "userClub"          => is_null( $shift->getPerson()->first() ) ? "" : $shift->getPerson()->first()->getClub->clb_title,
             "userComment"       => $shift->comment,
             "timestamp"         => $timestamp,
-            "is_current_user"   => $prsn_ldap_id == Session::get('userId')
+            "is_current_user"   => $prsn_ldap_id == Auth::user()->person->prsn_ldap_id
         ], 200);
     }
 
@@ -448,7 +448,7 @@ class ShiftController extends Controller
             }
 
             // If a person adds him/herself - update status from session to catch if it was changed in LDAP
-            if ($person->prsn_ldap_id == Session::get('userId'))
+            if ($person->prsn_ldap_id == Auth::user()->person->prsn_ldap_id)
             {
                 $person->prsn_status = Session::get('userStatus');
                 $person->prsn_name = Auth::user()->name;
