@@ -153,7 +153,7 @@ class LoginController extends Controller
         }
         $userName = $input[$userId];
 
-        $person = Person::inRandomOrder()->first();
+        $person = Person::where('clb_id', '<' , 4)->inRandomOrder()->first();
         // get user club
         $this->setCurrentUserInSession(
             $person->prsn_ldap_id,
