@@ -7,6 +7,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Auth;
 use Cache;
 use Eluceo\iCal\Component\Alarm;
 use Eluceo\iCal\Component\Calendar;
@@ -458,7 +459,7 @@ class IcalController extends Controller
             Utilities::clearIcalCache();
             
             // Log the action while we still have the data
-            Log::info('Event unpublished: '.Session::get('userName').' ('.Session::get('userId').', '
+            Log::info('Event unpublished: '.Auth::user()->name.' ('.Session::get('userId').', '
                 .Session::get('userGroup').') unpublished event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
             
             // Inform the user
@@ -475,7 +476,7 @@ class IcalController extends Controller
             Utilities::clearIcalCache();
             
             // Log the action while we still have the data
-            Log::info('Event published: '.Session::get('userName').' ('.Session::get('userId').', '
+            Log::info('Event published: '.Auth::user()->name.' ('.Session::get('userId').', '
                 .Session::get('userGroup').') published event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
             
             // Inform the user

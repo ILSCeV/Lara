@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Hash;
 use Lara\Library\Revision;
@@ -60,7 +61,7 @@ class SurveyAnswerController extends Controller
 		$revision_answer = new Revision($survey_answer);
         // prevent guestentries with ldapId
         // prevent entries with foreign usernames but valid ldap_id
-        if(Session::has('userId') && Session::get('userName')  === $input->name) {
+        if(Session::has('userId') && Auth::user()->name  === $input->name) {
             $survey_answer->creator_id = $input->ldapId;
         }
         else {
