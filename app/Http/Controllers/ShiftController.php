@@ -459,7 +459,7 @@ class ShiftController extends Controller
         // If club input is empty setting clubId to '-' (clubId 1).
         // Else - look for a match in the Clubs DB and set person->clubId = matched club's id.
         // No match found - creating a new club with title from input.
-        if ( $userClub == '' OR $userClub == '-' )
+        if ( $userClub == '' || $userClub == '-' )
         {
             $person->clb_id = '1';
         }

@@ -22,9 +22,9 @@ class Creator
         $newObject = new $classpath();
         $object = $newObject->findOrFail($request->route()->parameter($routeParameterName));
         if($object->creator_id == $request->session()->get('userId')
-            OR $request->session()->get('userGroup') == "clubleitung"
-            OR $request->session()->get('userGroup') == "marketing"
-            OR $request->session()->get('userGroup') == "admin") {
+            || $request->session()->get('userGroup') == "clubleitung"
+            || $request->session()->get('userGroup') == "marketing"
+            || $request->session()->get('userGroup') == "admin") {
             return $next($request);
         } else {
             $request->session()->put('message', 'Dir fehlt die nötige Berechtigung!');

@@ -20,9 +20,9 @@ class DeadlineSurvey
     {
         $survey = Survey::findOrFail($request->route()->parameter('survey'));
         if(Carbon::now() < Carbon::createFromTimestamp(strtotime($survey->deadline))
-            OR $request->session()->get('userGroup') == "clubleitung"
-            OR $request->session()->get('userGroup') == "marketing"
-            OR $request->session()->get('userGroup') == "admin") {
+            || $request->session()->get('userGroup') == "clubleitung"
+            || $request->session()->get('userGroup') == "marketing"
+            || $request->session()->get('userGroup') == "admin") {
             return $next($request);
         } else {
             $request->session()->put('message', 'Die Deadline ist überschritten, jetzt können nurnoch Clubleitung/Marketing/Admin die Umfrage ausfüllen');

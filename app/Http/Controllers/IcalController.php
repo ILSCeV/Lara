@@ -439,7 +439,7 @@ class IcalController extends Controller
         $event = ClubEvent::findOrFail($id);
         
         // Check credentials: you can only delete, if you have rights for marketing or management. 
-        if (!Auth::user() OR (Auth::user()->group != 'marketing'
+        if (!Auth::user() || (Auth::user()->group != 'marketing'
                 && Auth::user()->group != 'clubleitung'
                 && Auth::user()->group != 'admin')
         ) {

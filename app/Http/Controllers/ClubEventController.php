@@ -442,7 +442,7 @@ class ClubEventController extends Controller
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
         $created_by = $revisions[0]["user id"];
         if(!Auth::user()
-            OR (Auth::user()->group != 'marketing'
+            || (Auth::user()->group != 'marketing'
                 && Auth::user()->group != 'clubleitung'
                 && Auth::user()->group != 'admin'
                 && Auth::user()->person->prsn_ldap_id != $created_by))
