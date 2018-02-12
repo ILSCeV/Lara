@@ -440,8 +440,8 @@ class IcalController extends Controller
         
         // Check credentials: you can only delete, if you have rights for marketing or management. 
         if (!Auth::user() OR (Auth::user()->group != 'marketing'
-                AND Auth::user()->group != 'clubleitung'
-                AND Auth::user()->group != 'admin')
+                && Auth::user()->group != 'clubleitung'
+                && Auth::user()->group != 'admin')
         ) {
             Session::put('message',
                 'Du darfst dieses Event nicht veröffentlichen! Frage die Clubleitung oder Markleting ;)');

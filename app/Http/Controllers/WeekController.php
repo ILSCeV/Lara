@@ -32,7 +32,7 @@ class WeekController extends Controller {
     {
     	// A hack to correct wrong date in january starting in week 53 last year
     	if (date("m") == "01"
-    	AND date("W") == "53") {
+    	&& date("W") == "53") {
     		return Redirect::action('WeekController@showWeek', array('year' => date("Y",strtotime("-1 year")), 
                                                                  	 'week' => date('W'))); 
     	} else {

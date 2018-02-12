@@ -92,8 +92,8 @@ class ShiftTypeController extends Controller
         // Check credentials: you can only edit, if you have rights for marketing, section management or admin
         if(!Auth::user())
             OR (Auth::user()->group != 'marketing'
-                AND Auth::user()->group != 'clubleitung'
-                AND Auth::user()->group != 'admin'))
+                && Auth::user()->group != 'clubleitung'
+                && Auth::user()->group != 'admin'))
         {
             Session::put('message', trans('mainLang.cantTouchThis'));
             Session::put('msgType', 'danger');
@@ -159,8 +159,8 @@ class ShiftTypeController extends Controller
         // Check credentials: you can only delete, if you have rights for marketing, section management or admin
         if(!Auth::user())
             OR (Auth::user()->group != 'marketing'
-                AND Auth::user()->group != 'clubleitung'
-                AND Auth::user()->group != 'admin'))
+                && Auth::user()->group != 'clubleitung'
+                && Auth::user()->group != 'admin'))
         {
             Session::put('message', trans('mainLang.cantTouchThis'));
             Session::put('msgType', 'danger');

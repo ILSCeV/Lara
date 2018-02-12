@@ -102,7 +102,7 @@ class ShiftController extends Controller
         $password    = $request->get('password');
 
         // Check if someone modified LDAP ID manually
-        if ( !empty($ldapId) AND !is_numeric($ldapId) ) {
+        if ( !empty($ldapId) && !is_numeric($ldapId) ) {
             return response()->json("Fehler: die Clubnummer wurde in falschem Format angegeben. Bitte versuche erneut oder melde diesen Fehler dem Admin.", 400);
         }
 
@@ -157,7 +157,7 @@ class ShiftController extends Controller
                 {
                     // Member shifts (with LDAP ID provided) shouldn't change club id, so no need to do anything in that case either
                     if ( $shift->getPerson->prsn_name == $userName
-                        AND  Person::where('id', '=', $shift->person_id)->first()->prsn_ldap_id == $ldapId )
+                        &&  Person::where('id', '=', $shift->person_id)->first()->prsn_ldap_id == $ldapId )
                     {
                         // Possibility 1: same name, same ldap = same person
                         // Case SAME: Shift was not empty, but same person is there -> do nothing
@@ -176,8 +176,8 @@ class ShiftController extends Controller
                 {
                     // Guest shifts may change club
                     if ( $shift->getPerson->prsn_name == $userName
-                        AND  $shift->getPerson->getClub->clb_title == $userClub
-                        AND  $ldapId == '' )
+                        &&  $shift->getPerson->getClub->clb_title == $userClub
+                        &&  $ldapId == '' )
                     {
                         // Possibility 1: same name, same club, empty ldap  = do nothing
                         // Case SAME: Shift was not empty, but same person is there -> do nothing

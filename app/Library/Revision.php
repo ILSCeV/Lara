@@ -149,7 +149,7 @@ class Revision
             // filter columns which should not be shown in revisions
             return false;
         }
-        if ($type != "create" AND $type != "update" AND $type != "delete") {
+        if ($type != "create" && $type != "update" && $type != "delete") {
             // type needs to be one of those 3 options
             return false;
         }
