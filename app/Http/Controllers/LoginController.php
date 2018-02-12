@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Input;
 use Lara\Person;
-use Lara\Section;
 use Lara\Settings;
-use Lara\User;
 use Log;
 use Redirect;
 use Session;
@@ -106,12 +104,18 @@ class LoginController extends Controller
         } else {
             $result = $this->doProductionLogin();
         }
-        $userSettings = Settings::where('userId','=',Auth::user()->person->prsn_ldap_id)->first();
-        if(isset($userSettings)){
-            Session::put('applocale', $userSettings->language);
-        }
-        return $result;
 
+        $user = Auth::user();
+        if (!$user) {
+            return $result;
+        }
+
+        $userSettings = Settings::where('userId','=', Auth::user()->person->prsn_ldap_id)->first();
+        if (!$userSettings) {
+            return $result;
+        }
+        Session::put('applocale', $userSettings->language);
+        return $result;
     }
 
     /**
@@ -119,7 +123,7 @@ class LoginController extends Controller
      */
     public function doDevelopmentLogin()
     {
-        $isLDAPLogin = strpos(Input::get('userName'), "@") === FALSE;
+        $isLDAPLogin = strpos(Input::get('username'), "@") === FALSE;
         if (!$isLDAPLogin) {
             return $this->doLaraLogin();
         }
@@ -228,7 +232,11 @@ class LoginController extends Controller
 
     public function doLaraLogin()
     {
-        if ($this->attemptLogin(request())) {
+        // put email field into the request. Laravel expects login via an email field,
+        // we use a username field (for both ldap and email logins), so we have to add this value
+        $emailModifiedRequest = request()->merge(['email' => request('username')]);
+
+        if ($this->attemptLogin($emailModifiedRequest)) {
             $user = $this->guard()->user();
             $person = $user->person;
             $this->setCurrentUserInSession(
