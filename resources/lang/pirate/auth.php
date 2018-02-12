@@ -15,5 +15,5 @@ return [
 
     'failed' => 'Entern fehlgeschlagen! Das Losungswort war falsch, du darfst LARRRRA nicht betreten.',
     'throttle' => 'Landratten lassen wir nicht an bord. Bitte versuche es in :seconds Sekunden erneut.',
-
+    'register' => 'Matrosenmeldung',
 ];
