@@ -413,13 +413,13 @@ class IcalController extends Controller
             $result['locationName'][] = $section->title;
         }
         
-        if (!Auth::user())) {
+        if (!Auth::user()) {
             $result['isPublic'] = true;
         } else {
             $result['isPublic'] = false;
         }
         
-        if (!is_null($person) && Auth::user())) {
+        if (!is_null($person) && Auth::user()) {
             $result['personal'] = URL::to('/').'/ical/events/user/'.$person->prsn_uid.'/';
         }
         
@@ -439,8 +439,7 @@ class IcalController extends Controller
         $event = ClubEvent::findOrFail($id);
         
         // Check credentials: you can only delete, if you have rights for marketing or management. 
-        if (!Auth::user())
-            OR (Auth::user()->group != 'marketing'
+        if (!Auth::user() OR (Auth::user()->group != 'marketing'
                 AND Auth::user()->group != 'clubleitung'
                 AND Auth::user()->group != 'admin')
         ) {
