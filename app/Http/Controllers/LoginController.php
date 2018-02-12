@@ -471,11 +471,11 @@ class LoginController extends Controller
 
     public function setCurrentUserInSession($id, $name, $group, $club, $status)
     {
-        Session::put('userId', $id);
-        Session::put('userName', $name);
-        Session::put('userGroup', $group);
-        Session::put('userClub', $club);
-        Session::put('userStatus', $status);
+        //Session::put('userId', $id);
+        //Session::put('userName', $name);
+        //Session::put('userGroup', $group);
+        //Session::put('userClub', $club);
+        //Session::put('userStatus', $status);
     }
 
     /**
