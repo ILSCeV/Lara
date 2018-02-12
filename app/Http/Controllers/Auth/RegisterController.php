@@ -2,13 +2,16 @@
 
 namespace Lara\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
+
 use Lara\User;
 use Lara\Person;
 use Lara\Section;
 
 use Lara\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -87,5 +90,22 @@ class RegisterController extends Controller
             'group' => Section::find($data['section'])->title,
             'person_id' => $person->id
         ]);
+    }
+
+    /**
+     * Register the user with the data provided in the request.
+     * We overwrite the register method from the RegisterUsers trait,
+     * as we don't want to login the new User right away.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        return redirect($this->redirectPath());
     }
 }

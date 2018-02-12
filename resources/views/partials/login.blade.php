@@ -2,19 +2,6 @@
 
 
 <div class="navbar-form form-horizontal login-forms">
-    <select name="loginType" id="loginType" class="selectpicker">
-        <option value="LDAP">{{trans('mainLang.clubNumber')}}</option>
-        <option value="Lara">E-Mail</option>
-    </select>
-    {!! Form::text( 'email',
-                    Input::old('email'),
-                    array('placeholder'  => 'Email',
-                          'class'        => 'form-control',
-                          'autocomplete' => 'on',
-                          'style'        => 'cursor: auto',
-                          'visible'      => 'false') ) !!}
-
-    <br class="visible-xs">
     {!! Form::text( 'username',
                     Input::old( 'username' ),
                     array('placeholder'  => Lang::get('mainLang.clubNumber'),
