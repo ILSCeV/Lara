@@ -1,4 +1,4 @@
-<div class="tab-pane fade in {{ Section::sectionOfCurrentUser() === $name? 'active': '' }}" id="{{$name}}Leaderboards">
+<div class="tab-pane fade in {{ Lara\Section::sectionOfCurrentUser() === $name? 'active': '' }}" id="{{$name}}Leaderboards">
     <table class="table table-hover">
         <thead>
         <tr>
