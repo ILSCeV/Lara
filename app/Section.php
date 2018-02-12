@@ -2,8 +2,8 @@
 
 namespace Lara;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Session;
 
 /**
  * Representation of a section, like bc-club
