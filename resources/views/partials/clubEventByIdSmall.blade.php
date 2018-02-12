@@ -2,7 +2,7 @@
 <div class="panel">
 	<div class="panel panel-heading">
 		{{-- show only a placeholder for private events --}}
-		@if($clubEvent->evnt_is_private AND !Auth::user())
+		@if($clubEvent->evnt_is_private && !Auth::user())
 			<h4><span class="name">{{ trans('mainLang.internalEventP') }}</span></h4>
 		@else
 			<h4><a href="{{ URL::route('event.show', $clubEvent->id) }}">{{ $clubEvent->evnt_title }}</a></h4>

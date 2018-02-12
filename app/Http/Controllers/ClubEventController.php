@@ -457,9 +457,9 @@ class ClubEventController extends Controller
         $created_by = $revisions[0]["user id"];
         if(!Auth::user()
             OR (Auth::user()->group != 'marketing'
-                AND Auth::user()->group != 'clubleitung'
-                AND Auth::user()->group != 'admin'
-                AND Auth::user()->person->prsn_ldap_id != $created_by))
+                && Auth::user()->group != 'clubleitung'
+                && Auth::user()->group != 'admin'
+                && Auth::user()->person->prsn_ldap_id != $created_by))
         {
             Session::put('message', 'Du darfst diese Veranstaltung/Aufgabe nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
             Session::put('msgType', 'danger');

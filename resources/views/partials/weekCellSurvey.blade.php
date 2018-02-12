@@ -1,4 +1,4 @@
-@if(!Auth::user() AND $survey->is_private === 1)
+@if(!Auth::user() && $survey->is_private === 1)
     {{-- Hide internal surveys from guests --}}
     <div class="panel panel-warning">
 

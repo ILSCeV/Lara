@@ -246,7 +246,7 @@
 		<div class="panel-body no-padding ">
 			@foreach($shifts as $shift)
 				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
-				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) AND Auth::user() AND $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
+				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 			                                'id' => $shift->id,
 			                                'method' => 'PUT',
@@ -264,7 +264,7 @@
 			        </div>
 
 			        {{-- show public events, but protect members' shifts from being changed by guests --}}
-			        @if( isset($shift->getPerson->prsn_ldap_id) AND !Auth::user())
+			        @if( isset($shift->getPerson->prsn_ldap_id) && !Auth::user())
 						<div class="col-md-2 col-sm-2 col-xs-4 input-append btn-group">
 						    {{-- SHIFT STATUS --}}
 						    <div class="col-md-3 col-sm-2 col-xs-3 no-padding" id="clubStatus{{ $shift->id }}">
