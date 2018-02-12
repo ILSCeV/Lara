@@ -123,35 +123,7 @@ class LoginController extends Controller
         if (!$isLDAPLogin) {
             return $this->doLaraLogin();
         }
-        $inputUserName = Input::get('username');
-
-        $inputGroup = ["marketing", "bc-Club", "bc-Café", "clubleitung", "admin"];
-
-        $userGroup =null;
-        if($inputUserName!=null){
-         $group = array("1001"=>$inputGroup[0],"1002"=>$inputGroup[1],"1003"=>$inputGroup[2],
-             "1004"=>$inputGroup[3],"1005"=>$inputGroup[4],"1006"=>$inputGroup[0],
-             "1007"=>$inputGroup[1],"1008"=>$inputGroup[2],"1009"=>$inputGroup[3],
-             "1010"=>$inputGroup[4], "1011"=>$inputGroup[0], "1012"=>$inputGroup[1],
-             "1013"=>$inputGroup[2], "1014"=>$inputGroup[3], "1015"=>$inputGroup[4]);
-         $userGroup = $group[$inputUserName];
-        } else {
-          $userGroup = $inputGroup[array_rand($inputGroup, 1)];
-        }
-
         $userGroup = Input::get('userGroup');
-        $input = array("1001" => "Neo", "1002" => "Morpheus", "1003" => "Trinity", "1004" => "Cypher",
-            "1005" => "Tank", "1006" => "Hawkeye", "1007" => "Blackwidow", "1008" => "Deadpool",
-            "1009" => "Taskmaster", "1010" => "nicht-FREI", "1011" => "Venom", "1012" => "Superman",
-            "1013" => "Bart", "1014" => "Fry", "1015" => "Bender");
-        $userId = null;
-
-        if($inputUserName!=null){
-            $userId = $inputUserName;
-        } else {
-            $userId = array_rand($input, 1);
-        }
-        $userName = $input[$userId];
 
         $person = Person::where('clb_id', '<' , 4)->inRandomOrder()->first();
         // get user club
@@ -163,8 +135,9 @@ class LoginController extends Controller
             $person->prsn_status
         );
 
+        $person->user()->fill(["group" => $userGroup])->save();
         $this->loginPersonAsUser($person->prsn_ldap_id);
-        Log::info('Auth success: ' . $userName . ' (' . $userId . ', ' . $userGroup . ') just logged in.');
+        Log::info('Auth success: ' . $person->user()->name . ' (' . $person->prsn_ldap_id . ', ' . $userGroup . ') just logged in.');
 
         return Redirect::back();
     }
