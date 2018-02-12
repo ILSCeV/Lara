@@ -39,23 +39,6 @@ class AppServiceProvider extends ServiceProvider
             return collect($permissions)
                 ->contains($user->group);
         });
-
-        Blade::if('creator', function($thing, $user = NULL) {
-            if (!$user) {
-                $user = Auth::user();
-            }
-
-            if (!$user ) {
-                return false;
-            }
-
-            if ($thing instanceof ClubEvent) {
-                $revisions = json_decode($thing->schedule->entry_revisions, true);
-                return $revisions ?  $revisions[0]["user id"] === $user->person->prsn_ldap_id : false;
-            }
-
-            return false;
-        });
     }
 
     /**
