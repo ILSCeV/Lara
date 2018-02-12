@@ -36,7 +36,7 @@
                     </thead>
                     <tbody>
                         @foreach($clubInfo as $info)
-                            <tr class="{{$info->user->isLoggedInUser() ? 'my-shift' : ''}}">
+                            <tr class="{{Auth::user()->hasPermission($info->user->user())? 'my-shift' : ''}}">
                                 <td>
                                     @include('partials.personStatusMarker', ['person' => $info->user])
                                     <a href="#" onclick="chosenPerson = '{{$info->user->prsn_name}}'" name="show-stats-person{{$info->user->id}}" id="{{$info->user->id}}">

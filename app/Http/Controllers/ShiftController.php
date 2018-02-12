@@ -439,19 +439,21 @@ class ShiftController extends Controller
 
             // If not found, then a user is adding own data for the first time.
             // Let's create a new person with data provided in the session.
+            $user = Auth::user();
+
             if (is_null($person))
             {
                 $person = Person::create( array('prsn_ldap_id' => $ldapId) );
                 $person->prsn_name = $userName;
-                $person->prsn_status = Auth::user()->status;
+                $person->prsn_status = $user->status;
                 $person->prsn_uid = hash("sha512", uniqid());
             }
 
             // If a person adds him/herself - update status from session to catch if it was changed in LDAP
-            if ($person->prsn_ldap_id == Auth::user()->person->prsn_ldap_id)
+            if ($person->prsn_ldap_id == $user->person->prsn_ldap_id)
             {
-                $person->prsn_status = Auth::user()->status;
-                $person->prsn_name = Auth::user()->name;
+                $person->prsn_status = $user->status;
+                $person->prsn_name = $user->name;
             }
 
         }

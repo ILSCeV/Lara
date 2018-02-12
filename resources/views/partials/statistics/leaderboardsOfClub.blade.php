@@ -12,7 +12,7 @@
         <tbody>
         {{-- Only show Top 10 Shifts --}}
         @foreach($infos->sortByDesc('inOwnClub')->take(10) as $info)
-            <tr class=" {{$info->user->isLoggedInUser() ? 'my-shift' : ''}}">
+            <tr class=" {{Auth::user()->hasPermission($info->user->user()) ? 'my-shift' : ''}}">
                 <td>
                     @include('partials.personStatusMarker', ['person' => $info->user]){{$info->user->prsn_name }}
                 </td>

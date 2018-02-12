@@ -47,18 +47,11 @@ class Utilities
      */
     static function requirePermission($permissions)
     {
-        if(!is_array($permissions)){
-            $permissions = array($permissions);
-        }
-        $isAllowed = false;
         $user = Auth::user();
         if (!$user) {
             return false;
         }
-        foreach ($permissions as $permission) {
-            $isAllowed = $isAllowed || ($user->group == $permission);
-        }
-        return $isAllowed;
+        return $user->is($permissions);
     }
 
     static function getEventTypeTranslation($typeNumber){

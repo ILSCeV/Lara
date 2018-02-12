@@ -15,15 +15,20 @@ class LanguageController extends Controller
     {
         if (array_key_exists($lang, Config::get('languages'))) {
             Session::put('applocale', $lang);
-            
-            if(Auth::user())){
-               $userSettings = Settings::where('userId','=',Auth::user()->person->prsn_ldap_id)->first();
-               if(!isset($userSettings)){
-                   $userSettings = new Settings();
-               }
-               $userSettings->language = ''.$lang;
-               $userSettings->userId = Auth::user()->person->prsn_ldap_id;
-               $userSettings->save();
+
+            $user = Auth::user();
+            if($user) {
+                $ldap_id = $user->person->prsn_ldap_id;
+
+                $userSettings = Settings::where('userId','=', $ldap_id)->first();
+
+                if(!isset($userSettings)){
+                    $userSettings = new Settings();
+                }
+
+                $userSettings->language = ''.$lang;
+                $userSettings->userId = $ldap_id;
+                $userSettings->save();
             }
         }
 

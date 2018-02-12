@@ -131,7 +131,7 @@ class ShiftTypeController extends Controller
 
         // Log the action while we still have the data
         Log::info('ShiftType edited: ' .
-            Auth::user()->name . ' (' . Auth::user()->person->prsn_ldap_id . ', ' . Auth::user()->group .
+            $user->name . ' (' . $user->person->prsn_ldap_id . ', ' . $user->group .
             ') changed shift type #' . $shiftType->id . ' from "' . $shiftType->title . '", start: ' . $shiftType->start . ', end: ' . $shiftType->end . ', weight: ' . $shiftType->statistical_weight . ' to "' . $newTitle . '" , start: ' . $newTimeStart . ', end: ' . $newTimeEnd . ', weight: ' . $newWeight . '. ');
 
         // Write and save changes
@@ -184,7 +184,7 @@ class ShiftTypeController extends Controller
 
             // Log the action while we still have the data
             Log::info('ShiftType deleted: ' .
-                Auth::user()->name . ' (' . Auth::user()->person->prsn_ldap_id . ', ' . Auth::user()->group .
+                $user->name . ' (' . $user->person->prsn_ldap_id . ', ' . $user->group .
                 ') deleted "' . $shiftType->title .  '" (it was not used in any schedule).');
 
             // Now delete the shiftType

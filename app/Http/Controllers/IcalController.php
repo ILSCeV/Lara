@@ -391,7 +391,9 @@ class IcalController extends Controller
     /** generate links for ui */
     public function generateLinks()
     {
-        $userId = Auth::user()->person->prsn_ldap_id;
+        $user = Auth::user();
+
+        $userId = $user->person->prsn_ldap_id;
         
         $person = Person::where('prsn_ldap_id', '=', $userId)->first();
         
@@ -403,7 +405,7 @@ class IcalController extends Controller
         
         foreach ($sections as $section) {
             
-            if (Auth::user()) {
+            if ($user) {
                 $sectionLink = [$section->title => URL::to('/').'/ical/feed/'.$section->section_uid."/1"];
                 $result['location'][] = $sectionLink;
             }
@@ -413,13 +415,13 @@ class IcalController extends Controller
             $result['locationName'][] = $section->title;
         }
         
-        if (!Auth::user()) {
+        if (!$user) {
             $result['isPublic'] = true;
         } else {
             $result['isPublic'] = false;
         }
         
-        if (!is_null($person) && Auth::user()) {
+        if (!is_null($person) && $user) {
             $result['personal'] = URL::to('/').'/ical/events/user/'.$person->prsn_uid.'/';
         }
         
@@ -439,10 +441,9 @@ class IcalController extends Controller
         $event = ClubEvent::findOrFail($id);
         
         // Check credentials: you can only delete, if you have rights for marketing or management. 
-        if (!Auth::user() || (Auth::user()->group != 'marketing'
-                && Auth::user()->group != 'clubleitung'
-                && Auth::user()->group != 'admin')
-        ) {
+        $user = Auth::user();
+
+        if (!$user || !$user->is(['marketing', 'clubleitung', 'admin']) ) {
             Session::put('message',
                 'Du darfst dieses Event nicht veröffentlichen! Frage die Clubleitung oder Markleting ;)');
             Session::put('msgType', 'danger');
@@ -458,8 +459,8 @@ class IcalController extends Controller
             Utilities::clearIcalCache();
             
             // Log the action while we still have the data
-            Log::info('Event unpublished: '.Auth::user()->name.' ('.Auth::user()->person->prsn_ldap_id.', '
-                .Auth::user()->group.') unpublished event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
+            Log::info('Event unpublished: '. $user->name.' ('. $user->person->prsn_ldap_id.', '
+                . $user->group.') unpublished event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
             
             // Inform the user
             Session::put('message', "Dieses Event wurde erfolgreich aus dem Kalenderfeed entfernt.");
@@ -475,8 +476,8 @@ class IcalController extends Controller
             Utilities::clearIcalCache();
             
             // Log the action while we still have the data
-            Log::info('Event published: '.Auth::user()->name.' ('.Auth::user()->person->prsn_ldap_id.', '
-                .Auth::user()->group.') published event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
+            Log::info('Event published: '. $user->name.' ('. $user->person->prsn_ldap_id.', '
+                . $user->group.') published event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
             
             // Inform the user
             Session::put('message', "Dieses Event wurde erfolgreich zum Kalenderfeed hinzugefügt.");
