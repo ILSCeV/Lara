@@ -73,7 +73,7 @@
 			@foreach($shifts = $clubEvent->getSchedule->shifts as $shift)
 				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
                 {{-- add a divider if the shift is not the last one --}}
-			    <div class="row{!! $shift !== $shifts->last() ? ' divider': false !!}{!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id == Auth::user()->person->prsn_ldap_id)) ? " my-shift" : false !!}">
+			    <div class="row{!! $shift !== $shifts->last() ? ' divider': false !!}{!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id == Auth::user()->person->prsn_ldap_id) ? " my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 			                                'id' => $shift->id,
 			                                'method' => 'put',

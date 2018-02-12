@@ -46,14 +46,17 @@ class Section extends Model
 		return $this->hasMany('Lara\ClubEvent', 'plc_id', 'id');
 	}
 
-	public static function sectionOfCurrentUser() {
+	public static function current() {
         $user = Auth::user();
 
         if (!$user) {
-            return null;
+            return [
+                "title" => ""
+            ];
         }
         return $user->section;
     }
+
 
     public function club()
     {

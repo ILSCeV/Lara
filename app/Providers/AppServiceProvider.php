@@ -26,18 +26,23 @@ class AppServiceProvider extends ServiceProvider
             return App::environment('berta');
         });
 
-        Blade::if('is', function($permissions) {
-            if (!is_array($permissions)) {
-                $permissions = [$permissions];
-            }
-
+        Blade::if('is', function($groups) {
             $user = Auth::user();
             if (!$user) {
                 return false;
             }
 
-            return collect($permissions)
-                ->contains($user->group);
+            return $user->is($groups);
+        });
+
+        Blade::if('admin', function() {
+            $user = Auth::user();
+
+            if (!$user) {
+                return false;
+            }
+
+            return $user->group === "admin";
         });
     }
 

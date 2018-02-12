@@ -163,7 +163,7 @@ $userCanEditDueToRole
 
                     <input hidden id="get_row" value="">
                     <input type="hidden" id="hdnSession_userName" value="{{Auth::user()->name}}">
-                    <input type="hidden" id="hdnSession_userClub" value="{{Lara\Section::sectionOfCurrentUser()}}">
+                    <input type="hidden" id="hdnSession_userClub" value="{{Lara\Section::current()->title}}">
                     <input type="hidden" id="hdnSession_userID" value="{{Auth::user()->person->prsn_ldap_id)}}">
                     <input type="hidden" id="hdnSession_oldContent" name="hidden_oldContent[]" value="">
 
@@ -192,7 +192,7 @@ $userCanEditDueToRole
                                         <li id="yourself">
                                             <a href="javascript:void(0);"
                                                onClick="document.getElementById('newName').value='{{Auth::user()->name}}';
-                                                       document.getElementById('club').value='{{Lara\Section::sectionOfCurrentUser()}}';
+                                                       document.getElementById('club').value='{{Lara\Section::current()->title}}';
                                                        document.getElementById('ldapId').value='{{Auth::user()->person->prsn_ldap_id)}}'">
                                                 <b>{{ trans('mainLang.addMe') }}</b>
                                             </a>

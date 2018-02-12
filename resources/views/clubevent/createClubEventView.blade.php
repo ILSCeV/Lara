@@ -257,7 +257,7 @@
 						@if(is_null($filter) || $filter == "")
 							{{-- Set default values to the club the user is a member in.--}}
 							@foreach(Lara\Section::all() as $section)
-                                {{ Form::checkbox("filter[" . $section->title ."]", $section->id, $section->title === Lara\Section::sectionOfCurrentUser()) }}
+                                {{ Form::checkbox("filter[" . $section->title ."]", $section->id, $section === Lara\Section::current()) }}
 									{{ $section->title }}
                                 	&nbsp;
 							@endforeach
