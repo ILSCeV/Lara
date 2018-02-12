@@ -111,7 +111,7 @@ class ShiftTypeController extends Controller
     {
         // Check credentials: you can only edit, if you have rights for marketing, section management or admin
         if(!Auth::user())
-            OR (Auth::user()->group != 'marketing'
+            || (Auth::user()->group != 'marketing'
                 && Auth::user()->group != 'clubleitung'
                 && Auth::user()->group != 'admin'))
         {
@@ -243,7 +243,7 @@ class ShiftTypeController extends Controller
     {
         // Check credentials: you can only delete, if you have rights for marketing, section management or admin
         if(!Auth::user())
-            OR (Auth::user()->group != 'marketing'
+            || (Auth::user()->group != 'marketing'
                 && Auth::user()->group != 'clubleitung'
                 && Auth::user()->group != 'admin'))
         {

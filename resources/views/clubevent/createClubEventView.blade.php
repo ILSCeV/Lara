@@ -254,7 +254,7 @@
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
 					<label for="filter" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.showFor') }}: &nbsp;</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						@if(is_null($filter) OR $filter == "")
+						@if(is_null($filter) || $filter == "")
 							{{-- Set default values to the club the user is a member in.--}}
 							@foreach(Lara\Section::all() as $fSection)
                                 {{ Form::checkbox("filter[" . $fSection->title ."]", $fSection->id, $fSection->title === Session::get("userClub")) }}

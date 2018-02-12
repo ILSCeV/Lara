@@ -114,7 +114,7 @@ $userCanEditDueToRole
                 <i class="fa fa-bar-chart-o white-text"></i>
                 &nbsp;&nbsp;
                 {{ $survey->title }}
-                @if($userId == $survey->creator_id OR $userCanEditDueToRole)
+                @if($userId == $survey->creator_id || $userCanEditDueToRole)
                     <a href="{{$survey->id}}/edit"
                        style="float: right"
                        class="btn btn-default btn-sm"
@@ -259,8 +259,8 @@ $userCanEditDueToRole
                             </td>
                         </tr>
                         {!! Form::open(['action' => ['SurveyAnswerController@update', $survey->id,  'id' => '' ], 'class' => 'update']) !!}
-                        @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
-                            @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
+                        @if(!$survey->is_anonymous || $userId == $survey->creator_id)
+                            @if(!$survey->show_results_after_voting || $userParticipatedAlready)
                                 @foreach($answers as $key => $answer)
                                     <tr class="row{{$answer->id}}" id="{{$answer->id}}">
                                         <td class="singleAnswer">
@@ -283,8 +283,8 @@ $userCanEditDueToRole
                                                     {{trans($cell->answer)}}
                                                 </td>
                                                 @endforeach
-                                                @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
-                                                    @if($survey->deadline >= date("Y-m-d H:i:s") OR $userCanEditDueToRole)
+                                                @if($userId == $answer->creator_id || $userCanEditDueToRole || empty($answer->creator_id))
+                                                    @if($survey->deadline >= date("Y-m-d H:i:s") || $userCanEditDueToRole)
                                                     <!--Edit Delete Buttons-->
                                                         <td class="tdButtons ">
                                                             <input href="#"
@@ -331,9 +331,9 @@ $userCanEditDueToRole
 
     {{---------------------------------------------change-history-----------------------------------------------------}}
     @if(!empty($userId))
-        @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
+        @if(!$survey->is_anonymous || $userId == $survey->creator_id)
             {{--only if the survey is public or if the user is the creator of the survey--}}
-            @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
+            @if(!$survey->show_results_after_voting || $userParticipatedAlready)
                 {{--only if the results are always visiable or the user has already taken part--}}
                 {{--they can see the change history of the survey--}}
                 <br>
