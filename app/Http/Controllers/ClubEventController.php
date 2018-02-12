@@ -12,12 +12,13 @@ use Illuminate\Http\Request;
 use Input;
 use Lara\Club;
 use Lara\ClubEvent;
+use Lara\Console\Commands\SyncBDclub;
 use Lara\Logging;
-use Lara\Person;
-use Lara\Schedule;
-use Lara\Section;
-use Lara\Shift;
 use Lara\ShiftType;
+use Lara\Shift;
+use Lara\Person;
+use Lara\Section;
+use Lara\Schedule;
 use Lara\Template;
 use Lara\Utilities;
 use Log;
@@ -168,8 +169,7 @@ class ClubEventController extends Controller
                                                          'section', 'filter', 'timeStart', 'timeEnd',
                                                          'info', 'details', 'private', 'dv',
                                                          'activeTemplate',
-                                                         'date', 'templateId','facebookNeeded','createClubEvent',
-                                                         'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal'));
+                                                         'date', 'templateId','facebookNeeded','createClubEvent'));
     }
 
 
@@ -348,23 +348,19 @@ class ClubEventController extends Controller
             $creator_name = $revisions[0]["user name"];
         }
 
-        $title                  = $event->evnt_title;
-        $type                   = $event->evnt_type;
-        $subtitle               = $event->evnt_subtitle;
-        $section                = $event->section;
-        $filter                 = $event->showToSectionNames();
-        $dv                     = $schedule->schdl_time_preparation_start;
-        $timeStart              = $event->evnt_time_start;
-        $timeEnd                = $event->evnt_time_end;
-        $info                   = $event->evnt_public_info;
-        $details                = $event->evnt_private_details;
-        $private                = $event->evnt_is_private;
-        $facebookNeeded         = $event->facebook_done;
-        $date                   = $event->evnt_date_start;
-        $priceNormal            = $event->price_normal;
-        $priceTicketsNormal     = $event->price_tickets_normal;
-        $priceExternal          = $event->price_external;
-        $priceTicketsExternal   = $event->price_tickets_external;
+        $title          = $event->evnt_title;
+        $type           = $event->evnt_type;
+        $subtitle       = $event->evnt_subtitle;
+        $section        = $event->section;
+        $filter         = $event->showToSectionNames();
+        $dv             = $schedule->schdl_time_preparation_start;
+        $timeStart      = $event->evnt_time_start;
+        $timeEnd        = $event->evnt_time_end;
+        $info           = $event->evnt_public_info;
+        $details        = $event->evnt_private_details;
+        $private        = $event->evnt_is_private;
+        $facebookNeeded = $event->facebook_done;
+        $date = $event->evnt_date_start;
         if(!is_null($event->template_id)) {
             $baseTemplate = $event->template;
         } else {

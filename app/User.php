@@ -53,4 +53,13 @@ class User extends Authenticatable
             'group' => $person->club->clb_title
         ]);
     }
+
+    public function is($groups) {
+        if (!is_array($groups)) {
+            $groups = [$groups];
+        }
+
+        return collect($groups)
+            ->contains($this->group);
+    }
 }
