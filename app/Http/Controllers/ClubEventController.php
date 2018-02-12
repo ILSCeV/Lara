@@ -203,8 +203,9 @@ class ClubEventController extends Controller
         ScheduleController::createShifts($newSchedule);
 
         // log the action
-        Log::info('Event created: ' . Auth::user()->name . ' (' . Auth::user()->person->prsn_ldap_id . ', '
-                 . Auth::user()->group . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
+        $user = Auth::user();
+        Log::info('Event created: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
+                 . $user->group . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
         Utilities::clearIcalCache();
         if (Input::get('saveAsTemplate')){
             $template = $newSchedule->toTemplate();
@@ -231,7 +232,8 @@ class ClubEventController extends Controller
         $clubEvent = ClubEvent::with('section')
                               ->findOrFail($id);
 
-        if(! Auth::user() && $clubEvent->evnt_is_private==1)
+        $user = Auth::user();
+        if (!$user && $clubEvent->evnt_is_private == 1)
         {
             Session::put('message', Config::get('messages_de.access-denied'));
             Session::put('msgType', 'danger');
@@ -408,8 +410,9 @@ class ClubEventController extends Controller
         ScheduleController::editShifts($schedule);
 
         // log the action
-        Log::info('Event edited: ' . Auth::user()->name . ' (' . Auth::user()->person->prsn_ldap_id . ', '
-                 . Auth::user()->group . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        $user = Auth::user();
+        Log::info('Event edited: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
+                 . $user->group . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
 
 
         // save all data in the database
@@ -451,11 +454,9 @@ class ClubEventController extends Controller
         // Check credentials: you can only delete, if you have rights for marketing or management.
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
         $created_by = $revisions[0]["user id"];
-        if(!Auth::user()
-            || (Auth::user()->group != 'marketing'
-                && Auth::user()->group != 'clubleitung'
-                && Auth::user()->group != 'admin'
-                && Auth::user()->person->prsn_ldap_id != $created_by))
+
+        $user = Auth::user();
+        if (!$user || $user->is(['marketing', 'clubleitung', 'admin']))
         {
             Session::put('message', 'Du darfst diese Veranstaltung/Aufgabe nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
             Session::put('msgType', 'danger');
@@ -464,8 +465,8 @@ class ClubEventController extends Controller
         }
 
         // Log the action while we still have the data
-        Log::info('Event deleted: ' . Auth::user()->name . ' (' . Auth::user()->person->prsn_ldap_id . ', '
-                 . Auth::user()->group . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        Log::info('Event deleted: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
+                 . $user->group . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         Utilities::clearIcalCache();
 
         // Delete schedule with shifts

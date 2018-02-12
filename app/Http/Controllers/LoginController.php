@@ -110,7 +110,7 @@ class LoginController extends Controller
             return $result;
         }
 
-        $userSettings = Settings::where('userId','=', Auth::user()->person->prsn_ldap_id)->first();
+        $userSettings = Settings::where('userId','=', $user->person->prsn_ldap_id)->first();
         if (!$userSettings) {
             return $result;
         }

@@ -54,12 +54,13 @@ class User extends Authenticatable
         ]);
     }
 
-    public function is($groups) {
-        if (!is_array($groups)) {
-            $groups = [$groups];
+    public function is($permissions)
+    {
+        if (!is_array($permissions)) {
+            $permissions = [$permissions];
         }
 
-        return collect($groups)
+        return collect($permissions)
             ->contains($this->group);
     }
 }

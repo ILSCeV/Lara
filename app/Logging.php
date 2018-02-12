@@ -71,14 +71,17 @@ class Logging
 
     public static function newShiftRevision($shift, $action, $old = "", $new = "")
     {
+        $user = Auth::user();
+        $person = $user->person;
+
         return [
             "entry id" => is_null($shift) ?  "" : $shift->id,
             "job type" => is_null($shift) ? "" : is_null($shift->shifttype_id) ? "" : ShiftType::find($shift->shifttype_id)->title(),
             "action" => $action,
             "old value" => $old,
             "new value" => $new,
-            "user id" => Auth::user()->person->prsn_ldap_id != NULL ? Auth::user()->person->prsn_ldap_id : "",
-            "user name" => Auth::user()->person->prsn_ldap_id != NULL ? Auth::user()->name . ' (' . Auth::user()->person->club->clb_title . ')' : "Gast",
+            "user id" => $person->prsn_ldap_id != NULL ? $person->prsn_ldap_id : "",
+            "user name" => $person->prsn_ldap_id != NULL ? $user->name . ' (' . $person->club->clb_title . ')' : "Gast",
             "from ip" => Request::getClientIp(),
             "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
         ];
@@ -86,14 +89,16 @@ class Logging
 
     public static function newScheduleRevision($schedule, $action, $old = "", $new = "")
     {
+        $user = Auth::user();
+        $person = $user->person;
         return [
             "entry id" => is_null($schedule) ? "" : $schedule->id,
             "job type" => "",
             "action" => $action,
             "old value" => $old,
             "new value" => $new,
-            "user id" => Auth::user()->person->prsn_ldap_id != NULL ? Auth::user()->person->prsn_ldap_id : "",
-            "user name" => Auth::user()->person->prsn_ldap_id != NULL ? Auth::user()->name . ' (' . Auth::user()->person->club->clb_title . ')' : "Gast",
+            "user id" => $person->prsn_ldap_id != NULL ? $person->prsn_ldap_id : "",
+            "user name" => $person->prsn_ldap_id != NULL ? $user->name . ' (' . $person->club->clb_title . ')' : "Gast",
             "from ip" => Request::getClientIp(),
             "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
         ];

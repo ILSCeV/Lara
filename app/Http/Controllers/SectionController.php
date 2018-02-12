@@ -170,8 +170,11 @@ class SectionController extends Controller
         }
 
         // Log the action while we still have the data
+        $user = Auth::user();
+        $person = $user->person;
+
         Log::info('Section removed: ' .
-            Auth::user()->person->prsn_name . ' (' . Auth::user()->person->prsn_ldap_id . ', ' . Auth::user()->group .
+            $person->prsn_name . ' (' . $person->prsn_ldap_id . ', ' . $user->group .
             ') deleted section "' . $section->title .  '". May Gods have mercy on their souls!');
 
         $events = ClubEvent::where("plc_id", "=", $section->id)->get();
