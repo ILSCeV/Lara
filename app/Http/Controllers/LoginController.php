@@ -119,7 +119,7 @@ class LoginController extends Controller
      */
     public function doDevelopmentLogin()
     {
-        $isLDAPLogin = request('loginType') === 'LDAP';
+        $isLDAPLogin = strpos(Input::get('userName'), "@") === FALSE;
         if (!$isLDAPLogin) {
             return $this->doLaraLogin();
         }

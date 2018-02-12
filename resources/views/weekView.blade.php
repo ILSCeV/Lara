@@ -71,7 +71,7 @@
 					{{-- Filter: we add a css class later below if a club is mentioned in filter data --}}
 
 					{{-- guests see private events as placeholders only, so check if user is logged in --}}
-					@if(!Session::has('userId'))
+					@guest
 
 						{{-- show only a placeholder for private events --}}
 						@if($clubEvent->evnt_is_private)
@@ -152,7 +152,7 @@
 
 						</div>
 
-					@endif
+					@endguest
 				@endforeach
 
                 @foreach($surveys as $survey)

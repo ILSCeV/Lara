@@ -51,8 +51,12 @@ class Utilities
             $permissions = array($permissions);
         }
         $isAllowed = false;
+        $user = Auth::user();
+        if (!$user) {
+            return false;
+        }
         foreach ($permissions as $permission) {
-            $isAllowed = $isAllowed || (Session::get('userGroup') == $permission);
+            $isAllowed = $isAllowed || ($user->group == $permission);
         }
         return $isAllowed;
     }

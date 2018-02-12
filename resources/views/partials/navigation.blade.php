@@ -49,9 +49,7 @@
 
 {{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
 
-                @if(Auth::user()->group == 'marketing'
-                 OR Auth::user()->group == 'clubleitung'
-                 OR Auth::user()->group == 'admin')
+                @is(['marketing', 'clubleitung', 'admin'])
                     <li>
                         <a href="{{ asset('shiftType') }}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
@@ -64,14 +62,13 @@
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>
                     </li>
-                @endif
+                @endis
 
 
 {{-- LARA LOGS / section management or admins only --}}
-                @if(Auth::user()->group == 'clubleitung'
-                 OR Auth::user()->group == 'admin')
+                @is(['clubleitung', 'admin'])
                     <li><a href="{{ asset('/logs') }}">Logs</a></li>
-                @endif
+                @endis
 
 
 
@@ -120,7 +117,7 @@ Disabling iCal until fully functional.
             <div class="col-xs-10 col-sm-12 col-md-12 no-margin no-padding">
 
 {{-- AUTHENTICATION --}}
-                @if(Session::has('userId'))
+                @auth
 
 {{-- CREATE BUTTONS / members only --}}
     {{-- Desktop version --}}
@@ -154,25 +151,25 @@ Disabling iCal until fully functional.
                                             'class'=>'form-horizontal')) !!}
                             <div class="navbar-form">
                                 &nbsp;&nbsp;
-                                @if     ( Session::get('userStatus') === 'candidate' )
+                                @if     ( Auth::user()->status === 'candidate' )
                                     <i class="fa fa-adjust"
                                        style="color:yellowgreen;"
                                        data-toggle="tooltip"
                                        data-placement="bottom"
                                        title="{{ trans('mainLang.candidate') }}"></i>
-                                @elseif ( Session::get('userStatus') === 'veteran' )
+                                @elseif ( Auth::user()->status === 'veteran' )
                                     <i class="fa fa-star"
                                        style="color:gold;"
                                        data-toggle="tooltip"
                                        data-placement="bottom"
                                        title="{{ trans('mainLang.veteran') }}"></i>
-                                @elseif ( Session::get('userStatus') === 'resigned' )
+                                @elseif ( Auth::user()->status === 'resigned' )
                                     <i class="fa fa-star-o"
                                        style="color:gold;"
                                        data-toggle="tooltip"
                                        data-placement="bottom"
                                        title="{{ trans('mainLang.ex-member') }}"></i>
-                                @elseif ( Session::get('userStatus') === 'member')
+                                @elseif ( Auth::user()->status === 'member')
                                     <i class="fa fa-circle"
                                        style="color:forestgreen;"
                                        data-toggle="tooltip"
@@ -184,15 +181,15 @@ Disabling iCal until fully functional.
                                     <span data-toggle="tooltip"
                                           data-placement="bottom"
                                           title="
-                                            @if(Auth::user()->group == 'marketing')
-                                                {{ Session::get('userClub') . " / Marketing" }}
-                                            @elseif (Auth::user()->group == 'clubleitung')
-                                                {{ Session::get('userClub') . " / Clubleitung" }}
-                                            @elseif (Auth::user()->group == 'admin')
-                                                {{ Session::get('userClub') . " / Admin" }}
+                                            @is('marketing')
+                                                {{ Auth::user()->section->title . " / Marketing" }}
+                                            @elseis('clubleitung')
+                                                {{ Auth::user()->section->title . " / Clubleitung" }}
+                                            @elseis('admin')
+                                                {{ Auth::user()->section->title . " / Admin" }}
                                             @else
-                                                {{ Session::get('userClub') }}
-                                            @endif
+                                                {{ Auth::user()->section->title }}
+                                            @endis
                                           ">
                                         {{ Auth::user()->name }}
                                     </span>
@@ -212,7 +209,7 @@ Disabling iCal until fully functional.
                         @include('partials/login')
                     </li>
 
-                @endif
+                @endauth
             </div>
             <span class="col-xs-1 visible-xs">&nbsp;</span>
           </ul>

@@ -16,7 +16,7 @@ class LanguageController extends Controller
         if (array_key_exists($lang, Config::get('languages'))) {
             Session::put('applocale', $lang);
             
-            if(Session::has('userId')){
+            if(Auth::user())){
                $userSettings = Settings::where('userId','=',Auth::user()->person->prsn_ldap_id)->first();
                if(!isset($userSettings)){
                    $userSettings = new Settings();

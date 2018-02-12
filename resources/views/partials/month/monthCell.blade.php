@@ -10,7 +10,7 @@
     @endif
 
     @if(date("Y-m-d", strtotime($survey->deadline)) === date("Y-m-d", $weekDay->getTimestamp()))
-        @if(!Session::has('userId') && $survey->is_private)
+        @if(!Auth::user() && $survey->is_private)
             {{-- check current session for user role && and the survey for private status--}}
             {{-- no userId means this a guest account, so he gets blocked here--}}
 
@@ -55,9 +55,11 @@
         @endif
 
         {{-- highlight with cal-month-my-event class if the signed in user has a shift in this event --}}
-        @if((Session::has('userId') && $clubEvent->hasShift($clubEvent->getSchedule->id, Auth::user()->person->prsn_ldap_id))))
-            <?php $classString .= " cal-month-my-event"; ?>
-        @endif
+        @auth
+            @if($clubEvent->hasShift(Auth::user()->person))
+                <?php $classString .= " cal-month-my-event"; ?>
+            @endif
+        @endauth
 
         {{-- Filter --}}
         @if ( $clubEvent->showToSection->isEmpty() )
@@ -70,7 +72,7 @@
 
 
             {{-- guests see private events as placeholders only, so check if user is logged in --}}
-            @if(!Session::has('userId'))
+            @guest
                 {{-- show only a placeholder for private events --}}
                 @if($clubEvent->evnt_is_private)
                     <div class="cal-event {{$classString}} palette-Grey-500 bg">
@@ -147,7 +149,7 @@
                     </a>
 
                 </div>
-            @endif
+            @endguest
 
         </div>
 

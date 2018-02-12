@@ -73,7 +73,7 @@
 			@foreach($shifts = $clubEvent->getSchedule->shifts as $shift)
 				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
                 {{-- add a divider if the shift is not the last one --}}
-			    <div class="row{!! $shift !== $shifts->last() ? ' divider': false !!}{!! ( isset($shift->getPerson->prsn_ldap_id) AND Session::has('userId') AND $shift->getPerson->prsn_ldap_id == Auth::user()->person->prsn_ldap_id)) ? " my-shift" : false !!}">
+			    <div class="row{!! $shift !== $shifts->last() ? ' divider': false !!}{!! ( isset($shift->getPerson->prsn_ldap_id) AND Auth::user() AND $shift->getPerson->prsn_ldap_id == Auth::user()->person->prsn_ldap_id)) ? " my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 			                                'id' => $shift->id,
 			                                'method' => 'put',
@@ -130,15 +130,12 @@
 			@endforeach
 
 			{{-- Show a "hide" button for management, that allows removal of an event from current view - needed for printing --}}
-	        @if(Session::has('userGroup')
-		        AND (Auth::user()->group == 'marketing'
-		        OR Auth::user()->group == 'clubleitung'
-		        OR Auth::user()->group == 'admin'))
+	        @is(['marketing', 'clubleitung', 'admin'])
 		        <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 				<div class="padding-right-16 bottom-padding pull-right hidden-print">
 					<small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
 				</div>
-			@endif
+			@endis
 
 		</div>
 

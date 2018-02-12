@@ -85,4 +85,14 @@ class Person extends Model
         $userRelationship = $this->hasOne('Lara\User');
         return $userRelationship->exists() ? $userRelationship->first() : User::createFromPerson($this);
     }
+
+    public static function isCurrent($ldap_id)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return false;
+        }
+        return $user->person->prsn_ldap_id === $ldap_id;
+
+    }
 }

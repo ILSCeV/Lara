@@ -10,7 +10,7 @@
 
 @section('content')
 
-@if(Session::has('userId'))
+@auth
     <div class="row">
         <div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
             @if($createClubEvent)
@@ -123,7 +123,7 @@
 			      	@endif
 			    </div>
 
-			    @if(Auth::user()->group == 'marketing' OR Auth::user()->group == 'clubleitung' OR Auth::user()->group == 'admin')
+			    @is(['marketing', 'clubleitung', 'admin'])
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 						<label for="facebookDone" class="col-md-4 col-sm-4 col-xs-7">{{trans('mainLang.faceDone')}}?</label>
                         <select class="selectpicker" name="facebookDone" id="facebookDone">
@@ -227,15 +227,15 @@
 				            </div>
 						</div>
 				    </div>
-				@endif
+				@endis
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="section" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
 					<span class="col-md-10 col-sm-10 col-xs-12">
 						@if (!is_null($section))
 							{!! Form::text('section', $section->title, array('id'=>'section', 'readonly') ) !!}
-						@elseif(!is_null(Session::get('userClub')))
-							{!! Form::text('section', Session::get('userClub'), array('id'=>'section', 'readonly')) !!}
+						@elseif(!is_null(Auth::user()))
+							{!! Form::text('section', Auth::user()->section->title, array('id'=>'section', 'readonly')) !!}
 						@endif
 					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 					        <span class="caret"></span>
@@ -407,13 +407,13 @@
 	    Disabling iCal until fully functional -> remove "Publish" button, rename "create unpublished" to just "create"
 
 
-	    @if(Auth::user()->group == 'marketing'
-	     OR Auth::user()->group == 'clubleitung'
-	     OR Auth::user()->group == 'admin')
+	    @is([ 'marketing'
+	     , 'clubleitung'
+	     , 'admin')]
 			<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<br class="visible-xs">
-	    @endif
+	    @endis
 
 	    --}}
         @if($createClubEvent)
@@ -433,7 +433,7 @@
 
 @else
 	@include('partials.accessDenied')
-@endif
+@endauth
 
 @stop
 

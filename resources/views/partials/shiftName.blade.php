@@ -21,19 +21,19 @@
 @endif
 
 {{-- Show dropdowns only for members --}}
-@if (Session::has("userName"))
+@auth
     <ul class="dropdown-menu dropdown-username" style="position: absolute;">
         <li id="yourself">
             <a href="javascript:void(0);"
                onClick="document.getElementById('userName{{ ''. $shift->id }}').value='{{Auth::user()->name}}';
-                       document.getElementById('club{{ ''. $shift->id }}').value='{{Session::get('userClub')}}';
-                       document.getElementById('ldapId{{ ''. $shift->id }}').value='{{Auth::user()->person->prsn_ldap_id)}}';
+                       document.getElementById('club{{ ''. $shift->id }}').value='{{Section::sectionOfCurrentUser()}}';
+                       document.getElementById('ldapId{{ ''. $shift->id }}').value='{{Auth::user()->person->prsn_ldap_id}}';
                        document.getElementById('btn-submit-changes{{ ''. $shift->id }}').click();">
                 <b>{{ trans('mainLang.IDoIt') }}</b>
             </a>
         </li>
     </ul>
-@endif
+@endauth
 
 <div>
     @if( is_null($shift->getPerson) )
