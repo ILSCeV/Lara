@@ -8,10 +8,7 @@
 
 @section('content')
 
-@if(Session::has('userGroup')
-	AND (Auth::user()->group == 'marketing'
-	OR Auth::user()->group == 'clubleitung'
-	OR Auth::user()->group == 'admin'))
+@is(['marketing', 'clubleitung', 'admin')
 
 	<div class="panel panel-info col-xs-12 no-padding">
 		<div class="panel-heading">
@@ -90,7 +87,7 @@
 	<br/>
 @else
 	@include('partials.accessDenied')
-@endif
+@endis
 @stop
 
 

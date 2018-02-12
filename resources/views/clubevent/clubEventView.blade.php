@@ -181,70 +181,11 @@
 					@endif
 
 				{{-- CRUD --}}
-				@if(Auth::user()->group === 'marketing'
-				 OR Auth::user()->group === 'clubleitung'
-				 OR Auth::user()->group === 'admin'
-				 OR Auth::user()->person->prsn_ldap_id) === $created_by)
-					<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">
-						<span class="pull-right">
-							{{-- Event publishing only for CL/marketing -> exclude creator
-
-
-							Disabling iCal until fully functional.
-
-
-							@if(Auth::user()->group === 'marketing'
-							 OR Auth::user()->group === 'clubleitung'
-							 OR Auth::user()->group === 'admin')
-								<button  id="unPublishEventLnkBtn"
-									data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
-									class="btn btn-danger @if($clubEvent->evnt_is_published === 0) hidden @endif"
-									name="toggle-publish-state"
-								    data-toggle="tooltip"
-								    data-placement="bottom"
-								    title="{{trans("mainLang.unpublishEvent")}}"
-								    data-token="{{csrf_token()}}"
-									>
-									<i class="fa fa-bullhorn" aria-hidden="true"></i>
-								</button>
-								<button  id="pubishEventLnkBtn"
-									data-href="{{ URL::route('togglePublishState', $clubEvent->id) }}"
-									class="btn btn-success @if($clubEvent->evnt_is_published === 1) hidden @endif"
-									name="toggle-publish-state"
-									data-toggle="tooltip"
-									data-placement="bottom"
-									title="{{trans("mainLang.publishEvent")}}"
-									data-token="{{csrf_token()}}"
-									>
-									<i class="fa fa-bullhorn" aria-hidden="true"></i>
-								</button>
-								&nbsp;&nbsp;
-							@endif
-
-							--}}
-
-							<a href="{{ URL::route('event.edit', $clubEvent->id) }}"
-							   class="btn btn-primary"
-							   data-toggle="tooltip"
-		                       data-placement="bottom"
-		                       title="{{ trans('mainLang.changeEvent') }}">
-							   <i class="fa fa-pencil"></i>
-							</a>
-							&nbsp;&nbsp;
-							<a href="{{ $clubEvent->id }}"
-							   class="btn btn-default"
-							   data-toggle="tooltip"
-		                       data-placement="bottom"
-		                       title="{{ trans('mainLang.deleteEvent') }}"
-							   data-method="delete"
-							   data-token="{{csrf_token()}}"
-							   rel="nofollow"
-							   data-confirm="{{ trans('mainLang.confirmDeleteEvent') }}">
-							   <i class="fa fa-trash"></i>
-							</a>
-						</span>
-					</div>
-				@endif
+				@is(['marketing', 'clubleitung', 'admin'])
+                    @include('partials/events/editOptions', ['event' => $clubEvent])
+                @elseif(Lara\Person::isCurrent($created_by))
+					@include('partials/events/editOptions', ['event' => $clubEvent])
+				@endis
 			</div>
 	                        <span class="displayMobile">
 	                            <br>	&nbsp;
@@ -305,7 +246,7 @@
 		<div class="panel-body no-padding ">
 			@foreach($shifts as $shift)
 				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
-				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) AND Session::has('userId') AND $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id)) ? "my-shift" : false !!}">
+				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) AND Auth::user() AND $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 			                                'id' => $shift->id,
 			                                'method' => 'PUT',
@@ -323,8 +264,7 @@
 			        </div>
 
 			        {{-- show public events, but protect members' shifts from being changed by guests --}}
-			        @if( isset($shift->getPerson->prsn_ldap_id) AND !Session::has('userId'))
-
+			        @if( isset($shift->getPerson->prsn_ldap_id) AND !Auth::user())
 						<div class="col-md-2 col-sm-2 col-xs-4 input-append btn-group">
 						    {{-- SHIFT STATUS --}}
 						    <div class="col-md-3 col-sm-2 col-xs-3 no-padding" id="clubStatus{{ $shift->id }}">
@@ -409,7 +349,7 @@
 
 	<br>
 
-	@if(Session::has('userId'))
+	@auth
 		{{-- REVISIONS --}}
 		<span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 		<a id="show-hide-history" class="text-muted hidden-print" href="#">
@@ -467,7 +407,7 @@
 		<br>
 		<br class="visible-xs">
                     </div>
-	@endif
+	@endauth
 
 @stop
 

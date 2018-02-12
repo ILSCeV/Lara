@@ -222,7 +222,7 @@ class ClubEventController extends Controller
         $clubEvent = ClubEvent::with('section')
                               ->findOrFail($id);
 
-        if(!Session::has('userId') && $clubEvent->evnt_is_private==1)
+        if(! Auth::user() && $clubEvent->evnt_is_private==1)
         {
             Session::put('message', Config::get('messages_de.access-denied'));
             Session::put('msgType', 'danger');
@@ -441,7 +441,7 @@ class ClubEventController extends Controller
         // Check credentials: you can only delete, if you have rights for marketing or management.
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
         $created_by = $revisions[0]["user id"];
-        if(!Session::has('userId')
+        if(!Auth::user()
             OR (Auth::user()->group != 'marketing'
                 AND Auth::user()->group != 'clubleitung'
                 AND Auth::user()->group != 'admin'
@@ -557,10 +557,11 @@ class ClubEventController extends Controller
         $event->evnt_is_private = (Input::get('isPrivate') == '1') ? 0 : 1;
         $eventIsPublished = Input::get('evntIsPublished');
 
+        $userGroup = Auth::user()->group;
         if (!is_null($eventIsPublished)) {
             //event is pubished
             $event->evnt_is_published = (int)$eventIsPublished;
-        } elseif (Auth::user()->group == 'marketing' OR Session::get('userGroup') == 'clubleitung'  OR Session::get('userGroup') == 'admin'){
+        } elseif (in_array($userGroup, ['marketing', 'clubleitung', 'admin'])){
             // event was unpublished
             $event->evnt_is_published = 0;
         }

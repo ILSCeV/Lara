@@ -47,11 +47,12 @@ class Section extends Model
 	}
 
 	public static function sectionOfCurrentUser() {
-        $sectionName = Session::get('userClub');
-        if (is_null($sectionName)) {
-	        return null;
+        $user = Auth::user();
+
+        if (!$user) {
+            return null;
         }
-        return Section::where('title', $sectionName)->first();
+        return $user->section;
     }
 
     public function club()

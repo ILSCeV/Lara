@@ -6,7 +6,7 @@
 @section('content')
 
 {{-- Restrict access to members only --}}
-@if(Session::has('userId'))
+@auth
 
     {{-- prev/next month --}}
     <div class="col-xs-12 col-md-12">
@@ -92,6 +92,6 @@
 
 @else
     @include('partials.accessDenied')
-@endif
+@endauth
 
 @stop

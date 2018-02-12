@@ -340,7 +340,7 @@ class IcalController extends Controller
      */
     public function singleEvent($evt_id)
     {
-        $calendar = Cache::remember("ical".$evt_id.Session::has('userGroup'), 4 * 60, function () use ($evt_id) {
+        $calendar = Cache::remember("ical".$evt_id.Auth::user()->group, 4 * 60, function () use ($evt_id) {
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
             $event = ClubEvent::where('id', '=', $evt_id)->first();
@@ -372,7 +372,7 @@ class IcalController extends Controller
             }
             
             $keys = Cache::get(self::ICAL_ACCESSOR, []);
-            array_push($keys, "ical".$evt_id.Session::has('userGroup'));
+            array_push($keys, "ical".$evt_id.Auth::user()->group);
             $keys = array_unique($keys);
             Cache::put(self::ICAL_ACCESSOR, $keys, 4 * 60);
             
@@ -403,7 +403,7 @@ class IcalController extends Controller
         
         foreach ($sections as $section) {
             
-            if (Session::has('userGroup')) {
+            if (Auth::user()) {
                 $sectionLink = [$section->title => URL::to('/').'/ical/feed/'.$section->section_uid."/1"];
                 $result['location'][] = $sectionLink;
             }
@@ -413,13 +413,13 @@ class IcalController extends Controller
             $result['locationName'][] = $section->title;
         }
         
-        if (!Session::has('userId')) {
+        if (!Auth::user())) {
             $result['isPublic'] = true;
         } else {
             $result['isPublic'] = false;
         }
         
-        if (!is_null($person) && Session::has('userId')) {
+        if (!is_null($person) && Auth::user())) {
             $result['personal'] = URL::to('/').'/ical/events/user/'.$person->prsn_uid.'/';
         }
         
@@ -439,7 +439,7 @@ class IcalController extends Controller
         $event = ClubEvent::findOrFail($id);
         
         // Check credentials: you can only delete, if you have rights for marketing or management. 
-        if (!Session::has('userId')
+        if (!Auth::user())
             OR (Auth::user()->group != 'marketing'
                 AND Auth::user()->group != 'clubleitung'
                 AND Auth::user()->group != 'admin')

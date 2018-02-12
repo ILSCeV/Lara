@@ -90,7 +90,7 @@ class ShiftTypeController extends Controller
     public function update(Request $request, $id)
     {
         // Check credentials: you can only edit, if you have rights for marketing, section management or admin
-        if(!Session::has('userId')
+        if(!Auth::user())
             OR (Auth::user()->group != 'marketing'
                 AND Auth::user()->group != 'clubleitung'
                 AND Auth::user()->group != 'admin'))
@@ -157,7 +157,7 @@ class ShiftTypeController extends Controller
     public function destroy($id)
     {
         // Check credentials: you can only delete, if you have rights for marketing, section management or admin
-        if(!Session::has('userId')
+        if(!Auth::user())
             OR (Auth::user()->group != 'marketing'
                 AND Auth::user()->group != 'clubleitung'
                 AND Auth::user()->group != 'admin'))

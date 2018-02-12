@@ -443,14 +443,14 @@ class ShiftController extends Controller
             {
                 $person = Person::create( array('prsn_ldap_id' => $ldapId) );
                 $person->prsn_name = $userName;
-                $person->prsn_status = Session::get('userStatus');
+                $person->prsn_status = Auth::user()->status;
                 $person->prsn_uid = hash("sha512", uniqid());
             }
 
             // If a person adds him/herself - update status from session to catch if it was changed in LDAP
             if ($person->prsn_ldap_id == Auth::user()->person->prsn_ldap_id)
             {
-                $person->prsn_status = Session::get('userStatus');
+                $person->prsn_status = Auth::user()->status;
                 $person->prsn_name = Auth::user()->name;
             }
 

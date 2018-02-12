@@ -25,7 +25,7 @@ class PersonController extends Controller
     public function index( $query = NULL )
     {
         // Not showing everything to guests
-        if(!Session::has('userId'))
+        if(!Auth::user()))
         {
             Session::put('message', Config::get('messages_de.access-denied'));
             Session::put('msgType', 'danger');

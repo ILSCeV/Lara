@@ -153,7 +153,7 @@ class SurveyController extends Controller
 
         //get the information from the current session
         $userId = Auth::user()->person->prsn_ldap_id;
-        $userStatus = Session::get("userStatus");
+        $userStatus = Auth::user()->status;
 
         $userParticipatedAlready = $survey->answers
             ->contains(function ($answer) use ($userId) {
