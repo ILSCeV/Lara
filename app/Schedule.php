@@ -49,7 +49,7 @@ class Schedule extends Model
     }
 
 	public function shifts() {
-	    return $this->hasMany('Lara\Shift', 'schedule_id', 'id');
+	    return $this->hasMany('Lara\Shift', 'schedule_id', 'id')->orderByRaw('position IS NULL, position ASC, id ASC');
     }
 	
 	/**

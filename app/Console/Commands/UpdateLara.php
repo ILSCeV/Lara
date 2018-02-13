@@ -12,7 +12,7 @@ class UpdateLara extends Command
      *
      * @var string
      */
-    protected $signature = 'lara:update';
+    protected $signature = 'lara:update {--server-mode}';
 
     /**
      * The console command description.
@@ -43,24 +43,48 @@ class UpdateLara extends Command
         Log::info('Starting Lara update...');
         $this->info('Starting Lara update...');
 
+        $serverMode = $this->option('server-mode');
+        if ($serverMode) {
+            $avoidSourseConflictCommand = 'git reset --hard';
+        } else {
+            $avoidSourseConflictCommand = 'git stash';
+        }
+        if(!$serverMode){
+            $reApplyChangesCommand = 'git stash pop || true';
+        } else {
+            $reApplyChangesCommand = '# nothing to do';
+        }
+
         // start counting time before processing every person
         $counterStart = microtime(true);
 
         // List of instructions to execute
         $instructions = [
-            'php artisan down',                     // Enter maintenance mode
-            'git reset --hard',                     // reset repo to avoid conflicts
-            'git pull --rebase',                    // Download latest changes from GitHub
-            'rm package-lock.json || true',          // remove package-lock, makes sure that you will get the stuff from package.json
-            'rm composer.lock || true',          // remove composer.lock, makes sure that you will get the stuff from composer.json
-            'sh git-create-revisioninfo-hook.sh',   // Update version info in the footer
-            'composer install',                     // Install and update dependencies
-            'php artisan view:clear',               // Clear and update cache
+            'php artisan down',
+            // Enter maintenance mode
+            $avoidSourseConflictCommand,
+            // reset repo to avoid conflicts
+            'git pull --rebase',
+            // Download latest changes from GitHub
+            'rm composer.lock || true',
+            // remove composer.lock, makes sure that you will get the stuff from composer.json
+            'rm package-lock.json || true',
+            // remove package-lock, makes sure that you will get the stuff from package.json
+            'sh git-create-revisioninfo-hook.sh',
+            // Update version info in the footer
+            'composer install',
+            // Install and update dependencies
+            'php artisan view:clear',
+            // Clear and update cache
             'php artisan config:cache',
-            'npm install',                          // JavaScript/TypeScript deployment
+            'npm install',
+            // JavaScript/TypeScript deployment
             'npm run production',
-            'php artisan migrate --force',          // Apply new database changes
-            'php artisan up'                        // Exit maintenance mode
+            'php artisan migrate --force',
+            $reApplyChangesCommand,
+            // Apply new database changes
+            'php artisan up'
+            // Exit maintenance mode
         ];
 
         // initialize progress bar
@@ -74,8 +98,11 @@ class UpdateLara extends Command
             $this->info('Executing "' . $step . '"...');
 
             // perform the instruction
-            exec($step);
-
+            passthru($step, $result);
+            $this->info('result: '.$result);
+            if ($result != 0) {
+                return $result;
+            }
             // adjust progress bar
             $bar->advance();
             $this->info(''); // new line

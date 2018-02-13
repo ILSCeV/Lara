@@ -41,7 +41,9 @@
 							      	</a>
 								</td>
 								<td>
-									{!! $section->color !!}
+									<span class="palette-{{$section->color}}-500-Primary bg">
+										&nbsp;&nbsp;&nbsp;&nbsp;{!! $section->color !!}&nbsp;&nbsp;&nbsp;&nbsp;
+									</span>
 								</td>
 							</tr>
 						@endforeach

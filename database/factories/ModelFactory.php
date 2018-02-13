@@ -31,7 +31,7 @@ $factory->define(Lara\Person::class, function (Faker\Generator $faker) {
         'prsn_ldap_id' => $faker->numberBetween(2000, 9999),
         'prsn_status' => $faker->randomElement(['member', 'veteran', 'candidate']),
         'prsn_uid' => hash("sha512", uniqid()),
-        'clb_id' => $faker->randomElement([1,2, Lara\Club::inRandomOrder()->first()->id])
+        'clb_id' => $faker->randomElement([1, 2, 3, Lara\Club::inRandomOrder()->first()->id])
     ];
 });
 
@@ -92,15 +92,21 @@ $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
         'evnt_title' => $faker->word(),
         'evnt_subtitle' => $faker->word(),
         'plc_id' => Lara\Section::inRandomOrder()->first()->id,
-        'evnt_show_to_club' => json_encode($faker->randomElements(Lara\Section::all()->pluck('title')->toArray(), $faker->numberBetween(1,2))),
         'evnt_date_start' => $start->format('Y-m-d'),
         'evnt_date_end' => $end->format('Y-m-d'),
         'evnt_time_start' => $start->format('H:i'),
         'evnt_time_end' => $end->format('H:i'),
         'evnt_public_info' => $faker->sentence(),
         'evnt_private_details' => $faker->sentence(),
-        'evnt_is_private' => $faker->boolean(),
-        'evnt_is_published' => 0
+        'evnt_is_private' => $faker->boolean(10),
+        'evnt_is_published' => 0,
+        'price_tickets_normal'=> $faker->numberBetween(0,5),
+        'price_tickets_external'=>$faker->numberBetween(0,10),
+        'price_normal' => $faker->randomFloat(2,0,1),
+        'price_external' => $faker->randomFloat(2,1,2),
+        'facebook_done' => $faker->boolean(50),
+        'event_url' => $faker->url(),
+        'external_id'=> $faker->word()
     ];
 });
 
@@ -133,7 +139,7 @@ $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
     $start = $faker->time('H:i', $end);
     $personId = $faker->randomElement([Lara\Person::inRandomOrder()->first()->id, NULL]);
     return [
-        'schedule_id' => Lara\Schedule::inRandomOrder()->first()->id,
+        'schedule_id' => Lara\Schedule::where('schdl_is_template', false)->inRandomOrder()->first()->id,
         'shifttype_id' => Lara\ShiftType::inRandomOrder()->first()->id,
         'person_id' => $personId,
         'comment' => $personId ? $faker->randomElement([$faker->sentence, ""]) : "",

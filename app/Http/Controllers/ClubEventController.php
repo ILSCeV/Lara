@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Input;
 use Lara\Club;
 use Lara\ClubEvent;
+use Lara\Console\Commands\SyncBDclub;
 use Lara\Logging;
 use Lara\ShiftType;
 use Lara\Shift;
@@ -68,6 +69,19 @@ class ClubEventController extends Controller
             $templateId = 0;    // 0 = no template
         }
 
+
+        // validate date, see
+        // https://stackoverflow.com/questions/19271381/correctly-determine-if-date-string-is-a-valid-date-in-that-format
+        $dateString = $year . "-" . $month . "-" . $day;
+        $d = DateTime::createFromFormat('Y-m-d', $dateString);
+        $isDateFormatValid = $d && $d->format('Y-m-d') === $dateString;
+
+        if ( !$isDateFormatValid) {
+            Session::put('message', trans("messages.invalidDate", compact('day', 'month', 'year')));
+            Session::put('msgType', 'danger');
+            return Redirect::to('/');
+        }
+
         // prepare correct date format to be used in the forms
         $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
 
@@ -78,6 +92,12 @@ class ClubEventController extends Controller
 
         // get a list of available templates to choose from
         $templates = Schedule::where('schdl_is_template', '=', '1')
+                            ->whereHas('event', function ($query) {
+                                /** this is to avoid usage of this template, its just technical and needed  for bd event sync
+                                 * its not designed for nomal usage
+                                 */
+                                $query->where('evnt_title','<>',SyncBDclub::BD_TEMPLATE_NAME);
+                            })
                              ->orderBy('schdl_title', 'ASC')
                              ->get();
 
@@ -106,8 +126,8 @@ class ClubEventController extends Controller
             $title      = $template->getClubEvent->evnt_title;
             $subtitle   = $template->getClubEvent->evnt_subtitle;
             $type       = $template->getClubEvent->evnt_type;
-            $section      = $template->getClubEvent->plc_id;
-            $filter     = $template->getClubEvent->evnt_show_to_club;
+            $section    = $template->getClubEvent->section;
+            $filter     = $template->getClubEvent->showToSectionNames();
             $dv         = $template->schdl_time_preparation_start;
             $timeStart  = $template->getClubEvent->evnt_time_start;
             $timeEnd    = $template->getClubEvent->evnt_time_end;
@@ -121,11 +141,11 @@ class ClubEventController extends Controller
             $title      = null;
             $type       = null;
             $subtitle   = null;
-            $section      = null;
+            $section    = Section::sectionOfCurrentUser();
             $filter     = null;
-            $dv         = null;
-            $timeStart  = null;
-            $timeEnd    = null;
+            $dv         = $section->preparationTime;
+            $timeStart  = $section->startTime;
+            $timeEnd    = $section->endTime;
             $info       = null;
             $details    = null;
             $private    = null;
@@ -188,6 +208,7 @@ class ClubEventController extends Controller
      */
     public function show($id)
     {
+        /* @var $clubEvent ClubEvent */
         $clubEvent = ClubEvent::with('section')
                               ->findOrFail($id);
 
@@ -250,8 +271,8 @@ class ClubEventController extends Controller
         }
 
         // Filter - Workaround for older events: populate filter with event club
-        if (empty($clubEvent->evnt_show_to_club) ) {
-            $clubEvent->evnt_show_to_club = json_encode([$clubEvent->section->title], true);
+        if ($clubEvent->showToSection->isEmpty() ) {
+            $clubEvent->showToSection()->sync([$clubEvent->section->id]);
             $clubEvent->save();
         }
 
@@ -268,6 +289,7 @@ class ClubEventController extends Controller
     public function edit($id)
     {
         // find event
+        /* @var $event ClubEvent */
         $event = ClubEvent::findOrFail($id);
 
         // find schedule
@@ -290,8 +312,8 @@ class ClubEventController extends Controller
                             ->get();
 
         // Filter - Workaround for older events: populate filter with event club
-        if (empty($event->evnt_show_to_club) ) {
-            $event->evnt_show_to_club = json_encode([$event->section->title], true);
+        if ($event->showToSection->isEmpty() ) {
+            $event->showToSection()->sync([$event->section->id]);
             $event->save();
         }
 
@@ -366,6 +388,8 @@ class ClubEventController extends Controller
         // Get all the data
         $event = ClubEvent::find($id);
 
+        $date = new DateTime($event->evnt_date_start);
+
 
         // Check if event exists
         if ( is_null($event) ) {
@@ -373,8 +397,8 @@ class ClubEventController extends Controller
             Session::put('msgType', 'danger');
             return Redirect::back();
         }
-        
-        // Check credentials: you can only delete, if you have rights for marketing or management. 
+
+        // Check credentials: you can only delete, if you have rights for marketing or management.
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
         $created_by = $revisions[0]["user id"];
         if(!Session::has('userId')
@@ -403,8 +427,8 @@ class ClubEventController extends Controller
         // show current month afterwards
         Session::put('message', Config::get('messages_de.event-delete-ok'));
         Session::put('msgType', 'success');
-        return Redirect::action( 'MonthController@showMonth', ['year' => date("Y"),
-                                                               'month' => date('m')] );
+        return Redirect::action( 'MonthController@showMonth', ['year' => $date->format('Y'),
+                                                               'month' => $date->format('m')] );
     }
 
 
@@ -429,11 +453,23 @@ class ClubEventController extends Controller
         }
 
         // format: strings; no validation needed
-        $event->evnt_title           = Input::get('title');
-        $event->evnt_subtitle        = Input::get('subtitle');
-        $event->evnt_public_info     = Input::get('publicInfo');
-        $event->evnt_private_details = Input::get('privateDetails');
-        $event->evnt_type            = Input::get('evnt_type');
+        $event->evnt_title             = Input::get('title');
+        $event->evnt_subtitle          = Input::get('subtitle');
+        $event->evnt_public_info       = Input::get('publicInfo');
+        $event->evnt_private_details   = Input::get('privateDetails');
+        $event->evnt_type              = Input::get('evnt_type');
+        $event->facebook_done          = Input::get('facebookDone',"0") == "1";
+        $event->event_url              = Input::get('eventUrl',"");
+        $event->price_tickets_normal   = $this->getOrNullNumber('priceTicketsNormal');
+        $event->price_tickets_external = $this->getOrNullNumber('priceTicketsExternal');
+        $event->price_normal           = $this->getOrNullNumber('priceNormal');
+        $event->price_external         = $this->getOrNullNumber('priceExternal');
+
+        // Check if event URL is properly formatted: if the protocol is missing, we have to add it.
+        if( $event->event_url !== ""
+        and parse_url($event->event_url, PHP_URL_SCHEME) === null) {
+            $event->event_url = 'https://' . $event->event_url;
+        }
 
         // create new section
         if (!Section::where('title', '=', Input::get('section'))->first())
@@ -450,7 +486,7 @@ class ClubEventController extends Controller
             $event->plc_id = Section::where('title', '=', Input::get('section'))->first()->id;
         }
 
-        // format: date; validate on filled value  
+        // format: date; validate on filled value
         if(!empty(Input::get('beginDate')))
         {
             $newBeginDate = new DateTime(Input::get('beginDate'), new DateTimeZone(Config::get('app.timezone')));
@@ -479,7 +515,7 @@ class ClubEventController extends Controller
         // reversed this: input=1 means "event is public", input=0 means "event is private"
         $event->evnt_is_private = (Input::get('isPrivate') == '1') ? 0 : 1;
         $eventIsPublished = Input::get('evntIsPublished');
-        
+
         if (!is_null($eventIsPublished)) {
             //event is pubished
             $event->evnt_is_published = (int)$eventIsPublished;
@@ -487,9 +523,12 @@ class ClubEventController extends Controller
             // event was unpublished
             $event->evnt_is_published = 0;
         }
+
         // Filter
-        $filter = collect(Input::get("filter"))->keys()->toArray();
-        $event->evnt_show_to_club = json_encode($filter, true);
+        $filter = collect(Input::get("filter"))->values()->toArray();
+
+        $event->save();
+        $event->showToSection()->sync($filter);
 
         // Logging
 
@@ -521,6 +560,15 @@ class ClubEventController extends Controller
 
         }
         return $event;
+    }
+
+    private function getOrNullNumber($query){
+        $num = Input::get($query);
+        if(doubleval($num)>0){
+            return $num;
+        } else {
+            return null;
+        }
     }
 }
 

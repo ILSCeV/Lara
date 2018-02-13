@@ -48,11 +48,17 @@ return [
     'marketingFlyersPlacard'    => 'Marketing / Flyer / Posters', //used in legend.blade.php
     'preSale'                   => 'Tickets presale',
     'others'                    => 'Others',
+    'faceDone'                  => 'Facebook event done',
+    'eventUrl'                  => 'Event link',
+    'priceTickets'              => 'Presales price',
+    'price'                     => 'Entrance fee',
+    'studentExtern'             => 'Student / Full price',
 
     //----------------------------------------------
 
     'begin'                 => 'Start',
     'end'                   => 'End',
+    'eventDefaults'         => 'Default values for events:',
 
     'DV-Time'               => 'Preparations',
     'club'                  => 'Club',
@@ -265,13 +271,14 @@ return [
     //-----------------------------------------------------------------------------------------------------------
 
     // /resources/views/partials/navigation.blade.php
+    'today'                 => 'Day',
     'month'                 => 'Month',
     'week'                  => 'Week',
 
     //not translated the term 'logs'
     'manageClub'            => 'Manage clubs',
-    'manageShiftType'       => 'Manage shift types', 
-    'manageSections'        => 'Sektionen verwalten',
+    'manageShiftType'       => 'Manage shift types',
+    'manageSections'        => 'Manage sections',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
 
     'manageTemplate'        => 'Manage templates',
@@ -311,7 +318,7 @@ return [
     'infoFor'               => 'Member statistics',
 
     // /resources/views/partials/personalStatistics.blade.php
-    
+
     // /resources/views/statisticsView.blade.php
     'monthStatistic'       => 'monthly Statistics',
     'yearStatistic'       => 'yearly Statistics',
@@ -352,8 +359,8 @@ return [
 
     // /resources/views/partials/weekCellHidden.blade.php
     'moreDetailsAfterLogInMessage' => 'More details are accessible to members after logging in.',
-    // 'moreDetailsAfterLogInMessage2' => 'after logging in.', 
-    // Merged with line above but there is now way to break the line (format is still ok) 
+    // 'moreDetailsAfterLogInMessage2' => 'after logging in.',
+    // Merged with line above but there is now way to break the line (format is still ok)
     // ToDo find a solution for breaking lines
 
     //-----------------------------------------------------------------------------------------------------------

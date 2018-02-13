@@ -28,8 +28,9 @@ composer.phar
 composer.lock
 
 # Login stuff should not be public
-app/Http/Controllers/LoginController.php
 config/bcLDAP.php
+# stuff for bd infratructure is not public
+config/bd_credentials.php
 
 # IDE related files
 .idea/

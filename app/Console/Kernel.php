@@ -16,8 +16,8 @@ class Kernel extends ConsoleKernel
         Commands\TestLog::class,
         Commands\LDAPsync::class,
         Commands\UpdateLara::class,
-        Commands\CleanShiftTypes::class
-
+        Commands\CleanShiftTypes::class,
+        Commands\SyncBDclub::class
     ];
 
     /**

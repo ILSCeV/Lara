@@ -5,6 +5,7 @@ namespace Lara\Http\Controllers;
 use Config;
 use Illuminate\Support\Facades\App;
 use Input;
+use Lara\Section;
 use Lara\Settings;
 use Log;
 use Redirect;
@@ -45,7 +46,7 @@ class LoginController extends Controller
     {
         Session::flush();
 
-        return Redirect::back();
+        return Redirect::to('/');
     }
 
     /**
@@ -141,7 +142,7 @@ class LoginController extends Controller
         $userName = $input[$userId];
 
         // get user club
-        $inputClub = array("bc-Club", "bc-Café");
+        $inputClub = Section::all()->map(function(Section $section) {return $section->title;})->toArray();
         $userClubId = array_rand($inputClub, 1);
         $userClub = $inputClub[$userClubId];
         $userStatus = "member";
@@ -165,6 +166,33 @@ class LoginController extends Controller
 
     public function doProductionLogin()
     {
+// Temporary login for softwareproject
+        if (Input::get('username') === "SWP") {
+
+            if (Config::get('bcLDAP.swp-override') === base64_encode(mhash(MHASH_MD5, Input::get('password')))) {
+
+                Session::put('userId', '8888');
+                Session::put('userName', 'SWP');
+                Session::put('userGroup', 'marketing');
+                Session::put('userClub', 'bc-Club');
+                Session::put('userStatus', 'member');
+                Session::put('clubFilter', 'bc-Club');
+
+                Log::info('SWP LOGIN USED.');
+
+                return Redirect::back();
+
+            } else {
+
+                Session::put('message', 'SWP Passwort falsch, versuche nochmal.');
+                Session::put('msgType', 'danger');
+
+                Log::warning('SWP LOGIN FAIL: wrong password!');
+
+                return Redirect::back();
+            }
+        }
+
 // MASTERPASSWORD for LDAP-Server downtime, stored in hashed form in config/bcLDAP.php
         if (Input::get('username') === "LDAP-OVERRIDE") {
 
@@ -191,6 +219,35 @@ class LoginController extends Controller
                 return Redirect::back();
             }
         }
+
+
+// Preview login for BD-Club, stored in hashed form in config/bcLDAP.php
+        if (Input::get('username') === "bd-berta") {
+
+            if (Config::get('bcLDAP.bd-berta') === base64_encode(mhash(MHASH_MD5, Input::get('password')))) {
+
+                Session::put('userId', '8888');
+                Session::put('userName', 'BD Berta Preview');
+                Session::put('userGroup', 'clubleitung');
+                Session::put('userClub', 'bd-Club');
+                Session::put('userStatus', 'member');
+                Session::put('clubFilter', 'bd-Club');
+
+                Log::info('BD Preview login used.');
+
+                return Redirect::back();
+
+            } else {
+
+                Session::put('message', Config::get('messages_de.ldap-override-fail'));
+                Session::put('msgType', 'danger');
+
+                Log::warning('BD BERTA PREVIEW LOGIN FAIL: wrong password!');
+
+                return Redirect::back();
+            }
+        }
+
 
 // BLACKLIST - following IDs will not be able to login
         // 1708 = public account for using bc-wiki
