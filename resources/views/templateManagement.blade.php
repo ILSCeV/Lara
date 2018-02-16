@@ -1,48 +1,102 @@
 @extends('layouts.master')
 
 @section('title')
-    {{ trans('mainLang.manageTemplate') }}
+    {{ trans('mainLang.manageTemplates') }}
 @stop
 
 @section('content')
 
-    <div class="col-md-12 panel">
-        <div class="form-inline fa-border has-feedback">
-           <label for="templateOverviewFilter"> {{ trans('mainLang.filter') }} </label>
-           <input type="text" class="form-control" id="templateOverviewFilter">
+    <div class="panel panel-info col-xs-12 no-padding">
+        <div class="panel-heading">
+            <h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageTemplates') }}</h4>
+        </div> 
+
+        <div class="panel panel-body no-padding">
+            <table class="table info table-hover table-condensed">
+                    <thead>
+                        <tr class="active">
+                            <th class="col-md-1 col-xs-1 padding-left-15">
+                                #
+                            </th>
+                            <th class="col-md-1 col-xs-1">
+                                {{ trans('mainLang.section') }}
+                            </th>
+                            <th class="col-md-3 col-xs-3">
+                                {{ trans('mainLang.type') }}
+                            </th>
+                            <th class="col-md-5 col-xs-5">
+                                {{ trans('mainLang.title') }}
+                            </th>
+                            <th class="col-md-1 col-xs-1">
+                                {{ trans('mainLang.start') }}
+                            </th>
+                            <th class="col-md-1 col-xs-1">
+                                {{ trans('mainLang.end') }}
+                            </th>
+                            <th class="col-md-1 col-xs-1 padding-right-15">
+                                &nbsp;
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="container" id="templateOverviewTable">
+                        <div class="table-control">
+                            <span class="table-control__create-new-template">
+                                <a class="btn btn-success" href="{{route('template.create')}}">
+                                    {{ trans('mainLang.createTemplate') }}
+                                </a>
+                            </span>
+                            <span class="table-control__search fa-pull-right form-inline has-feedback">
+                               <label for="templateOverviewFilter" class="test"> {{ trans('mainLang.search') }}: </label>
+                               <input type="text" class="form-control" id="templateOverviewFilter">
+                            </span>
+                        </div>
+
+                        @foreach($templates as $template)
+                            <tr>
+                                <td class="padding-left-15">
+                                    {!! $template->id !!}
+                                </td>
+                                <td>
+                                    {{ $template->section->title }}
+                                </td>
+                                <td>
+                                    {{ \Lara\Utilities::getEventTypeTranslation($template->type)  }}
+                                </td>
+                                <td>
+                                    <a href="{{ route('template.edit', $template) }}"> {{ $template->title }} </a>
+                                </td>
+                                <td>
+                                    {{ $template->time_start }}
+                                </td>
+                                <td>
+                                    {{ $template->time_end }}
+                                </td>
+                                <td class="padding-right-15"> 
+                                    <button data-id="{{$template->id}}" 
+                                            data-templatename="{{$template->title}}" 
+                                            class="btn btn-danger delete-template"> 
+                                        <span class="glyphicon glyphicon-trash"></span> 
+                                    </button>
+                                    <form id="delete-template-{{$template->id}}" 
+                                          method="POST" 
+                                          class="hidden" 
+                                          action="{{route('template.delete', $template->id)}}">
+                                        {{ csrf_field() }}
+                                        <button class="hidden" type="submit"></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+            </table>
         </div>
-        <div class="form-inline fa-border">
-            <a class="btn-small btn btn-primary" href="{{route('template.create')}}"><span class="glyphicon glyphicon-plus"></span></a>
-        </div>
-        <table class="table table-hover table-striped">
-            <thead>
-            <tr>
-                <th class="text-center"> {{ trans('mainLang.section') }} </th>
-                <th class="text-center"> {{ trans('mainLang.type') }} </th>
-                <th class="text-center"> {{ trans('mainLang.title') }} </th>
-                <th class="text-center"> {{ trans('mainLang.start') }} </th>
-                <th class="text-center"> {{ trans('mainLang.end') }} </th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody id="templateOverviewTable">
-            @foreach($templates as $template)
-                <tr>
-                    <td class="text-center"> {{ $template->section->title }} </td>
-                    <td class="text-center" > {{ \Lara\Utilities::getEventTypeTranslation($template->type)  }} </td>
-                    <td class="text-center" > <a href="{{ route('template.edit', $template) }}"> {{ $template->title }} </a> </td>
-                    <td class="text-center" > {{ $template->time_start }} </td>
-                    <td class="text-center" > {{ $template->time_end }} </td>
-                    <td class="text-center" > <button data-id="{{$template->id}}" data-templatename="{{$template->title}}" class="btn btn-danger delete-template"> <span class="glyphicon glyphicon-trash"></span> </button>
-                        <form id="delete-template-{{$template->id}}" method="POST" class="hidden" action="{{route('template.delete', $template->id)}}">
-                            {{ csrf_field() }}
-                        <button  class="hidden" type="submit"></button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
     </div>
+
+    {{-- Pagination --}}
+    <div class="text-center">
+        {{ $templates->links() }}
+    </div>
+
+    <br/>
 
 @stop

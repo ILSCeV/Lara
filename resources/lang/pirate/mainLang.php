@@ -283,7 +283,7 @@ return [
     'manageSections'        => 'Mannschaften verwalten',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
 
-    'manageTemplate'        => 'Vorlagen verwalten',
+    'manageTemplates'        => 'Vorlagen verwalten',
 
     //create button text
     'createNewEvent'           => 'Neue Fahrt ansagen',
@@ -503,11 +503,11 @@ return [
     'confirmUnpublishingEvent'      =>  'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
     'iCal'                          =>  'iCal',
 
-    //////////
+    /////////////////////////
     // Template management //
-    //////////
+    /////////////////////////
 
-    'filter'                        => 'Filter',
+    'Search'                        => 'Suche',
     'faceNeeded'                    => 'Piratenbuch benötigt',
     'createTemplate'                => 'Kaperplan erstellen'
 
