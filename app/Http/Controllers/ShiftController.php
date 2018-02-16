@@ -318,7 +318,6 @@ class ShiftController extends Controller
     }
 
     /**
-     * @param $isNewEvent
      * @param $title
      * @param $id
      * @param $type
