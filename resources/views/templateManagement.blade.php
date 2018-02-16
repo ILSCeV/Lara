@@ -16,15 +16,12 @@
                 <thead>
                     <tr class="active">
                         <th class="col-md-1 col-xs-1 padding-left-15">
-                            #
-                        </th>
-                        <th class="col-md-1 col-xs-1">
                             {{ trans('mainLang.section') }}
                         </th>
                         <th class="col-md-3 col-xs-3">
                             {{ trans('mainLang.type') }}
                         </th>
-                        <th class="col-md-5 col-xs-5">
+                        <th class="col-md-6 col-xs-6">
                             {{ trans('mainLang.title') }}
                         </th>
                         <th class="col-md-1 col-xs-1">
@@ -54,9 +51,6 @@
                     @foreach($templates as $template)
                         <tr>
                             <td class="padding-left-15">
-                                {!! $template->id !!}
-                            </td>
-                            <td>
                                 {{ $template->section->title }}
                             </td>
                             <td>
