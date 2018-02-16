@@ -508,7 +508,7 @@ return [
     // Template management //
     /////////////////////////
 
-    'Search'                        => 'Suche',
+    'search'                        => 'Suche',
     'facebookNeeded'                => 'Facebook benötigt',
     'createTemplate'                => 'Vorlage erstellen'
 ];
