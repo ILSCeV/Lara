@@ -15,6 +15,9 @@
             <table class="table info table-hover table-condensed">
                 <thead>
                     <tr class="active">
+                        <th>
+                            #
+                        </th>
                         <th class="col-md-1 col-xs-1 padding-left-15">
                             {{ trans('mainLang.section') }}
                         </th>
@@ -48,8 +51,11 @@
                         </span>
                     </div>
 
-                    @foreach($templates as $template)
+                    @foreach($templates as $index=>$template)
                         <tr>
+                            <td>
+                                {{ $index }}
+                            </td>
                             <td class="padding-left-15">
                                 {{ $template->section->title }}
                             </td>
