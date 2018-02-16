@@ -626,6 +626,16 @@ class ClubEventController extends Controller
         if($templateValue == -1){
             return null;
         }
+        /**
+         * from input event we get the link to create a template
+         * e.g. <code>/event/2018/02/16/81/create</code>
+         * in this case we need the 81
+         * php can only search from beginning
+         * so we reverse the string, use offset 7 to look after create
+         * we get the position of the /
+         * now we get the substring -> 81/create
+         * after this we remove the /create -> 81
+         */
         $reverse = strrev($templateValue);
         $pos = strpos($reverse,"/",7);
         $result = substr($templateValue, strlen($templateValue)-$pos);
