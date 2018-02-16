@@ -9,7 +9,7 @@
     <div class="panel panel-info col-xs-12 no-padding">
         <div class="panel-heading">
             <h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageTemplates') }}</h4>
-        </div> 
+        </div>
 
         <div class="panel panel-body no-padding">
             <table class="table info table-hover table-condensed">
@@ -65,15 +65,15 @@
                             <td>
                                 {{ $template->time_end }}
                             </td>
-                            <td class="padding-right-15"> 
-                                <button data-id="{{$template->id}}" 
-                                        data-templatename="{{$template->title}}" 
-                                        class="btn btn-danger delete-template"> 
-                                    <span class="glyphicon glyphicon-trash"></span> 
+                            <td class="padding-right-15">
+                                <button data-id="{{$template->id}}"
+                                        data-templatename="{{$template->title}}"
+                                        class="btn btn-danger delete-template">
+                                    <span class="glyphicon glyphicon-trash"></span>
                                 </button>
-                                <form id="delete-template-{{$template->id}}" 
-                                      method="POST" 
-                                      class="hidden" 
+                                <form id="delete-template-{{$template->id}}"
+                                      method="POST"
+                                      class="hidden"
                                       action="{{route('template.delete', $template->id)}}">
                                     {{ csrf_field() }}
                                     <button class="hidden" type="submit"></button>
@@ -84,11 +84,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
-
-    {{-- Pagination --}}
-    <div class="text-center">
-        {{ $templates->links() }}
     </div>
 
     <br/>

@@ -34,11 +34,11 @@ class TemplateController extends Controller
 
         //
         if (Utilities::requirePermission("admin")) {
-            $templates = Template::orderBy('title', 'DESC')->paginate(25);
+            $templates = Template::orderBy('title', 'DESC')->get();
         } else {
             $templates = Template::whereHas('section', function ($query) {
                 $query->where('title', '=', Session::get('userClub'));
-            })->orderBy('title', 'DESC')->paginate(25);
+            })->orderBy('title')->get();
         }
         return view('templateManagement', compact('templates'));
     }
