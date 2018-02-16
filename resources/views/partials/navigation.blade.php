@@ -53,8 +53,15 @@
                 @if(Session::get('userGroup') == 'marketing'
                  OR Session::get('userGroup') == 'clubleitung'
                  OR Session::get('userGroup') == 'admin')
-                    <li><a href="{{ asset('shiftType') }}">{{ trans('mainLang.manageShiftType') }}</a></li>
-                    <li><a href="{{route('template.overview')}}"> <i class="fa fa-magic" aria-hidden="true"></i>
+                    <li>
+                        <a href="{{ asset('shiftType') }}">
+                            <i class="fa fa-magic" aria-hidden="true"></i>
+                            {{ trans('mainLang.manageShiftType') }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('template.overview')}}"> 
+                            <i class="fa fa-magic" aria-hidden="true"></i>
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>
                     </li>
