@@ -508,7 +508,7 @@ return [
     /////////////////////////
 
     'Search'                        => 'Suche',
-    'faceNeeded'                    => 'Piratenbuch benötigt',
+    'facebookNeeded'                => 'Piratenbuch benötigt',
     'createTemplate'                => 'Kaperplan erstellen'
 
 ];

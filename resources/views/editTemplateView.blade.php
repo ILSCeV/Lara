@@ -64,7 +64,7 @@
                     </div>
                     <br/>
                     <div class="form-group">
-                        <label for="evnt_type" class="col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.faceNeeded') }}: </label>
+                        <label for="evnt_type" class="col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.facebookNeeded') }}: </label>
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <label>

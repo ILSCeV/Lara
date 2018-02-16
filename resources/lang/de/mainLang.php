@@ -509,6 +509,6 @@ return [
     /////////////////////////
 
     'Search'                        => 'Suche',
-    'faceNeeded'                    => 'Facebook benötigt',
+    'facebookNeeded'                => 'Facebook benötigt',
     'createTemplate'                => 'Vorlage erstellen'
 ];
