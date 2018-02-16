@@ -171,14 +171,14 @@ class TemplateController extends Controller
         $template = Template::with('section')->firstOrNew(['id' => $templateId]);
         $sections = Section::all();
         if ($template->id == null) {
-            /** @var Section $usersection */
-            $usersection = Section::where('title', '=', Session::get('userClub'))->firstOrFail();;
+            /** @var Section $userSection */
+            $userSection = Section::where('title', '=', Session::get('userClub'))->firstOrFail();;
 
-            $template->section_id = $usersection->id;
-            $template->section = $usersection;
-            $template->time_preparation_start = $usersection->preparationTime;
-            $template->time_start = $usersection->startTime;
-            $template->time_end = $usersection->endTime;
+            $template->section_id = $userSection->id;
+            $template->section = $userSection;
+            $template->time_preparation_start = $userSection->preparationTime;
+            $template->time_start = $userSection->startTime;
+            $template->time_end = $userSection->endTime;
         }
         $shifts = $template->shifts()->get();
         // get a list of available job types
