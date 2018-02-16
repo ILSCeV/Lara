@@ -14,6 +14,7 @@ class TemplatesTableSeeder extends Seeder
         $bdId = \DB::table('templates')->select('id')->where('title', '=', 'BD Template')->first();
         $bdSectionId = \DB::table('sections')->select('id')->where('title', '=', 'bd-Club')->first();
         \DB::table('section_template')->where('template_id','=',$bdId->id)->update(['section_id'=>$bdSectionId->id]);
+        \DB::table('templates')->where('id','=',$bdId->id)->update(['section_id'=>$bdSectionId->id]);
 
         \DB::table('section_template')->delete();
         \DB::table('templates')->where('title', '!=', 'BD Template')->delete();
