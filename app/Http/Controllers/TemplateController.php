@@ -142,8 +142,9 @@ class TemplateController extends Controller
 
             $position = $i;
             $shift = ShiftController::createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position);
-
-            array_push($results, $shift->id);
+            if ($shift != null) {
+                array_push($results, $shift->id);
+            }
         }
         return $results;
     }
