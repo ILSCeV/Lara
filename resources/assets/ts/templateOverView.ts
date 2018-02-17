@@ -15,8 +15,9 @@ $(()=>{
   });
 
   $('.delete-template').on('click', (event) =>  {
-    let templateId = $(event.target).data('id');
-    let templateName = $(event.target).data('templatename');
+    let target = event.currentTarget;
+    let templateId = $(target).data('id');
+    let templateName = $(target).data('templatename');
 
     // Initialise modal and show loading icon and message
     var dialog = <any> bootbox.confirm({
