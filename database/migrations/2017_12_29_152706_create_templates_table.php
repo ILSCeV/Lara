@@ -68,7 +68,7 @@ class CreateTemplatesTable extends Migration
         DB::table('schedules')->where('schdl_title', '=', self::BD_TEMPLATE_NAME)
             ->update(['schdl_is_template' => '1']);
 
-        $bdSection = Section::where('title', '=', 'bd-Club')->first();
+        $bdSection = Section::where('title', '=', self::BD_SECTION_NAME)->first();
 
         $templates = Schedule::where('schdl_is_template', '=', '1')->get();
         $templates->map(function (Schedule $template) use ($bdSection) {
