@@ -32,7 +32,7 @@ export default {
     "legend": "Legende",
     'confirmPublishingEvent': 'Möchtest du dieses Event wirklich zum Kalenderfeed hinzufügen?',
     'confirmUnpublishingEvent': 'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
-    'deleteTemplate' : 'Vorlage löschen',
+    'deleteTemplate' : 'Vorlage über bort werfen',
     'deleteTemplateMessage' : 'Bist du dir sicher, dass du diese Vorlage löschen möchtest?',
 
 
