@@ -32,6 +32,6 @@ export default {
     "legend":"Legend",
     'confirmPublishingEvent': 'Are you sure you want to publish this event to calendar feed?',
     'confirmUnpublishingEvent': 'Are you sure you want to remove this event from the calendar feed?',
-    'deleteTemplate' : 'Template deletion',
+    'deleteTemplate' : 'delete Template',
     'deleteTemplateMessage' : 'Are you sure that you want to delete this Template?'
 };
