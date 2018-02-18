@@ -196,7 +196,7 @@ class ClubEventController extends Controller
         Log::info('Event created: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
                  . Session::get('userGroup') . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
         Utilities::clearIcalCache();
-        if (Input::get('saveAsTemplate') == true){
+        if (Input::get('saveAsTemplate')){
             $template = $newSchedule->toTemplate();
             $newEvent->template_id = $template->id;
             $newEvent->save();
