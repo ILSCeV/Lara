@@ -397,7 +397,7 @@
 	<br>
 
 	<div class="row">
-		@include('partials.editSchedule')
+		@include('partials.editSchedule',['shifts'=>$shifts, 'timeStart'=>$timeStart, 'timeEnd'=>$timeEnd])
 		<br>
 		{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'hidden', 'id'=>'button-create-submit')) !!}
 	    <input class="hidden" name="evntIsPublished" type="text" value="0" />

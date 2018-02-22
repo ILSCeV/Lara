@@ -20,8 +20,8 @@
 
 			@include('partials.events.shift', [
 				"title" => "",
-				"startTime" => "21:00",
-				'endTime' => "01:00",
+				"startTime" => $timeStart,
+				'endTime' => $timeEnd,
 				"weight" => 1,
 				"shiftId" => "",
 				'shiftTypeId' => ""

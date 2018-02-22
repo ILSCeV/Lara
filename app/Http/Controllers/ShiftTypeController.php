@@ -3,13 +3,13 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Lara\Shift;
+use Lara\ShiftType;
 use Log;
 use Redirect;
 use Session;
 use View;
-
-use Lara\Shift;
-use Lara\ShiftType;
 
 
 class ShiftTypeController extends Controller
@@ -19,21 +19,26 @@ class ShiftTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function find($query = NULL)
+    public function find($query = NULL, $beginTime = '', $endTime = '')
     {
         if ( is_null($query) ) { $query = ""; } // if no parameter specified - empty means "show all"
 
-        $shiftTypes =  ShiftType::where('title', 'like', '%' . $query . '%')
-            ->orderBy('title')
-            ->get([
+        $shiftTypesQuery =  ShiftType::where('title', 'like', '%' . $query . '%');
+        if ($beginTime == '' || $endTime == '') {
+            $shiftTypesQuery = $shiftTypesQuery->orderBy('title');
+        } else {
+            $shiftTypesQuery = $shiftTypesQuery->orderBy(DB::raw("title, ABS(TIMEDIFF(start,TIME('".$beginTime."'))), ABS(TIMEDIFF(end,TIME('".$endTime."')))"));
+        }
+
+        $shiftTypes= $shiftTypesQuery->get([
                 'title',
                 'start',
                 'end',
                 'statistical_weight'
             ]);
-
-        return response()->json($shiftTypes);
+        return response()->json($shiftTypes->toArray());
     }
+
 
     /**
      * Display a listing of the resource.

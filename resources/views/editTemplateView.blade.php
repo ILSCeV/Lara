@@ -202,7 +202,7 @@
         </div>
     </div>
     <div class="row">
-        @include('partials.editSchedule')
+        @include('partials.editSchedule',['shifts'=>$shifts,'timeStart'=>$template->time_start, 'timeEnd'=>$template->time_end])
         <br>
         @if($template->id == null)
             {!! Form::submit( trans('mainLang.createTemplate') , array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
