@@ -283,7 +283,7 @@ return [
     'manageSections'        => 'Mannschaften verwalten',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
 
-    'manageTemplate'        => 'Vorlagen verwalten',
+    'manageTemplates'        => 'Vorlagen verwalten',
 
     //create button text
     'createNewEvent'           => 'Neue Fahrt ansagen',
@@ -501,6 +501,14 @@ return [
     'eventIsUnpublished'            =>  'Schleichfahrt - dieses Abenteuer wird von Barden nicht erwähnt',
     'confirmPublishingEvent'        =>  'Möchtest du dieses Event wirklich zum Kalenderfeed hinzufügen?',
     'confirmUnpublishingEvent'      =>  'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
-    'iCal'                          =>  'iCal'
+    'iCal'                          =>  'iCal',
+
+    /////////////////////////
+    // Template management //
+    /////////////////////////
+
+    'Search'                        => 'Suche',
+    'facebookNeeded'                => 'Piratenbuch benötigt',
+    'createTemplate'                => 'Kaperplan erstellen'
 
 ];

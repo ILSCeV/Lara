@@ -1,6 +1,6 @@
-import * as $ from "jquery"
-import { translate } from "./Translate"
-import * as bootbox from "bootbox"
+import * as $ from "jquery";
+import {translate} from "./Translate";
+import * as bootbox from "bootbox";
 
 // values of events that should trigger the selection of all clubs
 let internalEventValues = [
@@ -20,7 +20,7 @@ $(() => {
         // the  browser will catch this and empty the value before submitting the changes
         // thus the weight will be empty, and we can check for that
         const isSomeWeightIllFormatted = $("[name^='shifts[weight]']").toArray().some((e: HTMLElement) => e["value"] === "");
-        
+
         // contains the keys to translations to be shown if the condition is fulfilled
         let errorConditions: {[key: string]: boolean} = {
             'endBeforeStart': beginDate.getTime() > endDate.getTime(),
@@ -69,5 +69,17 @@ $(() => {
             }
         }
     });
+  $('#templateSelector').selectpicker({
+    style: 'btn-primary',
+    liveSearch:true
+  });
+  $('#templateSelector').change(() => {
+    var selectedValue = $('#templateSelector').val();
+    $('#templateSelectorForm').attr('action',selectedValue).submit();
+  });
+});
+
+$(window).on('load',()=>{
+  $('#templateValue').val($('#templateSelector').val());
 });
 

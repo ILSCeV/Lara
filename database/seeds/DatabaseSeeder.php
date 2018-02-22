@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call('ClubEventsTableSeeder');
         $this->call('SchedulesTableSeeder');
         $this->call('ShiftsTableSeeder');
+        $this->call('TemplatesTableSeeder');
 
         $this->call('SurveysTableSeeder');
         $this->call('SurveyQuestionsTableSeeder');

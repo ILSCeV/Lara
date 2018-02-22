@@ -281,7 +281,7 @@ return [
     'manageSections'        => 'Manage sections',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
 
-    'manageTemplate'        => 'Manage templates',
+    'manageTemplates'        => 'Manage templates',
 
     //create button text
     'createNewEvent'           => 'Create new event',
@@ -499,5 +499,13 @@ return [
     'eventIsUnpublished'            =>  'Event is not published and isn\'t visible in calendar feed',
     'confirmPublishingEvent'        =>  'Are you sure you want to publish this event to calendar feed?',
     'confirmUnpublishingEvent'      =>  'Are you sure you want to remove this event from the calendar feed?',
-    'iCal'                          =>  'iCal'
+    'iCal'                          =>  'iCal',
+
+    /////////////////////////
+    // Template management //
+    /////////////////////////
+
+    'search'                        => 'Search',
+    'facebookNeeded'                => 'Facebook needed',
+    'createTemplate'                => 'Create template'
 ];

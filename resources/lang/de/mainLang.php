@@ -283,7 +283,7 @@ return [
     'manageSections'        => 'Sektionen verwalten',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
 
-    'manageTemplate'        => 'Vorlagen verwalten',
+    'manageTemplates'        => 'Vorlagen verwalten',
 
     //create button text
     'createNewEvent'           => 'Neues Event erstellen',
@@ -502,5 +502,13 @@ return [
     'eventIsUnpublished'            =>  'Event ist nicht veröffentlicht ist im Kalendarfeed nicht sichtbar',
     'confirmPublishingEvent'        =>  'Möchtest du dieses Event wirklich zum Kalenderfeed hinzufügen?',
     'confirmUnpublishingEvent'      =>  'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
-    'iCal'                          =>  'iCal'
+    'iCal'                          =>  'iCal',
+
+    /////////////////////////
+    // Template management //
+    /////////////////////////
+
+    'search'                        => 'Suche',
+    'facebookNeeded'                => 'Facebook benötigt',
+    'createTemplate'                => 'Vorlage erstellen'
 ];

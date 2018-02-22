@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property double price_tickets_external
  * @property double price_normal
  * @property double price_external
+ * @property int template_id
  */
 class ClubEvent extends Model
 {
@@ -34,7 +35,7 @@ class ClubEvent extends Model
      * @var $table string
      */
     protected $table = 'club_events';
-    
+
     /**
      * The database columns used by the model.
      * This attributes are mass assignable.
@@ -70,8 +71,9 @@ class ClubEvent extends Model
         'price_external',
         'facebook_done',
         'event_url',
+        'template_id',
     ];
-    
+
     /**
      * Get the corresponding section.
      * Looks up in table sections for that entry, which has the same id like plc_id of ClubEvent instance.
@@ -82,7 +84,12 @@ class ClubEvent extends Model
     {
         return $this->belongsTo('Lara\Section', 'plc_id', 'id');
     }
-    
+
+    public function template()
+    {
+        return $this->belongsTo('Lara\Template','template_id','id');
+    }
+
     /**
      * Get the corresponding schedule.
      * Looks up in table schedules for that entry, which has the same evnt_id like id of ClubEvent instance.
@@ -93,12 +100,12 @@ class ClubEvent extends Model
     {
         return $this->hasOne('Lara\Schedule', 'evnt_id', 'id');
     }
-    
+
     public function schedule()
     {
         return $this->hasOne('Lara\Schedule', 'evnt_id', 'id');
     }
-    
+
     /**
      * Check if the signed in user has a shift in the current event
      * Looks up in table Shifts for entries, which has the same scheduleId like id of ClubEvent instance.
@@ -108,27 +115,27 @@ class ClubEvent extends Model
      */
     public function hasShift($scheduleId, $userId)
     {
-        
+
         $shifts = Shift::where('schedule_id', '=', $scheduleId)->with('getPerson')->get();
         foreach ($shifts as $shift) {
             if (isset($shift->getPerson->prsn_ldap_id) && $shift->getPerson->prsn_ldap_id == $userId) {
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     public function shifts()
     {
         return $this->hasManyThrough('Lara\Shift', 'Lara\Schedule', 'evnt_id', 'schedule_id', 'id');
     }
-    
+
     public function showToSection()
     {
         return $this->belongsToMany('Lara\Section');
     }
-    
+
     public function showToSectionNames()
     {
         return $this->showToSection()->get()->map(function ($section) {

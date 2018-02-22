@@ -18,6 +18,7 @@ use Lara\Shift;
 use Lara\Person;
 use Lara\Section;
 use Lara\Schedule;
+use Lara\Template;
 use Lara\Utilities;
 use Log;
 use Redirect;
@@ -88,19 +89,17 @@ class ClubEventController extends Controller
         // get a list of possible clubs to create an event at, but without the id=0 (default value)
         $sections = Section::where("id", '>', 0)
                        ->orderBy('title', 'ASC')
-                       ->pluck('title', 'id');
+                       ->get();
 
         // get a list of available templates to choose from
-        $templates = Schedule::where('schdl_is_template', '=', '1')
-                            ->whereHas('event', function ($query) {
-                                /** this is to avoid usage of this template, its just technical and needed  for bd event sync
-                                 * its not designed for nomal usage
-                                 */
-                                $query->where('evnt_title','<>',SyncBDclub::BD_TEMPLATE_NAME);
-                            })
-                             ->orderBy('schdl_title', 'ASC')
-                             ->get();
-
+        $userClub = Session::get('userClub');
+        if(Utilities::requirePermission("admin")) {
+            $templates = Template::all()->sortBy('title');
+        } else {
+            $templates = Template::whereHas('section', function ($query) use ($userClub) {
+                $query->where('title', '=', $userClub);
+            })->get()->sortBy('title');
+        }
         // get a list of available job types
         $shiftTypes = ShiftType::where('is_archived', '=', '0')
                            ->orderBy('title', 'ASC')
@@ -108,11 +107,12 @@ class ClubEventController extends Controller
 
         // if a template id was provided, load the schedule needed and extract job types
         if ( $templateId != 0 ) {
-            $template = Schedule::where('id', '=', $templateId)
+            /** @var Template $template */
+            $template = Template::where('id', '=', $templateId)
                                 ->first();
 
             // put name of the active template for further use
-            $activeTemplate = $template->schdl_title;
+            $activeTemplate = $template->title;
 
             // get template data
             $shifts     = $template->shifts()
@@ -123,40 +123,43 @@ class ClubEventController extends Controller
                     // copy all except person_id and schedule_id and comment
                     return $shift->replicate(['person_id', 'schedule_id', 'comment']);
                 });
-            $title      = $template->getClubEvent->evnt_title;
-            $subtitle   = $template->getClubEvent->evnt_subtitle;
-            $type       = $template->getClubEvent->evnt_type;
-            $section    = $template->getClubEvent->section;
-            $filter     = $template->getClubEvent->showToSectionNames();
-            $dv         = $template->schdl_time_preparation_start;
-            $timeStart  = $template->getClubEvent->evnt_time_start;
-            $timeEnd    = $template->getClubEvent->evnt_time_end;
-            $info       = $template->getClubEvent->evnt_public_info;
-            $details    = $template->getClubEvent->evnt_private_details;
-            $private    = $template->getClubEvent->evnt_is_private;
+            $title          = $template->title;
+            $subtitle       = $template->subtitle;
+            $type           = $template->type;
+            $section        = $template->section;
+            $filter         = $template->showToSectionNames();
+            $dv             = $template->time_preparation_start;
+            $timeStart      = $template->time_start;
+            $timeEnd        = $template->time_end;
+            $info           = $template->public_info;
+            $details        = $template->private_details;
+            $private        = $template->is_private;
+            $facebookNeeded = $template->facebook_needed;
         } else {
             // fill variables with no data if no template was chosen
             $activeTemplate = "";
-            $shifts     = collect([]);
-            $title      = null;
-            $type       = null;
-            $subtitle   = null;
-            $section    = Section::sectionOfCurrentUser();
-            $filter     = null;
-            $dv         = $section->preparationTime;
-            $timeStart  = $section->startTime;
-            $timeEnd    = $section->endTime;
-            $info       = null;
-            $details    = null;
-            $private    = null;
+            $shifts         = collect([]);
+            $title          = null;
+            $type           = null;
+            $subtitle       = null;
+            $section        = Section::sectionOfCurrentUser();
+            $filter         = null;
+            $dv             = $section->preparationTime;
+            $timeStart      = $section->startTime;
+            $timeEnd        = $section->endTime;
+            $info           = null;
+            $details        = null;
+            $private        = null;
+            $facebookNeeded = false;
         }
+        $createClubEvent = true;
 
-        return View::make('createClubEventView', compact('sections', 'shiftTypes', 'templates',
+        return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
                                                          'shifts', 'title', 'subtitle', 'type',
                                                          'section', 'filter', 'timeStart', 'timeEnd',
                                                          'info', 'details', 'private', 'dv',
                                                          'activeTemplate',
-                                                         'date'));
+                                                         'date', 'templateId','facebookNeeded','createClubEvent'));
     }
 
 
@@ -193,6 +196,12 @@ class ClubEventController extends Controller
         Log::info('Event created: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
                  . Session::get('userGroup') . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
         Utilities::clearIcalCache();
+        if (Input::get('saveAsTemplate')){
+            $template = $newSchedule->toTemplate();
+            $newEvent->template_id = $template->id;
+            $newEvent->save();
+        }
+
         // show new event
         return Redirect::action('ClubEventController@show', array('id' => $newEvent->id));
     }
@@ -276,7 +285,7 @@ class ClubEventController extends Controller
             $clubEvent->save();
         }
 
-        return View::make('clubEventView', compact('clubEvent', 'shifts', 'clubs', 'persons', 'revisions', 'created_by', 'creator_name'));
+        return View::make('clubevent.clubEventView', compact('clubEvent', 'shifts', 'clubs', 'persons', 'revisions', 'created_by', 'creator_name'));
     }
 
 
@@ -296,8 +305,9 @@ class ClubEventController extends Controller
         $schedule = $event->getSchedule;
 
         // get a list of possible clubs to create an event at
-        $sections = Section::orderBy('title', 'ASC')
-                       ->pluck('title', 'id');
+        $sections = Section::where("id", '>', 0)
+                        ->orderBy('title', 'ASC')
+                       ->get();
 
 
         // get a list of available job types
@@ -328,14 +338,38 @@ class ClubEventController extends Controller
             $creator_name = $revisions[0]["user name"];
         }
 
+        $title          = $event->evnt_title;
+        $type           = $event->evnt_type;
+        $subtitle       = $event->evnt_subtitle;
+        $section        = $event->section;
+        $filter         = $event->showToSectionNames();
+        $dv             = $schedule->schdl_time_preparation_start;
+        $timeStart      = $event->evnt_time_start;
+        $timeEnd        = $event->evnt_time_end;
+        $info           = $event->evnt_public_info;
+        $details        = $event->evnt_private_details;
+        $private        = $event->evnt_is_private;
+        $facebookNeeded = $event->facebook_done;
+        $date = $event->evnt_date_start;
+        if(!is_null($event->template_id)) {
+            $baseTemplate = $event->template;
+        } else {
+            $baseTemplate = null;
+        }
 
-        return View::make('editClubEventView', compact('event',
-                                                       'schedule',
-                                                       'sections',
-                                                       'shiftTypes',
-                                                       'shifts',
-                                                       'created_by',
-                                                       'creator_name'));
+        $createClubEvent = false;
+
+       if(Utilities::requirePermission(["marketing","clubleitung","admin"]) || Session::get('userId') == $created_by) {
+           return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
+               'shifts', 'title', 'subtitle', 'type',
+               'section', 'filter', 'timeStart', 'timeEnd',
+               'info', 'details', 'private', 'dv',
+               'activeTemplate',
+               'date', 'templateId', 'facebookNeeded', 'createClubEvent',
+               'event','baseTemplate'));
+       } else {
+           return response()->view('clubevent.notAllowedToEdit',compact('created_by','creator_name'),403);
+       }
     }
 
     /**
@@ -372,6 +406,11 @@ class ClubEventController extends Controller
         $schedule->save();
 
         Utilities::clearIcalCache();
+        if (Input::get('saveAsTemplate') == true){
+            $template = $schedule->toTemplate();
+            $event->template_id = $template->id;
+            $event->save();
+        }
 
         // show event
         return Redirect::action('ClubEventController@show', array('id' => $id));
@@ -458,12 +497,13 @@ class ClubEventController extends Controller
         $event->evnt_public_info       = Input::get('publicInfo');
         $event->evnt_private_details   = Input::get('privateDetails');
         $event->evnt_type              = Input::get('evnt_type');
-        $event->facebook_done          = Input::get('facebookDone',"0") == "1";
+        $event->facebook_done          = $this->getFacebookDoneValue();
         $event->event_url              = Input::get('eventUrl',"");
         $event->price_tickets_normal   = $this->getOrNullNumber('priceTicketsNormal');
         $event->price_tickets_external = $this->getOrNullNumber('priceTicketsExternal');
         $event->price_normal           = $this->getOrNullNumber('priceNormal');
         $event->price_external         = $this->getOrNullNumber('priceExternal');
+        $event->template_id            = $this->getTemplateId();
 
         // Check if event URL is properly formatted: if the protocol is missing, we have to add it.
         if( $event->event_url !== ""
@@ -569,6 +609,37 @@ class ClubEventController extends Controller
         } else {
             return null;
         }
+    }
+
+    private function getFacebookDoneValue() {
+        $inputVal = Input::get('facebookDone') ;
+        switch ($inputVal){
+            case "1": return true;
+            case "0": return false;
+            case "-1" :
+            default:null;
+        }
+    }
+
+    private function getTemplateId() {
+        $templateValue = Input::get('template',-1);
+        if($templateValue == -1){
+            return null;
+        }
+        /**
+         * from input event we get the link to create a template
+         * e.g. <code>/event/2018/02/16/81/create</code>
+         * in this case we need the 81
+         * php can only search from beginning
+         * so we reverse the string, use offset 7 to look after create
+         * we get the position of the /
+         * now we get the substring -> 81/create
+         * after this we remove the /create -> 81
+         */
+        $reverse = strrev($templateValue);
+        $pos = strpos($reverse,"/",7);
+        $result = substr($templateValue, strlen($templateValue)-$pos);
+        return str_replace("/create",'',$result);
     }
 }
 
