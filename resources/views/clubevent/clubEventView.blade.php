@@ -97,7 +97,7 @@
 					<hr class="no-margin no-padding">
 
 					{{-- Internat event metadata --}}
-					@if(Session::has('userId'))
+					@auth
 						<table class="table table-hover">
                             @if(isset($clubEvent->facebook_done))
                                 <tr>
@@ -178,7 +178,7 @@
 
 							--}}
 						</table>
-					@endif
+					@endauth
 
 				{{-- CRUD --}}
 				@is(['marketing', 'clubleitung', 'admin'])
@@ -203,7 +203,7 @@
 				</div>
 				@endif
 
-				@if(Session::has('userId'))
+				@auth
 					@if($clubEvent->evnt_private_details != '')
 					<div class="panel hidden-print">
 						<div class="panel-body more-details">
@@ -214,7 +214,7 @@
 						<button type="button" class="moreless-less-details btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showLess') }}</button>
 					</div>
 					@endif
-				@endif
+				@endauth
 			</div>
 		</div>
 	</div>

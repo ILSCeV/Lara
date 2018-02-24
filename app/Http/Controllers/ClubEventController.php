@@ -99,7 +99,7 @@ class ClubEventController extends Controller
                        ->get();
 
         // get a list of available templates to choose from
-        $userClub = Session::get('userClub');
+        $userClub = Auth::user()->section->title;
         if(Utilities::requirePermission("admin")) {
             $templates = Template::all()->sortBy('title');
         } else {
@@ -368,17 +368,20 @@ class ClubEventController extends Controller
 
         $createClubEvent = false;
 
-       if(Utilities::requirePermission(["marketing","clubleitung","admin"]) || Session::get('userId') == $created_by) {
-           return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
-               'shifts', 'title', 'subtitle', 'type',
-               'section', 'filter', 'timeStart', 'timeEnd',
-               'info', 'details', 'private', 'dv',
-               'activeTemplate',
-               'date', 'templateId', 'facebookNeeded', 'createClubEvent',
-               'event','baseTemplate'));
-       } else {
-           return response()->view('clubevent.notAllowedToEdit',compact('created_by','creator_name'),403);
-       }
+        
+        $userId = Auth::user()->person->prsn_ldap_id;
+
+        if(Utilities::requirePermission(["marketing","clubleitung","admin"]) || $userId == $created_by) {
+            return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
+                'shifts', 'title', 'subtitle', 'type',
+                'section', 'filter', 'timeStart', 'timeEnd',
+                'info', 'details', 'private', 'dv',
+                'activeTemplate',
+                'date', 'templateId', 'facebookNeeded', 'createClubEvent',
+                'event','baseTemplate'));
+        } else {
+            return response()->view('clubevent.notAllowedToEdit',compact('created_by','creator_name'),403);
+        }
     }
 
     /**
