@@ -16,6 +16,13 @@ use Session;
 
 class TemplateController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('managingUsersOnly', ['except' => 'create']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,16 +30,6 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        if (!(Session::has('userId')
-            && (Session::get('userGroup') == 'marketing'
-                || Session::get('userGroup') == 'clubleitung'
-                || Session::get('userGroup') == 'admin'))) {
-            Session::put('message', trans("messages.notAllowed"));
-            Session::put('msgType', 'danger');
-            return redirect('/');
-        }
-
-        //
         if (Utilities::requirePermission("admin")) {
             $templatesQuery = Template::query();
         } else {
@@ -62,16 +59,6 @@ class TemplateController extends Controller
      */
     public function store(Request $request, $templateId)
     {
-        //
-        if (!(Session::has('userId')
-            && (Session::get('userGroup') == 'marketing'
-                || Session::get('userGroup') == 'clubleitung'
-                || Session::get('userGroup') == 'admin'))) {
-            Session::put('message', trans("messages.notAllowed"));
-            Session::put('msgType', 'danger');
-            return redirect('/');
-        }
-
         $title = Input::get('title');
         $subtitle = Input::get('subtitle');
         $type = Input::get('type');
@@ -157,16 +144,6 @@ class TemplateController extends Controller
      */
     public function show($templateId)
     {
-        //
-        if (!(Session::has('userId')
-            && (Session::get('userGroup') == 'marketing'
-                || Session::get('userGroup') == 'clubleitung'
-                || Session::get('userGroup') == 'admin'))) {
-            Session::put('message', trans("messages.notAllowed"));
-            Session::put('msgType', 'danger');
-            return redirect('/');
-        }
-
         /** @var Template $template */
         $template = Template::with('section')->firstOrNew(['id' => $templateId]);
         $sections = Section::all();
@@ -221,15 +198,6 @@ class TemplateController extends Controller
      */
     public function destroy($templateId)
     {
-        if (!(Session::has('userId')
-            && (Session::get('userGroup') == 'marketing'
-                || Session::get('userGroup') == 'clubleitung'
-                || Session::get('userGroup') == 'admin'))) {
-            Session::put('message', trans("messages.notAllowed"));
-            Session::put('msgType', 'danger');
-            return redirect('/');
-        }
-
         $template = Template::where('id', $templateId)->with('shifts')->first();
 
         //

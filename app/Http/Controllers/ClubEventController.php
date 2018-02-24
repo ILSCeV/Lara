@@ -99,7 +99,7 @@ class ClubEventController extends Controller
                        ->get();
 
         // get a list of available templates to choose from
-        $userClub = Session::get('userClub');
+        $userClub = Auth::user()->section->title;
         if(Utilities::requirePermission("admin")) {
             $templates = Template::all()->sortBy('title');
         } else {
@@ -130,43 +130,34 @@ class ClubEventController extends Controller
                     // copy all except person_id and schedule_id and comment
                     return $shift->replicate(['person_id', 'schedule_id', 'comment']);
                 });
-            $title                  = $template->title;
-            $subtitle               = $template->subtitle;
-            $type                   = $template->type;
-            $section                = $template->section;
-            $filter                 = $template->showToSectionNames();
-            $dv                     = $template->time_preparation_start;
-            $timeStart              = $template->time_start;
-            $timeEnd                = $template->time_end;
-            $info                   = $template->public_info;
-            $details                = $template->private_details;
-            $private                = $template->is_private;
-            $facebookNeeded         = $template->facebook_needed;
-            $priceNormal            = $template->price_normal;
-            $priceTicketsNormal     = $template->price_tickets_normal;
-            $priceExternal          = $template->price_external;
-            $priceTicketsExternal   = $template->price_tickets_external;
-
+            $title          = $template->title;
+            $subtitle       = $template->subtitle;
+            $type           = $template->type;
+            $section        = $template->section;
+            $filter         = $template->showToSectionNames();
+            $dv             = $template->time_preparation_start;
+            $timeStart      = $template->time_start;
+            $timeEnd        = $template->time_end;
+            $info           = $template->public_info;
+            $details        = $template->private_details;
+            $private        = $template->is_private;
+            $facebookNeeded = $template->facebook_needed;
         } else {
             // fill variables with no data if no template was chosen
-            $activeTemplate         = "";
-            $shifts                 = collect([]);
-            $title                  = null;
-            $type                   = null;
-            $subtitle               = null;
-            $section                = Section::sectionOfCurrentUser();
-            $filter                 = null;
-            $dv                     = $section->preparationTime;
-            $timeStart              = $section->startTime;
-            $timeEnd                = $section->endTime;
-            $info                   = null;
-            $details                = null;
-            $private                = null;
-            $facebookNeeded         = false;
-            $priceNormal            = null;
-            $priceTicketsNormal     = null;
-            $priceExternal          = null;
-            $priceTicketsExternal   = null;
+            $activeTemplate = "";
+            $shifts         = collect([]);
+            $title          = null;
+            $type           = null;
+            $subtitle       = null;
+            $section        = Section::current();
+            $filter         = null;
+            $dv             = $section->preparationTime;
+            $timeStart      = $section->startTime;
+            $timeEnd        = $section->endTime;
+            $info           = null;
+            $details        = null;
+            $private        = null;
+            $facebookNeeded = false;
         }
         $createClubEvent = true;
 
@@ -377,18 +368,21 @@ class ClubEventController extends Controller
 
         $createClubEvent = false;
 
-       if(Utilities::requirePermission(["marketing","clubleitung","admin"]) || Session::get('userId') == $created_by) {
-           return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
-               'shifts', 'title', 'subtitle', 'type',
-               'section', 'filter', 'timeStart', 'timeEnd',
-               'info', 'details', 'private', 'dv',
-               'activeTemplate',
-               'date', 'templateId', 'facebookNeeded', 'createClubEvent',
-               'event','baseTemplate',
+        
+        $userId = Auth::user()->person->prsn_ldap_id;
+
+        if(Utilities::requirePermission(["marketing","clubleitung","admin"]) || $userId == $created_by) {
+            return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
+                'shifts', 'title', 'subtitle', 'type',
+                'section', 'filter', 'timeStart', 'timeEnd',
+                'info', 'details', 'private', 'dv',
+                'activeTemplate',
+                'date', 'templateId', 'facebookNeeded', 'createClubEvent',
+                'event','baseTemplate',
                'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal'));
-       } else {
-           return response()->view('clubevent.notAllowedToEdit',compact('created_by','creator_name'),403);
-       }
+        } else {
+            return response()->view('clubevent.notAllowedToEdit',compact('created_by','creator_name'),403);
+        }
     }
 
     /**
