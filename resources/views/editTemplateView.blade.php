@@ -92,7 +92,7 @@
                             @if($template->id == null)
                                 @foreach($sections as $section)
                                     <label>
-                                        {{ Form::checkbox("filter[" . $section->title ."]", $section->id, $section->id === Auth::user()->section_id }}
+                                        {{ Form::checkbox("filter[" . $section->title ."]", $section->id, $section->id === Auth::user()->section_id )}}
                                         {{ $section->title }}
                                     </label>
                                 @endforeach
