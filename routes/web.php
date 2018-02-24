@@ -48,7 +48,8 @@ Route::pattern('day', 	'[0-3][0-9]');
 */
 
 // LOG VIEWER
-Route::get('logs', 								'LogViewerController@index');
+Route::get('logs', 								'LogViewerController@index')
+    ->middleware('checkRoles:admin,clubleitung');
 
 
 // DEFAULT
@@ -97,7 +98,7 @@ Route::post('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventCont
 // AJAX calls
 Route::get('person/{query?}', 				'PersonController@index');
 Route::get('club/{query?}', 				'ClubController@index');
-Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson');
+Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson')->middleware('rejectGuests');
 Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
 Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
 
@@ -123,8 +124,8 @@ Route::resource('survey.answer', 	'SurveyAnswerController', 	['only'   => ['show
 Route::resource('section', 			'SectionController');
 
 // STATISTICS
-Route::get('/statistics/month/{year?}/{month?}',	'StatisticsController@showStatistics');
-Route::get('/statistics/year/{year?}',	'StatisticsController@showYearStatistics');
+Route::get('/statistics/month/{year?}/{month?}',	'StatisticsController@showStatistics')->middleware('rejectGuests');
+Route::get('/statistics/year/{year?}',	'StatisticsController@showYearStatistics')->middleware('rejectGuests');
 
 
 // JSON EXPORT - RETURNS EVENTS METADATA

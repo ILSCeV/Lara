@@ -67,6 +67,6 @@ class Kernel extends HttpKernel
         'deadlineSurvey' => \Lara\Http\Middleware\DeadlineSurvey::class,
         'rejectGuests' => \Lara\Http\Middleware\RejectGuests::class,
         'managingUsersOnly' => \Lara\Http\Middleware\ManagingUsersOnly::class,
-
+        'checkRoles' => \Lara\Http\Middleware\CheckRoles::class,
     ];
 }
