@@ -165,8 +165,10 @@ Route::get('/create/template/',                               'TemplateControlle
 
 
 
-Route::get('register', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm']);
-Route::post('register', ['as' => 'register.post', 'uses' => 'Auth\RegisterController@register']);
+Route::get('register', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm'])
+    ->middleware('checkRoles:admin,clubleitung');
+Route::post('register', ['as' => 'register.post', 'uses' => 'Auth\RegisterController@register'])
+    ->middleware('checkRoles:admin,clubleitung');
 
 // Password Reset Routes...
 Route::get('password/reset', ['as' => 'password.reset', 'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm']);
