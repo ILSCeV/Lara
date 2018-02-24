@@ -16,4 +16,6 @@ return [
     'failed' => 'Entern fehlgeschlagen! Das Losungswort war falsch, du darfst LARRRRA nicht betreten.',
     'throttle' => 'Landratten lassen wir nicht an bord. Bitte versuche es in :seconds Sekunden erneut.',
     'register' => 'Matrosenmeldung',
+    'missingPermissions' => 'Dir fehlen die benötigten Rechte um diese Aktion durchzuführen.',
+    'notAuthenticated' => 'Du bist nicht angemeldet.',
 ];
