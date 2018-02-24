@@ -15,5 +15,7 @@ return [
 
     'failed' => 'Login fehlgeschlagen! Deine Anmeldedaten stimmen nicht mit denen in LARA überein.',
     'throttle' => 'Zu viele Login-Versuche. Bitte versuche es in :seconds Sekunden erneut.',
-    'register' => 'Registrierung'
+    'register' => 'Registrierung',
+    'missingPermissions' => 'Dir fehlen die benötigten Rechte um diese Aktion durchzuführen.',
+    'notAuthenticated' => 'Du bist nicht angemeldet.',
 ];

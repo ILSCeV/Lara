@@ -64,7 +64,7 @@ class LoginController extends Controller
      */
 
     /**
-     * Authentificates a user and saves credentials in session data.
+     * Authenticates a user and saves credentials in session data.
      *
      * CONFIG is stored in \app\config\bcLDAP.php
      * For the purpose of securing personal data of club members
@@ -130,14 +130,6 @@ class LoginController extends Controller
         $userGroup = Input::get('userGroup');
 
         $person = Person::where('clb_id', '<' , 4)->inRandomOrder()->first();
-        // get user club
-        $this->setCurrentUserInSession(
-            $person->prsn_ldap_id,
-            $person->prsn_name,
-            $userGroup,
-            $person->club->clb_title,
-            $person->prsn_status
-        );
 
         $person->user()->fill(["group" => $userGroup])->save();
         $this->loginPersonAsUser($person->prsn_ldap_id);
@@ -239,13 +231,6 @@ class LoginController extends Controller
         if ($this->attemptLogin($emailModifiedRequest)) {
             $user = $this->guard()->user();
             $person = $user->person;
-            $this->setCurrentUserInSession(
-                $person->prsn_ldap_id,
-                $person->prsn_name,
-                $user->group,
-                $person->club->clb_title,
-                $person->prsn_status
-            );
             return Redirect::back();
         }
         return $this->loginFailed();
@@ -455,8 +440,6 @@ class LoginController extends Controller
 
         // Compare password in LDAP with hashed input.
         if ($info[0]['userpassword'][0] === $password) {
-            $this->setCurrentUserInSession($info[0]['uidnumber'][0], $userName, $userGroup, $userClub, $userStatus);
-
             $this->loginPersonAsUser($info[0]['uidnumber'][0]);
 
             Log::info('Auth success: ' .
@@ -475,15 +458,6 @@ class LoginController extends Controller
         Log::info('Auth fail: ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] . ', ' . $userGroup . ') used wrong password.');
 
         return $this->loginFailed();
-    }
-
-    public function setCurrentUserInSession($id, $name, $group, $club, $status)
-    {
-        //Session::put('userId', $id);
-        //Session::put('userName', $name);
-        //Session::put('userGroup', $group);
-        //Session::put('userClub', $club);
-        //Session::put('userStatus', $status);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Lara\Http\Middleware;
 use Closure;
 use Auth;
 use Redirect;
+use Lara\Utilities;
 
 class CheckRoles
 {
@@ -17,16 +18,15 @@ class CheckRoles
      */
     public function handle($request, Closure $next, ...$params)
     {
-        $user = Auth::user();
-
-        if (!$user) {
-
+        if (!Auth::check()) {
+            Utilities::error(trans('auth.notAuthenticated'));
             return Redirect('/');
         }
 
-        $userGroup = $user->group;
+        $userGroup = Auth::user()->group;
 
         if (!in_array($userGroup, $params)) {
+            Utilities::error(trans('auth.missingPermissions'));
             return Redirect('/');
         }
 

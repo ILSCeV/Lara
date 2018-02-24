@@ -4,6 +4,7 @@ namespace Lara\Http\Middleware;
 
 use Closure;
 use Auth;
+use Lara\Utilities;
 use Session;
 
 class ManagingUsersOnly
@@ -17,17 +18,13 @@ class ManagingUsersOnly
      */
     public function handle($request, Closure $next)
     {
-        $user = Auth::user();
-
-        if (!$user) {
-            Session::put('message', trans("messages.notAllowed"));
-            Session::put('msgType', 'danger');
+        if (!Auth::check()) {
+            Utilities::error(trans('auth.notAuthenticated'));
             return Redirect('/');
         }
 
-        if (!$user->is(['admin', 'marketing', 'clubleitung'])) {
-            Session::put('message', trans("messages.notAllowed"));
-            Session::put('msgType', 'danger');
+        if (!Auth::user()->is(['admin', 'marketing', 'clubleitung'])) {
+            Utilities::error(trans('auth.missingPermissions'));
             return Redirect('/');
         }
 

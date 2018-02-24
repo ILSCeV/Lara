@@ -3,6 +3,7 @@
 namespace Lara\Http\Middleware;
 
 use Closure;
+use Lara\Utilities;
 use Redirect;
 use Auth;
 
@@ -18,10 +19,12 @@ class AdminOnly
     public function handle($request, Closure $next)
     {
         if (!Auth::check()) {
+            Utilities::error(trans('auth.notAuthenticated'));
             return Redirect('/');
         }
 
         if (Auth::user()->group !== 'admin') {
+            Utilities::error(trans('auth.missingPermissions'));
             return Redirect('/');
         }
 

@@ -70,4 +70,10 @@ class Utilities
         }
     }
 
+    static function error($message)
+    {
+        Session::put('message', $message);
+        Session::put('msgType', 'danger');
+    }
+
 }
