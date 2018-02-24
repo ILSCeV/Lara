@@ -171,12 +171,11 @@ class LoginController extends Controller
         $emailModifiedRequest = request()->merge(['email' => request('username')]);
 
         if ($this->attemptLogin($emailModifiedRequest)) {
-            $user = $this->guard()->user();
-            $person = $user->person;
             return Redirect::back();
         }
         return $this->loginFailed();
     }
+
     public function doLDAPLogin()
     {
         // CONNECTING TO LDAP SERVER
