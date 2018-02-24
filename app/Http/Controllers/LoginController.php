@@ -146,64 +146,6 @@ class LoginController extends Controller
 
     public function doProductionLogin()
     {
-// MASTERPASSWORD for LDAP-Server downtime, stored in hashed form in config/bcLDAP.php
-        if (Input::get('username') === "LDAP-OVERRIDE") {
-
-            if (Config::get('bcLDAP.ldap-override') === base64_encode(mhash(MHASH_MD5, Input::get('password')))) {
-
-                Session::put('userId', '9999');
-                Session::put('userName', 'LDAP-OVERRIDE');
-                Session::put('userGroup', 'clubleitung');
-                Session::put('userClub', 'bc-Club');
-                Session::put('userStatus', 'member');
-                Session::put('clubFilter', 'bc-Club');
-
-                Log::info('LDAP OVERRIDE USED.');
-
-                return Redirect::back();
-
-            } else {
-
-                Session::put('message', Config::get('messages_de.ldap-override-fail'));
-                Session::put('msgType', 'danger');
-
-                Log::warning('LDAP OVERRIDE FAIL: wrong password!');
-
-                return Redirect::back();
-            }
-        }
-
-
-// Preview login for BD-Club, stored in hashed form in config/bcLDAP.php
-        if (Input::get('username') === "bd-berta") {
-
-            if (Config::get('bcLDAP.bd-berta') === base64_encode(mhash(MHASH_MD5, Input::get('password')))) {
-
-                Session::put('userId', '8888');
-                Session::put('userName', 'BD Berta Preview');
-                Session::put('userGroup', 'clubleitung');
-                Session::put('userClub', 'bd-Club');
-                Session::put('userStatus', 'member');
-                Session::put('clubFilter', 'bd-Club');
-
-                Log::info('BD Preview login used.');
-
-                return Redirect::back();
-
-            } else {
-
-                Session::put('message', Config::get('messages_de.ldap-override-fail'));
-                Session::put('msgType', 'danger');
-
-                Log::warning('BD BERTA PREVIEW LOGIN FAIL: wrong password!');
-
-                return Redirect::back();
-            }
-        }
-
-
-// BLACKLIST - following IDs will not be able to login
-        // 1708 = public account for using bc-wiki
         if (Input::get('username') === "1708") {
             Session::put('message', 'Ne ne ne, nicht mit dieser Clubnummer, sie ist ja nur fur bc-Wiki zu benutzen ;)');
             Session::put('msgType', 'danger');
