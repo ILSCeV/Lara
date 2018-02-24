@@ -13,6 +13,7 @@ use Input;
 use Lara\Club;
 use Lara\ClubEvent;
 use Lara\Console\Commands\SyncBDclub;
+use Lara\Http\Middleware\RejectGuests;
 use Lara\Logging;
 use Lara\ShiftType;
 use Lara\Shift;
@@ -28,6 +29,11 @@ use View;
 
 class ClubEventController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('rejectGuests', ['only' => 'create']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -518,14 +524,12 @@ class ClubEventController extends Controller
         $event->template_id            = $this->getTemplateId();
 
         // Check if event URL is properly formatted: if the protocol is missing, we have to add it.
-        if( $event->event_url !== ""
-        and parse_url($event->event_url, PHP_URL_SCHEME) === null) {
+        if( $event->event_url !== "" && parse_url($event->event_url, PHP_URL_SCHEME) === null) {
             $event->event_url = 'https://' . $event->event_url;
         }
 
         // create new section
-        if (!Section::where('title', '=', Input::get('section'))->first())
-        {
+        if (!Section::where('title', '=', Input::get('section'))->first()) {
             $section = new Section;
             $section->title = Input::get('section');
             $section->save();
@@ -533,8 +537,7 @@ class ClubEventController extends Controller
             $event->plc_id = $section->id;
         }
         // use existing section
-        else
-        {
+        else {
             $event->plc_id = Section::where('title', '=', Input::get('section'))->first()->id;
         }
 
