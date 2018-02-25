@@ -120,6 +120,13 @@ class ShiftController extends Controller
             return response()->json("Fehler: das angegebene Passwort ist falsch, keine Änderungen wurden gespeichert. Bitte versuche erneut oder frage einen anderen Mitglied oder CL.", 401);
         }
 
+        // Control if the updated_at matches with the request timestamp
+        if($timestamp <> $shift->updated_at ) {
+            return response()->json([
+                "errorCode"=>"error_outOfSync"
+            ], 409);
+        }
+
         // FYI:
         // We separate schedule shift person change from comment change
         // because we need an option to add a comment to an empty field.
