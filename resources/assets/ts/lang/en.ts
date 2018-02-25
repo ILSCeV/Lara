@@ -12,6 +12,8 @@ export default {
     "wrongShiftWeightFormat": "The format of a shift weight is wrong. The correct format is \"1\", \"0.7\", \"1.4\" or similar.",
     "addCommentHere": "Add comment here",
 
+    'error_outOfSync' : 'Error: you are trying to overwrite a value that has changed in the meanwhile. Please refresh the page and try again.',
+
     'loading': 'Loading...',
     'listOfShiftsDone': 'List of counted shifts done by ',
     'noShiftsInThisPeriod': 'No shifts done in chosen timeframe.',

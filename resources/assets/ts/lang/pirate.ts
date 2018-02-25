@@ -11,6 +11,8 @@ export default {
     "descriptionTooLong": "Der Beschreibungstext ist zu lange! Der Text sollte weniger als 1500 Zeichen enthalten.",
     "wrongShiftWeightFormat": "Das Format eines Schichtgewichts ist falsch! Das richtige Format ist z.B. \"1\", \"0.7\", \"1.4\" o.Ä.",
 
+    'error_out-of-sync' : 'Fehler: du versuchst einen Wert zu überschreiben, der in der Zwischenzeit geändert wurde. Aktualisiere bitte die Seite und versuch es nochmal.',
+
     "addCommentHere": "Blödsinn ausrufen",
 
     'loading': 'Der Schiff wird beladen...',
