@@ -1085,12 +1085,19 @@ jQuery( document ).ready( function( $ ) {
             },
 
             error: function (xhr, ajaxOptions, thrownError) {
-                alert(JSON.stringify(xhr.responseJSON));
-                // Hide spinner after response received
-                // We make changes on success anyway, so the following state is only achieved
-                // when a response from server was received, but errors occured - so let's inform the user
-                $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!");
-              }
+                try {
+                    alert(translate(xhr.responseJSON.errorCode));
+                }
+                catch(e) {
+                            alert(JSON.stringify(xhr.responseJSON));
+                            // Hide spinner after response received
+                            // We make changes on success anyway, so the following state is only achieved
+                            // when a response from server was received, but errors occured - so let's inform the user
+                }
+                finally {
+                    $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!");
+                }
+            }
 
 
         });
