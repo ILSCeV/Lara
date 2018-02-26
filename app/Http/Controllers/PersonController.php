@@ -8,6 +8,7 @@ use DateTime;
 use DateInterval;
 use Session;
 use Config;
+use Auth;
 use Redirect;
 
 use Lara\Person;
