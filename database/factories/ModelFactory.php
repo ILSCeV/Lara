@@ -87,9 +87,11 @@ $factory->define(Lara\SurveyQuestion::class, function(Faker\Generator $faker){
 $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
     $start = $faker->dateTimeBetween('-30 days', '+60 days');
     $end = $faker->dateTimeBetween($start, date("Y-m-d H:i:s", strtotime('+1 day', $start->getTimestamp())));
+    $eventName = $faker->randomKey(EventNameDictionary::EVENT_NAMES);
+    $eventType = EventNameDictionary::EVENT_NAMES[$eventName];
     return [
-        'evnt_type' => $faker->numberBetween(0,9),
-        'evnt_title' => $faker->word(),
+        'evnt_type' => $eventType,
+        'evnt_title' => $eventName,
         'evnt_subtitle' => $faker->word(),
         'plc_id' => Lara\Section::inRandomOrder()->first()->id,
         'evnt_date_start' => $start->format('Y-m-d'),
@@ -158,9 +160,11 @@ $factory->define(Lara\Club::class, function(Faker\Generator $faker) {
 $factory->define(Lara\Template::class, function(Faker\Generator $faker) {
     $start = $faker->dateTimeBetween('-30 days', '+60 days');
     $end = $faker->dateTimeBetween($start, date("Y-m-d H:i:s", strtotime('+1 day', $start->getTimestamp())));
+    $eventName = $faker->randomKey(EventNameDictionary::EVENT_NAMES);
+    $eventType = EventNameDictionary::EVENT_NAMES[$eventName];
     return [
-        'type' => $faker->numberBetween(0,9),
-        'title' => $faker->word(),
+        'type' => $eventType,
+        'title' => $eventName,
         'subtitle' => $faker->word(),
         'section_id' => Lara\Section::inRandomOrder()->first()->id,
         'time_start' => $start->format('H:i'),
