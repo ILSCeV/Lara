@@ -499,6 +499,8 @@ class ClubEventController extends Controller
     private function editClubEvent($id)
     {
         $event = new ClubEvent;
+        $event->creator_id = Auth::user()->id;
+
         if(!is_null($id)) {
             $event = ClubEvent::findOrFail($id);
         }
