@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+use Lara\Person;
+use Lara\User;
+
 class AddExtraUserColumns extends Migration
 {
     /**
@@ -20,9 +23,11 @@ class AddExtraUserColumns extends Migration
             $table->string('group');
         });
 
-        Lara\Person::all()->each(function(Person $person) {
-            User::createFromPerson($person);
-        });
+        Person::whereNotNull('prsn_ldap_id')
+            ->get()
+            ->each(function(Person $person) {
+                User::createFromPerson($person);
+            });
     }
 
     /**

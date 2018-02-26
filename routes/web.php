@@ -98,7 +98,8 @@ Route::post('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventCont
 // AJAX calls
 Route::get('person/{query?}', 				'PersonController@index');
 Route::get('club/{query?}', 				'ClubController@index');
-Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson')->middleware('rejectGuests');
+Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson')
+    ->middleware('rejectGuests');
 Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
 Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
 
@@ -113,11 +114,13 @@ Route::get('lang', function() {
 });
 
 // RESTful RESOURCES
-Route::resource('shiftType', 		'ShiftTypeController');
+Route::resource('shiftType', 		'ShiftTypeController')
+    ->middleware('checkRoles:admin,clubleitung');
 Route::resource('shift', 			'ShiftController', 	        ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('schedule', 		'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('event', 			'ClubEventController', 		['except' => ['index']]);
-Route::resource('person', 			'PersonController', 		['only'   => ['index']]);
+Route::resource('person', 			'PersonController', 		['only'   => ['index']])
+    ->middleware('rejectGuests');
 Route::resource('club', 			'ClubController', 			['only'   => ['index']]);
 Route::resource('survey',			'SurveyController',			['except' => ['index']]);
 Route::resource('survey.answer', 	'SurveyAnswerController', 	['only'   => ['show', 'store', 'update', 'destroy']]);
