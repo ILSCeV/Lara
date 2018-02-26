@@ -72,6 +72,7 @@ class ClubEvent extends Model
         'facebook_done',
         'event_url',
         'template_id',
+        'creator_id',
     ];
 
     /**
@@ -136,5 +137,10 @@ class ClubEvent extends Model
         return $this->showToSection()->get()->map(function ($section) {
             return $section->title;
         })->toArray();
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo('Lara\User', 'creator_id');
     }
 }
