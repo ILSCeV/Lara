@@ -14,5 +14,8 @@ class PersonsTableSeeder extends Seeder
     {
         \DB::table('persons')->delete();
         factory(Lara\Person::class, 100)->create();
+        Lara\Person::all()->each(function($person) {
+            Lara\User::createFromPerson($person);
+        });
     }
 }
