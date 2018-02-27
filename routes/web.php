@@ -184,3 +184,5 @@ Route::get('password/reset', ['as' => 'password.reset', 'uses' => 'Auth\ForgotPa
 Route::post('password/email', ['as' => 'password.email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
 Route::get('password/reset/{token}', ['as' => 'password.reset.token', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
 Route::post('password/reset', ['as' => 'password.reset.post', 'uses' => 'Auth\ResetPasswordController@reset']);
+
+Route::resource('user', 'UserController');
