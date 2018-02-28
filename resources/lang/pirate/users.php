@@ -2,4 +2,5 @@
 
 return [
     'users' => 'Nutzer',
+    'userManagement' => 'Nutzerverwaltung',
 ];
