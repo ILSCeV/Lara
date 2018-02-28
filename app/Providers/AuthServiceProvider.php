@@ -3,6 +3,8 @@
 namespace Lara\Providers;
 
 use Illuminate\Support\Facades\Gate;
+use Lara\User;
+use Lara\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -14,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'Lara\Model' => 'Lara\Policies\ModelPolicy',
+        'Lara\User' => 'Lara\Policies\UserPolicy'
     ];
 
     /**
@@ -24,9 +27,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Gate::resource('users', 'UserPolicy');
-
-        //
     }
 }
