@@ -14,9 +14,6 @@
             <table class="table info table-hover table-condensed">
                 <thead>
                 <tr class="active">
-                    <th>
-                        #
-                    </th>
                     <th class="col-md-1 col-xs-1 padding-left-15">
                         {{ trans('mainLang.section') }}
                     </th>
@@ -41,9 +38,6 @@
 
                 @foreach($users as $user)
                     <tr>
-                        <td>
-                            {{ $user->id }}
-                        </td>
                         <td class="padding-left-15">
                             {{ $user->section->title }}
                         </td>
