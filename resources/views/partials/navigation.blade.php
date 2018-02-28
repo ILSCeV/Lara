@@ -62,6 +62,12 @@
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('user.index') }}">
+                            <i class="fa fa-users" aria-hidden="true"> </i>
+                            {{ trans('users.userManagement') }}
+                        </a>
+                    </li>
                 @endis
 
 

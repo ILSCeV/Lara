@@ -30,6 +30,7 @@ class UserController extends Controller
         $users = User::with('section')
             ->get()
             ->sortBy('section.title')
+            ->sortBy('name', SORT_STRING)
             ->filter(function($user) use ($currentUser) {
                 return $currentUser->can('view', $user);
             });
