@@ -2,7 +2,12 @@
 
 namespace Lara\Http\Controllers;
 
-use User;
+use Lara\User;
+
+use Auth;
+use Lara\Utilities;
+use Redirect;
+use View;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -10,7 +15,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(User::class);
+
     }
 
     /**
@@ -20,7 +25,16 @@ class UserController extends Controller
      */
     public function index()
     {
+        $currentUser = Auth::user();
 
+        $users = User::with('section')
+            ->get()
+            ->sortBy('section.title')
+            ->filter(function($user) use ($currentUser) {
+                return $currentUser->can('view', $user);
+            });
+
+        return View::make('user.index', compact('users'));
     }
 
     /**
@@ -73,9 +87,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $this->authorize('update', $user);
+
+        if (!$user) {
+            Utilities::error('User does not exist');
+            return Redirect::back();
+        }
+
+        $user->fill($request->all())->save();
+        return Redirect::back();
     }
 
     /**

@@ -44,6 +44,9 @@ class User extends Authenticatable
 
     public static function createFromPerson(Person $person)
     {
+        if (!$person->club->section()) {
+            return NULL;
+        }
         return User::create([
             'name' => $person->prsn_name,
             'email' => $person->prsn_name . '@lara.il-sc.de',

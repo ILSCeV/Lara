@@ -19,13 +19,15 @@ class UserPolicy
      */
     public function before($user, $ability)
     {
-        if ($user->group === "admin") {
+        if ($user->group == "admin") {
             return true;
         }
 
-        if ($user->group !== 'clubleitung') {
+        if ($user->group != 'clubleitung') {
             return false;
         }
+
+        return NULL;
     }
 
     /**
@@ -37,7 +39,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return $user->section_id === $model->section_id;
+        return $user->section_id == $model->section_id;
     }
 
     /**
@@ -60,7 +62,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->section_id === $model->section_id;
+        return $user->section_id == $model->section_id;
     }
 
     /**
@@ -72,6 +74,6 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->section_id === $model->section_id;
+        return $user->section_id == $model->section_id;
     }
 }

@@ -33,5 +33,7 @@ export default {
     'confirmPublishingEvent': 'Are you sure you want to publish this event to calendar feed?',
     'confirmUnpublishingEvent': 'Are you sure you want to remove this event from the calendar feed?',
     'deleteTemplate' : 'delete Template',
-    'deleteTemplateMessage' : 'Are you sure that you want to delete this Template?'
+    'deleteTemplateMessage' : 'Are you sure that you want to delete this Template?',
+
+    'changeUserStatus': 'Are you sure that you want to change the status of this user?'
 };

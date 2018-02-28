@@ -67,5 +67,7 @@ export default {
     'CGW Tshirt/Hoodies': 'CGW Kleider',
     'CGW Backgammon/ Kickerturnier /Sonntagsöffnung': 'CGW Schatzsuche und Trinkspiele',
     'CGW Spieleabend': 'CGW "Fünf Finger Fillet"-Abend',
-    'Wochentliche ClubBildungsMaßnahme (CBM)': 'Wöchentliche Auspeitschung mit der Neunschwänzigen Katze'
+    'Wochentliche ClubBildungsMaßnahme (CBM)': 'Wöchentliche Auspeitschung mit der Neunschwänzigen Katze',
+
+    'changeUserStatus': 'Bist du dir sicher, dass du den Status dieses Nutzers ändern möchtest?'
 };
