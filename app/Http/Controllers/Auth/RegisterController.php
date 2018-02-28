@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Auth\Events\Registered;
 
+use Gate;
+
 use Lara\User;
 use Lara\Person;
 use Lara\Section;
 
 use Lara\Http\Controllers\Controller;
+use Lara\Utilities;
 
 class RegisterController extends Controller
 {
@@ -103,6 +106,13 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
+
+        $this->authorize('create', User::class);
+
+        if (Gate::denies('createUserOfSection', $request->get('section'))) {
+            Utilities::error('You cannot create a user of another section!');
+            return redirect($this->redirectPath());
+        }
 
         event(new Registered($user = $this->create($request->all())));
 

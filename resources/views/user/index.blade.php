@@ -14,9 +14,11 @@
             <table class="table info table-hover table-condensed">
                 <thead>
                 <tr class="active">
-                    <th class="col-md-1 col-xs-1 padding-left-15">
-                        {{ trans('mainLang.section') }}
-                    </th>
+                    @is('admin')
+                        <th class="col-md-1 col-xs-1 padding-left-15">
+                            {{ trans('mainLang.section') }}
+                        </th>
+                    @endis
                     <th class="col-md-3 col-xs-3">
                         Name
                     </th>
@@ -30,17 +32,24 @@
                 </thead>
                 <tbody class="container" id="userOverviewTable">
                 <div class="table-control">
-                    <span class="table-control__search fa-pull-right form-inline has-feedback">
-                           <label for="userOverviewFilter" class="test"> {{ trans('mainLang.search') }}: </label>
-                           <input type="text" class="form-control" id="userOverviewFilter">
+                    <span class="table-control__search fa-pull-left form-inline has-feedback">
+                        <label for="userOverviewFilter" class="test"> {{ trans('mainLang.search') }}: </label>
+                        <input type="text" class="form-control" id="userOverviewFilter">
+                    </span>
+                    <span class="table-control__create-new-user fa-pull-right">
+                            <a class="btn btn-success" href="{{route('register')}}">
+                                <i class="fa fa-user-plus"></i>
+                            </a>
                         </span>
                 </div>
 
                 @foreach($users as $user)
                     <tr>
-                        <td class="padding-left-15">
-                            {{ $user->section->title }}
-                        </td>
+                        @is('admin')
+                            <td class="padding-left-15">
+                                {{ $user->section->title }}
+                            </td>
+                        @endis
                         <td>
                             {{ $user->name }}
                         </td>
@@ -50,8 +59,10 @@
                         <td>
                             {{ Form::model($user, ['route' => ['user.update', $user->id], 'id' => 'change-user-status-' . $user->id, 'method' => 'PUT']) }}
                             <select name="status" class="selectpicker" data-id="{{$user->id}}" data-name="{{$user->name}}">
-                                @foreach(['candidate', 'member', 'veteran', 'member'] as $status)
-                                    <option value="{{ $status }}" {{ $status === $user->status ? "selected" : "" }}> {{ $status }}</option>
+                                @foreach(['candidate', 'member', 'veteran', 'ex-member', 'ex-candidate'] as $status)
+                                    <option value="{{ $status }}" {{ $status === $user->status ? "selected" : "" }}>
+                                        {{ trans($user->section->title . "." . $status) }}
+                                    </option>
                                 @endforeach
                             </select>
                             {{ Form::close() }}

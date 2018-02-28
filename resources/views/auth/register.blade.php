@@ -48,7 +48,7 @@
                             <div class="col-md-6">
                                 <select name="section" id="section" class="selectpicker">
                                     @foreach(Lara\Section::all() as $section)
-                                        <option value="{{$section->id}}" {{ starts_with($section->title, 'bc') ? 'disabled' : ''}}>{{$section->title}}</option>
+                                        <option value="{{$section->id}}">{{$section->title}}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('section'))
