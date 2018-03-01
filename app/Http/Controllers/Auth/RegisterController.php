@@ -60,7 +60,20 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
-            'section' => 'required'
+            'section' => [
+                'required',
+                Rule::in(
+                    Section::all()->map(
+                        function($section) { $section->id;}
+                    )
+                )
+            ],
+            'status' => [
+                'required',
+                Rule::in(
+                    ['candidate', 'member', 'veteran']
+                )
+            ]
         ]);
     }
 
