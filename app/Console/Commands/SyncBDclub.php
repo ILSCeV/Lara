@@ -6,13 +6,13 @@ use Carbon\Carbon;
 use ICal\Event;
 use ICal\ICal;
 use Illuminate\Console\Command;
-use it\thecsea\simple_caldav_client\SimpleCalDAVClient;
 use Lara\Club;
 use Lara\ClubEvent;
 use Lara\Person;
 use Lara\Schedule;
 use Lara\Section;
 use Lara\Shift;
+use Lara\Template;
 
 /**
  * To work with this, you need a file named bd_credentials.php in the config folder
@@ -30,27 +30,27 @@ use Lara\Shift;
 class SyncBDclub extends Command
 {
     const BD_TEMPLATE_NAME = 'BD Template';
-    
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'lara:sync-bd-club';
-    
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'download all events from bd club';
-    
+
     const DATE_TIME_FORMAT_PREFIX = 'Ymd';
-    
+
     const DATE_TIME_FORMAT_SUFFIX = 'His';
-    
+
     const BD_SECTION_NAME = 'bd-Club';
-    
+
     /**
      * Create a new command instance.
      *
@@ -60,7 +60,7 @@ class SyncBDclub extends Command
     {
         parent::__construct();
     }
-    
+
     /**
      * Execute the console command.
      *
@@ -69,7 +69,7 @@ class SyncBDclub extends Command
     public function handle()
     {
         //
-        
+
         $section = Section::where('title', '=', self::BD_SECTION_NAME)->first();
         if (is_null($section)) {
             $section = new Section();
@@ -80,60 +80,53 @@ class SyncBDclub extends Command
             $club->clb_title = $section->title;
             $club->save();
         }
-        
-        
-        $caldavClient = new SimpleCalDAVClient();
-        
-        
-        $caldavClient->connect(config('bd_credentials.host'),
-            config('bd_credentials.user'), config('bd_credentials.password'));
-        $arrayOfCalenars = $caldavClient->findCalendars();
-        $caldavClient->setCalendar($arrayOfCalenars[config('bd_credentials.calendarName')]);
-        // $this->info(var_dump($arrayOfCalenars));
-        $gmt = new \DateTimeZone('GMT');
-        $year = strftime('%Y');
-        $month = strftime('%m');
-        
-        $from = new \DateTime($year.'-'.$month.'-01');
-        $until = new \DateTime($from->format('Y-m-d'));
-        $from->modify('previous month');
-        $until->modify('next month')->modify('-1 day');
-        $from->setTimezone($gmt);
-        $until->setTimezone($gmt);
-        
-        //$this->info($this->formatDateTime($from));
-        $events = $caldavClient->getEvents($this->formatDateTime($from), $this->formatDateTime($until));
+
+
+        passthru('sh backup-calendars.sh ' . config('bd_credentials.host'), $result);
+        $this->info('result: ' . $result);
+        $calendars = file_get_contents(config('bd_credentials.searchdir') . '/filelist');
+        $events = explode("\n", $calendars);
+
+        //$this->info(var_dump($arrayOfCalendars));
+
         /* @var $template Schedule */
-        $template = Schedule::where('schdl_title', '=', self::BD_TEMPLATE_NAME)->first();
-        
-        
+        $template = Template::where('title', '=', self::BD_TEMPLATE_NAME)->first();
+
+
         //$this->info(var_dump($events));
         foreach ($events as $event) {
             $ical = new ICal();
-            $ical->initString($event->getData());
+            try {
+                $ical->initFile(config('bd_credentials.searchdir') . '/' . $event);
+            } catch (\Exception $exception) {
+                continue;
+            }
             $icalEvents = $ical->events();
             /* @var $icevt Event */
             foreach ($icalEvents as $icevt) {
                 $this->info($icevt->summary);
                 //$this->info($icevt->comment);
-                if(isset($icevt->comment)) {
+                if (isset($icevt->comment)) {
                     $extraData = json_decode($icevt->comment);
                 } else {
                     $extraData = json_decode("{\"isactive\":null,\"responsible\":\"\",\"music\":\"\",\"flyer\":\"\",\"flyerdone\":null,\"face\":\"\",\"facedone\":null,\"price_ak_n\":\"\",\"price_ak_v\":\"\",\"price_vk_n\":\"\",\"price_vk_v\":\"\",\"notes\":\"\"}");
                 }
-                $this->info("extradata:".json_encode($extraData));
+                if (is_null($extraData)) {
+                    $extraData = json_decode("{\"isactive\":null,\"responsible\":\"\",\"music\":\"\",\"flyer\":\"\",\"flyerdone\":null,\"face\":\"\",\"facedone\":null,\"price_ak_n\":\"\",\"price_ak_v\":\"\",\"price_vk_n\":\"\",\"price_vk_v\":\"\",\"notes\":\"\"}");
+                }
+                $this->info("extradata:" . json_encode($extraData));
                 //$this->info(var_dump($extraData));
                 $this->info($icevt->uid);
-                
+
                 /* @var $clubEvent ClubEvent */
                 $clubEvent = ClubEvent::where('external_id', '=', $icevt->uid)->first();
                 if (is_null($clubEvent)) {
-                    $this->info('Create new event for '.$icevt->summary);
+                    $this->info('Create new event for ' . $icevt->summary);
                     $clubEvent = new ClubEvent();
                 } else {
-                    $this->info('update event '.$icevt->summary);
+                    $this->info('update event ' . $icevt->summary);
                 }
-                
+
                 $clubEvent->evnt_title = $icevt->summary;
                 $clubEvent->external_id = $icevt->uid;
                 $clubEvent->evnt_is_private = !(!is_null($extraData->isactive) && $extraData->isactive == 'on');
@@ -148,13 +141,13 @@ class SyncBDclub extends Command
                 $clubEvent->price_tickets_normal = $extraData->price_vk_n;
                 $clubEvent->save();
                 $clubEvent->showToSection()->sync($section->id);
-                
-                $clubEvent->facebook_done = $extraData->facedone!=null && $extraData->facedone == "on";
+
+                $clubEvent->facebook_done = $extraData->facedone != null && $extraData->facedone == "on";
                 $clubEvent->event_url = $extraData->face;
-                $flyerDone = "Flyer erledigt: " . ($extraData->flyerdone != null ? "Ja":"Nein");
-                
+                $flyerDone = "Flyer erledigt: " . ($extraData->flyerdone != null ? "Ja" : "Nein");
+
                 $clubEvent->evnt_private_details = $flyerDone . "\n\n" . $extraData->notes;
-                
+
                 /* @var $schedule Schedule */
                 $schedule = $clubEvent->schedule;
                 if (is_null($schedule)) {
@@ -163,7 +156,7 @@ class SyncBDclub extends Command
                 $schedule->evnt_id = $clubEvent->id;
                 $schedule->schdl_title = $clubEvent->evnt_title;
                 $schedule->schdl_time_preparation_start = '20:00:00';
-                
+
                 $schedule->save();
                 $shifts = $schedule->shifts;
                 if ($shifts->isEmpty()) {
@@ -192,21 +185,40 @@ class SyncBDclub extends Command
                         $shift->save();
                     }
                 }
-                
+
                 $clubEvent->save();
             }
         }
+        $this->deleteDir(config('bd_credentials.searchdir'));
     }
-    
-    
+
+    private function deleteDir($dirPath)
+    {
+        if (!is_dir($dirPath)) {
+            throw new \InvalidArgumentException("$dirPath must be a directory");
+        }
+        if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
+            $dirPath .= '/';
+        }
+        $files = glob($dirPath . '*', GLOB_MARK);
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                self::deleteDir($file);
+            } else {
+                unlink($file);
+            }
+        }
+        rmdir($dirPath);
+    }
+
     /** @param $date \DateTime
      * @return string
      */
     private function formatDateTime($date)
     {
-        return $date->format(self::DATE_TIME_FORMAT_PREFIX).'T'.$date->format(self::DATE_TIME_FORMAT_SUFFIX).'Z';
+        return $date->format(self::DATE_TIME_FORMAT_PREFIX) . 'T' . $date->format(self::DATE_TIME_FORMAT_SUFFIX) . 'Z';
     }
-    
+
     /**
      * @return Person
      */
@@ -218,7 +230,7 @@ class SyncBDclub extends Command
         $person->prsn_status = "";
         $person->clb_id = $personClub->id;
         $person->updated_at = Carbon::now();
-        
+
         return $person;
     }
 }
