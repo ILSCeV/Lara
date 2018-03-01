@@ -13,7 +13,8 @@ class ShiftsTableSeeder extends Seeder
     public function run()
     {
         $bdTemplateId = DB::table('templates')->select('templates.id')->where('title','=','BD Template')->first();
-        DB::table('shifts')->where('schedule_id','!=',$bdTemplateId->id)->delete();
+        $shiftIds = DB::table('shift_template')->select('shift_id')->where('template_id','=',$bdTemplateId->id)->get()->map(function ($shiftId){return $shiftId->shift_id;})->toArray();
+        DB::table('shifts')->whereNotIn('id',$shiftIds)->delete();
         factory(Lara\Shift::class, 500)->create();
     }
 }
