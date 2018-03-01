@@ -21,6 +21,8 @@ class AddExtraUserColumns extends Migration
             $table->integer('section_id')->references('id')->on('section');
             $table->string('status');
             $table->string('group');
+
+            $table->string('email')->nullable()->change();
         });
 
         Person::whereNotNull('prsn_ldap_id')

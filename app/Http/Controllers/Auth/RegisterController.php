@@ -87,8 +87,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            // default to member, can change permissions later
-            'status' => 'member',
+            // default to candidate, can change permissions later
+            'status' => 'candidate',
             'section_id' => $data['section'],
             'group' => Section::find($data['section'])->title,
             'person_id' => $person->id

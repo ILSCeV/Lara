@@ -49,7 +49,6 @@ class User extends Authenticatable
         }
         return User::create([
             'name' => $person->prsn_name,
-            'email' => $person->prsn_name . '@lara.il-sc.de',
             'section_id' => $person->club->section()->id,
             'person_id' => $person->id,
             'status' => $person->prsn_status,
