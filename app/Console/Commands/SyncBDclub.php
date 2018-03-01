@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use ICal\Event;
 use ICal\ICal;
 use Illuminate\Console\Command;
-use it\thecsea\simple_caldav_client\SimpleCalDAVClient;
 use Lara\Club;
 use Lara\ClubEvent;
 use Lara\Person;
@@ -84,9 +83,9 @@ class SyncBDclub extends Command
 
 
         passthru('sh backup-calendars.sh ' . config('bd_credentials.host'), $result);
-        $this->info('result: '.$result);
-        $calendars = file_get_contents(config('bd_credentials.searchdir').'/filelist');
-        $events = explode("\n",$calendars);
+        $this->info('result: ' . $result);
+        $calendars = file_get_contents(config('bd_credentials.searchdir') . '/filelist');
+        $events = explode("\n", $calendars);
 
         //$this->info(var_dump($arrayOfCalendars));
 
@@ -99,7 +98,7 @@ class SyncBDclub extends Command
             $ical = new ICal();
             try {
                 $ical->initFile(config('bd_credentials.searchdir') . '/' . $event);
-            } catch (\Exception $exception){
+            } catch (\Exception $exception) {
                 continue;
             }
             $icalEvents = $ical->events();
@@ -107,25 +106,25 @@ class SyncBDclub extends Command
             foreach ($icalEvents as $icevt) {
                 $this->info($icevt->summary);
                 //$this->info($icevt->comment);
-                if(isset($icevt->comment)) {
+                if (isset($icevt->comment)) {
                     $extraData = json_decode($icevt->comment);
                 } else {
                     $extraData = json_decode("{\"isactive\":null,\"responsible\":\"\",\"music\":\"\",\"flyer\":\"\",\"flyerdone\":null,\"face\":\"\",\"facedone\":null,\"price_ak_n\":\"\",\"price_ak_v\":\"\",\"price_vk_n\":\"\",\"price_vk_v\":\"\",\"notes\":\"\"}");
                 }
-                if(is_null($extraData)){
+                if (is_null($extraData)) {
                     $extraData = json_decode("{\"isactive\":null,\"responsible\":\"\",\"music\":\"\",\"flyer\":\"\",\"flyerdone\":null,\"face\":\"\",\"facedone\":null,\"price_ak_n\":\"\",\"price_ak_v\":\"\",\"price_vk_n\":\"\",\"price_vk_v\":\"\",\"notes\":\"\"}");
                 }
-                $this->info("extradata:".json_encode($extraData));
+                $this->info("extradata:" . json_encode($extraData));
                 //$this->info(var_dump($extraData));
                 $this->info($icevt->uid);
 
                 /* @var $clubEvent ClubEvent */
                 $clubEvent = ClubEvent::where('external_id', '=', $icevt->uid)->first();
                 if (is_null($clubEvent)) {
-                    $this->info('Create new event for '.$icevt->summary);
+                    $this->info('Create new event for ' . $icevt->summary);
                     $clubEvent = new ClubEvent();
                 } else {
-                    $this->info('update event '.$icevt->summary);
+                    $this->info('update event ' . $icevt->summary);
                 }
 
                 $clubEvent->evnt_title = $icevt->summary;
@@ -143,9 +142,9 @@ class SyncBDclub extends Command
                 $clubEvent->save();
                 $clubEvent->showToSection()->sync($section->id);
 
-                $clubEvent->facebook_done = $extraData->facedone!=null && $extraData->facedone == "on";
+                $clubEvent->facebook_done = $extraData->facedone != null && $extraData->facedone == "on";
                 $clubEvent->event_url = $extraData->face;
-                $flyerDone = "Flyer erledigt: " . ($extraData->flyerdone != null ? "Ja":"Nein");
+                $flyerDone = "Flyer erledigt: " . ($extraData->flyerdone != null ? "Ja" : "Nein");
 
                 $clubEvent->evnt_private_details = $flyerDone . "\n\n" . $extraData->notes;
 
@@ -193,8 +192,9 @@ class SyncBDclub extends Command
         $this->deleteDir(config('bd_credentials.searchdir'));
     }
 
-    private function deleteDir($dirPath) {
-        if (! is_dir($dirPath)) {
+    private function deleteDir($dirPath)
+    {
+        if (!is_dir($dirPath)) {
             throw new \InvalidArgumentException("$dirPath must be a directory");
         }
         if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
@@ -216,7 +216,7 @@ class SyncBDclub extends Command
      */
     private function formatDateTime($date)
     {
-        return $date->format(self::DATE_TIME_FORMAT_PREFIX).'T'.$date->format(self::DATE_TIME_FORMAT_SUFFIX).'Z';
+        return $date->format(self::DATE_TIME_FORMAT_PREFIX) . 'T' . $date->format(self::DATE_TIME_FORMAT_SUFFIX) . 'Z';
     }
 
     /**
