@@ -59,6 +59,23 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                            <label for="status" class="col-md-4 control-label">Status</label>
+
+                            <div class="col-md-6">
+                                <select name="status" id="status" class="selectpicker">
+                                    @foreach(['candidate', 'member', 'veteran'] as $status)
+                                        <option value="{{$status}}" >{{trans(Auth::user()->section->title . "." . $status) }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('status'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('status') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
