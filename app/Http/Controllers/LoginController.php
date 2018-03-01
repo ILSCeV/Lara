@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Input;
 use Lara\Person;
+use Lara\Club;
+use Lara\User;
 use Lara\Settings;
 use Log;
 use Redirect;
@@ -64,12 +66,16 @@ class LoginController extends Controller
      */
 
     /**
-     * Authenticates a user and saves credentials in session data.
+     * Authenticates a user and saves credentials with Laravels native "AuthenticatesUsers" trait.
+     * First we check whether the user has an account in Lara by either matching the given login
+     * to a username or email stored in the users table.
+     *
+     * If this failes, we try to authenticate against the bcLDAP.
      *
      * CONFIG is stored in \app\config\bcLDAP.php
      * For the purpose of securing personal data of club members
-     * this config will not be shared via SVN. Ask Maxim for a working copy
-     * if you absolutely need to use bc-LDAP.
+     * this config will not be shared via git.
+     * Ask the current maintainers for a working copy if you absolutely need to use bc-LDAP.
      *
      * Connects to bcLDAP server using data from config.
      *
@@ -78,333 +84,300 @@ class LoginController extends Controller
      * On success returns relevant infos in session data.
      * Informs user about errors or success.
      *
-     * ToDo: Transform this into a ServiceProvider + Auth.
      * ToDo: 'No LDAP-Link' message for lost connection.
      *
-     * @param  string $userName (as form input)
-     * @param  string $userpassword (as form input)
-     *
-     * @return int $userId           (as session data)
-     * @return string $userName      (as session data)
-     * @return string $userGroup     (as session data)
-     *
-     * @return string $message       (as session data)
-     * @return string $msgType       (as session data)
+     * @param  string $userName (as form input) can be either the name of a Lara user
+     *                          an email of a lara user or an LDAP id of the bc-LDAP
+     * @param  string $password (as form input)
      *
      * @return RedirectResponse
      */
-    /**
-     * WORKAROUND for LDAP-Server down time
-     */
-    /*  DELETE THIS LINE TO ACTIVATE WORKAROUND AND COMMENT OUT WORKING CONTROLLER BELOW */
     public function doLogin()
     {
-        if (App::environment('development')) {
-            $result = $this->doDevelopmentLogin();
-        } else {
-            $result = $this->doProductionLogin();
-        }
+        $someLoginWorked = $this->attemptLoginWithCredentials(request(), 'name')
+            || $this->attemptLoginWithCredentials(request(), 'email')
+            || $this->attemptLoginViaLDAP();
 
-        $user = Auth::user();
-        if (!$user) {
-            return $result;
-        }
+        if ($someLoginWorked) {
+            $user = Auth::user();
+            if (!$user) {
+                return;
+            }
 
-        $userSettings = Settings::where('userId','=', $user->person->prsn_ldap_id)->first();
-        if (!$userSettings) {
-            return $result;
-        }
-        Session::put('applocale', $userSettings->language);
-        return $result;
-    }
-
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function doDevelopmentLogin()
-    {
-        $isLDAPLogin = strpos(Input::get('username'), "@") === FALSE;
-        if (!$isLDAPLogin) {
-            return $this->doLaraLogin();
-        }
-        $userGroup = Input::get('userGroup');
-
-        $person = Person::where('clb_id', '<' , 4)->inRandomOrder()->first();
-
-        $person->user()->fill(["group" => $userGroup])->save();
-        $this->loginPersonAsUser($person->prsn_ldap_id);
-        Log::info('Auth success: ' . $person->user()->name . ' (' . $person->prsn_ldap_id . ', ' . $userGroup . ') just logged in.');
-
-        return Redirect::back();
-    }
-
-
-    /**
-     * WORKING CONTROLLER BELOW THIS LINE,
-     * will only function with a bcLDAP-Config present.
-     */
-
-    public function doProductionLogin()
-    {
-        if (Input::get('username') === "1708") {
-            Session::put('message', 'Ne ne ne, nicht mit dieser Clubnummer, sie ist ja nur fur bc-Wiki zu benutzen ;)');
-            Session::put('msgType', 'danger');
-
-            Log::warning('bc-Wiki login used (1708), access denied.');
-
-            return Redirect::back();
-
-        }
-
-        $isLDAPLogin = request('loginType') === 'LDAP';
-        if ($isLDAPLogin) {
-            return $this->doLDAPLogin();
-        }
-        return $this->doLaraLogin();
-
-    }
-
-    public function doLaraLogin()
-    {
-        // put email field into the request. Laravel expects login via an email field,
-        // we use a username field (for both ldap and email logins), so we have to add this value
-        $emailModifiedRequest = request()->merge(['email' => request('username')]);
-
-        if ($this->attemptLogin($emailModifiedRequest)) {
+            $userSettings = Settings::where('userId','=', $user->person->prsn_ldap_id)->first();
+            if ($userSettings) {
+                Session::put('applocale', $userSettings->language);
+            }
             return Redirect::back();
         }
         return $this->loginFailed();
     }
 
-    public function doLDAPLogin()
+    protected function attemptLoginViaLDAP()
     {
-        // CONNECTING TO LDAP SERVER
-        $ldapConn = ldap_connect(Config::get('bcLDAP.server'), Config::get('bcLDAP.port'));
+        if (App::environment('development')) {
+            $userGroup = request('userGroup');
 
-        // Set some ldap options for talking to AD
-        // LDAP_OPT_PROTOCOL_VERSION: LDAP protocol version
-        ldap_set_option($ldapConn, LDAP_OPT_PROTOCOL_VERSION, 3);
-        // LDAP_OPT_REFERRALS: Specifies whether to automatically follow referrals returned by the LDAP server
-        ldap_set_option($ldapConn, LDAP_OPT_REFERRALS, 0);
+            $person = Person::where('clb_id', '<' , 4)->inRandomOrder()->first();
 
-        // Bind as a domain admin
-        $ldap_bind = ldap_bind($ldapConn,
-            Config::get('bcLDAP.admin-username'),
-            Config::get('bcLDAP.admin-password'));
+            $person->user()->fill(["group" => $userGroup])->save();
+            $this->loginPersonAsUser($person->prsn_ldap_id);
+
+            return true;
+        }
+        else {
+
+            if (Input::get('username') === "1708") {
+                Session::put('message', 'Ne ne ne, nicht mit dieser Clubnummer, sie ist ja nur fur bc-Wiki zu benutzen ;)');
+                Session::put('msgType', 'danger');
+
+                Log::warning('bc-Wiki login used (1708), access denied.');
+
+                return false;
+            }
+
+            // CONNECTING TO LDAP SERVER
+            $ldapConn = ldap_connect(Config::get('bcLDAP.server'), Config::get('bcLDAP.port'));
+
+            // Set some ldap options for talking to AD
+            // LDAP_OPT_PROTOCOL_VERSION: LDAP protocol version
+            ldap_set_option($ldapConn, LDAP_OPT_PROTOCOL_VERSION, 3);
+            // LDAP_OPT_REFERRALS: Specifies whether to automatically follow referrals returned by the LDAP server
+            ldap_set_option($ldapConn, LDAP_OPT_REFERRALS, 0);
+
+            // Bind as a domain admin
+            $ldap_bind = ldap_bind($ldapConn,
+                Config::get('bcLDAP.admin-username'),
+                Config::get('bcLDAP.admin-password'));
 
 
 // INPUT VALIDATION AND ERROR HANDLING
 
 
-        // Request UID if none entered
-        if (Input::get('username') === '') {
-            ldap_unbind($ldapConn);
+            // Request UID if none entered
+            if (Input::get('username') === '') {
+                ldap_unbind($ldapConn);
 
-            Session::put('message', Config::get('messages_de.user-id-input-empty'));
-            Session::put('msgType', 'danger');
+                Log::info('Auth fail: empty userID given.');
 
-            Log::info('Auth fail: empty userID given.');
+                return false;
+            }
 
-            return Redirect::back();
-        }
+            // Request numeric UID if something else is entered
+            if (!is_numeric(Input::get('username'))) {
+                ldap_unbind($ldapConn);
 
-        // Request numeric UID if something else is entered
-        if (!is_numeric(Input::get('username'))) {
-            ldap_unbind($ldapConn);
+                Log::info('Auth fail: not a number given as userID (username: ' . Input::get('username') . ').');
 
-            Session::put('message', Config::get('messages_de.user-id-not-numeric'));
-            Session::put('msgType', 'danger');
-
-            Log::info('Auth fail: not a number given as userID (username: ' . Input::get('username') . ').');
-
-            return Redirect::back();
-        }
-
-
+                return false;
+            }
 // AUTHENTICATING BC-CLUB
 
-
-        // Search for a bc-Club user with the uid number entered
-        $search = ldap_search($ldapConn,
-            Config::get('bcLDAP.bc-club-ou') .
-            Config::get('bcLDAP.base-dn'),
-            '(uid=' . Input::get('username') . ')');
-
-        $info = ldap_get_entries($ldapConn, $search);
-
-        // Set default user access group to "bc-Club member"
-        if ($info['count'] != 0) {
-            $userGroup = "bc-Club";
-        }
-
-
-// AUTHENTICATING BC-CAFE
-
-
-        // If no such user found in the Club - check Café next.
-        if ($info['count'] === 0) {
-
-            // Search for a Café-user with the uid number entered
+            // Search for a bc-Club user with the uid number entered
             $search = ldap_search($ldapConn,
-                Config::get('bcLDAP.bc-cafe-ou') .
+                Config::get('bcLDAP.bc-club-ou') .
                 Config::get('bcLDAP.base-dn'),
                 '(uid=' . Input::get('username') . ')');
 
             $info = ldap_get_entries($ldapConn, $search);
 
-            // If found - set user access group to "bc-Café member"
+            // Set default user access group to "bc-Club member"
             if ($info['count'] != 0) {
-                $userGroup = "bc-Café";
+                $userGroup = "bc-Club";
             }
-        }
+
+
+// AUTHENTICATING BC-CAFE
+
+
+            // If no such user found in the Club - check Café next.
+            if ($info['count'] === 0) {
+
+                // Search for a Café-user with the uid number entered
+                $search = ldap_search($ldapConn,
+                    Config::get('bcLDAP.bc-cafe-ou') .
+                    Config::get('bcLDAP.base-dn'),
+                    '(uid=' . Input::get('username') . ')');
+
+                $info = ldap_get_entries($ldapConn, $search);
+
+                // If found - set user access group to "bc-Café member"
+                if ($info['count'] != 0) {
+                    $userGroup = "bc-Café";
+                }
+            }
 
 
 // HANDLING ERRORS
 
 
-        // If no match found in all clubs - throw an error and quit
-        if ($info['count'] === 0) {
-            ldap_unbind($ldapConn);
+            // If no match found in all clubs - throw an error and quit
+            if ($info['count'] === 0) {
+                ldap_unbind($ldapConn);
 
-            Session::put('message', Config::get('messages_de.uid-not-found'));
-            Session::put('msgType', 'danger');
+                Session::put('message', Config::get('messages_de.uid-not-found'));
+                Session::put('msgType', 'danger');
 
-            Log::info('Auth fail: wrong userID given (username: ' . Input::get('username') . ').');
+                Log::info('Auth fail: wrong userID given (username: ' . Input::get('username') . ').');
 
-            return Redirect::back();
-        }
+                return false;
+            }
 
 
 // SETTING ACCESS GROUP
 
 
-        // get full user DN
-        $userDn = $info[0]['dn'];
+            // get full user DN
+            $userDn = $info[0]['dn'];
 
-        if ($userGroup === "bc-Club") {
-            // Check if user has MARKETING rights in bc-CLub
-            $searchGroup = ldap_search($ldapConn,
-                Config::get('bcLDAP.bc-club-group-ou') .
-                Config::get('bcLDAP.base-dn'),
-                Config::get('bcLDAP.bc-club-marketing-group'));
+            if ($userGroup === "bc-Club") {
+                // Check if user has MARKETING rights in bc-CLub
+                $searchGroup = ldap_search($ldapConn,
+                    Config::get('bcLDAP.bc-club-group-ou') .
+                    Config::get('bcLDAP.base-dn'),
+                    Config::get('bcLDAP.bc-club-marketing-group'));
 
-            $infoGroup = ldap_get_entries($ldapConn, $searchGroup);
+                $infoGroup = ldap_get_entries($ldapConn, $searchGroup);
 
-            for ($i = 0; $i < $infoGroup[0]['member']['count']; $i++) {
-                if ($infoGroup[0]['member'][$i] == $userDn) {
-                    $userGroup = "marketing";
+                for ($i = 0; $i < $infoGroup[0]['member']['count']; $i++) {
+                    if ($infoGroup[0]['member'][$i] == $userDn) {
+                        $userGroup = "marketing";
+                    }
+                }
+
+
+                // Check if user has MANAGEMENT rights in bc-CLub
+                $searchGroup = ldap_search($ldapConn,
+                    Config::get('bcLDAP.bc-club-group-ou') .
+                    Config::get('bcLDAP.base-dn'),
+                    Config::get('bcLDAP.bc-club-management-group'));
+
+                $infoGroup = ldap_get_entries($ldapConn, $searchGroup);
+
+                for ($i = 0; $i < $infoGroup[0]['member']['count']; $i++) {
+                    if ($infoGroup[0]['member'][$i] == $userDn) {
+                        $userGroup = "clubleitung";
+                    }
+                }
+            } elseif ($userGroup === "bc-Café") {
+                // Check if user has MARKETING rights in bc-Café
+                $searchGroup = ldap_search($ldapConn,
+                    Config::get('bcLDAP.bc-cafe-group-ou') .
+                    Config::get('bcLDAP.base-dn'),
+                    Config::get('bcLDAP.bc-cafe-marketing-group'));
+
+                $infoGroup = ldap_get_entries($ldapConn, $searchGroup);
+
+                for ($i = 0; $i < $infoGroup[0]['member']['count']; $i++) {
+                    if ($infoGroup[0]['member'][$i] == $userDn) {
+                        $userGroup = "marketing";
+                    }
+                }
+
+
+                // Check if user has MANAGEMENT rights in bc-Café
+                $searchGroup = ldap_search($ldapConn,
+                    Config::get('bcLDAP.bc-cafe-group-ou') .
+                    Config::get('bcLDAP.base-dn'),
+                    Config::get('bcLDAP.bc-cafe-management-group'));
+
+                $infoGroup = ldap_get_entries($ldapConn, $searchGroup);
+
+                for ($i = 0; $i < $infoGroup[0]['member']['count']; $i++) {
+                    if ($infoGroup[0]['member'][$i] == $userDn) {
+                        $userGroup = "clubleitung";
+                    }
                 }
             }
-
-
-            // Check if user has MANAGEMENT rights in bc-CLub
-            $searchGroup = ldap_search($ldapConn,
-                Config::get('bcLDAP.bc-club-group-ou') .
-                Config::get('bcLDAP.base-dn'),
-                Config::get('bcLDAP.bc-club-management-group'));
-
-            $infoGroup = ldap_get_entries($ldapConn, $searchGroup);
-
-            for ($i = 0; $i < $infoGroup[0]['member']['count']; $i++) {
-                if ($infoGroup[0]['member'][$i] == $userDn) {
-                    $userGroup = "clubleitung";
-                }
-            }
-        } elseif ($userGroup === "bc-Café") {
-            // Check if user has MARKETING rights in bc-Café
-            $searchGroup = ldap_search($ldapConn,
-                Config::get('bcLDAP.bc-cafe-group-ou') .
-                Config::get('bcLDAP.base-dn'),
-                Config::get('bcLDAP.bc-cafe-marketing-group'));
-
-            $infoGroup = ldap_get_entries($ldapConn, $searchGroup);
-
-            for ($i = 0; $i < $infoGroup[0]['member']['count']; $i++) {
-                if ($infoGroup[0]['member'][$i] == $userDn) {
-                    $userGroup = "marketing";
-                }
-            }
-
-
-            // Check if user has MANAGEMENT rights in bc-Café
-            $searchGroup = ldap_search($ldapConn,
-                Config::get('bcLDAP.bc-cafe-group-ou') .
-                Config::get('bcLDAP.base-dn'),
-                Config::get('bcLDAP.bc-cafe-management-group'));
-
-            $infoGroup = ldap_get_entries($ldapConn, $searchGroup);
-
-            for ($i = 0; $i < $infoGroup[0]['member']['count']; $i++) {
-                if ($infoGroup[0]['member'][$i] == $userDn) {
-                    $userGroup = "clubleitung";
-                }
-            }
-        }
 
 
 // SETTING ADMIN CREDENTIALS
 
 
-        // Checks if user LDAP ID is among hardcoded admin LDAP IDs from the config file
-        if (in_array($info[0]['uidnumber'][0], Config::get('bcLDAP.admin-ldap-id'))) {
-            $userGroup = "admin";
-        }
+            // Checks if user LDAP ID is among hardcoded admin LDAP IDs from the config file
+            if (in_array($info[0]['uidnumber'][0], Config::get('bcLDAP.admin-ldap-id'))) {
+                $userGroup = "admin";
+            }
 
 
 // PREPARE USER CREDENTIALS
 
 
-        // Get user nickname if it exists or first name instead
-        $userName = (!empty($info[0]['mozillanickname'][0])) ?
-            $info[0]['mozillanickname'][0] :
-            $info[0]['givenname'][0];
+            // Get user nickname if it exists or first name instead
+            $userName = (!empty($info[0]['mozillanickname'][0])) ?
+                $info[0]['mozillanickname'][0] :
+                $info[0]['givenname'][0];
 
-        // Get user club
-        if (substr($info[0]['dn'], 22, -7) === "cafe") {
-            $userClub = "bc-Café";
-        } elseif (substr($info[0]['dn'], 22, -7) === "bc-club") {
-            $userClub = "bc-Club";
-        }
+            // Get user club
+            if (substr($info[0]['dn'], 22, -7) === "cafe") {
+                $userClub = "bc-Café";
+            } elseif (substr($info[0]['dn'], 22, -7) === "bc-club") {
+                $userClub = "bc-Club";
+            }
 
-        // Get user active status
-        $userStatus = $info[0]['ilscstate'][0];
+            // Get user active status
+            $userStatus = $info[0]['ilscstate'][0];
 
 
 // AUTHENTICATE USER
 
 
-        // Hashing password input
-        $password = '{md5}' . base64_encode(mhash(MHASH_MD5, Input::get('password')));
+            // Hashing password input
+            $password = '{md5}' . base64_encode(mhash(MHASH_MD5, Input::get('password')));
 
-        // end ldapConnection
-        ldap_unbind($ldapConn);
+            // end ldapConnection
+            ldap_unbind($ldapConn);
 
-        // Compare password in LDAP with hashed input.
-        if ($info[0]['userpassword'][0] === $password) {
-            $this->loginPersonAsUser($info[0]['uidnumber'][0]);
+            // Compare password in LDAP with hashed input.
+            if ($info[0]['userpassword'][0] === $password) {
+                $ldapId = $info[0]['uidnumber'][0];
+                $person = Person::where('prsn_ldap_id', $ldapId)->first();
+                if (!$person) {
+                    $person = Person::create([
+                        'prsn_name' => $userName,
+                        'prsn_ldap_id' => $ldapId,
+                        'prsn_status' => $userStatus,
+                        'clb_id' => Club::where('clb_title', $userClub)->first()->id,
+                        'prsn_uid' => hash("sha512", uniqid())
+                    ]);
+                    User::createFromPerson($person);
+                }
+                Auth::login($person->user());
 
-            Log::info('Auth success: ' .
-                $info[0]['cn'][0] .
-                ' (' .
-                $info[0]['uidnumber'][0] .
-                ', "' .
-                (!empty($info[0]['mozillanickname'][0]) ? $info[0]['mozillanickname'][0] : $info[0]['givenname'][0]) .
-                '", ' .
-                $userGroup .
-                ') just logged in.');
+                Log::info('Auth success: ' .
+                    $info[0]['cn'][0] .
+                    ' (' .
+                    $info[0]['uidnumber'][0] .
+                    ', "' .
+                    (!empty($info[0]['mozillanickname'][0]) ? $info[0]['mozillanickname'][0] : $info[0]['givenname'][0]) .
+                    '", ' .
+                    $userGroup .
+                    ') just logged in.');
 
-            return Redirect::back();
+                return true;
+            }
+
+            Log::info('Auth fail: ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] . ', ' . $userGroup . ') used wrong password.');
+
+            return false;
         }
+    }
 
-        Log::info('Auth fail: ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] . ', ' . $userGroup . ') used wrong password.');
-
-        return $this->loginFailed();
+    protected function attemptLoginWithCredentials($request, $userIdentifier = 'email')
+    {
+        $credentials = [
+            $userIdentifier => request('username'),
+            'password' => request('password')
+        ];
+        return $this->guard()->attempt(
+            $credentials, $request->filled('remember')
+        );
     }
 
     /**
      * @return mixed
      */
-    public function loginFailed()
+    protected function loginFailed()
     {
         Session::put('message', Config::get('messages_de.login-fail'));
         Session::put('msgType', 'danger');
@@ -415,7 +388,7 @@ class LoginController extends Controller
     /**
      * @param $ldapId
      */
-    public function loginPersonAsUser($ldapId)
+    protected function loginPersonAsUser($ldapId)
     {
         $person = Person::where('prsn_ldap_id', $ldapId)->first();
         Auth::login($person->user());
