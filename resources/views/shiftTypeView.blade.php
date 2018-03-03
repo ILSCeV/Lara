@@ -73,7 +73,7 @@
 					</tr>
 				{!! Form::close() !!}
 
-				@if( $shifts->count() == 0 )
+				@if( $current_shiftType->shifts->count() == 0 )
 					<tr>
 						<td width="100%" colspan="2" class="left-padding-16">
 							{{ trans('mainLang.shiftTypeNeverUsed') }}
@@ -96,7 +96,7 @@
 						<td width="100%" colspan="2" class="left-padding-16">
 					      	{{ trans('mainLang.shiftTypeUsedInFollowingEvents') }}
 					    </td>
-					</tr>
+                    </tr>
 					<tr>
 						<td width="100%" colspan="2" class="no-padding">
 							<table class="table table-hover table-condensed" id="events-rows">
@@ -122,7 +122,7 @@
 								<tbody>
 									@foreach($shifts as $shift)
                                         {{-- ignore shifts without an event, example: shifts from bd-template  --}}
-                                        @if(is_null($shift->schedule->evnt_id))
+                                        @if(is_null($shift->schedule) || is_null($shift->schedule->evnt_id))
                                             @continue
                                         @endif
 
@@ -192,15 +192,84 @@
 								</tbody>
 							</table>
 						</td>
+                    </tr>
+                    <tr>
+                        <td width="100%" colspan="2" class="no-padding">
+                            <table class="table table-hover table-condensed" id="events-rows">
+                                <thead>
+                                <tr class="active">
+                                    <th class="col-md-3 col-xs-3 text-center">
+                                        #
+                                    </th>
+                                    <th class="col-md-3 col-xs-3 text-center">
+                                        {{ trans('mainLang.template') }}
+                                    </th>
+                                    <th class="col-md-3 col-xs-3 text-center">
+                                        {{ trans('mainLang.section') }}
+                                    </th>
+                                    <th class="col-md-3 col-xs-3 text-center">
+                                        {{ trans('mainLang.actions') }}
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($templates as $template)
+                                        @foreach($template->shifts as $shift)
+                                            @if($shift->shifttype_id !== $current_shiftType->id)
+                                                @continue
+                                            @endif
+                                        <tr>
+                                            <td class="text-center">
+                                                {{ $shift->id}}
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('template.edit', $template->id) }}">
+                                                    {{ $template->title }}
+                                                </a>
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $template->section->title }}
+                                            </td>
+                                            <td class="text-center">
+                                                {!! Form::open(  ['route'  => 'shiftTypeOverride',
+										                                'id' 	 => 'template'.$shift->id,
+										                                'method' => 'post',
+										                                ] ) !!}
+                                                {{-- Fields to populate --}}
+                                                <input type="text" id="{!! 'shift' . $shift->id !!}" name="shift" value="{{ $shift->id }}" hidden />
+                                                <select name="shiftType" data-submit="{{ 'template'.$shift->id }}" class="shiftTypeSelector">
+                                                    <option value="-1" disabled selected>{{ trans('mainLang.substituteThisInstance') }}</option>
+                                                    @foreach($shiftTypes->sortBy('title') as $shiftType)
+                                                        @if($shiftType->id === $current_shiftType->id)
+                                                            @continue
+                                                        @endif
+                                                        <option data-icon='fa fa-clock-o' value="{{$shiftType->id}}">
+                                                            (#{{ $shiftType->id }})
+                                                            {{  $shiftType->title }}
+                                                            {{  date("H:i", strtotime($shiftType->start))
+                                                                . "-" .
+                                                                date("H:i", strtotime($shiftType->end)) . ")" }}
+                                                        </option>
+                                                   @endforeach
+                                                </select>
+                                                {!! Form::submit( 'save', ['id' => 'btn-submit-changes' . $shift->id, 'hidden'] ) !!}
+                                                {!! Form::close() !!}
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </td>
 					</tr>
 				@endif
 			</table>
 		</div>
 	</div>
 
-	<center>
+	<div class="text-center">
 		{{ $shifts->links() }}
-	</center>
+	</div>
 
 	<br/>
 @else

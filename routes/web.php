@@ -162,3 +162,6 @@ Route::post('/edit/template/{id}',                                 'TemplateCont
 Route::post('/delete/template/{id}',                          'TemplateController@destroy')->name('template.delete');
 Route::get('/create/template/',                               'TemplateController@create')->name('template.create');
 
+//ShiftType
+Route::post('/overrideShiftType/',                              'ShiftTypeController@overrideShiftType')->name('shiftTypeOverride');
+

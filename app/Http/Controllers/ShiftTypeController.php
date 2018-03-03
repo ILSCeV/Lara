@@ -3,6 +3,10 @@
 namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Lara\Logging;
+use Lara\Template;
+use Lara\Utilities;
 use Log;
 use Redirect;
 use Session;
@@ -56,7 +60,7 @@ class ShiftTypeController extends Controller
     public function show($id)
     {
         // get selected shiftTypes
-        $current_shiftType = ShiftType::findOrFail($id);
+        $current_shiftType = ShiftType::with('shifts')->findOrFail($id);
 
         // get a list of all available job types
         $shiftTypes = ShiftType::orderBy('title', 'ASC')->get();
@@ -64,8 +68,21 @@ class ShiftTypeController extends Controller
         $shifts = Shift::where('shifttype_id', '=', $id)
             ->with('schedule.event.section')
             ->paginate(25);
+        $templatesQuery = Template::whereHas('shifts', function ($query) use ($shifts) {
+            $query->whereIn('id',$shifts->map(function($shift){
+                return $shift->id;
+            })->toArray());
+        })->orderBy('title');
 
-        return View::make('shiftTypeView', compact('current_shiftType', 'shiftTypes', 'shifts'));
+        if (!Utilities::requirePermission("admin")) {
+            $templatesQuery = $templatesQuery->whereHas('section', function ($query) {
+                $query->where('title', '=', Session::get('userClub'));
+            });
+        }
+
+        $templates = $templatesQuery->get();
+
+        return View::make('shiftTypeView', compact('current_shiftType', 'shiftTypes', 'shifts', 'templates'));
     }
 
     /**
@@ -145,6 +162,36 @@ class ShiftTypeController extends Controller
         Session::put('message', trans('mainLang.changesSaved'));
         Session::put('msgType', 'success');
         return Redirect::back();
+    }
+
+    /**
+     * Override the data of a shift with a new ShiftType
+     * set the shifttype of shift to the new value
+     * override start, end, and statistical_weigt
+     */
+    public function overrideShiftType(Request $request) {
+
+        $shiftId = Input::get('shift');
+        $shiftTypeNewId = Input::get('shiftType');
+
+        try {
+            $shift = Shift::findOrFail($shiftId);
+            $shiftType = ShiftType::findOrFail($shiftTypeNewId);
+
+            $shift->shifttype_id = $shiftType->id;
+            $shift->start = $shiftType->start;
+            $shift->end = $shiftType->end;
+            $shift->statistical_weight = $shiftType->statistical_weight;
+            $shift->save();
+
+            Session::put('message', trans('mainLang.changesSaved'));
+            Session::put('msgType', 'success');
+        } catch (\Exception $e) {
+            Session::put('message', trans('mainLang.error'));
+            Session::put('msgType', 'danger');
+        }
+        return Redirect::back();
+
     }
 
     /**
