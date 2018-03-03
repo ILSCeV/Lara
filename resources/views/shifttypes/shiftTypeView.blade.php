@@ -141,50 +141,7 @@
 												{!! date("H:i", strtotime($shift->schedule->event->evnt_time_start)) !!}
 											</td>
 											<td class="text-center">
-												{!! Form::open(  array( 'route'  => ['shift.update', $shift->id],
-										                                'id' 	 => $shift->id,
-										                                'method' => 'put',
-										                                'class'  => 'updateShiftType')  ) !!}
-
-									           		{{-- Fields to populate --}}
-											        <input type="text" id="{!! 'shift' . $shift->id !!}" name="{!!   'shift' . $shift->id !!}" value="" hidden />
-											        <input type="text" id="{!! 'shiftType' . $shift->id !!}" name="{!! 'shiftType' . $shift->id !!}" value="" hidden />
-
-									           		<div class="btn-group dropdown-shiftTypes">
-
-													  	<a href="#"
-													  	   class="btn btn-small btn-default"
-													  	   name={{ "dropdown" . $shift->id }}
-										           		   id={{   "dropdown" . $shift->id }}
-										           		   data-toggle="dropdown"
-										           		   aria-expanded="true">
-										           		   		{{ trans('mainLang.substituteThisInstance') }}
-													  			<span class="caret"></span>
-													  	</a>
-
-														<ul class="dropdown-menu">
-															@foreach($shiftTypes as $shiftType)
-																@if($shiftType->id !== $current_shiftType->id)
-																	<li class="dropdown">
-																		<a href="javascript:void(0);"
-																		   onClick="document.getElementById('{{ 'shift'. $shift->id }}').value='{{ $shift->id }}';
-																					document.getElementById('{{ 'shiftType'. $shift->id }}').value='{{ $shiftType->id }}';
-																					document.getElementById('{{ 'btn-submit-changes'. $shift->id }}').click();">
-																		   	(#{{ $shiftType->id }})
-																		   	{{  $shiftType->title }}
-																		   	(<i class='fa fa-clock-o'></i>
-																			{{  date("H:i", strtotime($shiftType->start))
-																				. "-" .
-																			    date("H:i", strtotime($shiftType->end)) . ")" }}
-																		</a>
-																	</li>
-																@endif
-															@endforeach
-														</ul>
-
-													</div>
-												{!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $shift->id, 'hidden') ) !!}
-							        			{!! Form::close() !!}
+                                                @include('shifttypes.shiftTypeSelect',['shift'=>$shift,'shiftTypes' => $shiftTypes])
 											</td>
 										</tr>
 									@endforeach
@@ -236,29 +193,7 @@
                                                 {{ $template->section->title }}
                                             </td>
                                             <td class="text-center">
-                                                {!! Form::open(  ['route'  => 'shiftTypeOverride',
-										                                'id' 	 => 'template'.$shift->id,
-										                                'method' => 'post',
-										                                ] ) !!}
-                                                {{-- Fields to populate --}}
-                                                <input type="text" id="{!! 'shift' . $shift->id !!}" name="shift" value="{{ $shift->id }}" hidden />
-                                                <select name="shiftType" data-submit="{{ 'template'.$shift->id }}" class="shiftTypeSelector">
-                                                    <option value="-1" disabled selected>{{ trans('mainLang.substituteThisInstance') }}</option>
-                                                    @foreach($shiftTypes->sortBy('title') as $shiftType)
-                                                        @if($shiftType->id === $current_shiftType->id)
-                                                            @continue
-                                                        @endif
-                                                        <option data-icon='fa fa-clock-o' value="{{$shiftType->id}}">
-                                                            {{  date("H:i", strtotime($shiftType->start))
-                                                                . "-" .
-                                                                date("H:i", strtotime($shiftType->end)) . ")" }}
-                                                            (#{{ $shiftType->id }})
-                                                            {{  $shiftType->title }}
-                                                        </option>
-                                                   @endforeach
-                                                </select>
-                                                {!! Form::submit( 'save', ['id' => 'btn-submit-changes' . $shift->id, 'hidden'] ) !!}
-                                                {!! Form::close() !!}
+                                                @include('shifttypes.shiftTypeSelect',['shift'=>$shift,'shiftTypes' => $shiftTypes])
                                             </td>
                                         </tr>
                                         @endforeach
