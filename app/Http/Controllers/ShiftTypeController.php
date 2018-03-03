@@ -48,7 +48,7 @@ class ShiftTypeController extends Controller
     {
         $shiftTypes = ShiftType::orderBy('title', 'ASC')->paginate(25);
 
-        return view('manageShiftTypesView', ['shiftTypes' => $shiftTypes]);
+        return view('shifttypes.manageShiftTypesView', ['shiftTypes' => $shiftTypes]);
     }
 
     /**
@@ -82,7 +82,7 @@ class ShiftTypeController extends Controller
 
         $templates = $templatesQuery->get();
 
-        return View::make('shiftTypeView', compact('current_shiftType', 'shiftTypes', 'shifts', 'templates'));
+        return View::make('shifttypes.shiftTypeView', compact('current_shiftType', 'shiftTypes', 'shifts', 'templates'));
     }
 
     /**
