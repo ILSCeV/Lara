@@ -187,6 +187,7 @@ class ShiftTypeController extends Controller
             Session::put('message', trans('mainLang.changesSaved'));
             Session::put('msgType', 'success');
         } catch (\Exception $e) {
+            Log::error('error',$e);
             Session::put('message', trans('mainLang.error'));
             Session::put('msgType', 'danger');
         }
