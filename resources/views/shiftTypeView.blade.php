@@ -194,6 +194,11 @@
 						</td>
                     </tr>
                     <tr>
+                        <td width="100%" colspan="2" class="left-padding-16">
+                            {{ trans('mainLang.shiftTypeUsedInFollowingTemplates') }}
+                        </td>
+                    </tr>
+                    <tr>
                         <td width="100%" colspan="2" class="no-padding">
                             <table class="table table-hover table-condensed" id="events-rows">
                                 <thead>

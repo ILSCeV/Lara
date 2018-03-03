@@ -469,6 +469,7 @@ return [
     'delete'                        => 'löschen',
     'shiftTypeNeverUsed'              => 'Dieser Diensttyp wird bei keinem einzigen Event benutzt... Traurig, so was... Vielleicht wäre es sinnvoll, ihn einfach zu',
     'shiftTypeUsedInFollowingEvents'  => 'Dieser Dienstyp wird bei folgenden Events eingesetzt. Um ihn zu entfernen, ersetze jede Instanz erst mit einem anderen Diensttyp.',
+    'shiftTypeUsedInFollowingTemplates'  => 'Dieser Dienstyp wird bei folgenden Vorlagen eingesetzt. Um ihn zu entfernen, ersetze jede Instanz erst mit einem anderen Diensttyp.',
     'event'                         => 'Event',
     'date'                          => 'Datum',
     'substituteThisInstance'        => 'Ersetzen durch...',

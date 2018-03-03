@@ -466,6 +466,7 @@ return [
     'delete'                        => 'delete it',
     'shiftTypeNeverUsed'              => 'This shift type was never used... Quite sad, isn\'t it? Maybe you should just ',
     'shiftTypeUsedInFollowingEvents'  => 'This shift type is used in the following events. To remove it you should substitute each of its instances with another shift type.',
+    'shiftTypeUsedInFollowingTemplates'  => 'This shift type is used in the following templates. To remove it you should substitute each of its instances with another shift type.',
     'event'                         => 'Event',
     'date'                          => 'Date',
     'substituteThisInstance'        => 'Substitute with...',
