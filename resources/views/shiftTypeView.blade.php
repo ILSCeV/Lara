@@ -244,11 +244,11 @@
                                                             @continue
                                                         @endif
                                                         <option data-icon='fa fa-clock-o' value="{{$shiftType->id}}">
-                                                            (#{{ $shiftType->id }})
-                                                            {{  $shiftType->title }}
                                                             {{  date("H:i", strtotime($shiftType->start))
                                                                 . "-" .
                                                                 date("H:i", strtotime($shiftType->end)) . ")" }}
+                                                            (#{{ $shiftType->id }})
+                                                            {{  $shiftType->title }}
                                                         </option>
                                                    @endforeach
                                                 </select>
