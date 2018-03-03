@@ -102,19 +102,19 @@
 							<table class="table table-hover table-condensed" id="events-rows">
 								<thead>
 									<tr class="active">
-										<th class="col-md-1 col-xs-1">
+										<th class="col-md-1 col-xs-1 text-center">
 											#
 										</th>
-										<th class="col-md-3 col-xs-4">
+										<th class="col-md-2 col-xs-2 text-center">
 											{{ trans('mainLang.event') }}
 										</th>
-										<th class="col-md-1 col-xs-1">
+										<th class="col-md-2 col-xs-2 text-center">
 											{{ trans('mainLang.section') }}
 										</th>
-										<th class="col-md-2 col-xs-4">
+										<th class="col-md-2 col-xs-2 text-center">
 											{{ trans('mainLang.date') }}
 										</th>
-										<th class="col-md-5 col-xs-2">
+										<th class="col-md-2 col-xs-2 text-center">
 											{{ trans('mainLang.actions') }}
 										</th>
 									</tr>
@@ -127,20 +127,20 @@
                                         @endif
 
 										<tr class="{!! "shiftType-event-row" . $shift->id !!}" name="{!! "shiftType-event-row" . $shift->id !!}">
-											<td>
+											<td class="text-center">
 										      	{!! $shift->schedule->event->id !!}
 											</td>
-											<td>
+											<td class="text-center">
 												<a href="/event/{!! $shift->schedule->event->id !!}">{!! $shift->schedule->event->evnt_title !!}</a>
 											</td>
-											<td>
+											<td class="text-center">
 												{!! $shift->schedule->event->section->title !!}
 											</td>
-											<td>
+											<td class="text-center">
 												{!! strftime("%a, %d. %b %Y", strtotime($shift->schedule->event->evnt_date_start)) !!} um
 												{!! date("H:i", strtotime($shift->schedule->event->evnt_time_start)) !!}
 											</td>
-											<td>
+											<td class="text-center">
 												{!! Form::open(  array( 'route'  => ['shift.update', $shift->id],
 										                                'id' 	 => $shift->id,
 										                                'method' => 'put',
