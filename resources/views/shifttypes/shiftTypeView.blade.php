@@ -141,7 +141,7 @@
 												{!! date("H:i", strtotime($shift->schedule->event->evnt_time_start)) !!}
 											</td>
 											<td class="text-center">
-                                                @include('shifttypes.shiftTypeSelect',['shift'=>$shift,'shiftTypes' => $shiftTypes])
+                                                @include('shifttypes.shiftTypeSelect',['shift'=>$shift,'shiftTypes' => $shiftTypes,'route'=>'shiftTypeOverride','shiftTypeId'=>$current_shiftType->id,'selectorClass'=>'shiftTypeSelector'])
 											</td>
 										</tr>
 									@endforeach
@@ -193,7 +193,7 @@
                                                 {{ $template->section->title }}
                                             </td>
                                             <td class="text-center">
-                                                @include('shifttypes.shiftTypeSelect',['shift'=>$shift,'shiftTypes' => $shiftTypes])
+                                                @include('shifttypes.shiftTypeSelect',['shift'=>$shift,'shiftTypes' => $shiftTypes, 'route'=>'shiftTypeOverride','shiftTypeId'=>$current_shiftType->id, 'selectorClass'=>'shiftTypeSelector'])
                                             </td>
                                         </tr>
                                         @endforeach

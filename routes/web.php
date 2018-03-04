@@ -164,4 +164,5 @@ Route::get('/create/template/',                               'TemplateControlle
 
 //ShiftType
 Route::post('/overrideShiftType/',                              'ShiftTypeController@overrideShiftType')->name('shiftTypeOverride');
+Route::post('/completeOverrideShiftType',                       'ShiftTypeController@completeOverrideShiftType')->name('completeOverrideShiftType');
 

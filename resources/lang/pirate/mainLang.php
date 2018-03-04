@@ -454,6 +454,7 @@ return [
     'management'                    => 'Verwaltung',
     'shiftType'                       => 'Diensttyp',
     'shiftTypes'                      => 'Diensttypen',
+    'replaceAll'                    => 'alle ersetzen',
     'shift'                         => 'Dienst',
     'start'                         => 'Beginn',
     'end'                           => 'Ende',

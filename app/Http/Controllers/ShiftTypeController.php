@@ -4,16 +4,17 @@ namespace Lara\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use Lara\Logging;
+use Lara\ClubEvent;
+use Lara\Schedule;
+use Lara\Section;
+use Lara\Shift;
+use Lara\ShiftType;
 use Lara\Template;
 use Lara\Utilities;
 use Log;
 use Redirect;
 use Session;
 use View;
-
-use Lara\Shift;
-use Lara\ShiftType;
 
 
 class ShiftTypeController extends Controller
@@ -169,30 +170,64 @@ class ShiftTypeController extends Controller
      * set the shifttype of shift to the new value
      * override start, end, and statistical_weigt
      */
-    public function overrideShiftType(Request $request) {
+    public function overrideShiftType(Request $request)
+    {
 
         $shiftId = Input::get('shift');
         $shiftTypeNewId = Input::get('shiftType');
 
-        try {
-            $shift = Shift::findOrFail($shiftId);
-            $shiftType = ShiftType::findOrFail($shiftTypeNewId);
-
-            $shift->shifttype_id = $shiftType->id;
-            $shift->start = $shiftType->start;
-            $shift->end = $shiftType->end;
-            $shift->statistical_weight = $shiftType->statistical_weight;
-            $shift->save();
-
-            Session::put('message', trans('mainLang.changesSaved'));
-            Session::put('msgType', 'success');
-        } catch (\Exception $e) {
-            Log::error('error',$e);
-            Session::put('message', trans('mainLang.error'));
-            Session::put('msgType', 'danger');
-        }
+        $this->replaceShiftType($shiftId, $shiftTypeNewId);
         return Redirect::back();
 
+    }
+
+    public function completeOverrideShiftType(Request $request)
+    {
+        $shiftTypeId = Input::get('shift');
+        $shiftTypeNewId = Input::get('shiftType');
+
+        /** @var ShiftType $shiftType */
+        $shiftType = ShiftType::findOrFail($shiftTypeId);
+        $shifts = $shiftType->shifts()->get();
+        if (!Utilities::requirePermission('admin')) {
+            $shiftFilter = $shifts->filter(function (Shift $shift) {
+                /** @var Schedule $schedule */
+                $schedule = $shift->schedule()->first();
+                if (is_null($schedule)) {
+                    return false;
+                }
+                /** @var ClubEvent $event */
+                $event = $schedule->event()->first();
+                if (is_null($event)) {
+                    return false;
+                }
+                /** @var Section $section */
+                $section = $event->section()->first();
+                return $section->title == Session::get('userClub');
+            });
+            $templateShift = Template::whereHas('shifts', function ($query) use ($shiftTypeId) {
+                $query->where('shifttype_id', '=', $shiftTypeId);
+            })->whereHas('section', function ($query) {
+                $query->where('title', '=', Session::get('userClub'));
+            })->get()->flatMap(function (Template $template) {
+                return $template->shifts()->get();
+            })->filter(function (Shift $shift) use ($shiftTypeId) {
+                return $shift->shifttype_id == $shiftTypeId;
+            });
+            $result = collect([]);
+            $shiftFilter->each(function ($shift) use ($result) {
+                $result->push($shift);
+            });
+            $templateShift->each(function ($shift) use ($result) {
+                $result->push($shift);
+            });
+            $shifts = $result;
+        }
+
+        $shifts->each(function ($shift) use ($shiftTypeNewId) {
+            $this->replaceShiftType($shift->id, $shiftTypeNewId);
+        });
+        return Redirect::back();
     }
 
     /**
@@ -243,6 +278,31 @@ class ShiftTypeController extends Controller
             Session::put('message', trans('mainLang.changesSaved'));
             Session::put('msgType', 'success');
             return Redirect::action( 'ShiftTypeController@index' );
+        }
+    }
+
+    /**
+     * @param $shiftId
+     * @param $shiftTypeNewId
+     */
+    private function replaceShiftType($shiftId, $shiftTypeNewId)
+    {
+        try {
+            $shift = Shift::findOrFail($shiftId);
+            $shiftType = ShiftType::findOrFail($shiftTypeNewId);
+
+            $shift->shifttype_id = $shiftType->id;
+            $shift->start = $shiftType->start;
+            $shift->end = $shiftType->end;
+            $shift->statistical_weight = $shiftType->statistical_weight;
+            $shift->save();
+
+            Session::put('message', trans('mainLang.changesSaved'));
+            Session::put('msgType', 'success');
+        } catch (\Exception $e) {
+            Log::error('error', $e);
+            Session::put('message', trans('mainLang.error'));
+            Session::put('msgType', 'danger');
         }
     }
 }

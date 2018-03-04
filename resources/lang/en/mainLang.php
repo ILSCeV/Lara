@@ -451,6 +451,7 @@ return [
     'management'                    => 'Management',
     'shiftType'                       => 'Shift type',
     'shiftTypes'                      => 'Shift types',
+    'replaceAll'                    => 'replace all',
     'shift'                         => 'Shift',
     'start'                         => 'Start',
     'end'                           => 'End',
