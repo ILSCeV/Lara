@@ -464,6 +464,7 @@ return [
     'warningNotReversible'          => 'Diese Aktion kann man nicht rückgängig machen!',
     'editDetails'                   => 'Details anpassen',
     'deleteThisShiftType'             => 'Entfernen',
+    'editShiftType'                 => 'Diensttyp bearbeiten',
 
     'reset'                         => 'Zurücksetzen',
     'update'                        => 'Änderungen speichern',

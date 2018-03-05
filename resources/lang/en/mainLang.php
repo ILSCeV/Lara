@@ -461,6 +461,7 @@ return [
     'warningNotReversible'          => 'This action is not reversible!',
     'editDetails'                   => 'Edit details',
     'deleteThisShiftType'             => 'Delete',
+    'editShiftType'                 => 'edit Shift type',
 
     'reset'                         => 'Reset',
     'update'                        => 'Save changes',

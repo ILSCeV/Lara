@@ -463,7 +463,8 @@ return [
     'deleteConfirmation'            => 'Möchtest du folgenden Diensttyp wirklich löschen:',
     'warningNotReversible'          => 'Diese Aktion kann man nicht rückgängig machen!',
     'editDetails'                   => 'Details anpassen',
-    'deleteThisShiftType'             => 'Entfernen',
+    'deleteThisShiftType'           => 'Entfernen',
+    'editShiftType'                 => 'Diensttyp bearbeiten',
 
     'reset'                         => 'Zurücksetzen',
     'update'                        => 'Änderungen speichern',
