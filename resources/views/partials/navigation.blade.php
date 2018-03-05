@@ -60,7 +60,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('template.overview')}}"> 
+                        <a href="{{route('template.overview')}}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>

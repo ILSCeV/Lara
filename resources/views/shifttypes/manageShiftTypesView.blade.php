@@ -16,6 +16,10 @@
 	<div class="panel panel-info col-xs-12 no-padding">
 		<div class="panel-heading">
 				<h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.shiftTypes') }}</h4>
+            {{Form::open( ['id'=>'shiftTypeFilterForm','class'=>'form-inline', 'route'=>'searchShiftType'] ) }}
+            {{ Form::text('filter','',['class'=>'form-control']) }}
+            <button type="submit" class="form-inline btn btn-success"> {{trans('mainLang.search') }}</button>
+            {{Form::close()}}
 		</div>
 		<div class="panel panel-body no-padding">
 			<table class="table info table-hover table-condensed">

@@ -40,14 +40,23 @@ class ShiftTypeController extends Controller
         return response()->json($shiftTypes);
     }
 
+    public function search(Request $request) {
+        $filter = Input::get('filter');
+        return redirect(route('shiftTypeSearch', ['filter'=>$filter]));
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($filter = NULL)
     {
-        $shiftTypes = ShiftType::orderBy('title', 'ASC')->paginate(25);
+        $shiftTypeQuery = ShiftType::query();
+        if(!is_null($filter)) {
+            $shiftTypeQuery->where('title','like','%'.$filter.'%');
+        }
+        $shiftTypes = $shiftTypeQuery->orderBy('title', 'ASC')->paginate(25);
 
         return view('shifttypes.manageShiftTypesView', ['shiftTypes' => $shiftTypes]);
     }
