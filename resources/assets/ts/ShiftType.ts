@@ -31,7 +31,6 @@ $('.shiftTypeReplaceSelector').change((event) => {
   }
   let submitBtn = selectElement.data('submit');
   let shiftName = $(event.target).parents('form').children('input[name="shiftName"]').val();
-  console.log($(event.target).parents('form').children('input[name="shiftName"]'));
 
   // Initialise modal and show loading icon and message
   bootbox.confirm({
