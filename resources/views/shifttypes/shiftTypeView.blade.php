@@ -125,13 +125,20 @@
                                         @if(is_null($shift->schedule) || is_null($shift->schedule->evnt_id))
                                             @continue
                                         @endif
+                                        @php
+                                            $isAllowedToEdit=\Lara\Utilities::requirePermission("admin") || $shift->schedule->event->section->title == Session::get('userClub');
+                                        @endphp
 
-										<tr class="{!! "shiftType-event-row" . $shift->id !!}" name="{!! "shiftType-event-row" . $shift->id !!}">
+										<tr class="{!! "shiftType-event-row" . $shift->id !!} @if(!$isAllowedToEdit) active @endif" name="{!! "shiftType-event-row" . $shift->id !!}">
 											<td class="text-center">
 										      	{!! $shift->schedule->event->id !!}
 											</td>
 											<td class="text-center">
-												<a href="/event/{!! $shift->schedule->event->id !!}">{!! $shift->schedule->event->evnt_title !!}</a>
+                                                @if($isAllowedToEdit)
+												    <a href="/event/{!! $shift->schedule->event->id !!}">{!! $shift->schedule->event->evnt_title !!}</a>
+                                                @else
+                                                    {{ $shift->schedule->event->evnt_title }}
+                                                @endif
 											</td>
 											<td class="text-center">
 												{!! $shift->schedule->event->section->title !!}
@@ -141,7 +148,9 @@
 												{!! date("H:i", strtotime($shift->schedule->event->evnt_time_start)) !!}
 											</td>
 											<td class="text-center">
-                                                @include('shifttypes.shiftTypeSelect',['shift'=>$shift,'shiftTypes' => $shiftTypes,'route'=>'shiftTypeOverride','shiftTypeId'=>$current_shiftType->id,'selectorClass'=>'shiftTypeSelector'])
+                                                @if($isAllowedToEdit)
+                                                    @include('shifttypes.shiftTypeSelect',['shift'=>$shift,'shiftTypes' => $shiftTypes,'route'=>'shiftTypeOverride','shiftTypeId'=>$current_shiftType->id,'selectorClass'=>'shiftTypeSelector'])
+                                                 @endif
 											</td>
 										</tr>
 									@endforeach
@@ -180,20 +189,29 @@
                                             @if($shift->shifttype_id !== $current_shiftType->id)
                                                 @continue
                                             @endif
-                                        <tr>
+                                            @php
+                                                $isAllowedToEdit=\Lara\Utilities::requirePermission("admin") || $template->section->title == Session::get('userClub');
+                                            @endphp
+                                        <tr class="@if(!$isAllowedToEdit) active @endif">
                                             <td class="text-center">
                                                 {{ $shift->id}}
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ route('template.edit', $template->id) }}">
+                                                @if($isAllowedToEdit)
+                                                    <a href="{{ route('template.edit', $template->id) }}">
+                                                        {{ $template->title }}
+                                                    </a>
+                                                @else
                                                     {{ $template->title }}
-                                                </a>
+                                                @endif
                                             </td>
                                             <td class="text-center">
                                                 {{ $template->section->title }}
                                             </td>
                                             <td class="text-center">
-                                                @include('shifttypes.shiftTypeSelect',['shift'=>$shift,'shiftTypes' => $shiftTypes, 'route'=>'shiftTypeOverride','shiftTypeId'=>$current_shiftType->id, 'selectorClass'=>'shiftTypeSelector'])
+                                                @if($isAllowedToEdit)
+                                                    @include('shifttypes.shiftTypeSelect',['shift'=>$shift,'shiftTypes' => $shiftTypes, 'route'=>'shiftTypeOverride','shiftTypeId'=>$current_shiftType->id, 'selectorClass'=>'shiftTypeSelector'])
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

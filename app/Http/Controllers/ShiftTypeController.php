@@ -82,13 +82,8 @@ class ShiftTypeController extends Controller
             $query->whereIn('id',$shifts->map(function($shift){
                 return $shift->id;
             })->toArray());
-        })->orderBy('title');
-
-        if (!Utilities::requirePermission("admin")) {
-            $templatesQuery = $templatesQuery->whereHas('section', function ($query) {
-                $query->where('title', '=', Session::get('userClub'));
-            });
-        }
+        })->with('section')
+        ->orderBy('title');
 
         $templates = $templatesQuery->get();
 
