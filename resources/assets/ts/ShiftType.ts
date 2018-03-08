@@ -19,8 +19,7 @@ $('.shiftTypeSelector').change((event) => {
   if (selectedValue == -1) {
     return;
   }
-  let submitBtn = selectElement.data('submit');
-  $('#' + submitBtn).submit();
+  $(event.target).parents('form').submit();
 });
 
 $('.shiftTypeReplaceSelector').change((event) => {
@@ -29,7 +28,7 @@ $('.shiftTypeReplaceSelector').change((event) => {
   if (selectedValue == -1) {
     return;
   }
-  let submitBtn = selectElement.data('submit');
+  let submitBtn = $(event.target).parents('form');
   let shiftName = $(event.target).parents('form').children('input[name="shiftName"]').val();
 
   // Initialise modal and show loading icon and message
@@ -49,7 +48,7 @@ $('.shiftTypeReplaceSelector').change((event) => {
     },
     callback: (result) => {
       if (result) {
-        $('#' + submitBtn).submit();
+        submitBtn.submit();
       }
     }
   });

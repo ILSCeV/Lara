@@ -209,9 +209,9 @@
                                                 {{ $template->section->title }}
                                             </td>
                                             <td class="text-center">
-                                                @if($isAllowedToEdit)
+                                              @if($isAllowedToEdit)
                                                     @include('shifttypes.shiftTypeSelect',['shift'=>$shift,'shiftTypes' => $shiftTypes, 'route'=>'shiftTypeOverride','shiftTypeId'=>$current_shiftType->id, 'selectorClass'=>'shiftTypeSelector'])
-                                                @endif
+                                              @endif
                                             </td>
                                         </tr>
                                         @endforeach

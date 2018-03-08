@@ -13,7 +13,7 @@
 ] ) !!}
 {{-- Fields to populate --}}
 <input type="text" id="{!! 'shift' . $shift->id !!}" name="shift" value="{{ $shift->id }}" hidden/>
-<select name="shiftType" data-submit="{{ 'shiftTypeOverride'.$shift->id }}" class="{{$selectorClass}}">
+<select name="shiftType" class="{{$selectorClass}}">
     <option value="-1" disabled selected>{{ trans('mainLang.substituteThisInstance') }}</option>
     @foreach($shiftTypes->sortBy('title') as $shiftType)
         @if($shiftType->id === $shiftTypeId)
