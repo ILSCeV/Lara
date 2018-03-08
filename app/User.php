@@ -19,7 +19,7 @@ class User extends Authenticatable
         // authentication related
         'name', 'email', 'password',
         // Lara related
-        'section_id', 'person_id', 'status', 'group'
+        'section_id', 'person_id', 'status'
     ];
 
     /**
@@ -51,8 +51,7 @@ class User extends Authenticatable
             'name' => $person->prsn_name,
             'section_id' => $person->club->section()->id,
             'person_id' => $person->id,
-            'status' => $person->prsn_status,
-            'group' => $person->club->clb_title
+            'status' => $person->prsn_status
         ]);
     }
 

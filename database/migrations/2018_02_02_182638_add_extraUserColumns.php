@@ -20,7 +20,6 @@ class AddExtraUserColumns extends Migration
             $table->integer('person_id')->references('id')->on('persons');
             $table->integer('section_id')->references('id')->on('section');
             $table->string('status');
-            $table->string('group');
 
             $table->string('email')->nullable()->change();
         });
@@ -43,7 +42,6 @@ class AddExtraUserColumns extends Migration
             $table->dropColumn('person_id');
             $table->dropColumn('section_id');
             $table->dropColumn('status');
-            $table->dropColumn('group');
         });
     }
 }
