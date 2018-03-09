@@ -5,6 +5,7 @@ namespace Lara;
 use Illuminate\Notifications\Notifiable;
 use Lara\Person;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Lara\utilities\RoleUtility;
 
 class User extends Authenticatable
 {
@@ -47,12 +48,16 @@ class User extends Authenticatable
         if (!$person->club->section()) {
             return NULL;
         }
-        return User::create([
+        $user = User::create([
             'name' => $person->prsn_name,
             'section_id' => $person->club->section()->id,
             'person_id' => $person->id,
             'status' => $person->prsn_status
         ]);
+        RoleUtility::assignPrivileges($user,$person->club->section()->first(),
+            RoleUtility::PRIVILEGE_MEMBER);
+
+        return $user;
     }
 
     public function is($permissions)
