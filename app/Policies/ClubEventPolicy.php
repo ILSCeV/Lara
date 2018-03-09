@@ -11,11 +11,6 @@ class ClubEventPolicy
 {
     use HandlesAuthorization;
 
-    public function update(User $user, ClubEvent $clubEvent)
-    {
-
-    }
-
     /**
      * Determine whether the user can view the clubEvent.
      *
