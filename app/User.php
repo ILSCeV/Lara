@@ -2,11 +2,13 @@
 
 namespace Lara;
 
-use Illuminate\Notifications\Notifiable;
-use Lara\Person;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Lara\utilities\RoleUtility;
 
+/**
+ * @property \Illuminate\Database\Eloquent\Relations\belongsToMany/Role $roles
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -43,6 +45,14 @@ class User extends Authenticatable
         return $this->belongsTo('Lara\Section');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany/Role
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
     public static function createFromPerson(Person $person)
     {
         if (!$person->club->section()) {
@@ -66,7 +76,6 @@ class User extends Authenticatable
             $permissions = [$permissions];
         }
 
-        return collect($permissions)
-            ->contains($this->group);
+        return $this->roles()->whereIn('name', $permissions)->exists();
     }
 }
