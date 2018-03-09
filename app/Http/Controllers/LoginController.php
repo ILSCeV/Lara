@@ -3,19 +3,18 @@
 namespace Lara\Http\Controllers;
 
 use Config;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Input;
-use Lara\Person;
 use Lara\Club;
-use Lara\User;
+use Lara\Person;
 use Lara\Settings;
+use Lara\User;
 use Lara\utilities\RoleUtility;
 use Log;
 use Redirect;
 use Session;
-
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 /*
 --------------------------------------------------------------------------
@@ -349,9 +348,12 @@ class LoginController extends Controller
                     User::createFromPerson($person);
                 }
                 Auth::login($person->user());
-                $user = $person->user();
+                $user = $person->user()->first();
                 $user->status = $userStatus;
                 $user->save();
+                if(in_array($userGroup,RoleUtility::ALL_PRIVILEGES)){
+                    \Roles::assignPrivileges($user, $user->section()->first(), $userGroup);
+                }
 
                 Log::info('Auth success: ' .
                     $info[0]['cn'][0] .
