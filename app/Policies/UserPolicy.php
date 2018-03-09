@@ -4,6 +4,7 @@ namespace Lara\Policies;
 
 use Lara\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Lara\utilities\RoleUtility;
 
 class UserPolicy
 {
@@ -19,11 +20,12 @@ class UserPolicy
      */
     public function before($user, $ability)
     {
-        if ($user->group == "admin") {
+        /** @var User $user */
+        if ($user->roles()->where('name','=',RoleUtility::PRIVILEGE_ADMINISTRATOR)->exists()) {
             return true;
         }
 
-        if ($user->group != 'clubleitung') {
+        if ($user->roles()->where('name','=',RoleUtility::PRIVILEGE_CL)->exists()) {
             return false;
         }
 

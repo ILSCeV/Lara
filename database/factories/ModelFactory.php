@@ -179,3 +179,10 @@ $factory->define(Lara\Template::class, function(Faker\Generator $faker) {
         'facebook_needed' => $faker->boolean(40),
     ];
 });
+
+$factory->define(Lara\Role::class, function(Faker\Generator $faker) {
+    return [
+        'name' => $faker->title(),
+        'section_id'=>Lara\Section::inRandomOrder()->first()->id
+    ];
+});

@@ -23,12 +23,6 @@ class AddExtraUserColumns extends Migration
 
             $table->string('email')->nullable()->change();
         });
-
-        Person::whereNotNull('prsn_ldap_id')
-            ->get()
-            ->each(function(Person $person) {
-                User::createFromPerson($person);
-            });
     }
 
     /**
