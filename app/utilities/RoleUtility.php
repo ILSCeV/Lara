@@ -8,7 +8,7 @@
 namespace Lara\utilities;
 
 
-use Illuminate\Contracts\Logging\Log;
+use Log;
 use Lara\Role;
 use Lara\Section;
 use Lara\User;
@@ -21,7 +21,7 @@ class RoleUtility
 
     const PRIVILEGE_MARKETING = "marketing";
 
-    const PRIVILEGE_MEMBER = "mitglied";
+    const PRIVILEGE_MEMBER = "member";
 
     const ALL_PRIVILEGES = [self::PRIVILEGE_CL, self::PRIVILEGE_ADMINISTRATOR, self::PRIVILEGE_MARKETING, self::PRIVILEGE_MEMBER];
 
@@ -38,7 +38,7 @@ class RoleUtility
                 Role::where('section_id', '=', $section->id)->where('name', '=', self::PRIVILEGE_MEMBER)->first()->users()->attach($user);
                 break;
             default:
-                Log::warn('could not assign privilege ' . $privilege, [$user, $section]);
+                Log::warning('could not assign privilege ' . $privilege, [$user, $section]);
         }
     }
 
@@ -55,7 +55,7 @@ class RoleUtility
                 Role::where('section_id', '=', $section->id)->where('name', '=', self::PRIVILEGE_MEMBER)->first()->users()->detach($user);
                 break;
             default:
-                Log::warn('could not assign privilege ' . $privilege, [$user, $section]);
+                Log::warning('could not unassign privilege ' . $privilege, [$user, $section]);
         }
     }
 }

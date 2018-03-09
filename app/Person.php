@@ -21,7 +21,7 @@ class Person extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('prsn_name', 
+	protected $fillable = array('prsn_name',
 								'prsn_ldap_id',
 								'prsn_status',
 								'clb_id',
@@ -80,9 +80,12 @@ class Person extends Model
         }
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne/Lara\User
+     */
     public function user()
     {
-        $userRelationship = $this->hasOne('Lara\User');
+        $userRelationship = $this->hasOne(User::class);
         return $userRelationship->exists() ? $userRelationship->first() : User::createFromPerson($this);
     }
 

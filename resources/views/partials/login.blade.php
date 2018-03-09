@@ -21,7 +21,7 @@
     <br class="visible-xs">
 
     @dev
-    <select name="userGroup" id="userGroup" class="btn btn-mini">
+    <select name="userGroup" id="userGroup" class="btn btn-sm">
         <option value="member"> Member </option>
         <option value="marketing"> Marketing </option>
         <option value="clubleitung"> CL </option>

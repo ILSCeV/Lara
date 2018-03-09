@@ -96,7 +96,7 @@ Disabling iCal until fully functional.
 
 
 {{-- LARA ADMIN PANEL / admins only --}}
-            @if(\Lara\Utilities::requirePermission('admin'))
+            @if(\Lara\Utilities::requirePermission(Roles::PRIVILEGE_ADMINISTRATOR))
                 <li class="dropdown">
                     <a href="#"
                        class="dropdown-toggle"
@@ -187,14 +187,14 @@ Disabling iCal until fully functional.
                                     <span data-toggle="tooltip"
                                           data-placement="bottom"
                                           title="
-                                            @is('marketing')
-                                                {{ Auth::user()->section->title . " / Marketing" }}
-                                            @elseis('clubleitung')
-                                                {{ Auth::user()->section->title . " / Clubleitung" }}
-                                            @elseis('admin')
+                                            @is(Roles::PRIVILEGE_ADMINISTRATOR)
                                                 {{ Auth::user()->section->title . " / Admin" }}
+                                            @elseis(Roles::PRIVILEGE_CL)
+                                                {{ Auth::user()->section->title . " / Clubleitung" }}
+                                            @elseis(Roles::PRIVILEGE_MARKETING)
+                                                {{ Auth::user()->section->title . " / Marketing" }}
                                             @else
-                                                {{ Auth::user()->section->title }}
+                                             {{ Auth::user()->section->title }}
                                             @endis
                                           ">
                                         {{ Auth::user()->name }}

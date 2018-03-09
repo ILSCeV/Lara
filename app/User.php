@@ -46,7 +46,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany/Role
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany/Lara\Role
      */
     public function roles()
     {

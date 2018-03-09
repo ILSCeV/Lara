@@ -10,13 +10,14 @@ use Lara\Person;
 use Lara\Club;
 use Lara\User;
 use Lara\Settings;
+use Lara\utilities\RoleUtility;
 use Log;
 use Redirect;
 use Session;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-/* 
+/*
 --------------------------------------------------------------------------
     Copyright (C) 2015  Maxim Drachinskiy
                         Silvi Kaltwasser
@@ -94,7 +95,7 @@ class LoginController extends Controller
      */
     public function doLogin()
     {
-        $someLoginWorked = $this->attemptLoginWithCredentials(request(), 'name')
+        $someLoginWorked = $this->attemtLoginViaDevelop() || $this->attemptLoginWithCredentials(request(), 'name')
             || $this->attemptLoginWithCredentials(request(), 'email')
             || $this->attemptLoginViaLDAP();
 
@@ -113,20 +114,25 @@ class LoginController extends Controller
         return $this->loginFailed();
     }
 
+    private function attemtLoginViaDevelop(){
+        if (!App::environment('development')) {
+            return false;
+        }
+        $userGroup = request('userGroup');
+        /** @var Person $person */
+        $person = Person::where('clb_id', '<' , 4)->inRandomOrder()->first();
+        /** @var User $user */
+        $user = $person->user();
+        $user->roles()->detach();
+        RoleUtility::assignPrivileges($user, $user->section, $userGroup);
+        $person->user()->fill(["group" => $userGroup])->save();
+        $this->loginPersonAsUser($person->prsn_ldap_id);
+
+        return true;
+    }
+
     protected function attemptLoginViaLDAP()
     {
-        if (App::environment('development')) {
-            $userGroup = request('userGroup');
-
-            $person = Person::where('clb_id', '<' , 4)->inRandomOrder()->first();
-
-            $person->user()->fill(["group" => $userGroup])->save();
-            $this->loginPersonAsUser($person->prsn_ldap_id);
-
-            return true;
-        }
-        else {
-
             if (Input::get('username') === "1708") {
                 Session::put('message', 'Ne ne ne, nicht mit dieser Clubnummer, sie ist ja nur fur bc-Wiki zu benutzen ;)');
                 Session::put('msgType', 'danger');
@@ -343,6 +349,9 @@ class LoginController extends Controller
                     User::createFromPerson($person);
                 }
                 Auth::login($person->user());
+                $user = $person->user();
+                $user->status = $userStatus;
+                $user->save();
 
                 Log::info('Auth success: ' .
                     $info[0]['cn'][0] .
@@ -360,7 +369,6 @@ class LoginController extends Controller
             Log::info('Auth fail: ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] . ', ' . $userGroup . ') used wrong password.');
 
             return false;
-        }
     }
 
     protected function attemptLoginWithCredentials($request, $userIdentifier = 'email')
@@ -396,78 +404,78 @@ class LoginController extends Controller
 
 }
 
-/*      This is what the returned bcLDAP object looks like (only useful fields are shown here).  
+/*      This is what the returned bcLDAP object looks like (only useful fields are shown here).
 
-        Array ( 
-            [count] => 1 
-            [0] => Array ( 
-                [uidnumber] => Array ( 
-                    [count] => 1 
-                    [0] => 1000 )                               // UID number 
+        Array (
+            [count] => 1
+            [0] => Array (
+                [uidnumber] => Array (
+                    [count] => 1
+                    [0] => 1000 )                               // UID number
 
-                [uid] => Array ( 
-                    [count] => 1 
+                [uid] => Array (
+                    [count] => 1
                     [0] => 1000 )                               // Clubnumber
 
-                [cn] => Array ( 
-                    [count] => 1 
+                [cn] => Array (
+                    [count] => 1
                     [0] => Dummy Dumminson )                    // Full name
 
-                [userpassword] => Array ( 
-                    [count] => 1 
+                [userpassword] => Array (
+                    [count] => 1
                     [0] => {md5}somethinghashedhere== )         // Hashed password
 
-                [ilscmember] => Array ( 
-                    [count] => 1 
+                [ilscmember] => Array (
+                    [count] => 1
                     [0] => 20110110000000Z )                    // Member since 10. Jan 2011
 
-                [sn] => Array ( 
-                    [count] => 1 
-                    [0] => Dumminson )                          // Last name 
+                [sn] => Array (
+                    [count] => 1
+                    [0] => Dumminson )                          // Last name
 
-                [birthday] => Array ( 
+                [birthday] => Array (
                     [count] => 1 [0] => 19990101000000Z )       // Birthday
 
-                [givenname] => Array ( 
-                    [count] => 1 
+                [givenname] => Array (
+                    [count] => 1
                     [0] => Dummy )                              // First name
 
-                [mozillanickname] => Array ( 
-                    [count] => 1 
+                [mozillanickname] => Array (
+                    [count] => 1
                     [0] => Dummer )                             // Clubname (nickname)
 
-                [mail] => Array ( 
-                    [count] => 1 
+                [mail] => Array (
+                    [count] => 1
                     [0] => dummy@mail.com )                     // Email
-               
-                [candidate] => Array ( 
-                    [count] => 1 
+
+                [candidate] => Array (
+                    [count] => 1
                     [0] => 20101011000000Z )                    // Candidate since 11. Oct 2010
-               
-                [ilscstate] => Array ( 
-                    [count] => 1 
+
+                [ilscstate] => Array (
+                    [count] => 1
                     [0] => veteran )                            // Club status (active/candidate/veteran/resigned)
 
                 [dn] => uid=1000,ou=People,ou=bc-club,o=ilsc )  // Full DN
-            ) 
+            )
 
 /*      bc-clubcl & bcMarketing Group object:
 
-        array(2) { ["count"]=> int(1) 
-        [0]=> array(10) { 
-            ["cn"]=> array(2) { 
-                ["count"]=> int(1) 
-                [0]=> string(9) "bc-clubcl" 
-            } 
+        array(2) { ["count"]=> int(1)
+        [0]=> array(10) {
+            ["cn"]=> array(2) {
+                ["count"]=> int(1)
+                [0]=> string(9) "bc-clubcl"
+            }
 
-            ["member"]=> array(6) { 
-                ["count"]=> int(5) 
-                [0]=> string(36) "uid=9999,ou=People,ou=bc-club,o=ilsc" 
-                [1]=> string(36) "uid=9998,ou=People,ou=bc-club,o=ilsc" 
-                [2]=> string(36) "uid=9997,ou=People,ou=bc-club,o=ilsc" 
-                [3]=> string(36) "uid=9996,ou=People,ou=bc-club,o=ilsc" 
-                [4]=> string(36) "uid=9995,ou=People,ou=bc-club,o=ilsc" 
-            } 
+            ["member"]=> array(6) {
+                ["count"]=> int(5)
+                [0]=> string(36) "uid=9999,ou=People,ou=bc-club,o=ilsc"
+                [1]=> string(36) "uid=9998,ou=People,ou=bc-club,o=ilsc"
+                [2]=> string(36) "uid=9997,ou=People,ou=bc-club,o=ilsc"
+                [3]=> string(36) "uid=9996,ou=People,ou=bc-club,o=ilsc"
+                [4]=> string(36) "uid=9995,ou=People,ou=bc-club,o=ilsc"
+            }
 
-*/            
+*/
 
