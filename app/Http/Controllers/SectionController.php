@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Lara\Club;
+use Lara\Role;
 use Lara\Section;
+use Lara\User;
 use Lara\Utilities;
 use Lara\ClubEvent;
+use Lara\utilities\RoleUtility;
 use Session;
 use View;
 use Redirect;
@@ -49,7 +52,7 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Utilities::requirePermission("admin")) {
+        if (!Utilities::requirePermission(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             // Return to the section management page
             Session::put('message', trans('mainLang.adminsOnly'));
             Session::put('msgType', 'danger');
@@ -108,6 +111,13 @@ class SectionController extends Controller
         $section->startTime =       $startTime;
         $section->endTime =         $endTime;
         $section->save();
+        if ($isNew) {
+            foreach (RoleUtility::ALL_PRIVILEGES as $roleName) {
+                $role = new Role(['name' => $roleName]);
+                $role->section_id = $section->id;
+                $role->save();
+            }
+        }
 
         $club->clb_title =          $title;
         $club->save();
@@ -163,18 +173,22 @@ class SectionController extends Controller
      */
     public function destroy(Section $section)
     {
-        if (!Utilities::requirePermission("admin")) {
+        if (!Utilities::requirePermission(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             // Return to the section management page
             Session::put('message', trans('mainLang.adminsOnly'));
             Session::put('msgType', 'danger');
         }
 
         // Log the action while we still have the data
+        /** @var User $user */
         $user = Auth::user();
+        $userGroups = $user->roles()->get()->map(function(Role $role){
+            return $role->name;
+        })->toArray();
         $person = $user->person;
 
         Log::info('Section removed: ' .
-            $person->prsn_name . ' (' . $person->prsn_ldap_id . ', ' . $user->group .
+            $person->prsn_name . ' (' . $person->prsn_ldap_id . ', ' . $userGroups .
             ') deleted section "' . $section->title .  '". May Gods have mercy on their souls!');
 
         $events = ClubEvent::where("plc_id", "=", $section->id)->get();
@@ -186,7 +200,7 @@ class SectionController extends Controller
             // Now delete the event itself
             ClubEvent::destroy($event->id);
         }
-        
+
         //find according clubs
         $clubs=Club::where('clb_title','=',$section->title)->get();
         foreach ($clubs as $club){
@@ -200,6 +214,6 @@ class SectionController extends Controller
         Session::put('message', trans('mainLang.changesSaved'));
         Session::put('msgType', 'success');
         return Redirect::action( 'SectionController@index' );
-        
+
     }
 }

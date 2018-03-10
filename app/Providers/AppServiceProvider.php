@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
 
-            return $user->group === "admin";
+            return $user->is("admin");
         });
     }
 

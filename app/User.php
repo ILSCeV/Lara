@@ -78,4 +78,19 @@ class User extends Authenticatable
 
         return $this->roles()->whereIn('name', $permissions)->exists();
     }
+
+    public function hasPermissionsInSection(Section $section, ...$permission)
+    {
+        return $this->roles()
+            ->whereIn('name', $permission)
+            ->where('section_id', '=', $section->id)->exists();
+    }
+
+    /**
+     * @param $type string
+     * @return \Illuminate\Database\Eloquent\Collection/Role
+     */
+    public function getRolesOfType($type){
+        return $this->roles()->where('name','=',$type)->get();
+    }
 }

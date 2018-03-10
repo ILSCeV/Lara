@@ -22,6 +22,7 @@ use Lara\Section;
 use Lara\Schedule;
 use Lara\Template;
 use Lara\Utilities;
+use Lara\utilities\RoleUtility;
 use Log;
 use Redirect;
 use Session;
@@ -202,7 +203,7 @@ class ClubEventController extends Controller
         // log the action
         $user = Auth::user();
         Log::info('Event created: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
-                 . $user->group . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
+                 . $user->roles()->get(['name'])->toArray() . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
         Utilities::clearIcalCache();
         if (Input::get('saveAsTemplate')){
             $template = $newSchedule->toTemplate();
@@ -368,7 +369,7 @@ class ClubEventController extends Controller
 
         $createClubEvent = false;
 
-        
+
         $userId = Auth::user()->person->prsn_ldap_id;
 
         if(Utilities::requirePermission(["marketing","clubleitung","admin"]) || $userId == $created_by) {
@@ -412,7 +413,7 @@ class ClubEventController extends Controller
         // log the action
         $user = Auth::user();
         Log::info('Event edited: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
-                 . $user->group . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+                 . $user->roles()->get(['name'])->toArray() . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
 
 
         // save all data in the database
@@ -466,7 +467,7 @@ class ClubEventController extends Controller
 
         // Log the action while we still have the data
         Log::info('Event deleted: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
-                 . $user->group . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+                 . $user->roles()->get(['name'])->toArray(). ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         Utilities::clearIcalCache();
 
         // Delete schedule with shifts
@@ -567,11 +568,10 @@ class ClubEventController extends Controller
         $event->evnt_is_private = (Input::get('isPrivate') == '1') ? 0 : 1;
         $eventIsPublished = Input::get('evntIsPublished');
 
-        $userGroup = Auth::user()->group;
         if (!is_null($eventIsPublished)) {
             //event is pubished
             $event->evnt_is_published = (int)$eventIsPublished;
-        } elseif (in_array($userGroup, ['marketing', 'clubleitung', 'admin'])){
+        } elseif (Auth::user()->hasPermissionsInSection($section,RoleUtility::PRIVILEGE_MARKETING)){
             // event was unpublished
             $event->evnt_is_published = 0;
         }
@@ -629,7 +629,7 @@ class ClubEventController extends Controller
             case "1": return true;
             case "0": return false;
             case "-1" :
-            default:null;
+            default: return null;
         }
     }
 

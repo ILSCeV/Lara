@@ -52,6 +52,6 @@ class Club extends Model
 
     public function section()
     {
-        return Section::where('title', $this->clb_title)->first();
+        return (new Section)->where('title', $this->clb_title)->first();
     }
 }

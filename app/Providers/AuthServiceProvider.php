@@ -30,11 +30,11 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('createUserOfSection', function(User $user, $section_id) {
-            if ($user->group === 'admin') {
+            if ($user->is('admin')) {
                 return true;
             }
 
-            if ($user->group !== 'clubleitung') {
+            if ($user->is('clubleitung')) {
                 return false;
             }
 

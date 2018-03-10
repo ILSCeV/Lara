@@ -23,9 +23,9 @@ class CheckRoles
             return Redirect('/');
         }
 
-        $userGroup = Auth::user()->group;
+        $hasRole = Auth::user()->roles()->whereIn('name',$params)->exists();
 
-        if (!in_array($userGroup, $params)) {
+        if (!$hasRole) {
             Utilities::error(trans('auth.missingPermissions'));
             return Redirect('/');
         }

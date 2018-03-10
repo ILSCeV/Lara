@@ -6,12 +6,15 @@ namespace Lara\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Lara\ClubEvent;
+use Lara\Http\Middleware\ManagingUsersOnly;
 use Lara\Logging;
+use Lara\Role;
 use Lara\Section;
 use Lara\Shift;
 use Lara\ShiftType;
 use Lara\Template;
 use Lara\Utilities;
+use Lara\utilities\RoleUtility;
 use Session;
 
 class TemplateController extends Controller
@@ -20,7 +23,7 @@ class TemplateController extends Controller
 
     public function __construct()
     {
-        $this->middleware('managingUsersOnly', ['except' => 'create']);
+        $this->middleware(ManagingUsersOnly::class, ['except' => 'create']);
     }
 
     /**
@@ -30,11 +33,14 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        if (Utilities::requirePermission("admin")) {
+        if (Utilities::requirePermission(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             $templatesQuery = Template::query();
         } else {
-            $templatesQuery = Template::whereHas('section', function ($query) {
-                $query->where('title', '=', Session::get('userClub'));
+            $allowedSections = \Auth::user()->getRolesOfType(RoleUtility::PRIVILEGE_MARKETING)->map(function (Role $role) {
+                return $role->section_id;
+            })->toArray();
+            $templatesQuery = Template::whereHas('section', function ($query) use ($allowedSections) {
+                $query->whereIn('id', $allowedSections );
             });
         }
         $templates = $templatesQuery->orderBy('section_id')->orderBy('title')->get();

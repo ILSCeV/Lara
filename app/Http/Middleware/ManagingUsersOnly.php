@@ -5,6 +5,7 @@ namespace Lara\Http\Middleware;
 use Closure;
 use Auth;
 use Lara\Utilities;
+use Lara\utilities\RoleUtility;
 use Session;
 
 class ManagingUsersOnly
@@ -23,7 +24,7 @@ class ManagingUsersOnly
             return Redirect('/');
         }
 
-        if (!Auth::user()->is(['admin', 'marketing', 'clubleitung'])) {
+        if (!Auth::user()->is(RoleUtility::PRIVILEGE_MARKETING)) {
             Utilities::error(trans('auth.missingPermissions'));
             return Redirect('/');
         }

@@ -23,7 +23,7 @@ class CreateRoleUserTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
         });
 
-        Person::whereNotNull('prsn_ldap_id')
+        (new Lara\Person)->whereNotNull('prsn_ldap_id')
             ->get()
             ->each(function(Person $person) {
                 User::createFromPerson($person);

@@ -13,7 +13,9 @@ class PersonsTableSeeder extends Seeder
     public function run()
     {
         \DB::table('persons')->delete();
-        factory(Lara\Person::class, 100)->create();
+        \DB::table('role_user')->delete();
+        \DB::table('users')->delete();
+        factory(Lara\Person::class, 200)->create();
         Lara\Person::all()->each(function($person) {
             Lara\User::createFromPerson($person);
         });
