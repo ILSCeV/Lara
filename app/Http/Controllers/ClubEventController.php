@@ -203,7 +203,7 @@ class ClubEventController extends Controller
         // log the action
         $user = Auth::user();
         Log::info('Event created: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
-                 . $user->roles()->get(['name'])->toArray() . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
+                 . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
         Utilities::clearIcalCache();
         if (Input::get('saveAsTemplate')){
             $template = $newSchedule->toTemplate();
@@ -413,7 +413,7 @@ class ClubEventController extends Controller
         // log the action
         $user = Auth::user();
         Log::info('Event edited: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
-                 . $user->roles()->get(['name'])->toArray() . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+                 . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
 
 
         // save all data in the database
@@ -467,7 +467,7 @@ class ClubEventController extends Controller
 
         // Log the action while we still have the data
         Log::info('Event deleted: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
-                 . $user->roles()->get(['name'])->toArray(). ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+                 . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         Utilities::clearIcalCache();
 
         // Delete schedule with shifts

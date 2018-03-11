@@ -155,7 +155,7 @@ class TemplateController extends Controller
         $sections = Section::all();
         if ($template->id == null) {
             /** @var Section $userSection */
-            $userSection = Section::where('title', '=', Session::get('userClub'))->firstOrFail();;
+            $userSection = \Auth::user()->section;
 
             $template->section_id = $userSection->id;
             $template->section = $userSection;
@@ -204,10 +204,10 @@ class TemplateController extends Controller
      */
     public function destroy($templateId)
     {
-        $template = Template::where('id', $templateId)->with('shifts')->first();
+        $template = (new \Lara\Template)->where('id', $templateId)->with('shifts')->first();
 
         //
-        $clubEvents = ClubEvent::where('template_id', '=', $template->id)->get();
+        $clubEvents = (new \Lara\ClubEvent)->where('template_id', '=', $template->id)->get();
         /** @var ClubEvent $clubEvent */
         foreach ($clubEvents as $clubEvent) {
             $clubEvent->template_id = null;

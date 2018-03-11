@@ -460,7 +460,7 @@ class IcalController extends Controller
 
             // Log the action while we still have the data
             Log::info('Event unpublished: '. $user->name.' ('. $user->person->prsn_ldap_id.', '
-                . $user->roles()->get(['name'])->toArray().') unpublished event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
+                . ') unpublished event "'.$event->evnt_title.'" (eventID: '.$event->id.') on '.$event->evnt_date_start.'.');
 
             // Inform the user
             Session::put('message', "Dieses Event wurde erfolgreich aus dem Kalenderfeed entfernt.");
