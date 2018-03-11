@@ -7,6 +7,10 @@ use Illuminate\Notifications\Notifiable;
 use Lara\utilities\RoleUtility;
 
 /**
+ * @property string name
+ * @property string email
+ * @property string password
+ * @property string status
  * @property \Illuminate\Database\Eloquent\Relations\belongsToMany/Role $roles
  */
 class User extends Authenticatable

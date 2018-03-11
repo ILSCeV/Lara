@@ -6,6 +6,10 @@ use Auth;
 use Session;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string prsn_name
+ * @property User user
+*/
 class Person extends Model
 {
 	/**

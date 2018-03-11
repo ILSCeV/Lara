@@ -5,6 +5,7 @@ namespace Lara\Console\Commands;
 use Config;
 use Illuminate\Console\Command;
 use Lara\Person;
+use Lara\Section;
 use Log;
 
 class LDAPsync extends Command
@@ -35,7 +36,7 @@ class LDAPsync extends Command
 
     /**
      * Execute the console command.
-     *  
+     *
      * Updates status of each Person saved in Lara with the latest state from LDAP
      * Main purpose: data is usually updated when a member logs in. This function targets updates for members who stop visiting Lara.
      *
@@ -49,7 +50,7 @@ class LDAPsync extends Command
         $this->info('Starting LDAP sync...');
 
         // get a list of all persons saved in Lara, except ldap-override
-        $persons = Person::whereNotNull('prsn_ldap_id')->whereNotIn('prsn_ldap_id', ['9999'])->get();
+        $persons = (new Person)->whereNotNull('prsn_ldap_id')->whereNotIn('prsn_ldap_id', ['9999'])->get();
 
         // start counting time before processing every person
         $counterStart = microtime(true);
@@ -71,16 +72,19 @@ class LDAPsync extends Command
         $ldap_bind = ldap_bind($ldapConn,
             Config::get('bcLDAP.admin-username'),
             Config::get('bcLDAP.admin-password'));
+        $allowedSection = (new Section())->whereIn('title',['bc-Club','bc-Café'])->get();
 
 // STARTING THE UPDATE
-
+        /** @var Person $person */
         foreach ($persons as $person) {
             $bar->advance();
             // skip ldap override
             if($person->prsn_ldap_id == '9999' ){
                 continue;
             }
-
+            if(!$allowedSection->contains($person->club->section)){
+                continue;
+            }
 // AUTHENTICATING BC-CLUB
 
             // Search for a bc-Club user with the uid number entered
@@ -110,7 +114,7 @@ class LDAPsync extends Command
             // If no match found in all clubs - log an error
             if ($info['count'] === 0) {
                 Log::info('LDAP sync error: could not authenticate ' . $person->prsn_ldap_id . ' in LDAP!');
-            }               
+            }
 
 // GETTING USER CREDENTIALS
 
@@ -128,15 +132,17 @@ class LDAPsync extends Command
                 Log::info('LDAP sync: Changing ' . $person->prsn_name . " (" . $person->prsn_ldap_id . ") name from " . $person->prsn_name . " to " . $userName . '.');
 
                 $person->prsn_name = $userName;
+                $person->user->name = $userName;
             }
-            
+
 
             if ($person->prsn_status !== $userStatus) {
                 Log::info('LDAP sync: Changing ' . $person->prsn_name . " (" . $person->prsn_ldap_id . ") status from " . $person->prsn_status . " to " . $userStatus . '.');
 
                 $person->prsn_status = $userStatus;
+                $person->user->status = $userStatus;
             }
-            
+
             $person->save();
         }
 
