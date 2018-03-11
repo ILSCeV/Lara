@@ -57,7 +57,7 @@
                             {{ $user->email }}
                         </td>
                         <td>
-                            {{ Form::model($user, ['route' => ['user.update', $user->id], 'id' => 'change-user-status-' . $user->id, 'method' => 'POST']) }}
+                            {{ Form::model($user, ['route' => ['user.update', $user->id], 'id' => 'change-user-status-' . $user->id, 'method' => 'PUT']) }}
                             <select name="status" class="selectpicker" data-id="{{$user->id}}" data-name="{{$user->name}}">
                                 @foreach(['candidate', 'member', 'veteran', 'ex-member', 'ex-candidate'] as $status)
                                     <option value="{{ $status }}" {{ $status === $user->status ? "selected" : "" }}>

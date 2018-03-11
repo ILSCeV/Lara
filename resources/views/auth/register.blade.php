@@ -11,9 +11,7 @@
                 <div class="panel-heading">{{ trans('auth.register') }}</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
-                        {{ csrf_field() }}
-
+                    {{ Form::open(['class'=>"form-horizontal","method"=>"POST","route"=>'register']) }}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Name</label>
 
@@ -105,7 +103,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    {{ Form::close() }}
                 </div>
             </div>
         </div>

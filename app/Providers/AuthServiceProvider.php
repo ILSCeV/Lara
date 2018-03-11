@@ -2,11 +2,11 @@
 
 namespace Lara\Providers;
 
-use Illuminate\Support\Facades\Gate;
-use Lara\User;
-use Lara\Section;
-use Lara\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Lara\Section;
+use Lara\User;
+use Lara\utilities\RoleUtility;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -29,20 +29,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('createUserOfSection', function(User $user, $section_id) {
-            if ($user->is('admin')) {
+        Gate::define('createUserOfSection', function (User $user, $section_id) {
+            if ($user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
                 return true;
             }
-
-            if ($user->is('clubleitung')) {
-                return false;
-            }
-
-            if ($user->section_id != $section_id) {
-                return false;
-            }
-
-            return true;
+            return $user->hasPermissionsInSection(Section::findOrFail($section_id),RoleUtility::PRIVILEGE_CL);
         });
 
     }

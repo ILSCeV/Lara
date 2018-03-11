@@ -87,7 +87,8 @@ class User extends Authenticatable
     {
         return $this->roles()
             ->whereIn('name', $permission)
-            ->where('section_id', '=', $section->id)->exists();
+            ->where('section_id', '=', $section->id)
+            ->exists();
     }
 
     /**
