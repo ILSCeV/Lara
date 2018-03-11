@@ -15,6 +15,7 @@ use Lara\ClubEvent;
 use Lara\Console\Commands\SyncBDclub;
 use Lara\Http\Middleware\RejectGuests;
 use Lara\Logging;
+use Lara\Role;
 use Lara\ShiftType;
 use Lara\Shift;
 use Lara\Person;
@@ -51,13 +52,8 @@ class ClubEventController extends Controller
      * @param  int $year
      * @param  int $month
      * @param  int $day
-     *
-     * @return view createClubEventView
-     * @return Section[] sections
-     * @return Schedule[] templates
-     * @return shiftTypes[] shiftTypes
-     * @return string $date
-     * @return \Illuminate\Http\Response
+     * @param int  $templateId
+     * @return \Illuminate\Contracts\View\View
      */
     public function create($year = null, $month = null, $day = null, $templateId = null)
     {
@@ -95,17 +91,23 @@ class ClubEventController extends Controller
         $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
 
         // get a list of possible clubs to create an event at, but without the id=0 (default value)
-        $sections = Section::where("id", '>', 0)
+        $sections = (new Section)->where("id", '>', 0)
                        ->orderBy('title', 'ASC')
                        ->get();
 
         // get a list of available templates to choose from
-        $userClub = Auth::user()->section->title;
-        if(Utilities::requirePermission("admin")) {
+        $allowedSections = Auth::user()
+            ->roles()
+            ->where('name','=',RoleUtility::PRIVILEGE_MARKETING)
+            ->get()
+            ->map(function (Role $role){
+                return $role->section_id;
+            })->toArray();
+        if(Utilities::requirePermission(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             $templates = Template::all()->sortBy('title');
         } else {
-            $templates = Template::whereHas('section', function ($query) use ($userClub) {
-                $query->where('title', '=', $userClub);
+            $templates = Template::whereHas('section', function ($query) use ($allowedSections) {
+                $query->whereIn('id',$allowedSections);
             })->get()->sortBy('title');
         }
         // get a list of available job types
