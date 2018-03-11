@@ -62,12 +62,14 @@
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>
                     </li>
+                    @is([Roles::PRIVILEGE_CL,Roles::PRIVILEGE_ADMINISTRATOR])
                     <li>
                         <a href="{{ route('user.index') }}">
                             <i class="fa fa-users" aria-hidden="true"> </i>
                             {{ trans('users.userManagement') }}
                         </a>
                     </li>
+                    @endis
                 @endis
 
 

@@ -21,15 +21,8 @@ class UserPolicy
     public function before($user, $ability)
     {
         /** @var User $user */
-        if ($user->roles()->where('name','=',RoleUtility::PRIVILEGE_ADMINISTRATOR)->exists()) {
-            return true;
-        }
+        return $user->is([RoleUtility::PRIVILEGE_ADMINISTRATOR,RoleUtility::PRIVILEGE_CL]);
 
-        if ($user->roles()->where('name','=',RoleUtility::PRIVILEGE_CL)->exists()) {
-            return false;
-        }
-
-        return NULL;
     }
 
     /**
@@ -41,7 +34,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return $user->section_id == $model->section_id;
+        return $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) || $user->section_id == $model->section_id;
     }
 
     /**
@@ -52,7 +45,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->is([RoleUtility::PRIVILEGE_ADMINISTRATOR,RoleUtility::PRIVILEGE_CL]);
     }
 
     /**
@@ -64,7 +57,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->section_id == $model->section_id;
+        return $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) || $user->section_id == $model->section_id;
     }
 
     /**
@@ -76,6 +69,6 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->section_id == $model->section_id;
+        return $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) || $user->section_id == $model->section_id;
     }
 }

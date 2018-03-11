@@ -34,6 +34,9 @@
 | Global Patterns
 |--------------------------------------------------------------------------
 */
+
+use Lara\Http\Middleware\ClOnly;
+
 Route::pattern('id', 	'[0-9]+');
 Route::pattern('year', 	'[2][0][0-9][0-9]');
 Route::pattern('month',	'[0][1-9]|[1][0-2]');
@@ -186,4 +189,4 @@ Route::get('password/reset/{token}', ['as' => 'password.reset.token', 'uses' => 
 Route::post('password/reset', ['as' => 'password.reset.post', 'uses' => 'Auth\ResetPasswordController@reset']);
 
 Route::resource('user', 'UserController')
-    ->middleware('rejectGuests');
+    ->middleware(ClOnly::class);

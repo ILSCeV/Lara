@@ -21,7 +21,7 @@ class PersonController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function index( $query = NULL )
     {
@@ -35,11 +35,11 @@ class PersonController extends Controller
         }
 
         // if no parameter specified - empty means "show all"
-        if ( is_null($query) ) {  
+        if ( is_null($query) ) {
             $query = "";
         }
 
-        $persons =  \Lara\Person::whereNotNull( "prsn_ldap_id" )
+        $persons =  (new \Lara\Person)->whereNotNull( "prsn_ldap_id" )
                                 // Look for autofill
                                 ->where('prsn_name', 'like', '%' . $query . '%')
                                 ->with('club')
@@ -48,7 +48,7 @@ class PersonController extends Controller
                                        'prsn_ldap_id',
                                        'prsn_status',
                                        'clb_id']);
-                     
+
         return response()->json($persons);
     }
 
