@@ -10,10 +10,15 @@ $(()=>{
             $(elem).toggle($(elem).text().toLowerCase().indexOf(value) > -1)
         });
     });
-    $('.selectpicker').selectpicker({
-        style: 'btn btn-default',
+    $('.change-user-status-form > .selectpicker').selectpicker({
+        style: 'btn btn-default btn-sm',
         liveSearch:true
     });
+
+  $('.editUserFormselectpicker').selectpicker({
+    style: 'btn btn-default btn-sm',
+    liveSearch:true
+  });
 
     $('.change-user-status-form select[name="status"]').on('change', (event) =>  {
 

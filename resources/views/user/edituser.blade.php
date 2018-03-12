@@ -6,7 +6,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="col-md-8 col-md-offset-2">
-            {{ Form::open(['class'=>'form-inline','route'=>['user.updateData',$user]])  }}
+            {{ Form::open(['class'=>'form-inline ','route'=>['user.updateData',$user]])  }}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     {{ trans('mainLang.editUser') }}
@@ -25,7 +25,7 @@
                         <div class="clearfix"></div>
                         <div class="form-group{{ $errors->has('section') ? ' has-error' : '' }}">
                             <label for="section" class=" control-label">{{trans('mainLang.section')}}</label>
-                            <select name="section" id="section" class="selectpicker">
+                            <select name="section" id="section" class="editUserFormselectpicker">
                                 @foreach(Lara\Section::all() as $section)
                                     <option value="{{$section->id}}" {{ Gate::denies('createUserOfSection', $section->id) ? "disabled" : "" }}>{{$section->title}}</option>
                                 @endforeach
@@ -39,7 +39,7 @@
                         <div class="clearfix"></div>
                         <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                             <label for="status" class="control-label">Status</label>
-                                <select name="status" id="status" class="selectpicker">
+                                <select name="status" id="status" class="editUserFormselectpicker">
                                     @foreach(['candidate', 'member', 'veteran'] as $status)
                                         <option value="{{$status}}" >{{trans(Auth::user()->section->title . "." . $status) }}</option>
                                     @endforeach
