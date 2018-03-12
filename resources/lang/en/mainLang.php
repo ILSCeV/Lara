@@ -510,5 +510,13 @@ return [
 
     'search'                        => 'Search',
     'facebookNeeded'                => 'Facebook needed',
-    'createTemplate'                => 'Create template'
+    'createTemplate'                => 'Create template',
+
+    /////////////////////////
+    // User management     //
+    /////////////////////////
+    'status'                        => 'Status',
+    'editUser'                      => 'edit User',
+    'availableRoles'                => 'available roles',
+    'activeRoles'                   => 'active roles'
 ];

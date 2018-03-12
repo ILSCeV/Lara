@@ -188,5 +188,6 @@ Route::post('password/email', ['as' => 'password.email', 'uses' => 'Auth\ForgotP
 Route::get('password/reset/{token}', ['as' => 'password.reset.token', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
 Route::post('password/reset', ['as' => 'password.reset.post', 'uses' => 'Auth\ResetPasswordController@reset']);
 
-Route::resource('user', 'UserController')
-    ->middleware(ClOnly::class);
+Route::post('/user/updateData/{user}', 'UserController@updateData')->name('user.updateData');
+Route::resource('user', 'UserController');
+

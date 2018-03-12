@@ -36,6 +36,7 @@ export default {
     'deleteTemplateMessage' : 'Are you sure that you want to delete this Template?',
 
     'changeUserStatus': 'Are you sure that you want to change the status of this user?',
+    'changeUserStatusHeader' : 'Change user status',
     'replaceShiftTypeConfirmation' : 'Do you really want to replace all shifts that use this shift type:',
     'replaceAll' : 'replace all',
 };

@@ -2,20 +2,24 @@
 
 namespace Lara\Http\Controllers;
 
-use Lara\User;
-
 use Auth;
+use Illuminate\Http\Request;
+use Input;
+use Lara\Http\Middleware\ClOnly;
+use Lara\Role;
+use Lara\Section;
+use Lara\User;
 use Lara\Utilities;
+use Lara\utilities\RoleUtility;
 use Redirect;
 use View;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
 
     public function __construct()
     {
-
+       $this->middleware(ClOnly::class);
     }
 
     /**
@@ -25,14 +29,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $currentUser = Auth::user();
-
         $users = User::with('section')
             ->get()
-            ->sortBy('section.title')
-            ->sortBy('name', SORT_STRING)
-            ->filter(function($user) use ($currentUser) {
-                return $currentUser->can('view', $user);
+            ->sortBy(function (User $user) {
+                return sprintf('%-12s%s%s', $user->section->title, $user->name, $user->status);
             });
 
         return View::make('user.index', compact('users'));
@@ -74,11 +74,25 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        //
+        /** @var User $editUser */
+        $user = User::findOrFail($id);
+
+        $permissionsPersection = [];
+        $sectionQuery = Section::query();
+        if(!Auth::user()->is(RoleUtility::PRIVILEGE_ADMINISTRATOR)){
+            $sectionQuery->whereIn('id',Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_CL));
+        }
+
+        foreach ($sectionQuery->get() as $section){
+            $roles = Role::query()->where('section_id','=',$section->id)->get();
+            $permissionsPersection[$section->id] = $roles;
+        }
+
+        return View::make('user.edituser',compact('user','permissionsPersection'));
     }
 
     /**
@@ -90,14 +104,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->authorize('update', $user);
+        //$this->authorize('update', $user);
 
-        if (!$user) {
-            Utilities::error('User does not exist');
+        if (!Auth::user()->can('update',$user) ) {
+            Utilities::error(trans('mainLang.accessDenied'));
             return Redirect::back();
         }
 
         $user->fill($request->all())->save();
+        Utilities::success(trans('mainLang.update'));
         return Redirect::back();
     }
 
@@ -110,5 +125,54 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateData(Request $request, User $user)
+    {
+        if (!Auth::user()->can('update', $user)) {
+            Utilities::error(trans('mainLang.accessDenied'));
+            return Redirect::back();
+        }
+        $data = [];
+        if(Auth::user()->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) || Auth::user()->hasPermissionsInSection(Section::findOrFail($user->section)->first(),RoleUtility::PRIVILEGE_CL)){
+            $data['name'] = Input::get('name');
+            $data['email'] = Input::get('email');
+            $data['section'] = Input::get('section');
+            $data['status'] = Input::get('status');
+        }
+
+        $sectionIds = Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_CL);
+        $assignedRoleIds = [];
+        $unassignedRoleIds = [];
+        foreach ($sectionIds as $sectionId){
+            $lAssignedRoleIds = explode(',',\Input::get('role-assigned-section-'.$sectionId));
+            $assignedRoleIds = array_merge($lAssignedRoleIds, $assignedRoleIds);
+
+            $lUnassignedRoleIds = explode(',',\Input::get('role-unassigned-section-'.$sectionId));
+            $unassignedRoleIds = array_merge($lUnassignedRoleIds, $unassignedRoleIds);
+        }
+
+        $assignedRoles = Role::query()->whereIn('id',$assignedRoleIds)->get();
+        $unassignedRoles = Role::query()->whereIn('id',$unassignedRoleIds)->get();
+
+        $user->fill($data);
+        $user->save();
+
+        $assignedRoles->each(function(Role $role) use ($user) {
+            $user->roles()->attach($role);
+        });
+        $unassignedRoles->each(function(Role $role) use ($user) {
+            $user->roles()->detach($role);
+        });
+
+        Utilities::success(trans('mainLang.update'));
+        return Redirect::back();
     }
 }

@@ -511,6 +511,14 @@ return [
 
     'Search'                        => 'Suche',
     'facebookNeeded'                => 'Piratenbuch benötigt',
-    'createTemplate'                => 'Kaperplan erstellen'
+    'createTemplate'                => 'Kaperplan erstellen',
+
+    /////////////////////////
+    // User management     //
+    /////////////////////////
+    'status'                        => 'Status',
+    'editUser'                      => 'Benutzer bearbeiten',
+    'availableRoles'                => 'verfügbare Rollen',
+    'activeRoles'                   => 'aktive Rollen'
 
 ];

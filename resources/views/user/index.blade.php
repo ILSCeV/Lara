@@ -14,11 +14,9 @@
             <table class="table info table-hover table-condensed">
                 <thead>
                 <tr class="active">
-                    @is('admin')
-                        <th class="col-md-1 col-xs-1 padding-left-15">
-                            {{ trans('mainLang.section') }}
-                        </th>
-                    @endis
+                    <th class="col-md-1 col-xs-1 padding-left-15">
+                        {{ trans('mainLang.section') }}
+                    </th>
                     <th class="col-md-3 col-xs-3">
                         Name
                     </th>
@@ -45,27 +43,29 @@
 
                 @foreach($users as $user)
                     <tr>
-                        @is('admin')
-                            <td class="padding-left-15">
-                                {{ $user->section->title }}
-                            </td>
-                        @endis
+                        <td class="padding-left-15">
+                           {{ $user->section->title }}
+                        </td>
                         <td>
-                            {{ $user->name }}
+                            <a href="{{route("user.edit",["id"=>$user->id])}}">
+                                {{ $user->name }}
+                            </a>
                         </td>
                         <td>
                             {{ $user->email }}
                         </td>
                         <td>
-                            {{ Form::model($user, ['route' => ['user.update', $user->id], 'id' => 'change-user-status-' . $user->id, 'method' => 'PUT']) }}
-                            <select name="status" class="selectpicker" data-id="{{$user->id}}" data-name="{{$user->name}}">
-                                @foreach(['candidate', 'member', 'veteran', 'ex-member', 'ex-candidate'] as $status)
-                                    <option value="{{ $status }}" {{ $status === $user->status ? "selected" : "" }}>
-                                        {{ trans($user->section->title . "." . $status) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            {{ Form::close() }}
+                            @canEditUser($user)
+                                {{ Form::model($user, ['route' => ['user.update', $user->id], 'id' => 'change-user-status-' . $user->id, 'class'=>'change-user-status-form', 'method' => 'PUT']) }}
+                                <select name="status" class="selectpicker" data-id="{{$user->id}}" data-name="{{$user->name}}">
+                                    @foreach(['candidate', 'member', 'veteran', 'ex-member', 'ex-candidate'] as $status)
+                                        <option value="{{ $status }}" {{ $status === $user->status ? "selected" : "" }}>
+                                            {{ trans($user->section->title . "." . $status) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                {{ Form::close() }}
+                            @endcanEditUser
                         </td>
                     </tr>
                 @endforeach

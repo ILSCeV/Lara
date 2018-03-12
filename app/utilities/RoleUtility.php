@@ -8,10 +8,10 @@
 namespace Lara\utilities;
 
 
-use Log;
 use Lara\Role;
 use Lara\Section;
 use Lara\User;
+use Log;
 
 class RoleUtility
 {
@@ -23,7 +23,7 @@ class RoleUtility
 
     const PRIVILEGE_MEMBER = "member";
 
-    const ALL_PRIVILEGES = [self::PRIVILEGE_CL, self::PRIVILEGE_ADMINISTRATOR, self::PRIVILEGE_MARKETING, self::PRIVILEGE_MEMBER];
+    const ALL_PRIVILEGES = [self::PRIVILEGE_ADMINISTRATOR, self::PRIVILEGE_CL, self::PRIVILEGE_MARKETING, self::PRIVILEGE_MEMBER];
 
     public static function assignPrivileges(User $user, Section $section, $privilege)
     {

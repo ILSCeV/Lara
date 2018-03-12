@@ -2,8 +2,8 @@
 
 namespace Lara\Policies;
 
-use Lara\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Lara\User;
 use Lara\utilities\RoleUtility;
 
 class UserPolicy
@@ -21,15 +21,15 @@ class UserPolicy
     public function before($user, $ability)
     {
         /** @var User $user */
-        return $user->is([RoleUtility::PRIVILEGE_ADMINISTRATOR,RoleUtility::PRIVILEGE_CL]);
+        return $user->is([RoleUtility::PRIVILEGE_ADMINISTRATOR, RoleUtility::PRIVILEGE_CL]);
 
     }
 
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \Lara\User  $user
-     * @param  \Lara\User  $model
+     * @param  \Lara\User $user
+     * @param  \Lara\User $model
      * @return mixed
      */
     public function view(User $user, User $model)
@@ -40,31 +40,31 @@ class UserPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \Lara\User  $user
+     * @param  \Lara\User $user
      * @return mixed
      */
     public function create(User $user)
     {
-        return $user->is([RoleUtility::PRIVILEGE_ADMINISTRATOR,RoleUtility::PRIVILEGE_CL]);
+        return $user->is([RoleUtility::PRIVILEGE_ADMINISTRATOR, RoleUtility::PRIVILEGE_CL]);
     }
 
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \Lara\User  $user
-     * @param  \Lara\User  $model
-     * @return mixed
+     * @param  \Lara\User $user
+     * @param  \Lara\User $model
+     * @return boolean
      */
     public function update(User $user, User $model)
     {
-        return $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) || $user->section_id == $model->section_id;
+        return $user->is([RoleUtility::PRIVILEGE_ADMINISTRATOR, RoleUtility::PRIVILEGE_CL]);
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \Lara\User  $user
-     * @param  \Lara\User  $model
+     * @param  \Lara\User $user
+     * @param  \Lara\User $model
      * @return mixed
      */
     public function delete(User $user, User $model)

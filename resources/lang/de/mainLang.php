@@ -513,5 +513,13 @@ return [
 
     'search'                        => 'Suche',
     'facebookNeeded'                => 'Facebook benötigt',
-    'createTemplate'                => 'Vorlage erstellen'
+    'createTemplate'                => 'Vorlage erstellen',
+
+    /////////////////////////
+    // User management     //
+    /////////////////////////
+    'status'                        => 'Status',
+    'editUser'                      => 'Benutzer bearbeiten',
+    'availableRoles'                => 'verfügbare Rollen',
+    'activeRoles'                   => 'aktive Rollen'
 ];

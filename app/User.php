@@ -4,6 +4,7 @@ namespace Lara;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Lara\utilities\RoleUtility;
 
 /**
@@ -90,12 +91,31 @@ class User extends Authenticatable
             ->where('section_id', '=', $section->id)
             ->exists();
     }
+    /**
+     * @param Role $role
+     * @return boolean user has role
+     */
+    public function hasPermission(Role $role)
+    {
+        return $this->roles()->where('id','=',$role->id)->exists();
+    }
 
     /**
-     * @param $type string
+     * @param string $type
      * @return \Illuminate\Database\Eloquent\Collection/Role
      */
     public function getRolesOfType($type){
         return $this->roles()->where('name','=',$type)->get();
+    }
+
+    /**
+     * @param string $type
+     * @return Collection/int
+     */
+    public function getSectionsIdForRoles($type)
+    {
+        return $this->getRolesOfType($type)->map(function (Role $role){
+            return $role->section_id;
+        });
     }
 }

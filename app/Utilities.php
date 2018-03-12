@@ -42,7 +42,7 @@ class Utilities
     }
 
     /** checks if a user has the permission to do what he want
-     * @param $permissions the permissions the user is needing
+     * @param string | array $permissions the permissions the user is needing
      * @return true or false
      */
     static function requirePermission($permissions)
@@ -74,6 +74,12 @@ class Utilities
     {
         Session::put('message', $message);
         Session::put('msgType', 'danger');
+    }
+
+    static function success($message)
+    {
+        Session::put('message', $message);
+        Session::put('msgType', 'success');
     }
 
 }

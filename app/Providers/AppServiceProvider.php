@@ -3,11 +3,11 @@
 namespace Lara\Providers;
 
 use Auth;
-use Illuminate\Support\ServiceProvider;
-
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\App;
-use Lara\ClubEvent;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
+use Lara\User;
+use Lara\utilities\RoleUtility;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -42,7 +42,16 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
 
-            return $user->is("admin");
+            return $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR);
+        });
+
+        Blade::if ('canEditUser', function (User $editUser) {
+            $user = Auth::user();
+            if(!$user) {
+                return false;
+            }
+
+            return $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) || $user->getSectionsIdForRoles(RoleUtility::PRIVILEGE_CL)->contains($editUser->section_id);
         });
     }
 

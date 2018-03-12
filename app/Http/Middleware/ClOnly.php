@@ -23,7 +23,7 @@ class ClOnly
             return Redirect('/');
         }
 
-        if (!Auth::user()->is(RoleUtility::PRIVILEGE_CL)) {
+        if (!Auth::user()->is([RoleUtility::PRIVILEGE_CL,RoleUtility::PRIVILEGE_ADMINISTRATOR])) {
             Utilities::error(trans('auth.missingPermissions'));
             return Redirect('/');
         }
