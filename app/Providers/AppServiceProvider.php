@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Lara\Section;
 use Lara\User;
 use Lara\utilities\RoleUtility;
 
@@ -33,6 +34,14 @@ class AppServiceProvider extends ServiceProvider
             }
 
             return $user->is($groups);
+        });
+
+        Blade::if ('isInSection', function (array $groups, Section $section) {
+            $user = Auth::user();
+            if (!$user) {
+                return false;
+            }
+            return $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) || $user->hasPermissionsInSection($section, ...$groups);
         });
 
         Blade::if('admin', function() {

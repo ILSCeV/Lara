@@ -374,7 +374,7 @@ class ClubEventController extends Controller
 
         $userId = Auth::user()->person->prsn_ldap_id;
 
-        if(Utilities::requirePermission(["marketing","clubleitung","admin"]) || $userId == $created_by) {
+        if(Auth::user()->hasPermissionsInSection($event->section, RoleUtility::PRIVILEGE_MARKETING) || $userId == $created_by) {
             return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
                 'shifts', 'title', 'subtitle', 'type',
                 'section', 'filter', 'timeStart', 'timeEnd',

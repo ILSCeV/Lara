@@ -86,11 +86,13 @@ class User extends Authenticatable
 
     public function hasPermissionsInSection(Section $section, ...$permission)
     {
-        return $this->roles()
-            ->whereIn('name', $permission)
-            ->where('section_id', '=', $section->id)
-            ->exists();
+        return $this->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) ||
+            $this->roles()
+                ->whereIn('name', $permission)
+                ->where('section_id', '=', $section->id)
+                ->exists();
     }
+
     /**
      * @param Role $role
      * @return boolean user has role
