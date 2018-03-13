@@ -96,13 +96,7 @@ class ClubEventController extends Controller
                        ->get();
 
         // get a list of available templates to choose from
-        $allowedSections = Auth::user()
-            ->roles()
-            ->where('name','=',RoleUtility::PRIVILEGE_MARKETING)
-            ->get()
-            ->map(function (Role $role){
-                return $role->section_id;
-            })->toArray();
+        $allowedSections = Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_MEMBER)->toArray();
         if(Utilities::requirePermission(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             $templates = Template::all()->sortBy('title');
         } else {
