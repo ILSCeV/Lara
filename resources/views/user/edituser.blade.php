@@ -13,14 +13,24 @@
                 </div>
                 <div class="panel-body">
                     @canEditUser($user)
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
                             <label class="control-label" for="userName"> Name </label>
                             {{ Form::text('name',$user->name,['class'=>"form-control" ,'id'=>'userName','required'=>"",'autofocus'=>'']) }}
+                            @if ($errors->has('name'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                            @endif
                         </div>
                         <div class="clearfix"></div>
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                             <label class="control-label" for="email"> Email </label>
                             {{ Form::email('email',$user->email,['class'=>"form-control" ,'id'=>'email']) }}
+                            @if ($errors->has('email'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                            @endif
                         </div>
                         <div class="clearfix"></div>
                         <div class="form-group{{ $errors->has('section') ? ' has-error' : '' }}">

@@ -4,6 +4,9 @@ namespace Lara\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Lara\Policies\RolePolicy;
+use Lara\Policies\UserPolicy;
+use Lara\Role;
 use Lara\Section;
 use Lara\User;
 use Lara\utilities\RoleUtility;
@@ -17,7 +20,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'Lara\Model' => 'Lara\Policies\ModelPolicy',
-        'Lara\User' => 'Lara\Policies\UserPolicy'
+        User::class => UserPolicy::class,
+        Role::class => RolePolicy::class,
+
     ];
 
     /**

@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 
 use Gate;
 
+use Illuminate\Validation\Rule;
 use Lara\User;
 use Lara\Person;
 use Lara\Section;
@@ -64,8 +65,8 @@ class RegisterController extends Controller
                 'required',
                 Rule::in(
                     Section::all()->map(
-                        function($section) { $section->id;}
-                    )
+                        function(Section $section) { return $section->id;}
+                    )->toArray()
                 )
             ],
             'status' => [

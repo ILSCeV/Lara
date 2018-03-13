@@ -4,8 +4,10 @@ namespace Lara\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Input;
 use Lara\Http\Middleware\ClOnly;
+use Lara\Logging;
 use Lara\Role;
 use Lara\Section;
 use Lara\User;
@@ -20,6 +22,34 @@ class UserController extends Controller
     public function __construct()
     {
        $this->middleware(ClOnly::class);
+    }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(User $user,array $data)
+    {
+        return \Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users,id,'.$user->id,
+            'section' => [
+                'required',
+                Rule::in(
+                    Section::all()->map(
+                        function(Section $section) { return $section->id;}
+                    )->toArray()
+                )
+            ],
+            'status' => [
+                'required',
+                Rule::in(
+                    ['candidate', 'member', 'veteran']
+                )
+            ]
+        ]);
     }
 
     /**
@@ -142,10 +172,15 @@ class UserController extends Controller
         }
         $data = [];
         if(Auth::user()->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) || Auth::user()->hasPermissionsInSection(Section::findOrFail($user->section)->first(),RoleUtility::PRIVILEGE_CL)){
+            $validator = $this->validator($user, Input::all());
+            if ($validator->fails()) {
+                return Redirect::back()->withErrors($validator);
+            }
             $data['name'] = Input::get('name');
             $data['email'] = Input::get('email');
             $data['section'] = Input::get('section');
             $data['status'] = Input::get('status');
+
         }
 
         $sectionIds = Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_CL);
@@ -166,10 +201,18 @@ class UserController extends Controller
         $user->save();
 
         $assignedRoles->each(function(Role $role) use ($user) {
-            $user->roles()->attach($role);
+            if(!Auth::user()->can('assign',$role)){
+                \Log::warning(trans('mainLang.accessDenied') . ' ' . $role->name);
+            } else {
+                $user->roles()->attach($role);
+            }
         });
         $unassignedRoles->each(function(Role $role) use ($user) {
-            $user->roles()->detach($role);
+            if(!Auth::user()->can('remove',$role)){
+                \Log::warning(trans('mainLang.accessDenied') . ' ' . $role->name . ' ' . $user->name);
+            } else {
+                $user->roles()->detach($role);
+            }
         });
 
         Utilities::success(trans('mainLang.update'));
