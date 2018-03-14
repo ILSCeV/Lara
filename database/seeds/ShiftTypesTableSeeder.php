@@ -26,6 +26,6 @@ class ShiftTypesTableSeeder extends Seeder
         $shiftTypes = array_merge($shiftTypes,$bdShiftTypes);
         \DB::table('shifttypes')->whereNotIn('id',$shiftTypes)->delete();
 
-        factory(Lara\ShiftType::class, 20)->create();
+        factory(Lara\ShiftType::class, 50)->create();
     }
 }

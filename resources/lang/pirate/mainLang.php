@@ -454,6 +454,7 @@ return [
     'management'                    => 'Verwaltung',
     'shiftType'                       => 'Diensttyp',
     'shiftTypes'                      => 'Diensttypen',
+    'replaceAll'                    => 'alle ersetzen',
     'shift'                         => 'Dienst',
     'start'                         => 'Beginn',
     'end'                           => 'Ende',
@@ -463,6 +464,7 @@ return [
     'warningNotReversible'          => 'Diese Aktion kann man nicht rückgängig machen!',
     'editDetails'                   => 'Details anpassen',
     'deleteThisShiftType'             => 'Entfernen',
+    'editShiftType'                 => 'Diensttyp bearbeiten',
 
     'reset'                         => 'Zurücksetzen',
     'update'                        => 'Änderungen speichern',

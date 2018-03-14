@@ -162,3 +162,9 @@ Route::post('/edit/template/{id}',                                 'TemplateCont
 Route::post('/delete/template/{id}',                          'TemplateController@destroy')->name('template.delete');
 Route::get('/create/template/',                               'TemplateController@create')->name('template.create');
 
+//ShiftType
+Route::post('/overrideShiftType/',                              'ShiftTypeController@overrideShiftType')->name('shiftTypeOverride');
+Route::post('/completeOverrideShiftType',                       'ShiftTypeController@completeOverrideShiftType')->name('completeOverrideShiftType');
+Route::get('/shiftTypeSearch/{filter?}',                               'ShiftTypeController@index')->name('shiftTypeSearch');
+Route::post('/seachShiftType/',                                 'ShiftTypeController@search')->name('searchShiftType');
+
