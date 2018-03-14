@@ -8,7 +8,7 @@ use Lara\ShiftType;
 class CreateBdTemplate extends Migration
 {
     const BD_TEMPLATE_NAME = 'BD Template';
-    
+
     /**
      * Run the migrations.
      *
@@ -16,7 +16,7 @@ class CreateBdTemplate extends Migration
      */
     public function up()
     {
-        
+
         /* @var $avTemplate ShiftType */
         $avTemplate = $this->createShiftType('AV');
         /* @var $discoTemplate ShiftType */
@@ -29,25 +29,25 @@ class CreateBdTemplate extends Migration
         $barTemplate = $this->createShiftType('Bar');
         /* @var $einlassTemplate ShiftType */
         $einlassTemplate = $this->createShiftType('Einlass');
-        
+
         /* @var $shiftType ShiftType */
         $shiftTypes = collect([$avTemplate, $discoTemplate, $tresenTemplate, $barTemplate, $einlassTemplate]);
         foreach ($shiftTypes as $shiftType) {
             $shiftType->save();
         }
-        
+
         $template = new Schedule();
         $template->fill([
             'schdl_title'                  => self::BD_TEMPLATE_NAME,
             'schdl_time_preparation_start' => '20:00:00',
-            'schdl_is_template'            => true,
+            'schdl_is_template'            => '1',
             'entry_revisions'              => '',
         ]);
         $template->save();
         /* @var $shiftType ShiftType */
         $shifts = $shiftTypes->flatMap(function ($shiftType) use ($template) {
             $shiftCount = $shiftType->title == 'AV' || $shiftType->title == 'Musik' ? 1 : 2;
-            
+
             return collect(range(1, $shiftCount))->map(function ($sc) use ($shiftType, $template) {
                 $shift = new Shift();
                 $shift->fill([
@@ -57,7 +57,7 @@ class CreateBdTemplate extends Migration
                     'end'                => $shiftType->end,
                     'statistical_weight' => $shiftType->statistical_weight,
                 ]);
-                
+
                 return $shift;
             });
         });
@@ -65,7 +65,7 @@ class CreateBdTemplate extends Migration
             $shift->save();
         }
     }
-    
+
     /** finds and return a new shifttype
      * @param $shiftName shifttype name
      * @return ShiftType
@@ -78,10 +78,10 @@ class CreateBdTemplate extends Migration
         /* @var $shiftType ShiftType */
         $shiftType = ShiftType::where('title', '=', $shiftName)->firstOrNew(['title'=>$shiftName, 'statistical_weight'=>1])->replicate();
         $shiftType->fill($shiftTimeRange);
-        
+
         return $shiftType;
     }
-    
+
     /**
      * Reverse the migrations.
      *
@@ -101,10 +101,10 @@ class CreateBdTemplate extends Migration
         if ($template != null) {
             $template->delete();
         }
-        
+
         $shiftTypeStart = '20:00:00';
         $shiftTypeEnd = '01:00:00';
-        
+
         $shiftTypeNames = ['AV', 'Musik', 'Bier', 'Bar', 'Einlass'];
         $shiftTypes = ShiftType::whereIn('title', $shiftTypeNames)
             ->where('start', '=', $shiftTypeStart)

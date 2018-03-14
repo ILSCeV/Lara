@@ -31,5 +31,9 @@ export default {
     "publishEventWarning":"If you publish an event it will be visible in the public calendar-feeds.",
     "legend":"Legend",
     'confirmPublishingEvent': 'Are you sure you want to publish this event to calendar feed?',
-    'confirmUnpublishingEvent': 'Are you sure you want to remove this event from the calendar feed?'
+    'confirmUnpublishingEvent': 'Are you sure you want to remove this event from the calendar feed?',
+    'deleteTemplate' : 'delete Template',
+    'deleteTemplateMessage' : 'Are you sure that you want to delete this Template?',
+    'replaceShiftTypeConfirmation' : 'Do you really want to replace all shifts that use this shift type:',
+    'replaceAll' : 'replace all',
 };

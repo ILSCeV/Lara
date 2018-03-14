@@ -12,20 +12,20 @@
 |--------------------------------------------------------------------------
 | Default Laravel routes for reference
 |--------------------------------------------------------------------------
-| 
+|
 | Route::get('/', function () {
 |     return view('welcome');
 |  });
 |
 | Route::get('/', 'WelcomeController@index');
-| 
+|
 | Route::get('home', 'HomeController@index');
-| 
+|
 | Route::controllers([
 | 	'auth' => 'Auth\AuthController',
 | 	'password' => 'Auth\PasswordController',
 | 	]);
-| 
+|
 */
 
 
@@ -91,6 +91,7 @@ Route::get('/calendar/{year}/{month}/{day}',	'DateController@showDate');
 
 // CREATE
 Route::get('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventController@create');
+Route::post('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventController@create');
 
 
 // AJAX calls
@@ -120,7 +121,6 @@ Route::resource('club', 			'ClubController', 			['only'   => ['index']]);
 Route::resource('survey',			'SurveyController',			['except' => ['index']]);
 Route::resource('survey.answer', 	'SurveyAnswerController', 	['only'   => ['show', 'store', 'update', 'destroy']]);
 Route::resource('section', 			'SectionController');
-
 
 // STATISTICS
 Route::get('/statistics/month/{year?}/{month?}',	'StatisticsController@showStatistics');
@@ -154,3 +154,17 @@ Route::get('/ical/event/{id}/publish', 							'IcalController@togglePublishState
 
 // Lara Upgrade
 Route::get('/update',                                         'AdminController@startUpdateProcess')->name('lara.update');
+
+//Templates
+Route::get('/templates',                                      'TemplateController@index')->name('template.overview');
+Route::get('/template/{id}',                                  'TemplateController@show')->name('template.edit');
+Route::post('/edit/template/{id}',                                 'TemplateController@store')->name('template.update');
+Route::post('/delete/template/{id}',                          'TemplateController@destroy')->name('template.delete');
+Route::get('/create/template/',                               'TemplateController@create')->name('template.create');
+
+//ShiftType
+Route::post('/overrideShiftType/',                              'ShiftTypeController@overrideShiftType')->name('shiftTypeOverride');
+Route::post('/completeOverrideShiftType',                       'ShiftTypeController@completeOverrideShiftType')->name('completeOverrideShiftType');
+Route::get('/shiftTypeSearch/{filter?}',                               'ShiftTypeController@index')->name('shiftTypeSearch');
+Route::post('/seachShiftType/',                                 'ShiftTypeController@search')->name('searchShiftType');
+

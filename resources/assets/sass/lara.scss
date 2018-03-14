@@ -1,5 +1,7 @@
 
 @import "../css/bootstrap-select.min.css";
+@import "../../../node_modules/bootstrap-select/sass/variables";
+@import "../../../node_modules/bootstrap-select/sass/bootstrap-select";
 @import "../css/bootstrap-bootswatch-paper.min.css";
 @import "../css/font-awesome.min.css";
 @import "../css/vedst.css";
@@ -7,3 +9,4 @@
 @import "event/createEdit";
 @import "../css/monthViewResponsive.css";
 @import "../css/palette.css";
+@import "../css/templateManagement/templateManagement.css";
