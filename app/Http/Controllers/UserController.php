@@ -182,8 +182,13 @@ class UserController extends Controller
             $data['status'] = Input::get('status');
 
         }
-
-        $sectionIds = Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_CL);
+        if(Auth::user()->is(RoleUtility::PRIVILEGE_ADMINISTRATOR)){
+            $sectionIds =  Section::all()->map(function (Section $section){
+                return $section->id;
+            });
+        } else {
+            $sectionIds = Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_CL);
+        }
         $assignedRoleIds = [];
         $unassignedRoleIds = [];
         foreach ($sectionIds as $sectionId){
