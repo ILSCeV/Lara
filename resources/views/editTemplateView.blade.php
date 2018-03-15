@@ -11,18 +11,18 @@
         {!! Form::open(['method' => 'POST', 'route' => ['template.update', $template->id], 'class'=> 'form-inline']) !!}
     @endif
     <div class="row">
-        <div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
+        <div class="panel col-md-6 col-sm-12 col-xs-12 ">
             <div class="panel-heading">
                 <h4 class="panel-title">{{ trans('mainLang.changeEventJob') }}:</h4>
             </div>
 
             <br>
 
-            <div class="panel-body no-padding">
+            <div class="panel-body">
                 <br>
 
-                <div class="panel-body no-padding">
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div class="panel-body">
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12 ">
                         <label for="title" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.title') }}:</label>
                         {!! Form::text('title',
                                         $template->title,
@@ -31,7 +31,7 @@
                                               'style'=>'cursor: auto',
                                               'required') ) !!}
                     </div>
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12 ">
                         <label for="subtitle" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.subTitle') }}
                             :</label>
                         {!! Form::text('subtitle',
@@ -166,8 +166,8 @@
                 </div>
             </div>
         </div>
-        <div class="container col-xs-12 col-sm-12 col-md-6 no-padding-xs">
-            <br class="visible-xs visible-sm">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="container col-xs-12 col-sm-12 col-md-5 ">
             <div class="panel">
                 <div class="panel-heading">
                     <h4 class="panel-title">{{ trans('mainLang.moreInfos') }}:</h4>
