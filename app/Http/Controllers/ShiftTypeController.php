@@ -78,10 +78,8 @@ class ShiftTypeController extends Controller
         $shifts = Shift::where('shifttype_id', '=', $id)
             ->with('schedule.event.section')
             ->paginate(25);
-        $templatesQuery = Template::whereHas('shifts', function ($query) use ($shifts) {
-            $query->whereIn('id',$shifts->map(function($shift){
-                return $shift->id;
-            })->toArray());
+        $templatesQuery = Template::whereHas('shifts', function ($query) use ($id) {
+            $query->where('shifttype_id','=',$id);
         })->with('section')
         ->orderBy('title');
 
