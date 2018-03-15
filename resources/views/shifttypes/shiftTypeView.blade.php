@@ -190,7 +190,7 @@
                                                 @continue
                                             @endif
                                             @php
-                                                $isAllowedToEdit=\Lara\Utilities::requirePermission("admin") || $template->section->title == Session::get('userClub');
+                                                $isAllowedToEdit=\Lara\Utilities::requirePermission("admin") ||  Auth::user()->getSectionsIdForRoles(Roles::PRIVILEGE_MARKETING)->contains($template->section->id);
                                             @endphp
                                         <tr class="@if(!$isAllowedToEdit) active @endif">
                                             <td class="text-center">

@@ -12,6 +12,7 @@ use Lara\Shift;
 use Lara\ShiftType;
 use Lara\Template;
 use Lara\Utilities;
+use Lara\utilities\RoleUtility;
 use Log;
 use Redirect;
 use Session;
@@ -194,23 +195,23 @@ class ShiftTypeController extends Controller
         if (!Utilities::requirePermission('admin')) {
             $shiftFilter = $shifts->filter(function (Shift $shift) {
                 /** @var Schedule $schedule */
-                $schedule = $shift->schedule()->first();
+                $schedule = $shift->schedule;
                 if (is_null($schedule)) {
                     return false;
                 }
                 /** @var ClubEvent $event */
-                $event = $schedule->event()->first();
+                $event = $schedule->event;
                 if (is_null($event)) {
                     return false;
                 }
                 /** @var Section $section */
-                $section = $event->section()->first();
-                return $section->title == Session::get('userClub');
+                $section = $event->section;
+                return Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_MARKETING)->contains($section->id)  ;
             });
             $templateShift = Template::whereHas('shifts', function ($query) use ($shiftTypeId) {
                 $query->where('shifttype_id', '=', $shiftTypeId);
             })->whereHas('section', function ($query) {
-                $query->where('title', '=', Session::get('userClub'));
+                $query->whereIn('id', Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_MARKETING)->toArray());
             })->get()->flatMap(function (Template $template) {
                 return $template->shifts()->get();
             })->filter(function (Shift $shift) use ($shiftTypeId) {
