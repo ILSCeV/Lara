@@ -186,7 +186,7 @@
                                 <tbody>
                                     @foreach($templates as $template)
                                         @foreach($template->shifts as $shift)
-                                            @if($shift->shifttype_id !== $current_shiftType->id)
+                                            @if($shift->shifttype_id != $current_shiftType->id)
                                                 @continue
                                             @endif
                                             @php
