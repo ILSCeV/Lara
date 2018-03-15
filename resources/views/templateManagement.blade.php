@@ -12,8 +12,9 @@
         </div>
 
         <div class="panel panel-body no-padding">
-            <table class="table info table-hover table-condensed">
-                <thead>
+            <div class="table-responsive">
+                <table class="table info table-hover table-condensed">
+                    <thead>
                     <tr class="active">
                         <th>
                             #
@@ -37,8 +38,8 @@
                             &nbsp;
                         </th>
                     </tr>
-                </thead>
-                <tbody class="container" id="templateOverviewTable">
+                    </thead>
+                    <tbody class="container" id="templateOverviewTable">
                     <div class="table-control">
                         <span class="table-control__create-new-template">
                             <a class="btn btn-success" href="{{route('template.create')}}">
@@ -87,8 +88,9 @@
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
