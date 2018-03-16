@@ -18,10 +18,15 @@
 				<h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.shiftTypes') }}</h4>
 		</div>
 		<div class="panel panel-body no-padding">
-            {{Form::open( ['id'=>'shiftTypeFilterForm','class'=>'form-inline rounded', 'route'=>'searchShiftType'] ) }}
-            {{ Form::text('filter','',['class'=>'form-control border', 'placeholder'=>trans('mainLang.search')]) }}
-            <button type="submit" class="form-inline btn btn-success"> {{trans('mainLang.search') }}</button>
+            {{Form::open( ['id'=>'shiftTypeFilterForm','class'=>' paddingTop form-inline rounded', 'route'=>'searchShiftType'] ) }}
+            <div class="form-group col-md-2">
+                {{ Form::text('filter','',['class'=>'form-control border', 'placeholder'=>trans('mainLang.search')]) }}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success"> {{trans('mainLang.search') }}</button>
+            </div>
             {{Form::close()}}
+            <div class="clearfix paddingTop"></div>
             <div class="table-responsive">
                 <table class="table info table-hover table-condensed">
                     <thead>
