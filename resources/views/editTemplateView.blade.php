@@ -15,13 +15,8 @@
             <div class="panel-heading">
                 <h4 class="panel-title">{{ trans('mainLang.changeEventJob') }}:</h4>
             </div>
-
-            <br>
-
             <div class="panel-body">
-                <br>
-
-                <div class="panel-body">
+                <div class="">
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 ">
                         <label for="title" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.title') }}:</label>
                         {!! Form::text('title',
@@ -32,17 +27,16 @@
                                               'required') ) !!}
                     </div>
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 ">
-                        <label for="subtitle" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.subTitle') }}
-                            :</label>
+                        <label for="subtitle" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.subTitle') }}:</label>
                         {!! Form::text('subtitle',
                                         $template->subtitle,
                                         array('class'=>'form-control',
                                                 'placeholder'=>trans('mainLang.placeholderSubTitleWineEvening'),
                                                 'style'=>'cursor: auto') ) !!}
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
                         <label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.type') }}:</label>
-                        <div class="col-md-10 col-sm-10 col-xs-10">
+                        <div class="col-md-9 col-sm-9 col-xs-9">
                             @for($i = 0;$i<10;$i++)
                                 <div class="radio">
                                     <label>
@@ -54,16 +48,16 @@
                             @endfor
                         </div>
                     </div>
-                    <br>
-                    <div class="form-group">
+
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
                         <label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2"> &nbsp; </label>
-                        <label class="col-md-8 col-sm-8 col-xs-8">
+                        <label class="col-md-10 col-sm-10 col-xs-10">
                             {!! Form::checkbox('isPrivate', '1', ($template->is_private + 1)%2,['class'=>'form-control']) !!}
                             {{ trans('mainLang.showExtern') }}
                         </label>
                     </div>
-                    <br/>
-                    <div class="form-group">
+
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
                         <label for="evnt_type" class="col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.facebookNeeded') }}: </label>
                         <div class="input-group">
                             <span class="input-group-addon">
@@ -80,9 +74,9 @@
                             </span>
                         </div>
                     </div>
-                    <br>
-                    <div class="form-group @if(!\Lara\Utilities::requirePermission("admin")) hidden @endif>">
-                        <label for="section" class="control-label">{{ trans('mainLang.section') }}: &nbsp;</label>
+
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12 @if(!\Lara\Utilities::requirePermission("admin")) hidden @endif>">
+                        <label for="section" class="control-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.section') }}: &nbsp;</label>
                         <select id="section" class="selectpicker" name="section" >
                             @foreach($sections as $section)
                                 <option value="{{$section->id}}"
@@ -92,8 +86,8 @@
                         </select>
                     </div>
                     <br>
-                    <div class="form-group " id="filter-checkboxes">
-                        <label for="filter" class="control-label ">{{ trans('mainLang.showFor') }}: &nbsp;</label>
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
+                        <label for="filter" class="control-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
                         <div id="filter" class="input-group">
                             @if($template->id == null)
                                 @foreach($sections as $section)
@@ -112,7 +106,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
 
                         <div id="priceTickets" class="input-group">
                             <span for="priceTickets" class="control-label input-group-addon">
@@ -129,7 +123,7 @@
                         </div>
                     </div>
                     <br>
-                    <div class="form-group ">
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
                         <div id="price" class="input-group">
                                 <span for="price" class="control-label input-group-addon" >
                                     {{ trans('mainLang.price') }}:
@@ -145,22 +139,23 @@
 
                     </div>
 
-                    <div class="form-group">
-                        <label for="preparationTime" class="control-label ">{{ trans('mainLang.DV-Time') }}:</label>
-                        {!! Form::input('time', 'preparationTime', $template->time_preparation_start, ['class'=>'form-control']) !!}
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                        <label for="preparationTime" class="control-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.DV-Time') }}:</label>
+                        {!! Form::input('time', 'preparationTime', $template->time_preparation_start, ['class'=>'form-control ']) !!}
+
                     </div>
-                    <br />
-                    <div class="form-group ">
-                        <label for="beginDate" class="control-label">{{ trans('mainLang.begin') }}:</label>
-                        <div class="col-md-10 col-sm-10 col-xs-12">
-                            <span class="visible-xs"><br></span>{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', $template->time_start) !!}
+
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                        <label for="beginDate" class="control-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.begin') }}:</label>
+                        <div>
+                            {!! Form::input('time', 'beginTime', $template->time_start, ['class'=>'form-control'] ) !!}
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="endDate" class="control-label">{{ trans('mainLang.end') }}:</label>
-                        <div class="col-md-10 col-sm-10 col-xs-12">
-                            <span class="visible-xs"><br></span>{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $template->time_end) !!}
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                        <label for="endDate" class="control-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.end') }}:</label>
+                        <div>
+                             {!! Form::input('time', 'endTime', $template->time_end, ['class'=>'form-control']) !!}
                         </div>
                     </div>
                 </div>
