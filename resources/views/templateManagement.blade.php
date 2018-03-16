@@ -40,16 +40,17 @@
                     </tr>
                     </thead>
                     <tbody class="container" id="templateOverviewTable">
-                    <div class="table-control">
-                        <span class="table-control__create-new-template">
-                            <a class="btn btn-success" href="{{route('template.create')}}">
-                                {{ trans('mainLang.createTemplate') }}
-                            </a>
-                        </span>
-                        <span class="table-control__search fa-pull-right form-inline has-feedback">
-                           <label for="templateOverviewFilter" class="test"> {{ trans('mainLang.search') }}: </label>
-                           <input type="text" class="form-control" id="templateOverviewFilter">
-                        </span>
+
+                    <div class="table-control form-inline">
+                        <div class="form-group has-feedback">
+                            <label for="templateOverviewFilter" class="text-primary"> {{ trans('mainLang.search') }}: </label>
+                            <input type="text" class="form-control" id="templateOverviewFilter" autofocus>
+                        </div>
+                        <div class="form-group pull-right">
+                           <a class="btn btn-success" href="{{route('template.create')}}">
+                              {{ trans('mainLang.createTemplate') }}
+                           </a>
+                        </div>
                     </div>
 
                     @foreach($templates as $index=>$template)
