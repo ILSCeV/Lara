@@ -161,14 +161,12 @@ input[type=number],
     -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
     line-height: normal;
-    word-break: break-all;
     padding: 5%;
     overflow: visible;
     text-overflow: clip;
     display: flex;
     color: white;
     white-space: normal;
-    word-break: break-word;
     min-height: 42px;
 }
 
