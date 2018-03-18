@@ -7,11 +7,7 @@
 
 @section('content')
 
-@if(Session::has('userGroup')
-	AND (Session::get('userGroup') == 'marketing'
-	OR Session::get('userGroup') == 'clubleitung'
-	OR Session::get('userGroup') == 'admin'))
-
+@is(['admin', 'clubleitung', 'marketing'])
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<h4 class="panel-title">#{{ $current_shiftType->id }}: "{!! $current_shiftType->title !!}" </h4>
@@ -232,7 +228,7 @@
 	<br/>
 @else
 	@include('partials.accessDenied')
-@endif
+@endis
 @stop
 
 
