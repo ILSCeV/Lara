@@ -41,8 +41,7 @@
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.3.0",
-        "rap2hpoutre/laravel-log-viewer": "^0.8.0",
-        "thecsea/simple-caldav-client": "^0.1.5"
+        "rap2hpoutre/laravel-log-viewer": "^0.8.0"
     },
     "require-dev": {
         "doctrine/dbal": "~2.3",
