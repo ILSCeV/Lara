@@ -25,14 +25,23 @@ class AddCreatorIdToClubevent extends Migration
             ->each(function(ClubEvent $event) {
                 $revisions = json_decode($event->getSchedule->entry_revisions, true);
 
-                if (!is_null($revisions)) {
-                    $revisions = array_reverse($revisions);
-                    $ldap_id = collect($revisions)->last()["user id"];
-
-                    $user = Person::where('prsn_ldap_id', $ldap_id)->first()->user;
-
-                    $event->creator_id = $user->id;
+                if (is_null($revisions)) {
+                    return;
                 }
+                $revisions = array_reverse($revisions);
+                $ldap_id = collect($revisions)->last()["user id"];
+
+                if (is_null($ldap_id)) {
+                    return;
+                }
+
+                $person = Person::where('prsn_ldap_id', $ldap_id)->first();
+                if (is_null($person)) {
+                    return;
+                }
+                $user = $person->user();
+
+                $event->creator_id = $user->id;
             });
     }
 
