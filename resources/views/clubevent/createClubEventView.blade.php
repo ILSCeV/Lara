@@ -276,10 +276,10 @@
 						{{ trans('mainLang.priceTickets') }}:  <br>
 						({{ trans('mainLang.studentExtern') }})</label>
 					<div id="priceTickets" class="input-group col-md-5 col-sm-5 col-xs-12">
-						<input class="form-control" type="number" name="priceTicketsNormal" step="0.1" placeholder="Student" value=""/>
+						<input class="form-control" type="number" name="priceTicketsNormal" step="0.1" placeholder="Student" value="{{$priceTicketsNormal}}"/>
 						<span class="input-group-addon">€</span>
 						<span class="input-group-addon">/</span>
-						<input class="form-control" type="number" name="priceTicketsExternal" step="0.1" placeholder="Extern" value=""/>
+						<input class="form-control" type="number" name="priceTicketsExternal" step="0.1" placeholder="Extern" value="{{$priceTicketsExternal}}"/>
 						<span class="input-group-addon">€</span>
 					</div>
 				</div>
@@ -289,10 +289,10 @@
 						{{ trans('mainLang.price') }}:   <br>
 						({{ trans('mainLang.studentExtern') }})</label>
 					<div id="price" class="input-group col-md-5 col-sm-5 col-xs-12">
-						<input class="form-control" type="number" name="priceNormal" step="0.1" placeholder="Student" value=""/>
+						<input class="form-control" type="number" name="priceNormal" step="0.1" placeholder="Student" value="{{$priceNormal}}"/>
 						<span class="input-group-addon">€</span>
 						<span class="input-group-addon">/</span>
-						<input class="form-control" type="number" name="priceExternal" step="0.1" placeholder="Extern" value=""/>
+						<input class="form-control" type="number" name="priceExternal" step="0.1" placeholder="Extern" value="{{$priceExternal}}"/>
 						<span class="input-group-addon">€</span>
 					</div>
 				</div>

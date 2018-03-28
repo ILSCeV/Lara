@@ -11,13 +11,12 @@ use Illuminate\Http\Request;
 use Input;
 use Lara\Club;
 use Lara\ClubEvent;
-use Lara\Console\Commands\SyncBDclub;
 use Lara\Logging;
-use Lara\ShiftType;
-use Lara\Shift;
 use Lara\Person;
-use Lara\Section;
 use Lara\Schedule;
+use Lara\Section;
+use Lara\Shift;
+use Lara\ShiftType;
 use Lara\Template;
 use Lara\Utilities;
 use Log;
@@ -123,34 +122,43 @@ class ClubEventController extends Controller
                     // copy all except person_id and schedule_id and comment
                     return $shift->replicate(['person_id', 'schedule_id', 'comment']);
                 });
-            $title          = $template->title;
-            $subtitle       = $template->subtitle;
-            $type           = $template->type;
-            $section        = $template->section;
-            $filter         = $template->showToSectionNames();
-            $dv             = $template->time_preparation_start;
-            $timeStart      = $template->time_start;
-            $timeEnd        = $template->time_end;
-            $info           = $template->public_info;
-            $details        = $template->private_details;
-            $private        = $template->is_private;
-            $facebookNeeded = $template->facebook_needed;
+            $title                  = $template->title;
+            $subtitle               = $template->subtitle;
+            $type                   = $template->type;
+            $section                = $template->section;
+            $filter                 = $template->showToSectionNames();
+            $dv                     = $template->time_preparation_start;
+            $timeStart              = $template->time_start;
+            $timeEnd                = $template->time_end;
+            $info                   = $template->public_info;
+            $details                = $template->private_details;
+            $private                = $template->is_private;
+            $facebookNeeded         = $template->facebook_needed;
+            $priceNormal            = $template->price_normal;
+            $priceTicketsNormal     = $template->price_tickets_normal;
+            $priceExternal          = $template->price_external;
+            $priceTicketsExternal   = $template->price_tickets_external;
+
         } else {
             // fill variables with no data if no template was chosen
-            $activeTemplate = "";
-            $shifts         = collect([]);
-            $title          = null;
-            $type           = null;
-            $subtitle       = null;
-            $section        = Section::sectionOfCurrentUser();
-            $filter         = null;
-            $dv             = $section->preparationTime;
-            $timeStart      = $section->startTime;
-            $timeEnd        = $section->endTime;
-            $info           = null;
-            $details        = null;
-            $private        = null;
-            $facebookNeeded = false;
+            $activeTemplate         = "";
+            $shifts                 = collect([]);
+            $title                  = null;
+            $type                   = null;
+            $subtitle               = null;
+            $section                = Section::sectionOfCurrentUser();
+            $filter                 = null;
+            $dv                     = $section->preparationTime;
+            $timeStart              = $section->startTime;
+            $timeEnd                = $section->endTime;
+            $info                   = null;
+            $details                = null;
+            $private                = null;
+            $facebookNeeded         = false;
+            $priceNormal            = null;
+            $priceTicketsNormal     = null;
+            $priceExternal          = null;
+            $priceTicketsExternal   = null;
         }
         $createClubEvent = true;
 
@@ -159,7 +167,8 @@ class ClubEventController extends Controller
                                                          'section', 'filter', 'timeStart', 'timeEnd',
                                                          'info', 'details', 'private', 'dv',
                                                          'activeTemplate',
-                                                         'date', 'templateId','facebookNeeded','createClubEvent'));
+                                                         'date', 'templateId','facebookNeeded','createClubEvent',
+                                                         'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal'));
     }
 
 
@@ -338,19 +347,23 @@ class ClubEventController extends Controller
             $creator_name = $revisions[0]["user name"];
         }
 
-        $title          = $event->evnt_title;
-        $type           = $event->evnt_type;
-        $subtitle       = $event->evnt_subtitle;
-        $section        = $event->section;
-        $filter         = $event->showToSectionNames();
-        $dv             = $schedule->schdl_time_preparation_start;
-        $timeStart      = $event->evnt_time_start;
-        $timeEnd        = $event->evnt_time_end;
-        $info           = $event->evnt_public_info;
-        $details        = $event->evnt_private_details;
-        $private        = $event->evnt_is_private;
-        $facebookNeeded = $event->facebook_done;
-        $date = $event->evnt_date_start;
+        $title                  = $event->evnt_title;
+        $type                   = $event->evnt_type;
+        $subtitle               = $event->evnt_subtitle;
+        $section                = $event->section;
+        $filter                 = $event->showToSectionNames();
+        $dv                     = $schedule->schdl_time_preparation_start;
+        $timeStart              = $event->evnt_time_start;
+        $timeEnd                = $event->evnt_time_end;
+        $info                   = $event->evnt_public_info;
+        $details                = $event->evnt_private_details;
+        $private                = $event->evnt_is_private;
+        $facebookNeeded         = $event->facebook_done;
+        $date                   = $event->evnt_date_start;
+        $priceNormal            = $event->price_normal;
+        $priceTicketsNormal     = $event->price_tickets_normal;
+        $priceExternal          = $event->price_external;
+        $priceTicketsExternal   = $event->price_tickets_external;
         if(!is_null($event->template_id)) {
             $baseTemplate = $event->template;
         } else {
@@ -366,7 +379,8 @@ class ClubEventController extends Controller
                'info', 'details', 'private', 'dv',
                'activeTemplate',
                'date', 'templateId', 'facebookNeeded', 'createClubEvent',
-               'event','baseTemplate'));
+               'event','baseTemplate',
+               'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal'));
        } else {
            return response()->view('clubevent.notAllowedToEdit',compact('created_by','creator_name'),403);
        }
