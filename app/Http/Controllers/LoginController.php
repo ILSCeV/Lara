@@ -7,11 +7,14 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Input;
+
 use Lara\Club;
 use Lara\Person;
 use Lara\Settings;
+use Lara\Section;
 use Lara\User;
 use Lara\utilities\RoleUtility;
+
 use Log;
 use Redirect;
 use Session;
@@ -119,13 +122,16 @@ class LoginController extends Controller
         }
         $userGroup = request('userGroup');
         /** @var Person $person */
-        $person = Person::where('clb_id', '<' , 4)->inRandomOrder()->first();
+        $clubIdsOfSections = Section::all()->map(function(Section $s) {
+            return $s->club()->id;
+        });
+        $person = Person::whereIn('clb_id', $clubIdsOfSections)->inRandomOrder()->first();
         /** @var User $user */
         $user = $person->user();
         $user->roles()->detach();
         RoleUtility::assignPrivileges($user, $user->section, $userGroup);
         $person->user()->fill(["group" => $userGroup])->save();
-        $this->loginPersonAsUser($person->prsn_ldap_id);
+        $this->loginPersonAsUser($person);
 
         return true;
     }
@@ -398,9 +404,8 @@ class LoginController extends Controller
     /**
      * @param $ldapId
      */
-    protected function loginPersonAsUser($ldapId)
+    protected function loginPersonAsUser(Person $person)
     {
-        $person = Person::where('prsn_ldap_id', $ldapId)->first();
         Auth::login($person->user());
     }
 

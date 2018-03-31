@@ -63,14 +63,19 @@ class User extends Authenticatable
         if (!$person->club->section()) {
             return NULL;
         }
+        $oldStatus = $person->prsn_status;
+
+        $newStatus = in_array($oldStatus, ['candidate', 'member', 'veteran']) ? $oldStatus : 'member';
         $user = User::create([
             'name' => $person->prsn_name,
             'section_id' => $person->club->section()->id,
             'person_id' => $person->id,
-            'status' => $person->prsn_status
+            'status' => $newStatus
         ]);
-        RoleUtility::assignPrivileges($user,$person->club->section()->first(),
-            RoleUtility::PRIVILEGE_MEMBER);
+        RoleUtility::assignPrivileges(
+            $user,$person->club->section()->first(),
+            RoleUtility::PRIVILEGE_MEMBER
+        );
 
         return $user;
     }
