@@ -353,10 +353,18 @@ class LoginController extends Controller
                     ]);
                     User::createFromPerson($person);
                 }
+
                 Auth::login($person->user());
-                $user = $person->user()->first();
+                $user = $person->user();
+
+                if ($user->email === "") {
+                    $user->email = $info[0]['email'][0];
+                }
+
+                $user->password = bcrypt(Input::get('password'));
                 $user->status = $userStatus;
                 $user->save();
+
                 if(in_array($userGroup,RoleUtility::ALL_PRIVILEGES)){
                     \Roles::assignPrivileges($user, $user->section()->first(), $userGroup);
                 }
