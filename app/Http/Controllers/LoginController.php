@@ -7,13 +7,11 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Input;
-
 use Lara\Club;
 use Lara\Person;
 use Lara\Section;
 use Lara\User;
 use Lara\utilities\RoleUtility;
-
 use Log;
 use Redirect;
 use Session;
@@ -137,6 +135,16 @@ class LoginController extends Controller
     }
 
     protected function attemptLoginViaLDAP()
+    {
+        try {
+            return $this->attemptLoginViaLDAPInternal();
+        } catch (\Exception $e) {
+            Log::error("ldap brocken", $e);
+            return false;
+        }
+    }
+
+    protected function attemptLoginViaLDAPInternal()
     {
             if (Input::get('username') === "1708") {
                 Session::put('message', 'Ne ne ne, nicht mit dieser Clubnummer, sie ist ja nur fur bc-Wiki zu benutzen ;)');
