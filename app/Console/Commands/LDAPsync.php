@@ -77,6 +77,7 @@ class LDAPsync extends Command
 // STARTING THE UPDATE
         /** @var Person $person */
         foreach ($persons as $person) {
+            $user = $person->user;
             $bar->advance();
             // skip ldap override
             if($person->prsn_ldap_id == '9999' ){
@@ -125,6 +126,7 @@ class LDAPsync extends Command
 
             // Get user active status
             $userStatus = $info[0]['ilscstate'][0];
+            $userEmail = $info[0]['email'][0];
 
 // UPDATE AND SAVE CHANGES
 
@@ -132,7 +134,7 @@ class LDAPsync extends Command
                 Log::info('LDAP sync: Changing ' . $person->prsn_name . " (" . $person->prsn_ldap_id . ") name from " . $person->prsn_name . " to " . $userName . '.');
 
                 $person->prsn_name = $userName;
-                $person->user->name = $userName;
+                $user->name = $userName;
             }
 
 
@@ -140,10 +142,15 @@ class LDAPsync extends Command
                 Log::info('LDAP sync: Changing ' . $person->prsn_name . " (" . $person->prsn_ldap_id . ") status from " . $person->prsn_status . " to " . $userStatus . '.');
 
                 $person->prsn_status = $userStatus;
-                $person->user->status = $userStatus;
+                $user->status = $userStatus;
+            }
+
+            if ($user->email === "") {
+                $user->email = $userEmail;
             }
 
             $person->save();
+            $user->save();
         }
 
 // FINISH UPDATE
