@@ -1,19 +1,24 @@
 @extends('layouts.master')
 @section('title')
-    {{ "User Overview" }}
+    {{ trans('mainLang.editUser') }}
 @stop
 
 @section('content')
     <div class="container-fluid">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
             {{ Form::open(['class'=>'form-inline ','route'=>['user.updateData',$user]])  }}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{ trans('mainLang.editUser') }}
-                </div>
-                <div class="panel-body">
-                    @canEditUser($user)
-                        <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading ">
+                        <h4 class="panel-title">
+                            {{ trans('mainLang.editUser') }}
+                            <a data-toggle="collapse" href="#userInformation" class="collapse-toggle">
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="userInformation" class="panel-body panel-collapse collapse in">
+                        @canEditUser($user)
+                        <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }} input-group" >
                             <label class="control-label" for="userName"> Name </label>
                             {{ Form::text('name',$user->name,['class'=>"form-control" ,'id'=>'userName','required'=>"",'autofocus'=>'']) }}
                             @if ($errors->has('name'))
@@ -22,8 +27,7 @@
                                     </span>
                             @endif
                         </div>
-                        <div class="clearfix"></div>
-                        <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }} input-group">
                             <label class="control-label" for="email"> Email </label>
                             {{ Form::email('email',$user->email,['class'=>"form-control" ,'id'=>'email']) }}
                             @if ($errors->has('email'))
@@ -32,26 +36,31 @@
                                     </span>
                             @endif
                         </div>
-                        <div class="clearfix"></div>
-                        <div class="form-group{{ $errors->has('section') ? ' has-error' : '' }}">
+                        <div class="form-group {{ $errors->has('section') ? ' has-error' : '' }} input-group">
                             <label for="section" class=" control-label">{{trans('mainLang.section')}}</label>
-                            <select name="section" id="section" class="editUserFormselectpicker">
-                                @foreach(Lara\Section::all() as $section)
-                                    <option value="{{$section->id}}" {{ Gate::denies('createUserOfSection', $section->id) ? "disabled" : "" }}>{{$section->title}}</option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('section'))
-                                <span class="help-block">
+                            <div>
+                                <select name="section" id="section" class="editUserFormselectpicker">
+                                    @foreach(Lara\Section::all() as $section)
+                                        <option value="{{$section->id}}" {{ Gate::denies('createUserOfSection', $section->id) ? "disabled" : "" }} >
+                                            {{$section->title}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('section'))
+                                    <span class="help-block">
                                    <strong>{{ $errors->first('section') }}</strong>
                                 </span>
-                            @endif
+                                @endif
+                            </div>
                         </div>
-                        <div class="clearfix"></div>
-                        <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                        <div class="form-group {{ $errors->has('status') ? ' has-error' : '' }} input-group">
                             <label for="status" class="control-label">Status</label>
+                            <div>
                                 <select name="status" id="status" class="editUserFormselectpicker">
                                     @foreach(['candidate', 'member', 'veteran'] as $status)
-                                        <option value="{{$status}}" >{{trans(Auth::user()->section->title . "." . $status) }}</option>
+                                        <option value="{{$status}}" {{$status === $user->status ? "selected" : ""}}>
+                                            {{trans(Auth::user()->section->title . "." . $status) }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('status'))
@@ -59,28 +68,40 @@
                                          <strong>{{ $errors->first('status') }}</strong>
                                     </span>
                                 @endif
+                            </div>
                         </div>
-                    @else
-                        <div class="form-group">
-                            <label class="control-label" for="userName"> Name </label>
-                            <div id="username" class="form-control"> {{ $user->name }} </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="form-group">
-                            <label class="control-label" for="email"> Email </label>
-                            <div id="email" class="form-control"> {{ $user->email }} </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="form-group">
-                            <label class="control-label" for="section"> {{ trans('mainLang.section') }} </label>
-                            <div id="section" class="form-control"> {{ $user->section->title }} </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="form-group">
-                            <label class="control-label" for="status"> {{ trans('mainLang.status') }} </label>
-                            <div id="status" class="form-control"> {{ trans(Auth::user()->section->title . "." . $user->status) }} </div>
-                        </div>
-                    @endcanEditUser
+                        @else
+                            <div class="form-group">
+                                <label class="control-label" for="userName"> Name </label>
+                                <div id="username" class="form-control"> {{ $user->name }} </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label class="control-label" for="email"> Email </label>
+                                <div id="email" class="form-control"> {{ $user->email }} </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label class="control-label" for="section"> {{ trans('mainLang.section') }} </label>
+                                <div id="section" class="form-control"> {{ $user->section->title }} </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label class="control-label" for="status"> {{ trans('mainLang.status') }} </label>
+                                <div id="status" class="form-control"> {{ trans(Auth::user()->section->title . "." . $user->status) }} </div>
+                            </div>
+                            @endcanEditUser
+                    </div>
+                </div>
+            <div class="panel panel-default">
+                <div class="panel panel-heading">
+                    <h4 class="panel-title">
+                        {{ trans('mainLang.roleManagement') }}
+                        <a data-toggle="collapse" href="#roleInformation" class="collapse-toggle">
+                        </a>
+                    </h4>
+                </div>
+                <div id="roleInformation" class="panel-body panel-collapse collapse in">
                     @if (count($permissionsPersection) > 0)
                         <div class="panel panel-default">
                             <ul class="nav nav-tabs">
@@ -150,16 +171,15 @@
                             </div>
                         </div>
                     @endif
-                        <div class="clearfix"></div>
-                        <div class="form-group">
-                            <button type="submit" id="updateUserData" class="btn btn-success"> {{ trans('mainLang.update') }} </button>
-                        </div>
-                        <div class="form-group">
-                            <a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
-                        </div>
                 </div>
             </div>
-            {{ Form::close() }}
         </div>
+        <div class="btn-group btn-group-lg centered">
+            <button type="submit" id="updateUserData" class="btn btn-success"> {{ trans('mainLang.update') }} </button>
+            <button class="btn btn-default">
+                <a href="javascript:history.back()">{{ trans('mainLang.backWithoutChange') }}</a>
+            </button>
+        </div>
+        {{ Form::close() }}
     </div>
 @stop

@@ -70,6 +70,9 @@ $(()=>{
     $('#' + targetElement).append($('#' + src).html());
     $('#' + src).empty();
   });
+  $('.fa-angle-double-right').on('click', function() {
+    $(this).toggleClass('fa-rotate-90');
+  });
   $('#updateUserData').on('click', (event) => {
     $('.permissiontable').each((index, elem) => {
       let section = $(elem).data('section');
