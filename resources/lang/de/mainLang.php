@@ -523,5 +523,6 @@ return [
     'availableRoles'                => 'Verfügbare Rollen',
     'activeRoles'                   => 'Aktive Rollen',
     'changesWereReset'              => 'Deine Änderungen wurden zurückgesetzt. Vor dem Absenden solltest du diese nochmals anwenden.',
-    'roleManagement'              => 'Berechtigungen verwalten',
+    'roleManagement'                => 'Berechtigungen verwalten',
+    'changesSaved'                  => 'Eingaben wurden gespeichert.',
 ];

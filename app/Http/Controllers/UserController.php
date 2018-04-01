@@ -221,7 +221,7 @@ class UserController extends Controller
             }
         });
 
-        Utilities::success(trans('mainLang.update'));
+        Utilities::success(trans('mainLang.changesSaved'));
         return Redirect::back();
     }
 }

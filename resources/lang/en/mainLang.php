@@ -520,5 +520,6 @@ return [
     'availableRoles'                => 'Available roles',
     'activeRoles'                   => 'Active roles',
     'changesWereReset'              => 'Your changes were reset. Please apply them again before submitting.',
-    'roleManagement'              => 'Manage roles',
+    'roleManagement'                => 'Manage roles',
+    'changesSaved'                  => 'Changes saved.',
 ];
