@@ -17,7 +17,6 @@ use Lara\ClubEvent;
 use Lara\Person;
 use Lara\Section;
 use Lara\Shift;
-use Lara\Settings;
 use Lara\Utilities;
 use Log;
 use Redirect;
@@ -223,7 +222,9 @@ class IcalController extends Controller
             $person = Person::where('prsn_uid', '=', $prsn_uid)->first();
 
             if(isset($person)) {
-                $userSettings = Settings::where('userId', '=', $person->prsn_ldap_id)->first();
+                $user = $person->user();
+                $userSettings = $user->settings;
+
                 if (isset($userSettings)) {
                     Session::put('applocale', $userSettings->language);
                 }

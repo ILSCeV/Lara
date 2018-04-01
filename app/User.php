@@ -60,6 +60,10 @@ class User extends Authenticatable
 
     public static function createFromPerson(Person $person)
     {
+        if (!$person->club) {
+            return NULL;
+        }
+
         if (!$person->club->section()) {
             return NULL;
         }
@@ -124,5 +128,9 @@ class User extends Authenticatable
         return $this->getRolesOfType($type)->map(function (Role $role){
             return $role->section_id;
         });
+    }
+
+    public function settings() {
+        return $this->hasOne('Lara\Settings');
     }
 }

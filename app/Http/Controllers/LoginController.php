@@ -10,7 +10,6 @@ use Input;
 
 use Lara\Club;
 use Lara\Person;
-use Lara\Settings;
 use Lara\Section;
 use Lara\User;
 use Lara\utilities\RoleUtility;
@@ -103,11 +102,12 @@ class LoginController extends Controller
 
         if ($someLoginWorked) {
             $user = Auth::user();
+
             if (!$user) {
                 return;
             }
 
-            $userSettings = Settings::where('userId','=', $user->person->prsn_ldap_id)->first();
+            $userSettings = $user->settings;
             if ($userSettings) {
                 Session::put('applocale', $userSettings->language);
             }

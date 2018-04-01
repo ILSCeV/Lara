@@ -85,7 +85,7 @@ class Person extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne/Lara\User
+     * @return \Lara\User
      */
     public function user()
     {
