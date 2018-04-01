@@ -522,4 +522,5 @@ return [
     'changesWereReset'              => 'Your changes were reset. Please apply them again before submitting.',
     'roleManagement'                => 'Manage roles',
     'changesSaved'                  => 'Changes saved.',
+    'sectionChanged'                => 'You changed the section of this user. Remember to also update his roles.',
 ];

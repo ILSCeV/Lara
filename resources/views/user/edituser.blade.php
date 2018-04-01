@@ -41,7 +41,7 @@
                             <div>
                                 <select name="section" id="section" class="editUserFormselectpicker">
                                     @foreach(Lara\Section::all() as $section)
-                                        <option value="{{$section->id}}" {{ Gate::denies('createUserOfSection', $section->id) ? "disabled" : "" }} >
+                                        <option value="{{$section->id}}" {{ Gate::denies('createUserOfSection', $section->id) ? "disabled" : "" }} {{$section->id === $user->section->id ? "selected" : ""}} >
                                             {{$section->title}}
                                         </option>
                                     @endforeach

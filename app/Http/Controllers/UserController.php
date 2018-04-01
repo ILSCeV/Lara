@@ -179,7 +179,7 @@ class UserController extends Controller
             }
             $data['name'] = Input::get('name');
             $data['email'] = Input::get('email');
-            $data['section'] = Input::get('section');
+            $data['section_id'] = Input::get('section');
             $data['status'] = Input::get('status');
 
         }
@@ -200,10 +200,11 @@ class UserController extends Controller
             $unassignedRoleIds = array_merge($lUnassignedRoleIds, $unassignedRoleIds);
         }
 
-        $assignedRoles = Role::query()->whereIn('id',$assignedRoleIds)->get();
-        $unassignedRoles = Role::query()->whereIn('id',$unassignedRoleIds)->get();
+        $assignedRoles = Role::query()->whereIn('id', $assignedRoleIds)->get();
+        $unassignedRoles = Role::query()->whereIn('id', $unassignedRoleIds)->get();
 
         $user->fill($data);
+        $changedSection = $user->isDirty('section_id');
         $user->save();
 
         $assignedRoles->each(function(Role $role) use ($user) {
@@ -221,7 +222,12 @@ class UserController extends Controller
             }
         });
 
-        Utilities::success(trans('mainLang.changesSaved'));
+        if ($changedSection) {
+            Utilities::success(trans('mainLang.changesSaved') . trans('mainLang.sectionChanged'));
+        }
+        else {
+            Utilities::success(trans('mainLang.changesSaved'));
+        }
         return Redirect::back();
     }
 }

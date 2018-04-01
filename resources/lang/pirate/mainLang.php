@@ -523,4 +523,5 @@ return [
     'changesWereReset'              => 'Deine Änderungen wurden zurückgesetzt. Vor dem Absenden solltest du diese nochmals anwenden.',
     'roleManagement'                => 'Berechtigungen verwalten',
     'changesSaved'                  => 'Eingaben wurden gespeichert.',
+    'sectionChanged'                => 'Die Sektion des Benutzers hat sich geändert. Denke daran, seine Berechtigungen ebenfalls anzupassen.',
 ];
