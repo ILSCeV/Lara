@@ -94,9 +94,9 @@ class LoginController extends Controller
      */
     public function doLogin()
     {
-        $someLoginWorked = $this->attemtLoginViaDevelop() || $this->attemptLoginWithCredentials(request(), 'name')
-            || $this->attemptLoginWithCredentials(request(), 'email')
-            || $this->attemptLoginViaLDAP();
+        $someLoginWorked = $this->attemtLoginViaDevelop() || $this->attemptLoginViaLDAP()
+            || $this->attemptLoginWithCredentials(request(), 'name')
+            || $this->attemptLoginWithCredentials(request(), 'email');
 
         if ($someLoginWorked) {
             $user = Auth::user();
