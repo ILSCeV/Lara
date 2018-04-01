@@ -10,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use Lara\Section;
 use Lara\User;
 use Lara\utilities\RoleUtility;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
+
         Blade::if('dev', function() {
             return App::environment('development');
         });
