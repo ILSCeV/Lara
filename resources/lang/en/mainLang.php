@@ -516,8 +516,8 @@ return [
     // User management     //
     /////////////////////////
     'status'                        => 'Status',
-    'editUser'                      => 'edit User',
-    'availableRoles'                => 'available roles',
-    'activeRoles'                   => 'active roles',
+    'editUser'                      => 'Edit user',
+    'availableRoles'                => 'Available roles',
+    'activeRoles'                   => 'Active roles',
     'changesWereReset'              => 'Your changes were reset. Please apply them again before submitting.',
 ];

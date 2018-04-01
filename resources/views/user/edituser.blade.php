@@ -81,59 +81,75 @@
                             <div id="status" class="form-control"> {{ trans(Auth::user()->section->title . "." . $user->status) }} </div>
                         </div>
                     @endcanEditUser
-                        @foreach($permissionsPersection as $sectionId=>$roles)
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    {{ \Lara\Section::findOrFail($sectionId)->title }}
-                                </div>
-                                <div class="panel-body">
+                    @if (count($permissionsPersection) > 0)
+                        <div class="panel panel-default">
+                            <ul class="nav nav-tabs">
+                                @foreach($permissionsPersection as $sectionId => $roles)
+                                    <li class="{{$user->section_id == $sectionId ? 'active': ''}} permissionsPicker">
+                                        <a aria-expanded="{{$user->section_id == $sectionId? 'active': ''}}"
+                                           href="#{{$sectionId}}Permissions"
+                                           data-toggle="tab">
+                                            {{Lara\Section::find($sectionId)->title}}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            <div class="tab-content">
+
+                            @foreach($permissionsPersection as $sectionId => $roles)
+                                <div class="tab-pane fade in {{ $user->section_id == $sectionId? 'active': '' }}" id="{{$sectionId}}Permissions">
                                     <table class="table table-striped permissiontable table-bordered" data-section="{{$sectionId}}">
                                         <thead>
-                                            <tr>
-                                                <th class="text-center">
-                                                    {{ trans('mainLang.availableRoles') }}
-                                                </th>
-                                                <th class="text-center">
+                                        <tr>
+                                            <th class="text-center">
+                                                {{ trans('mainLang.availableRoles') }}
+                                            </th>
+                                            <th class="text-center">
 
-                                                </th>
-                                                <th class="text-center">
-                                                    {{ trans('mainLang.activeRoles') }}
-                                                </th>
-                                            </tr>
+                                            </th>
+                                            <th class="text-center">
+                                                {{ trans('mainLang.activeRoles') }}
+                                            </th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($roles as $role)
-                                                <tr>
-                                                    <td class="text-center unassignedRoles" id="src-{{$role->id}}">
-                                                        @if(!$user->hasPermission($role))
-                                                            <div data-value="{{ $role->id }}">
-                                                                {{ $role->name }}
-                                                            </div>
-                                                        @endif
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @if(Auth::user()->is(Roles::PRIVILEGE_ADMINISTRATOR) || Auth::user()->hasPermission($role))
-                                                        <button type="button" class="btn btn-sm btn-primary addRoleBtn" data-src="src-{{$role->id}}" data-target="target-{{$role->id}}"> > </button>
-                                                        <br/>
-                                                        <button type="button" class="btn btn-sm btn-primary removeRoleBtn" data-target="src-{{$role->id}}" data-src="target-{{$role->id}}"> < </button>
-                                                        @endif
-                                                    </td>
-                                                    <td class="text-center assignedRoles" id="target-{{$role->id}}">
-                                                        @if($user->hasPermission($role))
-                                                            <div data-value="{{ $role->id }}">
-                                                                {{ $role->name }}
-                                                            </div>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                        @foreach($roles as $role)
+                                            <tr>
+                                                <td class="text-center unassignedRoles" id="src-{{$role->id}}">
+                                                    @if(!$user->hasPermission($role))
+                                                        <div class="text-capitalize" data-value="{{ $role->id }}">
+                                                            {{ $role->name }}
+                                                        </div>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    @if(Auth::user()->is(Roles::PRIVILEGE_ADMINISTRATOR) || Auth::user()->hasPermission($role))
+                                                        <button type="button"
+                                                                class="btn btn-sm btn-primary toggleRoleBtn"
+                                                                data-target="{{$user->hasPermission($role) ? 'src' : 'target'}}-{{$role->id}}"
+                                                                data-src="{{$user->hasPermission($role) ? 'target' : 'src'}}-{{$role->id}}">
+                                                            {{$user->hasPermission($role) ? '<' : '>' }}
+                                                        </button>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center assignedRoles" id="target-{{$role->id}}">
+                                                    @if($user->hasPermission($role))
+                                                        <div class="text-capitalize" data-value="{{ $role->id }}">
+                                                            {{ $role->name }}
+                                                        </div>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                     <input class="hidden" name="role-assigned-section-{{$sectionId}}" value="">
                                     <input class="hidden" name="role-unassigned-section-{{$sectionId}}" value="">
                                 </div>
+                            @endforeach
                             </div>
-                        @endforeach
+                        </div>
+                    @endif
                         <div class="clearfix"></div>
                         <div class="form-group">
                             <button type="submit" id="updateUserData" class="btn btn-success"> {{ trans('mainLang.update') }} </button>

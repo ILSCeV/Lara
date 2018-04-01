@@ -49,6 +49,20 @@ $(()=>{
         });
     });
 
+  $('.toggleRoleBtn').on('click', (event) => {
+    const target = event.currentTarget;
+    const src = $(target).data('src');
+    const targetElement = $(target).data('target');
+    $('#' + targetElement).append($('#' + src).html());
+    $('#' + src).empty();
+
+    const currentArrow = $(target).text();
+    $(target)
+      .data('src', targetElement)
+      .data('target', src)
+      .text(currentArrow.indexOf('>') > -1 ? '<' : '>');
+
+  });
   $('.addRoleBtn, .removeRoleBtn').on('click',(event)=>{
     const target = event.currentTarget;
     const src = $(target).data('src');
