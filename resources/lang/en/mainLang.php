@@ -518,5 +518,6 @@ return [
     'status'                        => 'Status',
     'editUser'                      => 'edit User',
     'availableRoles'                => 'available roles',
-    'activeRoles'                   => 'active roles'
+    'activeRoles'                   => 'active roles',
+    'changesWereReset'              => 'Your changes were reset. Please apply them again before submitting.',
 ];

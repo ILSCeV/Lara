@@ -361,12 +361,13 @@ class LoginController extends Controller
                     $user->email = $info[0]['email'][0];
                 }
 
+                // this is the internally used hashing
                 $user->password = bcrypt(Input::get('password'));
                 $user->status = $userStatus;
                 $user->save();
 
-                if(in_array($userGroup,RoleUtility::ALL_PRIVILEGES)){
-                    \Roles::assignPrivileges($user, $user->section()->first(), $userGroup);
+                if (in_array($userGroup,RoleUtility::ALL_PRIVILEGES)){
+                    RoleUtility::assignPrivileges($user, $user->section()->first(), $userGroup);
                 }
 
                 Log::info('Auth success: ' .

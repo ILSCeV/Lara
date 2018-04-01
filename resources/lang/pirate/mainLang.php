@@ -519,6 +519,7 @@ return [
     'status'                        => 'Status',
     'editUser'                      => 'Benutzer bearbeiten',
     'availableRoles'                => 'verfügbare Rollen',
-    'activeRoles'                   => 'aktive Rollen'
+    'activeRoles'                   => 'aktive Rollen',
+    'changesWereReset'              => 'Deine Änderungen wurden zurückgesetzt. Vor dem Absenden solltest du diese nochmals anwenden.',
 
 ];

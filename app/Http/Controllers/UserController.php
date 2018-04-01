@@ -174,6 +174,7 @@ class UserController extends Controller
         if(Auth::user()->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) || Auth::user()->hasPermissionsInSection(Section::findOrFail($user->section)->first(),RoleUtility::PRIVILEGE_CL)){
             $validator = $this->validator($user, Input::all());
             if ($validator->fails()) {
+                Utilities::error(trans('mainLang.changesWereReset'));
                 return Redirect::back()->withErrors($validator);
             }
             $data['name'] = Input::get('name');
