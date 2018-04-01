@@ -8,6 +8,8 @@ use Config;
 use Redirect;
 use Session;
 
+use Lara\Settings;
+
 class LanguageController extends Controller
 {
     public function switchLang($lang)
