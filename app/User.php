@@ -77,7 +77,7 @@ class User extends Authenticatable
             'status' => $newStatus
         ]);
         RoleUtility::assignPrivileges(
-            $user,$person->club->section()->first(),
+            $user, $person->club->section(),
             RoleUtility::PRIVILEGE_MEMBER
         );
 
