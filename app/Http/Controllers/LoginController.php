@@ -342,7 +342,7 @@ class LoginController extends Controller
 
 
             // Hashing password input
-            $password = '{md5}' . base64_encode(mhash(MHASH_MD5, Input::get('password')));
+            $password = '{md5}' . base64_encode(mhash(MHnpASH_MD5, Input::get('password')));
 
             // end ldapConnection
             ldap_unbind($ldapConn);
@@ -369,11 +369,9 @@ class LoginController extends Controller
                     $user->email = $info[0]['email'][0];
                 }
 
-                // only store the users password if it is empty, e.g. for the first LDAP-login
-                if ($user->password == '') {
-                    // this is the internally used hashing
-                    $user->password = bcrypt(Input::get('password'));
-                }
+                // this is the internally used hashing
+                $user->password = bcrypt(Input::get('password'));
+
                 $user->status = $userStatus;
                 $user->save();
 
