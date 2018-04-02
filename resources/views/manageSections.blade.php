@@ -3,7 +3,7 @@
 @extends('layouts.master')
 
 @section('title')
-	{{ trans('mainLang.management') }}: {{ trans('mainLang.nanageSections') }} 
+	{{ trans('mainLang.manageSections') }} 
 @stop
 
 @section('content')

@@ -90,37 +90,26 @@ class ScheduleController extends Controller
         }
 
         // format: time; validate on filled value
-        if(!empty(Input::get('preparationTime'))) 
+        if(!empty(Input::get('preparationTime')))
         {
             $schedule->schdl_time_preparation_start = Input::get('preparationTime');
         }
         else
-        { 
+        {
             $schedule->schdl_time_preparation_start = mktime(0, 0, 0);
         }
 
         // format: password; validate on filled value
-        if (Input::get('password') == "delete" 
-        AND Input::get('passwordDouble') == "delete") 
+        if (Input::get('password') == "delete"
+        AND Input::get('passwordDouble') == "delete")
         {
             $schedule->schdl_password = '';
-        } 
+        }
         elseif (!empty(Input::get('password'))
             AND !empty(Input::get('passwordDouble'))
-            AND Input::get('password') == Input::get('passwordDouble')) 
+            AND Input::get('password') == Input::get('passwordDouble'))
         {
             $schedule->schdl_password = Hash::make(Input::get('password'));
-        }
-
-        // format: tinyInt; validate on filled value
-        if (Input::get('saveAsTemplate') == true)
-        {
-            $schedule->schdl_is_template = true;
-            $schedule->schdl_title = Input::get('templateName');
-        }
-        else 
-        {
-            $schedule->schdl_is_template = false;
         }
 
         if ($schedule->exists) {
@@ -211,16 +200,16 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Receives a timestamp, compares it to last update time of the schedule 
+     * Receives a timestamp, compares it to last update time of the schedule
      * and returns either a false boolean for "no updates since timestamp provided"
      * or a JSON array of updated shifts
      *
      * @param int $scheduleId
      * @param String $timestamp
      *
-     * @return \Illuminate\Http\Response 
+     * @return \Illuminate\Http\Response
      */
-    public static function getUpdates($scheduleId, $timestamp) 
+    public static function getUpdates($scheduleId, $timestamp)
     {
         $updated = Schedule::where("id", "=",  $id)->first()->updated_at;
         return response()->json($updated, 200);

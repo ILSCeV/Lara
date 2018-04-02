@@ -281,7 +281,7 @@ return [
     'manageSections'        => 'Manage sections',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
 
-    'manageTemplate'        => 'Manage templates',
+    'manageTemplates'        => 'Manage templates',
 
     //create button text
     'createNewEvent'           => 'Create new event',
@@ -451,6 +451,7 @@ return [
     'management'                    => 'Management',
     'shiftType'                       => 'Shift type',
     'shiftTypes'                      => 'Shift types',
+    'replaceAll'                    => 'replace all',
     'shift'                         => 'Shift',
     'start'                         => 'Start',
     'end'                           => 'End',
@@ -460,12 +461,14 @@ return [
     'warningNotReversible'          => 'This action is not reversible!',
     'editDetails'                   => 'Edit details',
     'deleteThisShiftType'             => 'Delete',
+    'editShiftType'                 => 'edit Shift type',
 
     'reset'                         => 'Reset',
     'update'                        => 'Save changes',
     'delete'                        => 'delete it',
     'shiftTypeNeverUsed'              => 'This shift type was never used... Quite sad, isn\'t it? Maybe you should just ',
     'shiftTypeUsedInFollowingEvents'  => 'This shift type is used in the following events. To remove it you should substitute each of its instances with another shift type.',
+    'shiftTypeUsedInFollowingTemplates'  => 'This shift type is used in the following templates. To remove it you should substitute each of its instances with another shift type.',
     'event'                         => 'Event',
     'date'                          => 'Date',
     'substituteThisInstance'        => 'Substitute with...',
@@ -499,5 +502,13 @@ return [
     'eventIsUnpublished'            =>  'Event is not published and isn\'t visible in calendar feed',
     'confirmPublishingEvent'        =>  'Are you sure you want to publish this event to calendar feed?',
     'confirmUnpublishingEvent'      =>  'Are you sure you want to remove this event from the calendar feed?',
-    'iCal'                          =>  'iCal'
+    'iCal'                          =>  'iCal',
+
+    /////////////////////////
+    // Template management //
+    /////////////////////////
+
+    'search'                        => 'Search',
+    'facebookNeeded'                => 'Facebook needed',
+    'createTemplate'                => 'Create template'
 ];

@@ -283,7 +283,7 @@ return [
     'manageSections'        => 'Sektionen verwalten',
     // TODO use Job for Service - german: Dienst maybe change to Shift - Schicht
 
-    'manageTemplate'        => 'Vorlagen verwalten',
+    'manageTemplates'        => 'Vorlagen verwalten',
 
     //create button text
     'createNewEvent'           => 'Neues Event erstellen',
@@ -454,6 +454,7 @@ return [
     'management'                    => 'Verwaltung',
     'shiftType'                       => 'Diensttyp',
     'shiftTypes'                      => 'Diensttypen',
+    'replaceAll'                    => 'alle ersetzen',
     'shift'                         => 'Dienst',
     'start'                         => 'Beginn',
     'end'                           => 'Ende',
@@ -462,13 +463,15 @@ return [
     'deleteConfirmation'            => 'Möchtest du folgenden Diensttyp wirklich löschen:',
     'warningNotReversible'          => 'Diese Aktion kann man nicht rückgängig machen!',
     'editDetails'                   => 'Details anpassen',
-    'deleteThisShiftType'             => 'Entfernen',
+    'deleteThisShiftType'           => 'Entfernen',
+    'editShiftType'                 => 'Diensttyp bearbeiten',
 
     'reset'                         => 'Zurücksetzen',
     'update'                        => 'Änderungen speichern',
     'delete'                        => 'löschen',
     'shiftTypeNeverUsed'              => 'Dieser Diensttyp wird bei keinem einzigen Event benutzt... Traurig, so was... Vielleicht wäre es sinnvoll, ihn einfach zu',
     'shiftTypeUsedInFollowingEvents'  => 'Dieser Dienstyp wird bei folgenden Events eingesetzt. Um ihn zu entfernen, ersetze jede Instanz erst mit einem anderen Diensttyp.',
+    'shiftTypeUsedInFollowingTemplates'  => 'Dieser Dienstyp wird bei folgenden Vorlagen eingesetzt. Um ihn zu entfernen, ersetze jede Instanz erst mit einem anderen Diensttyp.',
     'event'                         => 'Event',
     'date'                          => 'Datum',
     'substituteThisInstance'        => 'Ersetzen durch...',
@@ -502,5 +505,13 @@ return [
     'eventIsUnpublished'            =>  'Event ist nicht veröffentlicht ist im Kalendarfeed nicht sichtbar',
     'confirmPublishingEvent'        =>  'Möchtest du dieses Event wirklich zum Kalenderfeed hinzufügen?',
     'confirmUnpublishingEvent'      =>  'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
-    'iCal'                          =>  'iCal'
+    'iCal'                          =>  'iCal',
+
+    /////////////////////////
+    // Template management //
+    /////////////////////////
+
+    'search'                        => 'Suche',
+    'facebookNeeded'                => 'Facebook benötigt',
+    'createTemplate'                => 'Vorlage erstellen'
 ];

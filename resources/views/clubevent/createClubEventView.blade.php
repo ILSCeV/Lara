@@ -1,54 +1,96 @@
 @extends('layouts.master')
 
 @section('title')
-	{{ trans('mainLang.createNewVEvent') }}
+        @if($createClubEvent)
+        	{{ trans('mainLang.createNewVEvent') }}
+        @else
+            {{ trans('mainLang.changeEventJob') }}
+        @endif
 @stop
 
 @section('content')
 
 @if(Session::has('userId'))
-	
-	{!! Form::open(['method' => 'POST', 'route' => ['event.store']]) !!}
+    <div class="row">
+        <div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
+            @if($createClubEvent)
+                {!! Form::open(['method' => 'POST', 'class'=>'form-inline','id'=>'templateSelectorForm']) !!}
+                <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <label for="templateSelector"
+                           class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}:
+                        &nbsp;</label>
+                    <div class="col-md-6 col-sm-6 col-xs-8">
+                        <select name="template" id="templateSelector" class="selectpicker" data-live-search="true">
+                            <optgroup label="">
+                                <option value="-1"></option>
+                            </optgroup>
+                            @foreach($sections as $section)
+                                <optgroup label="{{ $section->title }}">
+                                    @foreach( $templates->filter(function ($template) use ($section) { return $template->section_id == $section->id; }) as $template )
+                                        <option
+                                            value="{{ Request::getBasePath() }}/event/{{ substr($date, 6, 4) }}/{{ substr($date, 3, 2) }}/{{ substr($date, 0, 2) }}/{{ $template->id }}/create"
+                                            @if($template->id == $templateId )
+                                            selected
+                                            @endif
+                                            data-content="<span> {{  $template->title }} {{trans('mainLang.begin')}}: {{$template->time_start}}
+                                            {{trans('mainLang.end')}}: {{$template->time_end}}  </span>"
+                                            title="{{ $template->title }}"
+                                        >{{  $template->title }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach
+                        </select>
+                        <button class="hidden" type="submit"></button>
+                    </div>
+                </div>
+                {!! Form::close() !!}
+            @elseIf(isset($baseTemplate) && !is_null($baseTemplate))
+                <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <label class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}:
+                        &nbsp;</label>
+                    <div class="col-md-6 col-sm-6 col-xs-8">
+                        <div class="row">
+                            {{ $baseTemplate->title }}
+                        </div>
+                        <div class="row">
+                            {{ trans('mainLang.begin') }}: {{ $baseTemplate->time_start }}
+                        </div>
+                        <div class="row">
+                            {{ trans('mainLang.end') }}: {{$baseTemplate->time_end}}
+                        </div>
+                    </div>
+
+                </div>
+            @endif
+        </div>
+    </div>
+    @if($createClubEvent)
+	    {!! Form::open(['method' => 'POST', 'route' => ['event.store']]) !!}
+        <input class="hidden" id="templateValue" name="template" />
+    @else
+        {!! Form::open(['method' => 'PUT', 'route' => ['event.update', $event->id]]) !!}
+    @endif
 
 	<div class="row">
 		<div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
 
 			<div class="panel-heading">
-				<h4 class="panel-title">{{ trans('mainLang.createNewEvent') }}:</h4>
+				<h4 class="panel-title">
+                    @if($createClubEvent)
+                        {{ trans('mainLang.createNewEvent') }}
+                    @else
+                        {{ trans('mainLang.changeEventJob') }}
+                    @endif
+                    :
+                </h4>
 			</div>
 
 			<br>
-			
+
 			<div class="panel-body no-padding">
-
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="templateName" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}: &nbsp;</label>
-					
-					<div class="col-md-6 col-sm-6 col-xs-8">
-						@if (isset($activeTemplate))
-							{!! Form::text('templateName', $activeTemplate, array('id'=>'templateName', 'class'=>'col-xs-10 col-md-9') ) !!}
-						@else
-							{!! Form::text('templateName', '', array('id'=>'templateName', 'class'=>'col-xs-10 col-md-9') ) !!}
-						@endif
-						<span class="hidden-xs">&nbsp;&nbsp;</span>
-						<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-					        <span class="caret"></span>
-					    </a>
-					    <ul class="dropdown-menu">
-						    @foreach($templates as $template)
-						        <li> 
-						        	<a href="javascript:void(0);" 
-						        	   onClick="document.getElementById('templateName').value='{{$template->schdl_title}}',
-						        	   			window.location.href='{{ Request::getBasePath() }}/event/{{ substr($date, 6, 4) }}/{{ substr($date, 3, 2) }}/{{ substr($date, 0, 2) }}/{{ $template->id }}/create';">
-						        	   {{ $template->schdl_title }}</a>
-						        </li>
-							@endforeach
-					    </ul>
-				    </div>
-			   	</div>
-
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-			   		<span class="col-md-1 col-sm-1 col-xs-1">&nbsp;</span>			
+			   		<span class="col-md-1 col-sm-1 col-xs-1">&nbsp;</span>
 					{!! Form::checkbox('saveAsTemplate', '1', false, array('class'=>'col-md-1 col-sm-1 col-xs-1')) !!}
 					<span class="col-md-9 col-sm-9 col-xs-9">{{ trans('mainLang.templateNewSaveQ') }}</span>
 			   	</div>
@@ -68,7 +110,7 @@
 		      		@endif
 			    </div>
 
-			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
+			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="subtitle" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.subTitle') }}:</label>
 					@if(is_null($subtitle))
 						{!! Form::text('subtitle', '', array('placeholder'=>Lang::get('mainLang.placeholderSubTitleWineEvening'),
@@ -80,17 +122,21 @@
 			      										     'style'=>'cursor: auto') ) !!}
 			      	@endif
 			    </div>
-			    
+
 			    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung' OR Session::get('userGroup') == 'admin')
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 						<label for="facebookDone" class="col-md-4 col-sm-4 col-xs-7">{{trans('mainLang.faceDone')}}?</label>
-						{!! Form::checkbox('facebookDone', '1', false, array('class'=>'col-md-8 col-sm-8 col-xs-5')) !!}
+                        <select class="selectpicker" name="facebookDone" id="facebookDone">
+                            <option value="-1" @if(!$facebookNeeded) selected @endif> {{ trans('mainLang.=FREI=') }} </option>
+                            <option value="0" @if($facebookNeeded) selected @endif > {{ trans('mainLang.no') }} </option>
+                            <option value="1"> {{ trans('mainLang.yes') }} </option>
+                        </select>
 					</div>
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 						<label for="eventUrl" class="col-md-3 col-sm-3 col-xs-5">{{trans('mainLang.eventUrl')}}:</label>
 						{!! Form::text('eventUrl', '', array('class'=>'col-md-8 col-sm-8 col-xs-6','style'=>'cursor: auto')) !!}
 					</div>
-				    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
+				    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 				     	<label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">Typ:</label>
 				     	<div class="col-md-10 col-sm-10 col-xs-10">
 				            {!! Form::radio('evnt_type', "0", array("checked")) !!}
@@ -128,11 +174,11 @@
 								{{ trans('mainLang.showExtern') }}
 							</div>
 				            <br>
-							
+
 						</div>
 				    </div>
 				@else
-					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
+					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 				     	<label for="evnt_type" class="control-label col-md-2 col-sm-2 col-xs-2">Typ:</label>
 				     	<div class="col-md-10 col-sm-10 col-xs-10">
 				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
@@ -180,7 +226,7 @@
 								</span>
 				            </div>
 						</div>
-				    </div>					
+				    </div>
 				@endif
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
@@ -196,12 +242,12 @@
 					    </a>
 					    <ul class="dropdown-menu">
 						    @foreach($sections as $section)
-						        <li> 
-						        	<a href="javascript:void(0);" 
-						        	   onClick="document.getElementById('section').value='{{$section}}'">{{ $section }}</a>
+						        <li>
+						        	<a href="javascript:void(0);"
+						        	   onClick="document.getElementById('section').value='{{$section->title}}'">{{ $section->title }}</a>
 						        </li>
 							@endforeach
-					    </ul>  	
+					    </ul>
 				    </span>
 			   	</div>
 
@@ -230,10 +276,10 @@
 						{{ trans('mainLang.priceTickets') }}:  <br>
 						({{ trans('mainLang.studentExtern') }})</label>
 					<div id="priceTickets" class="input-group col-md-5 col-sm-5 col-xs-12">
-						<input class="form-control" type="number" name="priceTicketsNormal" step="0.1" placeholder="Student" value=""/>
+						<input class="form-control" type="number" name="priceTicketsNormal" step="0.1" placeholder="Student" value="{{$priceTicketsNormal}}"/>
 						<span class="input-group-addon">€</span>
 						<span class="input-group-addon">/</span>
-						<input class="form-control" type="number" name="priceTicketsExternal" step="0.1" placeholder="Extern" value=""/>
+						<input class="form-control" type="number" name="priceTicketsExternal" step="0.1" placeholder="Extern" value="{{$priceTicketsExternal}}"/>
 						<span class="input-group-addon">€</span>
 					</div>
 				</div>
@@ -243,23 +289,23 @@
 						{{ trans('mainLang.price') }}:   <br>
 						({{ trans('mainLang.studentExtern') }})</label>
 					<div id="price" class="input-group col-md-5 col-sm-5 col-xs-12">
-						<input class="form-control" type="number" name="priceNormal" step="0.1" placeholder="Student" value=""/>
+						<input class="form-control" type="number" name="priceNormal" step="0.1" placeholder="Student" value="{{$priceNormal}}"/>
 						<span class="input-group-addon">€</span>
 						<span class="input-group-addon">/</span>
-						<input class="form-control" type="number" name="priceExternal" step="0.1" placeholder="Extern" value=""/>
+						<input class="form-control" type="number" name="priceExternal" step="0.1" placeholder="Extern" value="{{$priceExternal}}"/>
 						<span class="input-group-addon">€</span>
 					</div>
 				</div>
 
-			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
+			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="preparationTime" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.DV-Time') }}:</label>
 					<div class="col-md-3 col-sm-3 col-xs-3">
 						<span class="hidden-xs">&nbsp;&nbsp;</span>
 						{!! Form::input('time', 'preparationTime', $dv) !!}
 					</div>
 			    </div>
-			    
-			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">	
+
+			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="beginDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.begin') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
@@ -297,7 +343,7 @@
 			    	&nbsp;
 			    </div>
 
-		    </div>	
+		    </div>
 		</div>
 
 		<div class="container col-xs-12 col-sm-12 col-md-6 no-padding-xs">
@@ -306,25 +352,25 @@
 				<div class="panel-heading">
 					<h4 class="panel-title">{{ trans('mainLang.moreInfos') }}:</h4>({{ trans('mainLang.public') }})
 				</div>
-				<div class="panel-body">				
-				    <div class="form-group">	
+				<div class="panel-body">
+				    <div class="form-group">
 						<div class="col-md-12">
 							@if(is_null($info))
-								{!! Form::textarea('publicInfo', '', array('class'=>'form-control', 
+								{!! Form::textarea('publicInfo', '', array('class'=>'form-control',
 																		  'rows'=>'8',
 																		  'placeholder'=>Lang::get('mainLang.placeholderPublicInfo')) ) !!}
 							@else
-								{!! Form::textarea('publicInfo', $info, array('class'=>'form-control', 
+								{!! Form::textarea('publicInfo', $info, array('class'=>'form-control',
 																	  'rows'=>'8',
 																	  'placeholder'=>Lang::get('mainLang.placeholderPublicInfo')) ) !!}
 							@endif
 						</div>
-					</div>	
+					</div>
 				</div>
 			</div>
 
 			<br>
-			
+
 			<div class="panel">
 				<div class="panel-heading">
 					<h4 class="panel-title">{{ trans('mainLang.details') }}:</h4>({{ trans('mainLang.showOnlyIntern') }})
@@ -333,12 +379,12 @@
 				    <div class="form-group">
 						<div class="col-md-12">
 							@if(is_null($details))
-								{!! Form::textarea('privateDetails', '', array('class'=>'form-control', 
-																			  'rows'=>'5', 
+								{!! Form::textarea('privateDetails', '', array('class'=>'form-control',
+																			  'rows'=>'5',
 																			  'placeholder'=>Lang::get('mainLang.placeholderPrivateDetails')) ) !!}
 							@else
-								{!! Form::textarea('privateDetails', $details, array('class'=>'form-control', 
-																		  'rows'=>'5', 
+								{!! Form::textarea('privateDetails', $details, array('class'=>'form-control',
+																		  'rows'=>'5',
 																		  'placeholder'=>Lang::get('mainLang.placeholderPrivateDetails')) ) !!}
 							@endif
 						</div>
@@ -347,23 +393,22 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<br>
-	
+
 	<div class="row">
 		@include('partials.editSchedule')
 		<br>
-		
 		{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'hidden', 'id'=>'button-create-submit')) !!}
 	    <input class="hidden" name="evntIsPublished" type="text" value="0" />
-	    
-	    {{-- 
+
+	    {{--
 
 	    Disabling iCal until fully functional -> remove "Publish" button, rename "create unpublished" to just "create"
 
 
-	    @if(Session::get('userGroup') == 'marketing' 
-	     OR Session::get('userGroup') == 'clubleitung'  
+	    @if(Session::get('userGroup') == 'marketing'
+	     OR Session::get('userGroup') == 'clubleitung'
 	     OR Session::get('userGroup') == 'admin')
 			<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
 			&nbsp;&nbsp;&nbsp;&nbsp;
@@ -371,15 +416,19 @@
 	    @endif
 
 	    --}}
+        @if($createClubEvent)
+		    <button class="btn btn-primary" id="createUnpublishedBtn">{{trans('mainLang.createNewEvent')}}</button>
+        @else
+            {!! Form::submit( trans('mainLang.update') , array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
+        @endif
 
-		<button class="btn btn-primary" id="createUnpublishedBtn">{{trans('mainLang.createNewEvent')}}</button>
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<br class="visible-xs">
 		<br class="visible-xs">
 		<a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
 
 		{!! Form::close() !!}
-	
+
 	</div>
 
 @else

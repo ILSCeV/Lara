@@ -308,6 +308,31 @@ class ShiftController extends Controller
             return;
         }
         // If no id is set, create a new Model
+        $shift = self::createShiftsFromEditSchedule($id,$title,$type,$start,$end,$weight,$position);
+        $shift->schedule_id = $schedule->id;
+        if (!$isNewEvent) {
+            $shift->save();
+            Logging::shiftCreated($shift);
+        }
+        $shift->save();
+    }
+
+    /**
+     * @param $title
+     * @param $id
+     * @param $type
+     * @param $start
+     * @param $end
+     * @param $weight
+     * @param $position
+     * @return Shift
+     */
+    public static function createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position) {
+
+        if ($title === "") {
+            return;
+        }
+
         $shift = Shift::firstOrNew(["id" => $id]);
 
         // If there was a shifttype passed and one with the correct title exists, use this one
@@ -335,7 +360,6 @@ class ShiftController extends Controller
 
         // if the model was newly created, save the new shiftType
         $shift->fill([
-            "schedule_id" => $schedule->id,
             "start" => $start,
             "end" => $end,
             "statistical_weight" => $weight,
@@ -360,11 +384,8 @@ class ShiftController extends Controller
                 Logging::shiftEndChanged($shift);
             }
         }
-        else if (!$isNewEvent) {
-            $shift->save();
-            Logging::shiftCreated($shift);
-        }
         $shift->save();
+        return $shift;
     }
 
 
@@ -482,13 +503,13 @@ class ShiftController extends Controller
                     $userStatus = ["status"=>"fa fa-times-circle-o", "style"=>"color:yellowgreen;", "title"=>"ex-Kandidat"];
                     break;
                 case "":
-                    $userStatus = ["status"=>"fa fa-circle-o", "style"=>"color:yellowgreen;", "title"=>"Extern"]; 
+                    $userStatus = ["status"=>"fa fa-circle-o", "style"=>"color:yellowgreen;", "title"=>"Extern"];
                     break;
             }
         }
         else
         {
-            $userStatus = ["status"=>"fa fa-question", "style"=>"color:lightgrey;", "title"=>"Dienst frei"]; 
+            $userStatus = ["status"=>"fa fa-question", "style"=>"color:lightgrey;", "title"=>"Dienst frei"];
         }
 
         return $userStatus;
