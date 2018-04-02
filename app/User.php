@@ -40,14 +40,20 @@ class User extends Authenticatable
     ];
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo/Lara\Person
+     */
     public function person()
     {
-        return $this->belongsTo('Lara\Person');
+        return $this->belongsTo(Person::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo/Lara\Section
+     */
     public function section()
     {
-        return $this->belongsTo('Lara\Section');
+        return $this->belongsTo(Section::class);
     }
 
     /**
