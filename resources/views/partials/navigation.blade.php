@@ -47,7 +47,17 @@
                 </a>
                 <ul class="dropdown-menu" role="menu">
 
-{{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
+                    @auth
+                        <li>
+                            <a href="{{route('password.change')}}">
+                                <i class="fa fa-key fa-rotate-90" aria-hidden="true"></i>
+                                {{ trans('auth.changePassword') }}
+                            </a>
+                        </li>
+
+                        <li role="separator" class="divider"></li>
+                    @endauth
+                    {{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
 
                 @is([Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR])
                     <li>
@@ -62,7 +72,7 @@
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>
                     </li>
-                    @is([Roles::PRIVILEGE_CL,Roles::PRIVILEGE_ADMINISTRATOR])
+                    @is([Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR])
                     <li>
                         <a href="{{ route('user.index') }}">
                             <i class="fa fa-users" aria-hidden="true"> </i>
@@ -70,12 +80,13 @@
                         </a>
                     </li>
                     @endis
+                    <li role="separator" class="divider"></li>
                 @endis
 
-
-{{-- LARA LOGS / section management or admins only --}}
-                @is([Roles::PRIVILEGE_CL,Roles::PRIVILEGE_ADMINISTRATOR])
+                {{-- LARA LOGS / section management or admins only --}}
+                @is([Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR])
                     <li><a href="{{ asset('/logs') }}">Logs</a></li>
+                    <li role="separator" class="divider"></li>
                 @endis
 
 
