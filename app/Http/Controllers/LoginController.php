@@ -133,7 +133,7 @@ class LoginController extends Controller
         $user = $person->user();
         $user->roles()->detach();
         RoleUtility::assignPrivileges($user, $user->section, $userGroup);
-        $person->user()->fill(["group" => $userGroup,"password"=>"123456"])->save();
+        $person->user()->fill(["group" => $userGroup,"password" => bcrypt( "123456")])->save();
         $this->loginPersonAsUser($person);
 
         return true;
