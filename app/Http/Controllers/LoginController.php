@@ -369,8 +369,11 @@ class LoginController extends Controller
                     $user->email = $info[0]['email'][0];
                 }
 
-                // this is the internally used hashing
-                $user->password = bcrypt(Input::get('password'));
+                // only store the users password if it is empty, e.g. for the first LDAP-login
+                if ($user->password == '') {
+                    // this is the internally used hashing
+                    $user->password = bcrypt(Input::get('password'));
+                }
                 $user->status = $userStatus;
                 $user->save();
 
