@@ -123,12 +123,17 @@ class LoginController extends Controller
         $clubIdsOfSections = Section::all()->map(function(Section $s) {
             return $s->club()->id;
         });
-        $person = Person::whereIn('clb_id', $clubIdsOfSections)->inRandomOrder()->first();
+        $username = Input::get("username");
+        if($username != null && $username != ""){
+            $person = Person::query()->where('prsn_ldap_id','=',$username)->first();
+        } else {
+            $person = Person::query()->whereIn('clb_id', $clubIdsOfSections)->inRandomOrder()->first();
+        }
         /** @var User $user */
         $user = $person->user();
         $user->roles()->detach();
         RoleUtility::assignPrivileges($user, $user->section, $userGroup);
-        $person->user()->fill(["group" => $userGroup])->save();
+        $person->user()->fill(["group" => $userGroup,"password"=>"123456"])->save();
         $this->loginPersonAsUser($person);
 
         return true;
