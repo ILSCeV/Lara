@@ -18,4 +18,10 @@ return [
     'register' => 'Matrosenmeldung',
     'missingPermissions' => 'Dir fehlen die benötigten Rechte um diese Aktion durchzuführen.',
     'notAuthenticated' => 'Du bist nicht angemeldet.',
+    'changePassword' => 'Passwort ändern',
+    'oldPassword' => 'Altes Passwort',
+    'newPassword' => 'Neues Passwort',
+    'confirmNewPassword' => 'Neues Passwort bestätigen',
+    'passwordDoesNotMatch' => 'Das angegebene Passwort ist falsch',
+    'passwordChanged' => 'Dein Password wurde erfolgreich geändert',
 ];

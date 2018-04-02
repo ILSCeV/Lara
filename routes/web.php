@@ -191,3 +191,7 @@ Route::post('password/reset', ['as' => 'password.reset.post', 'uses' => 'Auth\Re
 Route::post('/user/updateData/{user}', 'UserController@updateData')->name('user.updateData');
 Route::resource('user', 'UserController');
 
+Route::get('/password/change', ['as' => 'password.change', 'uses' => 'Auth\PasswordChangeController@showChangePasswordForm'])
+    ->middleware('auth');
+Route::post('/password/change', ['as' => 'password.change.post', 'uses' => 'Auth\PasswordChangeController@changePassword'])
+    ->middleware('auth');

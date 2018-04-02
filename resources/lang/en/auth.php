@@ -18,4 +18,10 @@ return [
     'register' => 'Registration',
     'missingPermissions' => 'You lack privileges to access this site!',
     'notAuthenticated' => 'You are not logged in.',
+    'changePassword' => 'Change password',
+    'oldPassword' => 'Old password',
+    'newPassword' => 'New password',
+    'confirmNewPassword' => 'Confirm new password',
+    'passwordDoesNotMatch' => 'The password you provided is  incorrect',
+    'passwordChanged' => 'Your password was changed successfully',
 ];
