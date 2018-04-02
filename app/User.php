@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Lara\utilities\RoleUtility;
+use Lara\Status;
 
 /**
  * @property string name
@@ -75,7 +76,7 @@ class User extends Authenticatable
         }
         $oldStatus = $person->prsn_status;
 
-        $newStatus = in_array($oldStatus, ['candidate', 'member', 'veteran']) ? $oldStatus : 'member';
+        $newStatus = in_array($oldStatus, Status::ALL) ? $oldStatus : Status::MEMBER;
         $user = User::create([
             'name' => $person->prsn_name,
             'section_id' => $person->club->section()->id,

@@ -57,7 +57,7 @@
                             <label for="status" class="control-label">Status</label>
                             <div>
                                 <select name="status" id="status" class="editUserFormselectpicker">
-                                    @foreach(['candidate', 'member', 'veteran'] as $status)
+                                    @foreach(Lara\Status::ALL as $status)
                                         <option value="{{$status}}" {{$status === $user->status ? "selected" : ""}}>
                                             {{trans(Auth::user()->section->title . "." . $status) }}
                                         </option>

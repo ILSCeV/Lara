@@ -6,6 +6,7 @@ use Auth;
 use Session;
 use Illuminate\Database\Eloquent\Model;
 
+use Lara\Status;
 /**
  * @property string prsn_name
  * @property User user
@@ -72,16 +73,8 @@ class Person extends Model
 
     public function shortHand()
     {
-        switch ($this->prsn_status) {
-            case "candidate":
-                return "(K)";
-            case "member":
-                return "(A)";
-            case "veteran":
-                return "(V)";
-            default:
-                return "";
-        }
+        $shortHand = Status::shortHand($this->prsn_status);
+        return $shortHand ? "(" . $shortHand . ")" : "";
     }
 
     /**

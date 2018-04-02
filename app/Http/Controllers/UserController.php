@@ -10,6 +10,7 @@ use Lara\Http\Middleware\ClOnly;
 use Lara\Logging;
 use Lara\Role;
 use Lara\Section;
+use Lara\Status;
 use Lara\User;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
@@ -43,12 +44,7 @@ class UserController extends Controller
                     )->toArray()
                 )
             ],
-            'status' => [
-                'required',
-                Rule::in(
-                    ['candidate', 'member', 'veteran']
-                )
-            ]
+            'status' => ['required', Rule::in(Status::ACTIVE)]
         ]);
     }
 

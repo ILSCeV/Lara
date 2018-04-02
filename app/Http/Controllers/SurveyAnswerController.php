@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Hash;
 use Lara\Library\Revision;
 use Lara\QuestionType;
+use Lara\Status;
 use Session;
 use Redirect;
 use Input;
@@ -21,7 +22,7 @@ use Lara\Club;
 /**
  * Class SurveyAnswerController
  * @package Lara\Http\Controllers
- * 
+ *
  * RESTful Resource Controller, implements only 3 RESTful actions (store, update, destroy)
  */
 class SurveyAnswerController extends Controller
@@ -39,7 +40,7 @@ class SurveyAnswerController extends Controller
         // after deadline, only Ersteller/Admin/Marketing/Clubleitung, privileged user groups only
         $this->middleware('deadlineSurvey', ['only' => ['store', 'update', 'destroy']]);
     }
-    
+
     /**
      * @param int $surveyid
      * @param Request $input
@@ -56,7 +57,7 @@ class SurveyAnswerController extends Controller
             Session::put('msgType', 'danger');
             return Redirect::action('SurveyController@show', array('id' => $survey->id));
         }
-        
+
         $survey_answer = new SurveyAnswer();
 		$revision_answer = new Revision($survey_answer);
         // prevent guestentries with ldapId
@@ -239,26 +240,7 @@ class SurveyAnswerController extends Controller
      */
     private function updateStatus($user_status)
     {
-        switch ($user_status) {
-            case 'candidate':
-                $user_status_style = ["status" => "fa fa-adjust", "style" => "color:yellowgreen;", "title" => "Kandidat"];
-                break;
-            case 'veteran':
-                $user_status_style = ["status" => "fa fa-star", "style" => "color:gold;", "title" => "Veteran"];
-                break;
-            case 'member':
-                $user_status_style = ["status" => "fa fa-circle", "style" => "color:forestgreen;", "title" => "Aktiv"];
-                break;
-            case 'resigned':
-                $user_status_style = ["status" => "fa fa-star-o", "style" => "color:gold;", "title" => "ex-Mitglied"];
-                break;
-            case 'guest':
-                    $userStatus = ["status"=>"fa fa-circle", "style"=>"color:lightgrey;", "title"=>"ex-Kandidat"];
-                    break;
-            default:
-                $user_status_style = ["status" => "fa fa-circle", "style" => "color:lightgrey;", "title" => "Extern"];
-        }
-        return $user_status_style;
+        return Status::style($status);
     }
 }
 

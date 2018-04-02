@@ -58,7 +58,7 @@
                             @canEditUser($user)
                                 {{ Form::model($user, ['route' => ['user.update', $user->id], 'id' => 'change-user-status-' . $user->id, 'class'=>'change-user-status-form', 'method' => 'PUT']) }}
                                 <select name="status" class="selectpicker" data-id="{{$user->id}}" data-name="{{$user->name}}">
-                                    @foreach(['candidate', 'member', 'veteran', 'ex-member', 'ex-candidate'] as $status)
+                                    @foreach(Lara\Status::ALL as $status)
                                         <option value="{{ $status }}" {{ $status === $user->status ? "selected" : "" }}>
                                             {{ trans($user->section->title . "." . $status) }}
                                         </option>

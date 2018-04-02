@@ -170,31 +170,14 @@ Disabling iCal until fully functional.
                                             'class'=>'form-horizontal')) !!}
                             <div class="navbar-form">
                                 &nbsp;&nbsp;
-                                @if     ( Auth::user()->status === 'candidate' )
-                                    <i class="fa fa-adjust"
-                                       style="color:yellowgreen;"
-                                       data-toggle="tooltip"
-                                       data-placement="bottom"
-                                       title="{{ trans('mainLang.candidate') }}"></i>
-                                @elseif ( Auth::user()->status === 'veteran' )
-                                    <i class="fa fa-star"
-                                       style="color:gold;"
-                                       data-toggle="tooltip"
-                                       data-placement="bottom"
-                                       title="{{ trans('mainLang.veteran') }}"></i>
-                                @elseif ( Auth::user()->status === 'resigned' )
-                                    <i class="fa fa-star-o"
-                                       style="color:gold;"
-                                       data-toggle="tooltip"
-                                       data-placement="bottom"
-                                       title="{{ trans('mainLang.ex-member') }}"></i>
-                                @elseif ( Auth::user()->status === 'member')
-                                    <i class="fa fa-circle"
-                                       style="color:forestgreen;"
-                                       data-toggle="tooltip"
-                                       data-placement="bottom"
-                                       title="{{ trans('mainLang.active') }}"></i>
-                                @endif
+                                @php
+                                    $attributes = Lara\Status::style(Auth::user()->status);
+                                @endphp
+                                <i class="{{ $attributes["status"]}}"
+                                   style="{{ $attributes["style"] }}"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="{{ Lara\Status::localizeCurrent() }}"></i>
                                 &nbsp;
                                 <strong>
                                     <span data-toggle="tooltip"

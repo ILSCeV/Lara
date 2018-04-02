@@ -13,6 +13,7 @@ use Illuminate\Validation\Rule;
 use Lara\User;
 use Lara\Person;
 use Lara\Section;
+use Lara\Status;
 
 use Lara\Http\Controllers\Controller;
 use Lara\Utilities;
@@ -69,12 +70,7 @@ class RegisterController extends Controller
                     )->toArray()
                 )
             ],
-            'status' => [
-                'required',
-                Rule::in(
-                    ['candidate', 'member', 'veteran']
-                )
-            ]
+            'status' => ['required', Rule::in(Status::ACTIVE)]
         ]);
     }
 

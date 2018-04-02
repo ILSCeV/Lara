@@ -13,6 +13,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use Carbon\Carbon;
+use Lara\STATUS;
 
 $factory->define(Lara\User::class, function (Faker\Generator $faker) {
     static $password;
@@ -29,7 +30,7 @@ $factory->define(Lara\Person::class, function (Faker\Generator $faker) {
     return [
         'prsn_name' => $faker->name(),
         'prsn_ldap_id' => $faker->numberBetween(2000, 9999),
-        'prsn_status' => $faker->randomElement(['member', 'veteran', 'candidate']),
+        'prsn_status' => $faker->randomElement(Status::ACTIVE),
         'prsn_uid' => hash("sha512", uniqid()),
         'clb_id' => $faker->randomElement((new Lara\Club)->inRandomOrder()->get()->map(function(\Lara\Club $club){return $club->id;})->toArray())
     ];

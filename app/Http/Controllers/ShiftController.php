@@ -14,6 +14,7 @@ use Lara\Club;
 use Lara\Person;
 use Lara\Shift;
 use Lara\ShiftType;
+use Lara\Status;
 use Lara\Utilities;
 
 class ShiftController extends Controller
@@ -489,33 +490,9 @@ class ShiftController extends Controller
      */
     private function updateStatus($shift) {
         if ( !is_null($shift->person_id) ) {
-            switch (Person::where("id","=",$shift->person_id)->first()->prsn_status) {
-                case 'candidate':
-                    $userStatus = ["status"=>"fa fa-adjust", "style"=>"color:yellowgreen;", "title"=>"Kandidat"];
-                    break;
-                case 'veteran':
-                    $userStatus = ["status"=>"fa fa-star", "style"=>"color:gold;", "title"=>"Veteran"];
-                    break;
-                case 'member':
-                    $userStatus = ["status"=>"fa fa-circle", "style"=>"color:forestgreen;", "title"=>"Aktiv"];
-                    break;
-                case 'resigned':
-                    $userStatus = ["status"=>"fa fa-star-o", "style"=>"color:gold;", "title"=>"ex-Mitglied"];
-                    break;
-                case 'guest':
-                    $userStatus = ["status"=>"fa fa-times-circle-o", "style"=>"color:yellowgreen;", "title"=>"ex-Kandidat"];
-                    break;
-                case "":
-                    $userStatus = ["status"=>"fa fa-circle-o", "style"=>"color:yellowgreen;", "title"=>"Extern"];
-                    break;
-            }
+            return Status::style($shift->person->status);
         }
-        else
-        {
-            $userStatus = ["status"=>"fa fa-question", "style"=>"color:lightgrey;", "title"=>"Dienst frei"];
-        }
-
-        return $userStatus;
+        return ["status"=>"fa fa-question", "style"=>"color:lightgrey;", "title"=>"Dienst frei"];
     }
 
 

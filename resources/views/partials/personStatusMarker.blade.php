@@ -1,39 +1,14 @@
-@if($status === 'candidate' )
-    <i class="fa fa-adjust"
+@if (!empty($status))
+    @php
+        $attributes = Lara\Status::style($status)
+    @endphp
+    <i class="{{ $attributes["status"] }}"
        name="status-icon"
-       style="color:yellowgreen;"
+       style="{{ $attributes["style"] }}"
        data-toggle="tooltip"
        data-placement="top"
-       title="{{ trans('mainLang.candidate') }}"></i>
-@elseif ( $status === 'veteran' )
-    <i class="fa fa-star"
-       name="status-icon"
-       style="color:gold;"
-       data-toggle="tooltip"
-       data-placement="top"
-       title="{{ trans('mainLang.veteran') }}"></i>
-@elseif ( $status === 'member')
-    <i class="fa fa-circle"
-       name="status-icon"
-       style="color:forestgreen;"
-       data-toggle="tooltip"
-       data-placement="top"
-       title="{{ trans('mainLang.active') }}"></i>
-@elseif ( $status === 'resigned' )
-    <i class="fa fa-star-o"
-       name="status-icon"
-       style="color:gold;"
-       data-toggle="tooltip"
-       data-placement="top"
-       title="{{ trans('mainLang.ex-member') }}"></i>
-@elseif ( $status === 'guest' )
-    <i class="fa fa-times-circle-o"
-       name="status-icon"
-       style="color:yellowgreen;"
-       data-toggle="tooltip"
-       data-placement="top"
-       title="{{ trans('mainLang.ex-candidate') }}"></i>
-@elseif ( empty($status) )
+       title="{{ Lara\Status::localize($status)}}"></i>
+@else
     <i class="fa fa-circle"
        name="status-icon"
        style="color:lightgrey;"

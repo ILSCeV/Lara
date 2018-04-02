@@ -62,7 +62,7 @@
 
                             <div class="col-md-6">
                                 <select name="status" id="status" class="selectpicker">
-                                    @foreach(['candidate', 'member', 'veteran'] as $status)
+                                    @foreach(Lara\Status::ACTIVE as $status)
                                         <option value="{{$status}}" >{{trans(Auth::user()->section->title . "." . $status) }}</option>
                                     @endforeach
                                 </select>
