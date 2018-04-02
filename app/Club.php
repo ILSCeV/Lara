@@ -44,7 +44,7 @@ class Club extends Model
     public static function activeClubs()
     {
         $club_ids = Section::all()->map(function(Section $section) {
-            return Club::query()->where('clb_title', $section->title)->first()->id;
+            return $section->club()->id;
         });
         return Club::query()->whereIn('id',$club_ids);
     }
