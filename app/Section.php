@@ -62,4 +62,9 @@ class Section extends Model
     {
         return Club::where('clb_title', $this->title)->first();
     }
+
+    public function users()
+    {
+        return $this->hasMany('Lara\User');
+    }
 }
