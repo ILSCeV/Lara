@@ -24,4 +24,11 @@ return [
     'confirmNewPassword' => 'Confirm new password',
     'passwordDoesNotMatch' => 'The password you provided is  incorrect',
     'passwordChanged' => 'Your password was changed successfully',
+
+    'email' => 'Email',
+    'section' => 'Section',
+    'status' => 'Status',
+    'password' => 'Password',
+    'status' => 'Confirm password',
+    'register_submit' => 'Register new user'
 ];

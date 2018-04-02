@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                            <label for="email" class="col-md-4 control-label">{{ trans('auth.email') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('section') ? ' has-error' : '' }}">
-                            <label for="section" class="col-md-4 control-label">Sektion</label>
+                            <label for="section" class="col-md-4 control-label"> {{ trans('auth.section') }}</label>
 
                             <div class="col-md-6">
                                 <select name="section" id="section" class="selectpicker">
@@ -58,7 +58,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-                            <label for="status" class="col-md-4 control-label">Status</label>
+                            <label for="status" class="col-md-4 control-label">{{ trans('auth.status') }}</label>
 
                             <div class="col-md-6">
                                 <select name="status" id="status" class="selectpicker">
@@ -75,7 +75,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+                            <label for="password" class="col-md-4 control-label">{{ trans('auth.password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required>
@@ -89,7 +89,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+                            <label for="password-confirm" class="col-md-4 control-label">{{ trans('auth.confirmPassword') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
@@ -99,7 +99,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Register
+                                    {{ trans('auth.register_submit') }}
                                 </button>
                             </div>
                         </div>
