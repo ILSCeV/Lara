@@ -49,7 +49,7 @@
 
 {{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
 
-                @is(['marketing', 'clubleitung', 'admin'])
+                @is([Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR])
                     <li>
                         <a href="{{ asset('shiftType') }}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
@@ -74,7 +74,7 @@
 
 
 {{-- LARA LOGS / section management or admins only --}}
-                @is(['clubleitung', 'admin'])
+                @is([Roles::PRIVILEGE_CL,Roles::PRIVILEGE_ADMINISTRATOR])
                     <li><a href="{{ asset('/logs') }}">Logs</a></li>
                 @endis
 
