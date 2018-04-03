@@ -347,7 +347,7 @@ class LoginController extends Controller
 
 
             // Hashing password input
-            $password = '{md5}' . base64_encode(mhash(MHnpASH_MD5, Input::get('password')));
+            $password = '{md5}' . base64_encode(mhash(MHASH_MD5, Input::get('password')));
 
             // end ldapConnection
             ldap_unbind($ldapConn);

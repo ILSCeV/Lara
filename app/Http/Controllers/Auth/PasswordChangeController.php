@@ -108,7 +108,7 @@ class PasswordChangeController extends Controller
             $userEntry = ldap_first_entry($ldapConn, $search);
             $userDn = ldap_get_dn($ldapConn, $userEntry);
             // Hashing password input
-            $encoded_newPassword = '{md5}' . base64_encode(mhash(MHnpASH_MD5, Input::get('password')));
+            $encoded_newPassword = '{md5}' . base64_encode(mhash(MHASH_MD5, Input::get('password')));
 
             $entry = array();
             $entry["userPassword"] = "$encoded_newPassword";
