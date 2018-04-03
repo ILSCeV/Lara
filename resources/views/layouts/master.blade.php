@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}">
 
 	<head>
 		<title>Lara | @yield('title', 'VedSt Default Title')</title>
@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="{{ mix('/lara.css') }}">
     	<link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-48x48.png') }}">
 
-        @yield('moreStylesheets') 
+        @yield('moreStylesheets')
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -34,17 +34,17 @@
 			@include('partials.message')
 		</div>
 
-    <section class="container containerNopadding">
+    <section class="container-fluid containerNopadding">
         @yield('content')
     </section>
 
     <!-- Back to Top button -->
-    <a id="back-to-top" 
-       href="#" 
-       class="btn btn-primary btn-lg back-to-top hidden-print hidden-md hidden-lg" 
-       role="button" 
-       title="{{ trans("mainLang.backToTop")  }}" 
-       data-toggle="tooltip" 
+    <a id="back-to-top"
+       href="#"
+       class="btn btn-primary btn-lg back-to-top hidden-print hidden-md hidden-lg"
+       role="button"
+       title="{{ trans("mainLang.backToTop")  }}"
+       data-toggle="tooltip"
        data-placement="right">
         <span class="glyphicon glyphicon-chevron-up"></span>
     </a>

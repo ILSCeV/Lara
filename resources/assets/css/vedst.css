@@ -272,7 +272,9 @@ input[type=number],
 }
 
 .word-break {
-    word-break: break-all;
+	overflow:hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .panel {
