@@ -176,9 +176,8 @@
         </div>
         <div class="btn-group btn-group-lg centered">
             <button type="submit" id="updateUserData" class="btn btn-success"> {{ trans('mainLang.update') }} </button>
-            <button class="btn btn-default">
-                <a href="javascript:history.back()">{{ trans('mainLang.backWithoutChange') }}</a>
-            </button>
+            <a class="btn btn-default" href="javascript:history.back()">{{ trans('mainLang.backWithoutChange') }}</a>
+
         </div>
         {{ Form::close() }}
     </div>
