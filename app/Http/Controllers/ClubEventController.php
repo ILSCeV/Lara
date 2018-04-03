@@ -344,19 +344,23 @@ class ClubEventController extends Controller
             $creator_name = $revisions[0]["user name"];
         }
 
-        $title          = $event->evnt_title;
-        $type           = $event->evnt_type;
-        $subtitle       = $event->evnt_subtitle;
-        $section        = $event->section;
-        $filter         = $event->showToSectionNames();
-        $dv             = $schedule->schdl_time_preparation_start;
-        $timeStart      = $event->evnt_time_start;
-        $timeEnd        = $event->evnt_time_end;
-        $info           = $event->evnt_public_info;
-        $details        = $event->evnt_private_details;
-        $private        = $event->evnt_is_private;
-        $facebookNeeded = $event->facebook_done;
-        $date = $event->evnt_date_start;
+        $title                  = $event->evnt_title;
+        $type                   = $event->evnt_type;
+        $subtitle               = $event->evnt_subtitle;
+        $section                = $event->section;
+        $filter                 = $event->showToSectionNames();
+        $dv                     = $schedule->schdl_time_preparation_start;
+        $timeStart              = $event->evnt_time_start;
+        $timeEnd                = $event->evnt_time_end;
+        $info                   = $event->evnt_public_info;
+        $details                = $event->evnt_private_details;
+        $private                = $event->evnt_is_private;
+        $facebookNeeded         = $event->facebook_done;
+        $date                   = $event->evnt_date_start;
+        $priceNormal            = $event->price_normal;
+        $priceTicketsNormal     = $event->price_tickets_normal;
+        $priceExternal          = $event->price_external;
+        $priceTicketsExternal   = $event->price_tickets_external;
         if(!is_null($event->template_id)) {
             $baseTemplate = $event->template;
         } else {

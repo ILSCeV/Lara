@@ -36,14 +36,17 @@ class Person extends Model
 	 * Get the corresponding club.
 	 * Looks up in table club for that entry, which has the same id like clb_id of Person instance.
 	 *
-	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Club
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo/Lara\Club
 	 */
     public function getClub() {
         return $this->belongsTo('Lara\Club', 'clb_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo/Lara\Club
+     */
     public function club() {
-        return $this->belongsTo('Lara\Club', 'clb_id', 'id');
+        return $this->belongsTo(Club::class, 'clb_id', 'id');
     }
 
     public function name()

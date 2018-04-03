@@ -38,14 +38,21 @@ class Shift extends Model
      * Looks up in table persons for that entry, which has the same id like person_id of ScheduleEntry instance.
      * If prsn_is is null, also null will be returned.
      *
-     * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Person
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function getPerson() {
         return $this->belongsTo('Lara\Person', 'person_id', 'id');
     }
 
+    /**
+     * Get the corresponding person, if existing.
+     * Looks up in table persons for that entry, which has the same id like person_id of ScheduleEntry instance.
+     * If prsn_is is null, also null will be returned.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function person() {
-        return $this->belongsTo('Lara\Person', 'person_id', 'id');
+        return $this->belongsTo(Person::class, 'person_id', 'id');
     }
 
     /**

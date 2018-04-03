@@ -49,8 +49,11 @@ class Club extends Model
         return Club::query()->whereIn('id',$club_ids);
     }
 
+    /**
+     * @return Section|null|object|static
+     */
     public function section()
     {
-        return (new Section)->where('title', $this->clb_title)->first();
+        return Section::query()->where('title', $this->clb_title)->first();
     }
 }

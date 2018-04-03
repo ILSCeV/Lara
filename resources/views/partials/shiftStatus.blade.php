@@ -19,12 +19,13 @@
 @else
 
     @php
-        $person = $shift->getPerson;
+    /** @var \Lara\Shift $shift */
+        $person = $shift->person;
         $attributes = Lara\Status::style($person->prsn_status);
-        $section = $person->club->section;
+        $section = $person->club->section();
     @endphp
 
-    @if ($sectionn)
+    @if ($section)
         <i class="{{ $attributes["status"]}}"
            name="status-icon"
            style="{{ $attributes["style"] }}"
