@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string entry_name
  * @property string entry_value
  */
-class LdapPlattform extends Model
+class LdapPlatform extends Model
 {
     protected $fillable = ['user_id', 'entry_name', 'entry_value'];
 }

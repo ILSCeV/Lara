@@ -6,6 +6,7 @@ use Auth;
 use Hash;
 use Input;
 use Lara\Http\Controllers\Controller;
+use Lara\LdapPlatform;
 use Lara\User;
 use Lara\Utilities;
 use Lara\utilities\LdapUtility;
@@ -46,7 +47,7 @@ class PasswordChangeController extends Controller
             try {
                 $this->changePasswordInLDAP($user);
             } catch (\Exception $e) {
-                \Log::error("ldap broken", $e);
+                \Log::error("ldap broken", [$e]);
             }
         }
 
@@ -69,6 +70,17 @@ class PasswordChangeController extends Controller
     private function changePasswordInLDAP(User $user)
     {
         $encoded_newPassword = '{md5}' . base64_encode(mhash(MHASH_MD5, Input::get('password')));
-        LdapUtility::changePassword($user->person->prsn_ldap_id, $encoded_newPassword);
+        $ldapPlatform = new LdapPlatform();
+        $ldapPlatform->entry_name = 'userpassword';
+        $ldapPlatform->entry_value = $encoded_newPassword;
+        $ldapPlatform->user_id = $user->person->prsn_ldap_id;
+        $ldapPlatform->save();
+        if(LdapUtility::changePassword($user->person->prsn_ldap_id, $encoded_newPassword)) {
+            try {
+                $ldapPlatform->delete();
+            } catch (\Exception $e) {
+                \Log::error('could not delete ldapplattform',[$e]);
+            }
+        }
     }
 }

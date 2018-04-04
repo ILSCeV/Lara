@@ -13,7 +13,7 @@ class CreateLdapPlattformsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ldap_plattforms', function (Blueprint $table) {
+        Schema::create('ldap_platforms', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->text("user_id");
@@ -29,6 +29,6 @@ class CreateLdapPlattformsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ldap_plattforms');
+        Schema::dropIfExists('ldap_platforms');
     }
 }
