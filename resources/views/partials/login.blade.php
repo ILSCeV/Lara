@@ -22,10 +22,9 @@
 
     @dev
     <select name="userGroup" id="userGroup" class="btn btn-sm">
-        <option value="member"> Member </option>
-        <option value="marketing"> Marketing </option>
-        <option value="clubleitung"> CL </option>
-        <option value="admin"> Admin </option>
+        @foreach(Roles::ALL_PRIVILEGES as $privilege)
+            <option value="{{ $privilege }}"> {{ ucwords($privilege) }}</option>
+        @endforeach
     </select>
     @enddev
     {!! Form::submit( Lang::get('mainLang.logIn'),
