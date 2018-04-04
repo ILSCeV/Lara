@@ -67,15 +67,26 @@ class LdapUtility
      */
     public static function changePassword($userId, $encoded_newPassword)
     {
+        $entry = array();
+        $entry["userpassword"] = "$encoded_newPassword";
+
+        return self::modify($userId, $entry);
+    }
+
+    /**
+     * @param $userId
+     * @param array $entry
+     * @return bool
+     */
+    public static function modify($userId, array $entry)
+    {
         $ldapConn = self::connect();
-        $userEntry = self::getEntry($ldapConn,$userId);
-        if($userEntry === false){
+        $userEntry = self::getEntry($ldapConn, $userId);
+        if ($userEntry === false) {
             self::disconnect($ldapConn);
             return false;
         }
         $userDn = ldap_get_dn($ldapConn, $userEntry);
-        $entry = array();
-        $entry["userpassword"] = "$encoded_newPassword";
 
         if (!ldap_modify($ldapConn, $userDn, $entry)) {
             \Log::error("ldap change not worked");
