@@ -83,7 +83,7 @@ class LDAPsync extends Command
             if($person->prsn_ldap_id == '9999' ){
                 continue;
             }
-            if(!$allowedSection->contains($person->club->section)){
+            if(!$allowedSection->contains($person->club->section())){
                 continue;
             }
 // AUTHENTICATING BC-CLUB
@@ -108,6 +108,7 @@ class LDAPsync extends Command
                     '(uid=' . $person->prsn_ldap_id . ')');
 
                 $info = ldap_get_entries($ldapConn, $search);
+
             }
 
 // HANDLING ERRORS
@@ -145,9 +146,8 @@ class LDAPsync extends Command
                 $user->status = $userStatus;
             }
 
-            if ($user->email === "") {
-                $user->email = $userEmail;
-            }
+            $user->email = $userEmail;
+
 
             $person->save();
             $user->save();
