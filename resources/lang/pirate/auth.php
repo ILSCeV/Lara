@@ -29,6 +29,6 @@ return [
     'section' => 'Sektion',
     'status' => 'Status',
     'password' => 'Passwort',
-    'status' => 'Passwort bestätigen',
+    'confirmPassword' => 'Passwort bestätigen',
     'register_submit' => 'Neuen Nutzer registrieren'
 ];
