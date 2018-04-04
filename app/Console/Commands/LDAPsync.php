@@ -4,8 +4,10 @@ namespace Lara\Console\Commands;
 
 use Config;
 use Illuminate\Console\Command;
+use Lara\LdapPlattform;
 use Lara\Person;
 use Lara\Section;
+use Lara\utilities\LdapUtility;
 use Log;
 
 class LDAPsync extends Command
@@ -156,6 +158,27 @@ class LDAPsync extends Command
 // FINISH UPDATE
 
         ldap_unbind($ldapConn);
+
+        $userIds = LdapPlattform::query()->select('user_id')->distinct()->get();
+        foreach ($userIds as $userId) {
+            $bar->advance();
+            $entry = [];
+            $entryNames = LdapPlattform::query()->select('entry_name')->where('user_id','=',$userId->user_id)->distinct()->get();
+            foreach ($entryNames as $entryName){
+                /** @var LdapPlattform $ldapPlattform */
+               $ldapPlattform = LdapPlattform::query()->where('user_id','=',$userId->user_id)
+                    ->where('entry_name','=',$entryName->entry_name)
+                   ->orderByDesc('created_at')->first();
+               //remove older entrys, we only apply the newest one
+               LdapPlattform::query()->where('user_id','=',$userId->user_id)
+                   ->where('entry_name','=',$entryName->entry_name)
+                   ->where('id','<>',$ldapPlattform->id)
+                   ->delete();
+               $entry[ $ldapPlattform->entry_name]=$ldapPlattform->entry_value;
+            }
+            LdapUtility::modify($userId->user_id, $entry);
+            Log::info("LDAP sync: Changing " . $userId->user_id . " " . implode(', ',$entry));
+        }
 
         $bar->finish();
 
