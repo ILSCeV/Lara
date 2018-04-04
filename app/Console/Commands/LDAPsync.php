@@ -176,7 +176,9 @@ class LDAPsync extends Command
                    ->delete();
                $entry[ $ldapPlattform->entry_name]=$ldapPlattform->entry_value;
             }
-            LdapUtility::modify($userId->user_id, $entry);
+            if(LdapUtility::modify($userId->user_id, $entry)){
+                LdapPlatform::query()->where('user_id','=',$userId->user_id)->delete();
+            }
             Log::info("LDAP sync: Changing " . $userId->user_id . " " . implode(', ',$entry));
         }
 
