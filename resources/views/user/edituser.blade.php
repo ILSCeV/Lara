@@ -71,24 +71,21 @@
                             </div>
                         </div>
                         @else
-                            <div class="form-group">
+                            <div class="form-group input-group" >
                                 <label class="control-label" for="userName"> Name </label>
-                                <div id="username" class="form-control"> {{ $user->name }} </div>
+                                {{ Form::text('name',$user->name,['class'=>"form-control" ,'id'=>'userName','required'=>"",'autofocus'=>'', 'disabled']) }}
                             </div>
-                            <div class="clearfix"></div>
-                            <div class="form-group">
+                            <div class="form-group input-group">
                                 <label class="control-label" for="email"> Email </label>
-                                <div id="email" class="form-control"> {{ $user->email }} </div>
+                                {{ Form::email('email',$user->email,['class'=>"form-control" ,'id'=>'email', 'disabled']) }}
                             </div>
-                            <div class="clearfix"></div>
-                            <div class="form-group">
-                                <label class="control-label" for="section"> {{ trans('mainLang.section') }} </label>
-                                <div id="section" class="form-control"> {{ $user->section->title }} </div>
+                            <div class="form-group input-group">
+                                <label for="section" class=" control-label">{{trans('mainLang.section')}}</label>
+                                {{ Form::text('section',$user->section->title,['class'=>"form-control" ,'id'=>'section', 'disabled']) }}
                             </div>
-                            <div class="clearfix"></div>
-                            <div class="form-group">
-                                <label class="control-label" for="status"> {{ trans('mainLang.status') }} </label>
-                                <div id="status" class="form-control"> {{ trans(Auth::user()->section->title . "." . $user->status) }} </div>
+                            <div class="form-group input-group">
+                                <label for="status" class="control-label">Status</label>
+                                {{ Form::text('section',trans(Auth::user()->section->title . "." . $user->status) ,['class'=>"form-control" ,'id'=>'status', 'disabled']) }}
                             </div>
                             @endcanEditUser
                     </div>
@@ -106,8 +103,8 @@
                         <div class="panel panel-default">
                             <ul class="nav nav-tabs">
                                 @foreach($permissionsPersection as $sectionId => $roles)
-                                    <li class="{{$user->section_id == $sectionId ? 'active': ''}} permissionsPicker">
-                                        <a aria-expanded="{{$user->section_id == $sectionId? 'active': ''}}"
+                                    <li class="{{Auth::user()->section_id == $sectionId ? 'active': ''}} permissionsPicker">
+                                        <a aria-expanded="{{Auth::user()->section_id == $sectionId? 'active': ''}}"
                                            href="#{{$sectionId}}Permissions"
                                            data-toggle="tab">
                                             {{Lara\Section::find($sectionId)->title}}
@@ -118,7 +115,7 @@
                             <div class="tab-content">
 
                             @foreach($permissionsPersection as $sectionId => $roles)
-                                <div class="tab-pane fade in {{ $user->section_id == $sectionId? 'active': '' }}" id="{{$sectionId}}Permissions">
+                                <div class="tab-pane fade in {{ Auth::user()->section_id == $sectionId? 'active': '' }}" id="{{$sectionId}}Permissions">
                                     <table class="table table-striped permissiontable table-bordered" data-section="{{$sectionId}}">
                                         <thead>
                                         <tr>
