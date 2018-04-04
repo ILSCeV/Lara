@@ -4,6 +4,8 @@ namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Lara\Status;
+
 class Club extends Model
 {
     /**
@@ -28,12 +30,12 @@ class Club extends Model
 
     public function members()
     {
-        return $this->persons()->where('prsn_status', '=', 'member');
+        return $this->persons()->where('prsn_status', '=', Status::MEMBER);
     }
 
     public function candidates()
     {
-        return $this->persons()->where('prsn_status', '=', 'candidate');
+        return $this->persons()->where('prsn_status', '=', Status::CANDIDATE);
     }
 
     public function accountableForStatistics()
