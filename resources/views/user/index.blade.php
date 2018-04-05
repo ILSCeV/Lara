@@ -34,11 +34,13 @@
                         <label for="userOverviewFilter" class="test"> {{ trans('mainLang.search') }}: </label>
                         <input type="text" class="form-control" id="userOverviewFilter">
                     </span>
+                @noLdapUser
                     <span class="table-control__create-new-user fa-pull-right">
                             <a class="btn btn-success" href="{{route('register')}}">
                                 <i class="fa fa-user-plus"></i>
                             </a>
-                        </span>
+                     </span>
+                @endnoLdapUser
                 </div>
 
                 @foreach($users as $user)

@@ -42,7 +42,7 @@ class PasswordChangeController extends Controller
         $newPassword = Input::get('password');
         $user->password = bcrypt($newPassword);
         $user->save();
-
+/*
         if (!\App::environment('development') && strpos(env('LDAP_SECTIONS', ''), $user->section->title) !== false) {
             try {
                 $this->changePasswordInLDAP($user);
@@ -50,7 +50,7 @@ class PasswordChangeController extends Controller
                 \Log::error("ldap broken", [$e]);
             }
         }
-
+*/
         Utilities::success(trans('auth.passwordChanged'));
 
         return Redirect::to('/');

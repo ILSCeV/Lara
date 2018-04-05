@@ -64,7 +64,24 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
 
-            return $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) || $user->getSectionsIdForRoles(RoleUtility::PRIVILEGE_CL)->contains($editUser->section_id);
+            return $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) ||
+                ($user->getSectionsIdForRoles(RoleUtility::PRIVILEGE_CL)
+                    ->contains($editUser->section_id)
+                    && (strpos(env('LDAP_SECTIONS', ''), $editUser->section->title) !== false
+                    || \App::environment('development'))
+                );
+        });
+
+        Blade::if('noLdapUser', function(){
+            $user = Auth::user();
+            if(!$user) {
+                return false;
+            }
+          if($user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR)){
+                return true;
+          }
+          return strpos(env('LDAP_SECTIONS', ''), $user->section->title) !== false
+              || \App::environment('development');
         });
     }
 
