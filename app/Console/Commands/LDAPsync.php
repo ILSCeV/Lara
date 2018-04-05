@@ -129,7 +129,7 @@ class LDAPsync extends Command
 
             // Get user active status
             $userStatus = $info[0]['ilscstate'][0];
-            $userEmail = $info[0]['email'][0];
+            $userEmail = $info[0]['mail'][0];
 
 // UPDATE AND SAVE CHANGES
 

@@ -370,7 +370,7 @@ class LoginController extends Controller
                 Auth::login($person->user());
                 $user = $person->user();
 
-                $user->email = $info[0]['email'][0];
+                $user->email = $info[0]['mail'][0];
 
                 // this is the internally used hashing
                 $user->password = bcrypt(Input::get('password'));
