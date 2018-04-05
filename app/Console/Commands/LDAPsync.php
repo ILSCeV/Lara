@@ -52,13 +52,13 @@ class LDAPsync extends Command
         $this->info('Starting LDAP sync...');
 
         // get a list of all persons saved in Lara, except ldap-override
-        $persons = (new Person)->whereNotNull('prsn_ldap_id')->whereNotIn('prsn_ldap_id', ['9999'])->get();
+        $persons = Person::query()->whereNotNull('prsn_ldap_id')->whereNotIn('prsn_ldap_id', ['9999'])->get();
 
         // start counting time before processing every person
         $counterStart = microtime(true);
 
         // Initiate progress bar
-        $bar = $this->output->createProgressBar(count($persons));
+        $bar = $this->output->createProgressBar(count($persons) + LdapPlatform::query()->count());
 
 // CONNECTING TO LDAP SERVER
 
@@ -161,25 +161,26 @@ class LDAPsync extends Command
 
         $userIds = LdapPlatform::query()->select('user_id')->distinct()->get();
         foreach ($userIds as $userId) {
-            $bar->advance();
             $entry = [];
-            $entryNames = LdapPlatform::query()->select('entry_name')->where('user_id','=',$userId->user_id)->distinct()->get();
-            foreach ($entryNames as $entryName){
+            $entryNames = LdapPlatform::query()->select('entry_name')->where('user_id', '=',
+                $userId->user_id)->distinct()->get();
+            foreach ($entryNames as $entryName) {
+                $bar->advance();
                 /** @var LdapPlatform $ldapPlattform */
-               $ldapPlattform = LdapPlatform::query()->where('user_id','=',$userId->user_id)
-                    ->where('entry_name','=',$entryName->entry_name)
-                   ->orderByDesc('created_at')->first();
-               //remove older entrys, we only apply the newest one
-               LdapPlatform::query()->where('user_id','=',$userId->user_id)
-                   ->where('entry_name','=',$entryName->entry_name)
-                   ->where('id','<>',$ldapPlattform->id)
-                   ->delete();
-               $entry[ $ldapPlattform->entry_name]=$ldapPlattform->entry_value;
+                $ldapPlattform = LdapPlatform::query()->where('user_id', '=', $userId->user_id)
+                    ->where('entry_name', '=', $entryName->entry_name)
+                    ->orderByDesc('created_at')->first();
+                //remove older entrys, we only apply the newest one
+                LdapPlatform::query()->where('user_id', '=', $userId->user_id)
+                    ->where('entry_name', '=', $entryName->entry_name)
+                    ->where('id', '<>', $ldapPlattform->id)
+                    ->delete();
+                $entry[$ldapPlattform->entry_name] = $ldapPlattform->entry_value;
             }
-            if(LdapUtility::modify($userId->user_id, $entry)){
-                LdapPlatform::query()->where('user_id','=',$userId->user_id)->delete();
+            if (LdapUtility::modify($userId->user_id, $entry)) {
+                LdapPlatform::query()->where('user_id', '=', $userId->user_id)->delete();
             }
-            Log::info("LDAP sync: Changing " . $userId->user_id . " " . implode(', ',$entry));
+            Log::info("LDAP sync: Changing " . $userId->user_id . " " . implode(', ', $entry));
         }
 
         $bar->finish();
