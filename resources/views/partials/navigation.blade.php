@@ -48,6 +48,7 @@
                 <ul class="dropdown-menu" role="menu">
 
                     @auth
+                        @noLdapUser
                         <li>
                             <a href="{{route('password.change')}}">
                                 <i class="fa fa-key fa-rotate-90" aria-hidden="true"></i>
@@ -56,6 +57,7 @@
                         </li>
 
                         <li role="separator" class="divider"></li>
+                        @endnoLdapUser
                     @endauth
                     {{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
 
