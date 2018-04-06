@@ -490,7 +490,7 @@ class ShiftController extends Controller
      */
     private function updateStatus($shift) {
         if ( !is_null($shift->person_id) ) {
-            return Status::style($shift->person->status);
+            return Status::style($shift->person->prsn_status);
         }
         return ["status"=>"fa fa-question", "style"=>"color:lightgrey;", "title"=>"Dienst frei"];
     }
