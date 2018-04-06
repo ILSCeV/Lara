@@ -82,26 +82,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // workaround, since most of the legacy depends on an LDAP id being present
-        $newLDAPId = Person::max('prsn_ldap_id') + 1;
-        $person = new Person([
-            'prsn_name' => $data['name'],
-            'prsn_ldap_id' => $newLDAPId,
-            'prsn_status' => 'member',
-            'clb_id' => Section::find($data['section'])->club()->id,
-            'prsn_uid' => hash("sha512", uniqid())
-        ]);
-        $person->save();
-
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'status' => $data['status'],
-            'section_id' => $data['section'],
-            'group' => Section::find($data['section'])->title,
-            'person_id' => $person->id
-        ]);
+        return User::createNew($data);
     }
 
     /**
