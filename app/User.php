@@ -28,7 +28,7 @@ class User extends Authenticatable
         // authentication related
         'name', 'email', 'password',
         // Lara related
-        'section_id', 'person_id', 'status'
+        'section_id', 'person_id', 'status', 'givenname', 'lastname'
     ];
 
     /**
