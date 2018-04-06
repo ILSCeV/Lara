@@ -10,6 +10,8 @@ namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Lara\Shift;
+
 /**
  * @property int evnt_type
  * @property string evnt_title
@@ -116,10 +118,9 @@ class ClubEvent extends Model
      */
     public function hasShift($person)
     {
-        
-        return $this->shifts ->contains(function( $shift) use($person){
-            return$shift->person === $person;
-                });
+        return $this->shifts ->contains(function(Shift $shift) use($person){
+            return $shift->person_id === $person->id;
+        });
     }
 
     public function shifts()
