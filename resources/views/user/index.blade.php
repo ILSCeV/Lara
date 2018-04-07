@@ -15,16 +15,22 @@
                 <thead>
                 <tr class="active">
                     <th class="col-md-1 col-xs-1 padding-left-15">
-                        {{ trans('mainLang.section') }}
+                        {{ trans('auth.section') }}
                     </th>
                     <th class="col-md-3 col-xs-3">
-                        Name
+                        {{ trans('auth.nickname') }}
+                    </th>
+                    <th class="col-md-3 col-xs-3">
+                        {{ trans('auth.givenname') }}
+                    </th>
+                    <th class="col-md-3 col-xs-3">
+                        {{ trans('auth.lastname') }}
                     </th>
                     <th class="col-md-6 col-xs-6">
-                        E-Mail
+                        {{ trans('auth.email') }}
                     </th>
                     <th class="col-md-1 col-xs-1">
-                        Status
+                        {{ trans('auth.status') }}
                     </th>
                 </tr>
                 </thead>
@@ -52,6 +58,12 @@
                             <a href="{{route("user.edit",["id"=>$user->id])}}">
                                 {{ $user->name }}
                             </a>
+                        </td>
+                        <td>
+                            {{ $user->givenname }}
+                        </td>
+                        <td>
+                            {{ $user->lastname }}
                         </td>
                         <td>
                             {{ $user->email }}

@@ -96,6 +96,16 @@ class Person extends Model
             return false;
         }
         return $user->person->prsn_ldap_id === $ldap_id;
+    }
 
+    public function fullName()
+    {
+        $user = $this->user();
+
+        if (!$user) {
+            return "";
+        }
+
+        return $user->fullName();
     }
 }

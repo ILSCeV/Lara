@@ -35,6 +35,8 @@ class UserController extends Controller
     {
         return \Validator::make($data, [
             'name' => 'required|max:255',
+            'givenname' => 'required|max:255',
+            'lastname' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,id,'.$user->id,
             'section' => [
                 'required',
@@ -173,6 +175,8 @@ class UserController extends Controller
                 Utilities::error(trans('mainLang.changesWereReset'));
                 return Redirect::back()->withErrors($validator);
             }
+            $data['givenname'] = Input::get('givenname');
+            $data['lastname'] = Input::get('lastname');
             $data['name'] = Input::get('name');
             $data['email'] = Input::get('email');
             $data['section_id'] = Input::get('section');

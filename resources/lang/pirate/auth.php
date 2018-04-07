@@ -26,6 +26,9 @@ return [
     'passwordChanged' => 'Dein Password wurde erfolgreich geändert',
 
     'email' => 'E-Mail',
+    'nickname' => 'Nickname',
+    'givenname' => 'Vornname',
+    'lastname' => 'Nachname',
     'section' => 'Sektion',
     'status' => 'Status',
     'password' => 'Passwort',

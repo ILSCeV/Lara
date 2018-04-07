@@ -25,6 +25,32 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('givenname') ? ' has-error' : '' }}">
+                            <label for="givenname" class="col-md-4 control-label">{{ trans('auth.givenname') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="givenname" type="text" class="form-control" name="givenname" value="{{ old('givenname') }}" required autofocus>
+
+                                @if ($errors->has('givenname'))
+                                    <span class="help-block">
+                                            <strong>{{ $errors->first('givenname') }}</strong>
+                                        </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('lastname') ? ' has-error' : '' }}">
+                            <label for="lastname" class="col-md-4 control-label">{{ trans('auth.lastname') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="lastname" type="text" class="form-control" name="lastname" value="{{ old('lastname') }}" required autofocus>
+
+                                @if ($errors->has('lastname'))
+                                    <span class="help-block">
+                                            <strong>{{ $errors->first('lastname') }}</strong>
+                                        </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">{{ trans('auth.email') }}</label>

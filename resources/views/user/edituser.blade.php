@@ -35,6 +35,24 @@
                                     </span>
                             @endif
                         </div>
+                        <div class="form-group {{ $errors->has('givenname') ? ' has-error' : '' }} input-group" >
+                            <label class="control-label" for="givenname"> {{ trans('auth.givenname') }} </label>
+                            {{ Form::text('givenname',$user->givenname,['class'=>"form-control" ,'id'=>'givenname','required'=>"",'autofocus'=>'']) }}
+                            @if ($errors->has('givenname'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('givenname') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                        <div class="form-group {{ $errors->has('lastname') ? ' has-error' : '' }} input-group" >
+                            <label class="control-label" for="lastname"> {{ trans('auth.lastname') }} </label>
+                            {{ Form::text('lastname',$user->lastname,['class'=>"form-control" ,'id'=>'lastname','required'=>"",'autofocus'=>'']) }}
+                            @if ($errors->has('lastname'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('lastname') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
                         <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }} input-group">
                             <label class="control-label" for="email"> Email </label>
                             {{ Form::email('email',$user->email,['class'=>"form-control" ,'id'=>'email']) }}

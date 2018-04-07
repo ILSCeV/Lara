@@ -81,6 +81,8 @@ class User extends Authenticatable
 
         $user = User::create([
             'name' => $data['name'],
+            'givenname' => $data['givenname'],
+            'lastname' => $data['lastname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'status' => $data['status'],
@@ -170,7 +172,13 @@ class User extends Authenticatable
         });
     }
 
-    public function settings() {
+    public function settings()
+    {
         return $this->hasOne('Lara\Settings');
+    }
+
+    public function fullName()
+    {
+        return $this->givenname . " " . $this->lastname;
     }
 }

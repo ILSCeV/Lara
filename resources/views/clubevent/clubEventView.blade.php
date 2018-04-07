@@ -272,7 +272,7 @@
 						    </div>
 
 						    {{-- Shift USERNAME--}}
-						    <div id="{!! 'userName' . $shift->id !!}">
+						    <div id="{!! 'userName' . $shift->id !!}" >
 						        {!! $shift->getPerson->prsn_name !!}
 						    </div>
 
