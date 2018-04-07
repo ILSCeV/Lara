@@ -70,23 +70,32 @@ class User extends Authenticatable
         // workaround, since most of the legacy depends on an LDAP id being present
         $newLDAPId = $data['prsn_ldap_id'] ?:Person::query()->max('prsn_ldap_id') + 1;
 
+        $section = Section::find($data['section']);
         $person = Person::create([
             'prsn_name' => $data['name'],
             'prsn_ldap_id' => $newLDAPId,
             'prsn_status' => $data['status'],
-            'clb_id' => Section::find($data['section'])->club()->id,
+            'clb_id' => $section->club()->id,
             'prsn_uid' => hash("sha512", uniqid())
         ]);
 
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'status' => $data['status'],
             'section_id' => $data['section'],
-            'group' => Section::find($data['section'])->title,
+            'group' => $section->title,
             'person_id' => $person->id
         ]);
+
+        RoleUtility::assignPrivileges(
+            $user,
+            $section,
+            RoleUtility::PRIVILEGE_MEMBER
+        );
+
+        return $user;
     }
 
     public static function createFromPerson(Person $person)

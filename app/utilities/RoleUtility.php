@@ -58,4 +58,14 @@ class RoleUtility
                 Log::warning('could not unassign privilege ' . $privilege, [$user, $section]);
         }
     }
+
+
+    public static function createRolesForNewSection(Section $section)
+    {
+        foreach (RoleUtility::ALL_PRIVILEGES as $roleName) {
+            $role = new Role(['name' => $roleName]);
+            $role->section_id = $section->id;
+            $role->save();
+        }
+    }
 }

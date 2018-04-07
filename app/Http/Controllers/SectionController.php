@@ -120,11 +120,7 @@ class SectionController extends Controller
         $section->endTime =         $endTime;
         $section->save();
         if ($isNew) {
-            foreach (RoleUtility::ALL_PRIVILEGES as $roleName) {
-                $role = new Role(['name' => $roleName]);
-                $role->section_id = $section->id;
-                $role->save();
-            }
+            RoleUtility::createRolesForNewSection($section);
         }
 
         $club->clb_title =          $title;

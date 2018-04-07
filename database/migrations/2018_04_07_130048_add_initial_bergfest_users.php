@@ -8,6 +8,7 @@ use Illuminate\Database\Migrations\Migration;
 use Lara\Person;
 use Lara\Section;
 use Lara\User;
+use Lara\Utilities\RoleUtility;
 
 class AddInitialBergfestUsers extends Migration
 {
@@ -20,7 +21,7 @@ class AddInitialBergfestUsers extends Migration
     {
         $bergfestUsers = Config::get('bergfest_users.initial');
 
-        $bergfest = Section::firstOrNew(['title' => 'Bergfest']);
+        $bergfest = Section::firstOrCreate(['title' => 'Bergfest']);
 
         $bergfest->fill([
             'section_uid' => hash("sha512", uniqid()),
@@ -31,6 +32,8 @@ class AddInitialBergfestUsers extends Migration
         ]);
 
         $bergfest->save();
+
+        RoleUtility::createRolesForNewSection($bergfest);
 
         if ($bergfestUsers) {
             // creating the persons is tricky. The 'max' query is probably cached, thus we need to manually
