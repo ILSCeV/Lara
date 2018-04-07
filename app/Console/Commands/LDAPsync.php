@@ -131,6 +131,9 @@ class LDAPsync extends Command
             $userStatus = $info[0]['ilscstate'][0];
             $userEmail = $info[0]['mail'][0];
 
+            $userGivenName = $info[0]['givenname'][0];
+            $userLastName = $info[0]['sn'][0];
+
 // UPDATE AND SAVE CHANGES
 
             if ($person->prsn_name !== $userName) {
@@ -149,6 +152,8 @@ class LDAPsync extends Command
             }
 
             $user->email = $userEmail;
+            $user->givenname = $userGivenName;
+            $user->lastname = $userLastName;
 
 
             $person->save();
