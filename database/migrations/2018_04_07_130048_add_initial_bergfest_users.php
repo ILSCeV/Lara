@@ -21,6 +21,7 @@ class AddInitialBergfestUsers extends Migration
     {
         $bergfestUsers = Config::get('bergfest_users.initial');
 
+        /** @var Section $bergfest */
         $bergfest = Section::firstOrCreate(['title' => 'Bergfest']);
 
         $bergfest->fill([
