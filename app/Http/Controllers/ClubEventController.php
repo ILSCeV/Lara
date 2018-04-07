@@ -127,34 +127,42 @@ class ClubEventController extends Controller
                     // copy all except person_id and schedule_id and comment
                     return $shift->replicate(['person_id', 'schedule_id', 'comment']);
                 });
-            $title          = $template->title;
-            $subtitle       = $template->subtitle;
-            $type           = $template->type;
-            $section        = $template->section;
-            $filter         = $template->showToSectionNames();
-            $dv             = $template->time_preparation_start;
-            $timeStart      = $template->time_start;
-            $timeEnd        = $template->time_end;
-            $info           = $template->public_info;
-            $details        = $template->private_details;
-            $private        = $template->is_private;
-            $facebookNeeded = $template->facebook_needed;
+            $title                  = $template->title;
+            $subtitle               = $template->subtitle;
+            $type                   = $template->type;
+            $section                = $template->section;
+            $filter                 = $template->showToSectionNames();
+            $dv                     = $template->time_preparation_start;
+            $timeStart              = $template->time_start;
+            $timeEnd                = $template->time_end;
+            $info                   = $template->public_info;
+            $details                = $template->private_details;
+            $private                = $template->is_private;
+            $facebookNeeded         = $template->facebook_needed;
+            $priceNormal            = $template->price_normal;
+            $priceTicketsNormal     = $template->price_tickets_normal;
+            $priceExternal          = $template->price_external;
+            $priceTicketsExternal   = $template->price_tickets_external;
         } else {
             // fill variables with no data if no template was chosen
-            $activeTemplate = "";
-            $shifts         = collect([]);
-            $title          = null;
-            $type           = null;
-            $subtitle       = null;
-            $section        = Section::current();
-            $filter         = null;
-            $dv             = $section->preparationTime;
-            $timeStart      = $section->startTime;
-            $timeEnd        = $section->endTime;
-            $info           = null;
-            $details        = null;
-            $private        = null;
-            $facebookNeeded = false;
+            $activeTemplate         = "";
+            $shifts                 = collect([]);
+            $title                  = null;
+            $type                   = null;
+            $subtitle               = null;
+            $section                = Section::sectionOfCurrentUser();
+            $filter                 = null;
+            $dv                     = $section->preparationTime;
+            $timeStart              = $section->startTime;
+            $timeEnd                = $section->endTime;
+            $info                   = null;
+            $details                = null;
+            $private                = null;
+            $facebookNeeded         = false;
+            $priceNormal            = null;
+            $priceTicketsNormal     = null;
+            $priceExternal          = null;
+            $priceTicketsExternal   = null;
         }
         $createClubEvent = true;
 
