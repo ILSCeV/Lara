@@ -150,7 +150,7 @@ class ClubEventController extends Controller
             $title                  = null;
             $type                   = null;
             $subtitle               = null;
-            $section                = Section::sectionOfCurrentUser();
+            $section                = Section::current();
             $filter                 = null;
             $dv                     = $section->preparationTime;
             $timeStart              = $section->startTime;
@@ -171,7 +171,9 @@ class ClubEventController extends Controller
                                                          'section', 'filter', 'timeStart', 'timeEnd',
                                                          'info', 'details', 'private', 'dv',
                                                          'activeTemplate',
-                                                         'date', 'templateId','facebookNeeded','createClubEvent'));
+                                                         'date', 'templateId','facebookNeeded','createClubEvent',
+                                                          'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal'
+        ));
     }
 
 
