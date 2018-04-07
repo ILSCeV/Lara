@@ -8,7 +8,7 @@ use Illuminate\Database\Migrations\Migration;
 use Lara\Person;
 use Lara\Section;
 use Lara\User;
-use Lara\Utilities\RoleUtility;
+use Lara\utilities\RoleUtility;
 
 class AddInitialBergfestUsers extends Migration
 {
