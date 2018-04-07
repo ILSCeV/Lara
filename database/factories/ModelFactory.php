@@ -13,7 +13,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use Carbon\Carbon;
-use Lara\STATUS;
+use Lara\Status;
 
 $factory->define(Lara\User::class, function (Faker\Generator $faker) {
     static $password;
