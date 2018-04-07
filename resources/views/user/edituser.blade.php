@@ -17,10 +17,13 @@
                         </h4>
                     </div>
                     <div id="userInformation" class="panel-body panel-collapse collapse in">
-                        <div class="form-group input-group">
-                            <label class="control-label" for="clubNumber"> {{ trans('mainLang.clubNumber') }} </label>
-                            {{ Form::text('clubnumber', $user->person->prsn_ldap_id,['class'=>"form-control" ,'id'=>'clubNumber','required'=>"",'autofocus'=>'','disabled'=>''])  }}
-                        </div>
+
+                        @ldapSection($user->section)
+                            <div class="form-group input-group">
+                                <label class="control-label" for="clubNumber"> {{ trans('mainLang.clubNumber') }} </label>
+                                {{ Form::text('clubnumber', $user->person->prsn_ldap_id,['class'=>"form-control" ,'id'=>'clubNumber','required'=>"",'autofocus'=>'','disabled'=>''])  }}
+                            </div>
+                        @endldapSection
 
                         @canEditUser($user)
                         <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }} input-group" >

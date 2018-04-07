@@ -83,6 +83,11 @@ class AppServiceProvider extends ServiceProvider
           return strpos(env('LDAP_SECTIONS', ''), $user->section->title) !== false
               || \App::environment('development');
         });
+
+        Blade::if('ldapSection', function($section) {
+            return strpos(env('LDAP_SECTIONS', ''), $section->title) !== false;
+        });
+
     }
 
     /**
