@@ -95,6 +95,7 @@ class LoginController extends Controller
     public function doLogin()
     {
         $someLoginWorked = $this->attemtLoginViaDevelop() || $this->attemptLoginViaLDAP()
+            || $this->attemtLoginWithClubNumber(request())
             || $this->attemptLoginWithCredentials(request(), 'name')
             || $this->attemptLoginWithCredentials(request(), 'email');
 
@@ -398,6 +399,25 @@ class LoginController extends Controller
             Log::info('Auth fail: ' . $info[0]['cn'][0] . ' (' . $info[0]['uidnumber'][0] . ', ' . $userGroup . ') used wrong password.');
 
             return false;
+    }
+    
+    protected function attemtLoginWithClubNumber($request)
+    {
+        $clubNumber = request('username');
+        /** @var Person $person */
+        $person = Person::query()->where('prsn_ldap_id', '=', $clubNumber)->first();
+        if (is_null($person)) {
+            return false;
+        }
+        
+        $credentials = [
+            'name'     => $person->user()->name,
+            'password' => request('password'),
+        ];
+        
+        return $this->guard()->attempt(
+            $credentials, $request->filled('remember')
+        );
     }
 
     protected function attemptLoginWithCredentials($request, $userIdentifier = 'email')
