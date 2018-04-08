@@ -26,7 +26,7 @@ class AddInitialBergfestUsers extends Migration
 
         $bergfest->fill([
             'section_uid' => hash("sha512", uniqid()),
-            'color' => 'orange',
+            'color' => 'Orange',
             'preparationTime' => '18:00',
             'startTime' => '19:00',
             'endTime' => '01:00'
