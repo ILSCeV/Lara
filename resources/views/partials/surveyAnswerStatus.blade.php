@@ -2,7 +2,7 @@
     @php
         $person = $answer->getPerson;
         $attributes = Lara\Status::style($person->prsn_status);
-        $section = $person->club->section;
+        $section = $person->club->section();
     @endphp
     @if ($section)
         <i class="{{$attributes["status"] }}"
