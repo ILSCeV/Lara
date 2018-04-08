@@ -23,10 +23,10 @@ class AddInitialBdUsers extends Migration
         if ($allBDusers) {
             // creating the persons is tricky. The 'max' query is probably cached, thus we need to manually
             // track the ldap_ids we are handing out. Otherwise many users end up with the same ldap_id
-            $ldap_id = Person::query()->max('prsn_ldap_id') + 1;
+            $ldap_id = DB::table('persons')->select(DB::raw('max(convert( prsn_ldap_id, unsigned integer)) ldap_id'))->first()->ldap_id +1;
             foreach($allBDusers as $user) {
                 $user["section"] = Section::query()->where('title', 'bd-Club')->first()->id;
-                $user['prsn_ldap_id'] = $ldap_id++;
+                $user['prsn_ldap_id'] = strval($ldap_id++);
                 User::createNew($user);
             }
         }

@@ -70,7 +70,7 @@ class User extends Authenticatable
     public static function createNew($data)
     {
         // workaround, since most of the legacy depends on an LDAP id being present
-        $newLDAPId = key_exists('prsn_ldap_id', $data) ? $data['prsn_ldap_id'] : Person::query()->max('prsn_ldap_id') + 1;
+        $newLDAPId = key_exists('prsn_ldap_id', $data) ? $data['prsn_ldap_id'] : DB::table('persons')->select(DB::raw('max(convert( prsn_ldap_id, unsigned integer)) ldap_id'))->first()->ldap_id +1;;
 
         $section = Section::find($data['section']);
         $person = Person::create([

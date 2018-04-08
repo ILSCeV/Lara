@@ -39,7 +39,7 @@ class AddInitialBergfestUsers extends Migration
         if ($bergfestUsers) {
             // creating the persons is tricky. The 'max' query is probably cached, thus we need to manually
             // track the ldap_ids we are handing out. Otherwise many users end up with the same ldap_id
-            $ldap_id = Person::query()->max('prsn_ldap_id') + 1;
+            $ldap_id = DB::table('persons')->select(DB::raw('max(convert( prsn_ldap_id, unsigned integer)) ldap_id'))->first()->ldap_id +1;
             foreach($bergfestUsers as $user) {
                 $user["section"] = $bergfest->id;
                 $user['prsn_ldap_id'] = $ldap_id++;
