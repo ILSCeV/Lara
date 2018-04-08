@@ -15,7 +15,7 @@ use Lara\Status;
  * @property string status
  * @property string givenname
  * @property string lastname
- * @property \Illuminate\Database\Eloquent\Relations\belongsToMany/Role $roles
+ * @property \Illuminate\Database\Eloquent\Relations\belongsToMany|Role $roles
  */
 class User extends Authenticatable
 {
@@ -44,7 +44,7 @@ class User extends Authenticatable
 
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo/Lara\Person
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Person
      */
     public function person()
     {
@@ -52,15 +52,15 @@ class User extends Authenticatable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo/Lara\Section
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Section
      */
     public function section()
     {
         return $this->belongsTo(Section::class);
     }
-
+    
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany/Lara\Role
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany|Role
      */
     public function roles()
     {
@@ -157,7 +157,7 @@ class User extends Authenticatable
 
     /**
      * @param string $type
-     * @return \Illuminate\Database\Eloquent\Collection/Role
+     * @return \Illuminate\Database\Eloquent\Collection|Role
      */
     public function getRolesOfType($type){
         return $this->roles()->where('name','=',$type)->get();
@@ -165,7 +165,7 @@ class User extends Authenticatable
 
     /**
      * @param string $type
-     * @return Collection/int
+     * @return Collection|int
      */
     public function getSectionsIdForRoles($type)
     {
@@ -173,7 +173,10 @@ class User extends Authenticatable
             return $role->section_id;
         });
     }
-
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne|Settings
+     */
     public function settings()
     {
         return $this->hasOne('Lara\Settings');

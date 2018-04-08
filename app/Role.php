@@ -20,14 +20,14 @@ class Role extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo/Section
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Section
      */
     public function section(){
         return $this->belongsTo(Session::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany/User
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany|User
      */
     public function users()
     {

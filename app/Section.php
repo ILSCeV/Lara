@@ -40,7 +40,7 @@ class Section extends Model
 	 * Get the corresponding club events.
 	 * Looks up in table club_events for entries, which have the same plc_id like id of Section instance.
 	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\HasMany/Lara\ClubEvent
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany|ClubEvent
 	 */
 	public function getClubEvent() {
 		return $this->hasMany(ClubEvent::class, 'plc_id', 'id');
@@ -56,13 +56,19 @@ class Section extends Model
         }
         return $user->section;
     }
-
-
+    
+    
+    /**
+     * @return Club|null|object|static
+     */
     public function club()
     {
         return Club::where('clb_title', $this->title)->first();
     }
-
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|User
+     */
     public function users()
     {
         return $this->hasMany('Lara\User');

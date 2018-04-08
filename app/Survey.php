@@ -45,11 +45,16 @@ class Survey extends BaseSoftDelete
     /**
      * Get the corresponding club.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Club
      */
     public function club()
     {
         return $this->belongsTo('Lara\Club', 'club_id', 'id');
+    }
+    
+    public function section()
+    {
+        return $this->club()->section();
     }
 
     /**

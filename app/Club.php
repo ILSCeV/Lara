@@ -22,7 +22,10 @@ class Club extends Model
      * @var array
      */
     protected $fillable = array('clb_title');
-
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|Person
+     */
     public function persons()
     {
         return $this->hasMany('Lara\Person', 'clb_id');

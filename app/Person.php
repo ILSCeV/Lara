@@ -43,7 +43,7 @@ class Person extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo/Lara\Club
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Club
      */
     public function club() {
         return $this->belongsTo(Club::class, 'clb_id', 'id');
