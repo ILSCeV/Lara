@@ -4,6 +4,7 @@ namespace Lara\Http\Middleware;
 
 use Carbon\Carbon;
 use Closure;
+use Lara\utilities\RoleUtility;
 use Redirect;
 use Lara\Survey;
 
@@ -18,11 +19,11 @@ class DeadlineSurvey
      */
     public function handle($request, Closure $next)
     {
+        /** @var Survey $survey */
         $survey = Survey::findOrFail($request->route()->parameter('survey'));
         if(Carbon::now() < Carbon::createFromTimestamp(strtotime($survey->deadline))
-            || $request->session()->get('userGroup') == "clubleitung"
-            || $request->session()->get('userGroup') == "marketing"
-            || $request->session()->get('userGroup') == "admin") {
+            || \Auth::user()->is(RoleUtility::PRIVILEGE_ADMINISTRATOR)
+            || \Auth::user()->hasPermissionsInSection($survey->section(),[RoleUtility::PRIVILEGE_CL,RoleUtility::PRIVILEGE_MARKETING])) {
             return $next($request);
         } else {
             $request->session()->put('message', 'Die Deadline ist überschritten, jetzt können nurnoch Clubleitung/Marketing/Admin die Umfrage ausfüllen');
