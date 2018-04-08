@@ -111,7 +111,7 @@ class UserController extends Controller
 
         $permissionsPersection = [];
         $sectionQuery = Section::query();
-        if(!Auth::user()->is(RoleUtility::PRIVILEGE_ADMINISTRATOR)){
+        if(!Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)){
             $sectionQuery->whereIn('id',Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_CL));
         }
 

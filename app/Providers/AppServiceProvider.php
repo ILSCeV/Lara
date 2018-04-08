@@ -7,6 +7,7 @@ use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Lara\Role;
 use Lara\Section;
 use Lara\User;
 use Lara\utilities\RoleUtility;
@@ -70,6 +71,14 @@ class AppServiceProvider extends ServiceProvider
                     && (strpos(env('LDAP_SECTIONS', ''), $editUser->section->title) == false
                     || \App::environment('development'))
                 );
+        });
+        
+        Blade::if('hasRole',function (Role $role){
+            $user = Auth::user();
+            if(!$user) {
+                return false;
+            }
+            return $user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR) || $user->hasPermission($role);
         });
 
         Blade::if('noLdapUser', function(){

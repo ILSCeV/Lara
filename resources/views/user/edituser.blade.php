@@ -167,14 +167,14 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
-                                                    @if(Auth::user()->is(Roles::PRIVILEGE_ADMINISTRATOR) || Auth::user()->hasPermission($role))
+                                                    @hasRole($role)
                                                         <button type="button"
                                                                 class="btn btn-sm btn-primary toggleRoleBtn"
                                                                 data-target="{{$user->hasPermission($role) ? 'src' : 'target'}}-{{$role->id}}"
                                                                 data-src="{{$user->hasPermission($role) ? 'target' : 'src'}}-{{$role->id}}">
                                                             {{$user->hasPermission($role) ? '<' : '>' }}
                                                         </button>
-                                                    @endif
+                                                    @endhasRole
                                                 </td>
                                                 <td class="text-center assignedRoles" id="target-{{$role->id}}">
                                                     @if($user->hasPermission($role))

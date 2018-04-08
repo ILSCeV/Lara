@@ -35,7 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('createUserOfSection', function (User $user, $section_id) {
-            if ($user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
+            if ($user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
                 return true;
             }
             return $user->hasPermissionsInSection(Section::findOrFail($section_id),RoleUtility::PRIVILEGE_CL);
