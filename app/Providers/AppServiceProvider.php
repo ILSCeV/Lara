@@ -80,7 +80,7 @@ class AppServiceProvider extends ServiceProvider
           if($user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR)){
                 return true;
           }
-          return strpos(env('LDAP_SECTIONS', ''), $user->section->title) !== false
+          return strpos(env('LDAP_SECTIONS', ''), $user->section->title) == false
               || \App::environment('development');
         });
 
