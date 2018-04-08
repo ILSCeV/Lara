@@ -31,13 +31,13 @@ class AppServiceProvider extends ServiceProvider
             return App::environment('berta');
         });
 
-        Blade::if('is', function($groups) {
+        Blade::if('is', function(...$groups) {
             $user = Auth::user();
             if (!$user) {
                 return false;
             }
 
-            return $user->is($groups);
+            return $user->isAn(...$groups);
         });
 
         Blade::if ('isInSection', function (array $groups, Section $section) {
@@ -45,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
             if (!$user) {
                 return false;
             }
-            return $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) || $user->hasPermissionsInSection($section, ...$groups);
+            return $user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR) || $user->hasPermissionsInSection($section, ...$groups);
         });
 
         Blade::if('admin', function() {
@@ -55,7 +55,7 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
 
-            return $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR);
+            return $user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR);
         });
 
         Blade::if ('canEditUser', function (User $editUser) {
@@ -64,10 +64,10 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
 
-            return $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) ||
+            return $user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR) ||
                 ($user->getSectionsIdForRoles(RoleUtility::PRIVILEGE_CL)
                     ->contains($editUser->section_id)
-                    && (strpos(env('LDAP_SECTIONS', ''), $editUser->section->title) !== false
+                    && (strpos(env('LDAP_SECTIONS', ''), $editUser->section->title) == false
                     || \App::environment('development'))
                 );
         });
@@ -77,7 +77,7 @@ class AppServiceProvider extends ServiceProvider
             if(!$user) {
                 return false;
             }
-          if($user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR)){
+          if($user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)){
                 return true;
           }
           return strpos(env('LDAP_SECTIONS', ''), $user->section->title) == false

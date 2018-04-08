@@ -24,7 +24,7 @@ class ManagingUsersOnly
             return Redirect('/');
         }
 
-        if (!Auth::user()->is([RoleUtility::PRIVILEGE_MARKETING, RoleUtility::PRIVILEGE_ADMINISTRATOR])) {
+        if (!Auth::user()->isAn(RoleUtility::PRIVILEGE_MARKETING, RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             Utilities::error(trans('auth.missingPermissions'));
             return Redirect('/');
         }

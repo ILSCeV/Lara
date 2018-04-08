@@ -1,5 +1,5 @@
 <div class="panel panel-warning">
-	
+
 	{{--Check if the event is still going on--}}
 	<?php $classString = "panel panel-heading";?>
 	@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
@@ -12,14 +12,14 @@
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
     @elseif ($clubEvent->evnt_type == 1)
         <div class="{{$classString}} palette-Purple-500 bg">
-    @elseif ($clubEvent->evnt_type == 2 
+    @elseif ($clubEvent->evnt_type == 2
     	  || $clubEvent->evnt_type == 3)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
-    @elseif ($clubEvent->evnt_type == 4 
-          || $clubEvent->evnt_type == 5 
+    @elseif ($clubEvent->evnt_type == 4
+          || $clubEvent->evnt_type == 5
           || $clubEvent->evnt_type == 6)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg white-text">
-    @elseif ($clubEvent->evnt_type == 7 
+    @elseif ($clubEvent->evnt_type == 7
           || $clubEvent->evnt_type == 8)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg white-text">
     @elseif ($clubEvent->evnt_type == 9)
@@ -37,7 +37,7 @@
 			{{--
 
 			Disabling iCal until fully functional.
-			 
+
 			@include('partials.publishStateIndicatorRaw')
 			&nbsp;
 
@@ -59,7 +59,7 @@
 		{{-- Show password input if schedule needs one --}}
 		@if( $clubEvent->getSchedule->schdl_password != '')
 		    <div class="{{ $classString }} hidden-print">
-		        {!! Form::password('password' . $clubEvent->getSchedule->id, ['required', 
+		        {!! Form::password('password' . $clubEvent->getSchedule->id, ['required',
 		                                             'class'=>'col-md-12 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
 		                                             'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
@@ -130,7 +130,7 @@
 			@endforeach
 
 			{{-- Show a "hide" button for management, that allows removal of an event from current view - needed for printing --}}
-	        @is(['marketing', 'clubleitung', 'admin'])
+	        @is('marketing', 'clubleitung', 'admin')
 		        <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 				<div class="padding-right-16 bottom-padding pull-right hidden-print">
 					<small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>

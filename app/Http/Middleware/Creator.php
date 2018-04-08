@@ -23,7 +23,7 @@ class Creator
         $newObject = new $classpath();
         $object = $newObject->findOrFail($request->route()->parameter($routeParameterName));
         if($object->creator_id == \Auth::user()->person->prsn_ldap_id
-            || \Auth::user()->is(RoleUtility::PRIVILEGE_ADMINISTRATOR)
+            || \Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)
             || \Auth::user()->hasPermissionsInSection($object->section()
                 , [RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_MARKETING])
             ) {

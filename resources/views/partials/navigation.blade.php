@@ -61,7 +61,7 @@
                     @endauth
                     {{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
 
-                @is([Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR])
+                @is(Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
                     <li>
                         <a href="{{ asset('shiftType') }}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
@@ -74,7 +74,7 @@
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>
                     </li>
-                    @is([Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR])
+                    @is(Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
                     <li>
                         <a href="{{ route('user.index') }}">
                             <i class="fa fa-users" aria-hidden="true"> </i>
@@ -86,7 +86,7 @@
                 @endis
 
                 {{-- LARA LOGS / section management or admins only --}}
-                @is([Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR])
+                @is(Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
                     <li><a href="{{ asset('/logs') }}">Logs</a></li>
                     <li role="separator" class="divider"></li>
                 @endis

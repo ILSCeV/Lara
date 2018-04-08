@@ -128,18 +128,14 @@ class User extends Authenticatable
         return $user;
     }
 
-    public function is($permissions)
+    public function isAn(...$permissions)
     {
-        if (!is_array($permissions)) {
-            $permissions = [$permissions];
-        }
-
         return $this->roles()->whereIn('name', $permissions)->exists();
     }
 
     public function hasPermissionsInSection(Section $section, ...$permission)
     {
-        return $this->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) ||
+        return $this->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR) ||
             $this->roles()
                 ->whereIn('name', $permission)
                 ->where('section_id', '=', $section->id)

@@ -3,7 +3,7 @@
         {{-- Event publishing only for CL/marketing -> exclude creator
         Disabling iCal until fully functional.
 
-        @is(['marketing', 'clubleitung', 'admin')]
+        @is('marketing', 'clubleitung', 'admin')
             <button  id="unPublishEventLnkBtn"
                 data-href="{{ URL::route('togglePublishState', $event->id) }}"
                 class="btn btn-danger @if($event->evnt_is_published === 0) hidden @endif"

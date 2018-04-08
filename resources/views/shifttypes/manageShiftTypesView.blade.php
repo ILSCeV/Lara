@@ -8,7 +8,7 @@
 
 @section('content')
 
-@is(['marketing', 'clubleitung', 'admin'])
+@is('marketing', 'clubleitung', 'admin')
 
 	<div class="panel panel-info col-xs-12 no-padding">
 		<div class="panel-heading">

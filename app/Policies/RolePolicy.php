@@ -30,7 +30,7 @@ class RolePolicy
      */
     public function assign(User $user, Role $role)
     {
-        return $user->hasPermission($role) || $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR);
+        return $user->hasPermission($role) || $user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR);
     }
 
     /**
@@ -42,6 +42,6 @@ class RolePolicy
      */
     public function remove(User $user, Role $role)
     {
-        return $user->hasPermission($role) || $user->is(RoleUtility::PRIVILEGE_ADMINISTRATOR);
+        return $user->hasPermission($role) || $user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR);
     }
 }

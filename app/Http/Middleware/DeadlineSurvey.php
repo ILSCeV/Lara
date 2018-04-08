@@ -22,7 +22,7 @@ class DeadlineSurvey
         /** @var Survey $survey */
         $survey = Survey::findOrFail($request->route()->parameter('survey'));
         if(Carbon::now() < Carbon::createFromTimestamp(strtotime($survey->deadline))
-            || \Auth::user()->is(RoleUtility::PRIVILEGE_ADMINISTRATOR)
+            || \Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)
             || \Auth::user()->hasPermissionsInSection($survey->section(),[RoleUtility::PRIVILEGE_CL,RoleUtility::PRIVILEGE_MARKETING])) {
             return $next($request);
         } else {

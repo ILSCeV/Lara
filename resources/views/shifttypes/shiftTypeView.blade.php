@@ -7,7 +7,7 @@
 
 @section('content')
 
-@is([Roles::PRIVILEGE_ADMINISTRATOR, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_MARKETING])
+@is(Roles::PRIVILEGE_ADMINISTRATOR, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_MARKETING)
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<h4 class="panel-title">#{{ $current_shiftType->id }}: "{!! $current_shiftType->title !!}" </h4>

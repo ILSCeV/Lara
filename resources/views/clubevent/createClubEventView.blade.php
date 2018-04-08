@@ -123,7 +123,7 @@
 			      	@endif
 			    </div>
 
-			    @is(['marketing', 'clubleitung', 'admin'])
+			    @is('marketing', 'clubleitung', 'admin')
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 						<label for="facebookDone" class="col-md-4 col-sm-4 col-xs-7">{{trans('mainLang.faceDone')}}?</label>
                         <select class="selectpicker" name="facebookDone" id="facebookDone">
@@ -407,9 +407,9 @@
 	    Disabling iCal until fully functional -> remove "Publish" button, rename "create unpublished" to just "create"
 
 
-	    @is([ 'marketing'
+	    @is( 'marketing'
 	     , 'clubleitung'
-	     , 'admin')]
+	     , 'admin')
 			<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<br class="visible-xs">

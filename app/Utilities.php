@@ -51,7 +51,7 @@ class Utilities
         if (!$user) {
             return false;
         }
-        return $user->is($permissions);
+        return $user->isAn($permissions);
     }
 
     static function getEventTypeTranslation($typeNumber){
