@@ -185,20 +185,20 @@ $(function () { $("[data-toggle='tooltip']").tooltip({trigger: "hover"}); }).too
 // Automatically close notifications after 4 seconds (4000 milliseconds)
 window.setTimeout(function() {
     $(".message").fadeTo(1000, 0).slideUp(500, function(){
-        $(this).alert('close'); 
+        $(this).alert('close');
     });
 }, 4000);
 
 
 
-// Own shift highlighting 
+// Own shift highlighting
 $('[name^=btn-submit-change]').click(function() {
     $(this).parents('.row').removeClass('my-shift');
 });
 
 
 
-// Dropdown hiding fix 
+// Dropdown hiding fix
 $('input').focusout(function() {
     if ($(this).prop('placeholder') === '=FREI=') {
         // hack to allow for click to register before focusout is called
@@ -210,7 +210,7 @@ $('input').focusout(function() {
 
 
 
-// Language switcher 
+// Language switcher
 $('.languageSwitcher').find('a').click(function() {
     var language = $(this).data('language');
     localStorage.setItem('language', language);
@@ -234,12 +234,12 @@ function decodeEntities(encodedString) {
 
 
 // Scroll to current date/event if in mobile view in current month
-$(document).ready(function() 
+$(document).ready(function()
 {
     // check if we are in month view and if the today-marker exists
-    if ($('#month-view-marker').length && $(".scroll-marker").length) 
+    if ($('#month-view-marker').length && $(".scroll-marker").length)
     {
-        if ($(window).width() < 978) 
+        if ($(window).width() < 978)
         {
             $('html, body').animate({ scrollTop: $(".scroll-marker").offset().top -80 }, 1000);
         };
@@ -259,7 +259,7 @@ $(document).ready(function()
 $(function(){
 	$('.moreless-more-info').click(function(e) {
 		$(this).parent().children('.more-info').toggleClass('moreshow-info');
-        $(this).parent().children('.more-info').css('height','auto'); 
+        $(this).parent().children('.more-info').css('height','auto');
         $(this).parent().children('.moreless-less-info').show();
         $(this).parent().children('.moreless-more-info').hide();
 	});
@@ -268,18 +268,18 @@ $(function(){
 $(function(){
     $('.moreless-less-info').click(function(e) {
         $(this).parent().children('.more-info').toggleClass('moreshow-info');
-        $(this).parent().children('.more-info').css('height','100'); 
-        $(this).parent().children('.more-info').height(100);  
+        $(this).parent().children('.more-info').css('height','100');
+        $(this).parent().children('.more-info').height(100);
         $(this).parent().children('.moreless-less-info').hide();
-        $(this).parent().children('.moreless-more-info').show();  
+        $(this).parent().children('.moreless-more-info').show();
     });
 });
 
 $(function(){
     $('.moreless-more-info').hide();
     $('.moreless-less-info').hide();
-    if ($('.more-info').height() > 100) {   
-        $('.more-info').height(100);        
+    if ($('.more-info').height() > 100) {
+        $('.more-info').height(100);
         $('.moreless-more-info').show();
     };
 });
@@ -287,7 +287,7 @@ $(function(){
 $(function(){
     $('.moreless-more-details').click(function(e) {
         $(this).parent().children('.more-details').toggleClass('moreshow-details');
-        $(this).parent().children('.more-details').css('height','auto'); 
+        $(this).parent().children('.more-details').css('height','auto');
         $(this).parent().children('.moreless-less-details').show();
         $(this).parent().children('.moreless-more-details').hide();
     });
@@ -296,18 +296,18 @@ $(function(){
 $(function(){
     $('.moreless-less-details').click(function(e) {
         $(this).parent().children('.more-details').toggleClass('moreshow-details');
-        $(this).parent().children('.more-details').css('height','100'); 
-        $(this).parent().children('.more-details').height(100);  
+        $(this).parent().children('.more-details').css('height','100');
+        $(this).parent().children('.more-details').height(100);
         $(this).parent().children('.moreless-less-details').hide();
-        $(this).parent().children('.moreless-more-details').show();  
+        $(this).parent().children('.moreless-more-details').show();
     });
 });
 
 $(function(){
     $('.moreless-more-details').hide();
     $('.moreless-less-details').hide();
-    if ($('.more-details').height() > 100) {   
-        $('.more-details').height(100);        
+    if ($('.more-details').height() > 100) {
+        $('.more-details').height(100);
         $('.moreless-more-details').show();
     };
 
@@ -319,10 +319,10 @@ $(function(){
 $(function(){
     $('#show-hide-history').click(function(e) {
         e.preventDefault();
-        if ($('#change-history').hasClass("hide")) 
+        if ($('#change-history').hasClass("hide"))
         {
             // change state, change button
-            $('#change-history').removeClass('hide'); 
+            $('#change-history').removeClass('hide');
             $('#arrow-icon').removeClass('fa-caret-right');
             $('#arrow-icon').addClass('fa-sort-desc');
         }
@@ -332,7 +332,7 @@ $(function(){
             $('#change-history').addClass('hide');
             $('#arrow-icon').addClass('fa-caret-right');
             $('#arrow-icon').removeClass('fa-sort-desc');
-        };        
+        };
     });
 });
 
@@ -353,14 +353,14 @@ $(function(){
 
 
 
-// Shows dynamic form fields for new job types 
+// Shows dynamic form fields for new job types
 $(document).ready(function() {
     // initialise counter
     var iCnt = parseInt($('#counter').val());
 
     if (iCnt < 2) {
         $(".btnRemove").hide();
-    }; 
+    };
 
     // Add one more job with every click on "+"
     $('.btnAdd').click(function() {
@@ -378,14 +378,14 @@ $(document).ready(function() {
 
     // populate from dropdown select
     (<any>$.fn).dropdownSelect = function(shiftType, timeStart, timeEnd, weight) {
-        
+
         $(this).closest('.box').find("[name^=jbtyp_title]").val(shiftType);
         $(this).closest('.box').find("[name^=jbtyp_time_start]").val(timeStart);
-        $(this).closest('.box').find("[name^=jbtyp_time_end]").val(timeEnd);   
+        $(this).closest('.box').find("[name^=jbtyp_time_end]").val(timeEnd);
         $(this).closest('.box').find("[name^=jbtyp_statistical_weight]").val(weight);
     };
 });
- 
+
 
 
 
@@ -414,9 +414,9 @@ $(document).ready(function() {
             onEscape: () => {}
         });
 
-       
+
         // Do all the work here after AJAX response is received
-        function ajaxCallBackPersonStats(response) { 
+        function ajaxCallBackPersonStats(response) {
 
             // Parse and show response
             dialog.init(function(){
@@ -427,10 +427,10 @@ $(document).ready(function() {
                         + "<thead>"
                         + "<tr>"
                         + "<th>#</th>"
-                        + "<th>" + translate('shift') + "</th>" 
-                        + "<th>" + translate('event') + "</th>" 
-                        + "<th>" + translate('section') + "</th>" 
-                        + "<th>" + translate('date') + "</th>" 
+                        + "<th>" + translate('shift') + "</th>"
+                        + "<th>" + translate('event') + "</th>"
+                        + "<th>" + translate('section') + "</th>"
+                        + "<th>" + translate('date') + "</th>"
                         + "<th>" + translate('weight') + "</th>"
                         + "</tr>"
                         + "</thead>"
@@ -438,37 +438,37 @@ $(document).ready(function() {
                 );
 
                 // check for empty response
-                if (response.length === 0) 
+                if (response.length === 0)
                 {
                     $("#person-shifts-overview").append("<tr><td colspan=6>"  + translate('noShiftsInThisPeriod') + "</td></tr>");
                 }
 
-                // Fill with data received 
+                // Fill with data received
                 for (var i = 0; i < response.length; i++)
                 {
                     $("#person-shifts-overview").append(
-                        "<tbody>" 
+                        "<tbody>"
                         // Change background for shifts in other sections
-                        + "<tr" + (!response[i]["isOwnClub"] ? " class=\"active text-muted\"" : "") + ">" 
-                        + "<td>"  + (1+i) + "</td>" 
+                        + "<tr" + (!response[i]["isOwnClub"] ? " class=\"active text-muted\"" : "") + ">"
+                        + "<td>"  + (1+i) + "</td>"
                         + "<td>" + response[i]["shift"] + "</td>"
                         + "<td>" + "<a href=\"/event/" + response[i]["event_id"] + "\">" + response[i]["event"] + "</a>" + "</td>"
-                        // Color-coding for different sections 
+                        // Color-coding for different sections
                         + "<td class=\"" + response[i]["section"]+ "-section-highlight\">" + response[i]["section"] + "</td>"
-                        + "<td>" + response[i]["date"] + "</td>" 
+                        + "<td>" + response[i]["date"] + "</td>"
                         + "<td>" + response[i]["weight"] + "</td>"
                         + "</tr>"
                         + "</tbody>");
                 }
 
-            }); 
+            });
         }
 
         // AJAX Request shifts for a person selected
         $.ajax({
-            type: $( this ).prop( 'method' ),  
+            type: $( this ).prop( 'method' ),
 
-            url: "/statistics/person/" + $(this).prop("id"),  
+            url: "/statistics/person/" + $(this).prop("id"),
 
             data: {
                     // chosen date values from the view
@@ -481,7 +481,7 @@ $(document).ready(function() {
 
                     // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
                     "_method": "get"
-            },  
+            },
 
             dataType: 'json',
 
@@ -498,9 +498,9 @@ $(document).ready(function() {
 // ICal //
 //////////
 
-/* 
+/*
  * Disabling iCal until fully functional.
- * 
+ *
 
 $('[name^=icalfeeds]').click(function () {
 
@@ -540,7 +540,7 @@ $('[name^=icalfeeds]').click(function () {
                 }
             } else {
                 remindPersonalIcalInput = '<div class="form-group left-padding-16 padding-right-16 col-md-12 col-xs-12">' +
-                    translate('remindsBeforeShiftStart') + '&nbsp;&nbsp;' +  
+                    translate('remindsBeforeShiftStart') + '&nbsp;&nbsp;' +
                     '<input id="personalIcalRemindValue" type="number" value="0" width="20%"/>' + translate('minutes') +
                     '</div>';
             }
@@ -678,7 +678,7 @@ jQuery( document ).ready( function( $ ) {
         $(this).parents('.shift').find('[name^=status-icon]').addClass('hide');
 
         // do all the work here after AJAX response is received
-        function ajaxCallBackUsernames(response) { 
+        function ajaxCallBackUsernames(response) {
 
             // clear array from previous results, but leave first element with current user's data
             $(document.activeElement).parent().children('.dropdown-username').contents().filter(function () {
@@ -687,22 +687,22 @@ jQuery( document ).ready( function( $ ) {
 
             // format data received
             response.forEach(function(data) {
-
                 // convert person_status to text
                 if ( data.prsn_status == 'candidate' ) { data.prsn_status = " (K)" }
                 else if ( data.prsn_status == 'veteran' ) { data.prsn_status = " (V)" }
                 else if ( data.prsn_status == 'resigned' ) { data.prsn_status = " (ex)" }
-                else { data.prsn_status = "" } 
+                else { data.prsn_status = "" }
 
                 // add found persons to the array
                 $(document.activeElement).parent().children('.dropdown-username').append(
-                    '<li><a href="javascript:void(0);">' 
-                    + '<span id="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
-                    + '<span id="currentName">' + data.prsn_name + '</span>'
+                    '<li><a href="javascript:void(0);">'
+                    + '<span name="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
+                    + '<span name="currentName">' + data.prsn_name + '</span>'
                     + data.prsn_status
-                    + '(<span id="currentClub">' + data.club.clb_title + '</span>)'
+                    + '(<span name="currentClub">' + data.club.clb_title + '</span>)'
+                    + '&nbsp;<span name="tooltip" class="text-muted"> ' + data.get_user.givenname + ' ' + data.get_user.lastname + ' </span> '
                     + '</a></li>');
-            });  
+            });
 
             // process clicks inside the dropdown
             $(document.activeElement).parent().children('.dropdown-username').children('li').click(function(e){
@@ -710,13 +710,19 @@ jQuery( document ).ready( function( $ ) {
                 if ( this.id == "yourself") return false;
 
                 // gather the data for debugging
-                var currentLdapId = $(this).find('#currentLdapId').html();
-                var currentName = $(this).find('#currentName').html();
-                var currentClub = $(this).find('#currentClub').html();
-                var currentEntryId = $(this).closest(".shift").attr("id");
+                let currentLdapId = $(this).find('[name="currentLdapId"]').html();
+                let currentName = $(this).find('[name="currentName"]').html();
+                let currentClub = $(this).find('[name="currentClub"]').html();
+                let currentEntryId = $(this).closest(".shift").attr("id");
+                let tooltipText = $(this).find('[name="tooltip"]').html();
 
                 // update fields
                 $("input[id=userName" + currentEntryId + "]").val(currentName);
+                $("input[id=userName" + currentEntryId + "]")
+                  .tooltip('hide')
+                  .attr('data-original-title',tooltipText)
+                  .tooltip('fixTitle')
+                  .tooltip('show');
                 $("input[id=ldapId"   + currentEntryId + "]").val(currentLdapId);
                 $("input[id=club"     + currentEntryId + "]").val(currentClub);
 
@@ -735,10 +741,10 @@ jQuery( document ).ready( function( $ ) {
         $(this).delay(250);
 
         // Request autocompleted names
-        $.ajax({  
-            type: $( this ).prop( 'method' ),  
+        $.ajax({
+            type: $( this ).prop( 'method' ),
 
-            url: "/person/" + $(this).val(),  
+            url: "/person/" + $(this).val(),
 
             data: {
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
@@ -746,7 +752,7 @@ jQuery( document ).ready( function( $ ) {
 
                     // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
                     "_method": "get"
-            },  
+            },
 
             dataType: 'json',
 
@@ -761,7 +767,7 @@ jQuery( document ).ready( function( $ ) {
 
 /////////////////////////
 // AUTOCOMPELETE CLUBS //
-/////////////////////////   
+/////////////////////////
 
 
 
@@ -786,7 +792,7 @@ jQuery( document ).ready( function( $ ) {
         $(this).parents('.shift').find("[name^=status-icon]").addClass('hide');
 
         // do all the work here after AJAX response is received
-        function ajaxCallBackClubs(response) { 
+        function ajaxCallBackClubs(response) {
 
             // clear array from previous results, but leave first element with current user's data
             $(document.activeElement).parent().parent().children('.dropdown-club').contents().remove();
@@ -796,10 +802,10 @@ jQuery( document ).ready( function( $ ) {
 
                 // add found clubs to the array$(document.activeElement).parent().children('.dropdown-club')
                 $(document.activeElement).parent().parent().children('.dropdown-club').append(
-                    '<li><a href="javascript:void(0);">' 
+                    '<li><a href="javascript:void(0);">'
                     + '<span id="clubTitle">' + data.clb_title + '</span>'
                     + '</a></li>');
-            });  
+            });
 
             // process clicks inside the dropdown
             $(document.activeElement).parent().parent().children('.dropdown-club').children('li').click(function(e){
@@ -825,10 +831,10 @@ jQuery( document ).ready( function( $ ) {
         $(this).delay(250);
 
         // Request autocompleted names
-        $.ajax({  
-            type: $( this ).prop( 'method' ),  
+        $.ajax({
+            type: $( this ).prop( 'method' ),
 
-            url: "/club/" + $(this).val(),  
+            url: "/club/" + $(this).val(),
 
             data: {
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
@@ -836,7 +842,7 @@ jQuery( document ).ready( function( $ ) {
 
                     // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
                     "_method": "get"
-            },  
+            },
 
             dataType: 'json',
 
@@ -852,11 +858,11 @@ jQuery( document ).ready( function( $ ) {
     ///////////////////////////
     // AUTOCOMPLETE SHIFTTYPES //
     ///////////////////////////
-    
+
 
 
     // open shiftType dropdown on input selection
-    $( '.box' ).find('input[type=text]').on( 'focus', function() 
+    $( '.box' ).find('input[type=text]').on( 'focus', function()
     {
         // remove all other dropdowns
         $(document).find('.dropdown-shiftTypes').hide();
@@ -865,7 +871,7 @@ jQuery( document ).ready( function( $ ) {
     } );
 
     // hide all dropdowns on ESC keypress
-    $(document).keyup(function(e) 
+    $(document).keyup(function(e)
     {
       if (e.keyCode === 27) {
         $(document).find('.dropdown-shiftTypes').hide();
@@ -879,7 +885,7 @@ jQuery( document ).ready( function( $ ) {
     $( '.box' ).find("input[name^='shifts\[title\]']").on( 'input', function()
     {
         // do all the work here after AJAX response is received
-        function ajaxCallBackClubs(response) { 
+        function ajaxCallBackClubs(response) {
 
             // clear array from previous results
             $(document.activeElement).next('.dropdown-shiftTypes').contents().remove();
@@ -889,7 +895,7 @@ jQuery( document ).ready( function( $ ) {
 
                 // add found shiftTypes and metadata to the dropdown
                 $(document.activeElement).next('.dropdown-shiftTypes').append(
-                    '<li><a href="javascript:void(0);">' 
+                    '<li><a href="javascript:void(0);">'
                     + '<span id="shiftTypeTitle">'
                     + data.title
                     + '</span>'
@@ -904,9 +910,9 @@ jQuery( document ).ready( function( $ ) {
                     + '<span id="shiftTypeWeight" class="hidden">'
                     + data.statistical_weight
                     + '</span>'
-                    + ')' 
+                    + ')'
                     + '</a></li>');
-            });  
+            });
 
             // process clicks inside the dropdown
             $(document.activeElement).next('.dropdown-shiftTypes').children('li').click(function(e)
@@ -935,8 +941,8 @@ jQuery( document ).ready( function( $ ) {
         $(this).delay(250);
 
         // Request autocompleted names
-        $.ajax({  
-            type: $( this ).prop( 'method' ),  
+        $.ajax({
+            type: $( this ).prop( 'method' ),
 
             url: "/shiftTypes/" + $(this).val(),
 
@@ -946,7 +952,7 @@ jQuery( document ).ready( function( $ ) {
 
                     // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
                     "_method": "get"
-            },  
+            },
 
             dataType: 'json',
 
@@ -964,9 +970,9 @@ jQuery( document ).ready( function( $ ) {
         // For passworded schedules: check if a password field exists and is not empty
         // We will check correctness on the server side
         if ( $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").length
-          && !$(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val() ) 
+          && !$(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val() )
         {
-            var password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );      
+            var password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );
         } else {
             var password = <string> $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
         }
@@ -974,35 +980,35 @@ jQuery( document ).ready( function( $ ) {
         // necessary for the ajax callbacks
         var currentId = $(this).attr('id');
 
-        $.ajax({  
-            type: $( this ).prop( 'method' ),  
+        $.ajax({
+            type: $( this ).prop( 'method' ),
 
-            url: $( this ).prop( 'action' ),  
+            url: $( this ).prop( 'action' ),
 
             data: JSON.stringify({
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
                     "_token":       $(this).find( 'input[name=_token]' ).val(),
 
                     // Actual data being sent below
-                    "entryId":      $(this).closest("form").attr("id"), 
+                    "entryId":      $(this).closest("form").attr("id"),
                     "userName":     $(this).find("[name^=userName]").val(),
                     "ldapId":       $(this).find("[name^=ldapId]").val(),
                     "timestamp":    $(this).find("[name^=timestamp]").val(),
                     "userClub":     $(this).find("[name^=club]").val(),
                     "userComment":  $(this).find("[name^=comment]").val(),
-                    "password":     password, 
+                    "password":     password,
 
                     // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
                     "_method": "put"
-                }),  
+                }),
 
             dataType: 'json',
 
             contentType: 'application/json',
-            
+
             beforeSend: function() {
                 // console.log("beforesend");
-                
+
                 // hide dropdowns because they aren't no longer needed
                 $(document).find('.dropdown-username').hide();
                 $(document).find('.dropdown-club').hide();
@@ -1017,22 +1023,22 @@ jQuery( document ).ready( function( $ ) {
                     .attr("data-original-title", "In Arbeit...")
                     .css("color", "darkgrey");
             },
-            
+
             complete: function() {
                 // console.log('complete');
             },
 
-            success: function(data) {  
+            success: function(data) {
                 // console.log("success");
-                
+
                 // COMMENT:
                 // we update to server response instead of just saving user input
-                // for the case when an entry has been updated recently by other user, 
+                // for the case when an entry has been updated recently by other user,
                 // but current user hasn't received a push-update from the server yet.
                 //
                 // This should later be substituted for "update highlighting", e.g.:
-                // green  = "your data was saved successfully", 
-                // red    = "server error, entry not saved (try again)", 
+                // green  = "your data was saved successfully",
+                // red    = "server error, entry not saved (try again)",
                 // yellow = "other user updated before you, here's the new data"
 
                 // Update the fields according to server response
@@ -1068,7 +1074,7 @@ jQuery( document ).ready( function( $ ) {
 
                 // UPDATE STATUS ICON
                 // switch to normal user status icon and clear "spinner"-markup
-                // we receive this parameters: e.g. ["status"=>"fa fa-adjust", "style"=>"color:yellowgreen;", "title"=>"Kandidat"] 
+                // we receive this parameters: e.g. ["status"=>"fa fa-adjust", "style"=>"color:yellowgreen;", "title"=>"Kandidat"]
                 $("#spinner").attr("style", data["userStatus"]["style"]);
                 $("#spinner").attr("data-original-title", data["userStatus"]["title"]);
                 $("#spinner").removeClass().addClass(data["userStatus"]["status"]).removeAttr("id");
@@ -1081,7 +1087,7 @@ jQuery( document ).ready( function( $ ) {
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(JSON.stringify(xhr.responseJSON));
                 // Hide spinner after response received
-                // We make changes on success anyway, so the following state is only achieved 
+                // We make changes on success anyway, so the following state is only achieved
                 // when a response from server was received, but errors occured - so let's inform the user
                 $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!");
               }
@@ -1090,7 +1096,7 @@ jQuery( document ).ready( function( $ ) {
         });
 
         // Prevent the form from actually submitting in browser
-        return false; 
+        return false;
 
     });
 
@@ -1104,36 +1110,36 @@ jQuery( document ).ready( function( $ ) {
 
     $( '.updateShiftType' ).on( 'submit', function() {
 
-        $.ajax({  
-            type: $( this ).prop( 'method' ),  
+        $.ajax({
+            type: $( this ).prop( 'method' ),
 
-            url: $( this ).prop( 'action' ),  
+            url: $( this ).prop( 'action' ),
 
             data: JSON.stringify({
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
                     "_token":       $(this).find( 'input[name=_token]' ).val(),
 
                     // Actual data being sent below
-                    "entryId":      $(this).closest("form").attr("id"), 
+                    "entryId":      $(this).closest("form").attr("id"),
                     "shiftTypeId":    $(this).find("[name^=shiftType]").val(),
 
                     // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
                     "_method": "put"
-                }),  
+                }),
 
             dataType: 'json',
 
             contentType: 'application/json',
-            
+
             beforeSend: function() {
                 // console.log("beforesend");
             },
-            
+
             complete: function() {
                 // console.log('complete');
             },
 
-            success: function(data) {  
+            success: function(data) {
                 //console.log("success");
                 // remove row to indicate successful renaming of the shiftType
                 $(".shiftType-event-row" + data["entryId"]).hide();
@@ -1144,7 +1150,7 @@ jQuery( document ).ready( function( $ ) {
                     // we remove arguments after "?" because otherwise user could land on a pagination page that is already empty
                     (<any>window).location = window.location.href.split("?")[0];
                 }
-                
+
             },
 
             error: function (xhr, ajaxOptions, thrownError) {
@@ -1154,7 +1160,7 @@ jQuery( document ).ready( function( $ ) {
         });
 
         // Prevent the form from actually submitting in browser
-        return false; 
+        return false;
 
     });
 
@@ -1162,7 +1168,7 @@ jQuery( document ).ready( function( $ ) {
     $('.shift').find("[name^=userName]").on('input propertychange paste', function() {
         $(this).parent().find("[name^=ldapId]").val("");
     });
- 
+
 });
 
 
@@ -1177,8 +1183,8 @@ jQuery( document ).ready( function( $ ) {
 Taken from: https://gist.github.com/soufianeEL/3f8483f0f3dc9e3ec5d9
 Modified by Ferri Sutanto
 - use promise for verifyConfirm
-Examples : 
-<a href="posts/2" data-method="delete" data-token="{{csrf_token()}}"> 
+Examples :
+<a href="posts/2" data-method="delete" data-token="{{csrf_token()}}">
 - Or, request confirmation in the process -
 <a href="posts/2" data-method="delete" data-token="{{csrf_token()}}" data-confirm="Are you sure?">
 */

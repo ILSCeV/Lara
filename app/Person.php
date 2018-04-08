@@ -88,6 +88,14 @@ class Person extends Model
         $userRelationship = $this->hasOne(User::class);
         return $userRelationship->exists() ? $userRelationship->first() : User::createFromPerson($this);
     }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne|User
+     */
+    public function getUser()
+    {
+       return $this->hasOne(User::class);
+    }
 
     public static function isCurrent($ldap_id)
     {
