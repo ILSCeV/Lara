@@ -20,10 +20,10 @@ class DeadlineSurvey
     public function handle($request, Closure $next)
     {
         /** @var Survey $survey */
-        $survey = Survey::findOrFail($request->route()->parameter('survey'));
+        $survey = Survey::findOrFail($request->route()->parameter('survey'))->first();
         if(Carbon::now() < Carbon::createFromTimestamp(strtotime($survey->deadline))
             || \Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)
-            || \Auth::user()->hasPermissionsInSection($survey->section(),[RoleUtility::PRIVILEGE_CL,RoleUtility::PRIVILEGE_MARKETING])) {
+            || \Auth::user()->hasPermissionsInSection($survey->section(),RoleUtility::PRIVILEGE_CL,RoleUtility::PRIVILEGE_MARKETING)) {
             return $next($request);
         } else {
             $request->session()->put('message', 'Die Deadline ist überschritten, jetzt können nurnoch Clubleitung/Marketing/Admin die Umfrage ausfüllen');

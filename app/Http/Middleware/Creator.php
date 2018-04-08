@@ -25,7 +25,7 @@ class Creator
         if($object->creator_id == \Auth::user()->person->prsn_ldap_id
             || \Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)
             || \Auth::user()->hasPermissionsInSection($object->section()
-                , [RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_MARKETING])
+                , RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_MARKETING)
             ) {
             return $next($request);
         } else {

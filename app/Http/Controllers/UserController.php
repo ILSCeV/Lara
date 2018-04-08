@@ -169,7 +169,7 @@ class UserController extends Controller
             return Redirect::back();
         }
         $data = [];
-        if(Auth::user()->is(RoleUtility::PRIVILEGE_ADMINISTRATOR) || Auth::user()->hasPermissionsInSection($user->section,RoleUtility::PRIVILEGE_CL)){
+        if(Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR) || Auth::user()->hasPermissionsInSection($user->section,RoleUtility::PRIVILEGE_CL)){
             $validator = $this->validator($user, Input::all());
             if ($validator->fails()) {
                 Utilities::error(trans('mainLang.changesWereReset'));
@@ -183,7 +183,7 @@ class UserController extends Controller
             $data['status'] = Input::get('status');
 
         }
-        if(Auth::user()->is(RoleUtility::PRIVILEGE_ADMINISTRATOR)){
+        if(Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)){
             $sectionIds =  Section::all()->map(function (Section $section){
                 return $section->id;
             });
