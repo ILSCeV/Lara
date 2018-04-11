@@ -1,0 +1,7 @@
+/* fix for never ending popups on ios */
+@supports (-webkit-overflow-scrolling: touch) {
+	/* CSS specific to iOS devices */
+	body {
+		cursor: pointer;
+	}
+}
