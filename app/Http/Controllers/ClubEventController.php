@@ -21,8 +21,6 @@ use Lara\Shift;
 use Lara\Person;
 use Lara\Schedule;
 use Lara\Section;
-use Lara\Shift;
-use Lara\ShiftType;
 use Lara\Template;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
