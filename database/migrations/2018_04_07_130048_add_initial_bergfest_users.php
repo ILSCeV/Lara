@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+use Lara\Club;
 use Lara\Person;
 use Lara\Section;
 use Lara\User;
@@ -33,6 +34,10 @@ class AddInitialBergfestUsers extends Migration
         ]);
 
         $bergfest->save();
+        $bergfest->refresh();
+        if(is_null($bergfest->club())){
+            Club::create(['clb_title'=>$bergfest->title]);
+        }
 
         RoleUtility::createRolesForNewSection($bergfest);
 
