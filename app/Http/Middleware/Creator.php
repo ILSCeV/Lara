@@ -4,6 +4,7 @@ namespace Lara\Http\Middleware;
 
 use Closure;
 use Lara\Survey;
+use Lara\utilities\RoleUtility;
 use PhpParser\Node\Scalar\String_;
 use Redirect;
 
@@ -21,10 +22,11 @@ class Creator
     {
         $newObject = new $classpath();
         $object = $newObject->findOrFail($request->route()->parameter($routeParameterName));
-        if($object->creator_id == $request->session()->get('userId')
-            OR $request->session()->get('userGroup') == "clubleitung"
-            OR $request->session()->get('userGroup') == "marketing"
-            OR $request->session()->get('userGroup') == "admin") {
+        if($object->creator_id == \Auth::user()->person->prsn_ldap_id
+            || \Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)
+            || \Auth::user()->hasPermissionsInSection($object->section()
+                , RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_MARKETING)
+            ) {
             return $next($request);
         } else {
             $request->session()->put('message', 'Dir fehlt die nötige Berechtigung!');

@@ -21,7 +21,7 @@ class Kernel extends HttpKernel
     ];
 
     /**
-     * The application's route middleware groups.
+     * The application's route middleware groups
      *
      * @var array
      */
@@ -66,5 +66,7 @@ class Kernel extends HttpKernel
         'privateEntry' => \Lara\Http\Middleware\PrivateEntry::class,    
         'deadlineSurvey' => \Lara\Http\Middleware\DeadlineSurvey::class,
         'rejectGuests' => \Lara\Http\Middleware\RejectGuests::class,
+        'managingUsersOnly' => \Lara\Http\Middleware\ManagingUsersOnly::class,
+        'checkRoles' => \Lara\Http\Middleware\CheckRoles::class,
     ];
 }

@@ -2,8 +2,14 @@
 
 namespace Lara\Providers;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Lara\Policies\RolePolicy;
+use Lara\Policies\UserPolicy;
+use Lara\Role;
+use Lara\Section;
+use Lara\User;
+use Lara\utilities\RoleUtility;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -14,6 +20,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'Lara\Model' => 'Lara\Policies\ModelPolicy',
+        User::class => UserPolicy::class,
+        Role::class => RolePolicy::class,
+
     ];
 
     /**
@@ -25,6 +34,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('createUserOfSection', function (User $user, $section_id) {
+            if ($user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
+                return true;
+            }
+            return $user->hasPermissionsInSection(Section::findOrFail($section_id),RoleUtility::PRIVILEGE_CL);
+        });
+
     }
 }

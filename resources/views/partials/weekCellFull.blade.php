@@ -1,5 +1,5 @@
 <div class="panel panel-warning">
-	
+
 	{{--Check if the event is still going on--}}
 	<?php $classString = "panel panel-heading";?>
 	@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
@@ -12,15 +12,15 @@
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
     @elseif ($clubEvent->evnt_type == 1)
         <div class="{{$classString}} palette-Purple-500 bg">
-    @elseif ($clubEvent->evnt_type == 2 
-    	  OR $clubEvent->evnt_type == 3)
+    @elseif ($clubEvent->evnt_type == 2
+    	  || $clubEvent->evnt_type == 3)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
-    @elseif ($clubEvent->evnt_type == 4 
-          OR $clubEvent->evnt_type == 5 
-          OR $clubEvent->evnt_type == 6)
+    @elseif ($clubEvent->evnt_type == 4
+          || $clubEvent->evnt_type == 5
+          || $clubEvent->evnt_type == 6)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg white-text">
-    @elseif ($clubEvent->evnt_type == 7 
-          OR $clubEvent->evnt_type == 8)
+    @elseif ($clubEvent->evnt_type == 7
+          || $clubEvent->evnt_type == 8)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg white-text">
     @elseif ($clubEvent->evnt_type == 9)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg white-text">
@@ -37,7 +37,7 @@
 			{{--
 
 			Disabling iCal until fully functional.
-			 
+
 			@include('partials.publishStateIndicatorRaw')
 			&nbsp;
 
@@ -59,7 +59,7 @@
 		{{-- Show password input if schedule needs one --}}
 		@if( $clubEvent->getSchedule->schdl_password != '')
 		    <div class="{{ $classString }} hidden-print">
-		        {!! Form::password('password' . $clubEvent->getSchedule->id, ['required', 
+		        {!! Form::password('password' . $clubEvent->getSchedule->id, ['required',
 		                                             'class'=>'col-md-12 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
 		                                             'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
@@ -73,7 +73,7 @@
 			@foreach($shifts = $clubEvent->getSchedule->shifts as $shift)
 				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
                 {{-- add a divider if the shift is not the last one --}}
-			    <div class="row{!! $shift !== $shifts->last() ? ' divider': false !!}{!! ( isset($shift->getPerson->prsn_ldap_id) AND Session::has('userId') AND $shift->getPerson->prsn_ldap_id == Session::get('userId')) ? " my-shift" : false !!}">
+			    <div class="row{!! $shift !== $shifts->last() ? ' divider': false !!}{!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id == Auth::user()->person->prsn_ldap_id) ? " my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 			                                'id' => $shift->id,
 			                                'method' => 'put',
@@ -130,15 +130,12 @@
 			@endforeach
 
 			{{-- Show a "hide" button for management, that allows removal of an event from current view - needed for printing --}}
-	        @if(Session::has('userGroup')
-		        AND (Session::get('userGroup') == 'marketing'
-		        OR Session::get('userGroup') == 'clubleitung'
-		        OR Session::get('userGroup') == 'admin'))
+	        @is('marketing', 'clubleitung', 'admin')
 		        <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
 				<div class="padding-right-16 bottom-padding pull-right hidden-print">
 					<small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
 				</div>
-			@endif
+			@endis
 
 		</div>
 

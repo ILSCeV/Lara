@@ -4,6 +4,8 @@ namespace Lara\Http\Middleware;
 
 use Closure;
 use Redirect;
+use Auth;
+use Session;
 
 class RejectGuests
 {
@@ -16,12 +18,12 @@ class RejectGuests
      */
     public function handle($request, Closure $next)
     {
-        if($request->session()->get('userId')) {
+        if (Auth::check()) {
             return $next($request);
         } else {
-            $request->session()->put('message', 'Bitte einloggen!');
-            $request->session()->put('msgType', 'danger');
-            return Redirect::action('MonthController@currentMonth');
+            Session::put('message', 'Bitte einloggen');
+            Session::put('msgType', 'danger');
+            return Redirect('/');
         }
     }
 }

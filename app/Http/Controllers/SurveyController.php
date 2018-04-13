@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Auth;
 use Config;
 use Illuminate\Http\Request;
 use Hash;
@@ -10,6 +11,7 @@ use Lara\Person;
 use Lara\RevisionEntry;
 use Lara\SurveyAnswerCell;
 use Lara\Utilities;
+use Lara\utilities\RoleUtility;
 use Session;
 use Redirect;
 use DateTime;
@@ -151,8 +153,8 @@ class SurveyController extends Controller
         $clubs = Club::all();
 
         //get the information from the current session
-        $userId = Session::get('userId');
-        $userStatus = Session::get("userStatus");
+        $userId = Auth::user()->person->prsn_ldap_id;
+        $userStatus = Auth::user()->status;
 
         $userParticipatedAlready = $survey->answers
             ->contains(function ($answer) use ($userId) {
@@ -246,8 +248,7 @@ class SurveyController extends Controller
         unset($revision);
 
         //check if the role of the user allows edit/delete for all answers
-        $userGroup = Session::get('userGroup');
-        $userCanEditDueToRole = collect(['admin', 'clubleitung'])->contains($userGroup);
+        $userCanEditDueToRole = Auth::user()->isAn(RoleUtility::PRIVILEGE_CL);
 
         //evaluation part that shows below the survey, a statistic of answers of the users who already took part in the survey
 

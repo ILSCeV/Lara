@@ -6,16 +6,26 @@ namespace Lara\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Lara\ClubEvent;
+use Lara\Http\Middleware\ManagingUsersOnly;
 use Lara\Logging;
+use Lara\Role;
 use Lara\Section;
 use Lara\Shift;
 use Lara\ShiftType;
 use Lara\Template;
 use Lara\Utilities;
+use Lara\utilities\RoleUtility;
 use Session;
 
 class TemplateController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware(ManagingUsersOnly::class, ['except' => 'create']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,21 +33,14 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        if (!(Session::has('userId')
-            && (Session::get('userGroup') == 'marketing'
-                || Session::get('userGroup') == 'clubleitung'
-                || Session::get('userGroup') == 'admin'))) {
-            Session::put('message', trans("messages.notAllowed"));
-            Session::put('msgType', 'danger');
-            return redirect('/');
-        }
-
-        //
-        if (Utilities::requirePermission("admin")) {
+        if (Utilities::requirePermission(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             $templatesQuery = Template::query();
         } else {
-            $templatesQuery = Template::whereHas('section', function ($query) {
-                $query->where('title', '=', Session::get('userClub'));
+            $allowedSections = \Auth::user()->getRolesOfType(RoleUtility::PRIVILEGE_MARKETING)->map(function (Role $role) {
+                return $role->section_id;
+            })->toArray();
+            $templatesQuery = Template::whereHas('section', function ($query) use ($allowedSections) {
+                $query->whereIn('id', $allowedSections );
             });
         }
         $templates = $templatesQuery->orderBy('section_id')->orderBy('title')->get();
@@ -62,16 +65,6 @@ class TemplateController extends Controller
      */
     public function store(Request $request, $templateId)
     {
-        //
-        if (!(Session::has('userId')
-            && (Session::get('userGroup') == 'marketing'
-                || Session::get('userGroup') == 'clubleitung'
-                || Session::get('userGroup') == 'admin'))) {
-            Session::put('message', trans("messages.notAllowed"));
-            Session::put('msgType', 'danger');
-            return redirect('/');
-        }
-
         $title = Input::get('title');
         $subtitle = Input::get('subtitle');
         $type = Input::get('type');
@@ -157,22 +150,12 @@ class TemplateController extends Controller
      */
     public function show($templateId)
     {
-        //
-        if (!(Session::has('userId')
-            && (Session::get('userGroup') == 'marketing'
-                || Session::get('userGroup') == 'clubleitung'
-                || Session::get('userGroup') == 'admin'))) {
-            Session::put('message', trans("messages.notAllowed"));
-            Session::put('msgType', 'danger');
-            return redirect('/');
-        }
-
         /** @var Template $template */
         $template = Template::with('section')->firstOrNew(['id' => $templateId]);
         $sections = Section::all();
         if ($template->id == null) {
             /** @var Section $userSection */
-            $userSection = Section::where('title', '=', Session::get('userClub'))->firstOrFail();;
+            $userSection = \Auth::user()->section;
 
             $template->section_id = $userSection->id;
             $template->section = $userSection;
@@ -221,19 +204,10 @@ class TemplateController extends Controller
      */
     public function destroy($templateId)
     {
-        if (!(Session::has('userId')
-            && (Session::get('userGroup') == 'marketing'
-                || Session::get('userGroup') == 'clubleitung'
-                || Session::get('userGroup') == 'admin'))) {
-            Session::put('message', trans("messages.notAllowed"));
-            Session::put('msgType', 'danger');
-            return redirect('/');
-        }
-
-        $template = Template::where('id', $templateId)->with('shifts')->first();
+        $template = (new \Lara\Template)->where('id', $templateId)->with('shifts')->first();
 
         //
-        $clubEvents = ClubEvent::where('template_id', '=', $template->id)->get();
+        $clubEvents = (new \Lara\ClubEvent)->where('template_id', '=', $template->id)->get();
         /** @var ClubEvent $clubEvent */
         foreach ($clubEvents as $clubEvent) {
             $clubEvent->template_id = null;

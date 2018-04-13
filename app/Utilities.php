@@ -3,6 +3,8 @@
 
 namespace Lara;
 
+use Auth;
+use Session;
 use Illuminate\Support\Facades\Cache;
 use Lara\Http\Controllers\IcalController;
 
@@ -40,19 +42,16 @@ class Utilities
     }
 
     /** checks if a user has the permission to do what he want
-     * @param $permissions the permissions the user is needing
+     * @param string | array $permissions the permissions the user is needing
      * @return true or false
      */
     static function requirePermission($permissions)
     {
-        if(!is_array($permissions)){
-            $permissions = array($permissions);
+        $user = Auth::user();
+        if (!$user) {
+            return false;
         }
-        $isAllowed = false;
-        foreach ($permissions as $permission) {
-            $isAllowed = $isAllowed || (\Session::get('userGroup') == $permission);
-        }
-        return $isAllowed;
+        return $user->isAn($permissions);
     }
 
     static function getEventTypeTranslation($typeNumber){
@@ -69,6 +68,18 @@ class Utilities
             case "1": return  trans('mainLang.information');
             default : return  trans('mainLang.others');
         }
+    }
+
+    static function error($message)
+    {
+        Session::put('message', $message);
+        Session::put('msgType', 'danger');
+    }
+
+    static function success($message)
+    {
+        Session::put('message', $message);
+        Session::put('msgType', 'success');
     }
 
 }

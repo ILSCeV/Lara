@@ -35,19 +35,29 @@ class Schedule extends Model
      * Looks up in table club_events for that entry, which has the same id like evnt_id of Schedule instance.
      * If there is no entry, null will be returned.
      *
-     * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type ClubEvent
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|ClubEvent
      */
     public function getClubEvent()
     {
         return $this->belongsTo('Lara\ClubEvent', 'evnt_id', 'id');
     }
-
+    
+    /**
+     * Get the corresponding club event, if existing.
+     * Looks up in table club_events for that entry, which has the same id like evnt_id of Schedule instance.
+     * If there is no entry, null will be returned.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|ClubEvent
+     */
     public function event()
     {
         return $this->belongsTo('Lara\ClubEvent', 'evnt_id', 'id');
     }
-
-	public function shifts() {
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|Shift
+     */
+    public function shifts() {
 	    return $this->hasMany('Lara\Shift', 'schedule_id', 'id')->orderByRaw('position IS NULL, position ASC, id ASC');
     }
 

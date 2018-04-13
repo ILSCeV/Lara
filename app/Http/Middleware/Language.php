@@ -21,7 +21,7 @@ class Language
      */
     public function handle($request, Closure $next)
     {
-        if (Session::has('applocale') AND array_key_exists(Session::get('applocale'), Config::get('languages'))) {
+        if (Session::has('applocale') && array_key_exists(Session::get('applocale'), Config::get('languages'))) {
             App::setLocale(Session::get('applocale'));
         } else {
             //Detect Browser Prefered language

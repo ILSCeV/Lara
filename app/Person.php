@@ -2,9 +2,15 @@
 
 namespace Lara;
 
+use Auth;
 use Session;
 use Illuminate\Database\Eloquent\Model;
 
+use Lara\Status;
+/**
+ * @property string prsn_name
+ * @property User user
+*/
 class Person extends Model
 {
 	/**
@@ -20,7 +26,7 @@ class Person extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('prsn_name', 
+	protected $fillable = array('prsn_name',
 								'prsn_ldap_id',
 								'prsn_status',
 								'clb_id',
@@ -30,14 +36,17 @@ class Person extends Model
 	 * Get the corresponding club.
 	 * Looks up in table club for that entry, which has the same id like clb_id of Person instance.
 	 *
-	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Club
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo/Lara\Club
 	 */
     public function getClub() {
         return $this->belongsTo('Lara\Club', 'clb_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Club
+     */
     public function club() {
-        return $this->belongsTo('Lara\Club', 'clb_id', 'id');
+        return $this->belongsTo(Club::class, 'clb_id', 'id');
     }
 
     public function name()
@@ -47,7 +56,7 @@ class Person extends Model
 
     public function isLoggedInUser()
     {
-        return $this->prsn_ldap_id == Session::get('userId');
+        return $this->prsn_ldap_id == Auth::user()->person->prsn_ldap_id;
     }
 
     public function nameWithStatus()
@@ -67,15 +76,44 @@ class Person extends Model
 
     public function shortHand()
     {
-        switch ($this->prsn_status) {
-            case "candidate":
-                return "(K)";
-            case "member":
-                return "(A)";
-            case "veteran":
-                return "(V)";
-            default:
-                return "";
+        $shortHand = Status::shortHand($this->prsn_status);
+        return $shortHand ? "(" . $shortHand . ")" : "";
+    }
+
+    /**
+     * @return \Lara\User
+     */
+    public function user()
+    {
+        $userRelationship = $this->hasOne(User::class);
+        return $userRelationship->exists() ? $userRelationship->first() : User::createFromPerson($this);
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne|User
+     */
+    public function getUser()
+    {
+       return $this->hasOne(User::class);
+    }
+
+    public static function isCurrent($ldap_id)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return false;
         }
+        return $user->person->prsn_ldap_id === $ldap_id;
+    }
+
+    public function fullName()
+    {
+        $user = $this->user();
+
+        if (!$user) {
+            return "";
+        }
+
+        return $user->fullName();
     }
 }

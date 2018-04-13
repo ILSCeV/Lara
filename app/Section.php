@@ -2,8 +2,8 @@
 
 namespace Lara;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Session;
 
 /**
  * Representation of a section, like bc-club
@@ -40,17 +40,37 @@ class Section extends Model
 	 * Get the corresponding club events.
 	 * Looks up in table club_events for entries, which have the same plc_id like id of Section instance.
 	 *
-	 * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasMany of type ClubEvent
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany|ClubEvent
 	 */
 	public function getClubEvent() {
-		return $this->hasMany('Lara\ClubEvent', 'plc_id', 'id');
+		return $this->hasMany(ClubEvent::class, 'plc_id', 'id');
 	}
 
-	public static function sectionOfCurrentUser() {
-        $sectionName = Session::get('userClub');
-        if (is_null($sectionName)) {
-	        return null;
+	public static function current() {
+        $user = Auth::user();
+
+        if (!$user) {
+            return [
+                "title" => ""
+            ];
         }
-        return Section::where('title', $sectionName)->first();
+        return $user->section;
+    }
+    
+    
+    /**
+     * @return Club|null|object|static
+     */
+    public function club()
+    {
+        return Club::where('clb_title', $this->title)->first();
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|User
+     */
+    public function users()
+    {
+        return $this->hasMany('Lara\User');
     }
 }

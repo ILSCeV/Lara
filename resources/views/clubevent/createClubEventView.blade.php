@@ -10,7 +10,7 @@
 
 @section('content')
 
-@if(Session::has('userId'))
+@auth
     <div class="row">
         <div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
             @if($createClubEvent)
@@ -24,9 +24,9 @@
                             <optgroup label="">
                                 <option value="-1"></option>
                             </optgroup>
-                            @foreach($sections as $section)
-                                <optgroup label="{{ $section->title }}">
-                                    @foreach( $templates->filter(function ($template) use ($section) { return $template->section_id == $section->id; }) as $template )
+                            @foreach($sections as $tSection)
+                                <optgroup label="{{ $tSection->title }}">
+                                    @foreach( $templates->filter(function ($template) use ($tSection) { return $template->section_id == $tSection->id; }) as $template )
                                         <option
                                             value="{{ Request::getBasePath() }}/event/{{ substr($date, 6, 4) }}/{{ substr($date, 3, 2) }}/{{ substr($date, 0, 2) }}/{{ $template->id }}/create"
                                             @if($template->id == $templateId )
@@ -123,7 +123,7 @@
 			      	@endif
 			    </div>
 
-			    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung' OR Session::get('userGroup') == 'admin')
+			    @is('marketing', 'clubleitung', 'admin')
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 						<label for="facebookDone" class="col-md-4 col-sm-4 col-xs-7">{{trans('mainLang.faceDone')}}?</label>
                         <select class="selectpicker" name="facebookDone" id="facebookDone">
@@ -227,24 +227,24 @@
 				            </div>
 						</div>
 				    </div>
-				@endif
+				@endis
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="section" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
 					<span class="col-md-10 col-sm-10 col-xs-12">
 						@if (!is_null($section))
 							{!! Form::text('section', $section->title, array('id'=>'section', 'readonly') ) !!}
-						@elseif(!is_null(Session::get('userClub')))
-							{!! Form::text('section', Session::get('userClub'), array('id'=>'section', 'readonly')) !!}
+						@elseif(!is_null(Auth::user()))
+							{!! Form::text('section', Auth::user()->section->title, array('id'=>'section', 'readonly')) !!}
 						@endif
 					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 					        <span class="caret"></span>
 					    </a>
 					    <ul class="dropdown-menu">
-						    @foreach($sections as $section)
+						    @foreach($sections as $dSection)
 						        <li>
 						        	<a href="javascript:void(0);"
-						        	   onClick="document.getElementById('section').value='{{$section->title}}'">{{ $section->title }}</a>
+						        	   onClick="document.getElementById('section').value='{{$dSection->title}}'">{{ $dSection->title }}</a>
 						        </li>
 							@endforeach
 					    </ul>
@@ -254,17 +254,17 @@
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
 					<label for="filter" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.showFor') }}: &nbsp;</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						@if(is_null($filter) OR $filter == "")
+						@if(is_null($filter) || $filter == "")
 							{{-- Set default values to the club the user is a member in.--}}
-							@foreach(Lara\Section::all() as $section)
-                                {{ Form::checkbox("filter[" . $section->title ."]", $section->id, $section->title === Session::get("userClub")) }}
-									{{ $section->title }}
+							@foreach(Lara\Section::all() as $fSection)
+                                {{ Form::checkbox("filter[" . $fSection->title ."]", $fSection->id, $fSection->title === \Lara\Section::current()->title) }}
+									{{ $fSection->title }}
                                 	&nbsp;
 							@endforeach
 						@else
-							@foreach(Lara\Section::all() as $section)
-								{{ Form::checkbox("filter[" . $section->title ."]", $section->id, in_array($section->title, $filter)) }}
-								{{ $section->title }}
+							@foreach(Lara\Section::all() as $fSection)
+								{{ Form::checkbox("filter[" . $fSection->title ."]", $fSection->id, in_array($fSection->title, $filter)) }}
+								{{ $fSection->title }}
 								&nbsp;
 							@endforeach
 						@endif
@@ -407,13 +407,13 @@
 	    Disabling iCal until fully functional -> remove "Publish" button, rename "create unpublished" to just "create"
 
 
-	    @if(Session::get('userGroup') == 'marketing'
-	     OR Session::get('userGroup') == 'clubleitung'
-	     OR Session::get('userGroup') == 'admin')
+	    @is( 'marketing'
+	     , 'clubleitung'
+	     , 'admin')
 			<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<br class="visible-xs">
-	    @endif
+	    @endis
 
 	    --}}
         @if($createClubEvent)
@@ -433,7 +433,7 @@
 
 @else
 	@include('partials.accessDenied')
-@endif
+@endauth
 
 @stop
 

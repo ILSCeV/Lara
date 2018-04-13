@@ -3,6 +3,7 @@
 namespace Lara\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 use Lara\Survey;
 use Redirect;
 
@@ -21,7 +22,7 @@ class PrivateEntry
         $object = $newObject->findOrFail($request->route()->parameter($routeParameterName));
 
         if(!$object->is_private
-            OR $request->session()->get('userId')) {
+            || Auth::check()) {
             return $next($request);
         } else {
             $request->session()->put('message', 'Dir fehlt die nötige Berechtigung!');

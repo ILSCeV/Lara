@@ -34,10 +34,9 @@
             <li><a href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
 
 {{-- MEMBER STATISTICS / members only --}}
-            @if(Session::has('userId'))
+            @auth
                 <li><a href="{{ action('StatisticsController@showStatistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
-            @endif
-
+            @endauth
 {{-- SETTINGS (GEAR ICON) --}}
             <li class="dropdown">
                 <a href="#"
@@ -48,11 +47,21 @@
                 </a>
                 <ul class="dropdown-menu" role="menu">
 
-{{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
+                    @auth
+                        @noLdapUser
+                        <li>
+                            <a href="{{route('password.change')}}">
+                                <i class="fa fa-key fa-rotate-90" aria-hidden="true"></i>
+                                {{ trans('auth.changePassword') }}
+                            </a>
+                        </li>
 
-                @if(Session::get('userGroup') == 'marketing'
-                 OR Session::get('userGroup') == 'clubleitung'
-                 OR Session::get('userGroup') == 'admin')
+                        <li role="separator" class="divider"></li>
+                        @endnoLdapUser
+                    @endauth
+                    {{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
+
+                @is(Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
                     <li>
                         <a href="{{ asset('shiftType') }}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
@@ -65,14 +74,22 @@
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>
                     </li>
-                @endif
+                    @is(Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
+                    <li>
+                        <a href="{{ route('user.index') }}">
+                            <i class="fa fa-users" aria-hidden="true"> </i>
+                            {{ trans('users.userManagement') }}
+                        </a>
+                    </li>
+                    @endis
+                    <li role="separator" class="divider"></li>
+                @endis
 
-
-{{-- LARA LOGS / section management or admins only --}}
-                @if(Session::get('userGroup') == 'clubleitung'
-                 OR Session::get('userGroup') == 'admin')
+                {{-- LARA LOGS / section management or admins only --}}
+                @is(Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
                     <li><a href="{{ asset('/logs') }}">Logs</a></li>
-                @endif
+                    <li role="separator" class="divider"></li>
+                @endis
 
 
 
@@ -94,7 +111,7 @@ Disabling iCal until fully functional.
 
 
 {{-- LARA ADMIN PANEL / admins only --}}
-            @if(\Lara\Utilities::requirePermission('admin'))
+            @if(\Lara\Utilities::requirePermission(Roles::PRIVILEGE_ADMINISTRATOR))
                 <li class="dropdown">
                     <a href="#"
                        class="dropdown-toggle"
@@ -121,7 +138,7 @@ Disabling iCal until fully functional.
             <div class="col-xs-10 col-sm-12 col-md-12 no-margin no-padding">
 
 {{-- AUTHENTICATION --}}
-                @if(Session::has('userId'))
+                @auth
 
 {{-- CREATE BUTTONS / members only --}}
     {{-- Desktop version --}}
@@ -155,47 +172,30 @@ Disabling iCal until fully functional.
                                             'class'=>'form-horizontal')) !!}
                             <div class="navbar-form">
                                 &nbsp;&nbsp;
-                                @if     ( Session::get('userStatus') === 'candidate' )
-                                    <i class="fa fa-adjust"
-                                       style="color:yellowgreen;"
-                                       data-toggle="tooltip"
-                                       data-placement="bottom"
-                                       title="{{ trans('mainLang.candidate') }}"></i>
-                                @elseif ( Session::get('userStatus') === 'veteran' )
-                                    <i class="fa fa-star"
-                                       style="color:gold;"
-                                       data-toggle="tooltip"
-                                       data-placement="bottom"
-                                       title="{{ trans('mainLang.veteran') }}"></i>
-                                @elseif ( Session::get('userStatus') === 'resigned' )
-                                    <i class="fa fa-star-o"
-                                       style="color:gold;"
-                                       data-toggle="tooltip"
-                                       data-placement="bottom"
-                                       title="{{ trans('mainLang.ex-member') }}"></i>
-                                @elseif ( Session::get('userStatus') === 'member')
-                                    <i class="fa fa-circle"
-                                       style="color:forestgreen;"
-                                       data-toggle="tooltip"
-                                       data-placement="bottom"
-                                       title="{{ trans('mainLang.active') }}"></i>
-                                @endif
+                                @php
+                                    $attributes = Lara\Status::style(Auth::user()->status);
+                                @endphp
+                                <i class="{{ $attributes["status"]}}"
+                                   style="{{ $attributes["style"] }}"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="{{ Lara\Status::localizeCurrent() }}"></i>
                                 &nbsp;
                                 <strong>
                                     <span data-toggle="tooltip"
                                           data-placement="bottom"
                                           title="
-                                            @if(Session::get('userGroup') == 'marketing')
-                                                {{ Session::get('userClub') . " / Marketing" }}
-                                            @elseif (Session::get('userGroup') == 'clubleitung')
-                                                {{ Session::get('userClub') . " / Clubleitung" }}
-                                            @elseif (Session::get('userGroup') == 'admin')
-                                                {{ Session::get('userClub') . " / Admin" }}
+                                            @is(Roles::PRIVILEGE_ADMINISTRATOR)
+                                                {{ Auth::user()->section->title . " / Admin" }}
+                                            @elseis(Roles::PRIVILEGE_CL)
+                                                {{ Auth::user()->section->title . " / Clubleitung" }}
+                                            @elseis(Roles::PRIVILEGE_MARKETING)
+                                                {{ Auth::user()->section->title . " / Marketing" }}
                                             @else
-                                                {{ Session::get('userClub') }}
-                                            @endif
+                                             {{ Auth::user()->section->title }}
+                                            @endis
                                           ">
-                                        {{ Session::get('userName') }}
+                                        {{ Auth::user()->name }}
                                     </span>
                                 </strong>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -210,37 +210,10 @@ Disabling iCal until fully functional.
 
 {{-- LOGIN FORM / public --}}
                     <li>
-                        {!! Form::open( array('url'    => 'login',
-                                              'method' => 'POST',
-                                              'class'  => 'form-horizontal navbar-right') ) !!}
-
-                            <div class="navbar-form form-horizontal">
-                                {!! Form::text( 'username',
-                                                Input::old( 'username' ),
-                                                array('placeholder'  => Lang::get('mainLang.clubNumber'),
-                                                      'class'        => 'form-control',
-                                                      'autocomplete' => 'on',
-                                                      'style'        => 'cursor: auto') ) !!}
-
-                                <br class="visible-xs">
-
-                                {!! Form::password( 'password',
-                                                   ['placeholder'  => Lang::get('mainLang.password' ),
-                                                    'class'        => 'form-control',
-                                                    'autocomplete' => 'off',
-                                                    'style'        => 'cursor: auto'] ) !!}
-
-                                <br class="visible-xs">
-
-                                {!! Form::submit( Lang::get('mainLang.logIn'),
-                                                  array('class' => ' btn btn-primary btn-sm') ) !!}
-
-                                <br class="visible-xs">
-                            </div>
-                        {!! Form::close() !!}
+                        @include('partials/login')
                     </li>
 
-                @endif
+                @endauth
             </div>
             <span class="col-xs-1 visible-xs">&nbsp;</span>
           </ul>

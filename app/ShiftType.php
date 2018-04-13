@@ -21,7 +21,7 @@ class ShiftType extends Model
      * Get the corresponding shifts.
      * Looks up in table shifts for shifts, which have the same shifttype_id like id of ShiftType instance.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany/Shift of type ClubEvent
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|Shift of type ClubEvent
      */
     public function getJob(){
         return $this->hasMany('Lara\Shift', 'shifttype_id', 'id');
@@ -31,7 +31,7 @@ class ShiftType extends Model
      * Get the corresponding shifts.
      * Looks up in table shifts for shifts, which have the same shifttype_id like id of ShiftType instance.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany/Shift of type ClubEvent
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|Shift of type ClubEvent
      */
     public function shifts(){
         return $this->hasMany('Lara\Shift', 'shifttype_id', 'id');

@@ -9,8 +9,8 @@ class SurveyAnswer extends BaseSoftDelete
 
     /**
      * Get the corresponding question.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Survey
      */
     public function getSurvey()
     {
@@ -19,8 +19,8 @@ class SurveyAnswer extends BaseSoftDelete
 
     /**
      * Get the corresponding person.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Person
      */
     public function getPerson()
     {
@@ -30,7 +30,7 @@ class SurveyAnswer extends BaseSoftDelete
     /**
      * Get the corresponding club.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Club
      */
     public function getClub()
     {
@@ -40,7 +40,7 @@ class SurveyAnswer extends BaseSoftDelete
     /**
      * Get the corresponding SurveyAnswerCells.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|SurSurveyAnswerCellvey
      */
     public function getAnswerCells()
     {
@@ -50,7 +50,7 @@ class SurveyAnswer extends BaseSoftDelete
     /**
      * Get the corresponding question.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Survey
      */
     public function survey()
     {
@@ -60,7 +60,7 @@ class SurveyAnswer extends BaseSoftDelete
     /**
      * Get the corresponding person.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Person
      */
     public function person()
     {
@@ -70,7 +70,7 @@ class SurveyAnswer extends BaseSoftDelete
     /**
      * Get the corresponding club.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Club
      */
     public function club()
     {
@@ -80,7 +80,7 @@ class SurveyAnswer extends BaseSoftDelete
     /**
      * Get the corresponding SurveyAnswerCells.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|SurveyAnswerCell
      */
     public function cells()
     {

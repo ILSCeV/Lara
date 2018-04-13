@@ -8,6 +8,7 @@ use DateTime;
 use DateInterval;
 use Session;
 use Config;
+use Auth;
 use Redirect;
 
 use Lara\Person;
@@ -20,12 +21,13 @@ class PersonController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function index( $query = NULL )
     {
         // Not showing everything to guests
-        if(!Session::has('userId'))
+        $user = Auth::user();
+        if(!$user)
         {
             Session::put('message', Config::get('messages_de.access-denied'));
             Session::put('msgType', 'danger');
@@ -33,20 +35,36 @@ class PersonController extends Controller
         }
 
         // if no parameter specified - empty means "show all"
-        if ( is_null($query) ) {  
+        if ( is_null($query) ) {
             $query = "";
         }
+        
+        $columns = ['prsn_name',
+            'prsn_ldap_id',
+            'prsn_status',
+            'clb_id',
+            'id'];
+        
+        $givenNameQuery = Person::query()->whereHas('getUser', function ($subquery) use ($query) {
+            return $subquery->where('givenname','like','%'. $query . '%');
+        })->select($columns);
+    
+        $lastNameQuery = Person::query()->whereHas('getUser', function ($subquery) use ($query) {
+            return $subquery->where('lastname','like','%'. $query . '%');
+        })->select($columns);
 
-        $persons =  \Lara\Person::whereNotNull( "prsn_ldap_id" )
+        $persons =  Person::query()->whereNotNull( "prsn_ldap_id" )
                                 // Look for autofill
                                 ->where('prsn_name', 'like', '%' . $query . '%')
+                                ->union($givenNameQuery)
+                                ->union($lastNameQuery)
                                 ->with('club')
+                                ->with(['getUser' => function( $userQuery){
+                                  return $userQuery->select(['givenname','lastname','person_id','id']);
+                                }])
                                 ->orderBy('prsn_name')
-                                ->get(['prsn_name',
-                                       'prsn_ldap_id',
-                                       'prsn_status',
-                                       'clb_id']);
-                     
+                                ->get($columns);
+
         return response()->json($persons);
     }
 

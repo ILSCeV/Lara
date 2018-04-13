@@ -165,7 +165,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Laravel\Tinker\TinkerServiceProvider::class, 
+        Laravel\Tinker\TinkerServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -182,7 +182,7 @@ return [
         Lara\Providers\RouteServiceProvider::class,
 
         /*
-         * Lara Service Providers...
+         * lara service providers...
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
@@ -241,6 +241,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Input' => Illuminate\Support\Facades\Input::class,
+        'Roles' => \Lara\utilities\RoleUtility::class,
 
     ],
 

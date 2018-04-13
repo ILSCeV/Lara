@@ -5,8 +5,8 @@
 
    <ul class="nav nav-tabs">
         @foreach($clubInfos->keys() as $title)
-            <li class="{{Session::get('userClub') == $title? 'active': ''}} statisticClubPicker">
-                <a aria-expanded="{{Session::get('userClub') == $title? 'true' : 'false'}}" 
+            <li class="{{Lara\Section::current()->title == $title? 'active': ''}} statisticClubPicker">
+                <a aria-expanded="{{Lara\Section::current()->title == $title? 'true' : 'false'}}"
                    href="#{{$title}}" 
                    data-toggle="tab">
                     {{$title}}
@@ -19,7 +19,7 @@
 <div class="panel panel-body no-padding">
     <div id="memberStatisticsTabs" class="tab-content">
         @foreach($clubInfos as $title => $clubInfo)
-            <div class="tab-pane fade in {{ Session::get('userClub') === $title ? 'active' : '' }}" id="{{$title}}">
+            <div class="tab-pane fade in {{ Lara\Section::current()->title === $title ? 'active' : '' }}" id="{{$title}}">
                 <table class="table table-hover" >
                     <thead>
                         <tr>
@@ -36,9 +36,9 @@
                     </thead>
                     <tbody>
                         @foreach($clubInfo as $info)
-                            <tr class="{{$info->user->isLoggedInUser() ? 'my-shift' : ''}}">
+                            <tr class="{{Auth::user()->id === $info->user->user()->id? 'my-shift' : ''}}">
                                 <td>
-                                    @include('partials.personStatusMarker', ['person' => $info->user])
+                                    @include('partials.personStatusMarker', ['status' => $info->user->prsn_status])
                                     <a href="#" onclick="chosenPerson = '{{$info->user->prsn_name}}'" name="show-stats-person{{$info->user->id}}" id="{{$info->user->id}}">
                                         {{$info->user->prsn_name}}
                                     </a>

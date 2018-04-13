@@ -2,6 +2,7 @@
 
 namespace Lara;
 
+use Auth;
 use Illuminate\Support\Facades\Session;
 use Lara\Http\Requests\SurveyRequest;
 use Hash;
@@ -24,7 +25,7 @@ class Survey extends BaseSoftDelete
     /**
      * Get the corresponding person.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Person
      */
     public function creator()
     {
@@ -34,21 +35,26 @@ class Survey extends BaseSoftDelete
     /**
      * Get the corresponding club.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Club
      */
     public function getClub()
     {
-        return $this->belongsTo('Lara\Club', 'club_id', 'id');
+        return $this->club();
     }
 
     /**
      * Get the corresponding club.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Club
      */
     public function club()
     {
-        return $this->belongsTo('Lara\Club', 'club_id', 'id');
+        return $this->creator->club();
+    }
+    
+    public function section()
+    {
+        return $this->club->section();
     }
 
     /**
@@ -100,7 +106,7 @@ class Survey extends BaseSoftDelete
      */
     public function makeFromRequest(SurveyRequest $request)
     {
-        $this->creator_id = Session::get('userId');
+        $this->creator_id = Auth::user()->person->prsn_ldap_id;
         $this->title = $request->title;
         $this->description = $request->description;
         $this->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate . $request->deadlineTime));

@@ -9,8 +9,8 @@
             <a aria-expanded="true" href="#allLeaderboards" data-toggle="tab">{{ trans('mainLang.allClubs') }}</a>
         </li>
         @foreach($clubInfos->keys() as $title)
-            <li class="{{Session::get('userClub') == $title? 'active': ''}} leaderboardsClubPicker">
-                <a aria-expanded="{{Session::get('userClub') == $title? 'active': ''}}" 
+            <li class="{{Lara\Section::current()->title == $title? 'active': ''}} leaderboardsClubPicker">
+                <a aria-expanded="{{Lara\Section::current()->title == $title? 'active': ''}}"
                    href="#{{$title}}Leaderboards"
                    data-toggle="tab">
                     {{$title}}
