@@ -158,10 +158,14 @@ class LDAPsync extends Command
             }
             $user->givenname = $userGivenName;
             $user->lastname = $userLastName;
-
-
-            $person->save();
-            $user->save();
+    
+            try {
+                $person->save();
+                $user->save();
+            } catch (\Exception $e) {
+                Log::error('cannot update person ' . $person->prsn_ldap_id,[$e]);
+                $this->error('cannot update person ' . $person->prsn_ldap_id,$e->getMessage());
+            }
         }
 
 // FINISH UPDATE
