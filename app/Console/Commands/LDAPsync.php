@@ -153,7 +153,7 @@ class LDAPsync extends Command
                 $user->status = $userStatus;
             }
 
-            if(isset($userEmail)) {
+            if(isset($userEmail) && $userEmail != $user->email) {
                 $user->email = $userEmail;
             }
             $user->givenname = $userGivenName;
