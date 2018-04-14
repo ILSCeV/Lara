@@ -53,7 +53,11 @@ class LDAPsync extends Command
         $this->info('Starting LDAP sync...');
 
         // get a list of all persons saved in Lara, except ldap-override
-        $persons = Person::query()->whereNotNull('prsn_ldap_id')->whereRaw('convert( prsn_ldap_id, unsigned integer) < 9999')->get();
+        $persons = Person::query()
+            ->whereNotNull('prsn_ldap_id')
+            ->whereRaw('convert( prsn_ldap_id, unsigned integer) < 9999')
+            ->orderByDesc('prsn_ldap_id')
+            ->get();
 
         // start counting time before processing every person
         $counterStart = microtime(true);
