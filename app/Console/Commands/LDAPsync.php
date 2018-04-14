@@ -56,7 +56,7 @@ class LDAPsync extends Command
         $persons = Person::query()
             ->whereNotNull('prsn_ldap_id')
             ->whereRaw('convert( prsn_ldap_id, unsigned integer) < 9999')
-            ->orderByDesc('prsn_ldap_id')
+            ->orderByRaw('convert( prsn_ldap_id, unsigned integer) desc')
             ->get();
 
         // start counting time before processing every person
