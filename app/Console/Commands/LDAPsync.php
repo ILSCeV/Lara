@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Lara\LdapPlatform;
 use Lara\Person;
 use Lara\Section;
+use Lara\User;
 use Lara\utilities\LdapUtility;
 use Log;
 
@@ -154,7 +155,12 @@ class LDAPsync extends Command
             }
 
             if(isset($userEmail) && $userEmail != $user->email) {
-                $user->email = $userEmail;
+                if(!User::query()->where('email','=',$userEmail)->exists()) {
+                    $user->email = $userEmail;
+                } {
+                    $this->info("ignoring email " . $userEmail . "because someone else already use it");
+                    Log::warning("ignoring email " . $userEmail . "because someone else already use it");
+                }
             }
             $user->givenname = $userGivenName;
             $user->lastname = $userLastName;
