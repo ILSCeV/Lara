@@ -4,7 +4,10 @@ namespace Lara;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+
 use Lara\utilities\RoleUtility;
 use Lara\Status;
 
@@ -58,7 +61,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Section::class);
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany|Role
      */
@@ -169,7 +172,7 @@ class User extends Authenticatable
             return $role->section_id;
         });
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne|Settings
      */
