@@ -127,14 +127,14 @@
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 						<label for="facebookDone" class="col-md-4 col-sm-4 col-xs-7">{{trans('mainLang.faceDone')}}?</label>
                         <select class="selectpicker" name="facebookDone" id="facebookDone">
-                            <option value="-1" @if(!$facebookNeeded) selected @endif> {{ trans('mainLang.=FREI=') }} </option>
-                            <option value="0" @if($facebookNeeded) selected @endif > {{ trans('mainLang.no') }} </option>
-                            <option value="1"> {{ trans('mainLang.yes') }} </option>
+                            <option value="-1" @if($facebookNeeded === null) selected @endif> {{ trans('mainLang.=FREI=') }} </option>
+                            <option value="0" @if($facebookNeeded !== null && $facebookNeeded === 0) selected @endif > {{ trans('mainLang.no') }} </option>
+                            <option value="1" @if($facebookNeeded) selected @endif > {{ trans('mainLang.yes') }} </option>
                         </select>
 					</div>
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 						<label for="eventUrl" class="col-md-3 col-sm-3 col-xs-5">{{trans('mainLang.eventUrl')}}:</label>
-						{!! Form::text('eventUrl', '', array('class'=>'col-md-8 col-sm-8 col-xs-6','style'=>'cursor: auto')) !!}
+						{!! Form::text('eventUrl', $eventUrl, array('class'=>'col-md-8 col-sm-8 col-xs-6','style'=>'cursor: auto')) !!}
 					</div>
 				    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 				     	<label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">Typ:</label>
