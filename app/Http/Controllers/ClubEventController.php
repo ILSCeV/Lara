@@ -54,6 +54,13 @@ class ClubEventController extends Controller
      * @param  int $day
      * @param int  $templateId
      * @return \Illuminate\Contracts\View\View
+     *
+     * @return view createClubEventView
+     * @return Section[] sections
+     * @return Schedule[] templates
+     * @return shiftTypes[] shiftTypes
+     * @return string $date
+     * @return \Illuminate\Http\Response
      */
     public function create($year = null, $month = null, $day = null, $templateId = null)
     {
@@ -91,7 +98,7 @@ class ClubEventController extends Controller
         $date = strftime("%d-%m-%Y", strtotime($year.$month.$day));
 
         // get a list of possible clubs to create an event at, but without the id=0 (default value)
-        $sections = (new Section)->where("id", '>', 0)
+        $sections = Section::where("id", '>', 0)
                        ->orderBy('title', 'ASC')
                        ->get();
 
@@ -138,11 +145,12 @@ class ClubEventController extends Controller
             $info                   = $template->public_info;
             $details                = $template->private_details;
             $private                = $template->is_private;
-            $facebookNeeded         = $template->facebook_needed;
+            $facebookNeeded         = $template->facebook_needed==false?null:0;
             $priceNormal            = $template->price_normal;
             $priceTicketsNormal     = $template->price_tickets_normal;
             $priceExternal          = $template->price_external;
             $priceTicketsExternal   = $template->price_tickets_external;
+
         } else {
             // fill variables with no data if no template was chosen
             $activeTemplate         = "";
@@ -150,7 +158,7 @@ class ClubEventController extends Controller
             $title                  = null;
             $type                   = null;
             $subtitle               = null;
-            $section                = Section::current();
+            $section                = Section::sectionOfCurrentUser();
             $filter                 = null;
             $dv                     = $section->preparationTime;
             $timeStart              = $section->startTime;
@@ -158,13 +166,14 @@ class ClubEventController extends Controller
             $info                   = null;
             $details                = null;
             $private                = null;
-            $facebookNeeded         = false;
+            $facebookNeeded         = null;
             $priceNormal            = null;
             $priceTicketsNormal     = null;
             $priceExternal          = null;
             $priceTicketsExternal   = null;
         }
         $createClubEvent = true;
+        $eventUrl = '';
 
         return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
                                                          'shifts', 'title', 'subtitle', 'type',
@@ -172,8 +181,7 @@ class ClubEventController extends Controller
                                                          'info', 'details', 'private', 'dv',
                                                          'activeTemplate',
                                                          'date', 'templateId','facebookNeeded','createClubEvent',
-                                                          'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal'
-        ));
+                                                         'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal','eventUrl'));
     }
 
 
@@ -365,12 +373,16 @@ class ClubEventController extends Controller
         $info                   = $event->evnt_public_info;
         $details                = $event->evnt_private_details;
         $private                = $event->evnt_is_private;
-        $facebookNeeded         = $event->facebook_done;
         $date                   = $event->evnt_date_start;
         $priceNormal            = $event->price_normal;
         $priceTicketsNormal     = $event->price_tickets_normal;
         $priceExternal          = $event->price_external;
         $priceTicketsExternal   = $event->price_tickets_external;
+        $eventUrl               = $event->event_url;
+        $facebookNeeded         = $event->facebook_done;
+        
+        
+        
         if(!is_null($event->template_id)) {
             $baseTemplate = $event->template;
         } else {
@@ -390,7 +402,7 @@ class ClubEventController extends Controller
                 'activeTemplate',
                 'date', 'templateId', 'facebookNeeded', 'createClubEvent',
                 'event','baseTemplate',
-               'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal'));
+               'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal','eventUrl'));
         } else {
             return response()->view('clubevent.notAllowedToEdit',compact('created_by','creator_name'),403);
         }
