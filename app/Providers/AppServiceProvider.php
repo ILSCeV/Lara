@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
             return $user->isAn(...$groups);
         });
 
-        Blade::if ('isInSection', function (array $groups, Section $section) {
+        Blade::if('isInSection', function (array $groups, Section $section) {
             $user = Auth::user();
             if (!$user) {
                 return false;
@@ -59,7 +59,7 @@ class AppServiceProvider extends ServiceProvider
             return $user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR);
         });
 
-        Blade::if ('canEditUser', function (User $editUser) {
+        Blade::if('canEditUser', function (User $editUser) {
             $user = Auth::user();
             if(!$user) {
                 return false;
@@ -72,7 +72,7 @@ class AppServiceProvider extends ServiceProvider
                     || \App::environment('development'))
                 );
         });
-        
+
         Blade::if('hasRole',function (Role $role){
             $user = Auth::user();
             if(!$user) {

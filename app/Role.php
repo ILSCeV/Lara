@@ -23,7 +23,7 @@ class Role extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Section
      */
     public function section(){
-        return $this->belongsTo(Session::class);
+        return $this->belongsTo(Section::class);
     }
 
     /**

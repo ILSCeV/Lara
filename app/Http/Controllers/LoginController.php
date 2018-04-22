@@ -106,6 +106,8 @@ class LoginController extends Controller
                 return;
             }
 
+            $this->logSuccessfulAuthentication($user);
+
             $userSettings = $user->settings;
             if ($userSettings) {
                 Session::put('applocale', $userSettings->language);
@@ -383,16 +385,6 @@ class LoginController extends Controller
                     RoleUtility::assignPrivileges($user, $user->section()->first(), $userGroup);
                 }
 
-                Log::info('Auth success: ' .
-                    $info[0]['cn'][0] .
-                    ' (' .
-                    $info[0]['uidnumber'][0] .
-                    ', "' .
-                    (!empty($info[0]['mozillanickname'][0]) ? $info[0]['mozillanickname'][0] : $info[0]['givenname'][0]) .
-                    '", ' .
-                    $userGroup .
-                    ') just logged in.');
-
                 return true;
             }
 
@@ -400,7 +392,7 @@ class LoginController extends Controller
 
             return false;
     }
-    
+
     protected function attemtLoginWithClubNumber($request)
     {
         $clubNumber = request('username');
@@ -409,12 +401,12 @@ class LoginController extends Controller
         if (is_null($person)) {
             return false;
         }
-        
+
         $credentials = [
             'name'     => $person->user()->name,
             'password' => request('password'),
         ];
-        
+
         return $this->guard()->attempt(
             $credentials, $request->filled('remember')
         );
@@ -448,6 +440,31 @@ class LoginController extends Controller
     protected function loginPersonAsUser(Person $person)
     {
         Auth::login($person->user());
+    }
+
+    /**
+     * @param $info
+     * @param $userGroup
+     */
+    protected function logSuccessfulAuthentication($user)
+    {
+        $fullName = $user->givenname . " " . $user->lastname;
+        $id = $user->id;
+        $nickName = $user->name;
+        $givenName = $user->givenname;
+        $roles = $user->roles->reduce(function($previous, $role) {
+            return $previous . ", " . $role->section->title . ": " . $role->name;
+        }, '');
+
+        Log::info('Auth success: ' .
+            $fullName .
+            ' (' .
+            $id .
+            ', "' .
+            (!empty($nickName) ? $nickName : $givenName) .
+            '", ' .
+            $roles .
+            ') just logged in.');
     }
 
 }
