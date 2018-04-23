@@ -95,7 +95,7 @@ class WeekController extends Controller {
 		
 		$sections = Section::where('id', '>', 0)
                          ->orderBy('title')
-                         ->get(['id','title']);
+                         ->get(['id', 'title', 'color']);
 
         // Filter - Workaround for older events: populate filter with event club
         /* @var $clubEvent ClubEvent */
