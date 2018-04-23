@@ -5,7 +5,7 @@ import * as Isotope  from "../../../node_modules/isotope-layout/js/isotope.js"
 import * as bootbox from "bootbox"
 import {ToggleButton} from "./ToggleButton";
 import {makeLocalStorageAction, makeClassToggleAction} from "./ToggleAction";
-import {safeGetLocalStorage} from "./Utilities";
+import {safeGetLocalStorage, safeSetLocalStorage} from "./Utilities";
 
 const jQuery = $;
 /////////////
@@ -35,14 +35,11 @@ $(function() {
         };
 
         sectionFilters.forEach((filterName) => {
-            const sectionButton = new ToggleButton(filterName, () => $(`#${filterName}`).hasClass("btn-primary"));
-
-            sectionButton.addActions([
-                makeLocalStorageAction(filterName, "show", "hide"),
-                showAllActiveSections,
-                () => isotope ? isotope.layout() : null
-            ])
-                .setToggleStatus(safeGetLocalStorage(filterName) !== "hide");
+            const $sf = $("#"+filterName);
+            $sf.change((e) => safeSetLocalStorage(filterName, e.target.checked ? "show" : "hide"));
+            $sf.prop('checked', safeGetLocalStorage(filterName) === 'show');
+            $sf.change(showAllActiveSections);
+            $sf.change(() => isotope ? isotope.layout() : null);
         });
     }
 
