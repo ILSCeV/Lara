@@ -260,6 +260,7 @@ return [
     // /resources/views/partials/filter.blade.php
     'allSections'           => 'Alle Schiffe',
     'comments'              => 'Ausrufe',
+    'chooseAtLeastOne'      => 'Wähle mind. eine...',
 
     //-----------------------------------------------------------------------------------------------------------
 
