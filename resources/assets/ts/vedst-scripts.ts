@@ -27,8 +27,24 @@ $(function() {
 
         const showAllActiveSections = () => {
             $(".section-filter").hide();
-            $sectionSelect.val().forEach(filter => $(`.${filter.slice(7)}`).show())
+            $(".label-filters").hide();
+            $sectionSelect.val().forEach(filter => {
+                $(`.${filter.slice(7)}`).show();
+                $(`#label-${filter.slice(7)}`).show();
+            })
         };
+
+        //Handle clicking on a section label
+        $('.label-filters').click((e) => {
+            //Deselect the clicked section
+            let section = (<HTMLSpanElement>e.target).id.slice(6);
+            //Update the local storage
+            safeSetLocalStorage("filter-" + section, "hide");
+            //Uncheck the select option
+            $sectionSelect.selectpicker('val',  $sectionSelect.val().filter(sec => sec !== "filter-"+section));
+            //Refresh elements
+            showAllActiveSections();
+        });
 
         let $sectionSelect = $('#section-filter-selector');
 

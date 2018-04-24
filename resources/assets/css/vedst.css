@@ -592,3 +592,8 @@ a.event-name{
     clear:both;
 }
 
+
+.option-shadow{
+    margin:3px 4px 0 4px !important;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.4) !important;
+}
