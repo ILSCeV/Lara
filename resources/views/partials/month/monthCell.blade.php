@@ -15,7 +15,7 @@
             {{-- no userId means this a guest account, so he gets blocked here--}}
 
             {{--if so show a grey placeholder for the guest--}}
-            <div class="cal-event {{$classString}} palette-Grey-500 bg">
+            <div class="cal-event {{$classString}} palette-Grey-500 bg word-break section-filter survey">
                 <i class="fa fa-bar-chart-o white-text"></i>
                 &nbsp;&nbsp;
                 {{--and show him thats a private survey(=Interne Umfrage in german) only for users--}}
@@ -27,7 +27,7 @@
         @else
             {{-- meaning Session::has'userId' OR !$survey->is_private == 0--}}
             {{-- so session has a valid user OR the guest can see this survey because it isn't private--}}
-            <div class="cal-event {{$classString}} palette-Purple-900 bg">
+            <div class="cal-event {{$classString}} palette-Purple-900 bg word-break section-filter survey">
                 <i class="fa fa-bar-chart-o white-text"></i>
                 &nbsp;&nbsp;
                 {{-- provide a URL to the survey --}}
