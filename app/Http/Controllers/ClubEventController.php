@@ -158,7 +158,7 @@ class ClubEventController extends Controller
             $title                  = null;
             $type                   = null;
             $subtitle               = null;
-            $section                = Section::sectionOfCurrentUser();
+            $section                = Section::current();
             $filter                 = null;
             $dv                     = $section->preparationTime;
             $timeStart              = $section->startTime;
@@ -380,9 +380,9 @@ class ClubEventController extends Controller
         $priceTicketsExternal   = $event->price_tickets_external;
         $eventUrl               = $event->event_url;
         $facebookNeeded         = $event->facebook_done;
-        
-        
-        
+
+
+
         if(!is_null($event->template_id)) {
             $baseTemplate = $event->template;
         } else {
