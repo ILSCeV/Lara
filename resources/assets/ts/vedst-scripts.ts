@@ -22,26 +22,35 @@ $(function() {
 
 
     const initializeSectionFilters = (isotope: typeof Isotope = null) => {
-        let sectionFilters = [];
-        $.each($('.section-filter-selector'), function () {
-            sectionFilters.push($(this).prop('id'));
-        });
+
+        let enabledSections = [];
 
         const showAllActiveSections = () => {
             $(".section-filter").hide();
-            sectionFilters
-                .filter(filter => safeGetLocalStorage(filter) !== "hide")
-                .forEach(filter => $(`.${filter.slice(7)}`).show())
+            $sectionSelect.val().forEach(filter => $(`.${filter.slice(7)}`).show())
         };
 
-        sectionFilters.forEach((filterName) => {
-            const $sf = $("#"+filterName);
-            $sf.change((e) => safeSetLocalStorage(filterName, e.target.checked ? "show" : "hide"));
-            $sf.prop('checked', safeGetLocalStorage(filterName) === 'show');
-            $sf.change(showAllActiveSections);
-            $sf.change(() => isotope ? isotope.layout() : null);
+        let $sectionSelect = $('#section-filter-selector');
+
+        $sectionSelect.on('changed.bs.select', (event, clickedIndex, newValue, oldValue) => {
+            //Always set all of them, in case the user selected "Select/Deselect all"
+            $sectionSelect.find('option').each((i: number, option: HTMLOptionElement) => {
+                safeSetLocalStorage(option.value, option.selected ? "show" : "hide");
+            });
+            showAllActiveSections();
+            isotope ? isotope.layout() : null;
         });
-    }
+
+        $sectionSelect.find('option').each((i: number, option: HTMLOptionElement) => {
+            if (safeGetLocalStorage(option.value) !== "hide") {
+                enabledSections.push(option.value);
+            }
+        });
+
+        //Enable all sections enabled in the localStorage inside the select
+        $sectionSelect.removeClass("hidden");
+        $sectionSelect.selectpicker('val', enabledSections);
+    };
 
     if (isMonthView || isWeekView) {
         initializeSectionFilters();

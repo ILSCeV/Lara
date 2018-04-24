@@ -1,23 +1,10 @@
 <div id="section-filter" class="hidden-print">
 	{{-- Show/hide events belonging to a chosen section --}}
-	@foreach($sections as $section)
-		<style>
-			.toggle.{!! $section["title"] !!} input:checked {
-				background-color: {!! $section["color"] !!};
-			}
-		</style>
-	@endforeach
 
-	<div class="row">
+	<select id="section-filter-selector" class="hidden show-tick" multiple title="{{ trans('mainLang.chooseAtLeastOne') }}" data-selected-text-format="count > 2" data-actions-box="true">
 	@foreach($sections as $section)
-		<div class="toggle {!! $section["title"] !!} col-xs-6 col-sm-2">
-		<label for="filter-{!! $section["title"] !!}" >{!! $section["title"] !!}</label>
-		<input class="section-filter-selector"
-				type="checkbox"
-				id="filter-{!! $section["title"] !!}" 
-				data-filter="{!! $section["title"] !!}" />
-		</div>
+		<option value="filter-{!! $section["title"] !!}" class="palette-{!! $section["color"] !!}-100 bg">{!! $section["title"] !!}</option>
 	@endforeach
-		</div>
+	</select>
 </div>
 
