@@ -42,4 +42,9 @@ export default {
     'changeUserStatusHeader' : 'Benutzerstatus bearbeiten',
     'replaceShiftTypeConfirmation' : 'Möchtest du alle Dienste die den folgenden Diensttyp verwenden wirklich ersetzen?:',
     'replaceAll' : 'Alle ersetzen',
+
+    'conflictDetected' : 'Konflikt erkannt!',
+    'conflictAlertLine1':'Jemand anderes hat diese Schicht vor dir bearbeitet. Die neuen Werte wurden aktualisiert.',
+    'conflictAlertLine2':'Bitte überprüfe die neuen Informationen und wenn du diese wirklich überschreiben möchtest, führe die Änderungen erneut durch.',
+
 };

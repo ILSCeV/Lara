@@ -75,4 +75,7 @@ export default {
     'CGW Spieleabend': 'CGW "Fünf Finger Fillet"-Abend',
     'Wochentliche ClubBildungsMaßnahme (CBM)': 'Wöchentliche Auspeitschung mit der Neunschwänzigen Katze',
 
+    'conflictDetected' : 'Arg, da ist ein Konflikt!',
+    'conflictAlertLine1' : 'Du hast wohl dem Kapitän nicht zugehört, du Landratte! Ein anderer Matrose ist schon dran!',
+    'conflictAlertLine2' : 'Schau\'s dir doch genauer an - wolltest du etwa einen Messer in seinen Rücken stecken?!',
 };
