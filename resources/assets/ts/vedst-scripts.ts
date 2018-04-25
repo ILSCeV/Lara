@@ -79,6 +79,8 @@ $(function() {
                 }
         });
 
+        (<any>window).isotope = isotope;
+
         /////////////////////
         // Section filters //
         /////////////////////
@@ -869,17 +871,15 @@ jQuery( document ).ready( function( $ ) {
 
         if(isConflict)
         {
-            let $alert = $('<div class="id="alert\'+entryId+\'" alert alert-dismissible alert-warning clear-both">\n' +
+            let $alert = $('<div id="alert' + entryId + '" class="alert alert-dismissible alert-warning clear-both">\n' +
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>\n' +
-                '<h5>Conflict detected!</h5>\n' +
-                '<p>Someone else has edited this shift before you. The new values have been updated.</p>'+
-                '<p>Please check the new values and if you want to override them, perform your changes again.</p>\n' +
+                '<strong>'+translate("conflictDetected")+'</strong>\n<i class="fa fa-3x fa-history pull-right"></i>' +
+                '<p>'+translate("conflictAlertLine1")+'</p>' +
+                '<p>'+translate("conflictAlertLine2")+'</p>\n' +
                 '</div>');
             $alert.alert();
             $commentInput.after($alert);
-        }
-        else{
-            $('div#alert'+entryId).remove();
+            (<any>window).isotope.layout();
         }
 
         if(isConflict && $userNameInput.val() !== data.userName){
@@ -940,8 +940,6 @@ jQuery( document ).ready( function( $ ) {
 
 
         $userNameInput.closest('form').parent().toggleClass('my-shift', data.is_current_user);
-
-
     }
 
 
@@ -1097,6 +1095,7 @@ jQuery( document ).ready( function( $ ) {
                 // hide dropdowns because they aren't no longer needed
                 $(document).find('.dropdown-username').hide();
                 $(document).find('.dropdown-club').hide();
+                $('div#alert'+currentId).remove();
 
                 // Remove save icon and show a spinner in the username status while we are waiting for a server response
                 $('#btn-submit-changes' + currentId).addClass('hide')
