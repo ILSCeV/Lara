@@ -869,12 +869,17 @@ jQuery( document ).ready( function( $ ) {
 
         if(isConflict)
         {
-            let $label = $('<span id="label'+entryId+'" class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="A conflict occurred" ><i class="fa fa-users">&nbsp;</i></span>');
-            $label.tooltip();
-            $timestampInput.before($label);
+            let $alert = $('<div class="id="alert\'+entryId+\'" alert alert-dismissible alert-warning clear-both">\n' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>\n' +
+                '<h5>Conflict detected!</h5>\n' +
+                '<p>Someone else has edited this shift before you. The new values have been updated.</p>'+
+                '<p>Please check the new values and if you want to override them, perform your changes again.</p>\n' +
+                '</div>');
+            $alert.alert();
+            $commentInput.after($alert);
         }
         else{
-            $('span#'+entryId).hide();
+            $('div#alert'+entryId).remove();
         }
 
         if(isConflict && $userNameInput.val() !== data.userName){
