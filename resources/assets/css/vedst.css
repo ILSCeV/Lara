@@ -521,3 +521,9 @@ input[type=number],
     border-left: 5px #52aadc solid !important;
 }
 
+/* Conflict management */
+input.input-warning{
+    border-bottom: none;
+    box-shadow: inset 0 -2px 0 gold;
+}
+
