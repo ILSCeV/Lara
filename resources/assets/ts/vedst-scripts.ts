@@ -868,18 +868,19 @@ jQuery( document ).ready( function( $ ) {
         const $timestampInput = $("input[id=timestamp"+ entryId + "]");
         const $clubInput = $("input[id=club"     + entryId + "]");
         const $commentInput = $("input[id=comment"  + entryId + "]");
+        const $row = $userNameInput.closest('.row');
 
         if(isConflict)
         {
-            let $alert = $('<div id="alert' + entryId + '" class="alert alert-dismissible alert-warning clear-both">\n' +
+            let $alert = $('<div id="alert' + entryId + '" class="alert alert-dismissible alert-warning clear-both col-md-12">\n' +
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>\n' +
                 '<strong>'+translate("conflictDetected")+'</strong>\n<i class="fa fa-3x fa-history pull-right"></i>' +
                 '<p>'+translate("conflictAlertLine1")+'</p>' +
                 '<p>'+translate("conflictAlertLine2")+'</p>\n' +
                 '</div>');
             $alert.alert();
-            $commentInput.after($alert);
-            (<any>window).isotope?(<any>window).isotope.layout();
+            $row.append($alert);
+            (<any>window).isotope?(<any>window).isotope.layout() : null;
         }
 
         if(isConflict && $userNameInput.val() !== data.userName){
