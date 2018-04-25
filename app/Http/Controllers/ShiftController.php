@@ -121,9 +121,22 @@ class ShiftController extends Controller
         }
 
         // Control if the updated_at matches with the request timestamp
-        if($timestamp <> $shift->updated_at ) {
+        if((!is_null( $shift->getPerson()->first() )) && $timestamp <> $shift->updated_at ) {
+            // Find user status icon parameters to return
+            $userStatus = $this->updateStatus($shift);
+
+            // Formulate the response
+            $prsn_ldap_id = is_null($shift->getPerson()->first()) ? "" : $shift->getPerson()->first()->prsn_ldap_id;
             return response()->json([
-                "errorCode"=>"error_outOfSync"
+                "errorCode" => "error_outOfSync",
+                "entryId"           => $shift->id,
+                "userStatus"        => $userStatus,
+                "userName"          => $shift->getPerson()->first()->prsn_name,
+                "ldapId"            => $prsn_ldap_id,
+                "userClub"          => $shift->getPerson()->first()->getClub->clb_title,
+                "userComment"       => $shift->comment,
+                "timestamp"         => $shift->updated_at->toDateTimeString(),
+                "is_current_user"   => $prsn_ldap_id == Auth::user()->person->prsn_ldap_id
             ], 409);
         }
 
