@@ -4,7 +4,7 @@
 <div class="navbar-form form-horizontal login-forms">
     {!! Form::text( 'username',
                     Input::old( 'username' ),
-                    array('placeholder'  => Lang::get('mainLang.clubNumber'),
+                    array('placeholder'  => Lang::get('mainLang.clubNumber') . " / " . trans('auth.email'),
                           'class'        => 'form-control',
                           'autocomplete' => 'on',
                           'style'        => 'cursor: auto') ) !!}
