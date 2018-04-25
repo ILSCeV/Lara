@@ -879,7 +879,7 @@ jQuery( document ).ready( function( $ ) {
                 '</div>');
             $alert.alert();
             $commentInput.after($alert);
-            (<any>window).isotope.layout();
+            (<any>window).isotope?(<any>window).isotope.layout();
         }
 
         if(isConflict && $userNameInput.val() !== data.userName){
