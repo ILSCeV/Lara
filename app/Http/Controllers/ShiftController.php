@@ -249,6 +249,7 @@ class ShiftController extends Controller
 
         // Formulate the response
         $prsn_ldap_id = is_null($shift->getPerson()->first()) ? "" : $shift->getPerson()->first()->prsn_ldap_id;
+        $user = Auth::user();
         return response()->json([
             "entryId"           => $shift->id,
             "userStatus"        => $userStatus,
@@ -257,7 +258,7 @@ class ShiftController extends Controller
             "userClub"          => is_null( $shift->getPerson()->first() ) ? "" : $shift->getPerson()->first()->getClub->clb_title,
             "userComment"       => $shift->comment,
             "timestamp"         => $timestamp,
-            "is_current_user"   => $prsn_ldap_id == Auth::user()->person->prsn_ldap_id
+            "is_current_user"   => $prsn_ldap_id == ($user ? $user->person->prsn_ldap_id : NULL)
         ], 200);
     }
 
