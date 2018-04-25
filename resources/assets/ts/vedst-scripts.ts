@@ -858,7 +858,86 @@ jQuery( document ).ready( function( $ ) {
     ///////////////////////////
     // AUTOCOMPLETE SHIFTTYPES //
     ///////////////////////////
+    function updateShiftEntry(data : any, isConflict : boolean){
+        const $spinner = $("#spinner");
+        const entryId = data.entryId;
+        const $userNameInput = $("input[id=userName" + entryId + "]");
+        const $ldapInput = $("input[id=ldapId"   + entryId + "]");
+        const $timestampInput = $("input[id=timestamp"+ entryId + "]");
+        const $clubInput = $("input[id=club"     + entryId + "]");
+        const $commentInput = $("input[id=comment"  + entryId + "]");
 
+        if(isConflict)
+        {
+            let $label = $('<span id="label'+entryId+'" class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="A conflict occurred" ><i class="fa fa-users">&nbsp;</i></span>');
+            $label.tooltip();
+            $timestampInput.before($label);
+        }
+        else{
+            $('span#'+entryId).hide();
+        }
+
+        if(isConflict && $userNameInput.val() !== data.userName){
+            $userNameInput.addClass("input-warning");
+        }
+        else{
+            $userNameInput.removeClass("input-warning");
+        }
+        if(isConflict && $commentInput.val() !== data.userComment){
+            $commentInput.addClass("input-warning");
+        }
+        else{
+            $commentInput.removeClass("input-warning");
+        }
+        if(isConflict && $clubInput.val() !== data.userClub){
+            $clubInput.addClass("input-warning");
+        }
+        else{
+            $clubInput.removeClass("input-warning");
+        }
+
+        $userNameInput.val(data.userName).attr("placeholder", "=FREI=");
+        $ldapInput.val(data.ldapId);
+        $timestampInput.val(data.timestamp);
+        $clubInput.val(data.userClub).attr("placeholder", "-");
+        $commentInput.val(data.userComment).attr("placeholder", translate("addCommentHere"));
+
+        // Switch comment icon in week view
+        if ( $commentInput.val() == "" ) {
+            $commentInput.parent().children().children("button").children("i").removeClass().addClass("fa fa-comment-o");
+        } else {
+            $commentInput.parent().children().children("button").children("i").removeClass().addClass("fa fa-comment");
+        }
+
+        // Switch comment in event view
+        if ( $commentInput.val() == "" ) {
+            $commentInput.parent().children("span").children("i").removeClass().addClass("fa fa-comment-o");
+        } else {
+            $commentInput.parent().children("span").children("i").removeClass().addClass("fa fa-comment");
+        }
+
+        let $colorDiv = $userNameInput.parent().prev().find("div");
+
+        let isShiftEmpty = data["userName"] !== "";
+        if(isShiftEmpty) {
+            $colorDiv.removeClass("red").addClass("green");
+        }
+        else {
+            $colorDiv.removeClass("green").addClass("red");
+        }
+
+        // UPDATE STATUS ICON
+        // switch to normal user status icon and clear "spinner"-markup
+        // we receive this parameters: e.g. ["status"=>"fa fa-adjust", "style"=>"color:yellowgreen;", "title"=>"Kandidat"]
+        $spinner.attr("style", data["userStatus"]["style"]);
+        $spinner.attr("data-original-title", data["userStatus"]["title"]);
+        $spinner.removeClass().addClass(data["userStatus"]["status"]).removeAttr("id");
+
+
+        $userNameInput.closest('form').parent().toggleClass('my-shift', data.is_current_user);
+
+
+    }
 
 
     // open shiftType dropdown on input selection
@@ -969,16 +1048,17 @@ jQuery( document ).ready( function( $ ) {
 
         // For passworded schedules: check if a password field exists and is not empty
         // We will check correctness on the server side
+        let password = "";
         if ( $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").length
           && !$(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val() )
         {
-            var password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );
+            password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );
         } else {
-            var password = <string> $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
+            password = <string> $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
         }
 
         // necessary for the ajax callbacks
-        var currentId = $(this).attr('id');
+        let currentId = $(this).attr('id');
 
         $.ajax({
             type: $( this ).prop( 'method' ),
@@ -1042,61 +1122,27 @@ jQuery( document ).ready( function( $ ) {
                 // yellow = "other user updated before you, here's the new data"
 
                 // Update the fields according to server response
-                var $userNameInput = $("input[id=userName" + data["entryId"] + "]");
-                $userNameInput.val(data["userName"]).attr("placeholder", "=FREI=");
-                $("input[id=ldapId"   + data["entryId"] + "]").val(data["ldapId"]);
-                $("input[id=timestamp"+ data["entryId"] + "]").val(data["timestamp"]);
-                $("input[id=club"     + data["entryId"] + "]").val(data["userClub"]).attr("placeholder", "-");
-                $("input[id=comment"  + data["entryId"] + "]").val(data["userComment"]).attr("placeholder", translate("addCommentHere"));
-
-                // Switch comment icon in week view
-                if ( $("input[id=comment"  + data["entryId"] + "]").val() == "" ) {
-                    $("input[id=comment"  + data["entryId"] + "]").parent().children().children("button").children("i").removeClass().addClass("fa fa-comment-o");
-                } else {
-                    $("input[id=comment"  + data["entryId"] + "]").parent().children().children("button").children("i").removeClass().addClass("fa fa-comment");
-                };
-
-                // Switch comment in event view
-                if ( $("input[id=comment"  + data["entryId"] + "]").val() == "" ) {
-                    $("input[id=comment"  + data["entryId"] + "]").parent().children("span").children("i").removeClass().addClass("fa fa-comment-o");
-                } else {
-                    $("input[id=comment"  + data["entryId"] + "]").parent().children("span").children("i").removeClass().addClass("fa fa-comment");
-                };
-
-                var $colorDiv = $userNameInput.parent().prev().find("div");
-                var isShiftEmpty = data["userName"] !== "";
-                if(isShiftEmpty) {
-                    $colorDiv.removeClass("red").addClass("green");
-                }
-                else {
-                    $colorDiv.removeClass("green").addClass("red");
-                }
-
-                // UPDATE STATUS ICON
-                // switch to normal user status icon and clear "spinner"-markup
-                // we receive this parameters: e.g. ["status"=>"fa fa-adjust", "style"=>"color:yellowgreen;", "title"=>"Kandidat"]
-                $("#spinner").attr("style", data["userStatus"]["style"]);
-                $("#spinner").attr("data-original-title", data["userStatus"]["title"]);
-                $("#spinner").removeClass().addClass(data["userStatus"]["status"]).removeAttr("id");
-
-                if (data["is_current_user"]) {
-                    $userNameInput.closest('form').parent().addClass('my-shift');
-                }
+                updateShiftEntry(data, false);
             },
 
             error: function (xhr, ajaxOptions, thrownError) {
-                try {
-                    alert(translate(xhr.responseJSON.errorCode));
+                if(xhr.responseJSON && xhr.responseJSON.errorCode){
+                    let json = xhr.responseJSON;
+                if(json.errorCode === "error_outOfSync")
+                    {
+                        if(json.userStatus){
+                            updateShiftEntry(json, true);
+                            return;
+                        }
+                        else{
+                            alert(translate(xhr.responseJSON.errorCode));
+                        }
+                    }
                 }
-                catch(e) {
-                            alert(JSON.stringify(xhr.responseJSON));
-                            // Hide spinner after response received
-                            // We make changes on success anyway, so the following state is only achieved
-                            // when a response from server was received, but errors occured - so let's inform the user
+                else{
+                    alert(JSON.stringify(xhr.responseJSON));
                 }
-                finally {
-                    $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!");
-                }
+                $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!"); //TODO: translate
             }
 
 
