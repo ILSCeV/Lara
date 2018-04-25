@@ -35,6 +35,9 @@ class Status {
 
     public static function shortHand($status)
     {
+        if (!array_key_exists($status, self::SHORTHANDS)) {
+            return "";
+        }
         return self::SHORTHANDS[$status];
     }
 
