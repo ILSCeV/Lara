@@ -164,7 +164,6 @@ input[type=number],
     padding: 5%;
     overflow: visible;
     text-overflow: clip;
-    display: flex;
     color: white;
     white-space: normal;
     min-height: 42px;
@@ -519,5 +518,15 @@ input[type=number],
 
 .bc-Café-section-highlight {
     border-left: 5px #52aadc solid !important;
+}
+
+a.event-name{
+    margin-top:3px;
+    display:block;
+    clear:both;
+}
+
+span.event-time{
+    font-size:x-small;
 }
 
