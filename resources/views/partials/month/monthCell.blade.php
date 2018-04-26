@@ -101,7 +101,7 @@
                     @endif
 
                     @include("partials.event-marker", $clubEvent)
-                        <span class="event-time">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}&nbsp-&nbsp{{date ('H:i',strtotime($clubEvent->evnt_time_end))}}</span>
+                        <span class="event-time">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}{{$clubEvent->schedule->schdl_time_preparation_start <> $clubEvent->evnt_time_start?" (".date ('H:i',strtotime($clubEvent->schedule->schdl_time_preparation_start)).")":""}}</span>
                     &nbsp;&nbsp;
                     <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
                        data-toggle="tooltip" 
