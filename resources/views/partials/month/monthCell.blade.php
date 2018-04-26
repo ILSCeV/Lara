@@ -99,9 +99,11 @@
                     @elseif ($clubEvent->evnt_type == 9)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
                     @endif
+
                     @include("partials.event-marker", $clubEvent)
+                        <span class="event-time">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}&nbsp-&nbsp{{date ('H:i',strtotime($clubEvent->evnt_time_end))}}</span>
                     &nbsp;&nbsp;
-                    <a href="{{ URL::route('event.show', $clubEvent->id) }}"
+                    <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
                        data-toggle="tooltip" 
                        data-placement="right"
                        title="{{ trans('mainLang.showDetails')}}">
@@ -131,7 +133,8 @@
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
                 @endif
 
-                @include("partials.event-marker", $clubEvent)
+                    @include("partials.event-marker", $clubEvent)
+                        <span class="event-time">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}</span>
 
                 {{--
 
@@ -141,7 +144,7 @@
 
                 --}}
                     &nbsp;&nbsp;
-                    <a href="{{ URL::route('event.show', $clubEvent->id) }}"
+                    <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
                        data-toggle="tooltip" 
                        data-placement="right"
                        title="{{ trans('mainLang.showDetails')}}">
