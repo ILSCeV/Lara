@@ -9,7 +9,11 @@
 @else
     <div class="otherMonth custom-md-85">
 @endif
-    <div class="">
+    <div class="day-cell">
+        <small class="visible-xs-inline visible-sm-inline">
+            {{-- Display day of the week--}}
+            {{ strftime("%a", $weekDay->getTimestamp()) }}
+        </small>
         @auth
             <a href="{{ Request::getBasePath() }}/event/{{ strftime("%Y/%m/%d", $weekDay->getTimestamp()) }}/0/create"
                data-toggle="tooltip" 
@@ -20,12 +24,9 @@
         @else
             {{$weekDay->format('d')}}
         @endauth
-        <small class="visible-xs visible-sm">
-            {{-- Display day of the month--}}
-            {{ strftime("%a", $weekDay->getTimestamp()) }}
-        </small>
+
     </div>
-    <div class="" style="padding-right:4px;">
+    <div class="day-cell-events">
         @include( 'partials.month.monthCell')
     </div>
 </div>
