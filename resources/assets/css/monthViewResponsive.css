@@ -141,17 +141,26 @@
 
 }
 
-.cell10 a:link,
+span.event-time{
+    font-size:x-small;
+}
+
+.day-cell-events{
+    padding-right: 6px;
+    padding-left:2px;
+}
+
+.day-cell a:link,
 .calendarWeek a:link {
     color: #666666;
 }
 
-.cell10 a:hover,
+.day-cell a:hover,
 .calendarWeek a:hover {
     color: #040303;
 }
 
-.cell10 a:visited,
+.day-cell a:visited,
 .calendarWeek a:visited {
     color: #666666;
 }
@@ -217,34 +226,6 @@
 /*
     space for number and space for event
 */
-/*
-    cell10 = a cell width 10%. Used to encapsulate the
-    day number on the left side of the month cell
-*/
-.cell10 {
-    width: 10%;
-    float: left;
-    position: relative;
-    margin: 0px;
-    text-align: center;
-}
-
-/*
-    cell90 = a cell with 90% width. Used to encapsulate the
-    event (or white space) of the month cell
-*/
-.cell90 {
-    width: 90%;
-    float: right;
-    position: relative;
-    padding: 0 8px 8px 16px;
-}
-
-@media screen and (max-width: 978px) {
-    .cell90 {
-        padding: 8px 16px 16px 8px;
-    }
-}
 
 @media screen and (max-width: 978px) {
     .mobile72Width {
@@ -274,11 +255,6 @@
         line-height: 5vh;
         height: 5vh;
         min-height: 5vh;
-    }
-
-    .cell10{
-        line-height:5vh;
-        height:5vh;
     }
 
     .calendarRow{
