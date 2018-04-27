@@ -123,6 +123,9 @@ class User extends Authenticatable
             'person_id' => $person->id,
             'status' => $newStatus
         ]);
+
+        $person->prsn_status = $newStatus;
+        $person->save();
         RoleUtility::assignPrivileges(
             $user, $person->club->section(),
             RoleUtility::PRIVILEGE_MEMBER
