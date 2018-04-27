@@ -101,8 +101,7 @@
                     @endif
 
                     @include("partials.event-marker", $clubEvent)
-                        <span class="event-time">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}{{$clubEvent->schedule->schdl_time_preparation_start <> $clubEvent->evnt_time_start?" (".date ('H:i',strtotime($clubEvent->schedule->schdl_time_preparation_start)).")":""}}</span>
-                    &nbsp;&nbsp;
+                        <span class="event-time white-text">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}</span>
                     <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
                        data-toggle="tooltip" 
                        data-placement="right"
@@ -134,8 +133,10 @@
                 @endif
 
                     @include("partials.event-marker", $clubEvent)
-                        <span class="event-time">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}</span>
-
+                    {{-- Show starting time with Preparation time in () --}}
+                    <span class="event-time white-text">
+                        &nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}{{$clubEvent->schedule->schdl_time_preparation_start <> $clubEvent->evnt_time_start?" (".date ('H:i',strtotime($clubEvent->schedule->schdl_time_preparation_start)).")":""}}
+                    </span>
                 {{--
 
                 Disabling iCal until fully functional.
@@ -143,7 +144,7 @@
                 @include("partials.publishStateIndicator")
 
                 --}}
-                    &nbsp;&nbsp;
+
                     <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
                        data-toggle="tooltip" 
                        data-placement="right"
