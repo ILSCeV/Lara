@@ -138,7 +138,6 @@
 .day {
     text-align: left !important;
     border-left-width: 0px !important;
-
 }
 
 span.event-time{
@@ -148,6 +147,12 @@ span.event-time{
 .day-cell-events{
     padding-right: 6px;
     padding-left:2px;
+}
+
+.day-cell-events{
+    word-break: initial;
+    word-wrap: break-word;
+    max-width: 160px;
 }
 
 .day-cell a:link,
