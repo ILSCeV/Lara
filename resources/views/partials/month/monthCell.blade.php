@@ -64,10 +64,10 @@
         {{-- Filter --}}
         @if ( $clubEvent->showToSection->isEmpty() )
             {{-- Workaround for older events: if filter is empty - use event club data instead --}}
-            <div class="{!! $clubEvent->section->title !!}  word-break">
+            <div class="{!! $clubEvent->section->title !!}">
         @else
             {{-- Normal scenario: add a css class according to filter data --}}
-            <div class="word-break section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach">
+            <div class="section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach">
         @endif
 
 
