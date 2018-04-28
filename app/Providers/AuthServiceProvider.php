@@ -41,7 +41,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasPermissionsInSection(Section::findOrFail($section_id),RoleUtility::PRIVILEGE_CL);
         });
 
-        Gate::define('accessInformation', function(User $user, User $otherUser, $information) {
+        Gate::define('accessInformation', function(User $user, User $otherUser) {
             if (!$user) {
                 return false;
             }
