@@ -4,6 +4,7 @@ namespace Lara;
 use Auth;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Lara\Person;
 use Session;
 use Request;
 
@@ -72,7 +73,13 @@ class Logging
     public static function newShiftRevision($shift, $action, $old = "", $new = "")
     {
         $user = Auth::user();
-        $person = $user->person;
+
+        $person = new Person;
+
+        if ($user) {
+            $person = $user->person;
+        }
+
 
         return [
             "entry id" => is_null($shift) ?  "" : $shift->id,

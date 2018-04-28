@@ -162,8 +162,8 @@ class LDAPsync extends Command
                 if(!User::query()->where('email','=',$userEmail)->exists()) {
                     $user->email = $userEmail;
                 } {
-                    $this->info($person->prsn_ldap_id. " ignoring email " . $userEmail . " because someone else already use it");
-                    Log::warning($person->prsn_ldap_id. " ignoring email " . $userEmail . " because someone else already use it");
+                    $this->info($person->prsn_ldap_id. " ignoring email " . $userEmail . "because someone else already use it");
+                    Log::warning($person->prsn_ldap_id. " ignoring email " . $userEmail . "because someone else already use it");
                 }
             }
             $user->givenname = $userGivenName;
