@@ -152,7 +152,6 @@ span.event-time{
 .day-cell-events{
     word-break: initial;
     word-wrap: break-word;
-    max-width: 160px;
 }
 
 .day-cell a:link,
