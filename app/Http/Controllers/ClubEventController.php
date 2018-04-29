@@ -479,7 +479,7 @@ class ClubEventController extends Controller
         $created_by = $revisions[0]["user id"];
 
         $user = Auth::user();
-        if (!$user || $user->is(['marketing', 'clubleitung', 'admin']))
+        if (!$user || $user->isAn(RoleUtility::PRIVILEGE_MARKETING, RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_ADMINISTRATOR))
         {
             Session::put('message', 'Du darfst diese Veranstaltung/Aufgabe nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
             Session::put('msgType', 'danger');
