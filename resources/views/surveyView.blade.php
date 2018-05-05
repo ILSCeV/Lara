@@ -7,6 +7,8 @@ $clubs
 $userId
 $userGroup
 $userCanEditDueToRole
+$username
+$ldapid
 -->
 @extends('layouts.master')
 @section('title')
@@ -162,9 +164,9 @@ $userCanEditDueToRole
                 <div id="survey-answer" class="table-responsive-custom">
 
                     <input hidden id="get_row" value="">
-                    <input type="hidden" id="hdnSession_userName" value="{{Auth::user()->name}}">
+                    <input type="hidden" id="hdnSession_userName" value="{{ $username }}">
                     <input type="hidden" id="hdnSession_userClub" value="{{Lara\Section::current()->title}}">
-                    <input type="hidden" id="hdnSession_userID" value="{{Auth::user()->person->prsn_ldap_id}}">
+                    <input type="hidden" id="hdnSession_userID" value="{{ $ldapid }}">
                     <input type="hidden" id="hdnSession_oldContent" name="hidden_oldContent[]" value="">
 
                     <table class="table table-striped table-bordered table-condensed table-responsive-custom">
@@ -191,9 +193,9 @@ $userCanEditDueToRole
                                     <ul id="dropdown-menu_name" class="dropdown-menu dropdown-username">
                                         <li id="yourself">
                                             <a href="javascript:void(0);"
-                                               onClick="document.getElementById('newName').value='{{Auth::user()->name}}';
+                                               onClick="document.getElementById('newName').value='{{ $username }}';
                                                        document.getElementById('club').value='{{Lara\Section::current()->title}}';
-                                                       document.getElementById('ldapId').value='{{Auth::user()->person->prsn_ldap_id}}'">
+                                                       document.getElementById('ldapId').value='{{ $ldapid }}'">
                                                 <b>{{ trans('mainLang.addMe') }}</b>
                                             </a>
                                         </li>
@@ -357,7 +359,7 @@ $userCanEditDueToRole
                         <tbody>
                         @foreach($revisions as $key_revision => $revision)
                             <tr id="tr-header-{{$key_revision}}"
-                                onclick="toggle({{$key_revision}}, {{count($revision['revision_entries'])}})">
+                                onclick="toggle({{$key_revision}}, {{ count($revision['revision_entries']) }})">
                                 <td>{{$revision['creator_name']}}</td>
                                 <td>{{$revision['summary']}}</td>
                                 <td><i id="arrow-icon{{$key_revision}}" class="fa fa-caret-right"></i></td>
