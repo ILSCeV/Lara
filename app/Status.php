@@ -2,7 +2,6 @@
 
 namespace Lara;
 
-use Lara\Section;
 use Auth;
 
 class Status {
@@ -10,21 +9,26 @@ class Status {
     const CANDIDATE = 'candidate';
     const MEMBER = 'member';
     const VETERAN = 'veteran';
+    const RESIGNED = 'resigned';
     const EXMEMBER = 'ex-member';
     const EXCANDIDATE = 'ex-candidate';
+    const GUEST = 'guest';
 
     const ALL = [
         self::CANDIDATE,
         self::MEMBER,
         self::VETERAN,
+        self::RESIGNED,
         self::EXMEMBER,
-        self::EXCANDIDATE
+        self::EXCANDIDATE,
+        self::GUEST
     ];
 
     const ACTIVE = [
         self::CANDIDATE,
         self::MEMBER,
-        self::VETERAN
+        self::VETERAN,
+        self::RESIGNED
     ];
 
     const SHORTHANDS = [
