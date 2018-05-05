@@ -153,9 +153,18 @@ class SurveyController extends Controller
         $clubs = Club::all();
 
         //get the information from the current session
-        $userId = Auth::user()->person->prsn_ldap_id;
-        $userStatus = Auth::user()->status;
-
+        $user = Auth::user();
+        if($user == null){
+            $userId = null;
+            $userStatus = null;
+            $username = null;
+            $ldapid = null;
+        } else {
+            $userId = Auth::user()->person->prsn_ldap_id;
+            $userStatus = Auth::user()->status;
+            $username = Auth::user()->name;
+            $ldapid = Auth::user()->person->prsn_ldap_id;
+        }
         $userParticipatedAlready = $survey->answers
             ->contains(function ($answer) use ($userId) {
                 return $answer && $answer->creator_id === $userId && !empty($userId);
@@ -248,7 +257,7 @@ class SurveyController extends Controller
         unset($revision);
 
         //check if the role of the user allows edit/delete for all answers
-        $userCanEditDueToRole = Auth::user()->isAn(RoleUtility::PRIVILEGE_CL);
+        $userCanEditDueToRole = $user==null?false:Auth::user()->isAn(RoleUtility::PRIVILEGE_CL);
 
         //evaluation part that shows below the survey, a statistic of answers of the users who already took part in the survey
 
@@ -311,7 +320,7 @@ class SurveyController extends Controller
 
         //return all the gathered information to the survey view
         return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
-            'userGroup', 'userStatus', 'userCanEditDueToRole', 'evaluation', 'revisions', 'userParticipatedAlready'));
+            'userGroup', 'userStatus', 'userCanEditDueToRole', 'evaluation', 'revisions', 'userParticipatedAlready','username','ldapid'));
     }
 
     /**
