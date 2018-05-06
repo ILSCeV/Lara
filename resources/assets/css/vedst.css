@@ -602,4 +602,5 @@ a.event-name{
 .label-filters{
     cursor: pointer;
     user-select: none;
+	margin-right: 4px;
 }
