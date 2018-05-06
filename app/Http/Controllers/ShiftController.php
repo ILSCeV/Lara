@@ -120,6 +120,26 @@ class ShiftController extends Controller
             return response()->json("Fehler: das angegebene Passwort ist falsch, keine Änderungen wurden gespeichert. Bitte versuche erneut oder frage einen anderen Mitglied oder CL.", 401);
         }
 
+        // Control if the updated_at matches with the request timestamp
+        if((!is_null( $shift->getPerson()->first() )) && $timestamp <> $shift->updated_at ) {
+            // Find user status icon parameters to return
+            $userStatus = $this->updateStatus($shift);
+
+            // Formulate the response
+            $prsn_ldap_id = is_null($shift->getPerson()->first()) ? "" : $shift->getPerson()->first()->prsn_ldap_id;
+            return response()->json([
+                "errorCode" => "error_outOfSync",
+                "entryId"           => $shift->id,
+                "userStatus"        => $userStatus,
+                "userName"          => $shift->getPerson()->first()->prsn_name,
+                "ldapId"            => $prsn_ldap_id,
+                "userClub"          => $shift->getPerson()->first()->getClub->clb_title,
+                "userComment"       => $shift->comment,
+                "timestamp"         => $shift->updated_at->toDateTimeString(),
+                "is_current_user"   => $prsn_ldap_id == Auth::user()->person->prsn_ldap_id
+            ], 409);
+        }
+
         // FYI:
         // We separate schedule shift person change from comment change
         // because we need an option to add a comment to an empty field.
@@ -257,7 +277,7 @@ class ShiftController extends Controller
             "ldapId"            => $prsn_ldap_id,
             "userClub"          => is_null( $shift->getPerson()->first() ) ? "" : $shift->getPerson()->first()->getClub->clb_title,
             "userComment"       => $shift->comment,
-            "timestamp"         => $timestamp,
+            "timestamp"         => $shift->updated_at->toDateTimeString(),
             "is_current_user"   => $prsn_ldap_id == ($user ? $user->person->prsn_ldap_id : NULL)
         ], 200);
     }

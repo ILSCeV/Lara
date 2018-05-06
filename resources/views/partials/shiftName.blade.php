@@ -53,15 +53,8 @@
 </div>
 
 <div>
-    @if( is_null($shift->getPerson) )
-        {!! Form::hidden('timestamp' . $shift->id,
-                         '',
-                         array('id'=>'timestamp' . $shift->id) )
+        {!! Form::hidden('timestamp' . $shift->id, 
+                         $shift->updated_at, 
+                         array('id'=>'timestamp' . $shift->id) ) 
         !!}
-    @else
-        {!! Form::hidden('timestamp' . $shift->id,
-                         $shift->updated_at,
-                         array('id'=>'timestamp' . $shift->id) )
-        !!}
-    @endif
 </div>
