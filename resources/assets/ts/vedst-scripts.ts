@@ -26,11 +26,11 @@ $(function() {
         let enabledSections = [];
 
         const showAllActiveSections = () => {
-            $(".section-filter").hide();
-            $(".label-filters").hide();
+            $(".section-filter").addClass('hidden');
+            $(".label-filters").addClass('hidden');
             $sectionSelect.val().forEach(filter => {
-                $(`.${filter.slice(7)}`).show();
-                $(`#label-${filter.slice(7)}`).show();
+                $(`.${filter.slice(7)}`).removeClass('hidden');
+                $(`#label-${filter.slice(7)}`).removeClass('hidden');
             })
         };
 
@@ -66,6 +66,7 @@ $(function() {
         //Enable all sections enabled in the localStorage inside the select
         $sectionSelect.removeClass("hidden");
         $sectionSelect.selectpicker('val', enabledSections);
+        showAllActiveSections();
     };
 
     if (isMonthView || isWeekView) {
