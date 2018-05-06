@@ -96,7 +96,7 @@ class MonthController extends Controller
         
         $sections = Section::where('id', '>', 0)
             ->orderBy('title')
-            ->get(['id', 'title']);
+            ->get(['id', 'title', 'color']);
         
         return View::make('monthView',
             compact('events', 'date', 'surveys', 'firstDay', 'lastDay', 'mondays', 'sections'));

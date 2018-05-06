@@ -21,14 +21,12 @@ class Status {
         self::RESIGNED,
         self::EXMEMBER,
         self::EXCANDIDATE,
-        self::GUEST
     ];
 
     const ACTIVE = [
         self::CANDIDATE,
         self::MEMBER,
         self::VETERAN,
-        self::RESIGNED
     ];
 
     const SHORTHANDS = [
