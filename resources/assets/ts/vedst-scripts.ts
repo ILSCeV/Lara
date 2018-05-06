@@ -5,7 +5,7 @@ import * as Isotope  from "../../../node_modules/isotope-layout/js/isotope.js"
 import * as bootbox from "bootbox"
 import {ToggleButton} from "./ToggleButton";
 import {makeLocalStorageAction, makeClassToggleAction} from "./ToggleAction";
-import {safeGetLocalStorage} from "./Utilities";
+import {safeGetLocalStorage, safeSetLocalStorage} from "./Utilities";
 
 const jQuery = $;
 /////////////
@@ -22,29 +22,52 @@ $(function() {
 
 
     const initializeSectionFilters = (isotope: typeof Isotope = null) => {
-        let sectionFilters = [];
-        $.each($('.section-filter-selector'), function () {
-            sectionFilters.push($(this).prop('id'));
-        });
+
+        let enabledSections = [];
 
         const showAllActiveSections = () => {
-            $(".section-filter").hide();
-            sectionFilters
-                .filter(filter => safeGetLocalStorage(filter) !== "hide")
-                .forEach(filter => $(`.${filter.slice(7)}`).show())
+            $(".section-filter").addClass('hidden');
+            $(".label-filters").addClass('hidden');
+            $sectionSelect.val().forEach(filter => {
+                $(`.${filter.slice(7)}`).removeClass('hidden');
+                $(`#label-${filter.slice(7)}`).removeClass('hidden');
+            })
         };
 
-        sectionFilters.forEach((filterName) => {
-            const sectionButton = new ToggleButton(filterName, () => $(`#${filterName}`).hasClass("btn-primary"));
-
-            sectionButton.addActions([
-                makeLocalStorageAction(filterName, "show", "hide"),
-                showAllActiveSections,
-                () => isotope ? isotope.layout() : null
-            ])
-                .setToggleStatus(safeGetLocalStorage(filterName) !== "hide");
+        //Handle clicking on a section label
+        $('.label-filters').click((e) => {
+            //Deselect the clicked section
+            let section = (<HTMLSpanElement>e.target).id.slice(6);
+            //Update the local storage
+            safeSetLocalStorage("filter-" + section, "hide");
+            //Uncheck the select option
+            $sectionSelect.selectpicker('val',  $sectionSelect.val().filter(sec => sec !== "filter-"+section));
+            //Refresh elements
+            showAllActiveSections();
         });
-    }
+
+        let $sectionSelect = $('#section-filter-selector');
+
+        $sectionSelect.on('changed.bs.select', (event, clickedIndex, newValue, oldValue) => {
+            //Always set all of them, in case the user selected "Select/Deselect all"
+            $sectionSelect.find('option').each((i: number, option: HTMLOptionElement) => {
+                safeSetLocalStorage(option.value, option.selected ? "show" : "hide");
+            });
+            showAllActiveSections();
+            isotope ? isotope.layout() : null;
+        });
+
+        $sectionSelect.find('option').each((i: number, option: HTMLOptionElement) => {
+            if (safeGetLocalStorage(option.value) !== "hide") {
+                enabledSections.push(option.value);
+            }
+        });
+
+        //Enable all sections enabled in the localStorage inside the select
+        $sectionSelect.removeClass("hidden");
+        $sectionSelect.selectpicker('val', enabledSections);
+        showAllActiveSections();
+    };
 
     if (isMonthView || isWeekView) {
         initializeSectionFilters();

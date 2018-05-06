@@ -18,6 +18,7 @@ use Lara\Person;
 use Lara\Section;
 use Lara\Shift;
 use Lara\Utilities;
+use Lara\utilities\RoleUtility;
 use Log;
 use Redirect;
 use Session;
@@ -444,7 +445,7 @@ class IcalController extends Controller
         // Check credentials: you can only delete, if you have rights for marketing or management.
         $user = Auth::user();
 
-        if (!$user || !$user->is(['marketing', 'clubleitung', 'admin']) ) {
+        if (!$user || !$user->isAn(RoleUtility::PRIVILEGE_MARKETING, RoleUtility::PRIVILEGE_ADMINISTRATOR, RoleUtility::PRIVILEGE_CL) ) {
             Session::put('message',
                 'Du darfst dieses Event nicht veröffentlichen! Frage die Clubleitung oder Markleting ;)');
             Session::put('msgType', 'danger');

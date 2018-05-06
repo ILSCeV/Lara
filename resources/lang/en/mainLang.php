@@ -258,6 +258,7 @@ return [
     // /resources/views/partials/filter.blade.php
     'allSections'           => 'All sections',
     'comments'              => 'Comments',
+    'chooseAtLeastOne'      => 'Choose at least one...',
     //-----------------------------------------------------------------------------------------------------------
 
     // /resources/views/partials/legend.blade.php

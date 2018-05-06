@@ -1,6 +1,6 @@
 @if(!Auth::user() && $survey->is_private === 1)
     {{-- Hide internal surveys from guests --}}
-    <div class="panel panel-warning">
+    <div class="panel panel-warning word-break section-filter survey">
 
         <div class="panel palette-Grey-500 bg white-text"
              style="padding: 15px 15px 8px 15px;">
@@ -18,7 +18,7 @@
     </div>
 @else
     {{-- Show everything to memebers --}}
-    <div class="panel panel-warning">
+    <div class="panel panel-warning word-break section-filter survey">
 
         <div class="panel panel-heading palette-Purple-900 bg white-text">
             <h4 class="panel-title">

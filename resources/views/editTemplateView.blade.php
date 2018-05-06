@@ -113,11 +113,11 @@
                                 {{ trans('mainLang.priceTickets') }}:
                                 ({{ trans('mainLang.studentExtern') }})
                             </span>
-                            <input class="form-control" type="number" name="priceTicketsNormal" step="0.1"
+                            <input class="form-control" type="number" name="priceTicketsNormal" step="0.1" min="0"
                                    placeholder="Student" value="{{$template->price_tickets_normal}}"/>
                             <span class="input-group-addon">€</span>
                             <span class="input-group-addon">/</span>
-                            <input class="form-control" type="number" name="priceTicketsExternal" step="0.1"
+                            <input class="form-control" type="number" name="priceTicketsExternal" step="0.1" min="0"
                                    placeholder="Extern" value="{{$template->price_tickets_external}}"/>
                             <span class="input-group-addon">€</span>
                         </div>
@@ -128,11 +128,11 @@
                                 <span for="price" class="control-label input-group-addon" >
                                     {{ trans('mainLang.price') }}:
                                     ({{ trans('mainLang.studentExtern') }})</span>
-                                <input class="form-control" type="number" name="priceNormal" step="0.1"
+                                <input class="form-control" type="number" name="priceNormal" step="0.1" min="0"
                             placeholder="Student" value="{{$template->price_normal}}"/>
                             <span class="input-group-addon">€</span>
                             <span class="input-group-addon">/</span>
-                            <input class="form-control" type="number" name="priceExternal" step="0.1"
+                            <input class="form-control" type="number" name="priceExternal" step="0.1" min="0"
                                    placeholder="Extern" value="{{$template->price_external}}"/>
                             <span class="input-group-addon">€</span>
                         </div>

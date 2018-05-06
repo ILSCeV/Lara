@@ -134,6 +134,14 @@ class LDAPsync extends Command
 
             // Get user active status
             $userStatus = $info[0]['ilscstate'][0];
+            if ($userStatus == "resigned") {
+                $userStatus = "ex-member";
+            }
+
+            if ($userStatus == "guest") {
+                $userStatus = "ex-candidate";
+            }
+
             if(array_key_exists ('mail',$info[0])) {
                 $userEmail = $info[0]['mail'][0];
             }
@@ -168,7 +176,7 @@ class LDAPsync extends Command
             }
             $user->givenname = $userGivenName;
             $user->lastname = $userLastName;
-    
+
             try {
                 $person->save();
                 $user->save();

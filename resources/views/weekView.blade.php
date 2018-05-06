@@ -44,6 +44,7 @@
 		<div class="col-xs-12 col-md-6 hidden-print">
 			<div class="pull-right">
 				@include('partials.filter')
+				<div class="btn-group">
 				{{-- show time button Ger.: Zeiten einblenden --}}
 				<button class="btn btn-xs hidden-print" type="button" id="toggle-shift-time">{{ trans('mainLang.shiftTime') }}</button> 
 				
@@ -55,7 +56,7 @@
 				
 				{{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
 				<button class="btn btn-xs btn-primary hidden-print" type="button" id="toggle-week-start">{{ trans('mainLang.weekStart') }}</button> 
-							 
+				</div>
 			</div>
 		</div>
 	</div>

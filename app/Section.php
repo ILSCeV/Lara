@@ -50,7 +50,7 @@ class Section extends Model
         $user = Auth::user();
 
         if (!$user) {
-            return [
+            return (object)[
                 "title" => ""
             ];
         }
