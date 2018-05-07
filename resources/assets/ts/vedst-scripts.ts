@@ -31,7 +31,8 @@ $(function() {
             $sectionSelect.val().forEach(filter => {
                 $(`.${filter.slice(7)}`).removeClass('hidden');
                 $(`#label-${filter.slice(7)}`).removeClass('hidden');
-            })
+            });
+            isotope ? isotope.layout() : null;
         };
 
         //Handle clicking on a section label
@@ -54,7 +55,6 @@ $(function() {
                 safeSetLocalStorage(option.value, option.selected ? "show" : "hide");
             });
             showAllActiveSections();
-            isotope ? isotope.layout() : null;
         });
 
         $sectionSelect.find('option').each((i: number, option: HTMLOptionElement) => {
