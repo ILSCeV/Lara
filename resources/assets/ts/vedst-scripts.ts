@@ -45,6 +45,7 @@ $(function() {
             $sectionSelect.selectpicker('val',  $sectionSelect.val().filter(sec => sec !== "filter-"+section));
             //Refresh elements
             showAllActiveSections();
+            e.preventDefault();
         });
 
         let $sectionSelect = $('#section-filter-selector');
