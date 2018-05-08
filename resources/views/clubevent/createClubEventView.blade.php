@@ -10,7 +10,7 @@
 
 @section('content')
 
-@if(Session::has('userId'))
+@auth
     <div class="row">
         <div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
             @if($createClubEvent)
@@ -123,7 +123,7 @@
 			      	@endif
 			    </div>
 
-			    @if(Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung' OR Session::get('userGroup') == 'admin')
+			    @is('marketing', 'clubleitung', 'admin')
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 						<label for="facebookDone" class="col-md-4 col-sm-4 col-xs-7">{{trans('mainLang.faceDone')}}?</label>
                         <select class="selectpicker" name="facebookDone" id="facebookDone">
@@ -227,15 +227,15 @@
 				            </div>
 						</div>
 				    </div>
-				@endif
+				@endis
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="section" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
 					<span class="col-md-10 col-sm-10 col-xs-12">
 						@if (!is_null($section))
 							{!! Form::text('section', $section->title, array('id'=>'section', 'readonly') ) !!}
-						@elseif(!is_null(Session::get('userClub')))
-							{!! Form::text('section', Session::get('userClub'), array('id'=>'section', 'readonly')) !!}
+						@elseif(!is_null(Auth::user()))
+							{!! Form::text('section', Auth::user()->section->title, array('id'=>'section', 'readonly')) !!}
 						@endif
 					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
 					        <span class="caret"></span>
@@ -254,10 +254,10 @@
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
 					<label for="filter" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.showFor') }}: &nbsp;</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						@if(is_null($filter) OR $filter == "")
+						@if(is_null($filter) || $filter == "")
 							{{-- Set default values to the club the user is a member in.--}}
 							@foreach(Lara\Section::all() as $fSection)
-                                {{ Form::checkbox("filter[" . $fSection->title ."]", $fSection->id, $fSection->title === Session::get("userClub")) }}
+                                {{ Form::checkbox("filter[" . $fSection->title ."]", $fSection->id, $fSection->title === \Lara\Section::current()->title) }}
 									{{ $fSection->title }}
                                 	&nbsp;
 							@endforeach
@@ -276,10 +276,10 @@
 						{{ trans('mainLang.priceTickets') }}:  <br>
 						({{ trans('mainLang.studentExtern') }})</label>
 					<div id="priceTickets" class="input-group col-md-5 col-sm-5 col-xs-12">
-						<input class="form-control" type="number" name="priceTicketsNormal" step="0.1" placeholder="Student" value="{{$priceTicketsNormal}}"/>
+						<input class="form-control" type="number" name="priceTicketsNormal" step="0.1" min="0" placeholder="Student" value="{{$priceTicketsNormal}}"/>
 						<span class="input-group-addon">€</span>
 						<span class="input-group-addon">/</span>
-						<input class="form-control" type="number" name="priceTicketsExternal" step="0.1" placeholder="Extern" value="{{$priceTicketsExternal}}"/>
+						<input class="form-control" type="number" name="priceTicketsExternal" step="0.1" min="0" placeholder="Extern" value="{{$priceTicketsExternal}}"/>
 						<span class="input-group-addon">€</span>
 					</div>
 				</div>
@@ -289,10 +289,10 @@
 						{{ trans('mainLang.price') }}:   <br>
 						({{ trans('mainLang.studentExtern') }})</label>
 					<div id="price" class="input-group col-md-5 col-sm-5 col-xs-12">
-						<input class="form-control" type="number" name="priceNormal" step="0.1" placeholder="Student" value="{{$priceNormal}}"/>
+						<input class="form-control" type="number" name="priceNormal" step="0.1" min="0" placeholder="Student" value="{{$priceNormal}}"/>
 						<span class="input-group-addon">€</span>
 						<span class="input-group-addon">/</span>
-						<input class="form-control" type="number" name="priceExternal" step="0.1" placeholder="Extern" value="{{$priceExternal}}"/>
+						<input class="form-control" type="number" name="priceExternal" step="0.1" min="0"  placeholder="Extern" value="{{$priceExternal}}"/>
 						<span class="input-group-addon">€</span>
 					</div>
 				</div>
@@ -407,13 +407,13 @@
 	    Disabling iCal until fully functional -> remove "Publish" button, rename "create unpublished" to just "create"
 
 
-	    @if(Session::get('userGroup') == 'marketing'
-	     OR Session::get('userGroup') == 'clubleitung'
-	     OR Session::get('userGroup') == 'admin')
+	    @is( 'marketing'
+	     , 'clubleitung'
+	     , 'admin')
 			<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<br class="visible-xs">
-	    @endif
+	    @endis
 
 	    --}}
         @if($createClubEvent)
@@ -433,7 +433,7 @@
 
 @else
 	@include('partials.accessDenied')
-@endif
+@endauth
 
 @stop
 

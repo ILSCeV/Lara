@@ -101,13 +101,13 @@ class ScheduleController extends Controller
 
         // format: password; validate on filled value
         if (Input::get('password') == "delete"
-        AND Input::get('passwordDouble') == "delete")
+        && Input::get('passwordDouble') == "delete")
         {
             $schedule->schdl_password = '';
         }
         elseif (!empty(Input::get('password'))
-            AND !empty(Input::get('passwordDouble'))
-            AND Input::get('password') == Input::get('passwordDouble'))
+            && !empty(Input::get('passwordDouble'))
+            && Input::get('password') == Input::get('passwordDouble'))
         {
             $schedule->schdl_password = Hash::make(Input::get('password'));
         }

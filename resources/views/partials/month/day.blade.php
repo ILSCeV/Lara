@@ -9,8 +9,12 @@
 @else
     <div class="otherMonth custom-md-85">
 @endif
-    <div class="cell10 padleft">
-        @if(Session::has('userGroup'))
+    <div class="day-cell">
+        <small class="visible-xs-inline visible-sm-inline">
+            {{-- Display day of the week--}}
+            {{ strftime("%a", $weekDay->getTimestamp()) }}
+        </small>
+        @auth
             <a href="{{ Request::getBasePath() }}/event/{{ strftime("%Y/%m/%d", $weekDay->getTimestamp()) }}/0/create"
                data-toggle="tooltip" 
                data-placement="top"
@@ -19,13 +23,10 @@
             </a>
         @else
             {{$weekDay->format('d')}}
-        @endif
-        <small class="visible-xs visible-md visible-sm">
-            {{-- Display day of the month--}}
-            {{ strftime("%a", $weekDay->getTimestamp()) }}
-        </small>
+        @endauth
+
     </div>
-    <div class="cell90">
+    <div class="day-cell-events">
         @include( 'partials.month.monthCell')
     </div>
 </div>

@@ -34,6 +34,8 @@ export default {
     'confirmUnpublishingEvent': 'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
     'deleteTemplate' : 'Vorlage über bort werfen',
     'deleteTemplateMessage' : 'Bist du dir sicher, dass du diese Vorlage löschen möchtest?',
+    'changeUserStatus': 'Bist du dir sicher, dass du den Status dieses Nutzers ändern möchtest?',
+    'changeUserStatusHeader' : 'Benutzerstatus bearbeiten',
     'replaceShiftTypeConfirmation' : 'Möchtest du alle Dienste die den folgenden Diensttyp verwenden wirklich ersetzen?:',
     'replaceAll' : 'Alle ersetzen',
 
@@ -69,5 +71,9 @@ export default {
     'CGW Tshirt/Hoodies': 'CGW Kleider',
     'CGW Backgammon/ Kickerturnier /Sonntagsöffnung': 'CGW Schatzsuche und Trinkspiele',
     'CGW Spieleabend': 'CGW "Fünf Finger Fillet"-Abend',
-    'Wochentliche ClubBildungsMaßnahme (CBM)': 'Wöchentliche Auspeitschung mit der Neunschwänzigen Katze'
+    'Wochentliche ClubBildungsMaßnahme (CBM)': 'Wöchentliche Auspeitschung mit der Neunschwänzigen Katze',
+
+    'conflictDetected' : 'Arg, da ist ein Konflikt!',
+    'conflictAlertLine1' : 'Du hast wohl dem Kapitän nicht zugehört, du Landratte! Ein anderer Matrose ist schon dran!',
+    'conflictAlertLine2' : 'Schau\'s dir doch genauer an - wolltest du etwa einen Messer in seinen Rücken stecken?!',
 };

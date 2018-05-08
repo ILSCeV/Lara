@@ -3,10 +3,12 @@
 namespace Lara\Http\Controllers;
 
 
+use Auth;
 use Config;
-use Lara\Settings;
 use Redirect;
 use Session;
+
+use Lara\Settings;
 
 class LanguageController extends Controller
 {
@@ -14,15 +16,18 @@ class LanguageController extends Controller
     {
         if (array_key_exists($lang, Config::get('languages'))) {
             Session::put('applocale', $lang);
-            
-            if(Session::has('userId')){
-               $userSettings = Settings::where('userId','=',Session::get('userId'))->first();
-               if(!isset($userSettings)){
-                   $userSettings = new Settings();
-               }
-               $userSettings->language = ''.$lang;
-               $userSettings->userId = Session::get('userId');
-               $userSettings->save();
+
+            $user = Auth::user();
+            if ($user) {
+                $userSettings = $user->settings;
+
+                if (!isset($userSettings)) {
+                    $userSettings = new Settings();
+                }
+
+                $userSettings->language = ''.$lang;
+                $userSettings->user_id = $user->id;
+                $userSettings->save();
             }
         }
 

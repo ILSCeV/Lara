@@ -4,7 +4,11 @@ namespace Lara\Console\Commands;
 
 use Config;
 use Illuminate\Console\Command;
+use Lara\LdapPlatform;
 use Lara\Person;
+use Lara\Section;
+use Lara\User;
+use Lara\utilities\LdapUtility;
 use Log;
 
 class LDAPsync extends Command
@@ -35,7 +39,7 @@ class LDAPsync extends Command
 
     /**
      * Execute the console command.
-     *  
+     *
      * Updates status of each Person saved in Lara with the latest state from LDAP
      * Main purpose: data is usually updated when a member logs in. This function targets updates for members who stop visiting Lara.
      *
@@ -49,13 +53,17 @@ class LDAPsync extends Command
         $this->info('Starting LDAP sync...');
 
         // get a list of all persons saved in Lara, except ldap-override
-        $persons = Person::whereNotNull('prsn_ldap_id')->whereNotIn('prsn_ldap_id', ['9999'])->get();
+        $persons = Person::query()
+            ->whereNotNull('prsn_ldap_id')
+            ->whereRaw('convert( prsn_ldap_id, unsigned integer) < 9999')
+            ->orderByRaw('convert( prsn_ldap_id, unsigned integer) desc')
+            ->get();
 
         // start counting time before processing every person
         $counterStart = microtime(true);
 
         // Initiate progress bar
-        $bar = $this->output->createProgressBar(count($persons));
+        $bar = $this->output->createProgressBar(count($persons) + LdapPlatform::query()->count());
 
 // CONNECTING TO LDAP SERVER
 
@@ -71,16 +79,20 @@ class LDAPsync extends Command
         $ldap_bind = ldap_bind($ldapConn,
             Config::get('bcLDAP.admin-username'),
             Config::get('bcLDAP.admin-password'));
+        $allowedSection = (new Section())->whereIn('title',['bc-Club','bc-Café'])->get();
 
 // STARTING THE UPDATE
-
+        /** @var Person $person */
         foreach ($persons as $person) {
+            $user = $person->user();
             $bar->advance();
             // skip ldap override
             if($person->prsn_ldap_id == '9999' ){
                 continue;
             }
-
+            if(!$allowedSection->contains($person->club->section())){
+                continue;
+            }
 // AUTHENTICATING BC-CLUB
 
             // Search for a bc-Club user with the uid number entered
@@ -103,6 +115,7 @@ class LDAPsync extends Command
                     '(uid=' . $person->prsn_ldap_id . ')');
 
                 $info = ldap_get_entries($ldapConn, $search);
+
             }
 
 // HANDLING ERRORS
@@ -110,7 +123,7 @@ class LDAPsync extends Command
             // If no match found in all clubs - log an error
             if ($info['count'] === 0) {
                 Log::info('LDAP sync error: could not authenticate ' . $person->prsn_ldap_id . ' in LDAP!');
-            }               
+            }
 
 // GETTING USER CREDENTIALS
 
@@ -121,6 +134,20 @@ class LDAPsync extends Command
 
             // Get user active status
             $userStatus = $info[0]['ilscstate'][0];
+            if ($userStatus == "resigned") {
+                $userStatus = "ex-member";
+            }
+
+            if ($userStatus == "guest") {
+                $userStatus = "ex-candidate";
+            }
+
+            if(array_key_exists ('mail',$info[0])) {
+                $userEmail = $info[0]['mail'][0];
+            }
+
+            $userGivenName = $info[0]['givenname'][0];
+            $userLastName = $info[0]['sn'][0];
 
 // UPDATE AND SAVE CHANGES
 
@@ -128,21 +155,64 @@ class LDAPsync extends Command
                 Log::info('LDAP sync: Changing ' . $person->prsn_name . " (" . $person->prsn_ldap_id . ") name from " . $person->prsn_name . " to " . $userName . '.');
 
                 $person->prsn_name = $userName;
+                $user->name = $userName;
             }
-            
+
 
             if ($person->prsn_status !== $userStatus) {
                 Log::info('LDAP sync: Changing ' . $person->prsn_name . " (" . $person->prsn_ldap_id . ") status from " . $person->prsn_status . " to " . $userStatus . '.');
 
                 $person->prsn_status = $userStatus;
+                $user->status = $userStatus;
             }
-            
-            $person->save();
+
+            if(isset($userEmail) && $userEmail != $user->email) {
+                if(!User::query()->where('email','=',$userEmail)->exists()) {
+                    $user->email = $userEmail;
+                } {
+                    $this->info($person->prsn_ldap_id. " ignoring email " . $userEmail . "because someone else already use it");
+                    Log::warning($person->prsn_ldap_id. " ignoring email " . $userEmail . "because someone else already use it");
+                }
+            }
+            $user->givenname = $userGivenName;
+            $user->lastname = $userLastName;
+
+            try {
+                $person->save();
+                $user->save();
+            } catch (\Exception $e) {
+                Log::error('cannot update person ' . $person->prsn_ldap_id,[$e]);
+                $this->error('cannot update person ' . $person->prsn_ldap_id,$e->getMessage());
+            }
         }
 
 // FINISH UPDATE
 
         ldap_unbind($ldapConn);
+
+        $userIds = LdapPlatform::query()->select('user_id')->distinct()->get();
+        foreach ($userIds as $userId) {
+            $entry = [];
+            $entryNames = LdapPlatform::query()->select('entry_name')->where('user_id', '=',
+                $userId->user_id)->distinct()->get();
+            foreach ($entryNames as $entryName) {
+                $bar->advance();
+                /** @var LdapPlatform $ldapPlattform */
+                $ldapPlattform = LdapPlatform::query()->where('user_id', '=', $userId->user_id)
+                    ->where('entry_name', '=', $entryName->entry_name)
+                    ->orderByDesc('created_at')->first();
+                //remove older entrys, we only apply the newest one
+                LdapPlatform::query()->where('user_id', '=', $userId->user_id)
+                    ->where('entry_name', '=', $entryName->entry_name)
+                    ->where('id', '<>', $ldapPlattform->id)
+                    ->delete();
+                $entry[$ldapPlattform->entry_name] = $ldapPlattform->entry_value;
+            }
+            if (LdapUtility::modify($userId->user_id, $entry)) {
+                LdapPlatform::query()->where('user_id', '=', $userId->user_id)->delete();
+            }
+            Log::info("LDAP sync: Changing " . $userId->user_id . " " . implode(', ', $entry));
+        }
 
         $bar->finish();
 

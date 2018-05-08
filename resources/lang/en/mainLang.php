@@ -258,6 +258,7 @@ return [
     // /resources/views/partials/filter.blade.php
     'allSections'           => 'All sections',
     'comments'              => 'Comments',
+    'chooseAtLeastOne'      => 'Choose at least one...',
     //-----------------------------------------------------------------------------------------------------------
 
     // /resources/views/partials/legend.blade.php
@@ -510,5 +511,17 @@ return [
 
     'search'                        => 'Search',
     'facebookNeeded'                => 'Facebook needed',
-    'createTemplate'                => 'Create template'
+    'createTemplate'                => 'Create template',
+
+    /////////////////////////
+    // User management     //
+    /////////////////////////
+    'status'                        => 'Status',
+    'editUser'                      => 'Edit user',
+    'availableRoles'                => 'Available roles',
+    'activeRoles'                   => 'Active roles',
+    'changesWereReset'              => 'Your changes were reset. Please apply them again before submitting.',
+    'roleManagement'                => 'Manage roles',
+    'changesSaved'                  => 'Changes saved.',
+    'sectionChanged'                => 'You changed the section of this user. Remember to also update his roles.',
 ];

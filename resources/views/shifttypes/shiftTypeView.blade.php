@@ -7,11 +7,7 @@
 
 @section('content')
 
-@if(Session::has('userGroup')
-	AND (Session::get('userGroup') == 'marketing'
-	OR Session::get('userGroup') == 'clubleitung'
-	OR Session::get('userGroup') == 'admin'))
-
+@is(Roles::PRIVILEGE_ADMINISTRATOR, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_MARKETING)
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<h4 class="panel-title">#{{ $current_shiftType->id }}: "{!! $current_shiftType->title !!}" </h4>
@@ -190,7 +186,7 @@
                                                 @continue
                                             @endif
                                             @php
-                                                $isAllowedToEdit=\Lara\Utilities::requirePermission("admin") || $template->section->title == Session::get('userClub');
+                                                $isAllowedToEdit=\Lara\Utilities::requirePermission("admin") ||  Auth::user()->getSectionsIdForRoles(Roles::PRIVILEGE_MARKETING)->contains($template->section->id);
                                             @endphp
                                         <tr class="@if(!$isAllowedToEdit) active @endif">
                                             <td class="text-center">
@@ -232,7 +228,7 @@
 	<br/>
 @else
 	@include('partials.accessDenied')
-@endif
+@endis
 @stop
 
 

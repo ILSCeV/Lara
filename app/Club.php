@@ -4,6 +4,8 @@ namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Lara\Status;
+
 class Club extends Model
 {
     /**
@@ -20,7 +22,10 @@ class Club extends Model
      * @var array
      */
     protected $fillable = array('clb_title');
-
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|Person
+     */
     public function persons()
     {
         return $this->hasMany('Lara\Person', 'clb_id');
@@ -28,12 +33,12 @@ class Club extends Model
 
     public function members()
     {
-        return $this->persons()->where('prsn_status', '=', 'member');
+        return $this->persons()->where('prsn_status', '=', Status::MEMBER);
     }
 
     public function candidates()
     {
-        return $this->persons()->where('prsn_status', '=', 'candidate');
+        return $this->persons()->where('prsn_status', '=', Status::CANDIDATE);
     }
 
     public function accountableForStatistics()
@@ -43,11 +48,17 @@ class Club extends Model
 
     public static function activeClubs()
     {
-        $sectionTitles = Section::all()->pluck('title')->toArray();
-        $clubs = Club::whereIn('clb_title', $sectionTitles)->get()->filter(function (Club $club) use ($sectionTitles) {
-            return in_array($club->clb_title, $sectionTitles);
+        $club_ids = Section::all()->map(function(Section $section) {
+            return $section->club()->id;
         });
-        return Club::whereIn('id',$clubs->map(function (Club $club){ return $club->id; })->toArray());
+        return Club::query()->whereIn('id',$club_ids);
     }
 
+    /**
+     * @return Section|null|object|static
+     */
+    public function section()
+    {
+        return Section::query()->where('title', $this->clb_title)->first();
+    }
 }

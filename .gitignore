@@ -33,6 +33,9 @@ composer.lock
 config/bcLDAP.php
 # stuff for bd infratructure is not public
 config/bd_credentials.php
+# passwords of BD/Bergfest users
+config/bd_users.initial.php
+config/bergfest_users.initial.php
 
 # IDE related files
 .idea/

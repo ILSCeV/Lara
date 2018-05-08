@@ -3,6 +3,7 @@
 namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Shift extends Model
 {
@@ -27,7 +28,7 @@ class Shift extends Model
      * Get the corresponding shift type.
      * Looks up in table shiftTypes for that entry, which has the same id like shifttype_id of ScheduleEntry instance.
      *
-     * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type ShiftType
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|ShiftType
      */
     public function type() {
         return $this->belongsTo('Lara\ShiftType', 'shifttype_id', 'id');
@@ -38,21 +39,28 @@ class Shift extends Model
      * Looks up in table persons for that entry, which has the same id like person_id of ScheduleEntry instance.
      * If prsn_is is null, also null will be returned.
      *
-     * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Person
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Person
      */
     public function getPerson() {
         return $this->belongsTo('Lara\Person', 'person_id', 'id');
     }
 
+    /**
+     * Get the corresponding person, if existing.
+     * Looks up in table persons for that entry, which has the same id like person_id of ScheduleEntry instance.
+     * If prsn_is is null, also null will be returned.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Person
+     */
     public function person() {
-        return $this->belongsTo('Lara\Person', 'person_id', 'id');
+        return $this->belongsTo(Person::class, 'person_id', 'id');
     }
 
     /**
      * Get the corresponding schedule.
      * Looks up in table schedule for that entry, which has the same id like schedule_id of ScheduleEntry instance.
      *
-     * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\BelongsTo of type Schedule
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Schedule
      */
     public function getSchedule() {
         return $this->belongsTo('Lara\Schedule', 'schedule_id', 'id');
@@ -61,7 +69,7 @@ class Shift extends Model
     /**
      * Get quantity of shifts grouped by $shiftTypeId.
      *
-     * @param Collection $shifts
+     * @param Collection|Shift $shifts
      * @param int $shiftTypeId
      * @return int quantity of $shifts grouped by $shiftTypeId
      */
@@ -122,7 +130,10 @@ class Shift extends Model
 
         return null;
     }
-
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Schedule
+     */
     public function schedule()
     {
         return $this->belongsTo('Lara\Schedule', 'schedule_id', 'id');

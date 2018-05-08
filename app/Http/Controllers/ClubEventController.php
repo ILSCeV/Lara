@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Auth;
 use Cache;
 use Config;
 use DateInterval;
@@ -11,14 +12,18 @@ use Illuminate\Http\Request;
 use Input;
 use Lara\Club;
 use Lara\ClubEvent;
+use Lara\Console\Commands\SyncBDclub;
+use Lara\Http\Middleware\RejectGuests;
 use Lara\Logging;
+use Lara\Role;
+use Lara\ShiftType;
+use Lara\Shift;
 use Lara\Person;
 use Lara\Schedule;
 use Lara\Section;
-use Lara\Shift;
-use Lara\ShiftType;
 use Lara\Template;
 use Lara\Utilities;
+use Lara\utilities\RoleUtility;
 use Log;
 use Redirect;
 use Session;
@@ -26,6 +31,11 @@ use View;
 
 class ClubEventController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('rejectGuests', ['only' => 'create']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,6 +52,8 @@ class ClubEventController extends Controller
      * @param  int $year
      * @param  int $month
      * @param  int $day
+     * @param int  $templateId
+     * @return \Illuminate\Contracts\View\View
      *
      * @return view createClubEventView
      * @return Section[] sections
@@ -91,12 +103,12 @@ class ClubEventController extends Controller
                        ->get();
 
         // get a list of available templates to choose from
-        $userClub = Session::get('userClub');
-        if(Utilities::requirePermission("admin")) {
+        $allowedSections = Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_MEMBER)->toArray();
+        if(Utilities::requirePermission(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             $templates = Template::all()->sortBy('title');
         } else {
-            $templates = Template::whereHas('section', function ($query) use ($userClub) {
-                $query->where('title', '=', $userClub);
+            $templates = Template::whereHas('section', function ($query) use ($allowedSections) {
+                $query->whereIn('id',$allowedSections);
             })->get()->sortBy('title');
         }
         // get a list of available job types
@@ -146,7 +158,7 @@ class ClubEventController extends Controller
             $title                  = null;
             $type                   = null;
             $subtitle               = null;
-            $section                = Section::sectionOfCurrentUser();
+            $section                = Section::current();
             $filter                 = null;
             $dv                     = $section->preparationTime;
             $timeStart              = $section->startTime;
@@ -203,8 +215,9 @@ class ClubEventController extends Controller
         ScheduleController::createShifts($newSchedule);
 
         // log the action
-        Log::info('Event created: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
-                 . Session::get('userGroup') . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
+        $user = Auth::user();
+        Log::info('Event created: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
+                 . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
         Utilities::clearIcalCache();
         if (Input::get('saveAsTemplate')){
             $template = $newSchedule->toTemplate();
@@ -231,7 +244,8 @@ class ClubEventController extends Controller
         $clubEvent = ClubEvent::with('section')
                               ->findOrFail($id);
 
-        if(!Session::has('userId') && $clubEvent->evnt_is_private==1)
+        $user = Auth::user();
+        if (!$user && $clubEvent->evnt_is_private == 1)
         {
             Session::put('message', Config::get('messages_de.access-denied'));
             Session::put('msgType', 'danger');
@@ -366,9 +380,9 @@ class ClubEventController extends Controller
         $priceTicketsExternal   = $event->price_tickets_external;
         $eventUrl               = $event->event_url;
         $facebookNeeded         = $event->facebook_done;
-        
-        
-        
+
+
+
         if(!is_null($event->template_id)) {
             $baseTemplate = $event->template;
         } else {
@@ -377,18 +391,21 @@ class ClubEventController extends Controller
 
         $createClubEvent = false;
 
-       if(Utilities::requirePermission(["marketing","clubleitung","admin"]) || Session::get('userId') == $created_by) {
-           return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
-               'shifts', 'title', 'subtitle', 'type',
-               'section', 'filter', 'timeStart', 'timeEnd',
-               'info', 'details', 'private', 'dv',
-               'activeTemplate',
-               'date', 'templateId', 'facebookNeeded', 'createClubEvent',
-               'event','baseTemplate',
+
+        $userId = Auth::user()->person->prsn_ldap_id;
+
+        if(Auth::user()->hasPermissionsInSection($event->section, RoleUtility::PRIVILEGE_MARKETING) || $userId == $created_by) {
+            return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
+                'shifts', 'title', 'subtitle', 'type',
+                'section', 'filter', 'timeStart', 'timeEnd',
+                'info', 'details', 'private', 'dv',
+                'activeTemplate',
+                'date', 'templateId', 'facebookNeeded', 'createClubEvent',
+                'event','baseTemplate',
                'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal','eventUrl'));
-       } else {
-           return response()->view('clubevent.notAllowedToEdit',compact('created_by','creator_name'),403);
-       }
+        } else {
+            return response()->view('clubevent.notAllowedToEdit',compact('created_by','creator_name'),403);
+        }
     }
 
     /**
@@ -416,8 +433,9 @@ class ClubEventController extends Controller
         ScheduleController::editShifts($schedule);
 
         // log the action
-        Log::info('Event edited: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
-                 . Session::get('userGroup') . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        $user = Auth::user();
+        Log::info('Event edited: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
+                 . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
 
 
         // save all data in the database
@@ -459,11 +477,9 @@ class ClubEventController extends Controller
         // Check credentials: you can only delete, if you have rights for marketing or management.
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
         $created_by = $revisions[0]["user id"];
-        if(!Session::has('userId')
-            OR (Session::get('userGroup') != 'marketing'
-                AND Session::get('userGroup') != 'clubleitung'
-                AND Session::get('userGroup') != 'admin'
-                AND Session::get('userId') != $created_by))
+
+        $user = Auth::user();
+        if (!$user || !$user->isAn(RoleUtility::PRIVILEGE_MARKETING, RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_ADMINISTRATOR))
         {
             Session::put('message', 'Du darfst diese Veranstaltung/Aufgabe nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
             Session::put('msgType', 'danger');
@@ -472,8 +488,8 @@ class ClubEventController extends Controller
         }
 
         // Log the action while we still have the data
-        Log::info('Event deleted: ' . Session::get('userName') . ' (' . Session::get('userId') . ', '
-                 . Session::get('userGroup') . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        Log::info('Event deleted: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
+                 . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         Utilities::clearIcalCache();
 
         // Delete schedule with shifts
@@ -506,6 +522,8 @@ class ClubEventController extends Controller
     private function editClubEvent($id)
     {
         $event = new ClubEvent;
+        $event->creator_id = Auth::user()->id;
+
         if(!is_null($id)) {
             $event = ClubEvent::findOrFail($id);
         }
@@ -525,14 +543,12 @@ class ClubEventController extends Controller
         $event->template_id            = $this->getTemplateId();
 
         // Check if event URL is properly formatted: if the protocol is missing, we have to add it.
-        if( $event->event_url !== ""
-        and parse_url($event->event_url, PHP_URL_SCHEME) === null) {
+        if( $event->event_url !== "" && parse_url($event->event_url, PHP_URL_SCHEME) === null) {
             $event->event_url = 'https://' . $event->event_url;
         }
 
         // create new section
-        if (!Section::where('title', '=', Input::get('section'))->first())
-        {
+        if (!Section::where('title', '=', Input::get('section'))->first()) {
             $section = new Section;
             $section->title = Input::get('section');
             $section->save();
@@ -540,8 +556,7 @@ class ClubEventController extends Controller
             $event->plc_id = $section->id;
         }
         // use existing section
-        else
-        {
+        else {
             $event->plc_id = Section::where('title', '=', Input::get('section'))->first()->id;
         }
 
@@ -578,7 +593,7 @@ class ClubEventController extends Controller
         if (!is_null($eventIsPublished)) {
             //event is pubished
             $event->evnt_is_published = (int)$eventIsPublished;
-        } elseif (Session::get('userGroup') == 'marketing' OR Session::get('userGroup') == 'clubleitung'  OR Session::get('userGroup') == 'admin'){
+        } elseif (Auth::user()->hasPermissionsInSection($section,RoleUtility::PRIVILEGE_MARKETING)){
             // event was unpublished
             $event->evnt_is_published = 0;
         }
@@ -636,7 +651,7 @@ class ClubEventController extends Controller
             case "1": return true;
             case "0": return false;
             case "-1" :
-            default:null;
+            default: return null;
         }
     }
 

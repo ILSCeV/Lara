@@ -2,10 +2,21 @@
 
 namespace Lara\Http\Controllers\Auth;
 
-use Lara\User;
-use Lara\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
+
+use Gate;
+
+use Illuminate\Validation\Rule;
+use Lara\User;
+use Lara\Person;
+use Lara\Section;
+use Lara\Status;
+
+use Lara\Http\Controllers\Controller;
+use Lara\Utilities;
 
 class RegisterController extends Controller
 {
@@ -27,7 +38,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -36,7 +47,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -49,8 +60,19 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
+            'givenname' => 'required|max:255',
+            'lastname' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'section' => [
+                'required',
+                Rule::in(
+                    Section::all()->map(
+                        function(Section $section) { return $section->id;}
+                    )->toArray()
+                )
+            ],
+            'status' => ['required', Rule::in(Status::ACTIVE)]
         ]);
     }
 
@@ -62,10 +84,30 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        return User::createNew($data);
+    }
+
+    /**
+     * Register the user with the data provided in the request.
+     * We overwrite the register method from the RegisterUsers trait,
+     * as we don't want to login the new User right away.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $this->authorize('create', User::class);
+
+        if (Gate::denies('createUserOfSection', $request->get('section'))) {
+            Utilities::error('You cannot create a user of another section!');
+            return redirect($this->redirectPath());
+        }
+
+        event(new Registered($user = $this->create($request->all())));
+
+        return redirect($this->redirectPath());
     }
 }

@@ -44,9 +44,6 @@
   </head>
   <body>
     {{-- only allow logs to be seen by admin and management --}}
-    @if   (Session::has('userGroup')
-    AND (Session::get('userGroup') == 'admin'
-    OR   Session::get('userGroup') == 'clubleitung'))
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
@@ -74,28 +71,27 @@
               </tr>
             </thead>
             <tbody>
-
-@foreach($logs as $key => $log)
-<tr>
-  <td class="text-{{$log['level_class']}}"><span class="glyphicon glyphicon-{{$log['level_img']}}-sign" aria-hidden="true"></span> &nbsp;{{$log['level']}}</td>
-  <td class="date">{{$log['date']}}</td>
-  <td class="text">
-    @if ($log['stack']) <a class="pull-right expand btn btn-default btn-xs" data-display="stack{{$key}}"><span class="glyphicon glyphicon-search"></span></a>@endif
-    {{$log['text']}}
-    @if (isset($log['in_file'])) <br />{{$log['in_file']}}@endif
-    @if ($log['stack']) <div class="stack" id="stack{{$key}}" style="display: none; white-space: pre-wrap;">{{ trim($log['stack']) }}</div>@endif
-  </td>
-</tr>
-@endforeach
+              @foreach($logs as $key => $log)
+              <tr>
+                <td class="text-{{$log['level_class']}}"><span class="glyphicon glyphicon-{{$log['level_img']}}-sign" aria-hidden="true"></span> &nbsp;{{$log['level']}}</td>
+                <td class="date">{{$log['date']}}</td>
+                <td class="text">
+                  @if ($log['stack']) <a class="pull-right expand btn btn-default btn-xs" data-display="stack{{$key}}"><span class="glyphicon glyphicon-search"></span></a>@endif
+                  {{$log['text']}}
+                  @if (isset($log['in_file'])) <br />{{$log['in_file']}}@endif
+                  @if ($log['stack']) <div class="stack" id="stack{{$key}}" style="display: none; white-space: pre-wrap;">{{ trim($log['stack']) }}</div>@endif
+                </td>
+              </tr>
+              @endforeach
 
             </tbody>
           </table>
           @endif
           <div>
-            @if(Session::get('userGroup') == 'admin')
+            @is('admin')
               -
               <a id="delete-log" href="?del={{ base64_encode($current_file) }}"><span class="glyphicon glyphicon-trash"></span> Delete file</a>
-            @endif
+            @endis
           </div>
         </div>
       </div>
@@ -126,11 +122,5 @@
         });
       });
     </script>
-    @else
-      {{-- send user back if no matching user group given --}}
-      <script type="text/javascript">
-          window.location = "{{ url('/') }}";
-      </script>
-    @endif
   </body>
 </html>

@@ -15,5 +15,23 @@ return [
 
     'failed' => 'Entern fehlgeschlagen! Das Losungswort war falsch, du darfst LARRRRA nicht betreten.',
     'throttle' => 'Landratten lassen wir nicht an bord. Bitte versuche es in :seconds Sekunden erneut.',
+    'register' => 'Matrosenmeldung',
+    'missingPermissions' => 'Dir fehlen die benötigten Rechte um diese Aktion durchzuführen.',
+    'notAuthenticated' => 'Du bist nicht angemeldet.',
+    'changePassword' => 'Passwort ändern',
+    'oldPassword' => 'Altes Passwort',
+    'newPassword' => 'Neues Passwort',
+    'confirmNewPassword' => 'Neues Passwort bestätigen',
+    'passwordDoesNotMatch' => 'Das angegebene Passwort ist falsch',
+    'passwordChanged' => 'Dein Password wurde erfolgreich geändert',
 
+    'email' => 'E-Mail',
+    'nickname' => 'Nickname',
+    'givenname' => 'Vornname',
+    'lastname' => 'Nachname',
+    'section' => 'Sektion',
+    'status' => 'Status',
+    'password' => 'Passwort',
+    'confirmPassword' => 'Passwort bestätigen',
+    'register_submit' => 'Neuen Nutzer registrieren'
 ];

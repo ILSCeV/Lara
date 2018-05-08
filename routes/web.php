@@ -34,6 +34,9 @@
 | Global Patterns
 |--------------------------------------------------------------------------
 */
+
+use Lara\Http\Middleware\ClOnly;
+
 Route::pattern('id', 	'[0-9]+');
 Route::pattern('year', 	'[2][0][0-9][0-9]');
 Route::pattern('month',	'[0][1-9]|[1][0-2]');
@@ -48,7 +51,8 @@ Route::pattern('day', 	'[0-3][0-9]');
 */
 
 // LOG VIEWER
-Route::get('logs', 								'LogViewerController@index');
+Route::get('logs', 								'LogViewerController@index')
+    ->middleware('checkRoles:admin,marketing');
 
 
 // DEFAULT
@@ -57,11 +61,11 @@ Route::get('/calendar/',						'MonthController@currentMonth');
 
 
 // AUTHENTIFICATION
-Route::get('login',								'MonthController@currentMonth');
-Route::get('logout', 							'LoginController@doLogout');
+Route::get('login',								'MonthController@currentMonth')->name('login');
+Route::get('logout', 							'LoginController@doLogout')->name('logout');
 
-Route::post('login', 							'LoginController@doLogin');
-Route::post('logout', 							'LoginController@doLogout');
+Route::post('login', 							'LoginController@doLogin')->name('login.post');
+Route::post('logout', 							'LoginController@doLogout')->name('logout.post');
 
 
 // TIMESTAMP
@@ -97,7 +101,8 @@ Route::post('event/{year?}/{month?}/{day?}/{templateId?}/create', 'ClubEventCont
 // AJAX calls
 Route::get('person/{query?}', 				'PersonController@index');
 Route::get('club/{query?}', 				'ClubController@index');
-Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson');
+Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson')
+    ->middleware('rejectGuests');
 Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
 Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
 
@@ -112,19 +117,21 @@ Route::get('lang', function() {
 });
 
 // RESTful RESOURCES
-Route::resource('shiftType', 		'ShiftTypeController');
+Route::resource('shiftType', 		'ShiftTypeController')
+    ->middleware('checkRoles:admin,clubleitung');
 Route::resource('shift', 			'ShiftController', 	        ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('schedule', 		'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('event', 			'ClubEventController', 		['except' => ['index']]);
-Route::resource('person', 			'PersonController', 		['only'   => ['index']]);
+Route::resource('person', 			'PersonController', 		['only'   => ['index']])
+    ->middleware('rejectGuests');
 Route::resource('club', 			'ClubController', 			['only'   => ['index']]);
 Route::resource('survey',			'SurveyController',			['except' => ['index']]);
 Route::resource('survey.answer', 	'SurveyAnswerController', 	['only'   => ['show', 'store', 'update', 'destroy']]);
 Route::resource('section', 			'SectionController');
 
 // STATISTICS
-Route::get('/statistics/month/{year?}/{month?}',	'StatisticsController@showStatistics');
-Route::get('/statistics/year/{year?}',	'StatisticsController@showYearStatistics');
+Route::get('/statistics/month/{year?}/{month?}',	'StatisticsController@showStatistics')->middleware('rejectGuests');
+Route::get('/statistics/year/{year?}',	'StatisticsController@showYearStatistics')->middleware('rejectGuests');
 
 
 // JSON EXPORT - RETURNS EVENTS METADATA
@@ -168,3 +175,23 @@ Route::post('/completeOverrideShiftType',                       'ShiftTypeContro
 Route::get('/shiftTypeSearch/{filter?}',                               'ShiftTypeController@index')->name('shiftTypeSearch');
 Route::post('/seachShiftType/',                                 'ShiftTypeController@search')->name('searchShiftType');
 
+
+
+Route::get('register', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm'])
+    ->middleware('checkRoles:admin,clubleitung');
+Route::post('register', ['as' => 'register.post', 'uses' => 'Auth\RegisterController@register'])
+    ->middleware('checkRoles:admin,clubleitung');
+
+// Password Reset Routes...
+Route::get('password/reset', ['as' => 'password.reset', 'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm']);
+Route::post('password/email', ['as' => 'password.email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
+Route::get('password/reset/{token}', ['as' => 'password.reset.token', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
+Route::post('password/reset', ['as' => 'password.reset.post', 'uses' => 'Auth\ResetPasswordController@reset']);
+
+Route::post('/user/updateData/{user}', 'UserController@updateData')->name('user.updateData');
+Route::resource('user', 'UserController');
+
+Route::get('/password/change', ['as' => 'password.change', 'uses' => 'Auth\PasswordChangeController@showChangePasswordForm'])
+    ->middleware('auth');
+Route::post('/password/change', ['as' => 'password.change.post', 'uses' => 'Auth\PasswordChangeController@changePassword'])
+    ->middleware('auth');

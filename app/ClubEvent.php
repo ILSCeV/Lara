@@ -10,6 +10,8 @@ namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Lara\Shift;
+
 /**
  * @property int evnt_type
  * @property string evnt_title
@@ -72,6 +74,7 @@ class ClubEvent extends Model
         'facebook_done',
         'event_url',
         'template_id',
+        'creator_id',
     ];
 
     /**
@@ -84,23 +87,30 @@ class ClubEvent extends Model
     {
         return $this->belongsTo('Lara\Section', 'plc_id', 'id');
     }
-
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Template
+     */
     public function template()
     {
-        return $this->belongsTo('Lara\Template','template_id','id');
+        return $this->belongsTo(Template::class,'template_id','id');
     }
 
     /**
      * Get the corresponding schedule.
      * Looks up in table schedules for that entry, which has the same evnt_id like id of ClubEvent instance.
      *
-     * @return \vendor\laravel\framework\src\Illuminate\Database\Eloquent\Relations\HasOne of type Schedule
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne|Schedule
+     *
      */
     public function getSchedule()
     {
         return $this->hasOne('Lara\Schedule', 'evnt_id', 'id');
     }
-
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne|Schedule
+     */
     public function schedule()
     {
         return $this->hasOne('Lara\Schedule', 'evnt_id', 'id');
@@ -113,33 +123,42 @@ class ClubEvent extends Model
      *
      * @return Boolean
      */
-    public function hasShift($scheduleId, $userId)
+    public function hasShift($person)
     {
-
-        $shifts = Shift::where('schedule_id', '=', $scheduleId)->with('getPerson')->get();
-        foreach ($shifts as $shift) {
-            if (isset($shift->getPerson->prsn_ldap_id) && $shift->getPerson->prsn_ldap_id == $userId) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->shifts->contains(function(Shift $shift) use($person){
+            return $shift->person_id == $person->id;
+        });
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough|Shift
+     */
     public function shifts()
     {
         return $this->hasManyThrough('Lara\Shift', 'Lara\Schedule', 'evnt_id', 'schedule_id', 'id');
     }
-
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|Section
+     */
     public function showToSection()
     {
         return $this->belongsToMany('Lara\Section');
     }
-
+    
+    
     public function showToSectionNames()
     {
         return $this->showToSection()->get()->map(function ($section) {
             return $section->title;
         })->toArray();
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|User
+     */
+    public function creator()
+    {
+        return $this->belongsTo('Lara\User', 'creator_id');
     }
 }

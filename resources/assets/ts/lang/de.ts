@@ -9,7 +9,7 @@ export default {
     "forgotStartTime": "Die Startzeit vergessen!",
     "forgotEndTime": "Die Endzeit vergessen!",
     "wrongShiftWeightFormat": "Das Format eines Schichtgewichts ist falsch! Das richtige Format ist z.B. \"1\", \"0.7\", \"1.4\" o.Ä.",
-
+    
     "descriptionTooLong": "Der Beschreibungstext ist zu lange! Der Text sollte weniger als 1500 Zeichen enthalten.",
     "addCommentHere": "Kommentar hier hinzufügen",
 
@@ -35,6 +35,14 @@ export default {
     'confirmUnpublishingEvent': 'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
     'deleteTemplate' : 'Vorlage löschen',
     'deleteTemplateMessage' : 'Bist du dir sicher, dass du diese Vorlage löschen möchtest?',
+
+    'changeUserStatus': 'Bist du dir sicher, dass du den Status dieses Nutzers ändern möchtest?',
+    'changeUserStatusHeader' : 'Benutzerstatus bearbeiten',
     'replaceShiftTypeConfirmation' : 'Möchtest du alle Dienste die den folgenden Diensttyp verwenden wirklich ersetzen?:',
     'replaceAll' : 'Alle ersetzen',
+
+    'conflictDetected' : 'Konflikt erkannt!',
+    'conflictAlertLine1':'Jemand anderes hat diese Schicht vor dir bearbeitet. Die neuen Werte wurden aktualisiert.',
+    'conflictAlertLine2':'Bitte überprüfe die neuen Informationen und wenn du diese wirklich überschreiben möchtest, führe die Änderungen erneut durch.',
+
 };

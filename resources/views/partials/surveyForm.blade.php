@@ -29,7 +29,7 @@
                 <div>
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
                     <label><input type="checkbox" id="required1" value="1" name="is_private"
-                                  @if(Session::get('userGroup') != 'clubleitung' AND Session::get('userGroup') != 'admin' AND Session::get('userGroup') != 'marketing') checked
+                                  @if(Auth::user()->isAn(Roles::PRIVILEGE_MARKETING)) checked
                                   disabled @endif class="input_checkboxitem"
                                   @if($survey->is_private) checked @endif> {{ trans('mainLang.showOnlyForLoggedInMember') }}
                     </label>

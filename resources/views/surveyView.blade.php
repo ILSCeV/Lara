@@ -7,6 +7,8 @@ $clubs
 $userId
 $userGroup
 $userCanEditDueToRole
+$username
+$ldapid
 -->
 @extends('layouts.master')
 @section('title')
@@ -114,7 +116,7 @@ $userCanEditDueToRole
                 <i class="fa fa-bar-chart-o white-text"></i>
                 &nbsp;&nbsp;
                 {{ $survey->title }}
-                @if($userId == $survey->creator_id OR $userCanEditDueToRole)
+                @if($userId == $survey->creator_id || $userCanEditDueToRole)
                     <a href="{{$survey->id}}/edit"
                        style="float: right"
                        class="btn btn-default btn-sm"
@@ -162,9 +164,9 @@ $userCanEditDueToRole
                 <div id="survey-answer" class="table-responsive-custom">
 
                     <input hidden id="get_row" value="">
-                    <input type="hidden" id="hdnSession_userName" value="{{Session::get('userName')}}">
-                    <input type="hidden" id="hdnSession_userClub" value="{{Session::get('userClub')}}">
-                    <input type="hidden" id="hdnSession_userID" value="{{Session::get('userId')}}">
+                    <input type="hidden" id="hdnSession_userName" value="{{ $username }}">
+                    <input type="hidden" id="hdnSession_userClub" value="{{Lara\Section::current()->title}}">
+                    <input type="hidden" id="hdnSession_userID" value="{{ $ldapid }}">
                     <input type="hidden" id="hdnSession_oldContent" name="hidden_oldContent[]" value="">
 
                     <table class="table table-striped table-bordered table-condensed table-responsive-custom">
@@ -191,9 +193,9 @@ $userCanEditDueToRole
                                     <ul id="dropdown-menu_name" class="dropdown-menu dropdown-username">
                                         <li id="yourself">
                                             <a href="javascript:void(0);"
-                                               onClick="document.getElementById('newName').value='{{Session::get('userName')}}';
-                                                       document.getElementById('club').value='{{Session::get('userClub')}}';
-                                                       document.getElementById('ldapId').value='{{Session::get('userId')}}'">
+                                               onClick="document.getElementById('newName').value='{{ $username }}';
+                                                       document.getElementById('club').value='{{Lara\Section::current()->title}}';
+                                                       document.getElementById('ldapId').value='{{ $ldapid }}'">
                                                 <b>{{ trans('mainLang.addMe') }}</b>
                                             </a>
                                         </li>
@@ -259,8 +261,8 @@ $userCanEditDueToRole
                             </td>
                         </tr>
                         {!! Form::open(['action' => ['SurveyAnswerController@update', $survey->id,  'id' => '' ], 'class' => 'update']) !!}
-                        @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
-                            @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
+                        @if(!$survey->is_anonymous || $userId == $survey->creator_id)
+                            @if(!$survey->show_results_after_voting || $userParticipatedAlready)
                                 @foreach($answers as $key => $answer)
                                     <tr class="row{{$answer->id}}" id="{{$answer->id}}">
                                         <td class="singleAnswer">
@@ -283,8 +285,8 @@ $userCanEditDueToRole
                                                     {{trans($cell->answer)}}
                                                 </td>
                                                 @endforeach
-                                                @if($userId == $answer->creator_id OR $userCanEditDueToRole OR empty($answer->creator_id))
-                                                    @if($survey->deadline >= date("Y-m-d H:i:s") OR $userCanEditDueToRole)
+                                                @if($userId == $answer->creator_id || $userCanEditDueToRole || empty($answer->creator_id))
+                                                    @if($survey->deadline >= date("Y-m-d H:i:s") || $userCanEditDueToRole)
                                                     <!--Edit Delete Buttons-->
                                                         <td class="tdButtons ">
                                                             <input href="#"
@@ -331,9 +333,9 @@ $userCanEditDueToRole
 
     {{---------------------------------------------change-history-----------------------------------------------------}}
     @if(!empty($userId))
-        @if(!$survey->is_anonymous OR $userId == $survey->creator_id)
+        @if(!$survey->is_anonymous || $userId == $survey->creator_id)
             {{--only if the survey is public or if the user is the creator of the survey--}}
-            @if(!$survey->show_results_after_voting OR $userParticipatedAlready)
+            @if(!$survey->show_results_after_voting || $userParticipatedAlready)
                 {{--only if the results are always visiable or the user has already taken part--}}
                 {{--they can see the change history of the survey--}}
                 <br>
@@ -357,7 +359,7 @@ $userCanEditDueToRole
                         <tbody>
                         @foreach($revisions as $key_revision => $revision)
                             <tr id="tr-header-{{$key_revision}}"
-                                onclick="toggle({{$key_revision}}, {{count($revision['revision_entries'])}})">
+                                onclick="toggle({{$key_revision}}, {{ count($revision['revision_entries']) }})">
                                 <td>{{$revision['creator_name']}}</td>
                                 <td>{{$revision['summary']}}</td>
                                 <td><i id="arrow-icon{{$key_revision}}" class="fa fa-caret-right"></i></td>

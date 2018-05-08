@@ -10,12 +10,12 @@
     @endif
 
     @if(date("Y-m-d", strtotime($survey->deadline)) === date("Y-m-d", $weekDay->getTimestamp()))
-        @if(!Session::has('userId') && $survey->is_private)
+        @if(!Auth::user() && $survey->is_private)
             {{-- check current session for user role && and the survey for private status--}}
             {{-- no userId means this a guest account, so he gets blocked here--}}
 
             {{--if so show a grey placeholder for the guest--}}
-            <div class="cal-event {{$classString}} palette-Grey-500 bg">
+            <div class="cal-event {{$classString}} palette-Grey-500 bg word-break section-filter survey">
                 <i class="fa fa-bar-chart-o white-text"></i>
                 &nbsp;&nbsp;
                 {{--and show him thats a private survey(=Interne Umfrage in german) only for users--}}
@@ -27,7 +27,7 @@
         @else
             {{-- meaning Session::has'userId' OR !$survey->is_private == 0--}}
             {{-- so session has a valid user OR the guest can see this survey because it isn't private--}}
-            <div class="cal-event {{$classString}} palette-Purple-900 bg">
+            <div class="cal-event {{$classString}} palette-Purple-900 bg word-break section-filter survey">
                 <i class="fa fa-bar-chart-o white-text"></i>
                 &nbsp;&nbsp;
                 {{-- provide a URL to the survey --}}
@@ -55,22 +55,24 @@
         @endif
 
         {{-- highlight with cal-month-my-event class if the signed in user has a shift in this event --}}
-        @if((Session::has('userId') && $clubEvent->hasShift($clubEvent->getSchedule->id, Session::get('userId'))))
-            <?php $classString .= " cal-month-my-event"; ?>
-        @endif
+        @auth
+            @if($clubEvent->hasShift(Auth::user()->person))
+                <?php $classString .= " cal-month-my-event"; ?>
+            @endif
+        @endauth
 
         {{-- Filter --}}
         @if ( $clubEvent->showToSection->isEmpty() )
             {{-- Workaround for older events: if filter is empty - use event club data instead --}}
-            <div class="{!! $clubEvent->section->title !!}  word-break">
+            <div class="{!! $clubEvent->section->title !!}">
         @else
             {{-- Normal scenario: add a css class according to filter data --}}
-            <div class="word-break section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach">
+            <div class="section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach">
         @endif
 
 
             {{-- guests see private events as placeholders only, so check if user is logged in --}}
-            @if(!Session::has('userId'))
+            @guest
                 {{-- show only a placeholder for private events --}}
                 @if($clubEvent->evnt_is_private)
                     <div class="cal-event {{$classString}} palette-Grey-500 bg">
@@ -85,21 +87,22 @@
                     @elseif ($clubEvent->evnt_type == 1)
                         <div class="cal-event {{$classString}} palette-Purple-500 bg">
                     @elseif ($clubEvent->evnt_type == 2 
-                          OR $clubEvent->evnt_type == 3)
+                          || $clubEvent->evnt_type == 3)
                         <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
                     @elseif ($clubEvent->evnt_type == 4 
-                          OR $clubEvent->evnt_type == 5 
-                          OR $clubEvent->evnt_type == 6)
+                          || $clubEvent->evnt_type == 5 
+                          || $clubEvent->evnt_type == 6)
                         <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
                     @elseif ($clubEvent->evnt_type == 7 
-                          OR $clubEvent->evnt_type == 8)
+                          || $clubEvent->evnt_type == 8)
                         <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg">
                     @elseif ($clubEvent->evnt_type == 9)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
                     @endif
+
                     @include("partials.event-marker", $clubEvent)
-                    &nbsp;&nbsp;
-                    <a href="{{ URL::route('event.show', $clubEvent->id) }}"
+                        <span class="event-time white-text">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}</span>
+                    <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
                        data-toggle="tooltip" 
                        data-placement="right"
                        title="{{ trans('mainLang.showDetails')}}">
@@ -116,21 +119,24 @@
                 @elseif ($clubEvent->evnt_type == 1)
                     <div class="cal-event {{$classString}} palette-Purple-500 bg">
                 @elseif ($clubEvent->evnt_type == 2 
-                      OR $clubEvent->evnt_type == 3)
+                      || $clubEvent->evnt_type == 3)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
                 @elseif ($clubEvent->evnt_type == 4 
-                      OR $clubEvent->evnt_type == 5 
-                      OR $clubEvent->evnt_type == 6)
+                      || $clubEvent->evnt_type == 5 
+                      || $clubEvent->evnt_type == 6)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
                 @elseif ($clubEvent->evnt_type == 7 
-                      OR $clubEvent->evnt_type == 8)
+                      || $clubEvent->evnt_type == 8)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg">
                 @elseif ($clubEvent->evnt_type == 9)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
                 @endif
 
-                @include("partials.event-marker", $clubEvent)
-
+                    @include("partials.event-marker", $clubEvent)
+                    {{-- Show starting time with Preparation time in () --}}
+                    <span class="event-time white-text">
+                        &nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}{{$clubEvent->schedule->schdl_time_preparation_start <> $clubEvent->evnt_time_start?" (".date ('H:i',strtotime($clubEvent->schedule->schdl_time_preparation_start)).")":""}}
+                    </span>
                 {{--
 
                 Disabling iCal until fully functional.
@@ -138,8 +144,8 @@
                 @include("partials.publishStateIndicator")
 
                 --}}
-                    &nbsp;&nbsp;
-                    <a href="{{ URL::route('event.show', $clubEvent->id) }}"
+
+                    <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
                        data-toggle="tooltip" 
                        data-placement="right"
                        title="{{ trans('mainLang.showDetails')}}">
@@ -147,7 +153,7 @@
                     </a>
 
                 </div>
-            @endif
+            @endguest
 
         </div>
 

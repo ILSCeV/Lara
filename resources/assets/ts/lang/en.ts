@@ -34,6 +34,14 @@ export default {
     'confirmUnpublishingEvent': 'Are you sure you want to remove this event from the calendar feed?',
     'deleteTemplate' : 'delete Template',
     'deleteTemplateMessage' : 'Are you sure that you want to delete this Template?',
+
+    'changeUserStatus': 'Are you sure that you want to change the status of this user?',
+    'changeUserStatusHeader' : 'Change user status',
     'replaceShiftTypeConfirmation' : 'Do you really want to replace all shifts that use this shift type:',
     'replaceAll' : 'replace all',
+
+    'conflictDetected' : 'Conflict detected!',
+    'conflictAlertLine1' : 'Someone else has edited this shift before you. The new values have been updated.',
+    'conflictAlertLine2' : 'Please check the new information and if you really want to override them, perform your changes again.',
+
 };

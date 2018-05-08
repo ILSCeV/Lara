@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Lara\ClubEvent;
@@ -11,6 +12,7 @@ use Lara\Shift;
 use Lara\ShiftType;
 use Lara\Template;
 use Lara\Utilities;
+use Lara\utilities\RoleUtility;
 use Log;
 use Redirect;
 use Session;
@@ -109,10 +111,9 @@ class ShiftTypeController extends Controller
     public function update(Request $request, $id)
     {
         // Check credentials: you can only edit, if you have rights for marketing, section management or admin
-        if(!Session::has('userId')
-            OR (Session::get('userGroup') != 'marketing'
-                AND Session::get('userGroup') != 'clubleitung'
-                AND Session::get('userGroup') != 'admin'))
+        $user = Auth::user();
+
+        if(!$user || !$user->is(['marketing', 'clubleitung', 'admin']))
         {
             Session::put('message', trans('mainLang.cantTouchThis'));
             Session::put('msgType', 'danger');
@@ -151,7 +152,7 @@ class ShiftTypeController extends Controller
 
         // Log the action while we still have the data
         Log::info('ShiftType edited: ' .
-            Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
+            $user->name . ' (' . $user->person->prsn_ldap_id . ', ' .
             ') changed shift type #' . $shiftType->id . ' from "' . $shiftType->title . '", start: ' . $shiftType->start . ', end: ' . $shiftType->end . ', weight: ' . $shiftType->statistical_weight . ' to "' . $newTitle . '" , start: ' . $newTimeStart . ', end: ' . $newTimeEnd . ', weight: ' . $newWeight . '. ');
 
         // Write and save changes
@@ -194,23 +195,23 @@ class ShiftTypeController extends Controller
         if (!Utilities::requirePermission('admin')) {
             $shiftFilter = $shifts->filter(function (Shift $shift) {
                 /** @var Schedule $schedule */
-                $schedule = $shift->schedule()->first();
+                $schedule = $shift->schedule;
                 if (is_null($schedule)) {
                     return false;
                 }
                 /** @var ClubEvent $event */
-                $event = $schedule->event()->first();
+                $event = $schedule->event;
                 if (is_null($event)) {
                     return false;
                 }
                 /** @var Section $section */
-                $section = $event->section()->first();
-                return $section->title == Session::get('userClub');
+                $section = $event->section;
+                return Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_MARKETING)->contains($section->id)  ;
             });
             $templateShift = Template::whereHas('shifts', function ($query) use ($shiftTypeId) {
                 $query->where('shifttype_id', '=', $shiftTypeId);
             })->whereHas('section', function ($query) {
-                $query->where('title', '=', Session::get('userClub'));
+                $query->whereIn('id', Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_MARKETING)->toArray());
             })->get()->flatMap(function (Template $template) {
                 return $template->shifts()->get();
             })->filter(function (Shift $shift) use ($shiftTypeId) {
@@ -241,10 +242,9 @@ class ShiftTypeController extends Controller
     public function destroy($id)
     {
         // Check credentials: you can only delete, if you have rights for marketing, section management or admin
-        if(!Session::has('userId')
-            OR (Session::get('userGroup') != 'marketing'
-                AND Session::get('userGroup') != 'clubleitung'
-                AND Session::get('userGroup') != 'admin'))
+        $user = Auth::user();
+
+        if(!$user || !$user->is(['marketing', 'clubleitung', 'admin']))
         {
             Session::put('message', trans('mainLang.cantTouchThis'));
             Session::put('msgType', 'danger');
@@ -270,7 +270,7 @@ class ShiftTypeController extends Controller
 
             // Log the action while we still have the data
             Log::info('ShiftType deleted: ' .
-                Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
+                $user->name . ' (' . $user->person->prsn_ldap_id . ', ' .
                 ') deleted "' . $shiftType->title .  '" (it was not used in any schedule).');
 
             // Now delete the shiftType

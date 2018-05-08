@@ -1,32 +1,16 @@
 @if($answer->getPerson)
-    @if( $answer->getPerson->prsn_status === 'candidate' )
-        <i class="fa fa-adjust"
+    @php
+        $person = $answer->getPerson;
+        $attributes = Lara\Status::style($person->prsn_status);
+        $section = $person->club->section();
+    @endphp
+    @if ($section)
+        <i class="{{$attributes["status"] }}"
            name="status-icon"
-           style="color:yellowgreen;"
+           style=" {{ $attributes["style"] }}"
            {{--data-toggle="tooltip"--}}
            {{--data-placement="top"--}}
-           title="{{ trans('mainLang.candidate') }}"></i>
-    @elseif ( $answer->getPerson->prsn_status === 'veteran' )
-        <i class="fa fa-star"
-           name="status-icon"
-           style="color:gold;"
-           {{--data-toggle="tooltip"--}}
-           {{--data-placement="top"--}}
-           title="{{ trans('mainLang.veteran') }}"></i>
-    @elseif ( $answer->getPerson->prsn_status === 'member')
-        <i class="fa fa-circle"
-           name="status-icon"
-           style="color:forestgreen;"
-           {{--data-toggle="tooltip"--}}
-           {{--data-placement="top"--}}
-           title="{{ trans('mainLang.active') }}"></i>
-    @elseif ( $answer->getPerson->prsn_status === 'resigned' )
-        <i class="fa fa-star-o"
-           name="status-icon"
-           style="color:gold;"
-           {{--data-toggle="tooltip"--}}
-           {{--data-placement="top"--}}
-           title="{{ trans('mainLang.ex-member') }}"></i>
+           title="{{ Lara\Status::localize($person->prsn_status, $section) }}"></i>
     @else
         <i class="fa fa-circle"
            style="color:lightgrey;"

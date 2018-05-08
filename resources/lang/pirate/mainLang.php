@@ -260,6 +260,7 @@ return [
     // /resources/views/partials/filter.blade.php
     'allSections'           => 'Alle Schiffe',
     'comments'              => 'Ausrufe',
+    'chooseAtLeastOne'      => 'Wähle mind. eine...',
 
     //-----------------------------------------------------------------------------------------------------------
 
@@ -511,6 +512,17 @@ return [
 
     'Search'                        => 'Suche',
     'facebookNeeded'                => 'Piratenbuch benötigt',
-    'createTemplate'                => 'Kaperplan erstellen'
+    'createTemplate'                => 'Kaperplan erstellen',
 
+    /////////////////////////
+    // User management     //
+    /////////////////////////
+    'status'                        => 'Status',
+    'editUser'                      => 'Benutzer bearbeiten',
+    'availableRoles'                => 'Verfügbare Rollen',
+    'activeRoles'                   => 'Aktive Rollen',
+    'changesWereReset'              => 'Deine Änderungen wurden zurückgesetzt. Vor dem Absenden solltest du diese nochmals anwenden.',
+    'roleManagement'                => 'Berechtigungen verwalten',
+    'changesSaved'                  => 'Eingaben wurden gespeichert.',
+    'sectionChanged'                => 'Die Sektion des Benutzers hat sich geändert. Denke daran, seine Berechtigungen ebenfalls anzupassen.',
 ];

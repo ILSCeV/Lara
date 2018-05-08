@@ -13,6 +13,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use Carbon\Carbon;
+use Lara\Status;
 
 $factory->define(Lara\User::class, function (Faker\Generator $faker) {
     static $password;
@@ -29,9 +30,9 @@ $factory->define(Lara\Person::class, function (Faker\Generator $faker) {
     return [
         'prsn_name' => $faker->name(),
         'prsn_ldap_id' => $faker->numberBetween(2000, 9999),
-        'prsn_status' => $faker->randomElement(['member', 'veteran', 'candidate']),
+        'prsn_status' => $faker->randomElement(Status::ACTIVE),
         'prsn_uid' => hash("sha512", uniqid()),
-        'clb_id' => $faker->randomElement([1, 2, 3, Lara\Club::inRandomOrder()->first()->id])
+        'clb_id' => $faker->randomElement((new Lara\Club)->inRandomOrder()->get()->map(function(\Lara\Club $club){return $club->id;})->toArray())
     ];
 });
 
@@ -177,5 +178,12 @@ $factory->define(Lara\Template::class, function(Faker\Generator $faker) {
         'price_normal' => $faker->randomFloat(2,0,1),
         'price_external' => $faker->randomFloat(2,1,2),
         'facebook_needed' => $faker->boolean(40),
+    ];
+});
+
+$factory->define(Lara\Role::class, function(Faker\Generator $faker) {
+    return [
+        'name' => $faker->title(),
+        'section_id'=> (new Lara\Section)->inRandomOrder()->first()->id
     ];
 });

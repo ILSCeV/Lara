@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Auth;
 use Carbon\Carbon;
 use Hash;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Lara\Club;
 use Lara\Person;
 use Lara\Shift;
 use Lara\ShiftType;
+use Lara\Status;
 use Lara\Utilities;
 
 class ShiftController extends Controller
@@ -35,7 +37,7 @@ class ShiftController extends Controller
         $name = !is_null($shift->getPerson) ? $shift->getPerson->prsn_name : "=FREI=";
         $status = !is_null($shift->getPerson) ? $shift->getPerson->prsn_status : "";
         $clubTitle = !is_null($shift->getPerson) ? $shift->getPerson->getClub->clb_title : "";
-        $isCurrentUser = $ldapId == Session::get('userId');
+        $isCurrentUser = $ldapId == Auth::user()->person->prsn_ldap_id;
         $response = [
             'id'                => $shift->id,
             'title'       => $shift->type->title(),
@@ -101,7 +103,7 @@ class ShiftController extends Controller
         $password    = $request->get('password');
 
         // Check if someone modified LDAP ID manually
-        if ( !empty($ldapId) AND !is_numeric($ldapId) ) {
+        if ( !empty($ldapId) && !is_numeric($ldapId) ) {
             return response()->json("Fehler: die Clubnummer wurde in falschem Format angegeben. Bitte versuche erneut oder melde diesen Fehler dem Admin.", 400);
         }
 
@@ -116,6 +118,26 @@ class ShiftController extends Controller
         if ($shift->getSchedule->schdl_password !== ''
             && !Hash::check( $password, $shift->getSchedule->schdl_password ) ) {
             return response()->json("Fehler: das angegebene Passwort ist falsch, keine Änderungen wurden gespeichert. Bitte versuche erneut oder frage einen anderen Mitglied oder CL.", 401);
+        }
+
+        // Control if the updated_at matches with the request timestamp
+        if((!is_null( $shift->getPerson()->first() )) && $timestamp <> $shift->updated_at ) {
+            // Find user status icon parameters to return
+            $userStatus = $this->updateStatus($shift);
+
+            // Formulate the response
+            $prsn_ldap_id = is_null($shift->getPerson()->first()) ? "" : $shift->getPerson()->first()->prsn_ldap_id;
+            return response()->json([
+                "errorCode" => "error_outOfSync",
+                "entryId"           => $shift->id,
+                "userStatus"        => $userStatus,
+                "userName"          => $shift->getPerson()->first()->prsn_name,
+                "ldapId"            => $prsn_ldap_id,
+                "userClub"          => $shift->getPerson()->first()->getClub->clb_title,
+                "userComment"       => $shift->comment,
+                "timestamp"         => $shift->updated_at->toDateTimeString(),
+                "is_current_user"   => $prsn_ldap_id == Auth::user()->person->prsn_ldap_id
+            ], 409);
         }
 
         // FYI:
@@ -156,7 +178,7 @@ class ShiftController extends Controller
                 {
                     // Member shifts (with LDAP ID provided) shouldn't change club id, so no need to do anything in that case either
                     if ( $shift->getPerson->prsn_name == $userName
-                        AND  Person::where('id', '=', $shift->person_id)->first()->prsn_ldap_id == $ldapId )
+                        &&  Person::where('id', '=', $shift->person_id)->first()->prsn_ldap_id == $ldapId )
                     {
                         // Possibility 1: same name, same ldap = same person
                         // Case SAME: Shift was not empty, but same person is there -> do nothing
@@ -175,8 +197,8 @@ class ShiftController extends Controller
                 {
                     // Guest shifts may change club
                     if ( $shift->getPerson->prsn_name == $userName
-                        AND  $shift->getPerson->getClub->clb_title == $userClub
-                        AND  $ldapId == '' )
+                        &&  $shift->getPerson->getClub->clb_title == $userClub
+                        &&  $ldapId == '' )
                     {
                         // Possibility 1: same name, same club, empty ldap  = do nothing
                         // Case SAME: Shift was not empty, but same person is there -> do nothing
@@ -247,6 +269,7 @@ class ShiftController extends Controller
 
         // Formulate the response
         $prsn_ldap_id = is_null($shift->getPerson()->first()) ? "" : $shift->getPerson()->first()->prsn_ldap_id;
+        $user = Auth::user();
         return response()->json([
             "entryId"           => $shift->id,
             "userStatus"        => $userStatus,
@@ -254,8 +277,8 @@ class ShiftController extends Controller
             "ldapId"            => $prsn_ldap_id,
             "userClub"          => is_null( $shift->getPerson()->first() ) ? "" : $shift->getPerson()->first()->getClub->clb_title,
             "userComment"       => $shift->comment,
-            "timestamp"         => $timestamp,
-            "is_current_user"   => $prsn_ldap_id == Session::get('userId')
+            "timestamp"         => $shift->updated_at->toDateTimeString(),
+            "is_current_user"   => $prsn_ldap_id == ($user ? $user->person->prsn_ldap_id : NULL)
         ], 200);
     }
 
@@ -438,19 +461,21 @@ class ShiftController extends Controller
 
             // If not found, then a user is adding own data for the first time.
             // Let's create a new person with data provided in the session.
+            $user = Auth::user();
+
             if (is_null($person))
             {
                 $person = Person::create( array('prsn_ldap_id' => $ldapId) );
                 $person->prsn_name = $userName;
-                $person->prsn_status = Session::get('userStatus');
+                $person->prsn_status = $user->status;
                 $person->prsn_uid = hash("sha512", uniqid());
             }
 
             // If a person adds him/herself - update status from session to catch if it was changed in LDAP
-            if ($person->prsn_ldap_id == Session::get('userId'))
+            if ($person->prsn_ldap_id == $user->person->prsn_ldap_id)
             {
-                $person->prsn_status = Session::get('userStatus');
-                $person->prsn_name = Session::get('userName');
+                $person->prsn_status = $user->status;
+                $person->prsn_name = $user->name;
             }
 
         }
@@ -458,7 +483,7 @@ class ShiftController extends Controller
         // If club input is empty setting clubId to '-' (clubId 1).
         // Else - look for a match in the Clubs DB and set person->clubId = matched club's id.
         // No match found - creating a new club with title from input.
-        if ( $userClub == '' OR $userClub == '-' )
+        if ( $userClub == '' || $userClub == '-' )
         {
             $person->clb_id = '1';
         }
@@ -486,33 +511,14 @@ class ShiftController extends Controller
      */
     private function updateStatus($shift) {
         if ( !is_null($shift->person_id) ) {
-            switch (Person::where("id","=",$shift->person_id)->first()->prsn_status) {
-                case 'candidate':
-                    $userStatus = ["status"=>"fa fa-adjust", "style"=>"color:yellowgreen;", "title"=>"Kandidat"];
-                    break;
-                case 'veteran':
-                    $userStatus = ["status"=>"fa fa-star", "style"=>"color:gold;", "title"=>"Veteran"];
-                    break;
-                case 'member':
-                    $userStatus = ["status"=>"fa fa-circle", "style"=>"color:forestgreen;", "title"=>"Aktiv"];
-                    break;
-                case 'resigned':
-                    $userStatus = ["status"=>"fa fa-star-o", "style"=>"color:gold;", "title"=>"ex-Mitglied"];
-                    break;
-                case 'guest':
-                    $userStatus = ["status"=>"fa fa-times-circle-o", "style"=>"color:yellowgreen;", "title"=>"ex-Kandidat"];
-                    break;
-                case "":
-                    $userStatus = ["status"=>"fa fa-circle-o", "style"=>"color:yellowgreen;", "title"=>"Extern"];
-                    break;
-            }
-        }
-        else
-        {
-            $userStatus = ["status"=>"fa fa-question", "style"=>"color:lightgrey;", "title"=>"Dienst frei"];
-        }
 
-        return $userStatus;
+            $person = $shift->person;
+            $club = $person->club;
+            $section = $club->section();
+
+            return Status::style($person->prsn_status, $section);
+        }
+        return ["status"=>"fa fa-question", "style"=>"color:lightgrey;", "title"=>"Dienst frei"];
     }
 
 

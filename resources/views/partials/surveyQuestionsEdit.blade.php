@@ -1,4 +1,4 @@
-@if(isset($questions) AND $questions->count() > 0)
+@if(isset($questions) && $questions->count() > 0)
     {{-- If we already have questions defined display them --}}
     @foreach($questions as $id => $question)
         @include('partials.survey.edit.question')

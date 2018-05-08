@@ -12,14 +12,14 @@
     @elseif ($clubEvent->evnt_type == 1)
         <div class="{{$classString}} palette-Purple-500 bg">
     @elseif ($clubEvent->evnt_type == 2 
-    	  OR $clubEvent->evnt_type == 3)
+    	  || $clubEvent->evnt_type == 3)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
     @elseif ($clubEvent->evnt_type == 4 
-          OR $clubEvent->evnt_type == 5 
-          OR $clubEvent->evnt_type == 6)
+          || $clubEvent->evnt_type == 5 
+          || $clubEvent->evnt_type == 6)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg white-text">
     @elseif ($clubEvent->evnt_type == 7 
-          OR $clubEvent->evnt_type == 8)
+          || $clubEvent->evnt_type == 8)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg white-text">
     @elseif ($clubEvent->evnt_type == 9)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg white-text">

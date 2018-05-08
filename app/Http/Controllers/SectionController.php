@@ -2,13 +2,18 @@
 
 namespace Lara\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Lara\Club;
+use Lara\Http\Middleware\AdminOnly;
+use Lara\Role;
 use Lara\Section;
+use Lara\User;
 use Lara\Utilities;
 use Lara\ClubEvent;
+use Lara\utilities\RoleUtility;
 use Session;
 use View;
 use Redirect;
@@ -16,6 +21,13 @@ use Log;
 
 class SectionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(AdminOnly::class);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +35,7 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $sections = Section::orderBy('title', 'ASC')->paginate(25);
+        $sections = (new Section)->orderBy('title', 'ASC')->paginate(25);
 
         return view('manageSections', ['sections' => $sections]);
     }
@@ -44,11 +56,11 @@ class SectionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        if (!Utilities::requirePermission("admin")) {
+        if (!Utilities::requirePermission(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             // Return to the section management page
             Session::put('message', trans('mainLang.adminsOnly'));
             Session::put('msgType', 'danger');
@@ -76,7 +88,7 @@ class SectionController extends Controller
         }
 
         if ($isNew) {
-            $existingSection = Section::where('title', '=', $title)->first();
+            $existingSection = (new Section)->where('title', '=', $title)->first();
             if (!is_null($existingSection)) {
                 // Return to the section management page
                 Session::put('message', trans('mainLang.sectionExists'));
@@ -107,6 +119,9 @@ class SectionController extends Controller
         $section->startTime =       $startTime;
         $section->endTime =         $endTime;
         $section->save();
+        if ($isNew) {
+            RoleUtility::createRolesForNewSection($section);
+        }
 
         $club->clb_title =          $title;
         $club->save();
@@ -147,7 +162,7 @@ class SectionController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Lara\Section $section
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Section $section)
     {
@@ -158,22 +173,29 @@ class SectionController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Lara\Section $section
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Section $section)
     {
-        if (!Utilities::requirePermission("admin")) {
+        if (!Utilities::requirePermission(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             // Return to the section management page
             Session::put('message', trans('mainLang.adminsOnly'));
             Session::put('msgType', 'danger');
         }
 
         // Log the action while we still have the data
+        /** @var User $user */
+        $user = Auth::user();
+        $userGroups = $user->roles()->get()->map(function(Role $role){
+            return $role->name;
+        })->toArray();
+        $person = $user->person;
+
         Log::info('Section removed: ' .
-            Session::get('userName') . ' (' . Session::get('userId') . ', ' . Session::get('userGroup') .
+            $person->prsn_name . ' (' . $person->prsn_ldap_id . ', ' . implode(', ', $userGroups) .
             ') deleted section "' . $section->title .  '". May Gods have mercy on their souls!');
 
-        $events = ClubEvent::where("plc_id", "=", $section->id)->get();
+        $events = (new \Lara\ClubEvent)->where("plc_id", "=", $section->id)->get();
         /* @var $event ClubEvent */
         foreach ($events as $event) {
              // Delete schedule with shifts
@@ -182,11 +204,18 @@ class SectionController extends Controller
             // Now delete the event itself
             ClubEvent::destroy($event->id);
         }
-        
+
         //find according clubs
-        $clubs=Club::where('clb_title','=',$section->title)->get();
+        $clubs= (new Club)->where('clb_title','=',$section->title)->get();
         foreach ($clubs as $club){
             Club::destroy($club->id);
+        }
+
+        //delete all roles assiged to this section
+        try {
+            (new Role())->where('section_id', '=', $section->id)->delete();
+        } catch (\Exception $e) {
+            Log::error('cannot delete roles',[$e]);
         }
 
         // Now delete the section
@@ -196,6 +225,6 @@ class SectionController extends Controller
         Session::put('message', trans('mainLang.changesSaved'));
         Session::put('msgType', 'success');
         return Redirect::action( 'SectionController@index' );
-        
+
     }
 }
