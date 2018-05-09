@@ -28,10 +28,15 @@ $(function() {
         const showAllActiveSections = () => {
             $(".section-filter").addClass('hidden');
             $(".label-filters").addClass('hidden');
-            $sectionSelect.val().forEach(filter => {
-                $(`.${filter.slice(7)}`).removeClass('hidden');
-                $(`#label-${filter.slice(7)}`).removeClass('hidden');
-            });
+            if($sectionSelect.val().length == 0){
+                $('#label-none').removeClass('hidden');
+            }
+            else {
+                $sectionSelect.val().forEach(filter => {
+                    $(`.${filter.slice(7)}`).removeClass('hidden');
+                    $(`#label-${filter.slice(7)}`).removeClass('hidden');
+                });
+            }
             isotope ? isotope.layout() : null;
         };
 

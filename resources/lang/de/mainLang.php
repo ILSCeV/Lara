@@ -264,6 +264,7 @@ return [
     'selectAll'             => 'Alle',
     'selectNone'            => 'Keine',
     'countSectionsSelected' => '{0} von {1} Sektionen',
+    'noSectionSelected'     => 'Keine Sektion ausgewählt!',
 
     //-----------------------------------------------------------------------------------------------------------
 

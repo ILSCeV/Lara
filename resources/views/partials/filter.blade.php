@@ -11,6 +11,8 @@
         &nbsp;
         <span class="glyphicon glyphicon-remove-circle"></span>
      </span>
+    <span id="label-none" class="label label-filters palette-Red-900-Primary bg hidden" >&nbsp;{{trans('mainLang.noSectionSelected')}}
+     </span>
     <br class="visible-xs">
     <br class="visible-xs">
     <span class="hidden-xs">
