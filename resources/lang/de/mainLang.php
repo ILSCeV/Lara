@@ -261,6 +261,9 @@ return [
     'allSections'           => 'Alle Sektionen',
     'comments'              => 'Kommentare',
     'chooseAtLeastOne'      => 'Wähle mind. eine...',
+    'selectAll'             => 'Alle',
+    'selectNone'            => 'Keine',
+    'countSectionsSelected' => '{0} von {1} Sektionen',
 
     //-----------------------------------------------------------------------------------------------------------
 

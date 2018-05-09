@@ -17,7 +17,13 @@
         &nbsp;
         &nbsp;
     </span>
-	<select id="section-filter-selector" class="hidden show-tick" multiple title="{{ trans('mainLang.chooseAtLeastOne') }}" data-selected-text-format="count > 2" data-actions-box="true">
+	<select id="section-filter-selector" class="hidden show-tick" multiple
+            title="{{ trans('mainLang.chooseAtLeastOne') }}"
+            data-selected-text-format="count > 2"
+            data-actions-box="true"
+            data-select-all-text="{{ trans('mainLang.selectAll') }}"
+            data-deselect-all-text="{{ trans('mainLang.selectNone') }}"
+            data-count-selected-text="{{ trans('mainLang.countSectionsSelected') }}">
 	@foreach($sections as $section)
 		<option value="filter-{!! $section["title"] !!}" class="palette-{{$section->color}}-500-Primary bg option-shadow">{!! $section["title"] !!}</option>
 	@endforeach
