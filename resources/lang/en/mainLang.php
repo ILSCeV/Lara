@@ -262,6 +262,7 @@ return [
     'selectAll'             => 'Select all',
     'selectNone'            => 'Deselect all',
     'countSectionsSelected' => '{0} of {1} sections',
+    'noSectionSelected'     => 'No section selected!',
     //-----------------------------------------------------------------------------------------------------------
 
     // /resources/views/partials/legend.blade.php
