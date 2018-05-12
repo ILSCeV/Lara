@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Redirect;
 use View;
 
-class legalController extends Controller
+class LegalController extends Controller
 {
     public function showPrivacyPolicy() {
     	return View::make('privacyPolicy');
