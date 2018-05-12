@@ -28,10 +28,16 @@ $(function() {
         const showAllActiveSections = () => {
             $(".section-filter").addClass('hidden');
             $(".label-filters").addClass('hidden');
-            $sectionSelect.val().forEach(filter => {
-                $(`.${filter.slice(7)}`).removeClass('hidden');
-                $(`#label-${filter.slice(7)}`).removeClass('hidden');
-            })
+            if($sectionSelect.val().length == 0){
+                $('#label-none').removeClass('hidden');
+            }
+            else {
+                $sectionSelect.val().forEach(filter => {
+                    $(`.${filter.slice(7)}`).removeClass('hidden');
+                    $(`#label-${filter.slice(7)}`).removeClass('hidden');
+                });
+            }
+            isotope ? isotope.layout() : null;
         };
 
         //Handle clicking on a section label
@@ -44,6 +50,7 @@ $(function() {
             $sectionSelect.selectpicker('val',  $sectionSelect.val().filter(sec => sec !== "filter-"+section));
             //Refresh elements
             showAllActiveSections();
+            e.preventDefault();
         });
 
         let $sectionSelect = $('#section-filter-selector');
@@ -54,7 +61,6 @@ $(function() {
                 safeSetLocalStorage(option.value, option.selected ? "show" : "hide");
             });
             showAllActiveSections();
-            isotope ? isotope.layout() : null;
         });
 
         $sectionSelect.find('option').each((i: number, option: HTMLOptionElement) => {

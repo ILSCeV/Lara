@@ -613,4 +613,9 @@ a.event-name{
     cursor: pointer;
     user-select: none;
 	margin-right: 4px;
+    padding: 4px;
+}
+
+.label-filters .glyphicon{
+    pointer-events:none;
 }

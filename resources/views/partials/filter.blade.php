@@ -11,13 +11,21 @@
         &nbsp;
         <span class="glyphicon glyphicon-remove-circle"></span>
      </span>
+    <span id="label-none" class="label label-filters palette-Red-900-Primary bg hidden" >&nbsp;{{trans('mainLang.noSectionSelected')}}
+     </span>
     <br class="visible-xs">
     <br class="visible-xs">
     <span class="hidden-xs">
         &nbsp;
         &nbsp;
     </span>
-	<select id="section-filter-selector" class="hidden show-tick" multiple title="{{ trans('mainLang.chooseAtLeastOne') }}" data-selected-text-format="count > 2" data-actions-box="true">
+	<select id="section-filter-selector" class="hidden show-tick" multiple
+            title="{{ trans('mainLang.chooseAtLeastOne') }}"
+            data-selected-text-format="count > 2"
+            data-actions-box="true"
+            data-select-all-text="{{ trans('mainLang.selectAll') }}"
+            data-deselect-all-text="{{ trans('mainLang.selectNone') }}"
+            data-count-selected-text="{{ trans('mainLang.countSectionsSelected') }}">
 	@foreach($sections as $section)
 		<option value="filter-{!! $section["title"] !!}" class="palette-{{$section->color}}-500-Primary bg option-shadow">{!! $section["title"] !!}</option>
 	@endforeach

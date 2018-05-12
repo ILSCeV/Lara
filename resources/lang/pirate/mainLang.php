@@ -261,6 +261,10 @@ return [
     'allSections'           => 'Alle Schiffe',
     'comments'              => 'Ausrufe',
     'chooseAtLeastOne'      => 'Wähle mind. eine...',
+    'selectAll'             => 'Alle',
+    'selectNone'            => 'Keine',
+    'countSectionsSelected' => '{0} von {1} Sektionen',
+    'noSectionSelected'     => 'Keine Sektion ausgewählt!',
 
     //-----------------------------------------------------------------------------------------------------------
 
