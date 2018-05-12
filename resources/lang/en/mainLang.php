@@ -27,8 +27,8 @@ return [
     //-----------------------------------------------------------------------------------------------------
 
     // /resources/views/layouts/master.blade.php
-    'notWorkingMail'        => 'Something isn\'t working? Write :Name a mail.',
-    'moreInfosProjectsite'  => 'Want to know more? Visit the projectsite on GitHub.',
+    'notWorkingMail'        => 'Something isn\'t working? Write us an e-mail!',
+    'moreInfosProjectsite'  => 'Want to know more? Visit us on GitHub!',
     'backToTop'             => 'Back to top',
 
     //-----------------------------------------------------------------------------------------------------
@@ -528,4 +528,15 @@ return [
     'roleManagement'                => 'Manage roles',
     'changesSaved'                  => 'Changes saved.',
     'sectionChanged'                => 'You changed the section of this user. Remember to also update his roles.',
+
+    /////////////////
+    // Legal stuff //
+    /////////////////
+    
+    'privacyPolicy'     => 'Privacy policy',
+    'impressum'         => 'Imprint',
+
+
+
+
 ];

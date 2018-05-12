@@ -195,3 +195,7 @@ Route::get('/password/change', ['as' => 'password.change', 'uses' => 'Auth\Passw
     ->middleware('auth');
 Route::post('/password/change', ['as' => 'password.change.post', 'uses' => 'Auth\PasswordChangeController@changePassword'])
     ->middleware('auth');
+
+ // LEGAL
+ Route::get('/privacy',					'LegalController@showPrivacyPolicy');
+ Route::get('/impressum',				'LegalController@showImpressum');

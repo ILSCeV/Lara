@@ -27,8 +27,8 @@ return [
     //-----------------------------------------------------------------------------------------------------
 
     // /resources/views/layouts/master.blade.php
-    'notWorkingMail'        => 'Etwas funktioniert nicht? Schreibe :Name eine Mail.',
-    'moreInfosProjectsite'  => 'Mehr Infos? Besuche die Projektseite auf GitHub.',
+    'notWorkingMail'        => 'Etwas funktioniert nicht? Schreibe uns eine Mail!',
+    'moreInfosProjectsite'  => 'Mehr Infos? Besuche uns auf GitHub!',
     'backToTop'             => 'Zurück zum Seitenanfang',
 
     //-----------------------------------------------------------------------------------------------------
@@ -531,4 +531,14 @@ return [
     'roleManagement'                => 'Berechtigungen verwalten',
     'changesSaved'                  => 'Eingaben wurden gespeichert.',
     'sectionChanged'                => 'Die Sektion des Benutzers hat sich geändert. Denke daran, seine Berechtigungen ebenfalls anzupassen.',
+
+    /////////////////
+    // Legal stuff //
+    /////////////////
+    
+    'privacyPolicy'     => 'Datenschutz',
+    'impressum'         => 'Impressum',
+
+
+
 ];
