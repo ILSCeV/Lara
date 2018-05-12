@@ -34,43 +34,25 @@
 			@include('partials.message')
 		</div>
 
-    <section class="container containerNopadding">
-        @yield('content')
-    </section>
+        <section class="container containerNopadding">
+            @yield('content')
+        </section>
 
-    <!-- Back to Top button -->
-    <a id="back-to-top" 
-       href="#" 
-       class="btn btn-primary btn-lg back-to-top hidden-print hidden-md hidden-lg" 
-       role="button" 
-       title="{{ trans("mainLang.backToTop")  }}" 
-       data-toggle="tooltip" 
-       data-placement="right">
-        <span class="glyphicon glyphicon-chevron-up"></span>
-    </a>
+        <!-- Back to Top button -->
+        <a id="back-to-top" 
+           href="#" 
+           class="btn btn-primary btn-lg back-to-top hidden-print hidden-md hidden-lg" 
+           role="button" 
+           title="{{ trans("mainLang.backToTop")  }}" 
+           data-toggle="tooltip" 
+           data-placement="right">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </a>
 
-    <br>
- 	<footer class="navbar-default navbar-static-bottom hidden-print" id="footer">
-        <div class="container">
-            <br>
-            <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
-                <small><a href="mailto:lara@il-sc.de"> {{ trans('mainLang.notWorkingMail',['Name' => 'Lara']) }} </a></small>
-            </span>
-            <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
-                <small>
-                    {{ File::exists("gitrevision.txt") ? File::get("gitrevision.txt") : "&nbsp;" }}
-                </small>
-            </span>
-            <span class="col-xs-12 col-sm-12 col-md-4 text-dark-grey" style="text-align: center;">
-                <small><a href="https://github.com/ILSCeV/Lara">{{ trans('mainLang.moreInfosProjectsite') }}</a>
-                </small>
-            </span>
-            <br class="visible-xs visible-sm">
-            <br class="visible-xs visible-sm">
-            <br>
-            <br>
-        </div>
-	</footer>
+        <br>
+     	<section class="footer">
+            @include('partials.footer')
+        </section>
         <script> var enviroment = '{{App::environment()}}'; </script>
         <script src="{{ mix('/manifest.js') }}"></script>
         <script src="{{ mix('/vendor.js') }}"></script>

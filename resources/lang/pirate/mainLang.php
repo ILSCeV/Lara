@@ -27,7 +27,7 @@ return [
     //-----------------------------------------------------------------------------------------------------
 
     // /resources/views/layouts/master.blade.php
-    'notWorkingMail'        => 'Eine Planke ist lose? Versende :Name eine Taube!',
+    'notWorkingMail'        => 'Eine Planke ist lose? Versende uns eine Taube!',
     'moreInfosProjectsite'  => 'Land in Sicht? Kletter\' in den Mast!',
     'backToTop'             => 'Ins Krähennest klettern!',
 
@@ -529,4 +529,15 @@ return [
     'roleManagement'                => 'Berechtigungen verwalten',
     'changesSaved'                  => 'Eingaben wurden gespeichert.',
     'sectionChanged'                => 'Die Sektion des Benutzers hat sich geändert. Denke daran, seine Berechtigungen ebenfalls anzupassen.',
+
+    /////////////////
+    // Legal stuff //
+    /////////////////
+    
+    'privacyPolicy'     => 'Datenschutz',
+    'impressum'         => 'Impressum',
+
+
+
+
 ];
