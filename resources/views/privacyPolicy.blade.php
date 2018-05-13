@@ -245,7 +245,191 @@ Dies setzt immer voraus, dass die Drittanbieter dieser Inhalte, die IP-Adresse d
 
                 </div>
                 <div class="tab-pane fade" id="short">
-                    short
+                    <p><strong>Wichtig:</strong></p>
+                    <p>
+                        Diese Version bietet eine kurze und leicht verständliche Erklärung der vollständigen deutschen
+                        Version der Datenschutzerklärung.
+                        <br>
+                        Diese Version wird NUR für den Komfort unserer Benutzer bereitgestellt. Die vollständige
+                        deutsche Version,
+                        die über einen Reiter oben zugänglich ist, ist für alle rechtlichen Angelegenheiten bindend.
+                        <br>
+                        Sollte ein Unterschied / Fehler in diese Version bestehen, ist die vollständige deutsche Version
+                        der Datenschutzerklärung als richtig anzusehen.<br>
+                    </p>
+
+                    <br>
+                    <p><strong> Warum das ganze?</strong></p>
+                    <ul>
+                        <li>Im Mai 2018 wird eine umfassende Aktualisierung der europäischen Datenschutzgesetze
+                            verbindlich.
+                        </li>
+                        <li>Wir aktualisieren unsere Datenschutzerklärung, um den neuen Gesetzen zu entsprechen.
+                            Außerdem informieren wir Sie auch über Ihre persönlichen Daten,
+                            die wir bei der Nutzung von Lara pflegen und weitergeben.
+                        </li>
+                        <li>Wir sind bestrebt, nur das absolut erforderliche Mindestmaß an persönlichen Daten zu
+                            verwenden,
+                            die für den bestimmungsgemäßen Betrieb unserer Dienste erforderlich sind.
+                        </li>
+                        <li>Wir tun unser Bestes, um Ihre Daten zu schützen und verantwortungsvoll und sorgfältig zu
+                            behandeln.
+                        </li>
+                        <li>Die folgenden Abschnitte enthalten einen Überblick darüber, welche Daten von Ihnen zu
+                            welchem Zweck verwendet
+                            werden und wie Sie uns kontaktieren können, wenn Sie Änderungen oder Löschungen wünschen.
+                        </li>
+                        <li>Danach bitten wir Sie um Erlaubnis, Ihre Daten wie beschrieben zu verwenden.</li>
+                    </ul>
+
+                    <br>
+                    <p><strong> Welche Daten sammeln wir über Nutzer und zu welchem Zweck?</strong></p>
+                    <p>
+                        <strong>Von allen, die auf Lara zugreifen, sowohl registrierte Benutzer als auch Gäste:</strong><br>
+                    <ul>
+                        <li><strong>Wir führen ein Protokoll aller Anfragen an den Server, die die Uhrzeit / das Datum,
+                                die IP-Adresse,
+                                den Typ des verwendeten Browsers, die von Ihnen besuchten Seiten und die von Ihnen
+                                geposteten Seiten enthalten</strong> - im Grunde alles,
+                            was Sie uns schicken (plus die Antworten des Servers). Dies wird benötigt, um den Dienst
+                            selbst bereitzustellen ("so funktioniert das Web"),
+                            und auch für die Fehlersuche, falls irgendwelche Probleme auftreten sollten. Diese
+                            Protokolle werden 30 Tage lang aufbewahrt und anschließend gelöscht.
+                            Nur Lara Administratoren haben Zugriff darauf.
+                        </li>
+                        <li><strong>Die IP-Adresse wird länger gespeichert, wenn Sie etwas in Lara
+                                veröffentlichen</strong> - zu wissen,
+                            wer was im Falle von seltsamen / illegalen Nachrichten gepostet hat.
+                            Grundsätzlich speichern wir für jeden Eintrag für eine Dienst oder einen Kommentar in Lara
+                            die IP-Adresse zusammen mit anderen Daten.
+                            Nur Lara Administratoren haben Zugriff darauf.
+                        </li>
+                    </ul>
+                    <p>
+                        <strong>Wenn sich ein Benutzer registriert und / oder anmeldet:</strong><br>
+                    <ul>
+                        <li><strong>Dein Spitzname in der Sektion, auch bekannt als "Clubname"</strong> - benötigt, um
+                            zu identifizieren,
+                            wer einen Dienst übernimmt oder einen Kommentar schreibt. Jeder kann es sehen.
+                        </li>
+                        <li><strong>Dein Voller Name</strong> - Wir verwenden den Vornamen als Ihren Spitznamen, wenn
+                            keiner angegeben wurde,
+                            und wir zeigen anderen angemeldeten Benutzern Ihren vollständigen Namen an, um leichter
+                            festzustellen, wer einen Dienst durchführt
+                            (z. B. Fabian A und Fabian B sind zwei verschiedene Personen und nur ein Vorname könnte zu
+                            Verwirrung führen).
+                        </li>
+                        <li><strong>Ihre Club ID aka "Clubnummer"</strong> (falls zutreffend) - wird verwendet,
+                            um Sie innerhalb des Systems zu identifizieren, wenn Sie sich anmelden oder Einträge
+                            vornehmen.
+                            Andere Benutzer können Ihre ID in Lara nicht sofort sehen, aber sie ist im Code der Webseite
+                            sichtbar.
+                            Betrachten Sie sie daher als sichtbar für andere Benutzer, wenn sie eingeloggt sind. Gäste
+                            (nicht eingeloggt) können Ihre Club ID nicht sehen.
+                        </li>
+                        <li><strong>Deine Emailadresse</strong> (falls zutreffend) - wird anstelle einer Club-ID
+                            verwendet,
+                            wenn Sie keine haben. Kann auch verwendet werden, um Sie zu kontaktieren.
+                        </li>
+                        <li><strong>Ihr Passwort ist uns nicht bekannt</strong> - Wir speichern nur eine Hash-Version
+                            für Authentifizierungszwecke,
+                            aber es ist unmöglich, das ursprüngliche Passwort daraus abzuleiten. Sie sind dafür
+                            verantwortlich,
+                            Ihr Passwort sicher zu verwahren und sollten es ändern (oder uns bitten, dies zu tun),
+                            wenn Sie vermuten, dass jemand anderes Zugang dazu erhalten hat.
+                        </li>
+                        <li><strong>Wir speichern Ihren Namen zusammen mit den Änderungen, die Sie an Ereignissen oder
+                                Umfragen vornehmen</strong> (z. B.
+                            Titeländerung oder hinzugefügte Details / Informationen, Hinzufügen / Entfernen von Diensten
+                            usw.)
+                            - dies bietet Verantwortlichkeit, so dass jeder weiß, wer wann was geändert hat. Dies hilft,
+                            unerwartete Änderungen oder Fehler aufzuspüren.
+                            Diese Information existiert, solange das Ereignis oder die Umfrage existiert und wird
+                            gelöscht, wenn das Ereignis / die Umfrage gelöscht wird.
+                            Alle angemeldeten Benutzer können diese "Änderungsliste" am Ende jedes Ereignisses sehen.
+                        </li>
+                        <li><strong>Wir speichern die Zeiten, in denen Sie sich bei Lara anmelden, in einem
+                                Protokoll</strong> (inkl. erfolgloser Versuche, z. B. falsches Passwort)
+                            für bis zu 30 Tage. Dies wird für die Fehlersuche benötigt und ist nur auf einer speziellen
+                            "logs" -Seite für Clubmanagement und Lara-Administratoren
+                            sichtbar.
+                        </li>
+                    </ul>
+                    <p>Unsere Beta-Testumgebung "Berta" funktioniert nach den gleichen Regeln.</p>
+
+
+                    <br>
+                    <p><strong>Wie sind die Daten gespeichert und wer hat Zugriff darauf?</strong></p>
+                    <p>
+                    <p>- Unser Server wird bereitgestellt von <a href="https://www.fem.tu-ilmenau.de">FeM</a>, aber ihre
+                        Administratoren dürfen nur im Notfall
+                        auf unsere Software zugreifen (z. B. wenn der Server einem Hackerangriff ausgesetzt war und
+                        heruntergefahren werden sollte, oder ähnliche Fälle).
+                        Andernfalls dürfen sie nicht auf die nicht öffentlichen Daten der Lara-Software zugreifen.</p>
+                    <p>- Die Administratoren von Lara haben vollen Zugriff auf alle Daten - dies wird benötigt, um die
+                        Entwicklung der Plattform fortzusetzen.
+                        (Sie verwenden auch ein Analysetool, um den Service zu entwickeln und zu warten.)</p>
+                    <p>- Die Administratoren von Lara verwalten auch eine lokale Sicherungskopie aller Daten.</p>
+                    <p>- Die Benutzer, einschließlich des Sektionsmanagements, erhalten nur Zugriff auf Teile Ihrer
+                        Daten,
+                        die für die Bereitstellung der Hauptservices von Lara erforderlich sind. Sie planen Personal für
+                        Ihren oder einen anderen Sektion und teilen Veranstaltung untereinander für eine einfachere
+                        Zusammenarbeit zwischen verschiendenen Sektionen.</p>
+                    <p>- Wir wollen die Ausbildung unserer Mitglieder und anderer Studenten der TU Ilmenau unterstützen.
+                        Daher bieten wir Möglichkeiten,
+                        Lara in Softwareprojekten, Bachelor- und Masterarbeiten oder anderen wissenschaftlichen
+                        Publikationen zu nutzen und zu entwickeln.
+                        Zu diesem Zweck erhalten die Studierenden vorübergehend Zugang zu den oben aufgeführten
+                        personenbezogenen Daten in dem für ihr
+                        Studium erforderlichen Mindestbetrag. Wenn eine Veröffentlichung erfolgt (Vorträge, Thesen
+                        usw.), müssen die Daten anonymisiert werden
+                        (z. B. Ihr vollständiger Name ersetzt "Benutzer 123" oder ähnliches).</p>
+                    <p>- Wir geben Ihre Daten nicht an andere Personen oder Unternehmen weiter.</p>
+                    <p>- Wir verwenden keine Social-Media-Plugins oder andere Tracking-Software.</p>
+
+
+                    <br>
+                    <p><strong>Wenn Sie sehen möchten, welche persönlichen Daten über Sie haben:</strong></p>
+                    <p>
+                        Bitte schreiben Sie uns eine E-Mail an <a href="mailto:lara@il-sc.de">lara@il-sc.de</a> mit der
+                        Bitte um Ihre Informationen..<br>
+                        Die Anfrage wird innerhalb von 10 Werktagen oder weniger bearbeitet (normalerweise 1-2
+                        Tage).<br>
+                        Wir werden Ihnen alle Daten, die wir über Sie haben, per E-Mail an die uns bekannte Adresse
+                        zukommen lassen.<br>
+                    </p>
+
+                    <br>
+                    <p><strong>Wenn Sie einen Fehler in Ihren Daten gefunden haben:</strong></p>
+                    <p>
+                        Bitte schreiben Sie uns eine E-Mail an <a href="mailto:lara@il-sc.de">lara@il-sc.de</a> mit den
+                        Informationen, die Sie geändert haben möchten.<br>
+                        Die Anfrage wird innerhalb von 10 Werktagen oder weniger bearbeitet (normalerweise 1-2
+                        Tage).<br>
+                        Wir senden Ihnen eine Bestätigung, nachdem Ihre Daten aktualisiert wurden.<br>
+                    </p>
+
+                    <br>
+                    <p><strong> Wenn Sie möchten, dass wir Ihre Daten löschen:</strong></p>
+                    <p>
+                        Bitte schreiben Sie uns eine E-Mail an <a href="mailto:lara@il-sc.de">lara@il-sc.de</a> mit
+                        einer Bitte um Löschung Ihrer Daten. <br>
+                        Die Anfrage wird innerhalb von 10 Werktagen oder weniger bearbeitet.<br>
+                        Wir senden Ihnen eine Bestätigung, nachdem Ihre Daten vollständig entfernt wurden.<br>
+                    </p>
+
+                    <br>
+                    <p><strong>Um Lara weiter nutzen zu können, benötigen wir Ihre Zustimmung.</strong></p>
+                    <p>
+                    <p>- Gemäß dem neuen Gesetz sollte jeder Benutzer über die gesammelten persönlichen Daten, die
+                        Zwecke, für die er genutzt wird,
+                        informiert werden und dann seine Zustimmung zu der Verwendung seiner Daten für diese Zwecke
+                        geben.</p>
+                    <p>- Wenn Sie diese Datenschutzerklärung ablehnen, können Sie die von Lara angebotenen Dienste nicht
+                        nutzen.</p>
+                    <p>- Wenn Sie Fragen haben oder unsicher sind, kontaktieren Sie uns bitte unter <a
+                            href="mailto:lara@il-sc.de">lara@il-sc.de</a> und wir werden unser Bestes tun, um alles zu
+                        klären. Wir sind hier um zu helfen.</p>
                 </div>
                 <div class="tab-pane fade" id="english">
                     <p><strong>IMPORTANT:</strong></p>
@@ -285,12 +469,12 @@ Dies setzt immer voraus, dass die Drittanbieter dieser Inhalte, die IP-Adresse d
                             everything you send our way (plus the responces of the server). This is needed to provide
                             the service itself ("this is how web works"), and also for troubleshooting if any problems
                             should arise. These logs are held for 30 days and deleted afterwards. Only Lara
-                            administrators and developers have access to them.
+                            administrators have access to them.
                         </li>
                         <li><strong>IP Address is saved longer if you post anything in Lara</strong> - to know who
                             posted what in case of any weird/illegal messages. Basically, for every entry for a shift or
-                            comment in Lara we save the IP address along other data. Only Lara administrators and
-                            developers have access to it.
+                            comment in Lara we save the IP address along other data. Only Lara administrators have
+                            access to it.
                         </li>
                     </ul>
                     <p>
@@ -326,8 +510,7 @@ Dies setzt immer voraus, dass die Drittanbieter dieser Inhalte, die IP-Adresse d
                         </li>
                         <li><strong>We save the times you log in to Lara in a log</strong> (incl. unsuccessfull
                             attempts, e.g. wrong password) for up to 30 days. This is needed for troubleshooting errors,
-                            and is visible on a special "logs" page for club management and Lara administrators or
-                            developers only.
+                            and is visible on a special "logs" page for club management and Lara administrators only.
                         </li>
                     </ul>
                     <p>Our beta-test environment "Berta" works with the same rules.</p>
@@ -340,10 +523,10 @@ Dies setzt immer voraus, dass die Drittanbieter dieser Inhalte, die IP-Adresse d
                         administrators are only allowed to access our software in case of emergency (e.g. the server was
                         a subject to a hacking attack and should be powered down, or similar cases). Otherwise they are
                         not allowed to access the insides of Lara software.</p>
-                    <p>- The administrators and developers of Lara have full access to all the data - this is needed to
+                    <p>- The administrators of Lara have full access to all the data - this is needed to
                         continue development of the platform. (They also use an analytics tool to help with developing
                         and troubleshooting the service.)</p>
-                    <p>- The administrators and developers of Lara also maintain a local backup copy of all the
+                    <p>- The administrators of Lara also maintain a local backup copy of all the
                         data.</p>
                     <p>- The users, including section management, only get access to parts of your data needed to
                         provide the main services of Lara - scheduling personnel for your or other section, and sharing
