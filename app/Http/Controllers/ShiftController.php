@@ -121,25 +121,28 @@ class ShiftController extends Controller
         }
 
         // Control if the updated_at matches with the request timestamp
-        if((!is_null( $shift->getPerson()->first() )) && $timestamp <> $shift->updated_at ) {
-            // Find user status icon parameters to return
-            $userStatus = $this->updateStatus($shift);
+        if($timestamp <> $shift->updated_at) {
+            if (!is_null($shift->getPerson()->first()) || $oldComment <> $userComment) {
+                // Find user status icon parameters to return
+                $userStatus = $this->updateStatus($shift);
 
-            // Formulate the response
-            $prsn_ldap_id = is_null($shift->getPerson()->first()) ? "" : $shift->getPerson()->first()->prsn_ldap_id;
-            return response()->json([
-                "errorCode" => "error_outOfSync",
-                "entryId"           => $shift->id,
-                "userStatus"        => $userStatus,
-                "userName"          => $shift->getPerson()->first()->prsn_name,
-                "ldapId"            => $prsn_ldap_id,
-                "userClub"          => $shift->getPerson()->first()->getClub->clb_title,
-                "userComment"       => $shift->comment,
-                "timestamp"         => $shift->updated_at->toDateTimeString(),
-                "is_current_user"   => $prsn_ldap_id == Auth::user()->person->prsn_ldap_id
-            ], 409);
+                // Formulate the response
+                $person = is_null($shift->getPerson()->first()) ? null : $shift->getPerson()->first();
+                $prsn_ldap_id = $person? $person->prsn_ldap_id : null;
+                return response()->json([
+                    "errorCode"     => "error_outOfSync",
+                    "entryId"       => $shift->id,
+                    "userStatus"    => $userStatus,
+                    "userName"      => $person? $person->prsn_name : null,
+                    "ldapId"        => $prsn_ldap_id,
+                    "userClub"      => $person? $person->getClub->clb_title : null,
+                    "userComment"   => $shift->comment,
+                    "timestamp"     => $shift->updated_at->toDateTimeString(),
+                    "is_current_user" => $prsn_ldap_id == Auth::user()->person->prsn_ldap_id
+                ], 409);
+
+            }
         }
-
         // FYI:
         // We separate schedule shift person change from comment change
         // because we need an option to add a comment to an empty field.
