@@ -533,7 +533,7 @@
                         nutzen.
                     </p>
                     <p>
-                        - Wenn Du Fragen habst oder unsicher bist, kontaktiere uns bitte unter 
+                        - Wenn Du Fragen hast oder unsicher bist, kontaktiere uns bitte unter 
                         <a href="mailto:lara@il-sc.de">lara@il-sc.de</a> und wir werden unser Bestes tun, um alles zu
                         klären. Wir sind hier um zu helfen!
                     </p>
