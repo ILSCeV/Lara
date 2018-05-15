@@ -19,7 +19,7 @@
                 <i class="fa fa-bar-chart-o white-text"></i>
                 &nbsp;&nbsp;
                 {{--and show him thats a private survey(=Interne Umfrage in german) only for users--}}
-                <span class="white-text">
+                <span class="white-text event-name">
                         {{ trans('mainLang.internalSurvey') }}
                     </span>
             </div>
@@ -29,14 +29,15 @@
             {{-- so session has a valid user OR the guest can see this survey because it isn't private--}}
             <div class="cal-event {{$classString}} palette-Purple-900 bg word-break section-filter survey">
                 <i class="fa fa-bar-chart-o white-text"></i>
-                &nbsp;&nbsp;
+                &nbsp;&nbsp;<span class="event-time white-text">{{date ('H:i',strtotime($survey->deadline))}}</span>
                 {{-- provide a URL to the survey --}}
                 <a href="{{ URL::route('survey.show', $survey->id) }}"
+                   class="event-name"
                    data-toggle="tooltip" 
                    data-placement="right"
                    title="{{ trans('mainLang.showDetails')}}">
                     {{-- instead of private survey show the actual title of the survey --}}
-                    <span class="white-text"> &nbsp;{{ $survey->title }} </span>
+                    <span class="white-text"> {{ $survey->title }} </span>
                 </a>
             </div>
         @endif
