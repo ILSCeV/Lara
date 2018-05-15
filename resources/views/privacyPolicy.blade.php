@@ -251,7 +251,7 @@
                     <p><strong>Administration, Finanzbuchhaltung, Büroorganisation, Kontaktverwaltung</strong></p>
                     <p>
                         <span class="ts-muster-content">
-                            Wir verarbeiten Daten im Rahmen von Verwaltungsaufgaben sowie Organisation unseres Betriebs, Finanzbuchhaltung und Befolgung der gesetzlichen Pflichten, wie z.B. der Archivierung. Herbei verarbeiten wir dieselben Daten, die wir im Rahmen der Erbringung unserer vertraglichen Leistungen verarbeiten. Die Verarbeitungsgrundlagen sind Art. 6 Abs. 1 lit. c. DSGVO, Art. 6 Abs. 1 lit. f. DSGVO. Von der Verarbeitung sind Kunden, Interessenten, Geschäftspartner und Websitebesucher betroffen. Der Zweck und unser Interesse an der Verarbeitung liegt in der Administration, Finanzbuchhaltung, Büroorganisation, Archivierung von Daten, also Aufgaben die der Aufrechterhaltung unserer Geschäftstätigkeiten, Wahrnehmung unserer Aufgaben und Erbringung unserer Leistungen dienen. Die Löschung der Daten im Hinblick auf vertragliche Leistungen und die vertragliche Kommunikation entspricht den, bei diesen Verarbeitungstätigkeiten genannten Angaben.<br>
+                            Wir verarbeiten Daten im Rahmen von Verwaltungsaufgaben sowie Organisation unseres Betriebs, Finanzbuchhaltung und Befolgung der gesetzlichen Pflichten, wie z.B. der Archivierung. Hierbei verarbeiten wir dieselben Daten, die wir im Rahmen der Erbringung unserer vertraglichen Leistungen verarbeiten. Die Verarbeitungsgrundlagen sind Art. 6 Abs. 1 lit. c. DSGVO, Art. 6 Abs. 1 lit. f. DSGVO. Von der Verarbeitung sind Kunden, Interessenten, Geschäftspartner und Websitebesucher betroffen. Der Zweck und unser Interesse an der Verarbeitung liegt in der Administration, Finanzbuchhaltung, Büroorganisation, Archivierung von Daten, also Aufgaben die der Aufrechterhaltung unserer Geschäftstätigkeiten, Wahrnehmung unserer Aufgaben und Erbringung unserer Leistungen dienen. Die Löschung der Daten im Hinblick auf vertragliche Leistungen und die vertragliche Kommunikation entspricht den, bei diesen Verarbeitungstätigkeiten genannten Angaben.<br>
                             <br>
                             Wir offenbaren oder übermitteln hierbei Daten an die Finanzverwaltung, Berater, wie z.B., Steuerberater oder Wirtschaftsprüfer sowie weitere Gebührenstellen und Zahlungsdienstleister.<br>
                             <br>
@@ -265,7 +265,7 @@
                             Nutzer können optional ein Nutzerkonto anlegen. Im Rahmen der Registrierung werden die erforderlichen Pflichtangaben den Nutzern mitgeteilt. Die im Rahmen der Registrierung eingegebenen Daten werden für die Zwecke der Nutzung des Angebotes verwendet. Die Nutzer können über angebots- oder registrierungsrelevante Informationen, wie Änderungen des Angebotsumfangs oder technische Umstände per E-Mail informiert werden. Wenn Nutzer ihr Nutzerkonto gekündigt haben, werden deren Daten im Hinblick auf das Nutzerkonto gelöscht, vorbehaltlich deren Aufbewahrung ist aus handels- oder steuerrechtlichen Gründen entspr. Art. 6 Abs. 1 lit. c DSGVO notwendig. Es obliegt den Nutzern, ihre Daten bei erfolgter Kündigung vor dem Vertragsende zu sichern. Wir sind berechtigt, sämtliche während der Vertragsdauer gespeicherten Daten des Nutzers unwiederbringlich zu löschen.<br>
                             <br>
                             <br>
-                            Im Rahmen der Inanspruchnahme unserer Registrierungs- und Anmeldefunktionen sowie der Nutzung der Nutzerkontos, speichern wird die IP-Adresse und den Zeitpunkt der jeweiligen Nutzerhandlung. Die Speicherung erfolgt auf Grundlage unserer berechtigten Interessen, als auch der Nutzer an Schutz vor Missbrauch und sonstiger unbefugter Nutzung. Eine Weitergabe dieser Daten an Dritte erfolgt grundsätzlich nicht, außer sie ist zur Verfolgung unserer Ansprüche erforderlich oder es besteht hierzu besteht eine gesetzliche Verpflichtung gem. Art. 6 Abs. 1 lit. c DSGVO.
+                            Im Rahmen der Inanspruchnahme unserer Registrierungs- und Anmeldefunktionen sowie der Nutzung der Nutzerkontos, speichern wird die IP-Adresse und den Zeitpunkt der jeweiligen Nutzerhandlung. Die Speicherung erfolgt auf Grundlage unserer berechtigten Interessen, als auch der Nutzer an Schutz vor Missbrauch und sonstiger unbefugter Nutzung. Eine Weitergabe dieser Daten an Dritte erfolgt grundsätzlich nicht, außer sie ist zur Verfolgung unserer Ansprüche erforderlich oder es besteht hierzu eine gesetzliche Verpflichtung gem. Art. 6 Abs. 1 lit. c DSGVO.
                         </span>
                     </p>
 
@@ -363,14 +363,14 @@
                     <p>
                         <strong>Von allen, die auf Lara zugreifen, sowohl registrierte Benutzer als auch Gäste:</strong><br>
                         <ul>
-                            <li><strong>Wir führen Protokolle aller Anfragen an den Server ("Log"), die 
+                            <li><strong>Wir führen Protokolle aller Anfragen an den Server ("Log"), die
                                     die Uhrzeit / das Datum,
                                     die IP-Adresse,
-                                    den Typ des verwendeten Browsers, 
-                                    die von Dir besuchten Seiten und 
-                                    die von Dir geposteten Seiten 
-                                enthalten</strong> - im Grunde alles, was Du uns schickst (plus die Antworten 
-                                des Servers). Dies wird benötigt, um den Dienst selbst bereitzustellen 
+                                    den Typ des verwendeten Browsers,
+                                    die von Dir besuchten Seiten und
+                                    die von Dir geposteten Seiten
+                                enthalten</strong> - im Grunde alles, was Du uns schickst (plus die Antworten
+                                des Servers). Dies wird benötigt, um den Dienst selbst bereitzustellen
                                 ("so funktioniert das Web"),
                                 und auch für die Fehlersuche, falls irgendwelche Probleme auftreten sollten. Diese
                                 Protokolle werden 30 Tage lang aufbewahrt und anschließend gelöscht.
@@ -383,7 +383,7 @@
                                 die IP-Adresse zusammen mit anderen Daten. Nur Lara Administratoren haben Zugriff darauf.
                             </li>
                         </ul>
-                    
+
 
                         <strong>Wenn sich ein Benutzer registriert und / oder anmeldet:</strong><br>
                         <ul>
@@ -407,7 +407,7 @@
                                 (nicht eingeloggt) können Deine Club ID nicht sehen.
                             </li>
                             <li><strong>Deine Emailadresse</strong> (falls zutreffend) - wird anstelle einer Club-ID
-                                verwendet, wenn Du keine ID hast. 
+                                verwendet, wenn Du keine ID hast.
                                 Kann auch verwendet werden, um Dich zu kontaktieren.
                             </li>
                             <li><strong>Dein Passwort ist uns nicht bekannt</strong> - wir speichern nur eine Hash-Version
@@ -417,7 +417,7 @@
                                 Dein Passwort sicher zu verwahren und solltest es ändern (oder uns bitten, dies zu tun),
                                 wenn Du vermutest, dass jemand anderes Zugang dazu erhalten hat.
                             </li>
-                            <li><strong>Wir speichern Deinen Namen zusammen mit den Änderungen, die Du an Events 
+                            <li><strong>Wir speichern Deinen Namen zusammen mit den Änderungen, die Du an Events
                                 (also Veranstaltungen, Info-Nachrichten, usw.) oder Umfragen vornimmst</strong> (z. B.
                                 Titeländerung oder hinzugefügte Details / Informationen, Hinzufügen / Entfernen von Diensten
                                 usw.)
@@ -533,7 +533,7 @@
                         nutzen.
                     </p>
                     <p>
-                        - Wenn Du Fragen hast oder unsicher bist, kontaktiere uns bitte unter 
+                        - Wenn Du Fragen hast oder unsicher bist, kontaktiere uns bitte unter
                         <a href="mailto:lara@il-sc.de">lara@il-sc.de</a> und wir werden unser Bestes tun, um alles zu
                         klären. Wir sind hier um zu helfen!
                     </p>
