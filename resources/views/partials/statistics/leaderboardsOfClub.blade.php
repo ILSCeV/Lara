@@ -13,8 +13,14 @@
         {{-- Only show Top 10 Shifts --}}
         @foreach($infos->sortByDesc('inOwnClub')->take(10) as $info)
             <tr class=" {{Auth::user()->id === $info->user->user()->id ? 'my-shift' : ''}}">
+                @php
+                    $user = $info->user->user();
+                @endphp
                 <td>
-                    @include('partials.personStatusMarker', ['status' => $info->user->prsn_status]){{$info->user->prsn_name }}
+                    @include('partials.personStatusMarker', ['status' => $user->status, 'section' => $user->section])
+                    <div data-toggle="tooltip" data-placement="top" title="{{ Gate::allows('accessInformation', [Auth::user(), $info->user->user()]) ? $info->user->fullName() : "" }}" style="display:inline">
+                        {{$user->name }}
+                    </div>
                 </td>
                 @if ($showClubName)
                     <td>
