@@ -379,7 +379,6 @@ class LoginController extends Controller
                         $user->email = $userEmail;
                     }
                     {
-                        $this->info($person->prsn_ldap_id." ignoring email ".$userEmail."because someone else already use it");
                         Log::warning($person->prsn_ldap_id." ignoring email ".$userEmail."because someone else already use it");
                     }
                 }
