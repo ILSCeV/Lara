@@ -12,10 +12,10 @@
         <tbody>
         {{-- Only show Top 10 Shifts --}}
         @foreach($infos->sortByDesc('inOwnClub')->take(10) as $info)
+            @php
+                $user = $info->user->user();
+            @endphp
             <tr class=" {{Auth::user()->id === $info->user->user()->id ? 'my-shift' : ''}}">
-                @php
-                    $user = $info->user->user();
-                @endphp
                 <td>
                     @include('partials.personStatusMarker', ['status' => $user->status, 'section' => $user->section])
                     <span data-toggle="tooltip" data-placement="top" title="{{ $user->fullName() }}" >
