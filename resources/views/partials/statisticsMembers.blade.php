@@ -7,7 +7,7 @@
         @foreach($clubInfos->keys() as $title)
             <li class="{{Lara\Section::current()->title == $title? 'active': ''}} statisticClubPicker">
                 <a aria-expanded="{{Lara\Section::current()->title == $title? 'true' : 'false'}}"
-                   href="#{{$title}}" 
+                   href="#{{$title}}"
                    data-toggle="tab">
                     {{$title}}
                 </a>
@@ -36,11 +36,14 @@
                     </thead>
                     <tbody>
                         @foreach($clubInfo as $info)
-                            <tr class="{{Auth::user()->id === $info->user->user()->id? 'my-shift' : ''}}">
+                            @php
+                                $user = $info->user->user();
+                            @endphp
+                            <tr class="{{Auth::user()->id === $user->id? 'my-shift' : ''}}">
                                 <td>
-                                    @include('partials.personStatusMarker', ['status' => $info->user->prsn_status])
-                                    <a href="#" onclick="chosenPerson = '{{$info->user->prsn_name}}'" name="show-stats-person{{$info->user->id}}" id="{{$info->user->id}}">
-                                        {{$info->user->prsn_name}}
+                                    @include('partials.personStatusMarker', ['status' => $user->status, 'section' => $user->section])
+                                    <a href="#" onclick="chosenPerson = '{{$user->name}}'" name="show-stats-person{{$info->user->id}}" id="{{$info->user->id}}" data-toggle="tooltip" data-placement="top" title="{{ $user->fullName() }}">
+                                            {{$user->name}}
                                     </a>
                                 </td>
                                 <td>

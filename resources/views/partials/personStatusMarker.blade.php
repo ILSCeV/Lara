@@ -7,7 +7,7 @@
        style="{{ $attributes["style"] }}"
        data-toggle="tooltip"
        data-placement="top"
-       title="{{ Lara\Status::localize($status)}}"></i>
+       title="{{ Lara\Status::localize($status, $section)}}"></i>
 @else
     <i class="fa fa-circle"
        name="status-icon"

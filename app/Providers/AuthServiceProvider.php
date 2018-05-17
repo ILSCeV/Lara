@@ -46,13 +46,17 @@ class AuthServiceProvider extends ServiceProvider
                 return false;
             }
 
+            if (!$otherUser) {
+                return false;
+            }
+
             if ($user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
                 return true;
             }
 
             $isClInSameSection = $user->hasPermissionsInSection($otherUser->section, RoleUtility::PRIVILEGE_CL);
 
-            if($isClInSameSection) {
+            if ($isClInSameSection) {
                 return true;
             }
 
