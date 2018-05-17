@@ -364,7 +364,7 @@ class LoginController extends Controller
                         'prsn_name' => $userName,
                         'prsn_ldap_id' => $ldapId,
                         'prsn_status' => $userStatus,
-                        'clb_id' => Club::where('clb_title', $userClub)->first()->id,
+                        'clb_id' => Club::query()->where('clb_title', $userClub)->first()->id,
                         'prsn_uid' => hash("sha512", uniqid())
                     ]);
                     User::createFromPerson($person);
@@ -372,8 +372,17 @@ class LoginController extends Controller
 
                 Auth::login($person->user());
                 $user = $person->user();
-
-                $user->email = $info[0]['mail'][0];
+    
+                $userEmail = $info[0]['mail'][0];
+                if (isset($userEmail) && $userEmail != $user->email) {
+                    if (!User::query()->where('email', '=', $userEmail)->where('id', '<>', $user->id)->exists()) {
+                        $user->email = $userEmail;
+                    }
+                    {
+                        $this->info($person->prsn_ldap_id." ignoring email ".$userEmail."because someone else already use it");
+                        Log::warning($person->prsn_ldap_id." ignoring email ".$userEmail."because someone else already use it");
+                    }
+                }
 
                 // this is the internally used hashing
                 $user->password = bcrypt(Input::get('password'));
