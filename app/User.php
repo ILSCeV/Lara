@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Gate;
 use Lara\utilities\RoleUtility;
 use Lara\Status;
 
@@ -186,6 +187,9 @@ class User extends Authenticatable
 
     public function fullName()
     {
-        return $this->givenname . " " . $this->lastname;
+        if (Gate::allows('accessInformation', $this)) {
+            return $this->givenname . " " . $this->lastname;
+        }
+        return "";
     }
 }

@@ -3,6 +3,7 @@
 namespace Lara;
 
 use Auth;
+use Illuminate\Support\Facades\Gate;
 use Session;
 use Illuminate\Database\Eloquent\Model;
 
@@ -88,7 +89,7 @@ class Person extends Model
         $userRelationship = $this->hasOne(User::class);
         return $userRelationship->exists() ? $userRelationship->first() : User::createFromPerson($this);
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne|User
      */
@@ -110,10 +111,10 @@ class Person extends Model
     {
         $user = $this->user();
 
-        if (!$user) {
-            return "";
+        if ($user && Gate::allows('accessInformation', $user)) {
+            return $user->fullName();
         }
 
-        return $user->fullName();
+        return "";
     }
 }
