@@ -39,7 +39,7 @@
                             <tr class="{{Auth::user()->id === $info->user->user()->id? 'my-shift' : ''}}">
                                 <td>
                                     @include('partials.personStatusMarker', ['status' => $info->user->prsn_status, 'section' => $info->user->user()->section])
-                                    <a href="#" onclick="chosenPerson = '{{$info->user->prsn_name}}'" name="show-stats-person{{$info->user->id}}" id="{{$info->user->id}}" data-toggle="tooltip" data-placement="top" title="{{ Gate::allows('accessInformation', $info->user->user()) ? $info->user->fullName() : "" }}">
+                                    <a href="#" onclick="chosenPerson = '{{$info->user->prsn_name}}'" name="show-stats-person{{$info->user->id}}" id="{{$info->user->id}}" data-toggle="tooltip" data-placement="top" title="{{ $info->user->fullName() }}">
                                             {{$info->user->prsn_name}}
                                     </a>
                                 </td>

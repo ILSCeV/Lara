@@ -18,7 +18,7 @@
                        'class'=>'col-xs-8 col-md-8',
                        'data-toggle' => "tooltip",
                        'data-placement' =>"top",
-                       'title' => Gate::allows('accessInformation', $shift->getPerson->user()) ? $shift->getPerson->fullName() : "",
+                       'title' => $shift->getPerson->fullName(),
                         'autocomplete'=>'off') )
     !!}
 @endif

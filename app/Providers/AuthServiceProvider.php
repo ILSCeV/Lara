@@ -46,6 +46,10 @@ class AuthServiceProvider extends ServiceProvider
                 return false;
             }
 
+            if (!$otherUser) {
+                return false;
+            }
+
             if ($user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
                 return true;
             }

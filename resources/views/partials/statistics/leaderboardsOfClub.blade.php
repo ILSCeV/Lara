@@ -18,9 +18,9 @@
                 @endphp
                 <td>
                     @include('partials.personStatusMarker', ['status' => $user->status, 'section' => $user->section])
-                    <div data-toggle="tooltip" data-placement="top" title="{{ Gate::allows('accessInformation', $user) ? $user->fullName() : "" }}" style="display:inline">
+                    <span data-toggle="tooltip" data-placement="top" title="{{ $user->fullName() }}" >
                         {{$user->name }}
-                    </div>
+                    </span>
                 </td>
                 @if ($showClubName)
                     <td>
