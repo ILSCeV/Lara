@@ -18,7 +18,7 @@
                 @endphp
                 <td>
                     @include('partials.personStatusMarker', ['status' => $user->status, 'section' => $user->section])
-                    <div data-toggle="tooltip" data-placement="top" title="{{ Gate::allows('accessInformation', [Auth::user(), $info->user->user()]) ? $info->user->fullName() : "" }}" style="display:inline">
+                    <div data-toggle="tooltip" data-placement="top" title="{{ Gate::allows('accessInformation', $user) ? $user->fullName() : "" }}" style="display:inline">
                         {{$user->name }}
                     </div>
                 </td>

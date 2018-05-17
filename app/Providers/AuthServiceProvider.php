@@ -52,7 +52,7 @@ class AuthServiceProvider extends ServiceProvider
 
             $isClInSameSection = $user->hasPermissionsInSection($otherUser->section, RoleUtility::PRIVILEGE_CL);
 
-            if($isClInSameSection) {
+            if ($isClInSameSection) {
                 return true;
             }
 

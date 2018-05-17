@@ -18,7 +18,7 @@
                        'class'=>'col-xs-8 col-md-8',
                        'data-toggle' => "tooltip",
                        'data-placement' =>"top",
-                       'title' => Gate::allows('accessInformation', [Auth::user(), $shift->getPerson->user()]) ? $shift->getPerson->fullName() : "",
+                       'title' => Gate::allows('accessInformation', $shift->getPerson->user()) ? $shift->getPerson->fullName() : "",
                         'autocomplete'=>'off') )
     !!}
 @endif
@@ -53,8 +53,8 @@
 </div>
 
 <div>
-        {!! Form::hidden('timestamp' . $shift->id, 
-                         $shift->updated_at, 
-                         array('id'=>'timestamp' . $shift->id) ) 
+        {!! Form::hidden('timestamp' . $shift->id,
+                         $shift->updated_at,
+                         array('id'=>'timestamp' . $shift->id) )
         !!}
 </div>
