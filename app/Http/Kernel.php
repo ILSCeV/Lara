@@ -37,6 +37,7 @@ class Kernel extends HttpKernel
 
             // Added for Lara
             \Lara\Http\Middleware\Language::class,
+            \Lara\Http\Middleware\CheckPrivacyPolicy::class,
         ],
 
         'api' => [
