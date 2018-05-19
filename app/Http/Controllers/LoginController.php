@@ -13,7 +13,6 @@ use Lara\Section;
 use Lara\User;
 use Lara\utilities\RoleUtility;
 use Log;
-use Redirect;
 use Session;
 
 /*
@@ -52,7 +51,7 @@ class LoginController extends Controller
         if (Auth::user()) {
             return $this->logout();
         }
-        return Redirect::to('/');
+        return redirect('/');
     }
 
     /**
@@ -112,7 +111,8 @@ class LoginController extends Controller
             if ($userSettings) {
                 Session::put('applocale', $userSettings->language);
             }
-            return Redirect::back();
+
+            return redirect()->back();
         }
         return $this->loginFailed();
     }
@@ -439,7 +439,16 @@ class LoginController extends Controller
         Session::put('message', Config::get('messages_de.login-fail'));
         Session::put('msgType', 'danger');
 
-        return Redirect::back();
+        return redirect()->back();
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function redirectToPrivacyPage(){
+        Session::put('message', trans('mainLang.agreeWithPrivacy'));
+        Session::put('msgType', 'danger');
+        return redirect("/privacy");
     }
 
     /**
