@@ -512,12 +512,16 @@ input[type=number],
 
 /* Statistics */
 
-.bc-Club-section-highlight {
-    border-left: 5px #e98383 solid !important;
+.statistics-section-highlight {
+    width: 5px;
+    max-width: 5px;
+    min-width: 5px;
+    overflow: hidden;
+    padding:0 !important;
 }
 
-.bc-Café-section-highlight {
-    border-left: 5px #52aadc solid !important;
+.other-section {
+    background-color: #eeeeee;
 }
 
 /* Conflict management */
