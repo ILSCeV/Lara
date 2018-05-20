@@ -478,7 +478,6 @@ $(document).ready(function() {
                 // Fill with data received
                 for (let i = 0; i < response.length; i++)
                 {
-                    console.dir(response[i]);
                     $("#person-shifts-overview").append(
                         "<tbody>"
                         // Change background for shifts in other sections
