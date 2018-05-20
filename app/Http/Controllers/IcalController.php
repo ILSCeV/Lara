@@ -342,7 +342,7 @@ class IcalController extends Controller
      */
     public function singleEvent($evt_id)
     {
-        $calendar = Cache::remember("ical".$evt_id.Auth::user()->id, 4 * 60, function () use ($evt_id) {
+        $calendar = Cache::remember("icalevent".$evt_id, 4 * 60, function () use ($evt_id) {
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
             $event = ClubEvent::where('id', '=', $evt_id)->first();
@@ -374,7 +374,7 @@ class IcalController extends Controller
             }
 
             $keys = Cache::get(self::ICAL_ACCESSOR, []);
-            array_push($keys, "ical".$evt_id.Auth::user()->id);
+            array_push($keys, "icalevent".$evt_id);
             $keys = array_unique($keys);
             Cache::put(self::ICAL_ACCESSOR, $keys, 4 * 60);
 
