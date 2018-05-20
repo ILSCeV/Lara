@@ -3,7 +3,7 @@
     @php
         $messageType = Session::get('msgType') ? Session::get('msgType') : 'info'
     @endphp
-    <div class="alert alert-centered alert-dismissable alert-{{$messageType}}">
+    <div class="alert alert-centered alert-dismissable alert-fixed alert-{{$messageType}}">
         <button type="button" class="close" data-dismiss="alert">×</button>
         {{ Session::get('message') }}
         {{ Session::forget('message') }} 
