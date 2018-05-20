@@ -4,7 +4,6 @@ namespace Lara\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Lara\Http\Controllers\LoginController;
 
 class CheckPrivacyPolicy
 {
@@ -17,10 +16,10 @@ class CheckPrivacyPolicy
      */
     public function handle($request, Closure $next)
     {
-        if($request->isMethod('get') and !$request->is('privacy')) {
+        if($request->isMethod('get') and ! ($request->is('privacy') or $request->is('lang*'))) {
             if (Auth::check()) {
                 if (!Auth::user()->privacy_accepted) {
-                    return LoginController::redirectToPrivacyPage();
+                    return redirect("/privacy");
                 }
             }
         }
