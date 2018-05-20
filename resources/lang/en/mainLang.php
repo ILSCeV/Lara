@@ -535,7 +535,7 @@ return [
     
     'privacyPolicy'     => 'Privacy Policy',
     'impressum'         => 'Imprint',
-
+    
     'agreeWithPrivacy'  => 'You must read and agree with our Privacy Policy in order to use this website. Please allow us to process your data by clicking on the button down below.',
     'privacyAccepted'   => 'Thank you, now you can continue using Lara',
     'fatalErrorUponSaving' => 'Something went wrong. Please try again later or contact an administrator for support.',

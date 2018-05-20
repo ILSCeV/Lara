@@ -443,6 +443,15 @@ class LoginController extends Controller
     }
 
     /**
+     * @return mixed
+     */
+    public static function redirectToPrivacyPage(){
+        Session::put('message', trans('mainLang.agreeWithPrivacy'));
+        Session::put('msgType', 'danger');
+        return redirect("/privacy");
+    }
+
+    /**
      * @param $ldapId
      */
     protected function loginPersonAsUser(Person $person)
