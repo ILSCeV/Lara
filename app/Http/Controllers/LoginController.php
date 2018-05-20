@@ -147,7 +147,7 @@ class LoginController extends Controller
         try {
             return $this->attemptLoginViaLDAPInternal();
         } catch (\Exception $e) {
-            Log::error("ldap brocken: " . $e->getMessage(), $e->getTrace());
+            Log::error("ldap broken: " . $e->getMessage(), $e->getTrace());
             return false;
         }
     }
