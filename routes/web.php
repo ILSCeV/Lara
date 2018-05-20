@@ -199,3 +199,4 @@ Route::post('/password/change', ['as' => 'password.change.post', 'uses' => 'Auth
  // LEGAL
  Route::get('/privacy',					'LegalController@showPrivacyPolicy');
  Route::get('/impressum',				'LegalController@showImpressum');
+ Route::post('userAgreesPrivacy','UserController@agreePrivacy')->name('user.agreePrivacy');

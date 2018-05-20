@@ -6,8 +6,22 @@
 
 @section('content')
 
+    <br class="visible-sm">
+    <br class="visible-sm">
+
+
+    @if(! Auth::user()->privacy_accepted)
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ trans("mainLang.waitOneSecond") }}</h3>
+        </div>
+
+        <div class="panel-body">
+            <strong>{{ trans('mainLang.agreeWithPrivacy') }}</strong>
+        </div>
+    </div>
     <br>
-    <br>
+    @endif
 
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -24,7 +38,7 @@
                         Version</a></li>
             </ul>
 
-            <div id="myTabContent" class="tab-content all-sides-padding-16">
+            <div id="myTabContent" class="tab-content all-sides-padding-16 pre-scrollable">
                 <div class="tab-pane fade active in" id="complete">
                     <p><strong>Datenschutzerklärung</strong></p>
                     <p><strong></strong></p>
@@ -309,6 +323,13 @@
                     </p>
 
                     <a href="https://datenschutz-generator.de" class="dsg1-5" rel="nofollow"> Erstellt mit Datenschutz-Generator.de von RA Dr. Thomas Schwenke</a>, vom Websiteinhaber angepasst.
+                    @if(! Auth::user()->privacy_accepted)
+                        <hr>
+                    <form method="post" action="{{url('userAgreesPrivacy')}}" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <button type="submit" class="btn btn-success">{{ trans("mainLang.privacyAgree") }}</button>
+                    </form>
+                    @endif
                 </div>
 
 
@@ -729,6 +750,15 @@
                     </p>
                 </div>
             </div>
+            @if(! Auth::user()->privacy_accepted)
+                <div class="panel-footer">
+                <hr>
+                <form method="post" action="{{url('userAgreesPrivacy')}}" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <button type="submit" class="btn btn-success">{{ trans("mainLang.privacyAgree") }}</button>
+                </form>
+                </div>
+            @endif
         </div>
     </div>
 @stop

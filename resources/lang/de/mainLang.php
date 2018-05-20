@@ -539,6 +539,12 @@ return [
     'privacyPolicy'     => 'Datenschutz',
     'impressum'         => 'Impressum',
 
+    'agreeWithPrivacy'  => 'Du musst unserer Datenschutzerklärung zustimmen, um Lara zu nutzen. Eine Zusammenfassung findest du in den Tabs. Bitte stimme unten der Nutzung deiner Daten zu.',
+    'privacyAccepted'   => 'Danke, jetzt kannst du Lara weiter benutzen',
+    'fatalErrorUponSaving' => 'Etwas ist schief gelaufen. Versuche es später erneut oder wende dich an einen Administrator, um Unterstützung zu erhalten.',
+    'privacyAgree'      => 'Ich stimme zu',
+    'waitOneSecond'     => 'Nur eine Sekunde...',
+
 
 
 ];
