@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-       $this->middleware(ClOnly::class);
+       $this->middleware(ClOnly::class, ['except' => ['agreePrivacy']]);
     }
 
     /**
