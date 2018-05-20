@@ -6,8 +6,10 @@
     <div class="alert alert-centered alert-dismissable alert-fixed alert-{{$messageType}}">
         <button type="button" class="close" data-dismiss="alert">×</button>
         {{ Session::get('message') }}
-        {{ Session::forget('message') }} 
-        {{ Session::forget('msgType') }}
+        @php
+            Session::forget('message');
+            Session::forget('msgType');
+        @endphp
     </div>
 @endif
 
