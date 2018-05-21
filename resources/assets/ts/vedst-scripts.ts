@@ -263,6 +263,10 @@ function decodeEntities(encodedString) {
 // Month view //
 ////////////////
 
+//This event listener is enabled while the scrolling to today anymation is running. If the user touches the screen, the animation is stopped.
+function stopScrollOnTouch(){
+    $('html, body').stop();
+}
 
 // Scroll to current date/event if in mobile view in current month
 $(document).ready(function()
@@ -272,9 +276,17 @@ $(document).ready(function()
     {
         if ($(window).width() < 978)
         {
-            $('html, body').animate({ scrollTop: $(".scroll-marker").offset().top -80 }, 1000);
-        };
-    };
+            //Add event listener to stop scrolling when the user touches the screen.
+            document.addEventListener("touchstart", stopScrollOnTouch, false);
+
+            $('html, body').animate({ scrollTop: $(".scroll-marker").offset().top -80 }, {
+                duration: 1000,
+                always:()=>{
+                    //Scroll completed or Aborted, remove the touch listener
+                    document.removeEventListener("touchstart", stopScrollOnTouch);
+                }});
+        }
+    }
 });
 
 
@@ -438,7 +450,7 @@ $(document).ready(function() {
     $('[name^=show-stats-person]').click(function() {
 
         // Initialise modal and show loading icon and message
-        var dialog = <any> bootbox.dialog({
+        const dialog = <any> bootbox.dialog({
             title: translate('listOfShiftsDone') + chosenPerson,
             size: 'large',
             message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
@@ -460,6 +472,7 @@ $(document).ready(function() {
                         + "<th>#</th>"
                         + "<th>" + translate('shift') + "</th>"
                         + "<th>" + translate('event') + "</th>"
+                        + "<th class=\"statistics-section-highlight\"></th>"
                         + "<th>" + translate('section') + "</th>"
                         + "<th>" + translate('date') + "</th>"
                         + "<th>" + translate('weight') + "</th>"
@@ -475,17 +488,18 @@ $(document).ready(function() {
                 }
 
                 // Fill with data received
-                for (var i = 0; i < response.length; i++)
+                for (let i = 0; i < response.length; i++)
                 {
                     $("#person-shifts-overview").append(
                         "<tbody>"
                         // Change background for shifts in other sections
-                        + "<tr" + (!response[i]["isOwnClub"] ? " class=\"active text-muted\"" : "") + ">"
+                        + "<tr" + (!response[i]["isOwnClub"] ? " class=\"other-section text-muted\"" : "") + ">"
                         + "<td>"  + (1+i) + "</td>"
                         + "<td>" + response[i]["shift"] + "</td>"
                         + "<td>" + "<a href=\"/event/" + response[i]["event_id"] + "\">" + response[i]["event"] + "</a>" + "</td>"
                         // Color-coding for different sections
-                        + "<td class=\"" + response[i]["section"]+ "-section-highlight\">" + response[i]["section"] + "</td>"
+                        +"<td class=\"statistics-section-highlight palette-"+response[i]["sectionColor"]+"-500 bg\">&nbsp;</td>"
+                        + "<td>" + response[i]["section"] + "</td>"
                         + "<td>" + response[i]["date"] + "</td>"
                         + "<td>" + response[i]["weight"] + "</td>"
                         + "</tr>"

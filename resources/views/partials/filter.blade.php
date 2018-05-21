@@ -7,7 +7,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </span>
 	@endforeach
-	<span id="label-survey" class="label label-filters palette-Purple-900-Primary bg hidden" >{{trans('mainLang.survey')}}
+	<span id="label-survey" class="label label-filters palette-Purple-900 bg hidden" >{{trans('mainLang.survey')}}
         &nbsp;
         <span class="glyphicon glyphicon-remove-circle"></span>
      </span>
@@ -29,7 +29,7 @@
 	@foreach($sections as $section)
 		<option value="filter-{!! $section["title"] !!}" class="palette-{{$section->color}}-500-Primary bg option-shadow">{!! $section["title"] !!}</option>
 	@endforeach
-		<option value="filter-survey" class="palette-Purple-900-Primary bg option-shadow">{{trans('mainLang.survey')}}</option>
+		<option value="filter-survey" class="palette-Purple-900 bg option-shadow">{{trans('mainLang.survey')}}</option>
 	</select>
 </div>
 

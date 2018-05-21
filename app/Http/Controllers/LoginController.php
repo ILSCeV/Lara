@@ -13,7 +13,6 @@ use Lara\Section;
 use Lara\User;
 use Lara\utilities\RoleUtility;
 use Log;
-use Redirect;
 use Session;
 
 /*
@@ -52,7 +51,7 @@ class LoginController extends Controller
         if (Auth::user()) {
             return $this->logout();
         }
-        return Redirect::to('/');
+        return redirect('/');
     }
 
     /**
@@ -112,7 +111,8 @@ class LoginController extends Controller
             if ($userSettings) {
                 Session::put('applocale', $userSettings->language);
             }
-            return Redirect::back();
+
+            return redirect()->back();
         }
         return $this->loginFailed();
     }
@@ -147,7 +147,7 @@ class LoginController extends Controller
         try {
             return $this->attemptLoginViaLDAPInternal();
         } catch (\Exception $e) {
-            Log::error("ldap brocken", [$e->getMessage()]);
+            Log::error("ldap broken: " . $e->getMessage(), $e->getTrace());
             return false;
         }
     }
@@ -372,7 +372,7 @@ class LoginController extends Controller
 
                 Auth::login($person->user());
                 $user = $person->user();
-    
+
                 $userEmail = $info[0]['mail'][0];
                 if (isset($userEmail) && $userEmail != $user->email) {
                     if (!User::query()->where('email', '=', $userEmail)->where('id', '<>', $user->id)->exists()) {
@@ -439,7 +439,7 @@ class LoginController extends Controller
         Session::put('message', Config::get('messages_de.login-fail'));
         Session::put('msgType', 'danger');
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
     /**
@@ -460,16 +460,17 @@ class LoginController extends Controller
         $id = $user->id;
         $nickName = $user->name;
         $givenName = $user->givenname;
-        $roles = $user->roles->reduce(function($previous, $role) {
-            return $previous . ", " . $role->section->title . ": " . $role->name;
-        }, '');
+        $displayName = !empty($nickName) ? $nickName : $givenName;
+        $roles = $user->roles->map(function($role) {
+            return $role->section->title  . ": " . $role->name;
+        })->implode(', ');
 
         Log::info('Auth success: ' .
             $fullName .
             ' (' .
             $id .
             ', "' .
-            (!empty($nickName) ? $nickName : $givenName) .
+            $displayName .
             '", ' .
             $roles .
             ') just logged in.');

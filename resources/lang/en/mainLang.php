@@ -483,8 +483,8 @@ return [
     'nonNumericStats'               => 'Statistical weight must be entered with numbers ;)',
     'negativeStats'                 => 'Statistical weight can\'t be negative.',
     'changesSaved'                  => 'Changes saved successfully.',
-    'deleteFailedShiftTypeInUse'      => 'Shift type was not deleted, because it\'s in use. Here you can change that.',
-    'adminsOnly'                    => 'Sorry, but this function can only used by Adminstrators',
+    'deleteFailedShiftTypeInUse'    => 'Shift type was not deleted, because it\'s in use. Here you can change that.',
+    'adminsOnly'                    => 'Sorry, but this function can only used by Administrators',
 
 
     ////////////////////////
@@ -533,10 +533,13 @@ return [
     // Legal stuff //
     /////////////////
     
-    'privacyPolicy'     => 'Privacy policy',
+    'privacyPolicy'     => 'Privacy Policy',
     'impressum'         => 'Imprint',
 
-
-
+    'agreeWithPrivacy'  => 'You must read and agree with our Privacy Policy in order to use this website. Please allow us to process your data by clicking on the button down below.',
+    'privacyAccepted'   => 'Thank you, now you can continue using Lara',
+    'fatalErrorUponSaving' => 'Something went wrong. Please try again later or contact an administrator for support.',
+    'privacyAgree'      => 'I Agree with Lara\'s Privacy Policy',
+    'waitOneSecond'     => 'Just a second...',
 
 ];
