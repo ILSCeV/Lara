@@ -33,7 +33,7 @@ class ClubEventController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('rejectGuests', ['only' => 'create']);
+        $this->middleware('rejectGuests', ['only' => ['create','edit']]);
     }
 
     /**
