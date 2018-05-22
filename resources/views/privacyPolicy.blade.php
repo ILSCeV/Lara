@@ -10,7 +10,7 @@
     <br class="visible-sm">
 
 
-    @if(! Auth::user()->privacy_accepted)
+    @if(Auth::user()->privacy_accepted == 0)
     <div class="panel panel-danger">
         <div class="panel-heading">
             <h3 class="panel-title">{{ trans("mainLang.waitOneSecond") }}</h3>
@@ -743,7 +743,7 @@
                     </p>
                 </div>
             </div>
-            @if(! Auth::user()->privacy_accepted)
+            @if(Auth::user()->privacy_accepted == 0)
                 <div class="panel-footer">
                 <hr>
                 <form method="post" action="{{url('userAgreesPrivacy')}}" enctype="multipart/form-data">
