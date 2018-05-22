@@ -158,7 +158,7 @@ class UserController extends Controller
 
     public function agreePrivacy(){
         $user = Auth::user();
-        $user->privacy_accepted = true;
+        $user->privacy_accepted =  new \DateTime();
         if($user->save()) {
             \Log::info('User: '. $user->name.' ('. $user->person->prsn_ldap_id.') accepted the privacy policy.');
             Session::put('message', trans('mainLang.privacyAccepted'));
