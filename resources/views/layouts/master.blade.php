@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
-		<title>Lara | @yield('title', 'VedSt Default Title')</title>
+		<title>Lara | @yield('title', 'VedSt')</title>
         <meta charset="UTF-8">
 		<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
         <meta http-equiv="Cache-control" content="no-cache">
@@ -18,6 +17,30 @@
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        
+        <!-- EU Cookie Consent Banner -->
+        <link rel="stylesheet" 
+              type="text/css" 
+              href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+        <script>
+            window.addEventListener("load", function(){
+                window.cookieconsent.initialise({
+                    "palette": {
+                        "popup": {
+                        "background": "#edeff5",
+                        "text": "#838391"
+                        },
+                        "button": {
+                            "background": "#4b81e8"
+                        }
+                    },
+                    "theme": "edgeless",
+                    "position": "bottom-right",
+                })
+            });
+        </script>
+        <!-- END EU Cookie Consent Banner -->
 	</head>
 
     <body @if(Session::get("applocale","de")  == "pirate") style="background-image:url( {{asset('/background-pirate.jpg')}} ) !important; background-size:initial; background-position:center;"  @endif>
