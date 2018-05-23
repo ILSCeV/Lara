@@ -342,9 +342,6 @@ input[type=number],
     z-index: 999999;
 }
 
-.alert-fixed{
-    position: fixed !important;
-}
 
 /**
  * ISOTOPE - animates the week view
