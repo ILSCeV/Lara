@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Lara | @yield('title', 'VedSt')</title>
+		<title>Lara | @yield('title', 'Default Title')</title>
         <meta charset="UTF-8">
 		<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
         <meta http-equiv="Cache-control" content="no-cache">
@@ -10,17 +10,17 @@
         <link rel="stylesheet" type="text/css" href="{{ mix('/lara.css') }}">
     	<link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-48x48.png') }}">
 
-        @yield('moreStylesheets') 
+        @yield('moreStylesheets')
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        
+
         <!-- EU Cookie Consent Banner -->
-        <link rel="stylesheet" 
-              type="text/css" 
+        <link rel="stylesheet"
+              type="text/css"
               href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
         <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
         <script>
@@ -62,12 +62,12 @@
         </section>
 
         <!-- Back to Top button -->
-        <a id="back-to-top" 
-           href="#" 
-           class="btn btn-primary btn-lg back-to-top hidden-print hidden-md hidden-lg" 
-           role="button" 
-           title="{{ trans("mainLang.backToTop")  }}" 
-           data-toggle="tooltip" 
+        <a id="back-to-top"
+           href="#"
+           class="btn btn-primary btn-lg back-to-top hidden-print hidden-md hidden-lg"
+           role="button"
+           title="{{ trans("mainLang.backToTop")  }}"
+           data-toggle="tooltip"
            data-placement="right">
             <span class="glyphicon glyphicon-chevron-up"></span>
         </a>
