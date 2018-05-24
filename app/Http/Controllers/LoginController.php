@@ -451,8 +451,7 @@ class LoginController extends Controller
     }
 
     /**
-     * @param $info
-     * @param $userGroup
+     * @param $user User
      */
     protected function logSuccessfulAuthentication($user)
     {
@@ -461,7 +460,8 @@ class LoginController extends Controller
         $nickName = $user->name;
         $givenName = $user->givenname;
         $displayName = !empty($nickName) ? $nickName : $givenName;
-        $roles = $user->roles->map(function($role) {
+        $roles=$user->roles->unique();
+        $rolesString = $roles->map(function($role) {
             return $role->section->title  . ": " . $role->name;
         })->implode(', ');
 
@@ -472,7 +472,7 @@ class LoginController extends Controller
             ', "' .
             $displayName .
             '", ' .
-            $roles .
+            $rolesString .
             ') just logged in.');
     }
 
