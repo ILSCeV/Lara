@@ -19,7 +19,7 @@ use Lara\Status;
  * @property string status
  * @property string givenname
  * @property string lastname
- * @property \Illuminate\Database\Eloquent\Relations\belongsToMany|Role $roles
+ * @property \Illuminate\Database\Eloquent\Relations\belongsToMany|Role roles
  */
 class User extends Authenticatable
 {
