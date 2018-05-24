@@ -54,5 +54,9 @@ mix.webpackConfig({
     .sass('resources/assets/sass/surveys.scss', 'public/')
     .ts('resources/assets/ts/lara.ts', 'public/')
     .extract(['jquery', 'bootstrap', 'bootbox', 'bootstrap-select'])
+    .styles(['node_modules/cookieconsent/build/cookieconsent.min.css'],'public/static.css')
+    .scripts([
+      'node_modules/cookieconsent/build/cookieconsent.min.js'
+    ], 'public/static.js')
     .sourceMaps()
     .version();

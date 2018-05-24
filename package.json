@@ -2,6 +2,7 @@
     "dependencies": {
         "bootbox": "^4.4.0",
         "bootstrap": "^3.3.7",
+        "cookieconsent": "^3.0.6",
         "laravel-mix": "^1.2.2",
         "sortablejs": "^1.6.0"
     },

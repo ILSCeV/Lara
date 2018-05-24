@@ -1392,3 +1392,9 @@ $(() => {
 
     });
 });
+
+$( ()=> {
+  $(window).scroll(()=>{
+    $('.alert-fixed').css('top',window.pageYOffset + 'px')
+  });
+} );
