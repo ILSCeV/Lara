@@ -108,6 +108,10 @@ class User extends Authenticatable
 
     public static function createFromPerson(Person $person)
     {
+        if ($person->user) {
+            return $person->user;
+        }
+
         if (!$person->club) {
             return NULL;
         }
@@ -128,6 +132,8 @@ class User extends Authenticatable
             $user, $person->club->section(),
             RoleUtility::PRIVILEGE_MEMBER
         );
+
+        $person->user = $user;
 
         return $user;
     }
