@@ -37,7 +37,7 @@
                     <tbody>
                         @foreach($clubInfo as $info)
                             @php
-                                $user = $info->user->user();
+                                $user = $info->user->user;
                             @endphp
                             <tr class="{{Auth::user()->id === $user->id? 'my-shift' : ''}}">
                                 <td>
