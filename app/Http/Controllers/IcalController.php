@@ -223,8 +223,11 @@ class IcalController extends Controller
             $person = Person::where('prsn_uid', '=', $prsn_uid)->first();
 
             if(isset($person)) {
-                $user = $person->user();
-                $userSettings = $user->settings;
+                $user = $person->user;
+
+                if (isset($user)) {
+                    $userSettings = $user->settings;
+                }
 
                 if (isset($userSettings)) {
                     Session::put('applocale', $userSettings->language);
