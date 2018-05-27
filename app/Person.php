@@ -82,12 +82,11 @@ class Person extends Model
     }
 
     /**
-     * @return \Lara\User
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne|User
      */
     public function user()
     {
-        $userRelationship = $this->hasOne(User::class);
-        return $userRelationship->exists() ? $userRelationship->first() : User::createFromPerson($this);
+        return $this->hasOne(User::class);
     }
 
     /**
@@ -109,7 +108,7 @@ class Person extends Model
 
     public function fullName()
     {
-        $user = $this->user();
+        $user = $this->user;
 
         if ($user && Gate::allows('accessInformation', $user)) {
             return $user->fullName();
