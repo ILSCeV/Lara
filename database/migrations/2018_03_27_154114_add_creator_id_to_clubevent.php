@@ -39,7 +39,7 @@ class AddCreatorIdToClubevent extends Migration
                 if (is_null($person)) {
                     return;
                 }
-                $user = $person->user();
+                $user = $person->user;
 
                 $event->creator_id = $user->id;
             });
