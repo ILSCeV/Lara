@@ -10,18 +10,20 @@
     <br class="visible-sm">
 
 
-    @if(Auth::user()->privacy_accepted == 0)
-    <div class="panel panel-danger">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ trans("mainLang.waitOneSecond") }}</h3>
-        </div>
+    @auth
+        @if(Auth::user()->privacy_accepted == 0)
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ trans("mainLang.waitOneSecond") }}</h3>
+            </div>
 
-        <div class="panel-body">
-            <strong>{{ trans('mainLang.agreeWithPrivacy') }}</strong>
+            <div class="panel-body">
+                <strong>{{ trans('mainLang.agreeWithPrivacy') }}</strong>
+            </div>
         </div>
-    </div>
-    <br>
-    @endif
+        <br>
+        @endif
+    @endauth
 
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -743,15 +745,17 @@
                     </p>
                 </div>
             </div>
-            @if(Auth::user()->privacy_accepted == 0)
-                <div class="panel-footer">
-                <hr>
-                <form method="post" action="{{url('userAgreesPrivacy')}}" enctype="multipart/form-data">
-                    {{ csrf_field() }}
-                    <button type="submit" class="btn btn-success">{{ trans("mainLang.privacyAgree") }}</button>
-                </form>
-                </div>
-            @endif
+            @auth
+                @if(Auth::user()->privacy_accepted == 0)
+                    <div class="panel-footer">
+                    <hr>
+                    <form method="post" action="{{url('userAgreesPrivacy')}}" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-success">{{ trans("mainLang.privacyAgree") }}</button>
+                    </form>
+                    </div>
+                @endif
+            @endauth
         </div>
     </div>
 @stop
