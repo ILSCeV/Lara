@@ -8,6 +8,7 @@ use ICal\ICal;
 use Illuminate\Console\Command;
 use Lara\Club;
 use Lara\ClubEvent;
+use Lara\Logging;
 use Lara\Person;
 use Lara\Schedule;
 use Lara\Section;
@@ -123,6 +124,7 @@ class SyncBDclub extends Command
                 if (is_null($clubEvent)) {
                     $this->info('Create new event for ' . $icevt->summary);
                     $clubEvent = new ClubEvent();
+
                 } else {
                     $this->info('update event ' . $icevt->summary);
                 }
@@ -152,6 +154,7 @@ class SyncBDclub extends Command
                 $schedule = $clubEvent->schedule;
                 if (is_null($schedule)) {
                     $schedule = new Schedule();
+                    Logging::scheduleCreated($schedule);
                 }
                 $schedule->evnt_id = $clubEvent->id;
                 $schedule->schdl_title = $clubEvent->evnt_title;
