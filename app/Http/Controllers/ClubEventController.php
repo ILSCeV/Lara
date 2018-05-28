@@ -598,11 +598,6 @@ class ClubEventController extends Controller
             $event->evnt_is_published = 0;
         }
 
-        // Filter
-        $filter = collect(Input::get("filter"))->values()->toArray();
-
-        $event->save();
-        $event->showToSection()->sync($filter);
 
         // Logging
 
@@ -633,6 +628,11 @@ class ClubEventController extends Controller
             }
 
         }
+        // Filter
+        $filter = collect(Input::get("filter"))->values()->toArray();
+
+        $event->save();
+        $event->showToSection()->sync($filter);
         return $event;
     }
 

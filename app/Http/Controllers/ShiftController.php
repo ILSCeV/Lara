@@ -336,10 +336,7 @@ class ShiftController extends Controller
         // If no id is set, create a new Model
         $shift = self::createShiftsFromEditSchedule($id,$title,$type,$start,$end,$weight,$position);
         $shift->schedule_id = $schedule->id;
-        if (!$isNewEvent) {
-            $shift->save();
-            Logging::shiftCreated($shift);
-        }
+
         $shift->save();
     }
 
@@ -409,6 +406,9 @@ class ShiftController extends Controller
             if ($shift->isDirty('end')) {
                 Logging::shiftEndChanged($shift);
             }
+        }
+        else {
+            Logging::shiftCreated($shift);
         }
         $shift->save();
         return $shift;
