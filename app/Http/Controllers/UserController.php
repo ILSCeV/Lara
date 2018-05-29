@@ -219,6 +219,11 @@ class UserController extends Controller
         $unassignedRoles = Role::query()->whereIn('id', $unassignedRoleIds)->get();
 
         $user->fill($data);
+
+        $person = $user->person;
+        $person->status = $user->status;
+        $person->save();
+
         $changedSection = $user->isDirty('section_id');
         $user->save();
 
