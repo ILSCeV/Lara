@@ -141,6 +141,11 @@ class UserController extends Controller
         }
 
         $user->fill($request->all())->save();
+
+        $person = $user->person;
+        $person->prsn_status = $user->status;
+        $person->save();
+
         Utilities::success(trans('mainLang.update'));
         return Redirect::back();
     }
@@ -221,7 +226,7 @@ class UserController extends Controller
         $user->fill($data);
 
         $person = $user->person;
-        $person->status = $user->status;
+        $person->prsn_status = $user->status;
         $person->save();
 
         $changedSection = $user->isDirty('section_id');
