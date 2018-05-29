@@ -133,10 +133,14 @@ class LoginController extends Controller
             $person = Person::query()->whereIn('clb_id', $clubIdsOfSections)->inRandomOrder()->first();
         }
         /** @var User $user */
-        $user = $person->user();
+        $user = $person->user;
+        if (!$user) {
+            $user = User::createFromPerson($person);
+        }
         $user->roles()->detach();
         RoleUtility::assignPrivileges($user, $user->section, $userGroup);
-        $person->user()->fill(["group" => $userGroup,"password" => bcrypt( "123456")])->save();
+
+        $user->fill(["group" => $userGroup,"password" => bcrypt( "123456")])->save();
         $this->loginPersonAsUser($person);
 
         return true;
@@ -370,8 +374,12 @@ class LoginController extends Controller
                     User::createFromPerson($person);
                 }
 
-                Auth::login($person->user());
-                $user = $person->user();
+                $user = $person->user;
+
+                if (!$user) {
+                    $user = User::createFromPerson($person);
+                }
+                Auth::login($user);
 
                 $userEmail = $info[0]['mail'][0];
                 if (isset($userEmail) && $userEmail != $user->email) {
@@ -410,8 +418,14 @@ class LoginController extends Controller
             return false;
         }
 
+        $user = $person->user;
+
+        if (!$user) {
+            $user = User::createFromPerson($person);
+        }
+
         $credentials = [
-            'name'     => $person->user()->name,
+            'name'     => $user->name,
             'password' => request('password'),
         ];
 
@@ -447,12 +461,11 @@ class LoginController extends Controller
      */
     protected function loginPersonAsUser(Person $person)
     {
-        Auth::login($person->user());
+        Auth::login($person->user);
     }
 
     /**
-     * @param $info
-     * @param $userGroup
+     * @param $user User
      */
     protected function logSuccessfulAuthentication($user)
     {
@@ -461,7 +474,8 @@ class LoginController extends Controller
         $nickName = $user->name;
         $givenName = $user->givenname;
         $displayName = !empty($nickName) ? $nickName : $givenName;
-        $roles = $user->roles->map(function($role) {
+        $roles=$user->roles->unique();
+        $rolesString = $roles->map(function($role) {
             return $role->section->title  . ": " . $role->name;
         })->implode(', ');
 
@@ -472,7 +486,7 @@ class LoginController extends Controller
             ', "' .
             $displayName .
             '", ' .
-            $roles .
+            $rolesString .
             ') just logged in.');
     }
 

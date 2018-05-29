@@ -19,7 +19,7 @@ use Lara\Status;
  * @property string status
  * @property string givenname
  * @property string lastname
- * @property \Illuminate\Database\Eloquent\Relations\belongsToMany|Role $roles
+ * @property \Illuminate\Database\Eloquent\Relations\belongsToMany|Role roles
  */
 class User extends Authenticatable
 {
@@ -108,6 +108,10 @@ class User extends Authenticatable
 
     public static function createFromPerson(Person $person)
     {
+        if ($person->user) {
+            return $person->user;
+        }
+
         if (!$person->club) {
             return NULL;
         }
@@ -131,6 +135,8 @@ class User extends Authenticatable
             $user, $person->club->section(),
             RoleUtility::PRIVILEGE_MEMBER
         );
+
+        $person->user = $user;
 
         return $user;
     }

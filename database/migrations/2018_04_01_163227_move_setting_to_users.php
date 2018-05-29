@@ -25,7 +25,7 @@ class MoveSettingToUsers extends Migration
             if (!$person) {
                 return;
             }
-            $settings->user_id = $person->user()->id;
+            $settings->user_id = $person->user->id;
             $settings->save();
         });
 

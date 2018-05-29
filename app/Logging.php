@@ -97,16 +97,31 @@ class Logging
     public static function newScheduleRevision($schedule, $action, $old = "", $new = "")
     {
         $user = Auth::user();
-        $person = $user->person;
+
+        if ($user) {
+            $person = $user->person;
+            return [
+                "entry id" => is_null($schedule) ? "" : $schedule->id,
+                "job type" => "",
+                "action" => $action,
+                "old value" => $old,
+                "new value" => $new,
+                "user id" => $person->prsn_ldap_id != NULL ? $person->prsn_ldap_id : "",
+                "user name" => $person->prsn_ldap_id != NULL ? $user->name . ' (' . $person->club->clb_title . ')' : "Gast",
+                "from ip" => Request::getClientIp(),
+                "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
+            ];
+        }
+        // If no one is logged in, the event is created from an import or other automated tasks => Use Lara as creator
         return [
             "entry id" => is_null($schedule) ? "" : $schedule->id,
             "job type" => "",
             "action" => $action,
             "old value" => $old,
             "new value" => $new,
-            "user id" => $person->prsn_ldap_id != NULL ? $person->prsn_ldap_id : "",
-            "user name" => $person->prsn_ldap_id != NULL ? $user->name . ' (' . $person->club->clb_title . ')' : "Gast",
-            "from ip" => Request::getClientIp(),
+            "user id" => "",
+            "user name" => "Lara",
+            "from ip" => "",
             "timestamp" => (new DateTime)->format('d.m.Y H:i:s')
         ];
     }

@@ -83,7 +83,11 @@ class LDAPsync extends Command
 
 // STARTING THE UPDATE
         $persons->each(function (Person $person) use ($bar, $allowedSection, $ldapConn) {
-            $user = $person->user();
+            $user = $person->user;
+
+            if (!$user) {
+                $user = User::createFromPerson($person);
+            }
             $bar->advance();
             // skip ldap override
             if ($person->prsn_ldap_id == '9999') {
