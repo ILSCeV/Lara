@@ -380,8 +380,10 @@ class LoginController extends Controller
                     $user = User::createFromPerson($person);
                 }
                 Auth::login($user);
-
-                $userEmail = $info[0]['mail'][0];
+    
+                if (array_key_exists('mail', $info[0])) {
+                    $userEmail = $info[0]['mail'][0];
+                }
                 if (isset($userEmail) && $userEmail != $user->email) {
                     if (!User::query()->where('email', '=', $userEmail)->where('id', '<>', $user->id)->exists()) {
                         $user->email = $userEmail;
