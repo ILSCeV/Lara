@@ -350,7 +350,7 @@ class ShiftController extends Controller
      * @param $position
      * @return Shift
      */
-    public static function createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position) {
+    public static function createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position, $isTemplate = false) {
 
         if ($title === "") {
             return;
@@ -408,7 +408,9 @@ class ShiftController extends Controller
             }
         }
         else {
-            Logging::shiftCreated($shift);
+            if(!$isTemplate) {
+                Logging::shiftCreated($shift);
+            }
         }
         $shift->save();
         return $shift;
