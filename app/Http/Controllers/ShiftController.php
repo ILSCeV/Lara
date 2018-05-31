@@ -7,15 +7,14 @@ use Carbon\Carbon;
 use Hash;
 use Illuminate\Http\Request;
 use Input;
-use Session;
-use Lara\Logging;
-
 use Lara\Club;
+use Lara\Logging;
 use Lara\Person;
 use Lara\Shift;
 use Lara\ShiftType;
 use Lara\Status;
 use Lara\Utilities;
+use Session;
 
 class ShiftController extends Controller
 {
@@ -334,8 +333,8 @@ class ShiftController extends Controller
             return;
         }
         // If no id is set, create a new Model
-        $shift = self::createShiftsFromEditSchedule($id,$title,$type,$start,$end,$weight,$position);
-        $shift->schedule_id = $schedule->id;
+        $shift = self::createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position,
+            $schedule->id);
 
         $shift->save();
     }
@@ -350,7 +349,7 @@ class ShiftController extends Controller
      * @param $position
      * @return Shift
      */
-    public static function createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position, $isTemplate = false) {
+    public static function createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position, $scheduleId = null) {
 
         if ($title === "") {
             return;
@@ -387,7 +386,8 @@ class ShiftController extends Controller
             "end" => $end,
             "statistical_weight" => $weight,
             "shifttype_id" => $shiftType->id,
-            "position" => $position
+            "position" => $position,
+            "schedule_id" => $scheduleId
         ]);
 
         if ($shift->exists) {
@@ -408,7 +408,7 @@ class ShiftController extends Controller
             }
         }
         else {
-            if(!$isTemplate) {
+            if(!is_null($scheduleId)) {
                 Logging::shiftCreated($shift);
             }
         }
