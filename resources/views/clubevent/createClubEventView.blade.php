@@ -151,6 +151,12 @@
 				            {!! Form::radio('evnt_type', "5", $type == 5 ? array("checked") : "") !!}
 							{{ trans('mainLang.utilization') }}
 				            <br>
+				            {!! Form::radio('evnt_type', "10", $type == 3 ? array("checked") : "") !!}
+							{{ trans('mainLang.outsideEvent') }}
+				            <br>
+				            {!! Form::radio('evnt_type', "11", $type == 3 ? array("checked") : "") !!}
+							{{ trans('mainLang.buffet') }}
+				            <br>
 				            {!! Form::radio('evnt_type', "4", $type == 4 ? array("checked") : "") !!}
 							{{ trans('mainLang.internalEvent') }}
 				            <br>

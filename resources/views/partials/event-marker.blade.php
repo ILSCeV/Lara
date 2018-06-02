@@ -38,5 +38,13 @@
     <?php
     $content = '<i class="fa fa-list-alt white-text"></i>'
     ?>
+@elseif( $clubEvent->evnt_type == 10)
+    <?php
+    $content = '<i class="fa fa-tree white-text"></i>'
+    ?>
+@elseif( $clubEvent->evnt_type == 11)
+    <?php
+    $content = '<i class="fa fa-cutlery white-text"></i>'
+    ?>
 @endif
 @include("partials.calendarLinkEvent", [$clubEvent, $content])

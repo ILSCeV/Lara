@@ -43,6 +43,16 @@
       <i class="fa fa-ticket"></i>
        - {{ trans('mainLang.preSale') }}
 
+      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+
+      <i class="fa fa-tree"></i>
+       - {{ trans('mainLang.outsideEvent') }}
+
+      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+
+      <i class="fa fa-cutlery"></i>
+       - {{ trans('mainLang.buffet') }}
+
       <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs visible-sm">
 
       <i class="fa fa-list-alt"></i>

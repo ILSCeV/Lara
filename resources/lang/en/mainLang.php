@@ -43,6 +43,8 @@ return [
     'LiveBandDJ'                => 'Live Band / Live DJ / Reading',
     'internalEvent'             => 'Internal event',
     'utilization'               => 'Leasing',
+    'outsideEvent'              => 'Outside event',
+    'buffet'                    => 'Buffet',
     'flooding'                  => 'Flooding',
     'flyersPlacard'             => 'Flyer / poster distribution',
     'marketingFlyersPlacard'    => 'Marketing / Flyer / Posters', //used in legend.blade.php
