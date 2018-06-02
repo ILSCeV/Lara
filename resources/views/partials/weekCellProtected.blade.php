@@ -16,7 +16,9 @@
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
     @elseif ($clubEvent->evnt_type == 4 
           || $clubEvent->evnt_type == 5 
-          || $clubEvent->evnt_type == 6)
+          || $clubEvent->evnt_type == 6
+          || $clubEvent->evnt_type == 10
+          || $clubEvent->evnt_type == 11)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg white-text">
     @elseif ($clubEvent->evnt_type == 7 
           || $clubEvent->evnt_type == 8)
