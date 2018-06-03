@@ -42,7 +42,6 @@ $factory->define(Lara\Survey::class, function (Faker\Generator $faker) {
         'creator_id' => Lara\Person::inRandomOrder()->first()->prsn_ldap_id,
         'title' => $faker->sentence(2),
         'description' => $faker->paragraphs(4, true),
-        'description' => $faker->paragraphs(4, true),
         'deadline' => $faker->dateTimeBetween('now', '+60 days'),
         'password' => '',
         'is_private' => false,
