@@ -128,6 +128,7 @@ class ShiftController extends Controller
                 // Formulate the response
                 $person = is_null($shift->getPerson()->first()) ? null : $shift->getPerson()->first();
                 $prsn_ldap_id = $person? $person->prsn_ldap_id : null;
+                $isCurrentUser = !is_null(Auth::user()) && $prsn_ldap_id == Auth::user()->person->prsn_ldap_id;
                 return response()->json([
                     "errorCode"     => "error_outOfSync",
                     "entryId"       => $shift->id,
@@ -137,7 +138,7 @@ class ShiftController extends Controller
                     "userClub"      => $person? $person->getClub->clb_title : null,
                     "userComment"   => $shift->comment,
                     "timestamp"     => $shift->updated_at->toDateTimeString(),
-                    "is_current_user" => $prsn_ldap_id == Auth::user()->person->prsn_ldap_id
+                    "is_current_user" => $isCurrentUser
                 ], 409);
 
             }
