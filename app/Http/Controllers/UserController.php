@@ -236,7 +236,7 @@ class UserController extends Controller
             if(!Auth::user()->can('assign',$role)){
                 \Log::warning(trans('mainLang.accessDenied') . ' ' . $role->name);
             } else {
-                $user->roles()->attach($role);
+                $user->roles()->syncWithoutDetaching($role);
             }
         });
         $unassignedRoles->each(function(Role $role) use ($user) {
