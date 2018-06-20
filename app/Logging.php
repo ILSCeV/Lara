@@ -12,6 +12,9 @@ class Logging
 {
     public static function logShiftRevision(Shift $shift, $action, $old = "", $new = "")
     {
+        if ($shift->schedule == null) {
+            return;
+        }
         self::ensureShiftHasRevisions($shift);
 
         $schedule = $shift->schedule;
