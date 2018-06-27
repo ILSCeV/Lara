@@ -16,7 +16,6 @@ class ClubsTableSeeder extends Seeder
         DB::table('clubs')->delete();
         
         \Lara\Section::query()->each(function(\Lara\Section $section) {
-            echo $section;
             $club = new \Lara\Club(['clb_title'=>$section->title]);
             $club->save();
         });
