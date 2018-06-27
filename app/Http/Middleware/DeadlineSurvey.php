@@ -28,7 +28,7 @@ class DeadlineSurvey
         } else {
             $request->session()->put('message', 'Die Deadline ist überschritten, jetzt können nurnoch Clubleitung/Marketing/Admin die Umfrage ausfüllen');
             $request->session()->put('msgType', 'danger');
-            return Redirect::action('MonthController@currentMonth');
+            return Redirect::action('SurveyController@show', ['id' => $survey->id]);
         }
     }
 }
