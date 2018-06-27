@@ -12,7 +12,9 @@
 			    @elseif ($clubEvent->evnt_type == 1)
 			        <div class="panel panel-heading palette-Purple-500 bg">
 			    @elseif ($clubEvent->evnt_type == 2
-			    	  || $clubEvent->evnt_type == 3)
+			    	  || $clubEvent->evnt_type == 3
+			          || $clubEvent->evnt_type == 10
+			          || $clubEvent->evnt_type == 11)
 			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-900 bg">
 			    @elseif ($clubEvent->evnt_type == 4
 			          || $clubEvent->evnt_type == 5
@@ -53,6 +55,10 @@
 									{{ trans('mainLang.preSale') }}
 								@elseif( $clubEvent->evnt_type == 9)
 									{{ trans('mainLang.others') }}
+								@elseif( $clubEvent->evnt_type == 10)
+									{{ trans('mainLang.outsideEvent') }}
+								@elseif( $clubEvent->evnt_type == 11)
+									{{ trans('mainLang.buffet') }}
 								@endif
 							</td>
 						</tr>

@@ -43,7 +43,9 @@ return [
     'special'               => 'Festmahl',
     'LiveBandDJ'            => 'Seeschlacht',
     'internalEvent'         => 'Feirn im engsten Kreise',
-    'utilization'           => 'Passagierbeförderung',
+    'utilization'           => 'Passagierbeförderung',    
+    'outsideEvent'          => 'Treffen weit vom Hafen',
+    'buffet'                => 'Mahlzeit',
     'flooding'              => 'Deck schrubben',
     'flyersPlacard'         => 'Rum verteilen',
     'marketingFlyersPlacard'=> 'Anhoyern', //used in legend.blade.php

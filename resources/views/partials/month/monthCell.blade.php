@@ -88,7 +88,9 @@
                     @elseif ($clubEvent->evnt_type == 1)
                         <div class="cal-event {{$classString}} palette-Purple-500 bg">
                     @elseif ($clubEvent->evnt_type == 2 
-                          || $clubEvent->evnt_type == 3)
+                          || $clubEvent->evnt_type == 3
+                          || $clubEvent->evnt_type == 10
+                          || $clubEvent->evnt_type == 11)
                         <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
                     @elseif ($clubEvent->evnt_type == 4 
                           || $clubEvent->evnt_type == 5 
@@ -120,7 +122,9 @@
                 @elseif ($clubEvent->evnt_type == 1)
                     <div class="cal-event {{$classString}} palette-Purple-500 bg">
                 @elseif ($clubEvent->evnt_type == 2 
-                      || $clubEvent->evnt_type == 3)
+                      || $clubEvent->evnt_type == 3
+                      || $clubEvent->evnt_type == 10
+                      || $clubEvent->evnt_type == 11)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
                 @elseif ($clubEvent->evnt_type == 4 
                       || $clubEvent->evnt_type == 5 
