@@ -128,16 +128,15 @@ $ldapid
 
         </div>
         <div class="panel-body" >
-            @if($survey->description != null)
-                {{ trans('mainLang.description') }}: {!! $survey->description !!}
+            @if(!is_null($survey->description))
+                <p><strong>{{ trans('mainLang.description') }}</strong>: {!! $survey->description !!}</p>
             @endif
             <br>
-            {{ trans('mainLang.surveyDeadlineTo') }}
-            : {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} {{ trans('mainLang.um') }}
+            <strong>{{ trans('mainLang.surveyDeadlineTo') }}</strong>: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} {{ trans('mainLang.um') }}
             {{ date("H:i", strtotime($survey->deadline)) }}.
             <br>@if(count($answers) === 0) {{ trans('mainLang.noPersonAnswered') }} @endif
             @if(count($answers) === 1) {{ trans('mainLang.onePersonAnswered') }} @endif
-            @if(count($answers) > 1) {{ trans('mainLang.fewPersonAnswered1') }} {{count($answers)}} {{ trans('mainLang.fewPersonAnswered2') }} @endif
+            @if(count($answers) > 1) {{ trans('mainLang.fewPersonAnswered1') }} <strong>{{count($answers)}}</strong> {{ trans('mainLang.fewPersonAnswered2') }} @endif
         </div>
     </div>
 
