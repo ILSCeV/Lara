@@ -281,7 +281,7 @@ $ldapid
                                             @else
                                                 <td class="singleAnswer">
                                                     @endif
-                                                    {{trans($cell->answer)}}
+                                                    {{$cell->answer}}
                                                 </td>
                                                 @endforeach
                                                 @if($userId == $answer->creator_id || $userCanEditDueToRole || empty($answer->creator_id))

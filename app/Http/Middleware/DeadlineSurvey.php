@@ -19,8 +19,9 @@ class DeadlineSurvey
      */
     public function handle($request, Closure $next)
     {
+        $surveyId = intval($request->route()->parameter('survey'));
         /** @var Survey $survey */
-        $survey = Survey::findOrFail($request->route()->parameter('survey'))->first();
+        $survey = Survey::query()->findOrFail($surveyId);
         if(Carbon::now() < Carbon::parse($survey->deadline) && !is_null(\Auth::user())
             || \Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)
             || \Auth::user()->hasPermissionsInSection($survey->section(),RoleUtility::PRIVILEGE_CL,RoleUtility::PRIVILEGE_MARKETING)) {
