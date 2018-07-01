@@ -19,16 +19,17 @@ class DeadlineSurvey
      */
     public function handle($request, Closure $next)
     {
+        $surveyId = intval($request->route()->parameter('survey'));
         /** @var Survey $survey */
-        $survey = Survey::findOrFail($request->route()->parameter('survey'))->first();
-        if(Carbon::now() < Carbon::createFromTimestamp(strtotime($survey->deadline) && !is_null(\Auth::user()))
+        $survey = Survey::query()->findOrFail($surveyId);
+        if(Carbon::now() < Carbon::parse($survey->deadline) && !is_null(\Auth::user())
             || \Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)
             || \Auth::user()->hasPermissionsInSection($survey->section(),RoleUtility::PRIVILEGE_CL,RoleUtility::PRIVILEGE_MARKETING)) {
             return $next($request);
         } else {
             $request->session()->put('message', 'Die Deadline ist überschritten, jetzt können nurnoch Clubleitung/Marketing/Admin die Umfrage ausfüllen');
             $request->session()->put('msgType', 'danger');
-            return Redirect::action('MonthController@currentMonth');
+            return Redirect::action('SurveyController@show', ['id' => $survey->id]);
         }
     }
 }
