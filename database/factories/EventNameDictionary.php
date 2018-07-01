@@ -53,5 +53,7 @@ class EventNameDictionary
         'CBM' => 4,
         'Nutzung' => 5,
         'Generische Aufgabe' => 9,
+        'Montagsküche und Musikkneipe' => 11,
+        'Grillen' => 10
     ];
 }
