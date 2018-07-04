@@ -29,11 +29,13 @@
                 <div>
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
                     <label><input type="checkbox" id="required1" value="1" name="is_private"
-                                  @if(Auth::user()->isAn(Roles::PRIVILEGE_MARKETING)) checked
-                                  disabled @endif class="input_checkboxitem"
+                                  @if(!Auth::user()->isAn(Roles::PRIVILEGE_MARKETING))
+                                  disabled checked @endif class="input_checkboxitem"
                                   @if($survey->is_private) checked @endif> {{ trans('mainLang.showOnlyForLoggedInMember') }}
                     </label>
-                    <input hidden type="checkbox" id="required1_hidden" name="is_private" value="1">
+                    @if(!Auth::user()->isAn(Roles::PRIVILEGE_MARKETING))
+                        <input hidden checked type="checkbox" id="required1_hidden" name="is_private" value="1">
+                    @endif
                 </div>
                 <div>
                     <label class="label_checkboxitem" for="checkboxitemitem"></label>
