@@ -10,7 +10,7 @@ use Hash;
 class Survey extends BaseSoftDelete
 {
     protected $table = 'surveys';
-    protected $fillable = array('title', 'description', 'deadline', 'password');
+    protected $fillable = array('title', 'description', 'deadline', 'password','is_private');
 
     /**
      * Get the corresponding person.

@@ -142,8 +142,20 @@ class SurveyController extends Controller
      */
     public function show($id)
     {
+        
+        
         //find survey
         $survey = Survey::findOrFail($id);
+    
+        $user = Auth::user();
+        if (!$user && $survey->is_private == 1)
+        {
+            Session::put('message', Config::get('messages_de.access-denied'));
+            Session::put('msgType', 'danger');
+            return Redirect::action('MonthController@showMonth', array('year' => date('Y'),
+                                                                       'month' => date('m')));
+        }
+        
         //find questions
         $questions = $survey->questions;
         $questionCount = count($questions);
