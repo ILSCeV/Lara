@@ -33,7 +33,7 @@
                 {{-- provide a URL to the survey --}}
                 <a href="{{ URL::route('survey.show', $survey->id) }}"
                    class="event-name"
-                   data-toggle="tooltip" 
+                   data-toggle="tooltip"
                    data-placement="right"
                    title="{{ trans('mainLang.showDetails')}}">
                     {{-- instead of private survey show the actual title of the survey --}}
@@ -46,7 +46,7 @@
 
 @foreach($events as $clubEvent)
     @if($clubEvent->evnt_date_start === date("Y-m-d", $weekDay->getTimestamp()))
- 
+
         {{--Check if the event is still going on--}}
         @if(strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time())
             {{-- The event is already over --}}
@@ -87,16 +87,16 @@
                         <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
                     @elseif ($clubEvent->evnt_type == 1)
                         <div class="cal-event {{$classString}} palette-Purple-500 bg">
-                    @elseif ($clubEvent->evnt_type == 2 
+                    @elseif ($clubEvent->evnt_type == 2
                           || $clubEvent->evnt_type == 3
                           || $clubEvent->evnt_type == 10
                           || $clubEvent->evnt_type == 11)
                         <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
-                    @elseif ($clubEvent->evnt_type == 4 
-                          || $clubEvent->evnt_type == 5 
+                    @elseif ($clubEvent->evnt_type == 4
+                          || $clubEvent->evnt_type == 5
                           || $clubEvent->evnt_type == 6)
                         <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
-                    @elseif ($clubEvent->evnt_type == 7 
+                    @elseif ($clubEvent->evnt_type == 7
                           || $clubEvent->evnt_type == 8)
                         <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg">
                     @elseif ($clubEvent->evnt_type == 9)
@@ -106,7 +106,7 @@
                     @include("partials.event-marker", $clubEvent)
                         <span class="event-time white-text">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}</span>
                     <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
-                       data-toggle="tooltip" 
+                       data-toggle="tooltip"
                        data-placement="right"
                        title="{{ trans('mainLang.showDetails')}}">
                         {{ $clubEvent->evnt_title }}
@@ -114,23 +114,23 @@
                 </div>
                 @endif
 
-            
+
             {{-- show everything for members, but switch the color theme according to event type --}}
-            @else       
+            @else
                 @if     ($clubEvent->evnt_type == 0)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
                 @elseif ($clubEvent->evnt_type == 1)
                     <div class="cal-event {{$classString}} palette-Purple-500 bg">
-                @elseif ($clubEvent->evnt_type == 2 
+                @elseif ($clubEvent->evnt_type == 2
                       || $clubEvent->evnt_type == 3
                       || $clubEvent->evnt_type == 10
                       || $clubEvent->evnt_type == 11)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
-                @elseif ($clubEvent->evnt_type == 4 
-                      || $clubEvent->evnt_type == 5 
+                @elseif ($clubEvent->evnt_type == 4
+                      || $clubEvent->evnt_type == 5
                       || $clubEvent->evnt_type == 6)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
-                @elseif ($clubEvent->evnt_type == 7 
+                @elseif ($clubEvent->evnt_type == 7
                       || $clubEvent->evnt_type == 8)
                     <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg">
                 @elseif ($clubEvent->evnt_type == 9)
@@ -151,7 +151,7 @@
                 --}}
 
                     <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
-                       data-toggle="tooltip" 
+                       data-toggle="tooltip"
                        data-placement="right"
                        title="{{ trans('mainLang.showDetails')}}">
                         {{ $clubEvent->evnt_title }}
