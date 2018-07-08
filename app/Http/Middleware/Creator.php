@@ -21,7 +21,7 @@ class Creator
     public function handle($request, Closure $next, $classpath, $routeParameterName)
     {
         $newObject = new $classpath();
-        $object = $newObject->findOrFail($request->route()->parameter($routeParameterName));
+        $object = $newObject->findOrFail($request->route()->parameter($routeParameterName))->first();
         if($object->creator_id == \Auth::user()->person->prsn_ldap_id
             || \Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)
             || \Auth::user()->hasPermissionsInSection($object->section()
