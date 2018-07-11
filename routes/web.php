@@ -52,7 +52,7 @@ Route::pattern('day', 	'[0-3][0-9]');
 
 // LOG VIEWER
 Route::get('logs', 								'LogViewerController@index')
-    ->middleware('checkRoles:admin,marketing');
+    ->middleware('checkRoles:admin');
 
 
 // DEFAULT
