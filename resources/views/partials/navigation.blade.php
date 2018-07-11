@@ -86,7 +86,7 @@
                 @endis
 
                 {{-- LARA LOGS / section management or admins only --}}
-                @is(Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
+                @is(Roles::PRIVILEGE_ADMINISTRATOR)
                     <li><a href="{{ asset('/logs') }}">Logs</a></li>
                     <li role="separator" class="divider"></li>
                 @endis

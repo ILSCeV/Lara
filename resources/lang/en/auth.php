@@ -33,5 +33,6 @@ return [
     'status' => 'Status',
     'password' => 'Password',
     'confirmPassword' => 'Confirm password',
-    'register_submit' => 'Register new user'
+    'register_submit' => 'Register new user',
+    'ldap_down' => 'LDAP is down, please use your E-Mail for logging in.',
 ];

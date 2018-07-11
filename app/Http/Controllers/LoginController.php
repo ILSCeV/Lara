@@ -12,6 +12,7 @@ use Lara\Person;
 use Lara\Section;
 use Lara\User;
 use Lara\utilities\RoleUtility;
+use Lara\Utilities;
 use Log;
 use Session;
 
@@ -151,7 +152,8 @@ class LoginController extends Controller
         try {
             return $this->attemptLoginViaLDAPInternal();
         } catch (\Exception $e) {
-            Log::error("ldap broken: " . $e->getMessage(), $e->getTrace());
+            Log::error(Input::get("username") . " tried to login via LDAP, but LDAP is not available.");
+            Utilities::error(trans("auth.ldap_down"));
             return false;
         }
     }
@@ -452,8 +454,7 @@ class LoginController extends Controller
      */
     protected function loginFailed()
     {
-        Session::put('message', Config::get('messages_de.login-fail'));
-        Session::put('msgType', 'danger');
+        Utilities::error(Config::get('messages_de.login-fail'));
 
         return redirect()->back();
     }
