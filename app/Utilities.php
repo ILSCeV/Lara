@@ -72,14 +72,18 @@ class Utilities
 
     static function error($message)
     {
-        Session::put('message', $message);
-        Session::put('msgType', 'danger');
+        if (!Session::has('message')) {
+            Session::put('message', $message);
+            Session::put('msgType', 'danger');
+        }
     }
 
     static function success($message)
     {
-        Session::put('message', $message);
-        Session::put('msgType', 'success');
+        if (!Session::has('message')) {
+            Session::put('message', $message);
+            Session::put('msgType', 'success');
+        }
     }
 
 }

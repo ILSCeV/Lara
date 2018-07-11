@@ -33,5 +33,6 @@ return [
     'status' => 'Status',
     'password' => 'Passwort',
     'confirmPassword' => 'Passwort bestätigen',
-    'register_submit' => 'Neuen Nutzer registrieren'
+    'register_submit' => 'Neuen Nutzer registrieren',
+    'ldap_down' => 'LDAP scheint nicht erreichbar zu sein, bitte melde dich mit deiner E-Mail Adresse an.',
 ];
