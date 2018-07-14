@@ -24,6 +24,8 @@ class Logging
         array_push($revisions, $newRevision);
 
         $schedule->entry_revisions = json_encode($revisions);
+
+        $schedule->save();
     }
 
     public static function logScheduleRevision(Schedule $schedule, $action, $old = "" , $new = "")
