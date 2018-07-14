@@ -121,10 +121,14 @@ class SyncBDclub extends Command
 
                 /* @var $clubEvent ClubEvent */
                 $clubEvent = ClubEvent::where('external_id', '=', $icevt->uid)->first();
+
                 if (is_null($clubEvent)) {
                     $this->info('Create new event for ' . $icevt->summary);
                     $clubEvent = new ClubEvent();
 
+                } else if ($clubEvent->was_manually_edited){
+                    $this->info('Skipping Event' . $icevt->summary . '. It was manually edited.');
+                    continue;
                 } else {
                     $this->info('update event ' . $icevt->summary);
                 }
