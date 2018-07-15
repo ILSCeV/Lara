@@ -6,6 +6,7 @@ use Auth;
 use Log;
 
 use Lara\ClubEvent;
+use Lara\Logging;
 
 class ClubEventObserver
 {

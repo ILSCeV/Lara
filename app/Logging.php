@@ -38,6 +38,8 @@ class Logging
         array_push($revisions, $newRevision);
 
         $schedule->entry_revisions = json_encode($revisions);
+
+        $schedule->save();
     }
 
     public static function logEventRevision(ClubEvent $event, $action, $old = "", $new = "")
