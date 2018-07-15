@@ -4,12 +4,19 @@ namespace Lara\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+
 use Lara\Policies\RolePolicy;
 use Lara\Policies\UserPolicy;
+
 use Lara\Role;
 use Lara\Section;
 use Lara\User;
+use Lara\ClubEvent;
+use Lara\Schedule;
 use Lara\utilities\RoleUtility;
+
+use Lara\Observers\ScheduleObserver;
+use Lara\Observers\ClubEventObserver;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -53,6 +60,7 @@ class AuthServiceProvider extends ServiceProvider
             return true;
         });
 
-
+        ClubEvent::observe(ClubEventObserver::class);
+        Schedule::observe(ScheduleObserver::class);
     }
 }

@@ -437,10 +437,6 @@ class ClubEventController extends Controller
         Log::info('Event edited: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
                  . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
 
-
-        if ($event->isDirty() || $schedule->isDirty()) {
-            $event->was_manually_edited = true;
-        }
         // save all data in the database
         $event->save();
         $schedule->save();
