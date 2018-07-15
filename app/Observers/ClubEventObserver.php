@@ -3,6 +3,8 @@
 namespace Lara\Observers;
 
 use Auth;
+use Log;
+
 use Lara\ClubEvent;
 
 class ClubEventObserver
@@ -27,4 +29,52 @@ class ClubEventObserver
         }
     }
 
+    public function created(ClubEvent $event) 
+    {
+        $user = Auth::user();
+        Log::info('Event created: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
+                 . ') created event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+    }
+
+    public function updating(ClubEvent $event) 
+    {
+        if ($event->isDirty('evnt_time_start')) {
+            Logging::eventStartChanged($event);
+        }
+
+        if ($event->isDirty('evnt_title')) {
+            Logging::eventTitleChanged($event);
+        }
+
+        if ($event->isDirty('evnt_subtitle')) {
+            Logging::eventSubtitleChanged($event);
+        }
+
+        if ($event->isDirty('evnt_time_end')) {
+            Logging::eventEndChanged($event);
+        }
+
+        if ($event->isDirty('evnt_public_info')) {
+            Logging::logEventRevision($event, "revisions.eventPublicInfoChanged");
+        }
+
+        if ($event->isDirty('evnt_private_details')) {
+            Logging::logEventRevision($event, "revisions.eventPrivateDetailsChanged");
+        }
+    }
+
+
+    public function updated(ClubEvent $event) 
+    {
+        $user = Auth::user();
+        Log::info('Event edited: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
+                 . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+    }
+
+    public function deleted(ClubEvent $event) 
+    {
+        $user = Auth::user();
+        Log::info('Event deleted: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
+                 . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+    }
 }

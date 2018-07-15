@@ -17,17 +17,37 @@ class ScheduleObserver
      */
     public function saving(Schedule $schedule)
     {
+
+
+    }
+
+
+    public function created(Schedule $schedule) 
+    {
+        Logging::scheduleCreated($schedule);
+    }
+
+    public function updating(Schedule $schedule) 
+    {
+        // entry-revisons should not count to modifying the event
+        // they could also be caused by changing shifts
+        $dirty = collect($schedule->getDirty())
+            ->pull('entry_revisions');
+
         $user = Auth::user();
 
-        $isDirty = $schedule->isDirty();
+        if ($dirty->has('schdl_time_preparation_start')) {
+            Logging::preparationTimeChanged($schedule);
 
-        if ($user && $isDirty) {
+        }
+
+        if ($user && $dirty->isNotEmpty()) {
             $event = $schedule->event;
 
             $event->was_manually_edited = true;
 
             $event->save();
         }
-    }
 
+    }
 }
