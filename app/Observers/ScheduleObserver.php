@@ -29,10 +29,10 @@ class ScheduleObserver
 
     public function updating(Schedule $schedule) 
     {
+        $dirty = collect($schedule->getDirty());
         // entry-revisons should not count to modifying the event
         // they could also be caused by changing shifts
-        $dirty = collect($schedule->getDirty())
-            ->pull('entry_revisions');
+        $dirty->pull('entry_revisions');
 
         $user = Auth::user();
 
