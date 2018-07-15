@@ -14,7 +14,6 @@ use Lara\Club;
 use Lara\ClubEvent;
 use Lara\Console\Commands\SyncBDclub;
 use Lara\Http\Middleware\RejectGuests;
-use Lara\Logging;
 use Lara\Role;
 use Lara\ShiftType;
 use Lara\Shift;
@@ -24,7 +23,6 @@ use Lara\Schedule;
 use Lara\Template;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
-use Log;
 use Redirect;
 use Session;
 use View;
@@ -199,7 +197,7 @@ class ClubEventController extends Controller
             Session::put('message', Config::get('messages_de.password-mismatch') );
             Session::put('msgType', 'danger');
             return Redirect::back()->withInput();
-            }
+        }
 
         $newEvent = $this->editClubEvent(null);
         $newEvent->save();
@@ -207,17 +205,11 @@ class ClubEventController extends Controller
         $newSchedule = (new ScheduleController)->update(null);
         $newSchedule->evnt_id = $newEvent->id;
 
-        // log revision
-        Logging::scheduleCreated($newSchedule);
 
         $newSchedule->save();
 
         ScheduleController::createShifts($newSchedule);
 
-        // log the action
-        $user = Auth::user();
-        Log::info('Event created: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
-                 . ') created event "' . $newEvent->evnt_title . '" (eventID: ' . $newEvent->id . ') on ' . $newEvent->evnt_date_start . '.');
         Utilities::clearIcalCache();
         if (Input::get('saveAsTemplate')){
             $template = $newSchedule->toTemplate();
@@ -432,11 +424,6 @@ class ClubEventController extends Controller
 
         ScheduleController::editShifts($schedule);
 
-        // log the action
-        $user = Auth::user();
-        Log::info('Event edited: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
-                 . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
-
         // save all data in the database
         $event->save();
         $schedule->save();
@@ -486,9 +473,6 @@ class ClubEventController extends Controller
                                                                    'month' => date('m')));
         }
 
-        // Log the action while we still have the data
-        Log::info('Event deleted: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
-                 . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         Utilities::clearIcalCache();
 
         // Delete schedule with shifts
@@ -598,35 +582,6 @@ class ClubEventController extends Controller
         }
 
 
-        // Logging
-
-        if ($event->exists) {
-            //only log changes if the event already exists in the DB
-            if ($event->isDirty('evnt_time_start')) {
-                Logging::eventStartChanged($event);
-            }
-
-            if ($event->isDirty('evnt_title')) {
-                Logging::eventTitleChanged($event);
-            }
-
-            if ($event->isDirty('evnt_subtitle')) {
-                Logging::eventSubtitleChanged($event);
-            }
-
-            if ($event->isDirty('evnt_time_end')) {
-                Logging::eventEndChanged($event);
-            }
-
-            if ($event->isDirty('evnt_public_info')) {
-                Logging::logEventRevision($event, "revisions.eventPublicInfoChanged");
-            }
-
-            if ($event->isDirty('evnt_private_details')) {
-                Logging::logEventRevision($event, "revisions.eventPrivateDetailsChanged");
-            }
-
-        }
         // Filter
         $filter = collect(Input::get("filter"))->values()->toArray();
 
