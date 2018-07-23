@@ -38,7 +38,6 @@ class ScheduleObserver
 
         if ($dirty->has('schdl_time_preparation_start')) {
             Logging::preparationTimeChanged($schedule);
-
         }
 
         if ($user && $dirty->isNotEmpty()) {

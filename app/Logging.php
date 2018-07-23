@@ -44,7 +44,9 @@ class Logging
 
     public static function logEventRevision(ClubEvent $event, $action, $old = "", $new = "")
     {
-        self::logScheduleRevision($event->schedule, $action, $old, $new);
+        if ($event->schedule) {
+            self::logScheduleRevision($event->schedule, $action, $old, $new);
+        }
     }
 
     public static function ensureShiftHasRevisions(Shift $shift)

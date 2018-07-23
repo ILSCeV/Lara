@@ -33,8 +33,13 @@ class ClubEventObserver
     public function created(ClubEvent $event) 
     {
         $user = Auth::user();
-        Log::info('Event created: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
-                 . ') created event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+
+        if ($user) {
+            Log::info('Event created: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
+                . ') created event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        } else {
+            Log::info('Event created by sync: ' . '"' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        }
     }
 
     public function updating(ClubEvent $event) 
@@ -68,14 +73,25 @@ class ClubEventObserver
     public function updated(ClubEvent $event) 
     {
         $user = Auth::user();
-        Log::info('Event edited: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
-                 . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        
+        if ($user) {
+            Log::info('Event edited: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
+                . ') edited event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        } else {
+            Log::info('Event edited by sync: "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        }
+
     }
 
     public function deleted(ClubEvent $event) 
     {
         $user = Auth::user();
-        Log::info('Event deleted: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
-                 . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        if ($user) {
+            Log::info('Event deleted: ' . $user->name . ' (' . $user->person->prsn_ldap_id . ', '
+                . ') deleted event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        } else {
+            Log::info('Event deleted by sync: "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
+        }
+
     }
 }
