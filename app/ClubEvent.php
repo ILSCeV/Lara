@@ -77,6 +77,7 @@ class ClubEvent extends Model
         'event_url',
         'template_id',
         'creator_id',
+        'was_manually_edited',
     ];
 
     /**

@@ -76,15 +76,14 @@ class SurveyAnswer extends BaseSoftDelete
     {
         return $this->belongsTo('Lara\Club', 'club_id', 'id');
     }
-
-    /**
-     * Get the corresponding SurveyAnswerCells.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany|SurveyAnswerCell
-     */
+    /** * Get the corresponding SurveyAnswerCells.  * * @return \Illuminate\Database\Eloquent\Relations\HasMany|SurveyAnswerCell */
     public function cells()
     {
         return $this->hasMany('Lara\SurveyAnswerCell');
     }
 
+    public function section() 
+    {
+        return $this->survey->section();
+    }
 }
