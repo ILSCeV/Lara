@@ -439,6 +439,11 @@ return [
     'logOut'                        => 'Logout',
     //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
+
+    //ShiftTitle
+    'optional'                      => 'Optional',
+    'optionalShort'                 => 'Opt.',
+
     //surveyForm
     'placeholderSurveyTitle'        => 'Title:',
     'placeholderTitleSurvey'        => 'e.g. Participation at the club trip',

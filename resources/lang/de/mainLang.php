@@ -442,6 +442,11 @@ return [
     'logOut'                        => 'Abmelden',
     //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
+
+    //ShiftTitle
+    'optional'                      => 'Optional',
+    'optionalShort'                 => 'Opt.',
+
     //surveyForm
     'placeholderSurveyTitle'        => 'Titel:',
     'placeholderTitleSurvey'        => 'z.B. Teilnahme an der Clubfahrt',
