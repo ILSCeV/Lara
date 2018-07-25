@@ -136,10 +136,10 @@ $(function() {
         ////////////////////////////
         // Show/hide taken shifts //
         ////////////////////////////
-        const takenShifts = new ToggleButton("toggle-taken-shifts", () => $("div.shift_taken").closest(".row").hasClass("hide"));
+        const takenShifts = new ToggleButton("toggle-taken-shifts", () => $(".shift_taken").closest(".row").hasClass("hide"));
         takenShifts.addActions([
             makeLocalStorageAction("onlyEmptyShifts", "true", "false"),
-            makeClassToggleAction($("div.shift_taken").closest(".row"), "hide", true),
+            makeClassToggleAction($(".shift_taken").closest(".row"), "hide", true),
             () => isotope.layout()
         ])
             .setToggleStatus(safeGetLocalStorage("onlyEmptyShifts") == "true")
