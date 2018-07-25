@@ -399,24 +399,31 @@ $(function(){
 // Shows dynamic form fields for new job types
 $(document).ready(function() {
     // initialise counter
-    var iCnt = parseInt($('#counter').val());
+    let iCnt = parseInt($('#counter').val());
 
     if (iCnt < 2) {
         $(".btnRemove").hide();
     };
 
+    const updateIsOptionalCheckboxes = () =>{
+        $('.isOptional').attr('name',(index)=>{return "shifts[optional]["+index+"]";});
+        $('.isOptionalHidden').attr('name',(index)=>{return "shifts[optional]["+index+"]";});
+    };
+
     // Add one more job with every click on "+"
     $('.btnAdd').click(function() {
-        var elementToCopy = $(this).closest('.box');
+        let elementToCopy = $(this).closest('.box');
         elementToCopy.find(".dropdown-menu").hide();
-        var clone = elementToCopy.clone(true);
+        let clone = elementToCopy.clone(true);
         clone.insertAfter(elementToCopy);
         clone.find('.shiftId').val("");
+        updateIsOptionalCheckboxes();
     });
 
     // Remove selected job
     $('.btnRemove').click(function(e) {
         $(this).closest('.box').remove();
+        updateIsOptionalCheckboxes();
     });
 
     // populate from dropdown select
