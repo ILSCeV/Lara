@@ -166,10 +166,11 @@ class ScheduleController extends Controller
             $start = $inputShifts["start"][$i];
             $end = $inputShifts["end"][$i];
             $weight = $inputShifts["weight"][$i];
+            $optional = $inputShifts["optional"][$i] === "on"? 1 : 0;
 
             $position = $i;
 
-            ShiftController::makeShift($schedule, $isNewEvent, $title, $id, $type, $start, $end, $weight, $position);
+            ShiftController::makeShift($schedule, $isNewEvent, $title, $id, $type, $start, $end, $weight, $position, $optional);
         }
     }
 

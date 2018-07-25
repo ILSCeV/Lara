@@ -47,6 +47,7 @@ class ShiftController extends Controller
             'comment'=> $shift->comment,
             'start'  => $shift->start,
             'end'    => $shift->end,
+            'optional' => $shift->optional,
             'updated_at'        => $shift->updated_at,
             'is_current_user'   => $isCurrentUser
         ];
@@ -328,14 +329,14 @@ class ShiftController extends Controller
      * @param $weight
      * @param $position
      */
-    public static function makeShift($schedule, $isNewEvent, $title, $id, $type, $start, $end, $weight, $position)
+    public static function makeShift($schedule, $isNewEvent, $title, $id, $type, $start, $end, $weight, $position, $optional)
     {
         if ($title === "") {
             return;
         }
         // If no id is set, create a new Model
         $shift = self::createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position,
-            $schedule->id);
+            $schedule->id, $optional);
 
         $shift->save();
     }
@@ -348,9 +349,11 @@ class ShiftController extends Controller
      * @param $end
      * @param $weight
      * @param $position
+     * @param $optional
+     * @param $scheduleId
      * @return Shift
      */
-    public static function createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position, $scheduleId = null) {
+    public static function createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position, $scheduleId = null, $optional) {
 
         if ($title === "") {
             return;
@@ -376,7 +379,7 @@ class ShiftController extends Controller
                 "title" => $title,
                 'start' => $start,
                 'end' => $end,
-                'statistical_weight' => $weight
+                'statistical_weight' => $weight,
             ]);
             $shiftType->save();
         }
@@ -388,6 +391,7 @@ class ShiftController extends Controller
             "statistical_weight" => $weight,
             "shifttype_id" => $shiftType->id,
             "position" => $position,
+            'optional' => $optional,
             "schedule_id" => $scheduleId
         ]);
 
