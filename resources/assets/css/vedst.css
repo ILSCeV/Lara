@@ -285,11 +285,19 @@ input[type=number],
     text-overflow: ellipsis;
 }
 
-.red {
+.shift_free {
     color: red;
 }
 
-.green {
+.shift_taken {
+    color: green;
+}
+
+.shift_optional {
+    color: #cc7a00;
+}
+
+.shift_taken.shift_optional {
     color: green;
 }
 
