@@ -4,7 +4,9 @@ namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Schedule extends Model
+use Lara\Loggable;
+
+class Schedule extends Model implements Loggable
 {
     /**
      * The database table used by the model.
@@ -148,5 +150,10 @@ class Schedule extends Model
     public function logs() 
     {
         return $this->morphMany('Lara\Log', 'loggable');
+    }
+
+    public function loggableName() 
+    {
+        return "Event: " . $this->event->evnt_title;
     }
 }

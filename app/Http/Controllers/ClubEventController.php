@@ -275,11 +275,13 @@ class ClubEventController extends Controller
         });
 
         $revisions = json_decode($clubEvent->getSchedule->entry_revisions, true);
+        $revisions = $clubEvent->logs
+            ->union($clubEvent->schedule->logs)
+            ->union($clubEvent->shifts->pluck('logs')->flatten())
+            ->sortByDesc('created_at');
 
-        if (!is_null($revisions)) {
-            // reverse order to show latest revision first
-            $revisions = array_reverse($revisions);
-
+        if ($revisions->isNotEmpty()) {
+            //
             // deleting ip adresses from output for privacy reasons
             foreach ($revisions as $entry) {
                 unset($entry["from ip"]);
@@ -290,7 +292,7 @@ class ClubEventController extends Controller
         }
         else {
             // workaround for empty revision in development
-            $revisions = [];
+            $revisions = collect([]);
             $created_by = "";
             $creator_name = "";
         }

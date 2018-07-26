@@ -5,7 +5,9 @@ namespace Lara;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-class Shift extends Model
+use Lara\Loggable;
+
+class Shift extends Model implements Loggable
 {
     protected $table = 'shifts';
 
@@ -145,5 +147,11 @@ class Shift extends Model
     public function logs() 
     {
         return $this->morphMany('Lara\Log', 'loggable');
+    }
+
+
+    public function loggableName() 
+    {
+        return "Dienst: " . $this->type->title;
     }
 }

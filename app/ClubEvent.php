@@ -11,6 +11,7 @@ namespace Lara;
 use Illuminate\Database\Eloquent\Model;
 
 use Lara\Shift;
+use Lara\Loggable;
 
 /**
  * @property int evnt_type
@@ -29,7 +30,7 @@ use Lara\Shift;
  * @property double price_external
  * @property int template_id
  */
-class ClubEvent extends Model
+class ClubEvent extends Model implements Loggable
 {
     /**
      * The database table used by the model.
@@ -168,5 +169,10 @@ class ClubEvent extends Model
     public function logs() 
     {
         return $this->morphMany('Lara\Log', 'loggable');
+    }
+
+    public function loggableName() 
+    {
+        return "Event: " . $this->evnt_title;
     }
 }

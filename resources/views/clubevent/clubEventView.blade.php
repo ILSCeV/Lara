@@ -388,22 +388,22 @@
 				@foreach( $revisions as $revision )
 					<tr>
 						<td>
-							{{ $revision["job type"] }}
+							{{ $revision->loggable->loggableName() }}
 						</td>
 						<td>
-							{{ trans($revision["action"]) }}
+							{{ trans($revision->action) }}
 						</td>
 						<td>
-							{{ $revision["old value"] }}
+							{{ $revision->old_value }}
 						</td>
 						<td>
-							{{ $revision["new value"] }}
+							{{ $revision->new_value }}
 						</td>
 						<td>
-							{{ $revision["user name"] }}
+							{{ $revision->user ? $revision->user->nickNameAndFullName() : "" }}
 						</td>
 						<td>
-							{{ $revision["timestamp"] }}
+							{{ $revision->created_at }}
 						</td>
 					</tr>
 				@endforeach

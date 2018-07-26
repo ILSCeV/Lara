@@ -195,4 +195,12 @@ class User extends Authenticatable
         }
         return "";
     }
+
+    public function nickNameAndFullName()
+    {
+        if (Gate::allows('accessInformation', $this)) {
+            return $this->name . ' (' . $this->givenname . " " . $this->lastname . ')';
+        }
+        return $this->name;
+    }
 }
