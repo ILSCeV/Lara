@@ -164,4 +164,9 @@ class ClubEvent extends Model
     {
         return $this->belongsTo('Lara\User', 'creator_id');
     }
+
+    public function logs() 
+    {
+        return $this->morphMany('Lara\Log', 'loggable');
+    }
 }

@@ -141,4 +141,9 @@ class Shift extends Model
 
     public static function sortByOrder($shifts) {
     }
+
+    public function logs() 
+    {
+        return $this->morphMany('Lara\Log', 'loggable');
+    }
 }

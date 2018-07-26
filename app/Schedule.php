@@ -144,4 +144,9 @@ class Schedule extends Model
 
 	    return $result;
     }
+
+    public function logs() 
+    {
+        return $this->morphMany('Lara\Log', 'loggable');
+    }
 }
