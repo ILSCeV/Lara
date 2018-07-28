@@ -25,6 +25,7 @@ return [
     'shiftCreated' => 'Dienst erstellt',
     'shiftDeleted' => 'Dienst gelöscht',
     'shiftWeightChanged' => 'Gewichtung geändert',
+    'shiftOptionalChanged' => 'Optional geändert',
     'shiftStartChanged' => 'Startzeit geändert',
     'shiftEndChanged' => 'Endzeit geändert'
 ];

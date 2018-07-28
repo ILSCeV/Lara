@@ -25,6 +25,7 @@ return [
     'shiftCreated' => 'Shift created',
     'shiftDeleted' => 'Shift deleted',
     'shiftWeightChanged' => 'Statistical weight changed',
+    'shiftOptionalChanged' => 'Optional changed',
     'shiftStartChanged' => 'Start changed',
     'shiftEndChanged' => 'End changed'
 ];

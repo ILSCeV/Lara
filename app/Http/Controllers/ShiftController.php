@@ -411,6 +411,10 @@ class ShiftController extends Controller
             if ($shift->isDirty('end')) {
                 Logging::shiftEndChanged($shift);
             }
+
+            if($shift->isDirty('optional')){
+                Logging::shiftOptionalChanged($shift);
+            }
         }
         else {
             if(!is_null($scheduleId)) {
