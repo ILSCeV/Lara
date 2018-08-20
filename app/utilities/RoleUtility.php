@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpMissingBreakStatementInspection */
+
 /**
  * User: fabian
  * Date: 09.03.18
@@ -30,13 +31,13 @@ class RoleUtility
     {
         switch ($privilege) {
             case self::PRIVILEGE_ADMINISTRATOR:
-                Role::query()->where('section_id', '=', $section->id)->where('name', '=', self::PRIVILEGE_ADMINISTRATOR)->first()->users()->syncWithoutDetaching($user);
+                Role::query()->where('section_id', '=', $section->id)->where('name', '=', self::PRIVILEGE_ADMINISTRATOR)->first()->users()->attach($user);
             case self::PRIVILEGE_CL:
-                Role::query()->where('section_id', '=', $section->id)->where('name', '=', self::PRIVILEGE_CL)->first()->users()->syncWithoutDetaching($user);
+                Role::query()->where('section_id', '=', $section->id)->where('name', '=', self::PRIVILEGE_CL)->first()->users()->attach($user);
             case self::PRIVILEGE_MARKETING:
-                Role::query()->where('section_id', '=', $section->id)->where('name', '=', self::PRIVILEGE_MARKETING)->first()->users()->syncWithoutDetaching($user);
+                Role::query()->where('section_id', '=', $section->id)->where('name', '=', self::PRIVILEGE_MARKETING)->first()->users()->attach($user);
             case self::PRIVILEGE_MEMBER:
-                Role::query()->where('section_id', '=', $section->id)->where('name', '=', self::PRIVILEGE_MEMBER)->first()->users()->syncWithoutDetaching($user);
+                Role::query()->where('section_id', '=', $section->id)->where('name', '=', self::PRIVILEGE_MEMBER)->first()->users()->attach($user);
                 break;
             default:
                 Log::warning('could not assign privilege ' . $privilege, [$user, $section]);
