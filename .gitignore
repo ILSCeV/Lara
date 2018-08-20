@@ -17,6 +17,10 @@ public/manifest.js.map
 public/vendor.js
 public/vendor.js.map
 public/fonts
+public/static.css
+public/static.js
+
+
 package-lock.json
 
 # Configuration files
