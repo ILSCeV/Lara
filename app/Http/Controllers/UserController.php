@@ -272,7 +272,7 @@ class UserController extends Controller
                 return $role->section->title  . ": " . $role->name;
             })->implode(', ');
 
-            Log::info('Roles for user ' . $user->givenname . " " . $user->lastname . '(' . $user->id . '). Previous roles: ' . $previousRolesString . ' New roles: ' . $currentRolesString . ' Changes made by '. Auth::user()->firstname . ' ' . Auth::user()->lastname . '(' . Auth::user()->id  .')');
+            Log::info('Roles for user ' . $user->givenname . " " . $user->lastname . '(' . $user->id . ').  Changes made by '. Auth::user()->firstname . ' ' . Auth::user()->lastname . '(' . Auth::user()->id  .')' . "\nPrevious roles: " . $previousRolesString . "\nNew roles: " . $currentRolesString );
         }
 
 
