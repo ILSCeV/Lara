@@ -501,6 +501,9 @@ return [
     'sectionExists'                 => 'A section with this name already exits, please enter a diffrent one!',
     'newSection'                    => 'new Section',
     'createSection'                 => 'create Section',
+    'privateClubName'               => 'Are Clubnames visable to Guests?',
+    'privateClubNameYes'            => 'private visibility',
+    'privateClubNameNo'             => 'public visibility',
     //////////
     // ICal //
     //////////

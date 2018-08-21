@@ -115,7 +115,7 @@ class Person extends Model
         return "";
     }
     
-    public function isNamePublic()
+    public function isNamePrivate()
     {
         $user = $this->user;
         if (isset($user->is_name_private)) {

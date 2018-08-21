@@ -81,6 +81,7 @@ class SectionController extends Controller
         $startTime =        Input::get("startTime");
         $endTime =          Input::get("endTime");
         $isNew =            strlen($id) == 0;
+        $isNamePrivate =    Input::get("is_name_private") == 'true';
 
 
         if ($validator->fails()) {
@@ -118,6 +119,7 @@ class SectionController extends Controller
         $section->preparationTime = $preparationTime;
         $section->startTime =       $startTime;
         $section->endTime =         $endTime;
+        $section->is_name_private = $isNamePrivate;
         $section->save();
         if ($isNew) {
             RoleUtility::createRolesForNewSection($section);

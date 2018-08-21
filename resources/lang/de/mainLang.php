@@ -503,6 +503,9 @@ return [
     'sectionExists'                 => 'Es gibt bereits eine Sektion mit diesem Namen, bitte gib einen anderen ein!',
     'newSection'                    => 'Neue Sektion',
     'createSection'                 => 'neue Sektion anlegen',
+    'privateClubName'               => 'Sind Clubnamen öffentlich nicht sichtbar?',
+    'privateClubNameYes'            => 'Nicht öffentlich',
+    'privateClubNameNo'             => 'Öffentlich sichtbar',
 
     //////////
     // ICal //

@@ -501,6 +501,9 @@ return [
     'sectionExists'                 => 'Es it bereits ein Schiff mit diesem Namen vom Stapel gelaufen!',
     'newSection'                    => 'Neues Schiff',
     'createSection'                 => 'Neues Schiff bauen',
+    'privateClubName'               => 'Sind Piratennamen öffentlich nicht sichtbar?',
+    'privateClubNameYes'            => 'Nicht öffentlich',
+    'privateClubNameNo'             => 'Öffentlich sichtbar',
 
     //////////
     // ICal //
