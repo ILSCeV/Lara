@@ -22,6 +22,7 @@ use Lara\Status;
  * @property \Illuminate\Database\Eloquent\Relations\belongsToMany|Role roles
  * @property bool is_name_private
  * @property Section section
+ * @property Person person
  */
 class User extends Authenticatable
 {

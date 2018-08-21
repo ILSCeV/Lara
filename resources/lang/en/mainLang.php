@@ -551,5 +551,9 @@ return [
     'fatalErrorUponSaving' => 'Something went wrong. Please try again later or contact an administrator for support.',
     'privacyAgree'      => 'I Agree with Lara\'s Privacy Policy',
     'waitOneSecond'     => 'Just a second...',
-
+    
+    ///////////////////
+    // Personal Page //
+    ///////////////////
+    'userPersonalPage' => 'personal page',
 ];
