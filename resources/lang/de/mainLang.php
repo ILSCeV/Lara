@@ -555,6 +555,8 @@ return [
     'privacyAgree'      => 'Ich stimme zu',
     'waitOneSecond'     => 'Nur eine Sekunde...',
 
-
-
+    ///////////////////
+    // Personal Page //
+    ///////////////////
+    'userPersonalPage' => 'Persönliche Seite',
 ];

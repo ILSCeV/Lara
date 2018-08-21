@@ -48,6 +48,12 @@
                 <ul class="dropdown-menu" role="menu">
 
                     @auth
+                        <li>
+                            <a href="{{route('user.personalpage')}}" >
+                                <i class="fas fa-user-edit"></i>
+                                {{ trans('mainLang.userPersonalPage') }}
+                            </a>
+                        </li>
                         @noLdapUser
                         <li>
                             <a href="{{route('password.change')}}">
