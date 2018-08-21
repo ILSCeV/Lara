@@ -6,6 +6,9 @@
 @stop
 
 @section('content')
+    @php
+    /** @var \Lara\Section $current_section */
+    @endphp
 
 @is('admin')
 
@@ -116,6 +119,30 @@
 						    </span>
 						</td>
 					</tr>
+{{-- is club name public --}}
+                    <tr class="form-group">
+                        <td width="20%" class="left-padding-16">
+                            <label for="endTime">
+                                <i>{{ trans('mainLang.privateClubName') }}:</i>
+                            </label>
+                        </td>
+                        <td>
+							<span class="col-md-12 col-sm-12 col-xs-12 no-padding">
+                                <div class="radio-inline">
+                                    <label>
+                                        {!! Form::radio( 'is_name_private','true', $current_section->is_name_private === 1) !!}
+                                        {{ trans('mainLang.privateClubNameYes') }}
+                                    </label>
+                                </div>
+                                <div class="radio-inline">
+                                    <label>
+                                        {!! Form::radio( 'is_name_private','false', $current_section->is_name_private === 0) !!}
+                                        {{ trans('mainLang.privateClubNameNo') }}
+                                    </label>
+                                </div>
+                            </span>
+                        </td>
+                    </tr>
 {{-- CRUD --}}
 					<tr>
 						<td>
