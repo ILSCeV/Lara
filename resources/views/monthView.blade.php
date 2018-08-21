@@ -6,8 +6,8 @@
 
 @section('content')
     <!-- prev/next month -->
-    <div class="col-xs-12 col-md-12">
-        <div class="col-xs-12 col-md-5 btn-group no-padding">
+    <div class="col-xs-12 col-md-12 month-view-header">
+        <div class="col-xs-12 col-md-4 btn-group no-padding">
             <a class="btn btn-default hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
                                 strtotime("previous month", $date['startStamp'])) }}">
@@ -24,7 +24,7 @@
         </div>
 
         <!-- Section filter -->
-        <div class="col-xs-12 col-md-7 no-padding">
+        <div class="col-xs-12 col-md-8 no-padding">
             <div class="pull-right">
                 @include('partials.filter')
             </div>

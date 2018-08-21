@@ -274,3 +274,9 @@ span.event-time{
         height:5vh;
     }
 }
+
+@media screen and (min-width: @screen-md-min) {
+    .month-view-header {
+        padding-bottom: 8px;
+    }
+}
