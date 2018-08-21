@@ -276,11 +276,19 @@
 						    <div class="col-md-3 col-sm-2 col-xs-3 no-padding" id="clubStatus{{ $shift->id }}">
 						        @include("partials.shiftStatus")
 						    </div>
-
-						    {{-- Shift USERNAME--}}
-						    <div id="{!! 'userName' . $shift->id !!}" >
-						        {!! $shift->getPerson->prsn_name !!}
-						    </div>
+                            @php
+                            /** @var \Lara\Shift $shift*/
+                            @endphp
+                            @if($shift->getPerson->isNamePublic())
+                                {{-- Shift USERNAME--}}
+                                <div id="{!! 'userName' . $shift->id !!}" >
+                                    {!! $shift->getPerson->prsn_name !!}
+                                </div>
+                            @else
+                                <div id="{!! 'userName' . $shift->id !!}" >
+                                    Anonymous
+                                </div>
+                            @endif
 
 						    {{-- no need to show LDAP ID or TIMESTAMP in this case --}}
 						</div>
