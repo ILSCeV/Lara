@@ -3,11 +3,9 @@
 namespace Lara;
 
 use Auth;
-use Illuminate\Support\Facades\Gate;
-use Session;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 
-use Lara\Status;
 /**
  * @property string prsn_name
  * @property User user
@@ -115,5 +113,18 @@ class Person extends Model
         }
 
         return "";
+    }
+    
+    public function isNamePublic()
+    {
+        $user = $this->user;
+        if (isset($user->is_name_private)) {
+            return $user->is_name_private;
+        }
+        if (isset($user->section->is_name_private)) {
+            return $user->section->is_name_private;
+        }
+        
+        return false;
     }
 }

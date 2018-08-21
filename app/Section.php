@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string title
  * @property string color
  * @property string section_uid
+ * @property bool is_name_private
  */
 class Section extends Model
 {
@@ -33,7 +34,8 @@ class Section extends Model
         'color',
         'preparationTime',
         'startTime',
-        'endTime'
+        'endTime',
+        'is_name_private'
     ];
 
 	/**
