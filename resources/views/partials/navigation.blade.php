@@ -50,7 +50,7 @@
                     @auth
                         <li>
                             <a href="{{route('user.personalpage')}}" >
-                                <i class="fas fa-user-edit"></i>
+                                <i class="fa fa-user-circle" aria-hidden="true"></i>
                                 {{ trans('mainLang.userPersonalPage') }}
                             </a>
                         </li>

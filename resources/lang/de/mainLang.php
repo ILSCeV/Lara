@@ -506,6 +506,7 @@ return [
     'privateClubName'               => 'Sind Clubnamen öffentlich nicht sichtbar?',
     'privateClubNameYes'            => 'Nicht öffentlich',
     'privateClubNameNo'             => 'Öffentlich sichtbar',
+    'privateClubNameNull'           => 'Sektionsvorgabe verwenden',
 
     //////////
     // ICal //

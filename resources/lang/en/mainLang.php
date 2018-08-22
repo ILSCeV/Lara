@@ -504,6 +504,8 @@ return [
     'privateClubName'               => 'Are Clubnames visable to Guests?',
     'privateClubNameYes'            => 'private visibility',
     'privateClubNameNo'             => 'public visibility',
+    'privateClubNameNull'           => 'use default from section',
+    
     //////////
     // ICal //
     //////////

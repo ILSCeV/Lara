@@ -504,7 +504,8 @@ return [
     'privateClubName'               => 'Sind Piratennamen öffentlich nicht sichtbar?',
     'privateClubNameYes'            => 'Nicht öffentlich',
     'privateClubNameNo'             => 'Öffentlich sichtbar',
-
+    'privateClubNameNull'           => 'Sektionsvorgabe verwenden',
+    
     //////////
     // ICal //
     //////////
