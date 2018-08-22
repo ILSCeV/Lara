@@ -130,6 +130,10 @@ class LoginController extends Controller
         $username = Input::get("username");
         if($username != null && $username != ""){
             $person = Person::query()->where('prsn_ldap_id','=',$username)->first();
+			// when LDAP does not work fallback to internal
+			if(!is_object($person)) {
+				return false;
+			}
         } else {
             $person = Person::query()->whereIn('clb_id', $clubIdsOfSections)->inRandomOrder()->first();
         }
