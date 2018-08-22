@@ -191,7 +191,8 @@ Route::post('password/reset', ['as' => 'password.reset.post', 'uses' => 'Auth\Re
 // Usermanagement
 Route::post('/user/updateData/{user}', 'UserController@updateData')->name('user.updateData');
 Route::resource('user', 'UserController');
-Route::get('/user/personalpage','UserPersonalPageController@index')->name('user.personalpage');
+Route::get('/personalpage','UserPersonalPageController@showPersonalPage')->name('user.personalpage');
+Route::post('/updatePersonalSettings', 'UserPersonalPageController@updatePerson')->name('user.updatePersonalSettings');
 
 Route::get('/password/change', ['as' => 'password.change', 'uses' => 'Auth\PasswordChangeController@showChangePasswordForm'])
     ->middleware('auth');
