@@ -36,7 +36,7 @@
 									{!! $section->id !!}
 								</td>
 								<td>
-							      	<a href="../section/{{ $section->id }}">
+							      	<a href="./section/{{ $section->id }}">
 							      		{!! $section->title !!}
 							      	</a>
 								</td>
