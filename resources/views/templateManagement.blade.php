@@ -53,42 +53,46 @@
                         </div>
                     </div>
 
-                    @foreach($templates as $index=>$template)
-                        <tr>
-                            <td>
-                                {{ $index }}
-                            </td>
-                            <td class="padding-left-15">
-                                {{ $template->section->title }}
-                            </td>
-                            <td>
-                                {{ \Lara\Utilities::getEventTypeTranslation($template->type)  }}
-                            </td>
-                            <td>
-                                <a href="{{ route('template.edit', $template) }}"> {{ $template->title }} </a>
-                            </td>
-                            <td>
-                                {{ $template->time_start }}
-                            </td>
-                            <td>
-                                {{ $template->time_end }}
-                            </td>
-                            <td class="padding-right-15">
-                                <button data-id="{{$template->id}}"
-                                        data-templatename="{{$template->title}}"
-                                        class="btn btn-danger delete-template">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                                <form id="delete-template-{{$template->id}}"
-                                      method="POST"
-                                      class="hidden"
-                                      action="{{route('template.delete', $template->id)}}">
-                                    {{ csrf_field() }}
-                                    <button class="hidden" type="submit"></button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+					@if( ! empty($templates['title']) )
+    
+						@foreach($templates as $index=>$template)
+							<tr>
+								<td>
+									{{ $index }}
+								</td>
+								<td class="padding-left-15">
+									{{ $template->section->title }}
+								</td>
+								<td>
+									{{ \Lara\Utilities::getEventTypeTranslation($template->type)  }}
+								</td>
+								<td>
+									<a href="{{ route('template.edit', $template) }}"> {{ $template->title }} </a>
+								</td>
+								<td>
+									{{ $template->time_start }}
+								</td>
+								<td>
+									{{ $template->time_end }}
+								</td>
+								<td class="padding-right-15">
+									<button data-id="{{$template->id}}"
+											data-templatename="{{$template->title}}"
+											class="btn btn-danger delete-template">
+										<span class="glyphicon glyphicon-trash"></span>
+									</button>
+									<form id="delete-template-{{$template->id}}"
+										  method="POST"
+										  class="hidden"
+										  action="{{route('template.delete', $template->id)}}">
+										{{ csrf_field() }}
+										<button class="hidden" type="submit"></button>
+									</form>
+								</td>
+							</tr>
+						@endforeach
+					
+					@endif
                     </tbody>
                 </table>
             </div>
