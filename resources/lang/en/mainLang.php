@@ -505,6 +505,7 @@ return [
     'privateClubNameYes'            => 'private visibility',
     'privateClubNameNo'             => 'public visibility',
     'privateClubNameNull'           => 'use default from section',
+    'upcomingShifts'                => 'upcoming shifts',
     
     //////////
     // ICal //
