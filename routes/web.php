@@ -79,7 +79,7 @@ Route::get('/calendar/{year}',					'YearController@showYear');
 
 // MONTH
 Route::get('/calendar/month',					'MonthController@currentMonth');
-Route::get('/calendar/{year}/{month}',			'MonthController@showMonth');
+Route::get('/calendar/{year}/{month}',			'MonthController@showMonth')->name('calendar.month');
 
 
 // WEEK
