@@ -63,7 +63,7 @@
                 </div>
                 <div>
                     <table class="col-md-12">
-                        <caption class="text-center">Künftige Dienste</caption>
+                        <caption class="text-center">{{trans('mainLang.upcomingShifts')}}</caption>
                         <thead>
                         <tr>
                             <th class="text-center col-md-3">{{trans('mainLang.shift')}}</th>
