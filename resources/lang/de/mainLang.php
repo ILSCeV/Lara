@@ -507,6 +507,7 @@ return [
     'privateClubNameYes'            => 'Nicht öffentlich',
     'privateClubNameNo'             => 'Öffentlich sichtbar',
     'privateClubNameNull'           => 'Sektionsvorgabe verwenden',
+    'upcomingShifts'                => 'Bevorstehende Dienste',
 
     //////////
     // ICal //
