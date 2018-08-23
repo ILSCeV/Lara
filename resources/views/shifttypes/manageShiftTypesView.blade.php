@@ -70,7 +70,7 @@
                                     {!! $shiftType->statistical_weight !!}
                                 </td>
                                 <td class="text-center">
-                                    <a href="../shiftType/{{ $shiftType->id }}"
+                                    <a href="{{route("shiftType.show",["id"=>$shiftType->id])}}"
                                        class="btn btn-small btn-success"
                                        rel="nofollow">
                                         {{ trans('mainLang.editDetails') }}
