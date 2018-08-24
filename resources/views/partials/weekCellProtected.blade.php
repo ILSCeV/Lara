@@ -92,7 +92,11 @@
 							    </div>
 
 							    <div class="col-xs-10 col-md-10 no-padding" id="{!! 'userName' . $shift->id !!}" >
-							        {!! $shift->getPerson->prsn_name !!}
+                                    @if($shift->getPerson->isNamePrivate() === 0)
+							            {!! $shift->getPerson->prsn_name !!}
+                                    @else
+                                        Anonymous
+                                    @endif
 							    </div>
 
 							    {{-- no need to show LDAP ID or TIMESTAMP in this case --}}
