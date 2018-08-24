@@ -87,6 +87,12 @@
                             {{ trans('users.userManagement') }}
                         </a>
                     </li>
+                    <li>
+                       <a href="{{ asset('section') }}">
+                           <i class="fa fa-university" aria-hidden="true"></i>
+                           {{ trans('mainLang.manageSections') }}
+                       </a>
+                    </li>
                     @endis
                     <li role="separator" class="divider"></li>
                 @endis
@@ -126,9 +132,6 @@ Disabling iCal until fully functional.
                         <i class="fa fa-diamond" aria-hidden="true"></i>&nbsp;<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="{{ asset('section') }}">{{ trans('mainLang.manageSections') }}</a>
-                        </li>
                         <li>
                             <a href="{{route("lara.update")}}">
                                 <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>

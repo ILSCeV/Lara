@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Session;
 
 /**
  * @property string $name
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo/Section $section
- * @property \Illuminate\Database\Eloquent\Relations\belongsToMany/User $users
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsTo/Section section
+ * @property \Illuminate\Database\Eloquent\Relations\belongsToMany/User users
  */
 class Role extends Model
 {

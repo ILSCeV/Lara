@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Lara\Club;
 use Lara\Http\Middleware\AdminOnly;
+use Lara\Http\Middleware\ClOnly;
 use Lara\Role;
 use Lara\Section;
 use Lara\User;
@@ -24,7 +25,8 @@ class SectionController extends Controller
 
     public function __construct()
     {
-        $this->middleware(AdminOnly::class);
+        $this->middleware(ClOnly::class);
+        $this->middleware(AdminOnly::class,['only' => ['create','destroy']]);
     }
 
 
@@ -35,7 +37,15 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $sections = (new Section)->orderBy('title', 'ASC')->paginate(25);
+        /** if you are an admin, you can see all */
+        if(Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
+            $sections = Section::query()->orderBy('title', 'ASC');
+        } else {
+            /** if you are just an CL you can only edit the section  where you have the permissions */
+            $sections = Auth::user()->roles()->where('name','=',RoleUtility::PRIVILEGE_CL)->get()->map(function (Role $role){
+                return $role->section;
+            });
+        }
 
         return view('manageSections', ['sections' => $sections]);
     }
@@ -60,14 +70,6 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Utilities::requirePermission(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
-            // Return to the section management page
-            Session::put('message', trans('mainLang.adminsOnly'));
-            Session::put('msgType', 'danger');
-
-            return Redirect::back();
-        }
-
         $rules = array(
             'title' => 'required',
             'color' => 'required'
@@ -179,12 +181,6 @@ class SectionController extends Controller
      */
     public function destroy(Section $section)
     {
-        if (!Utilities::requirePermission(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
-            // Return to the section management page
-            Session::put('message', trans('mainLang.adminsOnly'));
-            Session::put('msgType', 'danger');
-        }
-
         // Log the action while we still have the data
         /** @var User $user */
         $user = Auth::user();
@@ -227,6 +223,5 @@ class SectionController extends Controller
         Session::put('message', trans('mainLang.changesSaved'));
         Session::put('msgType', 'success');
         return Redirect::action( 'SectionController@index' );
-
     }
 }
