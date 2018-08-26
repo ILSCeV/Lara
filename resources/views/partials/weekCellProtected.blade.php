@@ -95,7 +95,9 @@
                                     @if($shift->getPerson->isNamePrivate() === 0)
 							            {!! $shift->getPerson->prsn_name !!}
                                     @else
-                                        Anonymous
+                                        @if(isset($shift->person->user))
+                                            {{ trans($shift->person->user->section->title . '.' . $shift->person->user->status) }}
+                                        @endif
                                     @endif
 							    </div>
 

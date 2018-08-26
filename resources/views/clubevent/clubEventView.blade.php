@@ -286,7 +286,9 @@
                                 </div>
                             @else
                                 <div id="{!! 'userName' . $shift->id !!}" >
-                                    Anonymous
+                                    @if(isset($shift->person->user))
+                                        {{ trans($shift->person->user->section->title . '.' . $shift->person->user->status) }}
+                                    @endif
                                 </div>
                             @endif
 

@@ -266,7 +266,17 @@ $ldapid
                                     <tr class="row{{$answer->id}}" id="{{$answer->id}}">
                                         <td class="singleAnswer">
                                             @include('partials.surveyAnswerStatus')
+                                            @if( isset($answer->person->prsn_ldap_id) && !Auth::user())
+                                                @if($answer->person->isNamePrivate()===0)
+                                                    {{$answer->name}}
+                                                @else
+                                                    @if(isset($answer->person->user))
+                                                        {{ trans($answer->person->user->section->title . '.' . $answer->person->user->status) }}
+                                                    @endif
+                                                @endif
+                                            @else
                                             {{$answer->name}}
+                                            @endif
                                         </td>
                                         <td class="singleAnswer">
                                             @if(!empty($answer->club))

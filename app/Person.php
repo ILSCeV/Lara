@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Gate;
 
 /**
  * @property string prsn_name
+ * @property string prsn_ldap_id
  * @property User user
+ * @property Club club
 */
 class Person extends Model
 {
