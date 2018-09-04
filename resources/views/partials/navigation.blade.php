@@ -48,12 +48,6 @@
                 <ul class="dropdown-menu" role="menu">
 
                     @auth
-                        <li>
-                            <a href="{{route('user.personalpage')}}" >
-                                <i class="fa fa-user-circle" aria-hidden="true"></i>
-                                {{ trans('mainLang.userPersonalPage') }}
-                            </a>
-                        </li>
                         @noLdapUser
                         <li>
                             <a href="{{route('password.change')}}">
@@ -65,7 +59,7 @@
                         <li role="separator" class="divider"></li>
                         @endnoLdapUser
                     @endauth
-                    {{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
+{{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
 
                 @is(Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
                     <li>
@@ -193,21 +187,26 @@ Disabling iCal until fully functional.
                                 <strong>
                                     <span data-toggle="tooltip"
                                           data-placement="bottom"
-                                          title="
-                                            @is(Roles::PRIVILEGE_ADMINISTRATOR)
-                                                {{ Auth::user()->section->title . " / Admin" }}
-                                            @elseis(Roles::PRIVILEGE_CL)
-                                                {{ Auth::user()->section->title . " / Clubleitung" }}
-                                            @elseis(Roles::PRIVILEGE_MARKETING)
-                                                {{ Auth::user()->section->title . " / Marketing" }}
-                                            @else
-                                             {{ Auth::user()->section->title }}
-                                            @endis
-                                          ">
-                                        {{ Auth::user()->name }}
+                                          title="{{ trans('mainLang.userPersonalPage') }}">
+                                            <a href="{{route('user.personalpage')}}" >
+                                                {{ Auth::user()->name }}
+                                                (
+                                                @is(Roles::PRIVILEGE_ADMINISTRATOR)
+                                                    {{ Auth::user()->section->title . " / Admin" }}
+                                                @elseis(Roles::PRIVILEGE_CL)
+                                                    {{ Auth::user()->section->title . " / Clubleitung" }}
+                                                @elseis(Roles::PRIVILEGE_MARKETING)
+                                                    {{ Auth::user()->section->title . " / Marketing" }}
+                                                @else
+                                                    {{ Auth::user()->section->title }}
+                                                @endis
+                                                )
+                                            </a>
                                     </span>
                                 </strong>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
+                                <br class="visible-xs">
+                                <br class="visible-xs">
                                 {!! Form::submit( Lang::get('mainLang.logOut'),
                                                   array('class' => 'btn btn-default btn-sm pull-right',
                                                         'name'  => 'logout') ) !!}
