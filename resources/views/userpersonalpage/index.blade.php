@@ -56,9 +56,22 @@
                     {{Form::close()}}
                 </div>
 
-                <br>
+                <hr class="no-padding no-margin">
 
-                <h5 class="left-padding-16 no-margin">
+                <div class="all-sides-padding-16">
+                    @auth
+                        @noLdapUser
+                            <a href="{{route('password.change')}}">
+                                <i class="fa fa-key fa-rotate-90" aria-hidden="true"></i>
+                                {{ trans('auth.changePassword') }}
+                            </a>
+                        @endnoLdapUser
+                    @endauth
+                </div>
+
+                <hr class="no-padding no-margin">
+
+                <h5 class="left-padding-16">
                     {{trans('mainLang.upcomingShifts')}}:
                 </h5>
 
