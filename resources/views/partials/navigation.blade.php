@@ -80,11 +80,20 @@
 
                 {{-- LARA LOGS / section management or admins only --}}
                 @is(Roles::PRIVILEGE_ADMINISTRATOR)
-                    <li><a href="{{ asset('/logs') }}">Logs</a></li>
+                    <li>
+                        <a href="{{ asset('/logs') }}">
+                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                            Logs
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a href="{{route("lara.update")}}">
+                            <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                            Lara update </a>
+                    </li>
                     <li role="separator" class="divider"></li>
                 @endis
-
-
 
 {{-- ICal feed links
 Disabling iCal until fully functional.
@@ -101,26 +110,6 @@ Disabling iCal until fully functional.
 
                 </ul>
             </li>
-
-
-{{-- LARA ADMIN PANEL / admins only --}}
-            @if(\Lara\Utilities::requirePermission(Roles::PRIVILEGE_ADMINISTRATOR))
-                <li class="dropdown">
-                    <a href="#"
-                       class="dropdown-toggle"
-                       data-toggle="dropdown"
-                       role="button" aria-expanded="false">
-                        <i class="fa fa-diamond" aria-hidden="true"></i>&nbsp;<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="{{route("lara.update")}}">
-                                <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
-                                Lara update </a>
-                        </li>
-                    </ul>
-                </li>
-            @endif
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
