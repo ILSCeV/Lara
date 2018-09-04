@@ -169,7 +169,7 @@ Disabling iCal until fully functional.
                     </a>
 
 {{-- MEMBER INFO / members only --}}
-                    <li style="padding-top: 5px;" class="btn-group testleft ">
+                    <li style="padding-top: 8px;" class="btn-group">
                         {!! Form::open(array('url' => 'logout',
                                             'method' => 'POST',
                                             'class'=>'form-horizontal')) !!}
@@ -190,17 +190,15 @@ Disabling iCal until fully functional.
                                           title="{{ trans('mainLang.userPersonalPage') }}">
                                             <a href="{{route('user.personalpage')}}" >
                                                 {{ Auth::user()->name }}
-                                                (
                                                 @is(Roles::PRIVILEGE_ADMINISTRATOR)
-                                                    {{ Auth::user()->section->title . " / Admin" }}
+                                                    ({{ Auth::user()->section->title . " / Admin" }})
                                                 @elseis(Roles::PRIVILEGE_CL)
-                                                    {{ Auth::user()->section->title . " / Clubleitung" }}
+                                                    ({{ Auth::user()->section->title . " / Clubleitung" }})
                                                 @elseis(Roles::PRIVILEGE_MARKETING)
-                                                    {{ Auth::user()->section->title . " / Marketing" }}
+                                                    ({{ Auth::user()->section->title . " / Marketing" }})
                                                 @else
-                                                    {{ Auth::user()->section->title }}
+                                                    ({{ Auth::user()->section->title }})
                                                 @endis
-                                                )
                                             </a>
                                     </span>
                                 </strong>
