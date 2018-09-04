@@ -50,7 +50,7 @@ return [
     'marketingFlyersPlacard'    => 'Marketing / Flyer / Posters', //used in legend.blade.php
     'preSale'                   => 'Tickets presale',
     'others'                    => 'Others',
-    'faceDone'                  => 'Social media done',
+    'faceDone'                  => 'Facebook event done',
     'eventUrl'                  => 'Event link',
     'priceTickets'              => 'Presales price',
     'price'                     => 'Entrance fee',
@@ -112,7 +112,7 @@ return [
     //blockString line~168
     'showForLoggedInMember'     => 'This event will only be visible to logged in members!',
     'showForExternOrChangeType' => 'To make it visible for guests or to change the event type,',
-    'askTheCLOrMM'              => 'ask the section management or marketing managers.',
+    'askTheCLOrMM'              => 'ask the club management or marketing managers.',
 
     'section'               => 'Section',
     'showFor'               => 'Show to',
@@ -137,7 +137,7 @@ return [
     'noNotThisWay'          => 'No, not this way...',
     'onlyThe'               => 'Only the',
     'only'                  => 'Only',
-    'clubManagement'        => 'section management',
+    'clubManagement'        => 'club management',
     'orThe'                 => 'or',
     'marketingManager'      => 'marketing managers',
     'canChangeEventJob'     => 'may change this event/task.',
@@ -499,13 +499,13 @@ return [
     ////////////////////////
     'color'                         => 'Color',
     'sectionExists'                 => 'A section with this name already exits, please enter a diffrent one!',
-    'newSection'                    => 'new Section',
-    'createSection'                 => 'create Section',
-    'privateClubName'               => 'Are Clubnames visable to Guests?',
-    'privateClubNameYes'            => 'private visibility',
-    'privateClubNameNo'             => 'public visibility',
-    'privateClubNameNull'           => 'use default from section',
-    'upcomingShifts'                => 'upcoming shifts',
+    'newSection'                    => 'New section',
+    'createSection'                 => 'Create section',
+    'privateClubName'               => 'Should my clubname be hidden from guests?',
+    'privateClubNameYes'            => 'Yes, hide my clubname from guests',
+    'privateClubNameNo'             => 'No, everyone can see my clubname',
+    'privateClubNameNull'           => 'Use my section\'s default setting',
+    'upcomingShifts'                => 'Upcoming shifts',
 
     //////////
     // ICal //
@@ -527,7 +527,7 @@ return [
     /////////////////////////
 
     'search'                        => 'Search',
-    'facebookNeeded'                => 'Social media needed',
+    'facebookNeeded'                => 'Facebook needed',
     'createTemplate'                => 'Create template',
 
     /////////////////////////
@@ -558,5 +558,5 @@ return [
     ///////////////////
     // Personal Page //
     ///////////////////
-    'userPersonalPage' => 'personal page',
+    'userPersonalPage' => 'Personal page',
 ];
