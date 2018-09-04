@@ -46,19 +46,6 @@
                     <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-
-                    @auth
-                        @noLdapUser
-                        <li>
-                            <a href="{{route('password.change')}}">
-                                <i class="fa fa-key fa-rotate-90" aria-hidden="true"></i>
-                                {{ trans('auth.changePassword') }}
-                            </a>
-                        </li>
-
-                        <li role="separator" class="divider"></li>
-                        @endnoLdapUser
-                    @endauth
 {{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
 
                 @is(Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
