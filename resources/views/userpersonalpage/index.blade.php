@@ -24,7 +24,7 @@
                         <tr class="form-group">
                             <td width="20%" class="left-padding-16">
                                 <label for="endTime">
-                                    <i>{{ trans('mainLang.privateClubName') }}:</i>
+                                    <i>{{ trans('mainLang.privateClubName') }}</i>
                                 </label>
                             </td>
                             <td>
@@ -63,7 +63,7 @@
                 </div>
                 <div>
                     <table class="col-md-12">
-                        <caption class="text-center">{{trans('mainLang.upcomingShifts')}}</caption>
+                        <caption class="text-center">{{trans('mainLang.upcomingShifts')}}:</caption>
                         <thead>
                         <tr>
                             <th class="text-center col-md-3">{{trans('mainLang.shift')}}</th>

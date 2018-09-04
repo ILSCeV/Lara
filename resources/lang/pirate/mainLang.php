@@ -43,7 +43,7 @@ return [
     'special'               => 'Festmahl',
     'LiveBandDJ'            => 'Seeschlacht',
     'internalEvent'         => 'Feirn im engsten Kreise',
-    'utilization'           => 'Passagierbeförderung',    
+    'utilization'           => 'Passagierbeförderung',
     'outsideEvent'          => 'Treffen weit vom Hafen',
     'buffet'                => 'Mahlzeit',
     'flooding'              => 'Deck schrubben',
@@ -501,12 +501,12 @@ return [
     'sectionExists'                 => 'Es it bereits ein Schiff mit diesem Namen vom Stapel gelaufen!',
     'newSection'                    => 'Neues Schiff',
     'createSection'                 => 'Neues Schiff bauen',
-    'privateClubName'               => 'Sind Piratennamen öffentlich nicht sichtbar?',
-    'privateClubNameYes'            => 'Nicht öffentlich',
-    'privateClubNameNo'             => 'Öffentlich sichtbar',
-    'privateClubNameNull'           => 'Sektionsvorgabe verwenden',
-    'upcomingShifts'                => 'Bevorstehende Dienste',
-    
+    'privateClubName'               => 'Soll mein Piratenname bekannt sein?',
+    'privateClubNameYes'            => 'Nein, zeig\'s keiner Landratte!',
+    'privateClubNameNo'             => 'Klar, jeder soll mich kennen!',
+    'privateClubNameNull'           => 'Ich lass den Kapitän entscheiden!',
+    'upcomingShifts'                => 'Wofür ich zunächst nüchtern bleiben soll',
+
     //////////
     // ICal //
     //////////
@@ -545,7 +545,7 @@ return [
     /////////////////
     // Legal stuff //
     /////////////////
-    
+
     'privacyPolicy'     => 'Datenschutz',
     'impressum'         => 'Impressum',
 
