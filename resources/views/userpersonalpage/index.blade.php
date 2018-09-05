@@ -27,21 +27,21 @@
                         <br class="show-xs">
                         <div class="radio-inline">
                             <label>
-                                {!! Form::radio( 'is_name_private','null', $user->is_name_private === null) !!}
+                                {!! Form::radio( 'is_name_private','null', is_null($user->is_name_private )) !!}
                                 {{ trans('mainLang.privateClubNameNull') }}
                             </label>
                         </div>
                         <br>
                         <div class="radio-inline">
                             <label>
-                                {!! Form::radio( 'is_name_private','true', $user->is_name_private === 1) !!}
+                                {!! Form::radio( 'is_name_private','true', !is_null($user->is_name_private ) && $user->is_name_private == 1 ) !!}
                                 {{ trans('mainLang.privateClubNameYes') }}
                             </label>
                         </div>
                         <br>
                         <div class="radio-inline">
                             <label>
-                                {!! Form::radio( 'is_name_private','false', $user->is_name_private === 0) !!}
+                                {!! Form::radio( 'is_name_private','false', !is_null($user->is_name_private ) && $user->is_name_private == 0) !!}
                                 {{ trans('mainLang.privateClubNameNo') }}
                             </label>
                         </div>

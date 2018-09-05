@@ -128,13 +128,13 @@
 							<span class="col-md-12 col-sm-12 col-xs-12 no-padding">
                                 <div class="radio-inline">
                                     <label>
-                                        {!! Form::radio( 'is_name_private','true', $current_section->is_name_private === 1) !!}
+                                        {!! Form::radio( 'is_name_private','true', !is_null($current_section->is_name_private ) && $current_section->is_name_private == 1) !!}
                                         {{ trans('mainLang.privateClubNameYes') }}
                                     </label>
                                 </div>
                                 <div class="radio-inline">
                                     <label>
-                                        {!! Form::radio( 'is_name_private','false', $current_section->is_name_private === 0) !!}
+                                        {!! Form::radio( 'is_name_private','false', !is_null($current_section->is_name_private ) && $current_section->is_name_private == 0) !!}
                                         {{ trans('mainLang.privateClubNameNo') }}
                                     </label>
                                 </div>

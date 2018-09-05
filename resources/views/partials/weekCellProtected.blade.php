@@ -92,7 +92,7 @@
 							    </div>
 
 							    <div class="col-xs-10 col-md-10 no-padding" id="{!! 'userName' . $shift->id !!}" >
-                                    @if($shift->getPerson->isNamePrivate() === 0)
+                                    @if($shift->getPerson->isNamePrivate() == 0)
 							            {!! $shift->getPerson->prsn_name !!}
                                     @else
                                         @if(isset($shift->person->user))
