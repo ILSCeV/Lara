@@ -9,13 +9,16 @@ class Status {
     const CANDIDATE = 'candidate';
     const MEMBER = 'member';
     const VETERAN = 'veteran';
+    const RESIGNED = 'resigned';
     const EXMEMBER = 'ex-member';
     const EXCANDIDATE = 'ex-candidate';
+    const GUEST = 'guest';
 
     const ALL = [
         self::CANDIDATE,
         self::MEMBER,
         self::VETERAN,
+        self::RESIGNED,
         self::EXMEMBER,
         self::EXCANDIDATE,
     ];
@@ -40,19 +43,22 @@ class Status {
         return self::SHORTHANDS[$status];
     }
 
-    public static function style($status)
+    public static function style($status, $section = NULL)
     {
+        if (!$section) {
+            $section = Section::query()->first();
+        }
         switch ($status) {
             case STATUS::CANDIDATE:
-                return ["status" => "fa fa-adjust", "style" => "color:yellowgreen;", "title" => "Kandidat"];
+                return ["status" => "fa fa-adjust", "style" => "color:yellowgreen;", "title" => self::localize($status, $section)];
             case STATUS::VETERAN:
-                return ["status" => "fa fa-star", "style" => "color:gold;", "title" => "Veteran"];
+                return ["status" => "fa fa-star", "style" => "color:gold;", "title" => self::localize($status, $section)];
             case STATUS::MEMBER:
-                return ["status" => "fa fa-circle", "style" => "color:forestgreen;", "title" => "Aktiv"];
+                return ["status" => "fa fa-circle", "style" => "color:forestgreen;", "title" => self::localize($status, $section)];
             case STATUS::EXMEMBER:
-                return ["status" => "fa fa-star-o", "style" => "color:gold;", "title" => "ex-Mitglied"];
+                return ["status" => "fa fa-star-o", "style" => "color:gold;", "title" => self::localize($status, $section)];
             case STATUS::EXCANDIDATE:
-                return ["status"=>"fa fa-circle", "style"=>"color:lightgrey;", "title"=>"ex-Kandidat"];
+                return ["status"=>"fa fa-circle", "style"=>"color:lightgrey;", "title" => self::localize($status, $section)];
             default:
                 return ["status" => "fa fa-circle", "style" => "color:lightgrey;", "title" => "Extern"];
         }

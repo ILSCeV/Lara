@@ -128,11 +128,11 @@ class ClubEvent extends Model
      */
     public function hasShift($person)
     {
-        return $this->shifts ->contains(function(Shift $shift) use($person){
-            return $shift->person_id === $person->id;
+        return $this->shifts->contains(function(Shift $shift) use($person){
+            return $shift->person_id == $person->id;
         });
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough|Shift
      */

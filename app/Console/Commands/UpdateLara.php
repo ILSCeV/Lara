@@ -95,7 +95,7 @@ class UpdateLara extends Command
 
             // log what you are doing
             $this->info(''); // new line
-            $this->info('Executing "'.$step.'"...');
+            $this->info('Executing "' . $step . '"...');
 
             // perform the instruction
             passthru($step, $result);
@@ -115,8 +115,8 @@ class UpdateLara extends Command
         // Inform the users
         $this->info(''); // new line
         $this->info(''); // new line
-        Log::info('Finished Lara update after '.($counterEnd - $counterStart).' seconds.');
-        $this->info('Finished Lara update after '.($counterEnd - $counterStart).' seconds.');
+        Log::info('Finished Lara update after ' . ($counterEnd - $counterStart) . ' seconds.');
+        $this->info('Finished Lara update after ' . ($counterEnd - $counterStart) . ' seconds.');
 
     }
 }

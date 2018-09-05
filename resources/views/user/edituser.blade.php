@@ -27,7 +27,7 @@
 
                         @canEditUser($user)
                         <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }} input-group" >
-                            <label class="control-label" for="userName"> Name </label>
+                            <label class="control-label" for="userName"> {{ trans('auth.nickname') }} </label>
                             {{ Form::text('name',$user->name,['class'=>"form-control" ,'id'=>'userName','required'=>"",'autofocus'=>'']) }}
                             @if ($errors->has('name'))
                                 <span class="help-block">

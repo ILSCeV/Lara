@@ -9,8 +9,11 @@
     <div class="col-xs-12 col-md-12">
         <div class="col-xs-12 col-md-5 btn-group no-padding">
             <a class="btn btn-default hidden-print"
-               href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
-                                strtotime("previous month", $date['startStamp'])) }}">
+               href="{{route("calendar.month",	
+						["year"=>date("Y",strtotime("previous month", $date['startStamp'])),
+						 "month"=>date("m",strtotime("previous month", $date['startStamp']))]
+						)
+					}}">
                 &lt;&lt;
             </a>
 
@@ -18,7 +21,11 @@
                 {{ $date['monthName'] . " " . $date['year'] }}
             </span>
             <a class="btn btn-default hidden-print"
-               href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m", strtotime("next month", $date['startStamp'])) }}">
+               href="{{route("calendar.month",	
+						["year"=>date("Y",strtotime("next month", $date['startStamp'])),
+						 "month"=>date("m",strtotime("next month", $date['startStamp']))]
+						)
+					}}">
                 &gt;&gt;
             </a>
         </div>
