@@ -25,7 +25,9 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
+            
 {{-- DAY VIEW / public --}}
+
             <li><a href="{{ asset('/calendar/today') }}">{{ trans('mainLang.today') }}</a></li>
 {{-- MONTH VIEW / public --}}
             <li><a href="{{ asset('/calendar/month') }}">{{ trans('mainLang.month') }}</a></li>
@@ -37,7 +39,24 @@
             @auth
                 <li><a href="{{ action('StatisticsController@showStatistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
             @endauth
-{{-- SETTINGS (GEAR ICON) --}}
+
+{{-- LANGUAGE SWITCHER / public --}}
+        <li class="dropdown">
+            <a href="#"
+             class="dropdown-toggle"
+             data-toggle="dropdown"
+             role="button" aria-expanded="false">
+                <i class="fa fa-language"></i>&nbsp;<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                @foreach (Config::get('languages') as $lang => $language)
+                    <li class="languageSwitcher"><a href="{{ route('lang.switch', $lang) }}" data-language="{{$lang}}"><i class="fa fa-globe" aria-hidden="true"></i></i> {{$language}}</a></li>
+                @endforeach
+            </ul>
+        </li>
+
+{{-- SETTINGS (GEAR ICON) / marketing, section management or admins only --}}
+        @is(Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
             <li class="dropdown">
                 <a href="#"
                  class="dropdown-toggle"
@@ -45,10 +64,9 @@
                  role="button" aria-expanded="false">
                     <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
                 </a>
-                <ul class="dropdown-menu" role="menu">
-{{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
 
-                @is(Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
+{{-- SHIFT TYPES AND TEMPLATE MANAGEMENT / marketing, section management or admins only --}}
+                <ul class="dropdown-menu" role="menu">
                     <li>
                         <a href="{{ asset('shiftType') }}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
@@ -61,6 +79,8 @@
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>
                     </li>
+
+{{-- USER AND SECTION MANAGEMENT / section management or admins only --}}
                     @is(Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
                     <li>
                         <a href="{{ route('user.index') }}">
@@ -75,11 +95,11 @@
                        </a>
                     </li>
                     @endis
-                    <li role="separator" class="divider"></li>
                 @endis
 
-                {{-- LARA LOGS / section management or admins only --}}
+{{-- LARA ADMINISTRATION / admins only --}}
                 @is(Roles::PRIVILEGE_ADMINISTRATOR)
+                    <li role="separator" class="divider"></li>
                     <li>
                         <a href="{{ asset('/logs') }}">
                             <i class="fa fa-list-alt" aria-hidden="true"></i>
@@ -92,7 +112,6 @@
                             <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                             Lara update </a>
                     </li>
-                    <li role="separator" class="divider"></li>
                 @endis
 
 {{-- ICal feed links
@@ -101,13 +120,6 @@ Disabling iCal until fully functional.
                     <li><a href="#" name="icalfeeds"><i class="fa fa-calendar" aria-hidden="true"></i> {{ trans('mainLang.icalfeeds') }}</a></li>
 
 --}}
-
-
-{{-- LANGUAGE SWITCHER / public --}}
-                @foreach (Config::get('languages') as $lang => $language)
-                    <li class="languageSwitcher"><a href="{{ route('lang.switch', $lang) }}" data-language="{{$lang}}"><i class="fa fa-globe" aria-hidden="true"></i></i> {{$language}}</a></li>
-                @endforeach
-
                 </ul>
             </li>
         </ul>
