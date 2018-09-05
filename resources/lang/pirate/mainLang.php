@@ -559,5 +559,6 @@ return [
     // Personal Page //
     ///////////////////
     'userPersonalPage' => 'Persönliche Kajüte',
+    'settings'         => 'Einstellungen',
 
 ];

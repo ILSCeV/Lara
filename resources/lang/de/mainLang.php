@@ -561,4 +561,5 @@ return [
     // Personal Page //
     ///////////////////
     'userPersonalPage' => 'Persönliche Seite',
+    'settings'         => 'Einstellungen',
 ];
