@@ -267,7 +267,7 @@ $ldapid
                                         <td class="singleAnswer">
                                             @include('partials.surveyAnswerStatus')
                                             @if( isset($answer->person->prsn_ldap_id) && !Auth::user())
-                                                @if($answer->person->isNamePrivate()===0)
+                                                @if($answer->person->isNamePrivate() == 0)
                                                     {{$answer->name}}
                                                 @else
                                                     @if(isset($answer->person->user))

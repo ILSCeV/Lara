@@ -279,7 +279,7 @@
                             @php
                             /** @var \Lara\Shift $shift*/
                             @endphp
-                            @if($shift->getPerson->isNamePrivate() === 0)
+                            @if($shift->getPerson->isNamePrivate() == 0)
                                 {{-- Shift USERNAME--}}
                                 <div id="{!! 'userName' . $shift->id !!}" >
                                     {!! $shift->getPerson->prsn_name !!}

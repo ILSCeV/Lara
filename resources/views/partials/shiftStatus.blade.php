@@ -1,6 +1,6 @@
 {{ Form::button('<i class="fa fa-check"
                    data-toggle="tooltip"
-                   data-placement:"top"
+                   data-placement="top"
                    title="Änderungen speichern"></i>',
                 array('type' => 'submit',
                       'name' => 'btn-submit-change' . $shift->id,
