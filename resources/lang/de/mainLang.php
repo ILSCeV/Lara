@@ -113,7 +113,7 @@ return [
     //blockString line~168
     'showForLoggedInMember'     => 'Dieses Event wird nur für eingeloggte Mitglieder sichtbar sein!',
     'showForExternOrChangeType' => 'Um sie für Externe sichtbar zu machen oder den Typ zu ändern,',
-    'askTheCLOrMM'              => 'frage die Clubleitung oder die Marketingverantwortlichen.',
+    'askTheCLOrMM'              => 'frage die Sektionsleitung oder die Marketingverantwortlichen.',
 
     'section'               => 'Sektion',
     'showFor'               => 'Zeige für',
@@ -138,7 +138,7 @@ return [
     'noNotThisWay'          => 'Ne, das geht so nicht...',
     'onlyThe'               => 'Nur die',
     'only'                  => 'Nur',
-    'clubManagement'        => 'Clubleitung',
+    'clubManagement'        => 'Sektionsleitung',
     'orThe'                 => 'oder die',
     'marketingManager'      => 'Marketingverantwortlichen',
     'canChangeEventJob'     => 'dürfen diese Veranstaltung/Aufgabe ändern.',
@@ -488,7 +488,7 @@ return [
     'date'                          => 'Datum',
     'substituteThisInstance'        => 'Ersetzen durch...',
 
-    'cantTouchThis'                 => 'Netter Versuch - du darfst das nicht einfach ändern! Frage die Clubleitung oder Markleting ;)',
+    'cantTouchThis'                 => 'Netter Versuch - du darfst das nicht einfach ändern! Frage die Sektionsleitung oder Markleting ;)',
     'cantBeBlank'                   => 'Diese Werte dürfen nicht leer sein.',
     'nonNumericStats'               => 'Statistische Wertung muss man mit Ziffern eingeben ;)',
     'negativeStats'                 => 'Statistische Wertung darf nicht negativ sein.',
@@ -547,7 +547,7 @@ return [
     /////////////////
     // Legal stuff //
     /////////////////
-    
+
     'privacyPolicy'     => 'Datenschutz',
     'impressum'         => 'Impressum',
 

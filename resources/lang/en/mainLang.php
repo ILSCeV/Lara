@@ -112,7 +112,7 @@ return [
     //blockString line~168
     'showForLoggedInMember'     => 'This event will only be visible to logged in members!',
     'showForExternOrChangeType' => 'To make it visible for guests or to change the event type,',
-    'askTheCLOrMM'              => 'ask the club management or marketing managers.',
+    'askTheCLOrMM'              => 'ask the section management or marketing managers.',
 
     'section'               => 'Section',
     'showFor'               => 'Show to',
@@ -137,7 +137,7 @@ return [
     'noNotThisWay'          => 'No, not this way...',
     'onlyThe'               => 'Only the',
     'only'                  => 'Only',
-    'clubManagement'        => 'club management',
+    'clubManagement'        => 'section management',
     'orThe'                 => 'or',
     'marketingManager'      => 'marketing managers',
     'canChangeEventJob'     => 'may change this event/task.',
@@ -506,7 +506,7 @@ return [
     'privateClubNameNo'             => 'public visibility',
     'privateClubNameNull'           => 'use default from section',
     'upcomingShifts'                => 'upcoming shifts',
-    
+
     //////////
     // ICal //
     //////////
@@ -545,7 +545,7 @@ return [
     /////////////////
     // Legal stuff //
     /////////////////
-    
+
     'privacyPolicy'     => 'Privacy Policy',
     'impressum'         => 'Imprint',
 
@@ -554,7 +554,7 @@ return [
     'fatalErrorUponSaving' => 'Something went wrong. Please try again later or contact an administrator for support.',
     'privacyAgree'      => 'I Agree with Lara\'s Privacy Policy',
     'waitOneSecond'     => 'Just a second...',
-    
+
     ///////////////////
     // Personal Page //
     ///////////////////
