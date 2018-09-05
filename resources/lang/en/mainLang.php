@@ -559,4 +559,5 @@ return [
     // Personal Page //
     ///////////////////
     'userPersonalPage' => 'Personal page',
+    'settings'         => 'Settings',
 ];
