@@ -19,12 +19,12 @@
 			    @elseif ($clubEvent->evnt_type == 4
 			          || $clubEvent->evnt_type == 5
 			          || $clubEvent->evnt_type == 6)
-			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg white-text">
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg">
 			    @elseif ($clubEvent->evnt_type == 7
 			          || $clubEvent->evnt_type == 8)
-			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-300 bg white-text">
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-300 bg">
 			    @elseif ($clubEvent->evnt_type == 9)
-			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg white-text">
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg">
 			    @endif
 					<h4 class="panel-title">@include("partials.event-marker")&nbsp;{{ $clubEvent->evnt_title }}</h4>
 					<h5 class="panel-title">{{ $clubEvent->evnt_subtitle }}</h5>
@@ -426,6 +426,3 @@
 	@endauth
 
 @stop
-
-
-

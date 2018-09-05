@@ -1,50 +1,30 @@
-@if( $clubEvent->evnt_type == 0)
-    <?php
-    $content = '<i class="fa fa-calendar-o white-text"></i>'
-    ?>
-@elseif( $clubEvent->evnt_type == 1)
-    <?php
-    $content = '<small>&nbsp;</small><i class="fa fa-info white-text"></i><small>&nbsp;</small>'
-    ?>
-@elseif( $clubEvent->evnt_type == 2)
-    <?php
-    $content = '<i class="fa fa-star white-text"></i>'
-    ?>
-@elseif( $clubEvent->evnt_type == 3)
-    <?php
-    $content = '<i class="fa fa-music white-text"></i>'
-    ?>
-@elseif( $clubEvent->evnt_type == 4)
-    <?php
-    $content = '<i class="fa fa-eye-slash white-text"></i>'
-    ?>
-@elseif( $clubEvent->evnt_type == 5)
-    <?php
-    $content = '<small>&nbsp;</small><i class="fa fa-eur white-text"></i><small>&nbsp;</small>'
-    ?>
-@elseif( $clubEvent->evnt_type == 6)
-    <?php
-    $content = '<i class="fa fa-life-ring white-text"></i>'
-    ?>
-@elseif( $clubEvent->evnt_type == 7)
-    <?php
-    $content = '<i class="fa fa-building white-text"></i>'
-    ?>
-@elseif( $clubEvent->evnt_type == 8)
-    <?php
-    $content = '<i class="fa fa-ticket white-text"></i>'
-    ?>
-@elseif( $clubEvent->evnt_type == 9)
-    <?php
-    $content = '<i class="fa fa-list-alt white-text"></i>'
-    ?>
-@elseif( $clubEvent->evnt_type == 10)
-    <?php
-    $content = '<i class="fa fa-tree white-text"></i>'
-    ?>
-@elseif( $clubEvent->evnt_type == 11)
-    <?php
-    $content = '<i class="fa fa-cutlery white-text"></i>'
-    ?>
-@endif
-@include("partials.calendarLinkEvent", [$clubEvent, $content])
+<a href="{{action('IcalController@singleEvent', $clubEvent->id)}}"
+   data-toggle="tooltip"
+   data-placement="top"
+   title="{{ trans('mainLang.addToCalendar')}}">
+    @if( $clubEvent->evnt_type == 0)
+        <i class="fa fa-calendar-o text"></i>
+    @elseif( $clubEvent->evnt_type == 1)
+        <small>&nbsp;</small><i class="fa fa-info text"></i><small>&nbsp;</small>
+    @elseif( $clubEvent->evnt_type == 2)
+        <i class="fa fa-star"></i>
+    @elseif( $clubEvent->evnt_type == 3)
+        <i class="fa fa-music text"></i>
+    @elseif( $clubEvent->evnt_type == 4)
+        <i class="fa fa-eye-slash text"></i>
+    @elseif( $clubEvent->evnt_type == 5)
+        <small>&nbsp;</small><i class="fa fa-eur text"></i><small>&nbsp;</small>
+    @elseif( $clubEvent->evnt_type == 6)
+        <i class="fa fa-life-ring text"></i>
+    @elseif( $clubEvent->evnt_type == 7)
+        <i class="fa fa-building text"></i>
+    @elseif( $clubEvent->evnt_type == 8)
+        <i class="fa fa-ticket text"></i>
+    @elseif( $clubEvent->evnt_type == 9)
+        <i class="fa fa-list-alt text"></i>
+    @elseif( $clubEvent->evnt_type == 10)
+        <i class="fa fa-tree text"></i>
+    @elseif( $clubEvent->evnt_type == 11)
+        <i class="fa fa-cutlery text"></i>
+    @endif
+</a>

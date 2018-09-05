@@ -16,10 +16,10 @@
 
             {{--if so show a grey placeholder for the guest--}}
             <div class="cal-event {{$classString}} palette-Grey-500 bg word-break section-filter survey">
-                <i class="fa fa-bar-chart-o white-text"></i>
+                <i class="fa fa-bar-chart-o"></i>
                 &nbsp;&nbsp;
                 {{--and show him thats a private survey(=Interne Umfrage in german) only for users--}}
-                <span class="white-text event-name">
+                <span class="event-name">
                         {{ trans('mainLang.internalSurvey') }}
                     </span>
             </div>
@@ -28,8 +28,8 @@
             {{-- meaning Session::has'userId' OR !$survey->is_private == 0--}}
             {{-- so session has a valid user OR the guest can see this survey because it isn't private--}}
             <div class="cal-event {{$classString}} palette-Purple-900 bg word-break section-filter survey">
-                <i class="fa fa-bar-chart-o white-text"></i>
-                &nbsp;&nbsp;<span class="event-time white-text">{{date ('H:i',strtotime($survey->deadline))}}</span>
+                <i class="fa fa-bar-chart-o"></i>
+                &nbsp;&nbsp;<span class="event-time">{{date ('H:i',strtotime($survey->deadline))}}</span>
                 {{-- provide a URL to the survey --}}
                 <a href="{{ URL::route('survey.show', $survey->id) }}"
                    class="event-name"
@@ -37,7 +37,7 @@
                    data-placement="right"
                    title="{{ trans('mainLang.showDetails')}}">
                     {{-- instead of private survey show the actual title of the survey --}}
-                    <span class="white-text"> {{ $survey->title }} </span>
+                    <span> {{ $survey->title }} </span>
                 </a>
             </div>
         @endif
@@ -104,7 +104,7 @@
                     @endif
 
                     @include("partials.event-marker", $clubEvent)
-                        <span class="event-time white-text">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}</span>
+                        <span class="event-time">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}</span>
                     <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
                        data-toggle="tooltip"
                        data-placement="right"
@@ -139,7 +139,7 @@
 
                     @include("partials.event-marker", $clubEvent)
                     {{-- Show starting time with Preparation time in () --}}
-                    <span class="event-time white-text">
+                    <span class="event-time">
                         &nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}{{$clubEvent->schedule->schdl_time_preparation_start <> $clubEvent->evnt_time_start?" (".date ('H:i',strtotime($clubEvent->schedule->schdl_time_preparation_start)).")":""}}
                     </span>
                 {{--
