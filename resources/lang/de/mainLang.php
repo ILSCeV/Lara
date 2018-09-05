@@ -51,7 +51,7 @@ return [
     'marketingFlyersPlacard'=> 'Marketing / Flyer / Plakate', //used in legend.blade.php
     'preSale'               => 'Vorverkauf',
     'others'                => 'Sonstiges',
-    'faceDone'              => 'Facebook erledigt',
+    'faceDone'              => 'Online Werbung erledigt',
     'eventUrl'              => 'Event - URL',
     'priceTickets'          => 'Vorverkaufspreis',
     'price'                 => 'Eintrittspreis',
@@ -529,7 +529,7 @@ return [
     /////////////////////////
 
     'search'                        => 'Suche',
-    'facebookNeeded'                => 'Facebook benötigt',
+    'facebookNeeded'                => 'Online bewerben',
     'createTemplate'                => 'Vorlage erstellen',
 
     /////////////////////////

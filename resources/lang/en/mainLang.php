@@ -50,7 +50,7 @@ return [
     'marketingFlyersPlacard'    => 'Marketing / Flyer / Posters', //used in legend.blade.php
     'preSale'                   => 'Tickets presale',
     'others'                    => 'Others',
-    'faceDone'                  => 'Facebook event done',
+    'faceDone'                  => 'Social media done',
     'eventUrl'                  => 'Event link',
     'priceTickets'              => 'Presales price',
     'price'                     => 'Entrance fee',
@@ -527,7 +527,7 @@ return [
     /////////////////////////
 
     'search'                        => 'Search',
-    'facebookNeeded'                => 'Facebook needed',
+    'facebookNeeded'                => 'Social media needed',
     'createTemplate'                => 'Create template',
 
     /////////////////////////
