@@ -38,25 +38,25 @@
 
 		<br class="visible-xs">
 		<br class="visible-xs">
-		<br class="visible-xs">
 
 		{{-- filter --}}
-		<div class="col-xs-12 col-md-6 hidden-print">
-			<div class="pull-right">
-				@include('partials.filter')
-				<div class="btn-group">
-				{{-- show time button Ger.: Zeiten einblenden --}}
-				<button class="btn btn-xs hidden-print" type="button" id="toggle-shift-time">{{ trans('mainLang.shiftTime') }}</button> 
-				
-				{{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
-				<button class="btn btn-xs hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button>
+		<div class="col-xs-12 col-md-6 hidden-print pull-right">
+    		<br class="visible-xs">
+			@include('partials.filter')
+    		<br class="visible-xs">
 
-				{{-- show/hide all comment fields --}}
-				<button class="btn btn-xs hidden-print" type="button" id="toggle-all-comments">{{ trans('mainLang.comments') }}</button>
-				
-				{{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
-				<button class="btn btn-xs btn-primary hidden-print" type="button" id="toggle-week-start">{{ trans('mainLang.weekStart') }}</button> 
-				</div>
+			<div class="btn-group pull-right">
+    			{{-- show time button Ger.: Zeiten einblenden --}}
+    			<button class="btn btn-xs hidden-print" type="button" id="toggle-shift-time">{{ trans('mainLang.shiftTime') }}</button>
+
+    			{{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
+    			<button class="btn btn-xs hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button>
+
+    			{{-- show/hide all comment fields --}}
+    			<button class="btn btn-xs hidden-print" type="button" id="toggle-all-comments">{{ trans('mainLang.comments') }}</button>
+
+    			{{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
+    			<button class="btn btn-xs btn-primary hidden-print" type="button" id="toggle-week-start">{{ trans('mainLang.weekStart') }}</button>
 			</div>
 		</div>
 	</div>
@@ -108,7 +108,7 @@
 							@else
 								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach">
 							@endif
-									
+
 								@include('partials.weekCellProtected')
 							</div>
 
@@ -223,6 +223,3 @@
     </div>
 
 @stop
-
-
-

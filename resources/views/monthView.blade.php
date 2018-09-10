@@ -24,14 +24,10 @@
         </div>
 
         <!-- Section filter -->
-        <div class="col-xs-12 col-md-8 no-padding">
-            <div class="pull-right">
-                @include('partials.filter')
-            </div>
+        <div class="col-xs-12 col-md-8 no-padding pull-right">
+            <br class="visible-xs">
+            @include('partials.filter')
         </div>
-
-        <br class="hidden-xs">
-        <br class="hidden-xs">
     </div>
 
     {{-- Month Table --}}
