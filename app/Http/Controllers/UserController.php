@@ -15,6 +15,7 @@ use Lara\User;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
 use Redirect;
+use Log;
 use View;
 use Session;
 
@@ -165,7 +166,7 @@ class UserController extends Controller
         $user = Auth::user();
         $user->privacy_accepted =  new \DateTime();
         if($user->save()) {
-            \Log::info('User: '. $user->name.' ('. $user->person->prsn_ldap_id.') accepted the privacy policy.');
+            Log::info('User: '. $user->name.' ('. $user->person->prsn_ldap_id.') accepted the privacy policy.');
             Session::put('message', trans('mainLang.privacyAccepted'));
             Session::put('msgType', 'success');
             return redirect('/');
@@ -220,6 +221,9 @@ class UserController extends Controller
             $unassignedRoleIds = array_merge($lUnassignedRoleIds, $unassignedRoleIds);
         }
 
+
+        $previousRoles = $user->roles;
+
         $assignedRoles = Role::query()->whereIn('id', $assignedRoleIds)->get();
         $unassignedRoles = Role::query()->whereIn('id', $unassignedRoleIds)->get();
 
@@ -234,14 +238,15 @@ class UserController extends Controller
 
         $assignedRoles->each(function(Role $role) use ($user) {
             if(!Auth::user()->can('assign',$role)){
-                \Log::warning(trans('mainLang.accessDenied') . ' ' . $role->name);
+                Log::warning(trans('mainLang.accessDenied') . ' ' . $role->name);
             } else {
-                $user->roles()->attach($role);
+                $user->roles()->syncWithoutDetaching($role);
             }
         });
+
         $unassignedRoles->each(function(Role $role) use ($user) {
             if(!Auth::user()->can('remove',$role)){
-                \Log::warning(trans('mainLang.accessDenied') . ' ' . $role->name . ' ' . $user->name);
+                Log::warning(trans('mainLang.accessDenied') . ' ' . $role->name . ' ' . $user->name);
             } else {
                 $user->roles()->detach($role);
             }
@@ -253,6 +258,24 @@ class UserController extends Controller
         else {
             Utilities::success(trans('mainLang.changesSaved'));
         }
+
+        $newRoles = $user->roles()->distinct()->get();
+        $rolesChanged = $newRoles->diff($previousRoles)->count() != 0 || $previousRoles->diff($newRoles)->count() != 0;
+
+        if ($rolesChanged) {
+
+            $previousRolesString = $previousRoles->map(function(Role $role) {
+                return $role->section->title  . ": " . $role->name;
+            })->implode(', ');
+
+            $currentRolesString = $newRoles->map(function(Role $role) {
+                return $role->section->title  . ": " . $role->name;
+            })->implode(', ');
+
+            Log::info('Roles for user ' . $user->givenname . " " . $user->lastname . '(' . $user->id . ').  Changes made by '. Auth::user()->firstname . ' ' . Auth::user()->lastname . '(' . Auth::user()->id  .')' . "\nPrevious roles: " . $previousRolesString . "\nNew roles: " . $currentRolesString );
+        }
+
+
         return Redirect::back();
     }
 }

@@ -83,7 +83,9 @@ class WeekController extends Controller {
                            ->with('section',
                            		  'showToSection',
                            		  'getSchedule.shifts.type',
-                           		  'getSchedule.shifts.getPerson.getClub')
+                           		  'getSchedule.shifts.getPerson.getClub',
+                                  'getSchedule.shifts.getPerson.user',
+                                  'getSchedule.shifts.getPerson.user.section')
                            ->orderBy('evnt_date_start')
                            ->orderBy('evnt_time_start')
                            ->get();

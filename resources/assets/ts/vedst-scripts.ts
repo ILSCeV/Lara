@@ -136,10 +136,10 @@ $(function() {
         ////////////////////////////
         // Show/hide taken shifts //
         ////////////////////////////
-        const takenShifts = new ToggleButton("toggle-taken-shifts", () => $("div.green").closest(".row").hasClass("hide"));
+        const takenShifts = new ToggleButton("toggle-taken-shifts", () => $(".shift_taken").closest(".row").hasClass("hide"));
         takenShifts.addActions([
             makeLocalStorageAction("onlyEmptyShifts", "true", "false"),
-            makeClassToggleAction($("div.green").closest(".row"), "hide", true),
+            makeClassToggleAction($(".shift_taken").closest(".row"), "hide", true),
             () => isotope.layout()
         ])
             .setToggleStatus(safeGetLocalStorage("onlyEmptyShifts") == "true")
@@ -399,24 +399,31 @@ $(function(){
 // Shows dynamic form fields for new job types
 $(document).ready(function() {
     // initialise counter
-    var iCnt = parseInt($('#counter').val());
+    let iCnt = parseInt($('#counter').val());
 
     if (iCnt < 2) {
         $(".btnRemove").hide();
     };
 
+    const updateIsOptionalCheckboxes = () =>{
+        $('.isOptional').attr('name',(index)=>{return "shifts[optional]["+index+"]";});
+        $('.isOptionalHidden').attr('name',(index)=>{return "shifts[optional]["+index+"]";});
+    };
+
     // Add one more job with every click on "+"
     $('.btnAdd').click(function() {
-        var elementToCopy = $(this).closest('.box');
+        let elementToCopy = $(this).closest('.box');
         elementToCopy.find(".dropdown-menu").hide();
-        var clone = elementToCopy.clone(true);
+        let clone = elementToCopy.clone(true);
         clone.insertAfter(elementToCopy);
         clone.find('.shiftId').val("");
+        updateIsOptionalCheckboxes();
     });
 
     // Remove selected job
     $('.btnRemove').click(function(e) {
         $(this).closest('.box').remove();
+        updateIsOptionalCheckboxes();
     });
 
     // populate from dropdown select
@@ -738,15 +745,17 @@ jQuery( document ).ready( function( $ ) {
                 else if ( data.prsn_status == 'resigned' ) { data.prsn_status = " (ex)" }
                 else { data.prsn_status = "" }
 
-                // add found persons to the array
-                $(document.activeElement).parent().children('.dropdown-username').append(
-                    '<li><a href="javascript:void(0);">'
-                    + '<span name="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
-                    + '<span name="currentName">' + data.prsn_name + '</span>'
-                    + data.prsn_status
-                    + '(<span name="currentClub">' + data.club.clb_title + '</span>)'
-                    + '&nbsp;<span name="tooltip" class="text-muted"> ' + data.get_user.givenname + ' ' + data.get_user.lastname + ' </span> '
-                    + '</a></li>');
+                if(data.get_user) {
+                    // add found persons to the array
+                    $(document.activeElement).parent().children('.dropdown-username').append(
+                        '<li><a href="javascript:void(0);">'
+                        + '<span name="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
+                        + '<span name="currentName">' + data.prsn_name + '</span>'
+                        + data.prsn_status
+                        + '(<span name="currentClub">' + data.club.clb_title + '</span>)'
+                        + '&nbsp;<span name="tooltip" class="text-muted"> ' + data.get_user.givenname + ' ' + data.get_user.lastname + ' </span> '
+                        + '</a></li>');
+                }
             });
 
             // process clicks inside the dropdown
@@ -969,10 +978,10 @@ jQuery( document ).ready( function( $ ) {
 
         let isShiftEmpty = data["userName"] !== "";
         if(isShiftEmpty) {
-            $colorDiv.removeClass("red").addClass("green");
+            $colorDiv.removeClass("shift_free").addClass("shift_taken");
         }
         else {
-            $colorDiv.removeClass("green").addClass("red");
+            $colorDiv.removeClass("shift_taken").addClass("shift_free");
         }
 
         // UPDATE STATUS ICON

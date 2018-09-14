@@ -218,6 +218,11 @@ class Logging
         self::attributeChanged($shift, "statistical_weight", "revisions.shiftWeightChanged");
     }
 
+    public static function shiftOptionalChanged($shift)
+    {
+        self::attributeChanged($shift, "optional", "revisions.shiftOptionalChanged");
+    }
+
     public static function shiftStartChanged($shift)
     {
         self::attributeChanged($shift, "start", "revisions.shiftStartChanged");

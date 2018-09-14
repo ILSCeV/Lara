@@ -16,6 +16,7 @@ class Shift extends Model
         'comment',
         'start',
         'end',
+        'optional',
         'statistical_weight',
         'position'
     ];

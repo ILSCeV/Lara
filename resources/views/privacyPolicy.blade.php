@@ -748,11 +748,10 @@
             @auth
                 @if(Auth::user()->privacy_accepted == 0)
                     <div class="panel-footer">
-                    <hr>
-                    <form method="post" action="{{url('userAgreesPrivacy')}}" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-success">{{ trans("mainLang.privacyAgree") }}</button>
-                    </form>
+                        <form method="post" action="{{url('userAgreesPrivacy')}}" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-success">{{ trans("mainLang.privacyAgree") }}</button>
+                        </form>
                     </div>
                 @endif
             @endauth

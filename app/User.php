@@ -20,6 +20,9 @@ use Lara\Status;
  * @property string givenname
  * @property string lastname
  * @property \Illuminate\Database\Eloquent\Relations\belongsToMany|Role roles
+ * @property bool is_name_private
+ * @property Section section
+ * @property Person person
  */
 class User extends Authenticatable
 {
@@ -34,7 +37,7 @@ class User extends Authenticatable
         // authentication related
         'name', 'email', 'password',
         // Lara related
-        'section_id', 'person_id', 'status', 'givenname', 'lastname'
+        'section_id', 'person_id', 'status', 'givenname', 'lastname','is_name_private'
     ];
 
     /**
