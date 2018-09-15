@@ -3,7 +3,7 @@ import {translate} from "./Translate"
 
 function replaceAll(string, search, replacement) {
     return string.split(search).join(replacement);
-};
+}
 
 declare var enviroment: any;
 
@@ -41,7 +41,7 @@ if ( typeof localStorage !== "undefined" && (localStorage.getItem("language") ||
                 $(elem).html(aRRRRifiedText);
             };
 
-            $('div.cal-event a:nth-child(2)').each(doTranslations);
+            $('div.cal-event a:nth-of-type(2)').each(doTranslations);
             $('span.name').each(doTranslations);
             $('div.panelEventView .panel-title ').each(doTranslations);
         }
