@@ -37,7 +37,7 @@ class Template extends Model
      * @var string
      */
     protected $table = 'templates';
-
+    
     /**
      * The database columns used by the model.
      * This attributes are mass assignable.
@@ -59,9 +59,9 @@ class Template extends Model
         'price_tickets_external',
         'price_normal',
         'price_external',
-        'facebook_needed'
+        'facebook_needed',
     ];
-
+    
     /**
      * Get the corresponding section.
      * Looks up in table sections for that entry, which has the same id like plc_id of ClubEvent instance.
@@ -72,7 +72,7 @@ class Template extends Model
     {
         return $this->belongsTo('Lara\Section');
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany/Section
      */
@@ -80,7 +80,7 @@ class Template extends Model
     {
         return $this->belongsToMany('Lara\Section');
     }
-
+    
     /**
      * @return array/String
      */
@@ -90,7 +90,7 @@ class Template extends Model
             return $section->title;
         })->toArray();
     }
-
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany/Shift
      */
@@ -98,5 +98,78 @@ class Template extends Model
     {
         return $this->belongsToMany('Lara\Shift');
     }
-
+    
+    /** @return ClubEvent */
+    public function toClubEvent()
+    {
+        $clubEvent = new ClubEvent();
+        $title = $this->title;
+        $subtitle = $this->subtitle;
+        $type = $this->type;
+        $section = $this->section;
+        $dv = $this->time_preparation_start;
+        $timeStart = $this->time_start;
+        $timeEnd = $this->time_end;
+        $info = $this->public_info;
+        $details = $this->private_details;
+        $private = $this->is_private;
+        $facebookNeeded = $this->facebook_needed == false ? null : 0;
+        $priceNormal = $this->price_normal;
+        $priceTicketsNormal = $this->price_tickets_normal;
+        $priceExternal = $this->price_external;
+        $priceTicketsExternal = $this->price_tickets_external;
+        $clubEvent->fill([
+            'evnt_type'              => $type,
+            'evnt_title'             => $title,
+            'evnt_subtitle'          => $subtitle,
+            'evnt_time_start'        => $timeStart,
+            'evnt_time_end'          => $timeEnd,
+            'evnt_public_info'       => $info,
+            'evnt_private_details'   => $details,
+            'evnt_is_private'        => $private,
+            'price_tickets_normal'   => $priceTicketsNormal,
+            'price_tickets_external' => $priceTicketsExternal,
+            'price_normal'           => $priceNormal,
+            'price_external'         => $priceExternal,
+            'facebook_done'          => $facebookNeeded,
+            'event_url',
+            'template_id'            => $this->id,
+        ]);
+        $clubEvent->save();
+        $clubEvent->showToSection()->sync($this->showToSection()->get()->map(function (Section $sec) {
+            return $sec->id;
+        }));
+        $clubEvent->plc_id = $section->id;
+        $schedule = new Schedule();
+        $schedule->save();
+        
+        // get template data
+        $shifts = $this->shifts()
+            ->with('type')
+            ->get()
+            ->map(function (Shift $shift) use ($schedule) {
+                // copy all except person_id and schedule_id and comment
+                return $shift->replicate([
+                    'person_id',
+                    'schedule_id',
+                    'comment',
+                ])->fill(['schedule_id' => $schedule->id]);
+            });
+        
+        $shifts->each(function(Shift $shift){
+            $shift->save();
+        });
+        
+        $schedule->evnt_id = $clubEvent->id;
+        $schedule->fill([
+            'schdl_title'                  => $title,
+            'schdl_time_preparation_start' => $dv,
+        ]);
+        $schedule->save();
+        //refresh from database
+        $clubEvent = $clubEvent->refresh();
+        
+        return $clubEvent;
+    }
+    
 }
