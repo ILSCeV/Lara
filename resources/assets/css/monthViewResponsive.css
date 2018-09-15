@@ -25,17 +25,6 @@
     height: 10vh;
 }
 
-@media screen and (max-width: 978px) {
-    .height10vh {
-        height: 0px;
-    }
-
-    .calendarRow {
-        min-height: 0px;
-    }
-}
-
-
 .weekDay {
     text-align: left !important;
     width: 13.714%;
@@ -207,7 +196,6 @@ span.event-time{
     }
 
     .calendarWeek {
-        margin-top: 10vh !important;
         background-color: #cccccc;
         border-radius: 15px 15px 0 0;
         font-weight: bold;
@@ -272,5 +260,11 @@ span.event-time{
 
     .noheightmobile{
         height:5vh;
+    }
+}
+
+@media screen and (min-width: @screen-md-min) {
+    .month-view-header {
+        padding-bottom: 8px;
     }
 }
