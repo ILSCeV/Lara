@@ -8,7 +8,8 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </span>
         @foreach($sections->reverse() as $section)
-            <span id="label-{!! $section["title"] !!}" class="label label-filters palette-{{$section->color}}-500-Primary bg hidden pull-right">
+            {{-- Formatting: "Section Name 123" => "section-name-123" --}}
+            <span id="label-{!! str_replace(' ', '-', strtolower($section["title"])) !!}" class="label label-filters palette-{{$section->color}}-500-Primary bg hidden pull-right">
                 {!! $section["title"] !!}
                 &nbsp;
                 <span class="glyphicon glyphicon-remove-circle"></span>
@@ -26,7 +27,8 @@
                                              data-deselect-all-text="{{ trans('mainLang.selectNone') }}"
                                              data-count-selected-text="{{ trans('mainLang.countSectionsSelected') }}">
             @foreach($sections as $section)
-                <option value="filter-{!! $section["title"] !!}"
+                {{-- Formatting: "Section Name 123" => "section-name-123" --}}
+                <option value="filter-{!! str_replace(' ', '-', strtolower($section["title"])) !!}"
                         class="palette-{{$section->color}}-500-Primary bg option-shadow">
                             {!! $section["title"] !!}
                 </option>
