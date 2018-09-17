@@ -579,6 +579,7 @@ a.event-name{
     user-select: none;
 	margin-right: 4px;
     padding: 4px;
+    margin: 4px;
 }
 
 .label-filters .glyphicon{
