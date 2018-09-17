@@ -21,11 +21,11 @@ class DateController extends Controller {
      * @return  int $month
      * @return  int $year
      * @return RedirectResponse
-     */       
+     */
     public function currentDate()
     {
-        return Redirect::action( 'DateController@showDate', ['year' => date("Y"), 
-                                                             'month' => date("m"), 
+        return Redirect::action( 'DateController@showDate', ['year' => date("Y"),
+                                                             'month' => date("m"),
                                                              'day' => date("d")] );
     }
 
@@ -40,7 +40,7 @@ class DateController extends Controller {
      * @return view calendarView
      * @return ClubEvent[] $events
      * @return string $date
-     */      
+     */
     public function showDate($year, $month, $day)
     {
         $dateInput = $year.$month.$day;
@@ -54,6 +54,7 @@ class DateController extends Controller {
 
         $events = ClubEvent::where('evnt_date_start','=',$dateInput)
                            ->with('section')
+                           ->orderBy('evnt_time_start','asc')
                            ->paginate(15);
 
         return View::make('listView', compact('events', 'date', 'previous', 'next'));
