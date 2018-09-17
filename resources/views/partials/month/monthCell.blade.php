@@ -68,7 +68,8 @@
             <div class="{!! $clubEvent->section->title !!}">
         @else
             {{-- Normal scenario: add a css class according to filter data --}}
-            <div class="section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach">
+            {{-- Formatting: "Section Name 123" => "section-name-123" --}}
+            <div class="section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach">
         @endif
 
 
