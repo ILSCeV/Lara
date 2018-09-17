@@ -11,6 +11,7 @@ use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
 
 use Lara\ClubEvent;
+use Lara\Section;
 
 class DateController extends Controller {
 
@@ -53,11 +54,15 @@ class DateController extends Controller {
         $date = strftime("%a, %d. %b %Y", strtotime($dateInput));
 
         $events = ClubEvent::where('evnt_date_start','=',$dateInput)
-                           ->with('section')
+                           ->with('section', "showToSection")
                            ->orderBy('evnt_time_start','asc')
                            ->paginate(15);
 
-        return View::make('listView', compact('events', 'date', 'previous', 'next'));
+        $sections = Section::where('id', '>', 0)
+                           ->orderBy('title')
+                           ->get(['id', 'title', 'color']);
+
+        return View::make('listView', compact('sections', 'events', 'date', 'previous', 'next'));
     }
 
 }

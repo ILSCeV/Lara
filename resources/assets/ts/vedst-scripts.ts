@@ -20,6 +20,7 @@ $(function() {
     //////////////////////////////////////////////////////
     const isMonthView = $('#month-view-marker').length;
     const isWeekView = $('.isotope').length > 0;
+    const isDayView = $('#day-view-marker').length;
 
 
     const initializeSectionFilters = (isotope: typeof Isotope = null) => {
@@ -76,7 +77,7 @@ $(function() {
         showAllActiveSections();
     };
 
-    if (isMonthView || isWeekView) {
+    if (isMonthView || isWeekView || isDayView) {
         initializeSectionFilters();
     }
 
