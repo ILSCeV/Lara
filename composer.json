@@ -24,7 +24,7 @@
         "sort-packages": true,
         "optimize-autoloader": true
     },
-    "description": "A calender with personnel scheduling for club management, built on top of Laravel 5.",
+    "description": "A calender with personnel scheduling for club management, built on top of Laravel 5.7",
     "keywords": [
         "calendar",
         "scheduling",
@@ -34,11 +34,12 @@
     "license": "GPL-3.0",
     "name": "ILSCeV/Lara",
     "require": {
-        "php": ">=5.6.4",
+        "php": ">=7.2",
         "barryvdh/laravel-ide-helper": "^2.2",
         "johngrogg/ics-parser": "^2",
         "eluceo/ical": "^0.11.0",
-        "laravel/framework": "5.5.*",
+        "laravel/framework": "5.6.*",
+        "fideloper/proxy": "^4.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.3.0",
         "rap2hpoutre/laravel-log-viewer": "^0.8.0"
@@ -48,7 +49,7 @@
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "orangehill/iseed": "dev-master",
-        "phpunit/phpunit": "~6.0",
+        "phpunit/phpunit": "^7.0",
         "filp/whoops": "~2.0"
     },
     "scripts": {
@@ -56,8 +57,7 @@
             "php artisan key:generate"
         ],
         "post-install-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
+            "Illuminate\\Foundation\\ComposerScripts::postInstall"
         ],
         "post-root-package-install": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -65,8 +65,7 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan ide-helper:generate",
-            "php artisan ide-helper:meta",
-            "php artisan optimize"
+            "php artisan ide-helper:meta"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
