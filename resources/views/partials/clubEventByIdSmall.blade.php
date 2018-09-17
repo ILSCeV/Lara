@@ -1,5 +1,4 @@
-
-<div class="panel">
+<div class="panel section-filter {!! $clubEvent->section->title !!}">
     {{-- show only a placeholder for private events --}}
     @if($clubEvent->evnt_is_private && !Auth::user())
         <div class="panel panel-heading">
@@ -33,7 +32,7 @@
         </div>
 	@endif
 
-	<div class="panel panel-body">
+	<div class="panel panel-body no-margin">
 		<strong>{{ trans('mainLang.begin') }}:</strong> {{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start)) }}
 		um {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
 		<br />
