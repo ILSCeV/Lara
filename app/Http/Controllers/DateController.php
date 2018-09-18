@@ -44,20 +44,20 @@ class DateController extends Controller {
      */
     public function showDate($year, $month, $day)
     {
-        $dateInput = $year.$month.$day;
-
-        $carbonDate = Carbon::createFromTimestamp(strtotime($dateInput));
+        $inputDate = Carbon::create($year,$month,$day);
+        $carbonDate = clone $inputDate;
 
         $previous = $carbonDate->subDays(1)->format('Y/m/d');
         $next = $carbonDate->addDays(2)->format('Y/m/d');
 
-        $date = strftime("%a, %d. %b %Y", strtotime($dateInput));
-
-        $events = ClubEvent::where('evnt_date_start','=',$dateInput)
+        $date = strftime("%a, %d. %b %Y", strtotime($inputDate->format("Ymd")));
+        
+        $events = ClubEvent::query()
+                           ->whereRaw('? BETWEEN evnt_date_start AND evnt_date_end',[$inputDate->format('Y-m-d')])
                            ->with('section', "showToSection")
-                           ->orderBy('evnt_time_start','asc')
-                           ->paginate(15);
-
+                           ->orderBy('evnt_time_start','asc')->get();
+                           
+        
         $sections = Section::where('id', '>', 0)
                            ->orderBy('title')
                            ->get(['id', 'title', 'color']);

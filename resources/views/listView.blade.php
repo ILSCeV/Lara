@@ -32,17 +32,9 @@
 
         <div class="col-md-12 col-xs-12">
             @foreach($events as $clubEvent)
-                    @if ($loop->first)
-                            <center>{!! $events->render() !!}</center>
-                    @endif
-
-                    <div class="panel-group">
-                        @include('partials.clubEventByIdSmall', $clubEvent)
-                    </div>
-
-                    @if ($loop->last)
-                            <center>{!! $events->render() !!}</center>
-                    @endif
+                <div class="panel-group">
+                    @include('partials.clubEventByIdSmall', $clubEvent)
+                </div>
             @endforeach
         </div>
 
