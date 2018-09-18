@@ -1,4 +1,7 @@
 {{-- Needs variables: $surveys, $events --}}
+@php
+use Carbon\Carbon;
+@endphp
 
 @foreach($surveys as $survey) {{-- going over all surveys see weekCellSurvey for a single survey--}}
 
@@ -44,8 +47,8 @@
     @endif
 @endforeach
 
-@foreach($events as $clubEvent)
-    @if($clubEvent->evnt_date_start === date("Y-m-d", $weekDay->getTimestamp()))
+@foreach($events->sortBy('section.title') as $clubEvent)
+    @if( Carbon::createFromTimestamp($weekDay->getTimestamp())->between(Carbon::createFromFormat('Y-m-d',$clubEvent->evnt_date_start)->subDay(),Carbon::createFromFormat('Y-m-d',$clubEvent->evnt_date_end)))
 
         {{--Check if the event is still going on--}}
         @if(strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time())
