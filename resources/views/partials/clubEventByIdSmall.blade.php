@@ -1,4 +1,4 @@
-<div class="panel section-filter {!! $clubEvent->section->title !!}">
+<div class="panel section-filter {!! strtolower($clubEvent->section->title) !!}">
     {{-- show only a placeholder for private events --}}
     @if($clubEvent->evnt_is_private && !Auth::user())
         <div class="panel panel-heading">

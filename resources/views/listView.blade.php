@@ -51,6 +51,6 @@
             @include("partials.legend")
 
             {{-- filter hack --}}
-            <span id="month-view-marker" hidden>&nbsp;</span>
+            <span id="day-view-marker" hidden>&nbsp;</span>
         </div>
 @stop
