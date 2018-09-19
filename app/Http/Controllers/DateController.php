@@ -53,7 +53,7 @@ class DateController extends Controller {
         $date = strftime("%a, %d. %b %Y", strtotime($inputDate->format("Ymd")));
         
         $events = ClubEvent::query()
-                           ->whereRaw('? BETWEEN evnt_date_start AND evnt_date_end',[$inputDate->format('Y-m-d')])
+                           ->whereRaw("? BETWEEN evnt_date_start AND DATE_ADD(concat(evnt_date_end , ' ' , evnt_time_end), INTERVAL -5 HOUR)",[$inputDate->format('Y-m-d')])
                            ->with('section', "showToSection")
                            ->orderBy('evnt_time_start','asc')->get();
                            
