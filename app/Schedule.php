@@ -4,6 +4,12 @@ namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property String  schdl_title
+ * @property String schdl_time_preparation_start
+ * @property String schdl_password
+ * @property ClubEvent event
+ */
 class Schedule extends Model
 {
     /**
