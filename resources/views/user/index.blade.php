@@ -5,13 +5,13 @@
 @stop
 
 @section('content')
-    <div class="panel panel-info col-xs-12 no-padding">
-        <div class="panel-heading">
-            <h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('users.users') }}</h4>
+    <div class="card card.text-white.bg-info col-xs-12 no-padding">
+        <div class="card-header">
+            <h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('users.users') }}</h4>
         </div>
 
-        <div class="panel panel-body no-padding">
-            <table class="table info table-hover table-condensed">
+        <div class="card card-body no-padding">
+            <table class="table info table-hover table-sm">
                 <thead>
                 <tr class="active">
                     <th class="col-md-1 col-xs-1 padding-left-15">

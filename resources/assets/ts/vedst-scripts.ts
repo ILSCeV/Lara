@@ -867,7 +867,7 @@ jQuery( document ).ready( function( $ ) {
 
                 // add found clubs to the array$(document.activeElement).parent().children('.dropdown-club')
                 $(document.activeElement).parent().parent().children('.dropdown-club').append(
-                    '<li><a href="javascript:void(0);">'
+                    '<li class="dropdown-item"><a href="javascript:void(0);">'
                     + '<span id="clubTitle">' + data.clb_title + '</span>'
                     + '</a></li>');
             });
@@ -940,7 +940,7 @@ jQuery( document ).ready( function( $ ) {
         {
             let $alert = $('<div id="alert' + entryId + '" class="alert alert-dismissible alert-warning clear-both col-md-12">\n' +
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>\n' +
-                '<strong>'+translate("conflictDetected")+'</strong>\n<i class="fa fa-3x fa-history pull-right"></i>' +
+                '<strong>'+translate("conflictDetected")+'</strong>\n<i class="fa fa-3x fa-history float-right"></i>' +
                 '<p>'+translate("conflictAlertLine1")+'</p>' +
                 '<p>'+translate("conflictAlertLine2")+'</p>\n' +
                 '</div>');
@@ -1044,7 +1044,7 @@ jQuery( document ).ready( function( $ ) {
 
                 // add found shiftTypes and metadata to the dropdown
                 $(document.activeElement).next('.dropdown-shiftTypes').append(
-                    '<li><a href="javascript:void(0);">'
+                    '<li class="dropdown-item"><a href="javascript:void(0);">'
                     + '<span id="shiftTypeTitle">'
                     + data.title
                     + '</span>'
@@ -1119,12 +1119,12 @@ jQuery( document ).ready( function( $ ) {
         // For passworded schedules: check if a password field exists and is not empty
         // We will check correctness on the server side
         let password = "";
-        if ( $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").length
-          && !$(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val() )
+        if ( $(this).parentsUntil( $(this), '.card.bg-warning').find("[name^=password]").length
+          && !$(this).parentsUntil( $(this), '.card.bg-warning').find("[name^=password]").val() )
         {
             password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );
         } else {
-            password = <string> $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
+            password = <string> $(this).parentsUntil( $(this), '.card.bg-warning').find("[name^=password]").val();
         }
 
         // necessary for the ajax callbacks

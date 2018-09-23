@@ -1,4 +1,4 @@
-{!! Form::open(['url' => 'login', 'method' => 'POST', 'class' => 'form-horizontal navbar-right']) !!}
+{!! Form::open(['url' => 'login', 'method' => 'POST', 'class' => 'form-horizontal ml-auto']) !!}
 
 
 <div class="navbar-form form-horizontal login-forms">
@@ -10,7 +10,7 @@
                           'style'        => 'cursor: auto',
                           'autofocus'=>'autofocus'])  !!}
 
-    <br class="visible-xs">
+    <br class="d-block.d-sm-none">
 
 
     {!! Form::password( 'password',
@@ -19,7 +19,7 @@
                         'autocomplete' => 'off',
                         'style'        => 'cursor: auto'] ) !!}
 
-    <br class="visible-xs">
+    <br class="d-block.d-sm-none">
 
     @dev
     <select name="userGroup" id="userGroup" class="btn btn-sm">
@@ -31,6 +31,6 @@
     {!! Form::submit( Lang::get('mainLang.logIn'),
                       array('class' => ' btn btn-primary btn-sm') ) !!}
 
-    <br class="visible-xs">
+    <br class="d-block.d-sm-none">
 </div>
 {!! Form::close() !!}

@@ -1,9 +1,9 @@
-<div class="panel no-padding">
-	<div class="panel-heading">
-		<h4 class="panel-title">{{ trans('mainLang.adjustRoster') }}:</h4>
+<div class="card no-padding">
+	<div class="card-header">
+		<h4 class="card-title">{{ trans('mainLang.adjustRoster') }}:</h4>
 	</div>
 
-	<div class="panel-body" id="main">
+	<div class="card-body" id="main">
 		{{-- shiftType fields --}}
 	    <div id="shiftContainer" class="container shiftContainer">
             <?php $counter=0;?>
@@ -18,7 +18,7 @@
 					"counter" => $counter,
 					'shiftTypeId' => $shift->type->id
 				])
-				<br class="visible-xs">
+				<br class="d-block.d-sm-none">
 				<?php $counter = $counter+1;?>
 			@endforeach
 

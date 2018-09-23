@@ -11,12 +11,12 @@ $(()=>{
         });
     });
     $('.change-user-status-form > .selectpicker').selectpicker({
-        style: 'btn btn-default btn-sm',
+        style: 'btn btn-secondary btn-sm',
         liveSearch:true
     });
 
   $('.editUserFormselectpicker').selectpicker({
-    style: 'btn btn-default btn-sm',
+    style: 'btn btn-secondary btn-sm',
     liveSearch:true
   });
 

@@ -8,62 +8,62 @@
         <div class="col-md-12">
             {{ Form::open(['class'=>'form-inline ','route'=>['user.updateData',$user]])  }}
             <div class="panel-group">
-                <div class="panel panel-default">
-                    <div class="panel-heading ">
-                        <h4 class="panel-title">
+                <div class="card panel-default">
+                    <div class="card-header ">
+                        <h4 class="card-title">
                             {{ trans('mainLang.editUser') }}
                             <a data-toggle="collapse" href="#userInformation" class="collapse-toggle">
                             </a>
                         </h4>
                     </div>
-                    <div id="userInformation" class="panel-body panel-collapse collapse in">
+                    <div id="userInformation" class="card-body panel-collapse collapse in">
 
                         @ldapSection($user->section)
                             <div class="form-group input-group">
-                                <label class="control-label" for="clubNumber"> {{ trans('mainLang.clubNumber') }} </label>
+                                <label class="col-form-label" for="clubNumber"> {{ trans('mainLang.clubNumber') }} </label>
                                 {{ Form::text('clubnumber', $user->person->prsn_ldap_id,['class'=>"form-control" ,'id'=>'clubNumber','required'=>"",'autofocus'=>'','disabled'=>''])  }}
                             </div>
                         @endldapSection
 
                         @canEditUser($user)
                         <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }} input-group" >
-                            <label class="control-label" for="userName"> Name </label>
+                            <label class="col-form-label" for="userName"> Name </label>
                             {{ Form::text('name',$user->name,['class'=>"form-control" ,'id'=>'userName','required'=>"",'autofocus'=>'']) }}
                             @if ($errors->has('name'))
-                                <span class="help-block">
+                                <span class="form-text">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('givenname') ? ' has-error' : '' }} input-group" >
-                            <label class="control-label" for="givenname"> {{ trans('auth.givenname') }} </label>
+                            <label class="col-form-label" for="givenname"> {{ trans('auth.givenname') }} </label>
                             {{ Form::text('givenname',$user->givenname,['class'=>"form-control" ,'id'=>'givenname','required'=>"",'autofocus'=>'']) }}
                             @if ($errors->has('givenname'))
-                                <span class="help-block">
+                                <span class="form-text">
                                         <strong>{{ $errors->first('givenname') }}</strong>
                                     </span>
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('lastname') ? ' has-error' : '' }} input-group" >
-                            <label class="control-label" for="lastname"> {{ trans('auth.lastname') }} </label>
+                            <label class="col-form-label" for="lastname"> {{ trans('auth.lastname') }} </label>
                             {{ Form::text('lastname',$user->lastname,['class'=>"form-control" ,'id'=>'lastname','required'=>"",'autofocus'=>'']) }}
                             @if ($errors->has('lastname'))
-                                <span class="help-block">
+                                <span class="form-text">
                                         <strong>{{ $errors->first('lastname') }}</strong>
                                     </span>
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }} input-group">
-                            <label class="control-label" for="email"> Email </label>
+                            <label class="col-form-label" for="email"> Email </label>
                             {{ Form::email('email',$user->email,['class'=>"form-control" ,'id'=>'email']) }}
                             @if ($errors->has('email'))
-                                <span class="help-block">
+                                <span class="form-text">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('section') ? ' has-error' : '' }} input-group">
-                            <label for="section" class=" control-label">{{trans('mainLang.section')}}</label>
+                            <label for="section" class=" col-form-label">{{trans('mainLang.section')}}</label>
                             <div>
                                 <select name="section" id="section" class="editUserFormselectpicker">
                                     @foreach(Lara\Section::all() as $section)
@@ -73,14 +73,14 @@
                                     @endforeach
                                 </select>
                                 @if ($errors->has('section'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                    <strong>{{ $errors->first('section') }}</strong>
                                 </span>
                                 @endif
                             </div>
                         </div>
                         <div class="form-group {{ $errors->has('status') ? ' has-error' : '' }} input-group">
-                            <label for="status" class="control-label">Status</label>
+                            <label for="status" class="col-form-label">Status</label>
                             <div>
                                 <select name="status" id="status" class="editUserFormselectpicker">
                                     @foreach(Lara\Status::ALL as $status)
@@ -90,7 +90,7 @@
                                     @endforeach
                                 </select>
                                 @if ($errors->has('status'))
-                                    <span class="help-block">
+                                    <span class="form-text">
                                          <strong>{{ $errors->first('status') }}</strong>
                                     </span>
                                 @endif
@@ -98,35 +98,35 @@
                         </div>
                         @else
                             <div class="form-group input-group" >
-                                <label class="control-label" for="userName"> Name </label>
+                                <label class="col-form-label" for="userName"> Name </label>
                                 {{ Form::text('name',$user->name,['class'=>"form-control" ,'id'=>'userName','required'=>"",'autofocus'=>'', 'disabled']) }}
                             </div>
                             <div class="form-group input-group">
-                                <label class="control-label" for="email"> Email </label>
+                                <label class="col-form-label" for="email"> Email </label>
                                 {{ Form::email('email',$user->email,['class'=>"form-control" ,'id'=>'email', 'disabled']) }}
                             </div>
                             <div class="form-group input-group">
-                                <label for="section" class=" control-label">{{trans('mainLang.section')}}</label>
+                                <label for="section" class=" col-form-label">{{trans('mainLang.section')}}</label>
                                 {{ Form::text('section',$user->section->title,['class'=>"form-control" ,'id'=>'section', 'disabled']) }}
                             </div>
                             <div class="form-group input-group">
-                                <label for="status" class="control-label">Status</label>
+                                <label for="status" class="col-form-label">Status</label>
                                 {{ Form::text('section',trans(Auth::user()->section->title . "." . $user->status) ,['class'=>"form-control" ,'id'=>'status', 'disabled']) }}
                             </div>
                             @endcanEditUser
                     </div>
                 </div>
-            <div class="panel panel-default">
-                <div class="panel panel-heading">
-                    <h4 class="panel-title">
+            <div class="card panel-default">
+                <div class="card card-header">
+                    <h4 class="card-title">
                         {{ trans('mainLang.roleManagement') }}
                         <a data-toggle="collapse" href="#roleInformation" class="collapse-toggle">
                         </a>
                     </h4>
                 </div>
-                <div id="roleInformation" class="panel-body panel-collapse collapse in">
+                <div id="roleInformation" class="card-body panel-collapse collapse in">
                     @if (count($permissionsPersection) > 0)
-                        <div class="panel panel-default">
+                        <div class="card panel-default">
                             <ul class="nav nav-tabs">
                                 @foreach($permissionsPersection as $sectionId => $roles)
                                     <li class="{{Auth::user()->section_id == $sectionId ? 'active': ''}} permissionsPicker">
@@ -199,7 +199,7 @@
         </div>
         <div class="btn-group btn-group-lg centered">
             <button type="submit" id="updateUserData" class="btn btn-success"> {{ trans('mainLang.update') }} </button>
-            <a class="btn btn-default" href="javascript:history.back()">{{ trans('mainLang.backWithoutChange') }}</a>
+            <a class="btn btn-secondary" href="javascript:history.back()">{{ trans('mainLang.backWithoutChange') }}</a>
 
         </div>
         {{ Form::close() }}

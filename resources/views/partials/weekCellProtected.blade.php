@@ -1,12 +1,12 @@
-<div class="panel panel-warning">
+<div class="card card.bg-warning">
 
 	{{-- Check if the event is still going on --}}
-	<?php $classString = "panel panel-heading";?>
+	<?php $classString = "card card-header";?>
 	@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
 		<?php $classString .= " past-event";?>
 	@endif
 
-	{{-- Set panel color --}}
+	{{-- Set card color --}}
 	@if     ($clubEvent->evnt_type == 0)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
     @elseif ($clubEvent->evnt_type == 1)
@@ -27,7 +27,7 @@
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
     @endif
 
-			<h4 class="panel-title">
+			<h4 class="card-title">
 				@include("partials.event-marker")
 				&nbsp;
 				<a href="{{ URL::route('event.show', $clubEvent->id) }}">
@@ -58,7 +58,7 @@
 		    </div>
 		@endif
 
-		<div class="panel panel-body no-padding">
+		<div class="card card-body no-padding">
 
 			@if (!is_null($clubEvent->getSchedule))
 
@@ -114,11 +114,11 @@
 							{{-- Show only the icon first --}}
 							<div class="col-xs-1 col-md-1 no-padding">
 							    @if( $shift->comment == "" )
-							        <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
+							        <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
 							            <i class="fa fa-comment-o"></i>
 							        </button>
 							    @else
-							        <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
+							        <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
 							            <i class="fa fa-comment"></i>
 							        </button>
 							    @endif
@@ -127,7 +127,7 @@
 							{{-- Hidden comment field to be opened after the click on the icon
 							     see vedst-scripts "Show/hide comments" function --}}
 							<div id="{!! 'comment' . $shift->id !!}"
-							     class="col-xs-10 col-md-10 hidden-print hide col-md-offset-1 word-break"
+							     class="col-xs-10 col-md-10 hidden-print hide offset-2 word-break"
 							     name="{!! 'comment' . $shift->id !!}">
 							    {!! !empty($shift->comment) ? $shift->comment : "-" !!}
 							</div>
@@ -147,11 +147,11 @@
 				            {{-- SMALL COMMENT ICON --}}
 				            <div class="col-xs-1 col-md-1 no-padding">
 						        @if( $shift->comment == "" )
-						            <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
+						            <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
 						                <i class="fa fa-comment-o"></i>
 						            </button>
 						        @else
-						            <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
+						            <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
 						                <i class="fa fa-comment"></i>
 						            </button>
 						        @endif
@@ -163,7 +163,7 @@
 							               $shift->comment,
 							               array('placeholder'=>Lang::get('mainLang.addCommentHere'),
 							                     'id'=>'comment' . $shift->id,
-							                     'class'=>'col-xs-10 col-md-10 hidden-print hide col-md-offset-1 col-xs-offset-1 word-break' ))
+							                     'class'=>'col-xs-10 col-md-10 hidden-print hide offset-2 offset-2 word-break' ))
 							!!}
 
 				        @endif

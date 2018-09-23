@@ -1,4 +1,4 @@
-<div class="panel panel-footer col-md-12 col-xs-12 hidden-print">
+<div class="card card-footer col-md-12 col-xs-12 hidden-print">
     <span class="pull-right">
         {{-- Event publishing only for CL/marketing -> exclude creator
         Disabling iCal until fully functional.
@@ -40,7 +40,7 @@
         </a>
         &nbsp;&nbsp;
         <a href="{{ $event->id }}"
-           class="btn btn-default"
+           class="btn btn-secondary"
            data-toggle="tooltip"
            data-placement="bottom"
            title="{{ trans('mainLang.deleteEvent') }}"

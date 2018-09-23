@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top navbar-fixed-top">
+<nav class="navbar navbar-default navbar-static-top fixed-top">
   <div class="container">
     <div class="navbar-header">
         <button type="button"
@@ -28,38 +28,38 @@
             
 {{-- DAY VIEW / public --}}
 
-            <li><a href="{{ asset('/calendar/today') }}">{{ trans('mainLang.today') }}</a></li>
+            <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/today') }}">{{ trans('mainLang.today') }}</a></li>
 {{-- MONTH VIEW / public --}}
-            <li><a href="{{ asset('/calendar/month') }}">{{ trans('mainLang.month') }}</a></li>
+            <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/month') }}">{{ trans('mainLang.month') }}</a></li>
 
 {{-- WEEK VIEW / public --}}
-            <li><a href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
+            <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
 
 {{-- MEMBER STATISTICS / members only --}}
             @auth
-                <li><a href="{{ action('StatisticsController@showStatistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
+                <li class="nav-item" ><a class="nav-link" href="{{ action('StatisticsController@showStatistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
             @endauth
 
 {{-- LANGUAGE SWITCHER / public --}}
-        <li class="dropdown">
+        <li class="dropdown nav-item">
             <a href="#"
-             class="dropdown-toggle"
+             class="dropdown-toggle nav-link"
              data-toggle="dropdown"
              role="button" aria-expanded="false">
                 <i class="fa fa-language"></i>&nbsp;<span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
                 @foreach (Config::get('languages') as $lang => $language)
-                    <li class="languageSwitcher"><a href="{{ route('lang.switch', $lang) }}" data-language="{{$lang}}"><i class="fa fa-globe" aria-hidden="true"></i></i> {{$language}}</a></li>
+                    <li class="languageSwitcher dropdown-item"><a class="nav-link" href="{{ route('lang.switch', $lang) }}" data-language="{{$lang}}"><i class="fa fa-globe" aria-hidden="true"></i></i> {{$language}}</a></li>
                 @endforeach
             </ul>
         </li>
 
 {{-- SETTINGS (GEAR ICON) / marketing, section management or admins only --}}
         @is(Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
-            <li class="dropdown">
+            <li class="dropdown nav-item">
                 <a href="#"
-                 class="dropdown-toggle"
+                 class="dropdown-toggle nav-link"
                  data-toggle="dropdown"
                  role="button" aria-expanded="false">
                     <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
@@ -67,14 +67,14 @@
 
 {{-- SHIFT TYPES AND TEMPLATE MANAGEMENT / marketing, section management or admins only --}}
                 <ul class="dropdown-menu" role="menu">
-                    <li>
-                        <a href="{{ asset('shiftType') }}">
+                    <li class="dropdown-item">
+                        <a class="nav-link" href="{{ asset('shiftType') }}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
                             {{ trans('mainLang.manageShiftType') }}
                         </a>
                     </li>
-                    <li>
-                        <a href="{{route('template.overview')}}">
+                    <li class="dropdown-item">
+                        <a class="nav-link" href="{{route('template.overview')}}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>
@@ -82,14 +82,14 @@
 
 {{-- USER AND SECTION MANAGEMENT / section management or admins only --}}
                     @is(Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
-                    <li>
-                        <a href="{{ route('user.index') }}">
+                    <li class="dropdown-item">
+                        <a class="nav-link" href="{{ route('user.index') }}">
                             <i class="fa fa-users" aria-hidden="true"> </i>
                             {{ trans('users.userManagement') }}
                         </a>
                     </li>
-                    <li>
-                       <a href="{{ asset('section') }}">
+                    <li class="dropdown-item">
+                       <a class="nav-link" href="{{ asset('section') }}">
                            <i class="fa fa-university" aria-hidden="true"></i>
                            {{ trans('mainLang.manageSections') }}
                        </a>
@@ -99,16 +99,16 @@
 
 {{-- LARA ADMINISTRATION / admins only --}}
                 @is(Roles::PRIVILEGE_ADMINISTRATOR)
-                    <li role="separator" class="divider"></li>
-                    <li>
-                        <a href="{{ asset('/logs') }}">
+                    <li role="separator" class="divider dropdown-item"></li>
+                    <li class="dropdown-item">
+                        <a class="nav-link" href="{{ asset('/logs') }}">
                             <i class="fa fa-list-alt" aria-hidden="true"></i>
                             Logs
                         </a>
                     </li>
-                    <li role="separator" class="divider"></li>
-                    <li>
-                        <a href="{{route("lara.update")}}">
+                    <li role="separator" class="divider dropdown-item"></li>
+                    <li class="dropdown-item">
+                        <a class="nav-link" href="{{route("lara.update")}}">
                             <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                             Lara update </a>
                     </li>
@@ -124,8 +124,8 @@ Disabling iCal until fully functional.
             </li>
         </ul>
 
-        <ul class="nav navbar-nav navbar-right">
-            <span class="col-xs-1 visible-xs">&nbsp;</span>
+        <ul class="nav navbar-nav ml-auto">
+            <span class="col-xs-1 d-block.d-sm-none">&nbsp;</span>
             <div class="col-xs-10 col-sm-12 col-md-12 no-margin no-padding">
 
 {{-- AUTHENTICATION --}}
@@ -133,31 +133,31 @@ Disabling iCal until fully functional.
 
 {{-- CREATE BUTTONS / members only --}}
     {{-- Desktop version --}}
-                    <li style="padding-top:5px" class="btn-group hidden-xs">
+                    <li style="padding-top:5px" class="btn-group d-none nav-item">
                         <div style="padding-top:2px" class="btn-group">
-                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">+</a>
+                            <a class="btn btn-primary dropdown-toggle nav-link" data-toggle="dropdown" href="#">+</a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ URL::route('event.create') }}">{{ trans('mainLang.createNewEvent') }}</a></li>
-                                <li><a href="{{ URL::route('survey.create') }}">{{ trans('mainLang.createNewSurvey') }}</a></li>
+                                <li class="dropdown-item" ><a href="{{ URL::route('event.create') }}">{{ trans('mainLang.createNewEvent') }}</a></li>
+                                <li class="dropdown-item" ><a href="{{ URL::route('survey.create') }}">{{ trans('mainLang.createNewSurvey') }}</a></li>
                             </ul>
                         </div>
                     </li>
 
     {{-- Mobile version --}}
                     <a href="{{ URL::route('event.create') }}"
-                       class="btn btn-sm btn-primary visible-xs centered">
+                       class="btn btn-sm btn-primary d-block.d-sm-none centered">
                         {{ trans('mainLang.createNewEvent') }}
                     </a>
 
-                    <br class="visible-xs">
+                    <br class="d-block.d-sm-none">
 
                     <a href="{{ URL::route('survey.create') }}"
-                       class="btn btn-sm btn-primary visible-xs centered">
+                       class="btn btn-sm btn-primary d-block.d-sm-none centered">
                         {{ trans('mainLang.createNewSurvey') }}
                     </a>
 
 {{-- MEMBER INFO / members only --}}
-                    <li style="padding-top: 8px;" class="btn-group">
+                    <li style="padding-top: 8px;" class="btn-group nav-item">
                         {!! Form::open(array('url' => 'logout',
                                             'method' => 'POST',
                                             'class'=>'form-horizontal')) !!}
@@ -191,10 +191,10 @@ Disabling iCal until fully functional.
                                     </span>
                                 </strong>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <br class="visible-xs">
-                                <br class="visible-xs">
+                                <br class="d-block.d-sm-none">
+                                <br class="d-block.d-sm-none">
                                 {!! Form::submit( Lang::get('mainLang.logOut'),
-                                                  array('class' => 'btn btn-default btn-sm pull-right',
+                                                  array('class' => 'btn btn-secondary btn-sm float-right',
                                                         'name'  => 'logout') ) !!}
                             </div>
                         {!! Form::close() !!}
@@ -203,13 +203,13 @@ Disabling iCal until fully functional.
                 @else
 
 {{-- LOGIN FORM / public --}}
-                    <li>
+                    <li class="nav-item">
                         @include('partials/login')
                     </li>
 
                 @endauth
             </div>
-            <span class="col-xs-1 visible-xs">&nbsp;</span>
+            <span class="col-xs-1 d-block.d-sm-none">&nbsp;</span>
           </ul>
 
         </div>

@@ -11,14 +11,14 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h4 class="panel-title">
+        <div class="card card.text-white.bg-info">
+            <div class="card-header">
+                <h4 class="card-title">
                     {{ trans('mainLang.userPersonalPage') }}:
                     {{ $user->name }} ({{ $user->section->title }})
                 </h4>
             </div>
-            <div class="panel-body no-padding">
+            <div class="card-body no-padding">
                 <ul class="nav nav-tabs">
                     <li class="active">
                         <a href="#shifts" data-toggle="tab">{{trans('mainLang.upcomingShifts')}}</a>
@@ -91,7 +91,7 @@
                                 <br>
                                 <div class="btn-group">
                                     <button type="reset"
-                                            class="btn btn-default">{{ trans('mainLang.reset') }}</button>
+                                            class="btn btn-secondary">{{ trans('mainLang.reset') }}</button>
                                     <button type="submit"
                                             class="btn btn-success">{{ trans('mainLang.update') }}</button>
                                 </div>
