@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top fixed-top">
+<nav class="navbar navbar-expand-sm navbar-light bg-lightfixed-top">
   <div class="container">
     <div class="navbar-header">
         <button type="button"
