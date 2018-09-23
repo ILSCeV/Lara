@@ -1,6 +1,6 @@
 <div name="question">
-    <div class="panel col-md-8 col-sm-12 col-xs-12">
-        <div class="panel-body">
+    <div class="card col-md-8 col-sm-12 col-xs-12">
+        <div class="card-body">
             <div class="col-md-11 col-sm-11 col-xs-10" style="padding-left: 0;">
                 <h4 class="heading-reference">{{ trans('mainLang.question') }} #</h4>
             </div>
@@ -20,7 +20,7 @@
                 </fieldset>
             </div>
 
-            <div class="visible-xs col-xs-12">
+            <div class="d-block.d-sm-none col-xs-12">
                 <br>
             </div>
 

@@ -11,11 +11,11 @@
         {!! Form::open(['method' => 'POST', 'route' => ['template.update', $template->id], 'class'=> 'form-inline']) !!}
     @endif
     <div class="row">
-        <div class="panel col-md-6 col-sm-12 col-xs-12 ">
-            <div class="panel-heading">
-                <h4 class="panel-title">{{ trans('mainLang.changeEventJob') }}:</h4>
+        <div class="card col-md-6 col-sm-12 col-xs-12 ">
+            <div class="card-header">
+                <h4 class="card-title">{{ trans('mainLang.changeEventJob') }}:</h4>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <div class="">
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 ">
                         <label for="title" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.title') }}:</label>
@@ -38,7 +38,7 @@
                         <label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.type') }}:</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
                             @for($i = 0;$i<10;$i++)
-                                <div class="radio">
+                                <div class="form-check">
                                     <label>
                                         {{ Form::radio('type', $i, $template->type == $i) }}
                                         {{ \Lara\Utilities::getEventTypeTranslation($i) }}
@@ -76,7 +76,7 @@
                     </div>
 
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 @if(!\Lara\Utilities::requirePermission("admin")) hidden @endif>">
-                        <label for="section" class="control-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.section') }}: &nbsp;</label>
+                        <label for="section" class="col-form-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.section') }}: &nbsp;</label>
                         <select id="section" class="selectpicker" name="section" >
                             @foreach($sections as $section)
                                 <option value="{{$section->id}}"
@@ -87,7 +87,7 @@
                     </div>
                     <br>
                     <div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
-                        <label for="filter" class="control-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
+                        <label for="filter" class="col-form-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
                         <div id="filter" class="input-group">
                             @if($template->id == null)
                                 @foreach($sections as $section)
@@ -109,7 +109,7 @@
                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
 
                         <div id="priceTickets" class="input-group">
-                            <span for="priceTickets" class="control-label input-group-addon">
+                            <span for="priceTickets" class="col-form-label input-group-addon">
                                 {{ trans('mainLang.priceTickets') }}:
                                 ({{ trans('mainLang.studentExtern') }})
                             </span>
@@ -125,7 +125,7 @@
                     <br>
                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
                         <div id="price" class="input-group">
-                                <span for="price" class="control-label input-group-addon" >
+                                <span for="price" class="col-form-label input-group-addon" >
                                     {{ trans('mainLang.price') }}:
                                     ({{ trans('mainLang.studentExtern') }})</span>
                                 <input class="form-control" type="number" name="priceNormal" step="0.1" min="0"
@@ -140,20 +140,20 @@
                     </div>
 
                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                        <label for="preparationTime" class="control-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.DV-Time') }}:</label>
+                        <label for="preparationTime" class="col-form-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.DV-Time') }}:</label>
                         {!! Form::input('time', 'preparationTime', $template->time_preparation_start, ['class'=>'form-control ']) !!}
 
                     </div>
 
                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                        <label for="beginDate" class="control-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.begin') }}:</label>
+                        <label for="beginDate" class="col-form-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.begin') }}:</label>
                         <div>
                             {!! Form::input('time', 'beginTime', $template->time_start, ['class'=>'form-control'] ) !!}
                         </div>
                     </div>
 
                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                        <label for="endDate" class="control-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.end') }}:</label>
+                        <label for="endDate" class="col-form-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.end') }}:</label>
                         <div>
                              {!! Form::input('time', 'endTime', $template->time_end, ['class'=>'form-control']) !!}
                         </div>
@@ -164,11 +164,11 @@
         &nbsp;&nbsp;&nbsp;&nbsp;
         <div class="container col-xs-12 col-sm-12 col-md-5 ">
             <div class="panel">
-                <div class="panel-heading">
-                    <h4 class="panel-title">{{ trans('mainLang.moreInfos') }}:</h4>
+                <div class="card-header">
+                    <h4 class="card-title">{{ trans('mainLang.moreInfos') }}:</h4>
                     ({{ trans('mainLang.public') }})
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="form-group">
                         <div class="col-md-12">
                             {!! Form::textarea('publicInfo', $template->public_info, array('class'=>'form-control',
@@ -180,11 +180,11 @@
             </div>
             <br>
             <div class="panel">
-                <div class="panel-heading">
-                    <h4 class="panel-title">{{ trans('mainLang.details') }}:</h4>
+                <div class="card-header">
+                    <h4 class="card-title">{{ trans('mainLang.details') }}:</h4>
                     ({{ trans('mainLang.showOnlyIntern') }})
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="form-group">
                         <div class="col-md-12">
                             {!! Form::textarea('privateDetails', $template->private_details, array('class'=>'form-control',
@@ -205,9 +205,9 @@
             {!! Form::submit( trans('mainLang.update') , array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
         @endif
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <br class="visible-xs">
-        <br class="visible-xs">
-        <a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }} </a>
+        <br class="d-block.d-sm-none">
+        <br class="d-block.d-sm-none">
+        <a href="javascript:history.back()" class="btn btn-secondary">{{ trans('mainLang.backWithoutChange') }} </a>
 
     </div>
     {!! Form::close() !!}

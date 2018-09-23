@@ -41,7 +41,7 @@
         <!-- Back to Top button -->
         <a id="back-to-top"
            href="#"
-           class="btn btn-primary btn-lg back-to-top hidden-print hidden-md hidden-lg"
+           class="btn btn-primary btn-lg back-to-top hidden-print d-md-none d-lg-none"
            role="button"
            title="{{ trans("mainLang.backToTop")  }}"
            data-toggle="tooltip"

@@ -1,5 +1,5 @@
-<div class="panel panel-heading no-padding">
-    <h4 class="panel-title all-sides-padding-16">
+<div class="card card-header no-padding">
+    <h4 class="card-title all-sides-padding-16">
         {{ trans('mainLang.infoFor') }}
     </h4>
 
@@ -16,7 +16,7 @@
     </ul>
 </div>
 
-<div class="panel panel-body no-padding">
+<div class="card card-body no-padding">
     <div id="memberStatisticsTabs" class="tab-content">
         @foreach($clubInfos as $title => $clubInfo)
             <div class="tab-pane fade in {{ Lara\Section::current()->title === $title ? 'active' : '' }}"

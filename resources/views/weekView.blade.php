@@ -9,43 +9,43 @@
 
 		{{-- prev/next week --}}
 		<div class="btn-group col-xs-12 col-md-6 hidden-print">
-			<a class="btn btn-default hidden-print col-md-1 col-xs-2"
+			<a class="btn btn-secondary hidden-print col-md-1 col-xs-2"
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}">
 			   	&lt;&lt;</a>
 
 			<h6 class="col-md-8 col-xs-8 week-mo-so no-margin centered">
-				<br class="hidden-xs">
+				<br class="d-none">
 				{{ "KW" . $date['week']}}:
-				<br class="visible-xs">
+				<br class="d-block.d-sm-none">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart))) }} -
-				<br class="visible-xs">
+				<br class="d-block.d-sm-none">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd . '- 2 days'))) }}
 			</h6>
 
 			<h6 class="col-md-8 col-xs-8 week-mi-di no-margin centered hide">
-				<br class="hidden-xs">
+				<br class="d-none">
 				{{ "KW" . $date['week']}}:
-				<br class="visible-xs">
+				<br class="d-block.d-sm-none">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart . '+  2 days'))) }} -
-				<br class="visible-xs">
+				<br class="d-block.d-sm-none">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd))) }}
 			</h6>
 
-			<a class="btn btn-default hidden-print col-md-1 col-xs-2"
+			<a class="btn btn-secondary hidden-print col-md-1 col-xs-2"
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}">
 			   	&gt;&gt;</a>
 		</div>
 
-		<br class="visible-xs">
-		<br class="visible-xs">
+		<br class="d-block.d-sm-none">
+		<br class="d-block.d-sm-none">
 
 		{{-- filter --}}
-		<div class="col-xs-12 col-md-6 hidden-print pull-right">
-    		<br class="visible-xs">
+		<div class="col-xs-12 col-md-6 hidden-print float-right">
+    		<br class="d-block.d-sm-none">
 			@include('partials.filter')
-    		<br class="visible-xs">
+    		<br class="d-block.d-sm-none">
 
-			<div class="btn-group pull-right">
+			<div class="btn-group float-right">
     			{{-- show time button Ger.: Zeiten einblenden --}}
     			<button class="btn btn-xs hidden-print" type="button" id="toggle-shift-time">{{ trans('mainLang.shiftTime') }}</button>
 
@@ -61,7 +61,7 @@
 		</div>
 	</div>
 
-	<br class="visible-xs">
+	<br class="d-block.d-sm-none">
 
 	<div class="containerPadding12Mobile" >
 		{{-- weekdays --}}
@@ -229,7 +229,7 @@
 			<br>
 			</div>
 			<div class="panel" style="margin: 16px;">
-				<div class="panel-heading">
+				<div class="card-header">
 					<h5>{{ trans('mainLang.noEventsThisWeek') }}</h5>
 				</div>
 			</div>

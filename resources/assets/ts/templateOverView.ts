@@ -10,7 +10,7 @@ $(()=>{
     });
   });
   $('.selectpicker').selectpicker({
-    style: 'btn btn-default',
+    style: 'btn btn-secondary',
     liveSearch:true
   });
 

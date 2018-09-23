@@ -1,12 +1,12 @@
-<div class="panel panel-default">
-	{{-- Check if the event is still going on and set panel color --}}
+<div class="card panel-default">
+	{{-- Check if the event is still going on and set card color --}}
 	@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
-		<div class="panel panel-heading palette-Grey-500 bg white-text past-event">
+		<div class="card card-header palette-Grey-500 bg white-text past-event">
 	@else
-		<div class="panel panel-heading palette-Grey-500 bg white-text">
+		<div class="card card-header palette-Grey-500 bg white-text">
 	@endif
 
-		<h4 class="panel-title">
+		<h4 class="card-title">
 			<i class="fa fa-eye-slash">&nbsp;&nbsp;</i><span class="name">{{ trans('mainLang.internalEventP') }}</span>
 		</h4>
 		
@@ -21,7 +21,7 @@
 		<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->section->title }}
 	</div>
 
-	<div class="panel-body">
+	<div class="card-body">
 		{{ trans('mainLang.moreDetailsAfterLogInMessage') }} 
 	</div>
 </div>

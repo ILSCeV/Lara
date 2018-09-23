@@ -43,7 +43,7 @@ if ( typeof localStorage !== "undefined" && (localStorage.getItem("language") ||
 
             $('div.cal-event a:nth-of-type(2)').each(doTranslations);
             $('span.name').each(doTranslations);
-            $('div.panelEventView .panel-title ').each(doTranslations);
+            $('div.panelEventView .card-title ').each(doTranslations);
         }
     );
 }

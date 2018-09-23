@@ -4,11 +4,11 @@ import * as bootbox from "bootbox";
 
 $(window).on('load', () => {
   $('.shiftTypeSelector').selectpicker({
-    style: 'btn btn-default btn-sm',
+    style: 'btn btn-secondary btn-sm',
     liveSearch: true
   });
   $('.shiftTypeReplaceSelector').selectpicker({
-    style: 'btn btn-default btn-sm',
+    style: 'btn btn-secondary btn-sm',
     liveSearch: true
   });
 });
@@ -43,7 +43,7 @@ $('.shiftTypeReplaceSelector').change((event) => {
       },
       cancel: {
         label: '<span class="glyphicon glyphicon-remove" ></span>',
-        className: 'btn-default'
+        className: 'btn-secondary'
       }
     },
     callback: (result) => {

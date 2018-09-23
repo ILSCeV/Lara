@@ -3,19 +3,19 @@
     {{-- Show/hide events belonging to a chosen section --}}
     <div class="col-md-12 no-padding">
         <span id="label-none"
-              class="label label-filters palette-Red-900-Primary bg hidden pull-right">
+              class="label label-filters palette-Red-900-Primary bg hidden float-right">
             &nbsp;
             {{trans('mainLang.noSectionSelected')}}
         </span>
         <span id="label-section-survey"
-              class="label label-filters palette-Purple-900 bg hidden pull-right">
+              class="label label-filters palette-Purple-900 bg hidden float-right">
             {{trans('mainLang.survey')}}
             &nbsp;
             <span class="glyphicon glyphicon-remove-circle"></span>
         </span>
         @foreach($sections->reverse() as $section)
             <span id="label-section-{!! $section["id"] !!}"
-                  class="label label-filters palette-{{$section->color}}-500-Primary bg hidden pull-right">
+                  class="label label-filters palette-{{$section->color}}-500-Primary bg hidden float-right">
                 {!! $section["title"] !!}
                 &nbsp;
                 <span class="glyphicon glyphicon-remove-circle"></span>
@@ -25,7 +25,7 @@
     <br>
     <div class="col-md-12 no-padding">
         <select id="section-filter-selector"
-                class="hidden show-tick pull-right bottom-padding"
+                class="hidden show-tick float-right bottom-padding"
                 multiple
                 title="{{ trans('mainLang.chooseAtLeastOne') }}"
                 data-selected-text-format="count > 2"

@@ -27,18 +27,18 @@
 }
 
 /* Description at the top */
-.panel {
+.card {
     margin: 15px;
     background-color: transparent;
 }
 
-.panel-title-box {
+.card-title-box {
     background-color: #89609E;
     color: white;
     padding: 15px;
 }
 
-.panel-body {
+.card-body {
     background-color: white;
 }
 
@@ -273,7 +273,7 @@ and also iPads specifically.
     }
 }
 
-tr .panel {
+tr .card {
     margin-right: auto;
 }
 

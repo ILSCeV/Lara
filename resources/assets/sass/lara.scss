@@ -1,8 +1,11 @@
 
-@import "../css/bootstrap-select.min.css";
+//@import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
+@import "~bootstrap/scss/bootstrap";
+@import "../../../node_modules/bootstrap-select/dist/css/bootstrap-select.css";
+
 @import "../../../node_modules/bootstrap-select/sass/variables";
 @import "../../../node_modules/bootstrap-select/sass/bootstrap-select";
-@import "../css/bootstrap-bootswatch-paper.min.css";
+
 @import "../css/font-awesome.min.css";
 @import "../css/vedst.css";
 @import "../css/print.css";
