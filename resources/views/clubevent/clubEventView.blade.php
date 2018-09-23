@@ -5,29 +5,29 @@
 @section('content')
     <div class="panelEventView">
 		<div class="row no-margin">
-			<div class="panel col-xs-12 col-md-6 no-padding">
-				{{-- Set panel color --}}
+			<div class="card col-xs-12 col-md-6 no-padding">
+				{{-- Set card color --}}
 				@if     ($clubEvent->evnt_type == 0)
-			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-700 bg">
+			        <div class="card card-header palette-{!! $clubEvent->section->color !!}-700 bg">
 			    @elseif ($clubEvent->evnt_type == 1)
-			        <div class="panel panel-heading palette-Purple-500 bg">
+			        <div class="card card-header palette-Purple-500 bg">
 			    @elseif ($clubEvent->evnt_type == 2
 			    	  || $clubEvent->evnt_type == 3
 			          || $clubEvent->evnt_type == 10
 			          || $clubEvent->evnt_type == 11)
-			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-900 bg">
+			        <div class="card card-header palette-{!! $clubEvent->section->color !!}-900 bg">
 			    @elseif ($clubEvent->evnt_type == 4
 			          || $clubEvent->evnt_type == 5
 			          || $clubEvent->evnt_type == 6)
-			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg">
+			        <div class="card card-header palette-{!! $clubEvent->section->color !!}-500 bg">
 			    @elseif ($clubEvent->evnt_type == 7
 			          || $clubEvent->evnt_type == 8)
-			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-300 bg">
+			        <div class="card card-header palette-{!! $clubEvent->section->color !!}-300 bg">
 			    @elseif ($clubEvent->evnt_type == 9)
-			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg">
+			        <div class="card card-header palette-{!! $clubEvent->section->color !!}-500 bg">
 			    @endif
-					<h4 class="panel-title">@include("partials.event-marker")&nbsp;{{ $clubEvent->evnt_title }}</h4>
-					<h5 class="panel-title">{{ $clubEvent->evnt_subtitle }}</h5>
+					<h4 class="card-title">@include("partials.event-marker")&nbsp;{{ $clubEvent->evnt_title }}</h4>
+					<h5 class="card-title">{{ $clubEvent->evnt_subtitle }}</h5>
 				</div>
 					<table class="table table-hover">
 						<tr>
@@ -94,7 +94,7 @@
 							</td>
 							<td>
 								{{ $clubEvent->section->title }}
-								&nbsp;&nbsp;<br class="visible-xs">
+								&nbsp;&nbsp;<br class="d-block.d-sm-none">
 								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", $clubEvent->showToSectionNames()) }})</i>
 							</td>
 						</tr>
@@ -141,7 +141,7 @@
                                         /
                                         {{ $clubEvent->price_tickets_external !== null ? $clubEvent->price_tickets_external : '--' }} €
                                         &nbsp;&nbsp;
-                                        <br class="visible-xs">
+                                        <br class="d-block.d-sm-none">
                                         ({{ trans('mainLang.studentExtern') }})
                                     </td>
                                 </tr>
@@ -156,7 +156,7 @@
                                         /
                                         {{ $clubEvent->price_external !== null ? $clubEvent->price_external : '--' }} €
                                         &nbsp;&nbsp;
-                                        <br class="visible-xs">
+                                        <br class="d-block.d-sm-none">
                                         ({{ trans('mainLang.studentExtern') }})
                                     </td>
                                 </tr>
@@ -200,8 +200,8 @@
 			<div class="col-xs-12 col-md-6 col-sm-12 no-padding-xs">
 				@if( $clubEvent->evnt_public_info != '')
 				<div class="panel">
-					<div class="panel-body more-info">
-						<h5 class="panel-title">{{ trans('mainLang.additionalInfo') }}:</h5>
+					<div class="card-body more-info">
+						<h5 class="card-title">{{ trans('mainLang.additionalInfo') }}:</h5>
 						{!! nl2br($clubEvent->evnt_public_info) !!}
 					</div>
 					<button type="button" class="moreless-more-info btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showMore') }}</button>
@@ -211,9 +211,9 @@
 
 				@auth
 					@if($clubEvent->evnt_private_details != '')
-					<div class="panel hidden-print">
-						<div class="panel-body more-details">
-							<h5 class="panel-title">{{ trans('mainLang.moreDetails') }}:</h5>
+					<div class="card hidden-print">
+						<div class="card-body more-details">
+							<h5 class="card-title">{{ trans('mainLang.moreDetails') }}:</h5>
 							{!! nl2br($clubEvent->evnt_private_details) !!}
 						</div>
 						<button type="button" class="moreless-more-details btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showMore') }}</button>
@@ -237,9 +237,9 @@
 	</div>
 
 
-	<div class="panel panel-warning">
+	<div class="card card.bg-warning">
 		@if( $clubEvent->getSchedule->schdl_password != '')
-			<div class="hidden-print panel panel-heading">
+			<div class="hidden-print card card-header">
 			    {!! Form::password('password', array('required',
 			                                         'class'=>'col-md-4 col-sm-4 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
@@ -249,7 +249,7 @@
 
 		@endif
 
-		<div class="panel-body no-padding ">
+		<div class="card-body no-padding ">
 			@foreach($shifts as $shift)
 				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
 				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
@@ -300,11 +300,11 @@
 						    {!! "(" . $shift->getPerson->getClub->clb_title . ")" !!}
 						</div>
 
-						<br class="visible-xs hidden-sm">
+						<br class="d-block.d-sm-none d-sm-none">
 
 						{{-- COMMENT SECTION --}}
 						<div class="col-md-6 col-sm-6 col-xs-12 hidden-print word-break no-margin">
-						    <span class="pull-left">
+						    <span class="float-left">
 						    	{!! $shift->comment === "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
 						    	&nbsp;&nbsp;
 						    </span>
@@ -329,10 +329,10 @@
 						</div>
 
 						{{-- COMMENT SECTION --}}
-						<br class="visible-print hidden-md hidden-sm hidden-xs">
-						<br class="visible-print hidden-md hidden-sm hidden-xs">
+						<br class="visible-print d-md-none d-sm-none d-none">
+						<br class="visible-print d-md-none d-sm-none d-none">
 						<div class="col-md-6 col-sm-12 col-xs-12 no-margin">
-						    <span class="pull-left">
+						    <span class="float-left">
 						    	{!! $shift->comment === "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
 						    	&nbsp;&nbsp;
 						    </span>
@@ -345,7 +345,7 @@
 					                         'class'=>'col-md-11 col-sm-11 col-xs-10 no-padding no-margin'))
 					    	!!}
 						</div>
-						<br class="visible-print hidden-md hidden-sm hidden-xs">
+						<br class="visible-print d-md-none d-sm-none d-none">
 
 			        @endif
 
@@ -367,13 +367,13 @@
 
 	@auth
 		{{-- REVISIONS --}}
-		<span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		<span class="d-none">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 		<a id="show-hide-history" class="text-muted hidden-print" href="#">
 			{{ trans('mainLang.listChanges') }} &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
 		</a>
 
-		<div class="panel hide" id="change-history">
-			<table class="table table-hover table-condensed">
+		<div class="card hide" id="change-history">
+			<table class="table table-hover table-sm">
 				<thead>
 					<th class="col-xs-2 col-md-2">
 						{{ trans('mainLang.work') }}
@@ -421,7 +421,7 @@
 			</table>
 		</div>
 		<br>
-		<br class="visible-xs">
+		<br class="d-block.d-sm-none">
                     </div>
 	@endauth
 

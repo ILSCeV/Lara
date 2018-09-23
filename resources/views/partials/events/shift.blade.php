@@ -24,11 +24,11 @@
            value="{{ $endTime }}"
            required
     />
-    <br class="visible-xs">
+    <br class="d-block.d-sm-none">
     <input type="hidden" name="shifts[optional][{{$counter}}]" class="isOptionalHidden" value="0">
     <label>{{trans('mainLang.optional')}}:&nbsp;<input type="checkbox" class="isOptional" name="shifts[optional][{{$counter}}]" {{$optional? 'checked="checked"':''}} /></label>
 
-    &nbsp;<br class="visible-xs">{{ trans('mainLang.weight') }}:&nbsp;
+    &nbsp;<br class="d-block.d-sm-none">{{ trans('mainLang.weight') }}:&nbsp;
     <input type="number"
            step="0.1"
            min="0"
@@ -47,5 +47,5 @@
     @if(!is_null($shiftId) && $shiftId!='' && \Lara\Utilities::requirePermission(['admin','marketing','clubleitung']))
         <a href="{{ route('shiftType.show',['id'=>$shiftTypeId]) }}" target="_blank" class="btn btn-primary btn-small" title="{{trans("mainLang.editShiftType")}}"> <span class="glyphicon glyphicon-pencil"></span> </a>
     @endif
-    <hr class="visible-xs">
+    <hr class="d-block.d-sm-none">
 </div>

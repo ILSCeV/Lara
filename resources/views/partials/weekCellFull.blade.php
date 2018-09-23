@@ -1,13 +1,13 @@
-<div class="panel panel-warning">
+<div class="card card.bg-warning">
 
 	{{--Check if the event is still going on--}}
-	<?php $classString = "panel panel-heading";?>
+	<?php $classString = "card card-header";?>
 	@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
 		{{-- The event is already over --}}
 		<?php $classString .= " past-event";?>
 	@endif
 
-	{{-- Set panel color --}}
+	{{-- Set card color --}}
 	@if     ($clubEvent->evnt_type == 0)
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
     @elseif ($clubEvent->evnt_type == 1)
@@ -28,7 +28,7 @@
         <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
     @endif
 
-			<h4 class="panel-title">
+			<h4 class="card-title">
 				@include("partials.event-marker")
 				&nbsp;
 				<a href="{{ URL::route('event.show', $clubEvent->id) }}">
@@ -69,7 +69,7 @@
 		    </div>
 		@endif
 
-		<div class="panel panel-body no-padding">
+		<div class="card card-body no-padding">
 
 			{{-- Show shifts --}}
 			@foreach($shifts = $clubEvent->getSchedule->shifts as $shift)
@@ -105,11 +105,11 @@
 					{{-- SMALL COMMENT ICON --}}
 					<div class="col-xs-1 col-md-1 no-padding">
 				        @if( $shift->comment == "" )
-				            <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
+				            <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
 				                <i class="fa fa-comment-o"></i>
 				            </button>
 				        @else
-				            <button type="button" class="showhide btn-small btn-default hidden-print" data-dismiss="alert">
+				            <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
 				                <i class="fa fa-comment"></i>
 				            </button>
 				        @endif
@@ -122,7 +122,7 @@
 					               array('placeholder'=>Lang::get('mainLang.addCommentHere'),
 					                     'id'=>'comment' . $shift->id,
 					                     'name'=>'comment' . $shift->id,
-					                     'class'=>'col-xs-10 col-md-10 hidden-print hide col-md-offset-1 col-xs-offset-1 word-break' ))
+					                     'class'=>'col-xs-10 col-md-10 hidden-print hide offset-2 offset-2 word-break' ))
 					!!}
 
 			        {!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $shift->id, 'hidden') ) !!}
@@ -134,7 +134,7 @@
 			{{-- Show a "hide" button for management, that allows removal of an event from current view - needed for printing --}}
 	        @is('marketing', 'clubleitung', 'admin')
 		        <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
-				<div class="padding-right-16 bottom-padding pull-right hidden-print">
+				<div class="padding-right-16 bottom-padding float-right hidden-print">
 					<small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
 				</div>
 			@endis

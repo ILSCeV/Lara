@@ -8,7 +8,7 @@
     <!-- prev/next month -->
     <div class="col-xs-12 col-md-12 month-view-header">
         <div class="col-xs-12 col-md-4 btn-group no-padding">
-            <a class="btn btn-default hidden-print"
+            <a class="btn btn-secondary hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
                                 strtotime("previous month", $date['startStamp'])) }}">
                 &lt;&lt;
@@ -17,22 +17,22 @@
             <span class="btn btn-lg disabled mobile72Width" style="text-align: center !important;">
                 {{ $date['monthName'] . " " . $date['year'] }}
             </span>
-            <a class="btn btn-default hidden-print"
+            <a class="btn btn-secondary hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m", strtotime("next month", $date['startStamp'])) }}">
                 &gt;&gt;
             </a>
         </div>
 
         <!-- Section filter -->
-        <div class="col-xs-12 col-md-8 no-padding pull-right">
-            <br class="visible-xs">
+        <div class="col-xs-12 col-md-8 no-padding float-right">
+            <br class="d-block.d-sm-none">
             @include('partials.filter')
         </div>
     </div>
 
     {{-- Month Table --}}
     <div class="col-xs-12 bgWhite col-md-12 calendarWrapper">
-        <div class=" hidden-xs" id="ContentRow">
+        <div class=" d-none" id="ContentRow">
             <div class="calendarWeek noBorderTop" style="border-top: 0px">
                 {{ trans('mainLang.Cw') }}
             </div>
@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <div class="calendarRow clearfix group noHeightMobile hidden-xs">
+        <div class="calendarRow clearfix group noHeightMobile d-none">
             <!--This is an empty row-->
             <!--Without this row, the first real calendar row would disapear-->
         </div>

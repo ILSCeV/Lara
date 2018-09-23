@@ -110,16 +110,16 @@ $ldapid
 @stop
 @section('content')
 
-    <div class="panel no-padding">
-        <div class="panel-title-box">
-            <h4 class="panel-title">
+    <div class="card no-padding">
+        <div class="card-title-box">
+            <h4 class="card-title">
                 <i class="fa fa-bar-chart-o white-text"></i>
                 &nbsp;&nbsp;
                 {{ $survey->title }}
                 @if($userId == $survey->creator_id || $userCanEditDueToRole)
                     <a href="{{$survey->id}}/edit"
                        style="float: right"
-                       class="btn btn-default btn-sm"
+                       class="btn btn-secondary btn-sm"
                        data-placement="bottom">
                         <i class="fa fa-pencil-square-o" style="color: black"></i>
                     </a>
@@ -127,7 +127,7 @@ $ldapid
             </h4>
 
         </div>
-        <div class="panel-body" >
+        <div class="card-body" >
             @if(!is_null($survey->description))
                 <p><strong>{{ trans('mainLang.description') }}</strong>: {!! $survey->description !!}</p>
             @endif
@@ -146,9 +146,9 @@ $ldapid
 
     {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id], 'class' => 'store', 'name' => 'store']) !!}
 
-    <div class="panel panel-warning">
+    <div class="card card.bg-warning">
         @if( $survey->password != '')
-            <div class="hidden-print panel-heading">
+            <div class="hidden-print card-header">
                 {!! Form::password('password', ['class'=>'col-md-4 col-xs-12 black-text',
                                                 'id'=>'password' . $survey->id,
                                                 'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
@@ -168,7 +168,7 @@ $ldapid
                     <input type="hidden" id="hdnSession_userID" value="{{ $ldapid }}">
                     <input type="hidden" id="hdnSession_oldContent" name="hidden_oldContent[]" value="">
 
-                    <table class="table table-striped table-bordered table-condensed table-responsive-custom">
+                    <table class="table table-striped table-bordered table-sm table-responsive-custom">
                         <thead>
                         <tr>
                             <th>{{ trans('mainLang.name') }}</th>
@@ -311,7 +311,7 @@ $ldapid
                                                                class="fa fa-spinner fa-spin fa-2x hidden"></i>
 
                                                             <a href="{{$survey->id}}/answer/{{$answer->id}}"
-                                                               class="btn btn-default deleteRow"
+                                                               class="btn btn-secondary deleteRow"
                                                                data-toggle="tooltip"
                                                                data-placement="bottom"
                                                                data-token="{{csrf_token()}}"
@@ -348,13 +348,13 @@ $ldapid
                 {{--only if the results are always visiable or the user has already taken part--}}
                 {{--they can see the change history of the survey--}}
                 <br>
-                <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
+                <span class="d-none">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
                 <a id="show-hide-history" class="text-muted hidden-print" href="#">
                     {{ trans('mainLang.listChanges') }} &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
                 </a>
 
-                <div class="panel hide" id="change-history">
-                    <table class="table table-responsive table-hover table-condensed">
+                <div class="card hide" id="change-history">
+                    <table class="table table-responsive table-hover table-sm">
                         <thead>
                         <tr>
                             <th>{{ trans('mainLang.who') }}?</th>

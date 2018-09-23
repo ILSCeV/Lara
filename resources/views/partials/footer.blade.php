@@ -34,8 +34,8 @@
                 </a>
             </small>
         </span>
-        <br class="visible-xs visible-sm">
-        <br class="visible-xs visible-sm">
+        <br class="d-block.d-sm-none d-none.d-sm-block.d-md-none">
+        <br class="d-block.d-sm-none d-none.d-sm-block.d-md-none">
         <br>
         <br>
     </div>

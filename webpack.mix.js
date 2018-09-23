@@ -35,7 +35,27 @@ mix.webpackConfig({
                 {
                     test: /bootbox.+\.(jsx|js)$/,
                     loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
-                }
+                },
+              {
+                test: /\.(scss)$/,
+                use: [{
+                  loader: 'style-loader', // inject CSS to page
+                }, {
+                  loader: 'css-loader', // translates CSS into CommonJS modules
+                }, {
+                  loader: 'postcss-loader', // Run post css actions
+                  options: {
+                    plugins: function () { // post css plugins, can be exported to postcss.config.js
+                      return [
+                        require('precss'),
+                        require('autoprefixer')
+                      ];
+                    }
+                  }
+                }, {
+                  loader: 'sass-loader' // compiles Sass to CSS
+                }]
+              }
             ]
         },
         plugins: [
@@ -45,18 +65,24 @@ mix.webpackConfig({
                 'jquery': 'jquery',
                 'window.jquery': 'jquery',
                 '$'     : 'jquery',
-                'window.$'     : 'jquery'
+                'window.$'     : 'jquery',
+                'Popper': 'popper.js'
             }),
             new LiveReloadPlugin()
         ]
     })
     .sass('resources/assets/sass/lara.scss', 'public/')
     .sass('resources/assets/sass/surveys.scss', 'public/')
+    .autoload({
+         "jquery": ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"],
+         'node_modules/popper.js/dist/umd/popper.js': ['Popper']
+    })
+  .scripts([
+    'node_modules/cookieconsent/build/cookieconsent.min.js',
+    "node_modules/popper.js/dist/umd/popper.js"
+  ], 'public/static.js')
     .ts('resources/assets/ts/lara.ts', 'public/')
-    .extract(['jquery', 'bootstrap', 'bootbox', 'bootstrap-select'])
+    .extract(['jquery', 'bootstrap', 'bootbox', 'bootstrap-select','popper.js'])
     .styles(['node_modules/cookieconsent/build/cookieconsent.min.css'],'public/static.css')
-    .scripts([
-      'node_modules/cookieconsent/build/cookieconsent.min.js'
-    ], 'public/static.js')
     .sourceMaps()
     .version();

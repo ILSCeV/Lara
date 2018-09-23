@@ -12,12 +12,12 @@
 
 @auth
     <div class="row">
-        <div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
+        <div class="card col-md-6 col-sm-12 col-xs-12 no-padding">
             @if($createClubEvent)
                 {!! Form::open(['method' => 'POST', 'class'=>'form-inline','id'=>'templateSelectorForm']) !!}
                 <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
                     <label for="templateSelector"
-                           class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}:
+                           class="col-form-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}:
                         &nbsp;</label>
                     <div class="col-md-6 col-sm-6 col-xs-8">
                         <select name="template" id="templateSelector" class="selectpicker" data-live-search="true">
@@ -47,7 +47,7 @@
                 {!! Form::close() !!}
             @elseIf(isset($baseTemplate) && !is_null($baseTemplate))
                 <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-                    <label class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}:
+                    <label class="col-form-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}:
                         &nbsp;</label>
                     <div class="col-md-6 col-sm-6 col-xs-8">
                         <div class="row">
@@ -73,10 +73,10 @@
     @endif
 
 	<div class="row">
-		<div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
+		<div class="card col-md-6 col-sm-12 col-xs-12 no-padding">
 
-			<div class="panel-heading">
-				<h4 class="panel-title">
+			<div class="card-header">
+				<h4 class="card-title">
                     @if($createClubEvent)
                         {{ trans('mainLang.createNewEvent') }}
                     @else
@@ -88,7 +88,7 @@
 
 			<br>
 
-			<div class="panel-body no-padding">
+			<div class="card-body no-padding">
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 			   		<span class="col-md-1 col-sm-1 col-xs-1">&nbsp;</span>
 					{!! Form::checkbox('saveAsTemplate', '1', false, array('class'=>'col-md-1 col-sm-1 col-xs-1')) !!}
@@ -185,7 +185,7 @@
 				    </div>
 				@else
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-				     	<label for="evnt_type" class="control-label col-md-3 col-sm-3 col-xs-3">Typ:</label>
+				     	<label for="evnt_type" class="col-form-label col-md-3 col-sm-3 col-xs-3">Typ:</label>
 				     	<div class="col-md-9 col-sm-9 col-xs-9">
 				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.normalProgramm') }}
@@ -236,7 +236,7 @@
 				@endis
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="section" class="control-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.section') }}: &nbsp;</label>
+					<label for="section" class="col-form-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.section') }}: &nbsp;</label>
 					<span class="col-md-9 col-sm-9 col-xs-9">
 						@if (!is_null($section))
 							{!! Form::text('section', $section->title, array('id'=>'section', 'readonly') ) !!}
@@ -248,7 +248,7 @@
 					    </a>
 					    <ul class="dropdown-menu">
 						    @foreach($sections as $dSection)
-						        <li>
+						        <li class="dropdown-item">
 						        	<a href="javascript:void(0);"
 						        	   onClick="document.getElementById('section').value='{{$dSection->title}}'">{{ $dSection->title }}</a>
 						        </li>
@@ -258,7 +258,7 @@
 			   	</div>
 
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
-					<label for="filter" class="control-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
+					<label for="filter" class="col-form-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
 					<div class="col-md-9 col-sm-9 col-xs-9">
 						@if(is_null($filter) || $filter == "")
 							{{-- Set default values to the club the user is a member in.--}}
@@ -278,7 +278,7 @@
 			   	</div>
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
-					<label for="priceTickets" class="control-label col-md-4 col-sm-4 col-xs-12 no-padding">
+					<label for="priceTickets" class="col-form-label col-md-4 col-sm-4 col-xs-12 no-padding">
 						{{ trans('mainLang.priceTickets') }}:  <br>
 						({{ trans('mainLang.studentExtern') }})</label>
 					<div id="priceTickets" class="input-group col-md-5 col-sm-5 col-xs-12">
@@ -291,7 +291,7 @@
 				</div>
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
-					<label for="price" class="control-label col-md-4 col-sm-4 col-xs-12 no-padding">
+					<label for="price" class="col-form-label col-md-4 col-sm-4 col-xs-12 no-padding">
 						{{ trans('mainLang.price') }}:   <br>
 						({{ trans('mainLang.studentExtern') }})</label>
 					<div id="price" class="input-group col-md-5 col-sm-5 col-xs-12">
@@ -304,15 +304,15 @@
 				</div>
 
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="preparationTime" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.DV-Time') }}:</label>
+					<label for="preparationTime" class="col-form-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.DV-Time') }}:</label>
 					<div class="col-md-3 col-sm-3 col-xs-3">
-						<span class="hidden-xs">&nbsp;&nbsp;</span>
+						<span class="d-none">&nbsp;&nbsp;</span>
 						{!! Form::input('time', 'preparationTime', $dv) !!}
 					</div>
 			    </div>
 
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="beginDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.begin') }}:</label>
+					<label for="beginDate" class="col-form-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.begin') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
 						{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
 						{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', $timeStart) !!}
@@ -320,7 +320,7 @@
 			    </div>
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="endDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.end') }}:</label>
+					<label for="endDate" class="col-form-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.end') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
                         @if($createClubEvent)
 						{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($timeStart) < strtotime($timeEnd) ? strtotime($date) : strtotime("+1 day", strtotime($date)))) !!}
@@ -336,14 +336,14 @@
 			    </div>
 
 			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-			    	<label for="password" class="control-label col-md-5 col-sm-5 col-xs-12">{{ trans('mainLang.passwordEntry') }}:</label>
+			    	<label for="password" class="col-form-label col-md-5 col-sm-5 col-xs-12">{{ trans('mainLang.passwordEntry') }}:</label>
 			    	<div class="col-md-7 col-sm-7 col-xs-12">
 			    		{!! Form::password('password', [''] ) !!}
 			    	</div>
 			    </div>
 
 			    <div class="form-groupcol-md-12 col-sm-12 col-xs-12 no-padding">
-			    	<label fro="passwordDouble" class="control-label col-md-5 col-sm-5 col-xs-12">{{ trans('mainLang.passwordRepeat') }}:</label>
+			    	<label fro="passwordDouble" class="col-form-label col-md-5 col-sm-5 col-xs-12">{{ trans('mainLang.passwordRepeat') }}:</label>
 			    	<div class="col-md-7 col-sm-7 col-xs-12">
 			    		{!! Form::password('passwordDouble', ['']) !!}
 			    	</div>
@@ -357,12 +357,12 @@
 		</div>
 
 		<div class="container col-xs-12 col-sm-12 col-md-6 no-padding-xs">
-			<br class="visible-xs visible-sm">
+			<br class="d-block.d-sm-none d-none.d-sm-block.d-md-none">
 			<div class="panel">
-				<div class="panel-heading">
-					<h4 class="panel-title">{{ trans('mainLang.moreInfos') }}:</h4>({{ trans('mainLang.public') }})
+				<div class="card-header">
+					<h4 class="card-title">{{ trans('mainLang.moreInfos') }}:</h4>({{ trans('mainLang.public') }})
 				</div>
-				<div class="panel-body">
+				<div class="card-body">
 				    <div class="form-group">
 						<div class="col-md-12">
 							@if(is_null($info))
@@ -382,10 +382,10 @@
 			<br>
 
 			<div class="panel">
-				<div class="panel-heading">
-					<h4 class="panel-title">{{ trans('mainLang.details') }}:</h4>({{ trans('mainLang.showOnlyIntern') }})
+				<div class="card-header">
+					<h4 class="card-title">{{ trans('mainLang.details') }}:</h4>({{ trans('mainLang.showOnlyIntern') }})
 				</div>
-				<div class="panel-body">
+				<div class="card-body">
 				    <div class="form-group">
 						<div class="col-md-12">
 							@if(is_null($details))
@@ -422,7 +422,7 @@
 	     , 'admin')
 			<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<br class="visible-xs">
+			<br class="d-block.d-sm-none">
 	    @endis
 
 	    --}}
@@ -433,9 +433,9 @@
         @endif
 
 		&nbsp;&nbsp;&nbsp;&nbsp;
-		<br class="visible-xs">
-		<br class="visible-xs">
-		<a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
+		<br class="d-block.d-sm-none">
+		<br class="d-block.d-sm-none">
+		<a href="javascript:history.back()" class="btn btn-secondary">{{ trans('mainLang.backWithoutChange') }}</a>
 
 		{!! Form::close() !!}
 

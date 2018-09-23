@@ -1,10 +1,10 @@
 @extends('layouts.master')
 @section('content')
-    <div class="panel panel-warning">
-        <div class="panel panel-heading">
+    <div class="card card.bg-warning">
+        <div class="card card-header">
             <h4 class="white-text">{{ trans('mainLang.noNotThisWay') }}</h4>
         </div>
-        <div class="panel panel-body">
+        <div class="card card-body">
             @if ($creator_name == "")
                 <h6>{{ trans('mainLang.onlyThe') }} <b>{{ trans('mainLang.clubManagement') }}</b> {{ trans('mainLang.orThe') }} <b>{{ trans('mainLang.marketingManager') }}</b> {{ trans('mainLang.canChangeEventJob') }}</h6>
             @else
