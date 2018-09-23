@@ -1,3 +1,3 @@
-<div class="panel panel-body">
+<div class="card card-body">
 	{{ trans('mainLang.accessDenied') }}
 </div>

@@ -8,11 +8,11 @@
 @section('content')
 
 @is(Roles::PRIVILEGE_ADMINISTRATOR, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_MARKETING)
-	<div class="panel panel-info">
-		<div class="panel-heading">
-			<h4 class="panel-title">#{{ $current_shiftType->id }}: "{!! $current_shiftType->title !!}" </h4>
+	<div class="card card.text-white.bg-info">
+		<div class="card-header">
+			<h4 class="card-title">#{{ $current_shiftType->id }}: "{!! $current_shiftType->title !!}" </h4>
 		</div>
-		<div class="panel panel-body no-padding">
+		<div class="card card-body no-padding">
 			<table class="table table-hover">
 				{!! Form::open(  array( 'route' => ['shiftType.update', $current_shiftType->id],
 		                                'id' => $current_shiftType->id,
@@ -63,7 +63,7 @@
 							&nbsp;
 						</td>
 						<td>
-							<button type="reset" class="btn btn-small btn-default">{{ trans('mainLang.reset') }}</button>
+							<button type="reset" class="btn btn-small btn-secondary">{{ trans('mainLang.reset') }}</button>
 					    	<button type="submit" class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
 						</td>
 					</tr>
@@ -95,7 +95,7 @@
                     </tr>
 					<tr>
 						<td width="100%" colspan="2" class="no-padding">
-							<table class="table table-hover table-condensed" id="events-rows">
+							<table class="table table-hover table-sm" id="events-rows">
 								<thead>
 									<tr class="active">
 										<th class="col-md-1 col-xs-1 text-center">
@@ -162,7 +162,7 @@
                     </tr>
                     <tr>
                         <td width="100%" colspan="2" class="no-padding">
-                            <table class="table table-hover table-condensed" id="events-rows">
+                            <table class="table table-hover table-sm" id="events-rows">
                                 <thead>
                                 <tr class="active">
                                     <th class="col-md-3 col-xs-3 text-center">

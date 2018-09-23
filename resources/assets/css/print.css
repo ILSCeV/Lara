@@ -40,13 +40,13 @@
 		float: left;
 	}
 
-	.panel-heading
+	.card-header
 	{
 		padding: 0;	
 	}
 	
 
-	.panel-body
+	.card-body
 	{
 		padding: 0;
 		padding-top: 5px;

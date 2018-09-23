@@ -6,14 +6,14 @@
 
 @section('content')
 
-    <div class="panel panel-info col-xs-12 no-padding">
-        <div class="panel-heading">
-            <h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageTemplates') }}</h4>
+    <div class="card card.text-white.bg-info col-xs-12 no-padding">
+        <div class="card-header">
+            <h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageTemplates') }}</h4>
         </div>
 
-        <div class="panel panel-body no-padding">
+        <div class="card card-body no-padding">
             <div class="table-responsive">
-                <table class="table info table-hover table-condensed">
+                <table class="table info table-hover table-sm">
                     <thead>
                     <tr class="active">
                         <th>
@@ -46,7 +46,7 @@
                             <label for="templateOverviewFilter" class="text-primary"> {{ trans('mainLang.search') }}: </label>
                             <input type="text" class="form-control" id="templateOverviewFilter" autofocus>
                         </div>
-                        <div class="form-group pull-right">
+                        <div class="form-group float-right">
                            <a class="btn btn-success" href="{{route('template.create')}}">
                               {{ trans('mainLang.createTemplate') }}
                            </a>

@@ -6,18 +6,18 @@
 
 @section('content')
 
-    <br class="visible-sm">
-    <br class="visible-sm">
+    <br class="d-none.d-sm-block.d-md-none">
+    <br class="d-none.d-sm-block.d-md-none">
 
 
     @auth
         @if(Auth::user()->privacy_accepted == 0)
-        <div class="panel panel-danger">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{ trans("mainLang.waitOneSecond") }}</h3>
+        <div class="card card.bg-danger.text-white">
+            <div class="card-header">
+                <h3 class="card-title">{{ trans("mainLang.waitOneSecond") }}</h3>
             </div>
 
-            <div class="panel-body">
+            <div class="card-body">
                 <strong>{{ trans('mainLang.agreeWithPrivacy') }}</strong>
             </div>
         </div>
@@ -25,12 +25,12 @@
         @endif
     @endauth
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ trans("mainLang.privacyPolicy") }}</h3>
+    <div class="card card.bg-primary.text-white">
+        <div class="card-header">
+            <h3 class="card-title">{{ trans("mainLang.privacyPolicy") }}</h3>
         </div>
 
-        <div class="panel-body no-padding">
+        <div class="card-body no-padding">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#complete" data-toggle="tab" aria-expanded="true">Datenschutzerklärung -
                         deutsche Version</a></li>
@@ -747,7 +747,7 @@
             </div>
             @auth
                 @if(Auth::user()->privacy_accepted == 0)
-                    <div class="panel-footer">
+                    <div class="card-footer">
                         <form method="post" action="{{url('userAgreesPrivacy')}}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <button type="submit" class="btn btn-success">{{ trans("mainLang.privacyAgree") }}</button>

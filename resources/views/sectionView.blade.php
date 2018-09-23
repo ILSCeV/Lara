@@ -10,12 +10,12 @@
         /** @var \Lara\Section $current_section */
     @endphp
 
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h4 class="panel-title">#{{ $current_section->id }}: "{!! $current_section->title !!}" </h4>
+    <div class="card card.text-white.bg-info">
+        <div class="card-header">
+            <h4 class="card-title">#{{ $current_section->id }}: "{!! $current_section->title !!}" </h4>
         </div>
 
-        <div class="panel panel-body no-padding">
+        <div class="card card-body no-padding">
             <table class="table table-hover">
                 @if(!isset($current_section->id))
                     {!! Form::open(  array( 'route' => ['section.store', $current_section->id],
@@ -162,7 +162,7 @@
                             </a>
                         @endif
                         @endis
-                        <button type="reset" class="btn btn-small btn-default">{{ trans('mainLang.reset') }}</button>
+                        <button type="reset" class="btn btn-small btn-secondary">{{ trans('mainLang.reset') }}</button>
                         @if(!isset($current_section->id))
                             <button type="submit"
                                     class="btn btn-small btn-success">{{ trans('mainLang.createSection') }}</button>
