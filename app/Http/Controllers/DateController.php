@@ -11,6 +11,7 @@ use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
 
 use Lara\ClubEvent;
+use Lara\Section;
 
 class DateController extends Controller {
 
@@ -21,11 +22,11 @@ class DateController extends Controller {
      * @return  int $month
      * @return  int $year
      * @return RedirectResponse
-     */       
+     */
     public function currentDate()
     {
-        return Redirect::action( 'DateController@showDate', ['year' => date("Y"), 
-                                                             'month' => date("m"), 
+        return Redirect::action( 'DateController@showDate', ['year' => date("Y"),
+                                                             'month' => date("m"),
                                                              'day' => date("d")] );
     }
 
@@ -40,23 +41,28 @@ class DateController extends Controller {
      * @return view calendarView
      * @return ClubEvent[] $events
      * @return string $date
-     */      
+     */
     public function showDate($year, $month, $day)
     {
-        $dateInput = $year.$month.$day;
-
-        $carbonDate = Carbon::createFromTimestamp(strtotime($dateInput));
+        $inputDate = Carbon::create($year,$month,$day);
+        $carbonDate = clone $inputDate;
 
         $previous = $carbonDate->subDays(1)->format('Y/m/d');
         $next = $carbonDate->addDays(2)->format('Y/m/d');
 
-        $date = strftime("%a, %d. %b %Y", strtotime($dateInput));
+        $date = strftime("%a, %d. %b %Y", strtotime($inputDate->format("Ymd")));
+        
+        $events = ClubEvent::query()
+                           ->whereRaw("? BETWEEN evnt_date_start AND DATE_ADD(concat(evnt_date_end , ' ' , evnt_time_end), INTERVAL -5 HOUR)",[$inputDate->format('Y-m-d')])
+                           ->with('section', "showToSection")
+                           ->orderBy('evnt_time_start','asc')->get();
+                           
+        
+        $sections = Section::where('id', '>', 0)
+                           ->orderBy('title')
+                           ->get(['id', 'title', 'color']);
 
-        $events = ClubEvent::where('evnt_date_start','=',$dateInput)
-                           ->with('section')
-                           ->paginate(15);
-
-        return View::make('listView', compact('events', 'date', 'previous', 'next'));
+        return View::make('listView', compact('sections', 'events', 'date', 'previous', 'next'));
     }
 
 }

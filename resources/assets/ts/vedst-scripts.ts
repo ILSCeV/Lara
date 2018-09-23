@@ -6,6 +6,7 @@ import * as bootbox from "bootbox"
 import {ToggleButton} from "./ToggleButton";
 import {makeLocalStorageAction, makeClassToggleAction} from "./ToggleAction";
 import {safeGetLocalStorage, safeSetLocalStorage} from "./Utilities";
+import {convertToSafeFormat} from "./Utilities";
 
 const jQuery = $;
 /////////////
@@ -19,6 +20,7 @@ $(function() {
     //////////////////////////////////////////////////////
     const isMonthView = $('#month-view-marker').length;
     const isWeekView = $('.isotope').length > 0;
+    const isDayView = $('#day-view-marker').length;
 
 
     const initializeSectionFilters = (isotope: typeof Isotope = null) => {
@@ -43,7 +45,7 @@ $(function() {
         //Handle clicking on a section label
         $('.label-filters').click((e) => {
             //Deselect the clicked section
-            let section = (<HTMLSpanElement>e.target).id.slice(6);
+            let section = convertToSafeFormat((<HTMLSpanElement>e.target).id.slice(6));
             //Update the local storage
             safeSetLocalStorage("filter-" + section, "hide");
             //Uncheck the select option
@@ -75,7 +77,7 @@ $(function() {
         showAllActiveSections();
     };
 
-    if (isMonthView || isWeekView) {
+    if (isMonthView || isWeekView || isDayView) {
         initializeSectionFilters();
     }
 
