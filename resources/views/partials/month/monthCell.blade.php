@@ -47,8 +47,12 @@ use Carbon\Carbon;
     @endif
 @endforeach
 
-@foreach($events->sortBy('evnt_date_start,evnt_time_start,section.title') as $clubEvent)
-    @if( Carbon::createFromTimestamp($weekDay->getTimestamp())->between(Carbon::createFromFormat('Y-m-d',$clubEvent->evnt_date_start)->subDay(),Carbon::createFromFormat('Y-m-d H:i:s',$clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end)->subHour(5)))
+@foreach($events as $clubEvent)
+    @if( Carbon::createFromTimestamp($weekDay->getTimestamp())
+            ->between(Carbon::createFromFormat('Y-m-d', $clubEvent->evnt_date_start)
+            ->subDay(),
+        Carbon::createFromFormat('Y-m-d H:i:s', $clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end)
+            ->subHour(5)))
 
         {{--Check if the event is still going on--}}
         @if(strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time())
