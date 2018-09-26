@@ -60,7 +60,7 @@ table {
 
 @media (min-width: 768px) {
     .ml-auto {
-        margin-right: -10px;
+     /*   margin-right: -10px; */
     }
 }
 

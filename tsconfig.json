@@ -15,7 +15,9 @@
       "bootbox",
       "sortablejs",
       "es6-promise",
-      "isotope-layout"
+      "isotope-layout",
+      "popper.js",
+      "tooltip.js"
     ]
   },
   "exclude": [
