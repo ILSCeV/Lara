@@ -63,19 +63,19 @@
 
         <br>
         <br>
-        <br class="d-block.d-sm-none">
+        <br class="d-block d-sm-none">
     </div>
 
 
     <div class="row">
 
         {{-- Club member stats --}}
-        <div class="col-md-7 col-sm-7 col-xs-12 no-padding">
+        <div class="col no-padding">
             @include('partials.statisticsMembers')
         </div>
 
         {{-- Leaderboard --}}
-        <div class="col-md-5 col-sm-5 col-xs-12 no-padding-xs">
+        <div class="col no-padding-xs">
             <br class="d-block.d-sm-none">
             @include('partials.statisticsLeaderboards')
         </div>
