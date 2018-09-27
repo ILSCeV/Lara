@@ -1,7 +1,7 @@
 {!! Form::open(['url' => 'login', 'method' => 'POST', 'class' => 'form-horizontal ml-auto']) !!}
 
 
-<div class="navbar-form form-horizontal login-forms">
+<div class="navbar-form form-inline login-forms">
     {!! Form::text( 'username',
                     Input::old( 'username' ),
                     ['placeholder'  => Lang::get('mainLang.clubNumber') . " / " . trans('auth.email'),
@@ -22,7 +22,7 @@
     <br class="d-block.d-sm-none">
 
     @dev
-    <select name="userGroup" id="userGroup" class="btn btn-sm">
+    <select name="userGroup" id="userGroup" class="btn btn-sm form-control">
         @foreach(Roles::ALL_PRIVILEGES as $privilege)
             <option value="{{ $privilege }}"> {{ ucwords($privilege) }}</option>
         @endforeach
