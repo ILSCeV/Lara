@@ -5,26 +5,29 @@
 @section('content')
     <div class="panelEventView">
 		<div class="row no-margin">
-			<div class="card col-xs-12 col-md-6 no-padding">
+			<div class="card col no-padding">
+                @php
+                $commonHeader = 'card card-header ';
+                @endphp
 				{{-- Set card color --}}
 				@if     ($clubEvent->evnt_type == 0)
-			        <div class="card card-header palette-{!! $clubEvent->section->color !!}-700 bg">
+			        <div class="{{ $commonHeader }} palette-{!! $clubEvent->section->color !!}-700 bg">
 			    @elseif ($clubEvent->evnt_type == 1)
-			        <div class="card card-header palette-Purple-500 bg">
+			        <div class="{{ $commonHeader }} palette-Purple-500 bg">
 			    @elseif ($clubEvent->evnt_type == 2
 			    	  || $clubEvent->evnt_type == 3
 			          || $clubEvent->evnt_type == 10
 			          || $clubEvent->evnt_type == 11)
-			        <div class="card card-header palette-{!! $clubEvent->section->color !!}-900 bg">
+			        <div class="{{ $commonHeader }} palette-{!! $clubEvent->section->color !!}-900 bg">
 			    @elseif ($clubEvent->evnt_type == 4
 			          || $clubEvent->evnt_type == 5
 			          || $clubEvent->evnt_type == 6)
-			        <div class="card card-header palette-{!! $clubEvent->section->color !!}-500 bg">
+			        <div class="{{ $commonHeader }} palette-{!! $clubEvent->section->color !!}-500 bg">
 			    @elseif ($clubEvent->evnt_type == 7
 			          || $clubEvent->evnt_type == 8)
-			        <div class="card card-header palette-{!! $clubEvent->section->color !!}-300 bg">
+			        <div class="{{ $commonHeader }} palette-{!! $clubEvent->section->color !!}-300 bg">
 			    @elseif ($clubEvent->evnt_type == 9)
-			        <div class="card card-header palette-{!! $clubEvent->section->color !!}-500 bg">
+			        <div class="{{ $commonHeader }} palette-{!! $clubEvent->section->color !!}-500 bg">
 			    @endif
 					<h4 class="card-title">@include("partials.event-marker")&nbsp;{{ $clubEvent->evnt_title }}</h4>
 					<h5 class="card-title">{{ $clubEvent->evnt_subtitle }}</h5>
@@ -94,7 +97,7 @@
 							</td>
 							<td>
 								{{ $clubEvent->section->title }}
-								&nbsp;&nbsp;<br class="d-block.d-sm-none">
+								&nbsp;&nbsp;<br class="d-block d-sm-none">
 								<i>({{ trans('mainLang.willShowFor') }}: {{ implode(", ", $clubEvent->showToSectionNames()) }})</i>
 							</td>
 						</tr>
@@ -106,7 +109,7 @@
 					@auth
 						<table class="table table-hover">
                             @if(isset($clubEvent->facebook_done))
-                                <tr>
+                                <tr class="d-flex">
                                     <td width="33%" class="left-padding-16">
                                         <i>{{ trans('mainLang.faceDone') }}?</i>
                                     </td>
@@ -120,19 +123,21 @@
                                 </tr>
                             @endif
 							@if($clubEvent->event_url!=null && $clubEvent->event_url!="")
-								<tr>
+								<tr class="d-flex">
 									<td width="33%" class="left-padding-16">
 										<i>{{ trans('mainLang.eventUrl') }}:</i>
 									</td>
-									<td>
-										<a target="_blank" href="{{ $clubEvent->event_url }}"  style="word-break: break-all;">
-											{{$clubEvent->event_url}}
-										</a>
+									<td class="d-block">
+                                        <div class="text-truncate col-9">
+                                            <a target="_blank" href="{{ $clubEvent->event_url }}"  >
+                                                {{$clubEvent->event_url}}
+                                            </a>
+                                        </div>
 									</td>
 								</tr>
 							@endif
                             @if(isset($clubEvent->price_tickets_normal))
-                                <tr>
+                                <tr class="d-flex">
                                     <td width="33%" class="left-padding-16">
                                         <i>{{ trans('mainLang.priceTickets') }}:</i>
                                     </td>
@@ -141,13 +146,13 @@
                                         /
                                         {{ $clubEvent->price_tickets_external !== null ? $clubEvent->price_tickets_external : '--' }} €
                                         &nbsp;&nbsp;
-                                        <br class="d-block.d-sm-none">
+                                        <br class="d-block d-sm-none">
                                         ({{ trans('mainLang.studentExtern') }})
                                     </td>
                                 </tr>
                             @endif
                             @if(isset($clubEvent->price_normal))
-                                <tr>
+                                <tr class="d-flex">
                                     <td width="33%" class="left-padding-16">
                                         <i>{{ trans('mainLang.price') }}:</i>
                                     </td>
@@ -156,7 +161,7 @@
                                         /
                                         {{ $clubEvent->price_external !== null ? $clubEvent->price_external : '--' }} €
                                         &nbsp;&nbsp;
-                                        <br class="d-block.d-sm-none">
+                                        <br class="d-block d-sm-none">
                                         ({{ trans('mainLang.studentExtern') }})
                                     </td>
                                 </tr>
@@ -199,7 +204,7 @@
 
 			<div class="col-xs-12 col-md-6 col-sm-12 no-padding-xs">
 				@if( $clubEvent->evnt_public_info != '')
-				<div class="panel">
+				<div class="card">
 					<div class="card-body more-info">
 						<h5 class="card-title">{{ trans('mainLang.additionalInfo') }}:</h5>
 						{!! nl2br($clubEvent->evnt_public_info) !!}
@@ -237,7 +242,7 @@
 	</div>
 
 
-	<div class="card card.bg-warning">
+	<div class="card card bg-warning">
 		@if( $clubEvent->getSchedule->schdl_password != '')
 			<div class="hidden-print card card-header">
 			    {!! Form::password('password', array('required',
@@ -256,7 +261,7 @@
 			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 			                                'id' => $shift->id,
 			                                'method' => 'PUT',
-			                                'class' => 'shift')  ) !!}
+			                                'class' => 'shift form-inline')  ) !!}
 
 			        {{-- SPAMBOT HONEYPOT - this field will be hidden, so if it's filled, then it's a bot or a user tampering with page source --}}
 			        <div id="welcome-to-our-mechanical-overlords">
@@ -265,15 +270,15 @@
 			        </div>
 
 			        {{-- SHIFT TITLE --}}
-			        <div class="col-md-2 col-sm-2 col-xs-4 left-padding-8">
+			        <div class="col left-padding-8">
 			            @include("partials.shiftTitle")
 			        </div>
 
 			        {{-- show public events, but protect members' shifts from being changed by guests --}}
 			        @if( isset($shift->getPerson->prsn_ldap_id) && !Auth::user())
-						<div class="col-md-2 col-sm-2 col-xs-4 input-append btn-group">
+						<div class="col input-append btn-group">
 						    {{-- SHIFT STATUS --}}
-						    <div class="col-md-3 col-sm-2 col-xs-3 no-padding" id="clubStatus{{ $shift->id }}">
+						    <div class="col form-control" id="clubStatus{{ $shift->id }}">
 						        @include("partials.shiftStatus")
 						    </div>
                             @php
@@ -296,20 +301,20 @@
 						</div>
 
 						{{-- SHIFT CLUB --}}
-						<div id="{!! 'club' . $shift->id !!}" class="col-md-2 col-xs-3 no-padding">
+						<div id="{!! 'club' . $shift->id !!}" class="col no-padding">
 						    {!! "(" . $shift->getPerson->getClub->clb_title . ")" !!}
 						</div>
 
 						<br class="d-block.d-sm-none d-sm-none">
 
 						{{-- COMMENT SECTION --}}
-						<div class="col-md-6 col-sm-6 col-xs-12 hidden-print word-break no-margin">
+						<div class="col hidden-print word-break no-margin">
 						    <span class="float-left">
 						    	{!! $shift->comment === "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
 						    	&nbsp;&nbsp;
 						    </span>
 
-						    <span class="col-md-10 col-sm-10 col-xs-10 no-padding no-margin">
+						    <span class="col-10 no-padding no-margin">
 							    {!! !empty($shift->comment) ? $shift->comment : "-" !!}
 							</span>
 						</div>
