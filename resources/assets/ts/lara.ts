@@ -1,11 +1,15 @@
+require ('../sass/lara.scss');
+require ('../sass/surveys.scss');
+
 import "jquery"
 import "popper.js/dist/umd/popper"
 import "popper.js/dist/umd/popper-utils"
-//import "tooltip.js/dist/umd/tooltip"
-import "bootstrap/dist/js/bootstrap.bundle"
-//import "bootstrap/dist/*.js"
+import "tooltip.js/dist/umd/tooltip"
+import "bootstrap"
+import "bootstrap-select"
 import "bootbox"
 import "sortablejs"
+import "cookieconsent"
 
 import "./create-shift"
 import "./CreateEditEvent"
@@ -23,5 +27,5 @@ import "./Translate"
 import "./Utilities"
 import "./templateOverView"
 import "./usersOverview"
-//import "./vedst-scripts"
+import "./vedst-scripts"
 import "./CookieConsistent"
