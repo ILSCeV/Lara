@@ -36,14 +36,14 @@
 			   	&gt;&gt;</a>
 		</div>
 
-		<br class="d-block.d-sm-none">
-		<br class="d-block.d-sm-none">
+		<br class="d-block d-sm-none">
+		<br class="d-block d-sm-none">
 
 		{{-- filter --}}
 		<div class="col-xs-12 col-md-6 hidden-print float-right">
-    		<br class="d-block.d-sm-none">
+    		<br class="d-block d-sm-none">
 			@include('partials.filter')
-    		<br class="d-block.d-sm-none">
+    		<br class="d-block d-sm-none">
 
 			<div class="btn-group float-right">
     			{{-- show time button Ger.: Zeiten einblenden --}}
