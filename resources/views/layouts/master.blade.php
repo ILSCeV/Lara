@@ -36,7 +36,7 @@
 			@include('partials.message')
 		</div>
 
-        <section class="container containerNopadding">
+        <section class="container-fluid containerNopadding">
             @yield('content')
         </section>
 
