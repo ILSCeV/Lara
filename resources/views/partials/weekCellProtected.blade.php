@@ -1,7 +1,7 @@
-<div class="card card.bg-warning">
+<div class="card bg-warning">
 
 	{{-- Check if the event is still going on --}}
-	<?php $classString = "card card-header";?>
+	<?php $classString = "card-header";?>
 	@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
 		<?php $classString .= " past-event";?>
 	@endif
