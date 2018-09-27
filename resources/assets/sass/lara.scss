@@ -1,11 +1,14 @@
 
 @import "~bootstrap/scss/bootstrap";
-@import "../../../node_modules/bootstrap-select/dist/css/bootstrap-select.css";
 
-@import "../../../node_modules/bootstrap-select/sass/variables";
-@import "../../../node_modules/bootstrap-select/sass/bootstrap-select";
+@import "~bootstrap-select/sass/variables";
+@import "~bootstrap-select/sass/bootstrap-select";
 
-@import '~font-awesome/scss/font-awesome';
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/brands';
 //import 'font-awesome/css/font-awesome.css';
 @import "../css/vedst.css";
 @import "../css/print.css";
