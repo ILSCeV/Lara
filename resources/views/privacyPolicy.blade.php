@@ -6,13 +6,13 @@
 
 @section('content')
 
-    <br class="d-none.d-sm-block.d-md-none">
-    <br class="d-none.d-sm-block.d-md-none">
+    <br class="d-none d-sm-block d-md-none">
+    <br class="d-none d-sm-block d-md-none">
 
 
     @auth
         @if(Auth::user()->privacy_accepted == 0)
-        <div class="card card.bg-danger.text-white">
+        <div class="card card bg-danger text-white">
             <div class="card-header">
                 <h3 class="card-title">{{ trans("mainLang.waitOneSecond") }}</h3>
             </div>
@@ -25,8 +25,8 @@
         @endif
     @endauth
 
-    <div class="card card.bg-primary.text-white">
-        <div class="card-header">
+    <div class="card card bg-primary">
+        <div class="card-header text-white">
             <h3 class="card-title">{{ trans("mainLang.privacyPolicy") }}</h3>
         </div>
 
@@ -41,7 +41,7 @@
             </ul>
 
             <div id="myTabContent" class="tab-content all-sides-padding-16 pre-scrollable">
-                <div class="tab-pane fade active in" id="complete">
+                <div class="tab-pane fade in active show" id="complete">
                     <p><strong>Datenschutzerklärung</strong></p>
                     <p><strong></strong></p>
                     <p>
