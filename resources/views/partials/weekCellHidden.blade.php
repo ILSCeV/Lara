@@ -1,9 +1,9 @@
-<div class="card panel-default">
+<div class="card bg-light">
 	{{-- Check if the event is still going on and set card color --}}
 	@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
-		<div class="card card-header palette-Grey-500 bg white-text past-event">
+		<div class=" card-header palette-Grey-500 bg white-text past-event">
 	@else
-		<div class="card card-header palette-Grey-500 bg white-text">
+		<div class=" card-header palette-Grey-500 bg white-text">
 	@endif
 
 		<h4 class="card-title">
