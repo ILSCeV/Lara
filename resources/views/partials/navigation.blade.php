@@ -1,18 +1,11 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-lightfixed-top">
-  <div class="container">
-    <div class="navbar-header">
-        <button type="button"
-                class="navbar-toggle collapsed"
-                data-toggle="collapse"
-                data-target="#navbar"
-                aria-expanded="false"
-                aria-controls="navbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
 
-{{-- LARA LOGO --}}
+    <div class="navbar-header">
+
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse"
+                data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span>
+            &#x2630;</button>
+        {{-- LARA LOGO --}}
         <a class="navbar-brand" href="{{ asset('/') }}">
             @if (App::environment('development'))
                 <img id="nav-logo-field" src="{{  asset('/logos/lara-logo-dev.png') }}" height="48" alt="LARA dev">
@@ -213,5 +206,4 @@ Disabling iCal until fully functional.
           </ul>
 
         </div>
-    </div>
 </nav>
