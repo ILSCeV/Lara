@@ -1,18 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
-const glob = require("glob");
 const LiveReloadPlugin = require('webpack-livereload-plugin');
-let WebpackChunkHash = require('webpack-chunk-hash');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssEntryPlugin = require("css-entry-webpack-plugin");
-const ManifestPlugin = require('webpack-manifest-plugin');
 const PhpManifestPlugin = require('webpack-php-manifest');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const devMode = process.env.NODE_ENV !== 'production';
+//const devMode = false;
 
 module.exports = {
   entry: {
-    //styles: './resources/assets/sass/lara.scss',
     lara: './resources/assets/ts/lara.ts',
   },
   module: {
@@ -41,7 +37,7 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              sourceMap: true
+              sourceMap: devMode
             }
           },
           'css-loader',
@@ -53,10 +49,17 @@ module.exports = {
                   require('precss'),
                   require('autoprefixer')
                 ];
-              }
+              },
+              sourceMap: devMode
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: devMode,
+              outputStyle: 'expanded'
             }
           },
-          'sass-loader',
         ],
       },
       {
@@ -75,21 +78,21 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js', '.css', '.scss']
   },
   output: {
-    filename: '[name].[hash].js',
+    filename: devMode ? '[name].js' : '[name].[hash].js',
     path: path.resolve(__dirname, 'public/'),
     publicPath: '/public/'
   },
+  devtool: devMode ?'source-map' : false,
   plugins: [
     new CleanWebpackPlugin(),
     new LiveReloadPlugin(),
-    new WebpackChunkHash({algorithm: 'sha512'}), // 'md5' is default value,
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: '[name].[hash].css',
-      chunkFilename: '[id].[hash].css',
+      filename: devMode ? '[name].css' : '[name].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
     new PhpManifestPlugin(),
-    new ManifestPlugin()
+    new webpack.SourceMapDevToolPlugin({})
   ]
 };
