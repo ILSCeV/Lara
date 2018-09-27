@@ -3,10 +3,10 @@
         "ajv": "^6.5.4",
         "bootbox": "^4.4.0",
         "cookieconsent": "^3.1.0",
-        "font-awesome": "^4.7.0",
         "sortablejs": "^1.6.0"
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.3.1",
         "@types/bootbox": "^4.4.32",
         "@types/bootstrap": "^4.1.2",
         "@types/bootstrap-select": "^1.11.0",
