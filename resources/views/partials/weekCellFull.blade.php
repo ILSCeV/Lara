@@ -1,4 +1,4 @@
-<div class="card card.bg-warning">
+<div class="card bg-warning">
 
 	{{--Check if the event is still going on--}}
 	<?php $classString = "card card-header";?>
@@ -79,7 +79,7 @@
 			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 			                                'id' => $shift->id,
 			                                'method' => 'put',
-			                                'class' => 'shift')  ) !!}
+			                                'class' => 'shift form-inline')  ) !!}
 
 			        {{-- SPAMBOT HONEYPOT - this field will be hidden, so if it's filled, then it's a bot or a user tampering with page source --}}
 			        <div id="welcome-to-our-mechanical-overlords">
@@ -88,22 +88,22 @@
 			        </div>
 
 			        {{-- Shift TITLE --}}
-			        <div class="col-xs-4 col-md-4 padding-right-minimal">
+			        <div class="col-4 padding-right-minimal">
 			            @include("partials.shiftTitle")
 			        </div>
 
 			        {{-- SHIFT STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-					<div class="col-xs-4 col-md-4 input-append btn-group padding-left-minimal">
+					<div class="col-4 input-append btn-group padding-left-minimal">
 					    @include("partials.shiftName")
 					</div>
 
 					{{-- SHIFT CLUB and DROPDOWN CLUB --}}
-					<div class="col-xs-3 col-md-3 no-padding">
+					<div class="col-3 no-padding">
 					    @include("partials.shiftClub")
 					</div>
 
 					{{-- SMALL COMMENT ICON --}}
-					<div class="col-xs-1 col-md-1 no-padding">
+					<div class="col-1 no-padding">
 				        @if( $shift->comment == "" )
 				            <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
 				                <i class="fa fa-comment-o"></i>
@@ -122,7 +122,7 @@
 					               array('placeholder'=>Lang::get('mainLang.addCommentHere'),
 					                     'id'=>'comment' . $shift->id,
 					                     'name'=>'comment' . $shift->id,
-					                     'class'=>'col-xs-10 col-md-10 hidden-print hide offset-2 offset-2 word-break' ))
+					                     'class'=>'col-10 hidden-print hide offset-2 offset-2 word-break' ))
 					!!}
 
 			        {!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $shift->id, 'hidden') ) !!}
@@ -133,7 +133,7 @@
 
 			{{-- Show a "hide" button for management, that allows removal of an event from current view - needed for printing --}}
 	        @is('marketing', 'clubleitung', 'admin')
-		        <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
+		        <hr class="col-12 top-padding no-margin no-padding">
 				<div class="padding-right-16 bottom-padding float-right hidden-print">
 					<small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
 				</div>
