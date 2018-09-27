@@ -6,11 +6,13 @@ let WebpackChunkHash = require('webpack-chunk-hash');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssEntryPlugin = require("css-entry-webpack-plugin");
 const ManifestPlugin = require('webpack-manifest-plugin');
-const devMode = process.env.NODE_ENV !== 'production';
+const PhpManifestPlugin = require('webpack-php-manifest');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
 
 module.exports = {
   entry: {
-    styles: glob.sync('./resources/assets/sass/lara.scss'),
+    //styles: './resources/assets/sass/lara.scss',
     lara: './resources/assets/ts/lara.ts',
   },
   module: {
@@ -36,13 +38,15 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          {loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
             options: {
               sourceMap: true
             }
           },
           'css-loader',
-          {loader:'postcss-loader',
+          {
+            loader: 'postcss-loader',
             options: {
               plugins: function () { // post css plugins, can be exported to postcss.config.js
                 return [
@@ -61,29 +65,31 @@ module.exports = {
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
-            outputPath: '../fonts/'
+            outputPath: 'fonts/'
           }
         }]
       },
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: ['.tsx', '.ts', '.js', '.css', '.scss']
   },
   output: {
-    //filename: '[name].js',
+    filename: '[name].[hash].js',
     path: path.resolve(__dirname, 'public/'),
     publicPath: '/public/'
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new LiveReloadPlugin(),
     new WebpackChunkHash({algorithm: 'sha512'}), // 'md5' is default value,
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: devMode ? '[name].css' : '[name].[hash].css',
-      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css',
     }),
+    new PhpManifestPlugin(),
     new ManifestPlugin()
   ]
 };
