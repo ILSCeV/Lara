@@ -1,12 +1,12 @@
 
-//@import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
 @import "~bootstrap/scss/bootstrap";
 @import "../../../node_modules/bootstrap-select/dist/css/bootstrap-select.css";
 
 @import "../../../node_modules/bootstrap-select/sass/variables";
 @import "../../../node_modules/bootstrap-select/sass/bootstrap-select";
 
-@import "../css/font-awesome.min.css";
+@import '~font-awesome/scss/font-awesome';
+//import 'font-awesome/css/font-awesome.css';
 @import "../css/vedst.css";
 @import "../css/print.css";
 @import "event/createEdit";

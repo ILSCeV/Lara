@@ -5,9 +5,10 @@
       "dom",
       "es5"
     ],
-    "module": "es2015",
+    "module": "es6",
     "sourceMap": true,
     "allowJs": true,
+    "noImplicitAny": false,
     "types": [
       "jquery",
       "bootstrap",
@@ -15,9 +16,7 @@
       "bootbox",
       "sortablejs",
       "es6-promise",
-      "isotope-layout",
-      "popper.js",
-      "tooltip.js"
+      "isotope-layout"
     ]
   },
   "exclude": [
