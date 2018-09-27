@@ -200,6 +200,6 @@ Route::post('/password/change', ['as' => 'password.change.post', 'uses' => 'Auth
     ->middleware('auth');
 
  // LEGAL
- Route::get('/privacy',					'LegalController@showPrivacyPolicy');
- Route::get('/impressum',				'LegalController@showImpressum');
+ Route::get('/privacy',					'LegalController@showPrivacyPolicy')->name('lara.privacy');
+ Route::get('/impressum',				'LegalController@showImpressum')->name('lara.impressum');
  Route::post('userAgreesPrivacy','UserController@agreePrivacy')->name('user.agreePrivacy');
