@@ -19,7 +19,9 @@ public/vendor.js.map
 public/fonts
 public/static.css
 public/static.js
-
+public/assets-manifest.php
+Lara.iml
+yarn.lock
 
 package-lock.json
 
