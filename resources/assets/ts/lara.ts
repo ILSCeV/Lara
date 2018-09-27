@@ -1,6 +1,5 @@
 require ('../sass/lara.scss');
 require ('../sass/surveys.scss');
-
 import "jquery"
 import "popper.js/dist/umd/popper"
 import "popper.js/dist/umd/popper-utils"
