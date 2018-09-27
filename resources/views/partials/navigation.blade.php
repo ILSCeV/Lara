@@ -118,15 +118,12 @@ Disabling iCal until fully functional.
         </ul>
 
         <ul class="nav navbar-nav ml-auto">
-            <span class="col-xs-1 d-block.d-sm-none">&nbsp;</span>
-            <div class="col-xs-10 col-sm-12 col-md-12 no-margin no-padding">
-
 {{-- AUTHENTICATION --}}
                 @auth
 
 {{-- CREATE BUTTONS / members only --}}
     {{-- Desktop version --}}
-                    <li style="padding-top:5px" class="btn-group d-none nav-item">
+                    <li class=" d-none d-md-block d-lg-block nav-item">
                         <div style="padding-top:2px" class="btn-group">
                             <a class="btn btn-primary dropdown-toggle nav-link" data-toggle="dropdown" href="#">+</a>
                             <ul class="dropdown-menu">
@@ -137,53 +134,55 @@ Disabling iCal until fully functional.
                     </li>
 
     {{-- Mobile version --}}
+                <li class="nav-item d-block d-sm-none">
                     <a href="{{ URL::route('event.create') }}"
-                       class="btn btn-sm btn-primary d-block.d-sm-none centered">
+                       class="btn btn-sm btn-primary d-block.d-sm-none centered nav-link">
                         {{ trans('mainLang.createNewEvent') }}
                     </a>
+                </li>
 
-                    <br class="d-block.d-sm-none">
-
+                <li class="nav-item d-block d-sm-none">
                     <a href="{{ URL::route('survey.create') }}"
-                       class="btn btn-sm btn-primary d-block.d-sm-none centered">
+                       class="btn btn-sm btn-primary d-block.d-sm-none centered nav-link">
                         {{ trans('mainLang.createNewSurvey') }}
                     </a>
-
+                </li>
 {{-- MEMBER INFO / members only --}}
-                    <li style="padding-top: 8px;" class="btn-group nav-item">
-                        {!! Form::open(array('url' => 'logout',
-                                            'method' => 'POST',
-                                            'class'=>'form-horizontal')) !!}
-                            <div class="navbar-form">
-                                &nbsp;&nbsp;
-                                @php
-                                    $attributes = Lara\Status::style(Auth::user()->status);
-                                @endphp
-                                <i class="{{ $attributes["status"]}}"
-                                   style="{{ $attributes["style"] }}"
-                                   data-toggle="tooltip"
-                                   data-placement="bottom"
-                                   title="{{ Lara\Status::localizeCurrent() }}"></i>
-                                &nbsp;
-                                <strong>
+                <li class="nav-item">
+                    <strong>
                                     <span data-toggle="tooltip"
                                           data-placement="bottom"
                                           title="{{ trans('mainLang.userPersonalPage') }}">
-                                            <a href="{{route('user.personalpage')}}" >
+                                            <a class="nav-link" href="{{route('user.personalpage')}}">
                                                 {{ Auth::user()->name }}
                                                 @is(Roles::PRIVILEGE_ADMINISTRATOR)
-                                                    ({{ Auth::user()->section->title . " / Admin" }})
-                                                @elseis(Roles::PRIVILEGE_CL)
-                                                    ({{ Auth::user()->section->title . " / Clubleitung" }})
-                                                @elseis(Roles::PRIVILEGE_MARKETING)
-                                                    ({{ Auth::user()->section->title . " / Marketing" }})
+                                           ({{ Auth::user()->section->title . " / Admin" }})
+                                       @elseis(Roles::PRIVILEGE_CL)
+                                        ({{ Auth::user()->section->title . " / Clubleitung" }})
+                                       @elseis(Roles::PRIVILEGE_MARKETING)
+                                       ({{ Auth::user()->section->title . " / Marketing" }})
                                                 @else
-                                                    ({{ Auth::user()->section->title }})
-                                                @endis
-                                            </a>
-                                    </span>
-                                </strong>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                            ({{ Auth::user()->section->title }})
+                                                    @endis
+                             </a>
+                       </span>
+                        @php
+                            $attributes = Lara\Status::style(Auth::user()->status);
+                        @endphp
+                        <i class="{{ $attributes["status"]}}"
+                           style="{{ $attributes["style"] }}"
+                           data-toggle="tooltip"
+                           data-placement="bottom"
+                           title="{{ Lara\Status::localizeCurrent() }}"></i>
+                    </strong>
+            </li>
+                    <li  class="btn-group nav-item">
+                        {!! Form::open(array('url' => 'logout',
+                                            'method' => 'POST',
+                                            'class'=>'form-inline')) !!}
+                            <div class="navbar-form">
+                                &nbsp;&nbsp;
+
                                 <br class="d-block.d-sm-none">
                                 <br class="d-block.d-sm-none">
                                 {!! Form::submit( Lang::get('mainLang.logOut'),
@@ -201,8 +200,7 @@ Disabling iCal until fully functional.
                     </li>
 
                 @endauth
-            </div>
-            <span class="col-xs-1 d-block.d-sm-none">&nbsp;</span>
+
           </ul>
 
         </div>
