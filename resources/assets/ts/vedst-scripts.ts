@@ -786,7 +786,7 @@ jQuery( document ).ready( function( $ ) {
                 $("input[id=userName" + currentEntryId + "]")
                   .tooltip('hide')
                   .attr('data-original-title',tooltipText)
-                  .tooltip('fixTitle')
+                  //.tooltip('fixTitle')
                   .tooltip('show');
                 $("input[id=ldapId"   + currentEntryId + "]").val(currentLdapId);
                 $("input[id=club"     + currentEntryId + "]").val(currentClub);
