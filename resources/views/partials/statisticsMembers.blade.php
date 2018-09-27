@@ -1,14 +1,16 @@
-<div class="card card-header no-padding">
-    <h4 class="card-title all-sides-padding-16">
-        {{ trans('mainLang.infoFor') }}
-    </h4>
+<div class="card no-padding">
+    <div class="card-header">
+        <h4 class="card-title all-sides-padding-16">
+            {{ trans('mainLang.infoFor') }}
+        </h4>
+    </div>
 
    <ul class="nav nav-tabs">
         @foreach($clubInfos->keys() as $title)
-            <li class="{{Lara\Section::current()->title == $title? 'active': ''}} statisticClubPicker">
+            <li class="{{Lara\Section::current()->title == $title? 'active': ''}} statisticClubPicker nav-item">
                 <a aria-expanded="{{Lara\Section::current()->title == $title? 'true' : 'false'}}"
                    href="#{{ str_replace(' ', '-', strtolower($title)) }}"
-                   data-toggle="tab">
+                   data-toggle="tab" class="nav-link">
                     {{$title}}
                 </a>
             </li>

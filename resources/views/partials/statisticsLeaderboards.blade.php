@@ -1,18 +1,19 @@
 
-<div class="card card-header no-padding">
-    <h4 class="card-title all-sides-padding-16">
-        {{ trans('mainLang.leaderBoards') }}
-    </h4>
-
+<div class="card no-padding">
+    <div class="card-header ">
+        <h4 class="card-title all-sides-padding-16">
+            {{ trans('mainLang.leaderBoards') }}
+        </h4>
+    </div>
     <ul class="nav nav-tabs">
-        <li class="leaderboardsClubPicker">
-            <a aria-expanded="true" href="#all-leaderboards" data-toggle="tab">{{ trans('mainLang.allClubs') }}</a>
+        <li class="leaderboardsClubPicker nav-item">
+            <a class="nav-link" aria-expanded="true" href="#all-leaderboards" data-toggle="tab">{{ trans('mainLang.allClubs') }}</a>
         </li>
         @foreach($clubInfos->keys() as $title)
-            <li class="{{Lara\Section::current()->title == $title? 'active': ''}} leaderboardsClubPicker">
+            <li class="{{Lara\Section::current()->title == $title? 'active': ''}} leaderboardsClubPicker nav-item">
                 <a aria-expanded="{{Lara\Section::current()->title == $title? 'active': ''}}"
                    href="#{{ str_replace(' ', '-', strtolower($title)) }}-leaderboards"
-                   data-toggle="tab">
+                   data-toggle="tab" class="nav-link">
                     {{$title}}
                 </a>
             </li>
