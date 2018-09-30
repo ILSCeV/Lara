@@ -357,7 +357,7 @@
 		</div>
 
 		<div class="container col-xs-12 col-sm-12 col-md-6 no-padding-xs">
-			<br class="d-block.d-sm-none d-none.d-sm-block.d-md-none">
+			<br class="d-block d-sm-none d-none d-sm-block d-md-none">
 			<div class="panel">
 				<div class="card-header">
 					<h4 class="card-title">{{ trans('mainLang.moreInfos') }}:</h4>({{ trans('mainLang.public') }})
@@ -422,7 +422,7 @@
 	     , 'admin')
 			<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<br class="d-block.d-sm-none">
+			<br class="d-block d-sm-none">
 	    @endis
 
 	    --}}
@@ -433,8 +433,8 @@
         @endif
 
 		&nbsp;&nbsp;&nbsp;&nbsp;
-		<br class="d-block.d-sm-none">
-		<br class="d-block.d-sm-none">
+		<br class="d-block d-sm-none">
+		<br class="d-block d-sm-none">
 		<a href="javascript:history.back()" class="btn btn-secondary">{{ trans('mainLang.backWithoutChange') }}</a>
 
 		{!! Form::close() !!}
