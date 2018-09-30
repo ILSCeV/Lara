@@ -305,7 +305,7 @@
 						    {!! "(" . $shift->getPerson->getClub->clb_title . ")" !!}
 						</div>
 
-						<br class="d-block.d-sm-none d-sm-none">
+						<br class="d-block d-sm-none d-sm-none">
 
 						{{-- COMMENT SECTION --}}
 						<div class="col hidden-print word-break no-margin">
@@ -426,7 +426,7 @@
 			</table>
 		</div>
 		<br>
-		<br class="d-block.d-sm-none">
+		<br class="d-block d-sm-none">
                     </div>
 	@endauth
 
