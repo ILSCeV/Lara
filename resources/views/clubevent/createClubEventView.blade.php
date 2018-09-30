@@ -322,7 +322,11 @@
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="endDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.end') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
+                        @if($createClubEvent)
 						{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($timeStart) < strtotime($timeEnd) ? strtotime($date) : strtotime("+1 day", strtotime($date)))) !!}
+                        @else
+                            {!! Form::input('date', 'endDate', $event->evnt_date_end) !!}
+                        @endif
 						{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $timeEnd) !!}
 					</div>
 			    </div>
