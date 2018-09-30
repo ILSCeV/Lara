@@ -205,8 +205,8 @@
             {!! Form::submit( trans('mainLang.update') , array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
         @endif
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <br class="d-block.d-sm-none">
-        <br class="d-block.d-sm-none">
+        <br class="d-block d-sm-none">
+        <br class="d-block d-sm-none">
         <a href="javascript:history.back()" class="btn btn-secondary">{{ trans('mainLang.backWithoutChange') }} </a>
 
     </div>
