@@ -137,8 +137,8 @@
 						{!! Form::text('eventUrl', $eventUrl, array('class'=>'col-md-8 col-sm-8 col-xs-6','style'=>'cursor: auto')) !!}
 					</div>
 				    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-				     	<label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">Typ:</label>
-				     	<div class="col-md-10 col-sm-10 col-xs-10">
+				     	<label for="evnt_type" class="col-md-3 col-sm-3 col-xs-3">Typ:</label>
+				     	<div class="col-md-9 col-sm-9 col-xs-9">
 				            {!! Form::radio('evnt_type', "0", array("checked")) !!}
 							{{ trans('mainLang.normalProgramm') }}
 				            <br>
@@ -151,10 +151,10 @@
 				            {!! Form::radio('evnt_type', "5", $type == 5 ? array("checked") : "") !!}
 							{{ trans('mainLang.utilization') }}
 				            <br>
-				            {!! Form::radio('evnt_type', "10", $type == 3 ? array("checked") : "") !!}
+				            {!! Form::radio('evnt_type', "10", $type == 10 ? array("checked") : "") !!}
 							{{ trans('mainLang.outsideEvent') }}
 				            <br>
-				            {!! Form::radio('evnt_type', "11", $type == 3 ? array("checked") : "") !!}
+				            {!! Form::radio('evnt_type', "11", $type == 11 ? array("checked") : "") !!}
 							{{ trans('mainLang.buffet') }}
 				            <br>
 				            {!! Form::radio('evnt_type', "4", $type == 4 ? array("checked") : "") !!}
@@ -185,8 +185,8 @@
 				    </div>
 				@else
 					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-				     	<label for="evnt_type" class="control-label col-md-2 col-sm-2 col-xs-2">Typ:</label>
-				     	<div class="col-md-10 col-sm-10 col-xs-10">
+				     	<label for="evnt_type" class="control-label col-md-3 col-sm-3 col-xs-3">Typ:</label>
+				     	<div class="col-md-9 col-sm-9 col-xs-9">
 				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.normalProgramm') }}
 				            <br>
@@ -236,8 +236,8 @@
 				@endis
 
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="section" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.section') }}: &nbsp;</label>
-					<span class="col-md-10 col-sm-10 col-xs-12">
+					<label for="section" class="control-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.section') }}: &nbsp;</label>
+					<span class="col-md-9 col-sm-9 col-xs-9">
 						@if (!is_null($section))
 							{!! Form::text('section', $section->title, array('id'=>'section', 'readonly') ) !!}
 						@elseif(!is_null(Auth::user()))
@@ -258,20 +258,20 @@
 			   	</div>
 
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
-					<label for="filter" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.showFor') }}: &nbsp;</label>
-					<div class="col-md-10 col-sm-10 col-xs-12">
+					<label for="filter" class="control-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
+					<div class="col-md-9 col-sm-9 col-xs-9">
 						@if(is_null($filter) || $filter == "")
 							{{-- Set default values to the club the user is a member in.--}}
 							@foreach(Lara\Section::all() as $fSection)
                                 {{ Form::checkbox("filter[" . $fSection->title ."]", $fSection->id, $fSection->title === \Lara\Section::current()->title) }}
 									{{ $fSection->title }}
-                                	&nbsp;
+                                	<br>
 							@endforeach
 						@else
 							@foreach(Lara\Section::all() as $fSection)
 								{{ Form::checkbox("filter[" . $fSection->title ."]", $fSection->id, in_array($fSection->title, $filter)) }}
 								{{ $fSection->title }}
-								&nbsp;
+								<br>
 							@endforeach
 						@endif
 				    </div>
@@ -322,7 +322,11 @@
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
 					<label for="endDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.end') }}:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
+                        @if($createClubEvent)
 						{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($timeStart) < strtotime($timeEnd) ? strtotime($date) : strtotime("+1 day", strtotime($date)))) !!}
+                        @else
+                            {!! Form::input('date', 'endDate', $event->evnt_date_end) !!}
+                        @endif
 						{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $timeEnd) !!}
 					</div>
 			    </div>
@@ -442,6 +446,3 @@
 @endauth
 
 @stop
-
-
-

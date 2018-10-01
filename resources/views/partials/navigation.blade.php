@@ -25,7 +25,9 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
+            
 {{-- DAY VIEW / public --}}
+
             <li><a href="{{ asset('/calendar/today') }}">{{ trans('mainLang.today') }}</a></li>
 {{-- MONTH VIEW / public --}}
             <li><a href="{{ asset('/calendar/month') }}">{{ trans('mainLang.month') }}</a></li>
@@ -37,7 +39,24 @@
             @auth
                 <li><a href="{{ action('StatisticsController@showStatistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
             @endauth
-{{-- SETTINGS (GEAR ICON) --}}
+
+{{-- LANGUAGE SWITCHER / public --}}
+        <li class="dropdown">
+            <a href="#"
+             class="dropdown-toggle"
+             data-toggle="dropdown"
+             role="button" aria-expanded="false">
+                <i class="fa fa-language"></i>&nbsp;<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                @foreach (Config::get('languages') as $lang => $language)
+                    <li class="languageSwitcher"><a href="{{ route('lang.switch', $lang) }}" data-language="{{$lang}}"><i class="fa fa-globe" aria-hidden="true"></i></i> {{$language}}</a></li>
+                @endforeach
+            </ul>
+        </li>
+
+{{-- SETTINGS (GEAR ICON) / marketing, section management or admins only --}}
+        @is(Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
             <li class="dropdown">
                 <a href="#"
                  class="dropdown-toggle"
@@ -45,23 +64,9 @@
                  role="button" aria-expanded="false">
                     <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
                 </a>
+
+{{-- SHIFT TYPES AND TEMPLATE MANAGEMENT / marketing, section management or admins only --}}
                 <ul class="dropdown-menu" role="menu">
-
-                    @auth
-                        @noLdapUser
-                        <li>
-                            <a href="{{route('password.change')}}">
-                                <i class="fa fa-key fa-rotate-90" aria-hidden="true"></i>
-                                {{ trans('auth.changePassword') }}
-                            </a>
-                        </li>
-
-                        <li role="separator" class="divider"></li>
-                        @endnoLdapUser
-                    @endauth
-                    {{-- MANAGEMENT: shift types / marketing, section management or admins only --}}
-
-                @is(Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
                     <li>
                         <a href="{{ asset('shiftType') }}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
@@ -74,6 +79,8 @@
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>
                     </li>
+
+{{-- USER AND SECTION MANAGEMENT / section management or admins only --}}
                     @is(Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
                     <li>
                         <a href="{{ route('user.index') }}">
@@ -81,17 +88,31 @@
                             {{ trans('users.userManagement') }}
                         </a>
                     </li>
+                    <li>
+                       <a href="{{ asset('section') }}">
+                           <i class="fa fa-university" aria-hidden="true"></i>
+                           {{ trans('mainLang.manageSections') }}
+                       </a>
+                    </li>
                     @endis
-                    <li role="separator" class="divider"></li>
                 @endis
 
-                {{-- LARA LOGS / section management or admins only --}}
+{{-- LARA ADMINISTRATION / admins only --}}
                 @is(Roles::PRIVILEGE_ADMINISTRATOR)
-                    <li><a href="{{ asset('/logs') }}">Logs</a></li>
                     <li role="separator" class="divider"></li>
+                    <li>
+                        <a href="{{ asset('/logs') }}">
+                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                            Logs
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a href="{{route("lara.update")}}">
+                            <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                            Lara update </a>
+                    </li>
                 @endis
-
-
 
 {{-- ICal feed links
 Disabling iCal until fully functional.
@@ -99,38 +120,8 @@ Disabling iCal until fully functional.
                     <li><a href="#" name="icalfeeds"><i class="fa fa-calendar" aria-hidden="true"></i> {{ trans('mainLang.icalfeeds') }}</a></li>
 
 --}}
-
-
-{{-- LANGUAGE SWITCHER / public --}}
-                @foreach (Config::get('languages') as $lang => $language)
-                    <li class="languageSwitcher"><a href="{{ route('lang.switch', $lang) }}" data-language="{{$lang}}"><i class="fa fa-globe" aria-hidden="true"></i></i> {{$language}}</a></li>
-                @endforeach
-
                 </ul>
             </li>
-
-
-{{-- LARA ADMIN PANEL / admins only --}}
-            @if(\Lara\Utilities::requirePermission(Roles::PRIVILEGE_ADMINISTRATOR))
-                <li class="dropdown">
-                    <a href="#"
-                       class="dropdown-toggle"
-                       data-toggle="dropdown"
-                       role="button" aria-expanded="false">
-                        <i class="fa fa-diamond" aria-hidden="true"></i>&nbsp;<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="{{ asset('section') }}">{{ trans('mainLang.manageSections') }}</a>
-                        </li>
-                        <li>
-                            <a href="{{route("lara.update")}}">
-                                <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
-                                Lara update </a>
-                        </li>
-                    </ul>
-                </li>
-            @endif
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -166,7 +157,7 @@ Disabling iCal until fully functional.
                     </a>
 
 {{-- MEMBER INFO / members only --}}
-                    <li style="padding-top: 5px;" class="btn-group testleft ">
+                    <li style="padding-top: 8px;" class="btn-group">
                         {!! Form::open(array('url' => 'logout',
                                             'method' => 'POST',
                                             'class'=>'form-horizontal')) !!}
@@ -184,21 +175,24 @@ Disabling iCal until fully functional.
                                 <strong>
                                     <span data-toggle="tooltip"
                                           data-placement="bottom"
-                                          title="
-                                            @is(Roles::PRIVILEGE_ADMINISTRATOR)
-                                                {{ Auth::user()->section->title . " / Admin" }}
-                                            @elseis(Roles::PRIVILEGE_CL)
-                                                {{ Auth::user()->section->title . " / Clubleitung" }}
-                                            @elseis(Roles::PRIVILEGE_MARKETING)
-                                                {{ Auth::user()->section->title . " / Marketing" }}
-                                            @else
-                                             {{ Auth::user()->section->title }}
-                                            @endis
-                                          ">
-                                        {{ Auth::user()->name }}
+                                          title="{{ trans('mainLang.userPersonalPage') }}">
+                                            <a href="{{route('user.personalpage')}}" >
+                                                {{ Auth::user()->name }}
+                                                @is(Roles::PRIVILEGE_ADMINISTRATOR)
+                                                    ({{ Auth::user()->section->title . " / Admin" }})
+                                                @elseis(Roles::PRIVILEGE_CL)
+                                                    ({{ Auth::user()->section->title . " / Clubleitung" }})
+                                                @elseis(Roles::PRIVILEGE_MARKETING)
+                                                    ({{ Auth::user()->section->title . " / Marketing" }})
+                                                @else
+                                                    ({{ Auth::user()->section->title }})
+                                                @endis
+                                            </a>
                                     </span>
                                 </strong>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
+                                <br class="visible-xs">
+                                <br class="visible-xs">
                                 {!! Form::submit( Lang::get('mainLang.logOut'),
                                                   array('class' => 'btn btn-default btn-sm pull-right',
                                                         'name'  => 'logout') ) !!}

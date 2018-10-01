@@ -1,4 +1,7 @@
 {{-- Needs variables: $surveys, $events --}}
+@php
+use Carbon\Carbon;
+@endphp
 
 @foreach($surveys as $survey) {{-- going over all surveys see weekCellSurvey for a single survey--}}
 
@@ -16,10 +19,10 @@
 
             {{--if so show a grey placeholder for the guest--}}
             <div class="cal-event {{$classString}} palette-Grey-500 bg word-break section-filter survey">
-                <i class="fa fa-bar-chart-o white-text"></i>
+                <i class="fa fa-bar-chart-o"></i>
                 &nbsp;&nbsp;
                 {{--and show him thats a private survey(=Interne Umfrage in german) only for users--}}
-                <span class="white-text event-name">
+                <span class="event-name">
                         {{ trans('mainLang.internalSurvey') }}
                     </span>
             </div>
@@ -28,8 +31,8 @@
             {{-- meaning Session::has'userId' OR !$survey->is_private == 0--}}
             {{-- so session has a valid user OR the guest can see this survey because it isn't private--}}
             <div class="cal-event {{$classString}} palette-Purple-900 bg word-break section-filter survey">
-                <i class="fa fa-bar-chart-o white-text"></i>
-                &nbsp;&nbsp;<span class="event-time white-text">{{date ('H:i',strtotime($survey->deadline))}}</span>
+                <i class="fa fa-bar-chart-o"></i>
+                &nbsp;&nbsp;<span class="event-time">{{date ('H:i',strtotime($survey->deadline))}}</span>
                 {{-- provide a URL to the survey --}}
                 <a href="{{ URL::route('survey.show', $survey->id) }}"
                    class="event-name"
@@ -37,7 +40,7 @@
                    data-placement="right"
                    title="{{ trans('mainLang.showDetails')}}">
                     {{-- instead of private survey show the actual title of the survey --}}
-                    <span class="white-text"> {{ $survey->title }} </span>
+                    <span> {{ $survey->title }} </span>
                 </a>
             </div>
         @endif
@@ -45,7 +48,11 @@
 @endforeach
 
 @foreach($events as $clubEvent)
-    @if($clubEvent->evnt_date_start === date("Y-m-d", $weekDay->getTimestamp()))
+    @if( Carbon::createFromTimestamp($weekDay->getTimestamp())
+            ->between(Carbon::createFromFormat('Y-m-d', $clubEvent->evnt_date_start)
+            ->subDay(),
+        Carbon::createFromFormat('Y-m-d H:i:s', $clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end)
+            ->subHour(5)))
 
         {{--Check if the event is still going on--}}
         @if(strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time())
@@ -68,7 +75,8 @@
             <div class="{!! $clubEvent->section->title !!}">
         @else
             {{-- Normal scenario: add a css class according to filter data --}}
-            <div class="section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach">
+            {{-- Formatting: "Section Name 123" => "section-name-123" --}}
+            <div class="section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach">
         @endif
 
 
@@ -104,7 +112,7 @@
                     @endif
 
                     @include("partials.event-marker", $clubEvent)
-                        <span class="event-time white-text">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}</span>
+                        <span class="event-time">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}</span>
                     <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
                        data-toggle="tooltip"
                        data-placement="right"
@@ -139,7 +147,7 @@
 
                     @include("partials.event-marker", $clubEvent)
                     {{-- Show starting time with Preparation time in () --}}
-                    <span class="event-time white-text">
+                    <span class="event-time">
                         &nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}{{$clubEvent->schedule->schdl_time_preparation_start <> $clubEvent->evnt_time_start?" (".date ('H:i',strtotime($clubEvent->schedule->schdl_time_preparation_start)).")":""}}
                     </span>
                 {{--

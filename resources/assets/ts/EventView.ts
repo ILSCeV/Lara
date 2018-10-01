@@ -28,10 +28,10 @@ $(() => {
         return;
     }
 
-    const takenShifts = new ToggleButton("toggle-taken-shifts", () => $('div.green').closest('.row').hasClass("hide"));
+    const takenShifts = new ToggleButton("toggle-taken-shifts", () => $('.shift_taken').closest('.row').hasClass("hide"));
     takenShifts.addActions([
         makeLocalStorageAction("onlyEmptyShifts", "true", "false"),
-        makeClassToggleAction($('div.green').closest('.row'), "hide", true)
+        makeClassToggleAction($('.shift_taken').closest('.row'), "hide", true)
     ])
         .setToggleStatus(safeGetLocalStorage("onlyEmptyShifts") == "true")
         .setText(translate("onlyEmpty"));

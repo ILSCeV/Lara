@@ -51,7 +51,7 @@ return [
     'marketingFlyersPlacard'=> 'Marketing / Flyer / Plakate', //used in legend.blade.php
     'preSale'               => 'Vorverkauf',
     'others'                => 'Sonstiges',
-    'faceDone'              => 'Facebook erledigt',
+    'faceDone'              => 'Online Werbung erledigt',
     'eventUrl'              => 'Event - URL',
     'priceTickets'          => 'Vorverkaufspreis',
     'price'                 => 'Eintrittspreis',
@@ -113,7 +113,7 @@ return [
     //blockString line~168
     'showForLoggedInMember'     => 'Dieses Event wird nur für eingeloggte Mitglieder sichtbar sein!',
     'showForExternOrChangeType' => 'Um sie für Externe sichtbar zu machen oder den Typ zu ändern,',
-    'askTheCLOrMM'              => 'frage die Clubleitung oder die Marketingverantwortlichen.',
+    'askTheCLOrMM'              => 'frage die Sektionsleitung oder die Marketingverantwortlichen.',
 
     'section'               => 'Sektion',
     'showFor'               => 'Zeige für',
@@ -138,7 +138,7 @@ return [
     'noNotThisWay'          => 'Ne, das geht so nicht...',
     'onlyThe'               => 'Nur die',
     'only'                  => 'Nur',
-    'clubManagement'        => 'Clubleitung',
+    'clubManagement'        => 'Sektionsleitung',
     'orThe'                 => 'oder die',
     'marketingManager'      => 'Marketingverantwortlichen',
     'canChangeEventJob'     => 'dürfen diese Veranstaltung/Aufgabe ändern.',
@@ -442,6 +442,11 @@ return [
     'logOut'                        => 'Abmelden',
     //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
+
+    //ShiftTitle
+    'optional'                      => 'Optional',
+    'optionalShort'                 => 'Opt.',
+
     //surveyForm
     'placeholderSurveyTitle'        => 'Titel:',
     'placeholderTitleSurvey'        => 'z.B. Teilnahme an der Clubfahrt',
@@ -483,7 +488,7 @@ return [
     'date'                          => 'Datum',
     'substituteThisInstance'        => 'Ersetzen durch...',
 
-    'cantTouchThis'                 => 'Netter Versuch - du darfst das nicht einfach ändern! Frage die Clubleitung oder Markleting ;)',
+    'cantTouchThis'                 => 'Netter Versuch - du darfst das nicht einfach ändern! Frage die Sektionsleitung oder Markleting ;)',
     'cantBeBlank'                   => 'Diese Werte dürfen nicht leer sein.',
     'nonNumericStats'               => 'Statistische Wertung muss man mit Ziffern eingeben ;)',
     'negativeStats'                 => 'Statistische Wertung darf nicht negativ sein.',
@@ -497,7 +502,12 @@ return [
     'color'                         => 'Farbe',
     'sectionExists'                 => 'Es gibt bereits eine Sektion mit diesem Namen, bitte gib einen anderen ein!',
     'newSection'                    => 'Neue Sektion',
-    'createSection'                 => 'neue Sektion anlegen',
+    'createSection'                 => 'Neue Sektion anlegen',
+    'privateClubName'               => 'Soll mein Clubname von Gästen versteckt werden?',
+    'privateClubNameYes'            => 'Ja, bitte anonymisieren',
+    'privateClubNameNo'             => 'Nein, jeder darf meinen Clubnamen sehen',
+    'privateClubNameNull'           => 'Sektionsvorgabe verwenden',
+    'upcomingShifts'                => 'Bevorstehende Dienste',
 
     //////////
     // ICal //
@@ -519,7 +529,7 @@ return [
     /////////////////////////
 
     'search'                        => 'Suche',
-    'facebookNeeded'                => 'Facebook benötigt',
+    'facebookNeeded'                => 'Online bewerben',
     'createTemplate'                => 'Vorlage erstellen',
 
     /////////////////////////
@@ -537,7 +547,7 @@ return [
     /////////////////
     // Legal stuff //
     /////////////////
-    
+
     'privacyPolicy'     => 'Datenschutz',
     'impressum'         => 'Impressum',
 
@@ -547,6 +557,9 @@ return [
     'privacyAgree'      => 'Ich stimme zu',
     'waitOneSecond'     => 'Nur eine Sekunde...',
 
-
-
+    ///////////////////
+    // Personal Page //
+    ///////////////////
+    'userPersonalPage' => 'Persönliche Seite',
+    'settings'         => 'Einstellungen',
 ];

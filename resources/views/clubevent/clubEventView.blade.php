@@ -19,12 +19,12 @@
 			    @elseif ($clubEvent->evnt_type == 4
 			          || $clubEvent->evnt_type == 5
 			          || $clubEvent->evnt_type == 6)
-			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg white-text">
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg">
 			    @elseif ($clubEvent->evnt_type == 7
 			          || $clubEvent->evnt_type == 8)
-			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-300 bg white-text">
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-300 bg">
 			    @elseif ($clubEvent->evnt_type == 9)
-			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg white-text">
+			        <div class="panel panel-heading palette-{!! $clubEvent->section->color !!}-500 bg">
 			    @endif
 					<h4 class="panel-title">@include("partials.event-marker")&nbsp;{{ $clubEvent->evnt_title }}</h4>
 					<h5 class="panel-title">{{ $clubEvent->evnt_subtitle }}</h5>
@@ -276,11 +276,21 @@
 						    <div class="col-md-3 col-sm-2 col-xs-3 no-padding" id="clubStatus{{ $shift->id }}">
 						        @include("partials.shiftStatus")
 						    </div>
-
-						    {{-- Shift USERNAME--}}
-						    <div id="{!! 'userName' . $shift->id !!}" >
-						        {!! $shift->getPerson->prsn_name !!}
-						    </div>
+                            @php
+                            /** @var \Lara\Shift $shift*/
+                            @endphp
+                            @if($shift->getPerson->isNamePrivate() == 0)
+                                {{-- Shift USERNAME--}}
+                                <div id="{!! 'userName' . $shift->id !!}" >
+                                    {!! $shift->getPerson->prsn_name !!}
+                                </div>
+                            @else
+                                <div id="{!! 'userName' . $shift->id !!}" >
+                                    @if(isset($shift->person->user))
+                                        {{ trans($shift->person->user->section->title . '.' . $shift->person->user->status) }}
+                                    @endif
+                                </div>
+                            @endif
 
 						    {{-- no need to show LDAP ID or TIMESTAMP in this case --}}
 						</div>
@@ -416,6 +426,3 @@
 	@endauth
 
 @stop
-
-
-

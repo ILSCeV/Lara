@@ -38,13 +38,14 @@ class Logging
         array_push($revisions, $newRevision);
 
         $schedule->entry_revisions = json_encode($revisions);
-
-        $schedule->save();
     }
 
     public static function logEventRevision(ClubEvent $event, $action, $old = "", $new = "")
     {
-        self::logScheduleRevision($event->schedule, $action, $old, $new);
+        if ($event->schedule) {
+            self::logScheduleRevision($event->schedule, $action, $old, $new);
+            $event->schedule->save();
+        }
     }
 
     public static function ensureShiftHasRevisions(Shift $shift)
@@ -215,6 +216,11 @@ class Logging
     public static function shiftStatisticalWeightChanged($shift)
     {
         self::attributeChanged($shift, "statistical_weight", "revisions.shiftWeightChanged");
+    }
+
+    public static function shiftOptionalChanged($shift)
+    {
+        self::attributeChanged($shift, "optional", "revisions.shiftOptionalChanged");
     }
 
     public static function shiftStartChanged($shift)

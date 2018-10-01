@@ -164,7 +164,6 @@ input[type=number],
     padding: 8px;
     overflow: visible;
     text-overflow: clip;
-    color: white;
     white-space: normal;
     min-height: 42px;
 }
@@ -179,57 +178,6 @@ input[type=number],
 
 .today-marker-today {
     background-color: #cccccc !important;
-}
-
-.cal-event a {
-    color: #ffffff;
-}
-
-.calendar-public-task {
-    background-color: #519839 !important;
-}
-
-.calendar-internal-task {
-    background-color: #7eb36d !important;
-}
-
-.calendar-public-info {
-    background-color: #89609E !important;
-}
-
-.calendar-internal-info {
-    background-color: #a78ab7 !important;
-}
-
-.calendar-public-marketing {
-    background-color: #D29034 !important;
-}
-
-.calendar-internal-marketing {
-    background-color: #ddad69 !important;
-}
-
-.calendar-public-event-bc-Club {
-    background-color: #e54545 !important;
-}
-
-.calendar-public-event-bc-Café {
-    background-color: #268ac3 !important;
-}
-.calendar-public-event-bd-Club {
-    background-color: #38c32e !important;
-}
-
-.calendar-internal-event-bc-Club {
-    background-color: #e98383 !important;
-}
-
-.calendar-internal-event-bc-Café {
-    background-color: #52aadc !important;
-}
-
-.calendar-internal-event-bd-Club {
-    background-color: #68c365 !important;
 }
 
 .light-grey {
@@ -254,6 +202,11 @@ input[type=number],
 
 .centered {
     text-align: center;
+}
+
+.cal-event a {
+    text-decoration: none;
+    color: inherit;
 }
 
 /**
@@ -285,11 +238,19 @@ input[type=number],
     text-overflow: ellipsis;
 }
 
-.red {
+.shift_free {
     color: red;
 }
 
-.green {
+.shift_taken {
+    color: green;
+}
+
+.shift_optional {
+    color: #cc7a00;
+}
+
+.shift_taken.shift_optional {
     color: green;
 }
 
@@ -427,7 +388,7 @@ input[type=number],
 }
 
 .top-padding {
-    padding-bottom: 8px !important;
+    padding-top: 8px !important;
 }
 
 .bottom-padding {
@@ -618,6 +579,7 @@ a.event-name{
     user-select: none;
 	margin-right: 4px;
     padding: 4px;
+    margin: 4px;
 }
 
 .label-filters .glyphicon{

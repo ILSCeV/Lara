@@ -38,25 +38,25 @@
 
 		<br class="visible-xs">
 		<br class="visible-xs">
-		<br class="visible-xs">
 
 		{{-- filter --}}
-		<div class="col-xs-12 col-md-6 hidden-print">
-			<div class="pull-right">
-				@include('partials.filter')
-				<div class="btn-group">
-				{{-- show time button Ger.: Zeiten einblenden --}}
-				<button class="btn btn-xs hidden-print" type="button" id="toggle-shift-time">{{ trans('mainLang.shiftTime') }}</button> 
-				
-				{{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
-				<button class="btn btn-xs hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button>
+		<div class="col-xs-12 col-md-6 hidden-print pull-right">
+    		<br class="visible-xs">
+			@include('partials.filter')
+    		<br class="visible-xs">
 
-				{{-- show/hide all comment fields --}}
-				<button class="btn btn-xs hidden-print" type="button" id="toggle-all-comments">{{ trans('mainLang.comments') }}</button>
-				
-				{{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
-				<button class="btn btn-xs btn-primary hidden-print" type="button" id="toggle-week-start">{{ trans('mainLang.weekStart') }}</button> 
-				</div>
+			<div class="btn-group pull-right">
+    			{{-- show time button Ger.: Zeiten einblenden --}}
+    			<button class="btn btn-xs hidden-print" type="button" id="toggle-shift-time">{{ trans('mainLang.shiftTime') }}</button>
+
+    			{{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
+    			<button class="btn btn-xs hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button>
+
+    			{{-- show/hide all comment fields --}}
+    			<button class="btn btn-xs hidden-print" type="button" id="toggle-all-comments">{{ trans('mainLang.comments') }}</button>
+
+    			{{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
+    			<button class="btn btn-xs btn-primary hidden-print" type="button" id="toggle-week-start">{{ trans('mainLang.weekStart') }}</button>
 			</div>
 		</div>
 	</div>
@@ -78,16 +78,17 @@
 						@if($clubEvent->evnt_is_private)
 							{{-- we compare the current week number with the week the event happens in
 								 to catch and hide any events on mondays and tuesdays (day < 3) next week
-								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
+								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view.
+                                 Formatting: "Section Name 123" => "section-name-123" --}}
 							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
 							  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach week-mo-so">
+								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach week-mo-so">
 							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
 								  === date("W", strtotime("next Week".$weekStart))
 								  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach week-mi-di hide">
+								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach week-mi-di hide">
 							@else
-								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach">
+								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach">
 							@endif
 								@include('partials.weekCellHidden')
 							</div>
@@ -97,18 +98,19 @@
 
 							{{-- we compare the current week number with the week the event happens in
 								 to catch and hide any events on mondays and tuesdays (day < 3) next week
-								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
+								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view.
+                                 Formatting: "Section Name 123" => "section-name-123"  --}}
 							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
 							  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach week-mo-so">
+								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach week-mo-so">
 							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
 								  === date("W", strtotime("next Week".$weekStart))
 								  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach week-mi-di hide">
+								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach week-mi-di hide">
 							@else
-								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach">
+								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach">
 							@endif
-									
+
 								@include('partials.weekCellProtected')
 							</div>
 
@@ -122,29 +124,30 @@
 
 							{{-- we compare the current week number with the week the event happens in
 								 to catch and hide any events on mondays and tuesdays (day < 3) next week
-								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view --}}
+								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view.
+                                 Formatting: "Section Name 123" => "section-name-123"  --}}
 							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
 							  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach week-mo-so">
+								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach week-mo-so">
 							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
 								  === date("W", strtotime("next Week".$weekStart))
 								  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach week-mi-di hide">
+								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach week-mi-di hide">
 							@else
-								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach">
+								<div class="element-item private section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach">
 							@endif
 
 						@else
 
 							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
 							  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach week-mo-so">
+								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach week-mo-so">
 							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
 								  === date("W", strtotime("next Week".$weekStart))
 								  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach week-mi-di hide">
+								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach week-mi-di hide">
 							@else
-								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? $section->title : false !!} @endforeach">
+								<div class="element-item section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach">
 							@endif
 
 						@endif
@@ -223,6 +226,3 @@
     </div>
 
 @stop
-
-
-

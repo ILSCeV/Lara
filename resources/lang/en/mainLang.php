@@ -439,6 +439,11 @@ return [
     'logOut'                        => 'Logout',
     //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
+
+    //ShiftTitle
+    'optional'                      => 'Optional',
+    'optionalShort'                 => 'Opt.',
+
     //surveyForm
     'placeholderSurveyTitle'        => 'Title:',
     'placeholderTitleSurvey'        => 'e.g. Participation at the club trip',
@@ -494,8 +499,14 @@ return [
     ////////////////////////
     'color'                         => 'Color',
     'sectionExists'                 => 'A section with this name already exits, please enter a diffrent one!',
-    'newSection'                    => 'new Section',
-    'createSection'                 => 'create Section',
+    'newSection'                    => 'New section',
+    'createSection'                 => 'Create section',
+    'privateClubName'               => 'Should my clubname be hidden from guests?',
+    'privateClubNameYes'            => 'Yes, hide my clubname from guests',
+    'privateClubNameNo'             => 'No, everyone can see my clubname',
+    'privateClubNameNull'           => 'Use my section\'s default setting',
+    'upcomingShifts'                => 'Upcoming shifts',
+
     //////////
     // ICal //
     //////////
@@ -534,7 +545,7 @@ return [
     /////////////////
     // Legal stuff //
     /////////////////
-    
+
     'privacyPolicy'     => 'Privacy Policy',
     'impressum'         => 'Imprint',
 
@@ -544,4 +555,9 @@ return [
     'privacyAgree'      => 'I Agree with Lara\'s Privacy Policy',
     'waitOneSecond'     => 'Just a second...',
 
+    ///////////////////
+    // Personal Page //
+    ///////////////////
+    'userPersonalPage' => 'Personal page',
+    'settings'         => 'Settings',
 ];

@@ -6,6 +6,7 @@
 	<div class="panel-body" id="main">
 		{{-- shiftType fields --}}
 	    <div id="shiftContainer" class="container shiftContainer">
+            <?php $counter=0;?>
 			@foreach($shifts as $shift)
 				@include('partials.events.shift', [
 					"title" => $shift->type->title,
@@ -13,9 +14,12 @@
 					"endTime" => $shift->end,
 					"weight" => $shift->statistical_weight,
 					"shiftId" => $shift->id,
+					"optional" => $shift->optional,
+					"counter" => $counter,
 					'shiftTypeId' => $shift->type->id
 				])
 				<br class="visible-xs">
+				<?php $counter = $counter+1;?>
 			@endforeach
 
 			@include('partials.events.shift', [
@@ -24,6 +28,7 @@
 				'endTime' => "01:00",
 				"weight" => 1,
 				"shiftId" => "",
+				"optional" => 0,
 				'shiftTypeId' => ""
 			])
 

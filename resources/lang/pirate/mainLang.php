@@ -43,7 +43,7 @@ return [
     'special'               => 'Festmahl',
     'LiveBandDJ'            => 'Seeschlacht',
     'internalEvent'         => 'Feirn im engsten Kreise',
-    'utilization'           => 'Passagierbeförderung',    
+    'utilization'           => 'Passagierbeförderung',
     'outsideEvent'          => 'Treffen weit vom Hafen',
     'buffet'                => 'Mahlzeit',
     'flooding'              => 'Deck schrubben',
@@ -442,6 +442,11 @@ return [
     'logOut'                        => 'Über Bord gehen',
     //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
+
+    //ShiftTitle
+    'optional'                      => 'Optional',
+    'optionalShort'                 => 'Opt.',
+
     //surveyForm
     'placeholderSurveyTitle'        => 'Titel:',
     'placeholderTitleSurvey'        => 'z.B. Teilnahme an der Clubfahrt',
@@ -496,6 +501,11 @@ return [
     'sectionExists'                 => 'Es it bereits ein Schiff mit diesem Namen vom Stapel gelaufen!',
     'newSection'                    => 'Neues Schiff',
     'createSection'                 => 'Neues Schiff bauen',
+    'privateClubName'               => 'Soll mein Piratenname bekannt sein?',
+    'privateClubNameYes'            => 'Nein, zeig\'s keiner Landratte!',
+    'privateClubNameNo'             => 'Klar, jeder soll mich kennen!',
+    'privateClubNameNull'           => 'Ich lass den Kapitän entscheiden!',
+    'upcomingShifts'                => 'Wofür ich zunächst nüchtern bleiben soll',
 
     //////////
     // ICal //
@@ -535,7 +545,7 @@ return [
     /////////////////
     // Legal stuff //
     /////////////////
-    
+
     'privacyPolicy'     => 'Datenschutz',
     'impressum'         => 'Impressum',
 
@@ -545,7 +555,10 @@ return [
     'privacyAgree'      => 'Ich stimme zu',
     'waitOneSecond'     => 'Nur eine Sekunde...',
 
-
-
+    ///////////////////
+    // Personal Page //
+    ///////////////////
+    'userPersonalPage' => 'Persönliche Kajüte',
+    'settings'         => 'Einstellungen',
 
 ];

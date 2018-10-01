@@ -84,13 +84,14 @@ class SyncBDclub extends Command
 
 
         passthru('sh backup-calendars.sh ' . config('bd_credentials.host'), $result);
+        
         $this->info('result: ' . $result);
         $calendars = file_get_contents(config('bd_credentials.searchdir') . '/filelist');
         $events = explode("\n", $calendars);
 
         //$this->info(var_dump($arrayOfCalendars));
 
-        /* @var $template Schedule */
+        /* @var $template Template */
         $template = Template::where('title', '=', self::BD_TEMPLATE_NAME)->first();
 
 
@@ -121,10 +122,15 @@ class SyncBDclub extends Command
 
                 /* @var $clubEvent ClubEvent */
                 $clubEvent = ClubEvent::where('external_id', '=', $icevt->uid)->first();
+
                 if (is_null($clubEvent)) {
                     $this->info('Create new event for ' . $icevt->summary);
-                    $clubEvent = new ClubEvent();
-
+                    $clubEvent = $template->toClubEvent();
+                    $this->info('event created: ' . json_encode($clubEvent->shifts));
+                    $eventCreated = true;
+                } else if ($clubEvent->was_manually_edited){
+                    $this->info('Skipping Event' . $icevt->summary . '. It was manually edited.');
+                    continue;
                 } else {
                     $this->info('update event ' . $icevt->summary);
                 }
@@ -154,23 +160,15 @@ class SyncBDclub extends Command
                 $schedule = $clubEvent->schedule;
                 if (is_null($schedule)) {
                     $schedule = new Schedule();
-                    Logging::scheduleCreated($schedule);
+                    //Logging::scheduleCreated($schedule);
                 }
                 $schedule->evnt_id = $clubEvent->id;
                 $schedule->schdl_title = $clubEvent->evnt_title;
                 $schedule->schdl_time_preparation_start = '20:00:00';
 
                 $schedule->save();
-                $shifts = $schedule->shifts;
-                if ($shifts->isEmpty()) {
-                    $shifts = $template->shifts()
-                        ->with('type')
-                        ->orderByRaw('position IS NULL, position ASC, id ASC')
-                        ->get()
-                        ->map(function (Shift $shift) use ($schedule) {
-                            // copy all except person_id and schedule_id and comment
-                            return $shift->replicate()->fill(['schedule_id' => $schedule->id]);
-                        });
+                if (isset($eventCreated)) {
+                    $shifts = $clubEvent->shifts;
                     /* @var $shift Shift */
                     foreach ($shifts as $shift) {
                         if ($shift->type->title == 'AV' && !is_null($extraData->responsible) && $extraData->responsible != '') {
@@ -193,6 +191,8 @@ class SyncBDclub extends Command
             }
         }
         $this->deleteDir(config('bd_credentials.searchdir'));
+        
+        return 0;
     }
 
     private function deleteDir($dirPath)
