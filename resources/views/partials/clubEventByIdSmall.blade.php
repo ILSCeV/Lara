@@ -1,4 +1,4 @@
-<div class="panel section-filter {!! str_replace(' ', '-', strtolower($clubEvent->section->title)) !!}">
+<div class="panel section-filter {!! "section-" . $clubEvent->section->id !!}">
     {{-- show only a placeholder for private events --}}
     @if($clubEvent->evnt_is_private && !Auth::user())
         <div class="panel panel-heading">

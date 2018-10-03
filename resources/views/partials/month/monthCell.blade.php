@@ -18,7 +18,7 @@ use Carbon\Carbon;
             {{-- no userId means this a guest account, so he gets blocked here--}}
 
             {{--if so show a grey placeholder for the guest--}}
-            <div class="cal-event {{$classString}} palette-Grey-500 bg word-break section-filter survey">
+            <div class="cal-event {{$classString}} palette-Grey-500 bg word-break section-filter section-survey">
                 <i class="fa fa-bar-chart-o"></i>
                 &nbsp;&nbsp;
                 {{--and show him thats a private survey(=Interne Umfrage in german) only for users--}}
@@ -30,7 +30,7 @@ use Carbon\Carbon;
         @else
             {{-- meaning Session::has'userId' OR !$survey->is_private == 0--}}
             {{-- so session has a valid user OR the guest can see this survey because it isn't private--}}
-            <div class="cal-event {{$classString}} palette-Purple-900 bg word-break section-filter survey">
+            <div class="cal-event {{$classString}} palette-Purple-900 bg word-break section-filter section-survey">
                 <i class="fa fa-bar-chart-o"></i>
                 &nbsp;&nbsp;<span class="event-time">{{date ('H:i',strtotime($survey->deadline))}}</span>
                 {{-- provide a URL to the survey --}}
@@ -72,14 +72,15 @@ use Carbon\Carbon;
         {{-- Filter --}}
         @if ( $clubEvent->showToSection->isEmpty() )
             {{-- Workaround for older events: if filter is empty - use event club data instead --}}
-            <div class="{!! $clubEvent->section->title !!}">
+            <div class="section-{!! $clubEvent->section->id !!}">
         @else
             {{-- Normal scenario: add a css class according to filter data --}}
             {{-- Formatting: "Section Name 123" => "section-name-123" --}}
-            <div class="section-filter @foreach($sections as $section) {!! in_array( $section->title, $clubEvent->showToSectionNames() ) ? str_replace(' ', '-', strtolower($section->title)) : false !!} @endforeach">
+            <div class="section-filter
+                        @foreach($sections as $section)
+                            {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                        @endforeach">
         @endif
-
-
             {{-- guests see private events as placeholders only, so check if user is logged in --}}
             @guest
                 {{-- show only a placeholder for private events --}}
