@@ -113,7 +113,7 @@ $ldapid
     <div class="card no-padding">
         <div class="card-title-box">
             <h4 class="card-title">
-                <i class="fa fa-bar-chart-o white-text"></i>
+                <i class="fa fa-bar-chart white-text"></i>
                 &nbsp;&nbsp;
                 {{ $survey->title }}
                 @if($userId == $survey->creator_id || $userCanEditDueToRole)
