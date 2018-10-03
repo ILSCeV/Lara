@@ -1,5 +1,5 @@
 <div id="section-filter"
-     class="hidden-print">
+     class="d-print-none">
     {{-- Show/hide events belonging to a chosen section --}}
     <div class="col-md-12 no-padding d-block p-2">
         <span id="label-none"
@@ -25,7 +25,7 @@
     <br>
     <div class="col-md-12 no-padding d-block p-2">
         <select id="section-filter-selector"
-                class="hidden show-tick float-right bottom-padding"
+                class="d-none show-tick float-right bottom-padding"
                 multiple
                 title="{{ trans('mainLang.chooseAtLeastOne') }}"
                 data-selected-text-format="count > 2"
