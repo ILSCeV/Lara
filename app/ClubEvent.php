@@ -150,10 +150,18 @@ class ClubEvent extends Model
     }
 
 
-    public function showToSectionNames()
+    public function showToSectionIds()
     {
         return $this->showToSection()->get()->map(function ($section) {
             return $section->id;
+        })->toArray();
+    }
+
+
+    public function showToSectionNames()
+    {
+        return $this->showToSection()->get()->map(function ($section) {
+            return $section->title;
         })->toArray();
     }
 

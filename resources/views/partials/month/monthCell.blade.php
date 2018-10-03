@@ -78,7 +78,7 @@ use Carbon\Carbon;
             {{-- Formatting: "Section Name 123" => "section-name-123" --}}
             <div class="section-filter
                         @foreach($sections as $section)
-                            {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                         @endforeach">
         @endif
             {{-- guests see private events as placeholders only, so check if user is logged in --}}
