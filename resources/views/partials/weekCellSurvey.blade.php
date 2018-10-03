@@ -5,7 +5,7 @@
         <div class="card palette-Grey-500 bg white-text"
              style="padding: 15px 15px 8px 15px;">
             <h4 class="card-title">
-                <i class="fa fa-bar-chart-o white-text"></i>
+                <i class="fa fa-chart-bar white-text"></i>
                 &nbsp;
                 <span class="name">{{ trans('mainLang.internalSurvey') }}</span>
             </h4>
@@ -23,7 +23,7 @@
         <div class="card card-header palette-Purple-900 bg white-text">
             <h4 class="card-title">
                 <a href="{{ URL::route('survey.show', $survey->id) }}">
-                    <i class="fa fa-bar-chart-o white-text"></i>
+                    <i class="fas fa-chart-bar white-text"></i>
                     &nbsp;
                     <span class="name">{{ $survey->title }}</span>
                 </a>
