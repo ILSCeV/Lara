@@ -90,7 +90,7 @@ class ClubEvent extends Model
     {
         return $this->belongsTo('Lara\Section', 'plc_id', 'id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Template
      */
@@ -110,7 +110,7 @@ class ClubEvent extends Model
     {
         return $this->hasOne('Lara\Schedule', 'evnt_id', 'id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne|Schedule
      */
@@ -132,7 +132,7 @@ class ClubEvent extends Model
             return $shift->person_id === $person->id;
         });
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough|Shift
      */
@@ -140,7 +140,7 @@ class ClubEvent extends Model
     {
         return $this->hasManyThrough('Lara\Shift', 'Lara\Schedule', 'evnt_id', 'schedule_id', 'id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|Section
      */
@@ -148,15 +148,15 @@ class ClubEvent extends Model
     {
         return $this->belongsToMany('Lara\Section');
     }
-    
-    
+
+
     public function showToSectionNames()
     {
         return $this->showToSection()->get()->map(function ($section) {
-            return $section->title;
+            return $section->id;
         })->toArray();
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|User
      */
