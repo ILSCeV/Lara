@@ -6,9 +6,11 @@ import * as bootbox from "bootbox"
 import {ToggleButton} from "./ToggleButton";
 import {makeLocalStorageAction, makeClassToggleAction} from "./ToggleAction";
 import {safeGetLocalStorage, safeSetLocalStorage} from "./Utilities";
-import {convertToSafeFormat} from "./Utilities";
 
 const jQuery = $;
+
+
+
 /////////////
 // Filters //
 /////////////
@@ -36,21 +38,21 @@ $(function() {
             else {
                 $sectionSelect.val().forEach(filter => {
                     $(`.${filter.slice(7)}`).removeClass('hidden');
-                    $(`#label-${filter.slice(7)}`).removeClass('hidden');
+                    $(`#label-section-${filter.slice(15)}`).removeClass('hidden');
                 });
             }
             isotope ? isotope.layout() : null;
         };
 
-        //Handle clicking on a section label
+        // Handle clicking on a section label
         $('.label-filters').click((e) => {
-            //Deselect the clicked section
-            let section = convertToSafeFormat((<HTMLSpanElement>e.target).id.slice(6));
-            //Update the local storage
-            safeSetLocalStorage("filter-" + section, "hide");
-            //Uncheck the select option
-            $sectionSelect.selectpicker('val',  $sectionSelect.val().filter(sec => sec !== "filter-"+section));
-            //Refresh elements
+            // Deselect the clicked section
+            let section = (<HTMLSpanElement>e.target).id.slice(14);
+            // Update the local storage
+            safeSetLocalStorage("filter-section-" + section, "hide");
+            // Uncheck the select option
+            $sectionSelect.selectpicker('val',  $sectionSelect.val().filter(sec => sec !== "filter-section-"+section));
+            // Refresh elements
             showAllActiveSections();
             e.preventDefault();
         });
@@ -200,10 +202,11 @@ $(function() {
 
 
 
-
 ///////////////
 // All views //
 ///////////////
+
+
 
 // Default language is german
 $(function() {
@@ -548,9 +551,12 @@ $(document).ready(function() {
     });
 
 
+
 //////////
 // ICal //
 //////////
+
+
 
 /*
  * Disabling iCal until fully functional.
@@ -699,9 +705,12 @@ Disabling iCal until fully functional. */
 jQuery( document ).ready( function( $ ) {
 
 
+
 /////////////////////////////
 // AUTOCOMPELETE USERNAMES //
 /////////////////////////////
+
+
 
     // open username dropdown on input selection and show only "I'll do it!" button at the beginning
     $( '.shift' ).find('input').on( 'focus', function() {
@@ -911,9 +920,12 @@ jQuery( document ).ready( function( $ ) {
 
 
 
-    ///////////////////////////
+    /////////////////////////////
     // AUTOCOMPLETE SHIFTTYPES //
-    ///////////////////////////
+    /////////////////////////////
+
+
+
     function updateShiftEntry(data : any, isConflict : boolean){
         const $spinner = $("#spinner");
         const entryId = data.entryId;
