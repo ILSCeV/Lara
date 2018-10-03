@@ -48,7 +48,7 @@
            title="{{ trans("mainLang.backToTop")  }}"
            data-toggle="tooltip"
            data-placement="right">
-            <span class="glyphicon glyphicon-chevron-up"></span>
+            <i class="fas fa-chevron-up"></i>
         </a>
 
         <br>
