@@ -30,15 +30,15 @@ $(function() {
         let enabledSections = [];
 
         const showAllActiveSections = () => {
-            $(".section-filter").addClass('hidden');
-            $(".label-filters").addClass('hidden');
+            $(".section-filter").addClass('d-none');
+            $(".label-filters").addClass('d-none');
             if($sectionSelect.val().length == 0){
-                $('#label-none').removeClass('hidden');
+                $('#label-none').removeClass('d-none');
             }
             else {
                 $sectionSelect.val().forEach(filter => {
-                    $(`.${filter.slice(7)}`).removeClass('hidden');
-                    $(`#label-section-${filter.slice(15)}`).removeClass('hidden');
+                    $(`.${filter.slice(7)}`).removeClass('d-none');
+                    $(`#label-section-${filter.slice(15)}`).removeClass('d-none');
                 });
             }
             isotope ? isotope.layout() : null;
@@ -74,7 +74,7 @@ $(function() {
         });
 
         //Enable all sections enabled in the localStorage inside the select
-        $sectionSelect.removeClass("hidden");
+        $sectionSelect.removeClass("d-none");
         $sectionSelect.selectpicker('val', enabledSections);
         showAllActiveSections();
     };
