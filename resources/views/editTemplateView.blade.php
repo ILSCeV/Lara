@@ -12,13 +12,13 @@
     @endif
     <div class="row">
         <div class="card col-md-6 col-sm-12 col-xs-12 ">
-            <div class="card-header">
+            <div class="card-header bg-white">
                 <h4 class="card-title">{{ trans('mainLang.changeEventJob') }}:</h4>
             </div>
             <div class="card-body">
                 <div class="">
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12 ">
-                        <label for="title" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.title') }}:</label>
+                    <div class="form-group  ">
+                        <label for="title" class="col-2">{{ trans('mainLang.title') }}:</label>
                         {!! Form::text('title',
                                         $template->title,
                                         array('class'=>'form-control',
@@ -26,47 +26,49 @@
                                               'style'=>'cursor: auto',
                                               'required') ) !!}
                     </div>
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12 ">
-                        <label for="subtitle" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.subTitle') }}:</label>
+                    <br />
+                    <div class="form-group  ">
+                        <label for="subtitle" class="col-2">{{ trans('mainLang.subTitle') }}:</label>
                         {!! Form::text('subtitle',
                                         $template->subtitle,
                                         array('class'=>'form-control',
                                                 'placeholder'=>trans('mainLang.placeholderSubTitleWineEvening'),
                                                 'style'=>'cursor: auto') ) !!}
                     </div>
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                        <label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.type') }}:</label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
+                    <br/>
+                    <div class="form-group ">
+                        <label for="evnt_type" class="col-2">{{ trans('mainLang.type') }}:</label>
+                        <div class="">
                             @for($i = 0;$i<10;$i++)
-                                <div class="form-check">
-                                    <label>
+                                <div class="form-check float-left">
+                                    <label >
                                         {{ Form::radio('type', $i, $template->type == $i) }}
                                         {{ \Lara\Utilities::getEventTypeTranslation($i) }}
                                     </label>
                                 </div>
-                                <br/>
+                            <br/>
                             @endfor
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                        <label for="evnt_type" class="col-md-2 col-sm-2 col-xs-2"> &nbsp; </label>
-                        <label class="col-md-10 col-sm-10 col-xs-10">
+                    <div class="form-group ">
+                        <label for="evnt_type" class="col-2"> &nbsp; </label>
+                        <label class="col-10">
                             {!! Form::checkbox('isPrivate', '1', ($template->is_private + 1)%2,['class'=>'form-control']) !!}
                             {{ trans('mainLang.showExtern') }}
                         </label>
                     </div>
 
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group ">
                         <label for="evnt_type" class="col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.facebookNeeded') }}: </label>
                         <div class="input-group">
-                            <span class="input-group-addon">
+                            <span class="input-group-append">
                                 <label>
                             {{ Form::radio('facebookNeeded',true,$template->facebook_needed == true, ['class'=>'form-control']) }}
                                     {{ trans('mainLang.yes')  }}
                                 </label>
                             </span>
-                            <span class="input-group-addon">
+                            <span class="input-group-append">
                                 <label>
                             {{ Form::radio('facebookNeeded',false,$template->facebook_needed == false, ['class'=>'form-control']) }}
                                 {{ trans('mainLang.no')  }}
@@ -75,8 +77,8 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12 @if(!\Lara\Utilities::requirePermission("admin")) hidden @endif>">
-                        <label for="section" class="col-form-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.section') }}: &nbsp;</label>
+                    <div class="form-group col @if(!\Lara\Utilities::requirePermission("admin")) hidden @endif>">
+                        <label for="section" class="col-form-label col-3">{{ trans('mainLang.section') }}: &nbsp;</label>
                         <select id="section" class="selectpicker" name="section" >
                             @foreach($sections as $section)
                                 <option value="{{$section->id}}"
@@ -88,7 +90,7 @@
                     <br>
                     <div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
                         <label for="filter" class="col-form-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
-                        <div id="filter" class="input-group">
+                        <div id="filter" class="input-group form-check">
                             @if($template->id == null)
                                 @foreach($sections as $section)
                                     <label>
@@ -106,13 +108,13 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
 
                         <div id="priceTickets" class="input-group">
-                            <span for="priceTickets" class="col-form-label input-group-addon">
+                            <label for="priceTickets" class="col-form-label input-group-addon">
                                 {{ trans('mainLang.priceTickets') }}:
                                 ({{ trans('mainLang.studentExtern') }})
-                            </span>
+                            </label>
                             <input class="form-control" type="number" name="priceTicketsNormal" step="0.1" min="0"
                                    placeholder="Student" value="{{$template->price_tickets_normal}}"/>
                             <span class="input-group-addon">€</span>
@@ -123,11 +125,11 @@
                         </div>
                     </div>
                     <br>
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group col">
                         <div id="price" class="input-group">
-                                <span for="price" class="col-form-label input-group-addon" >
+                                <label for="price" class="col-form-label input-group-addon" >
                                     {{ trans('mainLang.price') }}:
-                                    ({{ trans('mainLang.studentExtern') }})</span>
+                                    ({{ trans('mainLang.studentExtern') }})</label>
                                 <input class="form-control" type="number" name="priceNormal" step="0.1" min="0"
                             placeholder="Student" value="{{$template->price_normal}}"/>
                             <span class="input-group-addon">€</span>
@@ -139,20 +141,20 @@
 
                     </div>
 
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group col">
                         <label for="preparationTime" class="col-form-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.DV-Time') }}:</label>
                         {!! Form::input('time', 'preparationTime', $template->time_preparation_start, ['class'=>'form-control ']) !!}
 
                     </div>
 
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group col">
                         <label for="beginDate" class="col-form-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.begin') }}:</label>
                         <div>
                             {!! Form::input('time', 'beginTime', $template->time_start, ['class'=>'form-control'] ) !!}
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group col">
                         <label for="endDate" class="col-form-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.end') }}:</label>
                         <div>
                              {!! Form::input('time', 'endTime', $template->time_end, ['class'=>'form-control']) !!}
@@ -161,9 +163,9 @@
                 </div>
             </div>
         </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="container col-xs-12 col-sm-12 col-md-5 ">
-            <div class="panel">
+        <br/>
+        <div class="container col ">
+            <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">{{ trans('mainLang.moreInfos') }}:</h4>
                     ({{ trans('mainLang.public') }})
@@ -179,7 +181,7 @@
                 </div>
             </div>
             <br>
-            <div class="panel">
+            <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">{{ trans('mainLang.details') }}:</h4>
                     ({{ trans('mainLang.showOnlyIntern') }})
@@ -196,9 +198,12 @@
             </div>
         </div>
     </div>
+    <div class="row col-12">
+        <div class="col-12">
+            @include('partials.editSchedule')
+        </div>
+    </div>
     <div class="row">
-        @include('partials.editSchedule')
-        <br>
         @if($template->id == null)
             {!! Form::submit( trans('mainLang.createTemplate') , array('class'=>'btn btn-success', 'id'=>'button-edit-submit')) !!}
         @else
