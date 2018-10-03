@@ -83,7 +83,7 @@
 							  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
 								<div class="element-item private section-filter
                                             @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                                             @endforeach
                                             week-mo-so">
 							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
@@ -91,13 +91,13 @@
 								  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
 								<div class="element-item private section-filter
                                             @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                                             @endforeach
                                             week-mi-di hide">
 							@else
 								<div class="element-item private section-filter
                                             @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                                             @endforeach">
 							@endif
 								@include('partials.weekCellHidden')
@@ -114,7 +114,7 @@
 							  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
 								<div class="element-item section-filter
                                             @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                                             @endforeach
                                             week-mo-so">
 							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
@@ -122,13 +122,13 @@
 								  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
 								<div class="element-item section-filter
                                             @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                                             @endforeach
                                             week-mi-di hide">
 							@else
 								<div class="element-item section-filter
                                             @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                                             @endforeach ">
 							@endif
 
@@ -151,7 +151,7 @@
 							  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
 								<div class="element-item private section-filter
                                             @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                                             @endforeach
                                             week-mo-so">
 							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
@@ -159,13 +159,13 @@
 								  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
 								<div class="element-item private section-filter
                                             @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                                             @endforeach
                                             week-mi-di hide">
 							@else
 								<div class="element-item private section-filter
                                             @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                                             @endforeach">
 							@endif
 
@@ -175,7 +175,7 @@
 							  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
 								<div class="element-item section-filter
                                             @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                                             @endforeach
                                             week-mo-so">
 							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
@@ -183,13 +183,13 @@
 								  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
 								<div class="element-item section-filter
                                             @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                                             @endforeach
                                             week-mi-di hide">
 							@else
 								<div class="element-item section-filter
                                             @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionNames() ) ? "section-" . $section->id : false !!}
+                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
                                             @endforeach">
 							@endif
 
