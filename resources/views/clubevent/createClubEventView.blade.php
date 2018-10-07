@@ -240,7 +240,8 @@
 			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
                     <label for="filter" class="col-form-label col-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
                     <div id="filter" class="input-group form-check col-6">
-                        @if($templateId == null)
+
+                        @if(isset($templateId) && $templateId == null && $createClubEvent)
                             @foreach($sections as $filterSection)
                                 <label>
                                     {{ Form::checkbox("filter[" . $filterSection->title ."]", $filterSection->id, $filterSection->id === Auth::user()->section_id )}}
