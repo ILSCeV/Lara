@@ -65,6 +65,8 @@ class Utilities
             case "7": return  trans('mainLang.flyersPlacard');
             case "8": return  trans('mainLang.preSale');
             case "9": return  trans('mainLang.others');
+            case "10": return trans('mainLang.outsideEvent');
+            case "11": return trans('mainLang.buffet');
             case "1": return  trans('mainLang.information');
             default : return  trans('mainLang.others');
         }
