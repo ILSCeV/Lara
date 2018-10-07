@@ -7,7 +7,7 @@
 		<div class="row no-margin">
 			<div class="card col no-padding">
                 @php
-                $commonHeader = 'card card-header ';
+                $commonHeader = 'card-header ';
                 @endphp
 				{{-- Set card color --}}
 				@if     ($clubEvent->evnt_type == 0)
