@@ -1,5 +1,5 @@
-<div class="card card-footer col-12 hidden-print">
-    <span class="pull-right">
+<div class="card-footer col-12 hidden-print">
+    <span class="float-right">
         {{-- Event publishing only for CL/marketing -> exclude creator
         Disabling iCal until fully functional.
 
@@ -36,7 +36,7 @@
            data-toggle="tooltip"
            data-placement="bottom"
            title="{{ trans('mainLang.changeEvent') }}">
-           <i class="fa fa-pencil"></i>
+           <i class="fas fa-pencil-alt"></i>
         </a>
         &nbsp;&nbsp;
         <a href="{{ $event->id }}"
@@ -48,7 +48,7 @@
            data-token="{{csrf_token()}}"
            rel="nofollow"
            data-confirm="{{ trans('mainLang.confirmDeleteEvent') }}">
-           <i class="fa fa-trash"></i>
+           <i class="fas fa-trash"></i>
         </a>
     </span>
 </div>

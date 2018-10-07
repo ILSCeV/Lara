@@ -1,6 +1,7 @@
 <a href="{{action('IcalController@singleEvent', $clubEvent->id)}}"
    data-toggle="tooltip"
    data-placement="top"
+   class="text-white"
    title="{{ trans('mainLang.addToCalendar')}}">
     @if( $clubEvent->evnt_type == 0)
         <i class="fas fa-calendar-alt text"></i>
