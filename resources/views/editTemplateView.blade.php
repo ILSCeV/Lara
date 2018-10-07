@@ -18,28 +18,28 @@
             <div class="card-body">
                 <div class="">
                     <div class="form-group  ">
-                        <label for="title" class="col-2">{{ trans('mainLang.title') }}:</label>
+                        <label for="title" class="col-3">{{ trans('mainLang.title') }}:</label>
                         {!! Form::text('title',
                                         $template->title,
-                                        array('class'=>'form-control',
+                                        array('class'=>'form-control col-8',
                                               'placeholder'=>trans('mainLang.placeholderTitleWineEvening'),
                                               'style'=>'cursor: auto',
                                               'required') ) !!}
                     </div>
                     <br />
                     <div class="form-group  ">
-                        <label for="subtitle" class="col-2">{{ trans('mainLang.subTitle') }}:</label>
+                        <label for="subtitle" class="col-3">{{ trans('mainLang.subTitle') }}:</label>
                         {!! Form::text('subtitle',
                                         $template->subtitle,
-                                        array('class'=>'form-control',
+                                        array('class'=>'form-control col-8',
                                                 'placeholder'=>trans('mainLang.placeholderSubTitleWineEvening'),
                                                 'style'=>'cursor: auto') ) !!}
                     </div>
                     <br/>
                     <div class="form-group ">
-                        <label for="evnt_type" class="col-2">{{ trans('mainLang.type') }}:</label>
-                        <div class="">
-                            @for($i = 0;$i<10;$i++)
+                        <label for="evnt_type" class="col-3">{{ trans('mainLang.type') }}:</label>
+                        <div class="col-8">
+                            @for($i = 0;$i<12;$i++)
                                 <div class="form-check float-left">
                                     <label >
                                         {{ Form::radio('type', $i, $template->type == $i) }}
@@ -60,8 +60,8 @@
                     </div>
 
                     <div class="form-group ">
-                        <label for="evnt_type" class="col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.facebookNeeded') }}: </label>
-                        <div class="input-group">
+                        <label for="evnt_type" class="col-3">{{ trans('mainLang.facebookNeeded') }}: </label>
+                        <div class="input-group col-8">
                             <span class="input-group-append">
                                 <label>
                             {{ Form::radio('facebookNeeded',true,$template->facebook_needed == true, ['class'=>'form-control']) }}
@@ -77,10 +77,22 @@
                         </div>
                     </div>
 
-                    <div class="form-group col @if(!\Lara\Utilities::requirePermission("admin")) hidden @endif>">
+                    <div class="form-group col">
                         <label for="section" class="col-form-label col-3">{{ trans('mainLang.section') }}: &nbsp;</label>
                         <select id="section" class="selectpicker" name="section" >
-                            @foreach($sections as $section)
+                            @php
+                                if(Auth::user()->isAn(\Lara\utilities\RoleUtility::PRIVILEGE_ADMINISTRATOR)){
+                                $allowedSections = $sections;
+                                }
+                                else {
+                                $allowedSections = Auth::user()->roles->filter(function (\Lara\Role $r){
+                                return $r->name == \Lara\utilities\RoleUtility::PRIVILEGE_MARKETING;
+                                })->map(function (\Lara\Role $r){
+                                return $r->section;
+                                });
+                                }
+                            @endphp
+                            @foreach($allowedSections as $section)
                                 <option value="{{$section->id}}"
                                         data-content="<span class='palette-{!! $section->color !!}-900 bg'> {{$section->title}} </span>"
                                         @if($template->section->id == $section->id) selected @endif >{{ $section->title }}</option>
@@ -88,8 +100,8 @@
                         </select>
                     </div>
                     <br>
-                    <div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
-                        <label for="filter" class="col-form-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
+                    <div class="form-group col-12" id="filter-checkboxes">
+                        <label for="filter" class="col-form-label col-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
                         <div id="filter" class="input-group form-check">
                             @if($template->id == null)
                                 @foreach($sections as $section)
@@ -109,12 +121,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="priceTickets" class="col-form-label col-3">
+                            {{ trans('mainLang.priceTickets') }}:
+                            ({{ trans('mainLang.studentExtern') }})
+                        </label>
+                        <div id="priceTickets" class="input-group col-8">
 
-                        <div id="priceTickets" class="input-group">
-                            <label for="priceTickets" class="col-form-label input-group-addon">
-                                {{ trans('mainLang.priceTickets') }}:
-                                ({{ trans('mainLang.studentExtern') }})
-                            </label>
                             <input class="form-control" type="number" name="priceTicketsNormal" step="0.1" min="0"
                                    placeholder="Student" value="{{$template->price_tickets_normal}}"/>
                             <span class="input-group-addon">€</span>
@@ -126,10 +138,10 @@
                     </div>
                     <br>
                     <div class="form-group col">
-                        <div id="price" class="input-group">
-                                <label for="price" class="col-form-label input-group-addon" >
-                                    {{ trans('mainLang.price') }}:
-                                    ({{ trans('mainLang.studentExtern') }})</label>
+                        <label for="price" class="col-form-label col-3 " >
+                            {{ trans('mainLang.price') }}:
+                            ({{ trans('mainLang.studentExtern') }})</label>
+                        <div id="price" class="input-group col-8">
                                 <input class="form-control" type="number" name="priceNormal" step="0.1" min="0"
                             placeholder="Student" value="{{$template->price_normal}}"/>
                             <span class="input-group-addon">€</span>
@@ -142,21 +154,22 @@
                     </div>
 
                     <div class="form-group col">
-                        <label for="preparationTime" class="col-form-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.DV-Time') }}:</label>
-                        {!! Form::input('time', 'preparationTime', $template->time_preparation_start, ['class'=>'form-control ']) !!}
-
+                        <label for="preparationTime" class="col-form-label col-3">{{ trans('mainLang.DV-Time') }}:</label>
+                        <div class="col-8">
+                            {!! Form::input('time', 'preparationTime', $template->time_preparation_start, ['class'=>'form-control ']) !!}
+                        </div>
                     </div>
 
                     <div class="form-group col">
-                        <label for="beginDate" class="col-form-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.begin') }}:</label>
-                        <div>
+                        <label for="beginDate" class="col-form-label col-3">{{ trans('mainLang.begin') }}:</label>
+                        <div class="col-8">
                             {!! Form::input('time', 'beginTime', $template->time_start, ['class'=>'form-control'] ) !!}
                         </div>
                     </div>
 
                     <div class="form-group col">
-                        <label for="endDate" class="col-form-label col-md-2 col-sm-2 col-xs-2">{{ trans('mainLang.end') }}:</label>
-                        <div>
+                        <label for="endDate" class="col-form-label col-3">{{ trans('mainLang.end') }}:</label>
+                        <div class="col-8">
                              {!! Form::input('time', 'endTime', $template->time_end, ['class'=>'form-control']) !!}
                         </div>
                     </div>
