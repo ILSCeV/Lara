@@ -12,8 +12,8 @@
 
     @auth
         @if(Auth::user()->privacy_accepted == 0)
-        <div class="card card bg-danger text-white">
-            <div class="card-header">
+        <div class="card card bg-danger">
+            <div class="card-header text-white">
                 <h3 class="card-title">{{ trans("mainLang.waitOneSecond") }}</h3>
             </div>
 
@@ -32,11 +32,11 @@
 
         <div class="card-body no-padding">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#complete" data-toggle="tab" aria-expanded="true">Datenschutzerklärung -
+                <li class="nav-item"><a class="nav-link active" href="#complete" data-toggle="tab" aria-expanded="true">Datenschutzerklärung -
                         deutsche Version</a></li>
-                <li class=""><a href="#short" data-toggle="tab" aria-expanded="false">Kurze Zusammenfassung - deutsche
+                <li class="nav-item"><a class="nav-link" href="#short" data-toggle="tab" aria-expanded="false">Kurze Zusammenfassung - deutsche
                         Version</a></li>
-                <li class=""><a href="#english" data-toggle="tab" aria-expanded="false">Short Summary - English
+                <li class="nav-item"><a class="nav-link" href="#english" data-toggle="tab" aria-expanded="false">Short Summary - English
                         Version</a></li>
             </ul>
 
