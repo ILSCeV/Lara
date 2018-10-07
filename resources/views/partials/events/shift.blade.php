@@ -55,9 +55,9 @@
         <input hidden name="shifts[id][]" value="{{$shiftId}}" class="shiftId"/>
         <input hidden name="shifts[type][]" value="{{$shiftTypeId}}" class="shiftId"/>
         @if(!is_null($shiftId) && $shiftId!='' && \Lara\Utilities::requirePermission(['admin','marketing','clubleitung']))
+            &nbsp;&nbsp;
             <a href="{{ route('shiftType.show',['id'=>$shiftTypeId]) }}" target="_blank"
-               class="btn btn-primary btn-small" title="{{trans("mainLang.editShiftType")}}"> <span
-                    class="glyphicon glyphicon-pencil"></span> </a>
+               class="btn btn-primary btn-small" title="{{trans("mainLang.editShiftType")}}"> <i class="fas fa-pencil-alt"></i>  </a>
         @endif
         <br class="d-block d-sm-none">
     </div>
