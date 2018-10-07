@@ -81,7 +81,7 @@ module.exports = {
     filename: devMode ? '[name].js' : '[name].[hash].js',
     path: path.resolve(__dirname, 'public/'),
   },
-  devtool: devMode ?'source-map' : false,
+  devtool: devMode ?'inline-source-map' : false,
   plugins: [
     new CleanWebpackPlugin(),
     new LiveReloadPlugin(),
@@ -95,6 +95,7 @@ module.exports = {
     new webpack.SourceMapDevToolPlugin({})
   ],
   optimization: {
+    minimize: !devMode,
     splitChunks: {
       chunks: 'async',
       minSize: 30000,
