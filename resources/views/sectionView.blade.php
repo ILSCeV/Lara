@@ -129,29 +129,31 @@
                 <div class="w-100"></div>
                 {{-- CRUD --}}
                 <div class="form-group row align-content-center">
-                    @is('admin')
-                    @if(isset($current_section->id))
-                        <a href="{!! action('SectionController@destroy',$current_section->id) !!}"
-                           class="btn btn-small btn-danger"
-                           data-toggle="tooltip"
-                           data-placement="bottom"
-                           title="&#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }}) löschen"
-                           data-method="delete"
-                           data-token="{{csrf_token()}}"
-                           rel="nofollow"
-                           data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }})? {{ trans('mainLang.warningNotReversible') }}">
-                            {{ trans('mainLang.delete') }}?
-                        </a>
-                    @endif
-                    @endis
-                    <button type="reset" class="btn btn-small btn-secondary">{{ trans('mainLang.reset') }}</button>
-                    @if(!isset($current_section->id))
-                        <button type="submit"
-                                class="btn btn-small btn-success">{{ trans('mainLang.createSection') }}</button>
-                    @else
-                        <button type="submit"
-                                class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
-                    @endif
+                    <div class="btn-group" role="group" aria-label="submit">
+                        @is('admin')
+                        @if(isset($current_section->id))
+                            <a href="{!! action('SectionController@destroy',$current_section->id) !!}"
+                               class="btn btn-small btn-danger"
+                               data-toggle="tooltip"
+                               data-placement="bottom"
+                               title="&#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }}) löschen"
+                               data-method="delete"
+                               data-token="{{csrf_token()}}"
+                               rel="nofollow"
+                               data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }})? {{ trans('mainLang.warningNotReversible') }}">
+                                {{ trans('mainLang.delete') }}?
+                            </a>
+                        @endif
+                        @endis
+                        <button type="reset" class="btn btn-small btn-secondary">{{ trans('mainLang.reset') }}</button>
+                        @if(!isset($current_section->id))
+                            <button type="submit"
+                                    class="btn btn-small btn-success">{{ trans('mainLang.createSection') }}</button>
+                        @else
+                            <button type="submit"
+                                    class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
+                        @endif
+                    </div>
                 </div>
                 @foreach ($errors->all() as $message)
                     <div class="form-group row alert alert-danger">
