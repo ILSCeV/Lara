@@ -298,8 +298,8 @@ $ldapid
                                                     @if($survey->deadline >= date("Y-m-d H:i:s") || $userCanEditDueToRole)
                                                     <!--Edit Delete Buttons-->
                                                         <td class="tdButtons ">
-                                                            <input href="#"
-                                                                   class="editButton btn btn-primary fa fa-pencil"
+                                                            <button href="#"
+                                                                   class="editButton btn btn-primary "
                                                                    id="editButton{{$answer->id}}"
                                                                    value=""
                                                                    style="height: 34px; width: 43px;"
@@ -307,8 +307,10 @@ $ldapid
                                                                    data-toggle="tooltip"
                                                                    data-placement="bottom"
                                                                    onclick="change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
+                                                                <span class="fas fa-pencil-alt"></span>
+                                                            </button>
                                                             <i id="spinner{{$answer->id}}"
-                                                               class="fa fa-spinner fa-spin fa-2x hidden"></i>
+                                                               class="fas fa-spinner fa-spin fa-2x d-none"></i>
 
                                                             <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                                                class="btn btn-secondary deleteRow"
