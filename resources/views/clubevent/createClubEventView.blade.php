@@ -319,14 +319,14 @@
 			    <div class="form-group col-12">
 			    	<label for="password" class="col-form-label {{$labelClass}}">{{ trans('mainLang.passwordEntry') }}:</label>
 			    	<div class="col-8">
-			    		{!! Form::password('password', [''] ,['class'=>'form-control']) !!}
+			    		{!! Form::password('password', ['class'=>'form-control']) !!}
 			    	</div>
 			    </div>
 
 			    <div class="form-group col-12 ">
 			    	<label fro="passwordDouble" class="{{$labelClass}}">{{ trans('mainLang.passwordRepeat') }}:</label>
 			    	<div class="col-8">
-			    		{!! Form::password('passwordDouble', [''],['class'=>'form-control']) !!}
+			    		{!! Form::password('passwordDouble', ['class'=>'form-control']) !!}
 			    	</div>
 			    </div>
 
