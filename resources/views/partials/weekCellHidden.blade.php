@@ -14,11 +14,11 @@
 		&nbsp;
 		DV: {{ date("H:i", strtotime($clubEvent->getSchedule->schdl_time_preparation_start)) }}
 		&nbsp;
-		<i class="fa fa-clock-o"></i> {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
+		<i class="far fa-clock"></i> {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
 		-
 		{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 		&nbsp;
-		<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->section->title }}
+		<i class="fas fa-map-marker">&nbsp;</i>{{ $clubEvent->section->title }}
 	</div>
 
 	<div class="card-body">

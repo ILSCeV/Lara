@@ -1,41 +1,41 @@
 <div class="card bg-warning">
 
 	{{--Check if the event is still going on--}}
-	@php
-	$classString = "card-header";
-	$clubEventClass = "palette-". $clubEvent->section->color;
-    switch ($clubEvent->evnt_type){
-    case 0:
-    $clubEventClass .="-700 bg";
-    break;
-    case 1:
-    $clubEventClass .=" palette-Purple-500 bg";
-    break;
-    case 2:
-    case 3:
-    case 10:
-    case 11:
-    $clubEventClass .= "-900 bg";
-    break;
-    case 4:
-    case 5:
-    case 6:
-    case 9:
-    $clubEventClass .= "-500 bg";
-    break;
-    case 7:
-    case 8:
-    $clubEventClass .= "-300 bg";
-    break;
-    default:
-    $clubEventClass .= "-500 bg";
-    }
-	@endphp
+    @php
+        $classString = "card-header";
+        $clubEventClass = "palette-". $clubEvent->section->color;
+        switch ($clubEvent->evnt_type){
+        case 0:
+        $clubEventClass .="-700 bg";
+        break;
+        case 1:
+        $clubEventClass .=" palette-Purple-500 bg";
+        break;
+        case 2:
+        case 3:
+        case 10:
+        case 11:
+        $clubEventClass .= "-900 bg";
+        break;
+        case 4:
+        case 5:
+        case 6:
+        case 9:
+        $clubEventClass .= "-500 bg";
+        break;
+        case 7:
+        case 8:
+        $clubEventClass .= "-300 bg";
+        break;
+        default:
+        $clubEventClass .= "-500 bg";
+        }
+    @endphp
 
-	@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
-		{{-- The event is already over --}}
-		<?php $classString .= " past-event";?>
-	@endif
+    @if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
+        {{-- The event is already over --}}
+        <?php $classString .= " past-event";?>
+    @endif
 
 	{{-- Set card color --}}
            <div class="{{$classString}} {{$clubEventClass}}" >
