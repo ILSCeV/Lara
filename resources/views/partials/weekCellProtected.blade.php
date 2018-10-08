@@ -1,36 +1,42 @@
 <div class="card bg-warning">
 
 	{{-- Check if the event is still going on --}}
-	<?php $classString = "card-header";?>
-	@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
-		<?php $classString .= " past-event";?>
-	@endif
-
+    @php
+        $classString = "card-header";
+        $clubEventClass = "palette-". $clubEvent->section->color;
+        switch ($clubEvent->evnt_type){
+        case 0:
+        $clubEventClass .="-700 bg";
+        break;
+        case 1:
+        $clubEventClass .=" palette-Purple-500 bg";
+        break;
+        case 2:
+        case 3:
+        case 10:
+        case 11:
+        $clubEventClass .= "-900 bg";
+        break;
+        case 4:
+        case 5:
+        case 6:
+        case 9:
+        $clubEventClass .= "-500 bg";
+        break;
+        case 7:
+        case 8:
+        $clubEventClass .= "-300 bg";
+        break;
+        default:
+        $clubEventClass .= "-500 bg";
+        }
+    @endphp
 	{{-- Set card color --}}
-	@if     ($clubEvent->evnt_type == 0)
-        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
-    @elseif ($clubEvent->evnt_type == 1)
-        <div class="{{$classString}} palette-Purple-500 bg">
-    @elseif ($clubEvent->evnt_type == 2
-    	  || $clubEvent->evnt_type == 3
-          || $clubEvent->evnt_type == 10
-          || $clubEvent->evnt_type == 11)
-        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
-    @elseif ($clubEvent->evnt_type == 4
-          || $clubEvent->evnt_type == 5
-          || $clubEvent->evnt_type == 6)
-        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
-    @elseif ($clubEvent->evnt_type == 7
-          || $clubEvent->evnt_type == 8)
-        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg">
-    @elseif ($clubEvent->evnt_type == 9)
-        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
-    @endif
-
+    <div class="{{$classString}} {{$clubEventClass}}" >
 			<h4 class="card-title">
 				@include("partials.event-marker")
 				&nbsp;
-				<a href="{{ URL::route('event.show', $clubEvent->id) }}">
+				<a class="{{$clubEventClass}}" href="{{ URL::route('event.show', $clubEvent->id) }}">
 					<span class="name">{{ $clubEvent->evnt_title }}</span>
 				</a>
 			</h4>
@@ -39,7 +45,7 @@
 			&nbsp;
 			DV: {{ date("H:i", strtotime($clubEvent->getSchedule->schdl_time_preparation_start)) }}
 			&nbsp;
-			<i class="far fa-clock-o"></i> {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
+			<i class="far fa-clock"></i> {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
 			-
 			{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 			&nbsp;
@@ -58,7 +64,7 @@
 		    </div>
 		@endif
 
-		<div class="card card-body no-padding">
+		<div class="card-body no-padding">
 
 			@if (!is_null($clubEvent->getSchedule))
 
@@ -77,7 +83,7 @@
 				        </div>
 
 				        {{-- SHIFT TITLE --}}
-				        <div class="col-xs-4 col-md-4 padding-right-minimal">
+				        <div class="col-2 padding-right-minimal">
 				            @include("partials.shiftTitle")
 				        </div>
 
@@ -85,13 +91,13 @@
 				        @if(isset($shift->getPerson->prsn_ldap_id))
 
 				        	{{-- SHIFT STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-				            <div class="col-xs-4 col-md-4 input-append btn-group padding-left-minimal">
+				            <div class="col-5 input-append btn-group padding-left-minimal">
 
-							    <div class="col-xs-2 col-md-2 no-padding" id="clubStatus{{ $shift->id }}">
+							    <div class="col-2 no-padding" id="clubStatus{{ $shift->id }}">
 							        @include("partials.shiftStatus")
 							    </div>
 
-							    <div class="col-xs-10 col-md-10 no-padding" id="{!! 'userName' . $shift->id !!}" >
+							    <div class="col-10 no-padding" id="{!! 'userName' . $shift->id !!}" >
                                     @if($shift->getPerson->isNamePrivate() == 0)
 							            {!! $shift->getPerson->prsn_name !!}
                                     @else
@@ -115,11 +121,11 @@
 							<div class="col-xs-1 col-md-1 no-padding">
 							    @if( $shift->comment == "" )
 							        <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
-							            <i class="fa fa-comment-o"></i>
+							            <i class="fas fa-comment-alt"></i>
 							        </button>
 							    @else
 							        <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
-							            <i class="fa fa-comment"></i>
+							            <i class="far fa-comment"></i>
 							        </button>
 							    @endif
 							</div>
@@ -135,24 +141,24 @@
 				        @else
 
 				            {{-- SHIFT STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-				            <div class="col-xs-4 col-md-4 input-append btn-group padding-left-minimal">
+				            <div class="col-5 input-append btn-group padding-left-minimal">
 				                @include("partials.shiftName")
 				            </div>
 
 				            {{-- SHIFT CLUB and DROPDOWN CLUB --}}
-				            <div class="col-xs-3 col-md-3 no-padding">
+				            <div class="col-3 no-padding">
 				                @include("partials.shiftClub")
 				            </div>
 
 				            {{-- SMALL COMMENT ICON --}}
-				            <div class="col-xs-1 col-md-1 no-padding">
+				            <div class="col-1 no-padding">
 						        @if( $shift->comment == "" )
 						            <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
-						                <i class="fa fa-comment-o"></i>
+						                <i class="fas fa-comment-alt"></i>
 						            </button>
 						        @else
 						            <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
-						                <i class="fa fa-comment"></i>
+						                <i class="fas fa-comment"></i>
 						            </button>
 						        @endif
 							</div>
