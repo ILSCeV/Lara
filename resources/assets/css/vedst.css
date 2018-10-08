@@ -215,6 +215,7 @@ input[type=number],
 
 .hide {
     overflow: hidden;
+	  display: none !important;
     height: 0px;
 }
 
