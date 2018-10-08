@@ -11,24 +11,24 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="card card.text-white.bg-info">
-            <div class="card-header">
-                <h4 class="card-title">
+        <div class="card bg-info">
+            <div class="card-header text-white">
+                <h4 class="card-title ">
                     {{ trans('mainLang.userPersonalPage') }}:
                     {{ $user->name }} ({{ $user->section->title }})
                 </h4>
             </div>
             <div class="card-body no-padding">
                 <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#shifts" data-toggle="tab">{{trans('mainLang.upcomingShifts')}}</a>
+                    <li class="nav-item">
+                        <a href="#shifts" class="nav-link active" data-toggle="tab">{{trans('mainLang.upcomingShifts')}}</a>
                     </li>
-                    <li>
-                        <a href="#settings" data-toggle="tab">{{trans('mainLang.settings')}}</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#settings" data-toggle="tab">{{trans('mainLang.settings')}}</a>
                     </li>
                 </ul>
                 <div id="tabContent" class="tab-content">
-                    <div class="tab-pane fade active in" id="shifts">
+                    <div class="tab-pane fade active in show" id="shifts">
                         <table class="table table-hover col-md-12">
                             <caption class="text-center"></caption>
                             <thead>
@@ -66,23 +66,23 @@
                                 <label for="privateClubName">
                                     <strong>{{ trans('mainLang.privateClubName') }}</strong>
                                 </label>
-                                <br class="show-xs">
+                                <br class="d-block d-md-none d-lg-none">
                                 <div class="radio-inline">
-                                    <label>
+                                    <label class="form-check">
                                         {!! Form::radio( 'is_name_private','null', is_null($user->is_name_private )) !!}
                                         {{ trans('mainLang.privateClubNameNull') }}
                                     </label>
                                 </div>
                                 <br>
                                 <div class="radio-inline">
-                                    <label>
+                                    <label class="form-check">
                                         {!! Form::radio( 'is_name_private','true', !is_null($user->is_name_private ) && $user->is_name_private == 1 ) !!}
                                         {{ trans('mainLang.privateClubNameYes') }}
                                     </label>
                                 </div>
                                 <br>
                                 <div class="radio-inline">
-                                    <label>
+                                    <label class="form-check">
                                         {!! Form::radio( 'is_name_private','false', !is_null($user->is_name_private ) && $user->is_name_private == 0) !!}
                                         {{ trans('mainLang.privateClubNameNo') }}
                                     </label>
