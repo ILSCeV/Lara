@@ -24,17 +24,17 @@
 
 {{-- Section filter --}}
         <div class="col-xs-12 col-md-7 hidden-print float-right">
-            <br class="d-block.d-sm-none">
+            <br class="d-block d-sm-none">
             @include('partials.filter')
-            <br class="d-block.d-sm-none">
+            <br class="d-block d-sm-none">
 
         </div>
 
-        <div class="col-md-12 col-xs-12">
+        <div class="col-12">
             @foreach($events as $clubEvent)
-                <div class="panel-group">
+
                     @include('partials.clubEventByIdSmall', $clubEvent)
-                </div>
+
             @endforeach
         </div>
 
