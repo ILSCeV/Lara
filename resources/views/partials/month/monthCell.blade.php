@@ -92,26 +92,7 @@ use Carbon\Carbon;
                     </div>
                     {{-- show everything for public events --}}
                 @else
-                    @if     ($clubEvent->evnt_type == 0)
-                        <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
-                    @elseif ($clubEvent->evnt_type == 1)
-                        <div class="cal-event {{$classString}} palette-Purple-500 bg">
-                    @elseif ($clubEvent->evnt_type == 2
-                          || $clubEvent->evnt_type == 3
-                          || $clubEvent->evnt_type == 10
-                          || $clubEvent->evnt_type == 11)
-                        <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
-                    @elseif ($clubEvent->evnt_type == 4
-                          || $clubEvent->evnt_type == 5
-                          || $clubEvent->evnt_type == 6)
-                        <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
-                    @elseif ($clubEvent->evnt_type == 7
-                          || $clubEvent->evnt_type == 8)
-                        <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg">
-                    @elseif ($clubEvent->evnt_type == 9)
-                    <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
-                    @endif
-
+                <div class="cal-event {{$classString}} {{\Lara\utilities\ViewUtility::getEventPaletteClass($ClubEvent) }}">
                     @include("partials.event-marker", $clubEvent)
                         <span class="event-time">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}</span>
                     <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
@@ -126,25 +107,7 @@ use Carbon\Carbon;
 
             {{-- show everything for members, but switch the color theme according to event type --}}
             @else
-                @if     ($clubEvent->evnt_type == 0)
-                    <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
-                @elseif ($clubEvent->evnt_type == 1)
-                    <div class="cal-event {{$classString}} palette-Purple-500 bg">
-                @elseif ($clubEvent->evnt_type == 2
-                      || $clubEvent->evnt_type == 3
-                      || $clubEvent->evnt_type == 10
-                      || $clubEvent->evnt_type == 11)
-                    <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
-                @elseif ($clubEvent->evnt_type == 4
-                      || $clubEvent->evnt_type == 5
-                      || $clubEvent->evnt_type == 6)
-                    <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
-                @elseif ($clubEvent->evnt_type == 7
-                      || $clubEvent->evnt_type == 8)
-                    <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg">
-                @elseif ($clubEvent->evnt_type == 9)
-                    <div class="cal-event {{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
-                @endif
+                <div class="cal-event {{$classString}} {{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}">
 
                     @include("partials.event-marker", $clubEvent)
                     {{-- Show starting time with Preparation time in () --}}

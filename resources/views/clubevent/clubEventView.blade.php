@@ -7,28 +7,11 @@
 		<div class="row no-margin">
 			<div class="card col no-padding">
                 @php
-                $commonHeader = 'card-header ';
+                    $clubEventClass = \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent);
+                    $commonHeader = 'card-header '. $clubEventClass;
                 @endphp
 				{{-- Set card color --}}
-				@if     ($clubEvent->evnt_type == 0)
-			        <div class="{{ $commonHeader }} palette-{!! $clubEvent->section->color !!}-700 bg">
-			    @elseif ($clubEvent->evnt_type == 1)
-			        <div class="{{ $commonHeader }} palette-Purple-500 bg">
-			    @elseif ($clubEvent->evnt_type == 2
-			    	  || $clubEvent->evnt_type == 3
-			          || $clubEvent->evnt_type == 10
-			          || $clubEvent->evnt_type == 11)
-			        <div class="{{ $commonHeader }} palette-{!! $clubEvent->section->color !!}-900 bg">
-			    @elseif ($clubEvent->evnt_type == 4
-			          || $clubEvent->evnt_type == 5
-			          || $clubEvent->evnt_type == 6)
-			        <div class="{{ $commonHeader }} palette-{!! $clubEvent->section->color !!}-500 bg">
-			    @elseif ($clubEvent->evnt_type == 7
-			          || $clubEvent->evnt_type == 8)
-			        <div class="{{ $commonHeader }} palette-{!! $clubEvent->section->color !!}-300 bg">
-			    @elseif ($clubEvent->evnt_type == 9)
-			        <div class="{{ $commonHeader }} palette-{!! $clubEvent->section->color !!}-500 bg">
-			    @endif
+				<div class="{{ $commonHeader }}">
 					<h4 class="card-title">@include("partials.event-marker")&nbsp;{{ $clubEvent->evnt_title }}</h4>
 					<h5 class="card-title">{{ $clubEvent->evnt_subtitle }}</h5>
 				</div>
@@ -38,31 +21,7 @@
 								<i>{{ trans('mainLang.type') }}:</i>
 							</td>
 							<td>
-								@if( $clubEvent->evnt_type == 0)
-									{{ trans('mainLang.normalProgramm') }}
-								@elseif( $clubEvent->evnt_type == 1)
-									{{ trans('mainLang.information') }}
-								@elseif( $clubEvent->evnt_type == 2)
-									{{ trans('mainLang.special') }}
-								@elseif( $clubEvent->evnt_type == 3)
-									{{ trans('mainLang.LiveBandDJ') }}
-								@elseif( $clubEvent->evnt_type == 4)
-									{{ trans('mainLang.internalEvent') }}
-								@elseif( $clubEvent->evnt_type == 5)
-									{{ trans('mainLang.utilization') }}
-								@elseif( $clubEvent->evnt_type == 6)
-									{{ trans('mainLang.flooding') }}
-								@elseif( $clubEvent->evnt_type == 7)
-									{{ trans('mainLang.flyersPlacard') }}
-								@elseif( $clubEvent->evnt_type == 8)
-									{{ trans('mainLang.preSale') }}
-								@elseif( $clubEvent->evnt_type == 9)
-									{{ trans('mainLang.others') }}
-								@elseif( $clubEvent->evnt_type == 10)
-									{{ trans('mainLang.outsideEvent') }}
-								@elseif( $clubEvent->evnt_type == 11)
-									{{ trans('mainLang.buffet') }}
-								@endif
+                                {{ \Lara\Utilities::getEventTypeTranslation($clubEvent->evnt_type)  }}
 							</td>
 						</tr>
 						<tr>
