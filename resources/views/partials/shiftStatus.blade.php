@@ -33,7 +33,7 @@
            data-placement="top"
            title="{{ Lara\Status::localize($person->prsn_status, $section) }}"></i>
     @else
-        <i class="fa fa-circle-o"
+        <i class="far fa-circle"
            name="status-icon"
            style="color:yellowgreen;"
            data-toggle="tooltip"
