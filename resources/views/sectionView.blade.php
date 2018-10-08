@@ -8,185 +8,165 @@
 @section('content')
     @php
         /** @var \Lara\Section $current_section */
+    $labelClass='col-6 w-25';
+    $inputClass = 'col-6';
     @endphp
+    <div class="col-md-8 col-sm-auto">
+        <div class="card bg-info">
+            <div class="card-header text-white">
+                <h4 class="card-title">#{{ $current_section->id }}: "{!! $current_section->title !!}" </h4>
+            </div>
 
-    <div class="card card.text-white.bg-info">
-        <div class="card-header">
-            <h4 class="card-title">#{{ $current_section->id }}: "{!! $current_section->title !!}" </h4>
-        </div>
+            <div class="card-body ">
 
-        <div class="card card-body no-padding">
-            <table class="table table-hover">
                 @if(!isset($current_section->id))
-                    {!! Form::open(  array( 'route' => ['section.store', $current_section->id],
+                    {!! Form::open(  [ 'route' => ['section.store', $current_section->id],
                                             'id' => $current_section->id,
                                             'method' => 'POST',
-                                            'class' => 'section')  ) !!}
+                                            'class' => 'section ']  ) !!}
                 @else
-                    {!! Form::open(  array( 'route' => ['section.update', $current_section->id],
+                    {!! Form::open(  [ 'route' => ['section.update', $current_section->id],
                                             'id' => $current_section->id,
                                             'method' => 'PUT',
-                                            'class' => 'section')  ) !!}
+                                            'class' => 'section ']  ) !!}
                 @endif
                 {{-- Title --}}
-                <tr>
-                    <td width="20%" class="left-padding-16">
-                        <i>{{ trans('mainLang.section') }}:</i>
-                    </td>
-                    <td>
-                        {!! Form::text('id',
+
+                <div class="form-group row">
+                    <label class="col-form-label {{$labelClass}}" for="title"> <i>{{ trans('mainLang.section') }}:</i></label>
+                    <div class="{{$inputClass}}">
+                        {!!Form::hidden('id',
                            $current_section->id,
-                           array('id'=>'id', 'hidden')) !!}
+                           array('id'=>'id')) !!}
 
                         {!! Form::text('title',
                            $current_section->title,
-                           array('id'=>'title')) !!}
-                    </td>
-                </tr>
+                           array('id'=>'title', 'class'=>'form-control')) !!}
+                    </div>
+                </div>
+                <div class="w-100"></div>
+
                 {{-- Color --}}
-                <tr class="form-group">
-                    <td width="20%" class="left-padding-16">
-                        <label for="color">
-                            <i>{{ trans('mainLang.color') }}:</i>
-                        </label>
-                    </td>
-                    <td>
-							<span class="col-md-12 col-sm-12 col-xs-12 no-padding">
-								{!! Form::text('color', $current_section->color, array('id'=>'color', 'readonly', 'class'=>'palette-'.$current_section->color.'-500-Primary bg') ) !!}
-                                <a class="btn-small btn-primary dropdown-toggle"
-                                   data-toggle="dropdown"
-                                   href="javascript:void(0);">
-							        <span class="caret"></span>
-							    </a>
-							    <ul class="dropdown-menu">
-								    @foreach(config('color.colors') as $color)
-                                        <li>
-								        	<a href="javascript:void(0);"
-                                               class="palette-{{$color}}-500-Primary bg"
-                                               onClick="document.getElementById('color').value='{{$color}}'">
-								        		{{ $color }}
-								        	</a>
-								        </li>
-                                    @endforeach
-							    </ul>  	
-						    </span>
-                    </td>
-                </tr>
+                <div class="form-group row">
+                    <label class="col-form-label {{$labelClass}}" for="color">
+                          <i>{{ trans('mainLang.color') }}:</i>
+                    </label>
+                    <div class="{{$inputClass}}">
+                        <select
+                            id="color" class="selectpicker {{ $errors->has('color') ? ' has-error' : '' }}"
+                            form="{{$current_section->id}}" name="color">
+                            @foreach(config('color.colors') as $color)
+                                <option
+                                    data-content="<span class='palette-{{$color}}-500-Primary bg' >{{$color}}</span>"
+                                    @if($color == $current_section->color)selected @endif> {{$color}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="w-100"></div>
                 {{-- Event defaults --}}
-                <tr>
-                    <td colspan="2">
-                        {{ trans('mainLang.eventDefaults')}}
-                    </td>
-                </tr>
+                <div class="form-group row col-form-label">
+                    {{ trans('mainLang.eventDefaults')}}
+                </div>
+                <div class="w-100"></div>
                 {{-- Event DV time --}}
-                <tr class="form-group">
-                    <td width="20%" class="left-padding-16">
-                        <label for="preparationTime">
+                <div class="form-group row">
+                        <label class="col-form-label {{$labelClass}}" for="preparationTime">
                             <i>{{ trans('mainLang.DV-Time') }}:</i>
                         </label>
-                    </td>
-                    <td>
-							<span class="col-md-12 col-sm-12 col-xs-12 no-padding">
-								{!! Form::input('time', 'preparationTime', $current_section->preparationTime) !!}
-						    </span>
-                    </td>
-                </tr>
+
+                    <div class="{{$inputClass}}">
+                        {!! Form::input('time', 'preparationTime', $current_section->preparationTime,['class'=>'form-control']) !!}
+                    </div>
+                </div>
+                <div class="w-100"></div>
                 {{-- Event start time --}}
-                <tr class="form-group">
-                    <td width="20%" class="left-padding-16">
-                        <label for="startTime">
+                <div class="form-group row">
+                    <div class="{{$labelClass}}">
+                        <label class="col-form-label" for="startTime">
                             <i>{{ trans('mainLang.begin') }}:</i>
                         </label>
-                    </td>
-                    <td>
-							<span class="col-md-12 col-sm-12 col-xs-12 no-padding">
-								{!! Form::input('time', 'startTime', $current_section->startTime) !!}
-						    </span>
-                    </td>
-                </tr>
+                    </div>
+                    <div class="{{$inputClass}}">
+                        {!! Form::input('time', 'startTime', $current_section->startTime,['class'=>'form-control']) !!}
+                    </div>
+                </div>
+                <div class="w-100"></div>
                 {{-- Event end time --}}
-                <tr class="form-group">
-                    <td width="20%" class="left-padding-16">
-                        <label for="endTime">
+                <div class="form-group row">
+                    <div class="{{$labelClass}}">
+                        <label class="col-form-label" for="endTime">
                             <i>{{ trans('mainLang.end') }}:</i>
                         </label>
-                    </td>
-                    <td>
-							<span class="col-md-12 col-sm-12 col-xs-12 no-padding">
-								{!! Form::input('time', 'endTime', $current_section->endTime) !!}
-						    </span>
-                    </td>
-                </tr>
+                    </div>
+                    <div class="{{$inputClass}}">
+                        {!! Form::input('time', 'endTime', $current_section->endTime, ['class'=>'form-control']) !!}
+                    </div>
+                </div>
+                <div class="w-100"></div>
                 {{-- is club name public --}}
-                <tr class="form-group">
-                    <td width="20%" class="left-padding-16">
-                        <label for="endTime">
-                            <i>{{ trans('mainLang.privateClubName') }}:</i>
+                <div class="form-group row">
+                    <div class="{{$labelClass}}">
+                    <label class="col-form-label" for="private_name">
+                        <i>{{ trans('mainLang.privateClubName') }}:</i>
+                    </label>
+                    </div>
+                    <div class="{{$inputClass}}">
+                    <div class="radio-inline" id="private_name">
+                        <label class="form-check">
+                            {!! Form::radio( 'is_name_private','true', !is_null($current_section->is_name_private ) && $current_section->is_name_private == 1) !!}
+                            {{ trans('mainLang.privateClubNameYes') }}
                         </label>
-                    </td>
-                    <td>
-							<span class="col-md-12 col-sm-12 col-xs-12 no-padding">
-                                <div class="radio-inline">
-                                    <label>
-                                        {!! Form::radio( 'is_name_private','true', !is_null($current_section->is_name_private ) && $current_section->is_name_private == 1) !!}
-                                        {{ trans('mainLang.privateClubNameYes') }}
-                                    </label>
-                                </div>
-                                <div class="radio-inline">
-                                    <label>
-                                        {!! Form::radio( 'is_name_private','false', !is_null($current_section->is_name_private ) && $current_section->is_name_private == 0) !!}
-                                        {{ trans('mainLang.privateClubNameNo') }}
-                                    </label>
-                                </div>
-                            </span>
-                    </td>
-                </tr>
+                    </div>
+                    <div class="radio-inline">
+                        <label class="form-check">
+                            {!! Form::radio( 'is_name_private','false', !is_null($current_section->is_name_private ) && $current_section->is_name_private == 0) !!}
+                            {{ trans('mainLang.privateClubNameNo') }}
+                        </label>
+                    </div>
+                    </div>
+                </div>
+                <div class="w-100"></div>
                 {{-- CRUD --}}
-                <tr>
-                    <td>
-                        &nbsp;
-                    </td>
-                    <td>
-                        @is('admin')
-                        @if(isset($current_section->id))
-                            <a href="{!! action('SectionController@destroy',$current_section->id) !!}"
-                               class="btn btn-small btn-danger"
-                               data-toggle="tooltip"
-                               data-placement="bottom"
-                               title="&#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }}) löschen"
-                               data-method="delete"
-                               data-token="{{csrf_token()}}"
-                               rel="nofollow"
-                               data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }})? {{ trans('mainLang.warningNotReversible') }}">
-                                {{ trans('mainLang.delete') }}?
-                            </a>
-                        @endif
-                        @endis
-                        <button type="reset" class="btn btn-small btn-secondary">{{ trans('mainLang.reset') }}</button>
-                        @if(!isset($current_section->id))
-                            <button type="submit"
-                                    class="btn btn-small btn-success">{{ trans('mainLang.createSection') }}</button>
-                        @else
-                            <button type="submit"
-                                    class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
-                        @endif
-                    </td>
-                </tr>
+                <div class="form-group row align-content-center">
+                    @is('admin')
+                    @if(isset($current_section->id))
+                        <a href="{!! action('SectionController@destroy',$current_section->id) !!}"
+                           class="btn btn-small btn-danger"
+                           data-toggle="tooltip"
+                           data-placement="bottom"
+                           title="&#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }}) löschen"
+                           data-method="delete"
+                           data-token="{{csrf_token()}}"
+                           rel="nofollow"
+                           data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }})? {{ trans('mainLang.warningNotReversible') }}">
+                            {{ trans('mainLang.delete') }}?
+                        </a>
+                    @endif
+                    @endis
+                    <button type="reset" class="btn btn-small btn-secondary">{{ trans('mainLang.reset') }}</button>
+                    @if(!isset($current_section->id))
+                        <button type="submit"
+                                class="btn btn-small btn-success">{{ trans('mainLang.createSection') }}</button>
+                    @else
+                        <button type="submit"
+                                class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
+                    @endif
+                </div>
                 @foreach ($errors->all() as $message)
-                    <tr>
-                        <td>
+                    <div class="form-group row alert alert-danger">
+                        <div class="col">
                             Error:
-                        </td>
-                        <td>
+                        </div>
+                        <div class="col">
                             {{ $message }}
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 @endforeach
                 {!! Form::close() !!}
-            </table>
+            </div>
         </div>
     </div>
-
 
 @stop
 
