@@ -16,7 +16,7 @@ function sortTable($table: JQuery, byName: boolean, descending: boolean) {
         .find("tbody")
         .find("tr")
         .toArray()
-        .sort((a, b) => rowCatcher(a).localeCompare(rowCatcher(b), undefined, {'numeric': true}));
+        .sort((a, b) => rowCatcher(a.toString()).localeCompare(rowCatcher(b.toString()), undefined, {'numeric': true}));
     if (descending) {
         rows.reverse();
     }
