@@ -125,7 +125,7 @@ Disabling iCal until fully functional.
     {{-- Desktop version --}}
                     <li class=" d-none d-md-block d-lg-block nav-item">
                         <div style="padding-top:2px" class="btn-group">
-                            <a class="btn btn-primary dropdown-toggle nav-link" data-toggle="dropdown" href="#">+</a>
+                            <a class="btn btn-primary dropdown-toggle nav-link text-white" data-toggle="dropdown" href="#">+</a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-item" ><a href="{{ URL::route('event.create') }}">{{ trans('mainLang.createNewEvent') }}</a></li>
                                 <li class="dropdown-item" ><a href="{{ URL::route('survey.create') }}">{{ trans('mainLang.createNewSurvey') }}</a></li>
@@ -136,55 +136,56 @@ Disabling iCal until fully functional.
     {{-- Mobile version --}}
                 <li class="nav-item d-block d-sm-none">
                     <a href="{{ URL::route('event.create') }}"
-                       class="btn btn-sm btn-primary d-block.d-sm-none centered nav-link">
+                       class="btn btn-sm btn-primary d-block d-sm-none centered nav-link text-white">
                         {{ trans('mainLang.createNewEvent') }}
                     </a>
                 </li>
 
                 <li class="nav-item d-block d-sm-none">
                     <a href="{{ URL::route('survey.create') }}"
-                       class="btn btn-sm btn-primary d-block.d-sm-none centered nav-link">
+                       class="btn btn-sm btn-primary d-block d-sm-none centered nav-link text-white">
                         {{ trans('mainLang.createNewSurvey') }}
                     </a>
                 </li>
 {{-- MEMBER INFO / members only --}}
                 <li class="nav-item">
                     <strong>
-                                    <span data-toggle="tooltip"
-                                          data-placement="bottom"
-                                          title="{{ trans('mainLang.userPersonalPage') }}">
-                                            <a class="nav-link" href="{{route('user.personalpage')}}">
-                                                {{ Auth::user()->name }}
-                                                @is(Roles::PRIVILEGE_ADMINISTRATOR)
-                                           ({{ Auth::user()->section->title . " / Admin" }})
-                                       @elseis(Roles::PRIVILEGE_CL)
-                                        ({{ Auth::user()->section->title . " / Clubleitung" }})
-                                       @elseis(Roles::PRIVILEGE_MARKETING)
-                                       ({{ Auth::user()->section->title . " / Marketing" }})
-                                                @else
-                                            ({{ Auth::user()->section->title }})
-                                                    @endis
+                       <span data-toggle="tooltip"
+                         data-placement="bottom"
+                         title="{{ trans('mainLang.userPersonalPage') }}">
+                          <a class="nav-link" href="{{route('user.personalpage')}}">
+                            {{ Auth::user()->name }}
+                           @is(Roles::PRIVILEGE_ADMINISTRATOR)
+                            ({{ Auth::user()->section->title . " / Admin" }})
+                           @elseis(Roles::PRIVILEGE_CL)
+                            ({{ Auth::user()->section->title . " / Clubleitung" }})
+                           @elseis(Roles::PRIVILEGE_MARKETING)
+                            ({{ Auth::user()->section->title . " / Marketing" }})
+                           @else
+                            ({{ Auth::user()->section->title }})
+                           @endis
+                                  @php
+                                      $attributes = Lara\Status::style(Auth::user()->status);
+                                  @endphp
+                                  <i class="{{ $attributes["status"]}}"
+                                     style="{{ $attributes["style"] }}"
+                                     data-toggle="tooltip"
+                                     data-placement="bottom"
+                                     title="{{ Lara\Status::localizeCurrent() }}"></i>
                              </a>
                        </span>
-                        @php
-                            $attributes = Lara\Status::style(Auth::user()->status);
-                        @endphp
-                        <i class="{{ $attributes["status"]}}"
-                           style="{{ $attributes["style"] }}"
-                           data-toggle="tooltip"
-                           data-placement="bottom"
-                           title="{{ Lara\Status::localizeCurrent() }}"></i>
+
                     </strong>
             </li>
-                    <li  class="btn-group nav-item">
+                    <li  class="nav-item btn-group">
                         {!! Form::open(array('url' => 'logout',
                                             'method' => 'POST',
                                             'class'=>'form-inline')) !!}
                             <div class="navbar-form">
                                 &nbsp;&nbsp;
 
-                                <br class="d-block.d-sm-none">
-                                <br class="d-block.d-sm-none">
+                                <br class="d-block d-sm-none">
+                                <br class="d-block d-sm-none">
                                 {!! Form::submit( Lang::get('mainLang.logOut'),
                                                   array('class' => 'btn btn-secondary btn-sm float-right',
                                                         'name'  => 'logout') ) !!}
