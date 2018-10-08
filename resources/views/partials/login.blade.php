@@ -10,7 +10,7 @@
                           'style'        => 'cursor: auto',
                           'autofocus'=>'autofocus'])  !!}
 
-    <br class="d-block.d-sm-none">
+    <br class="d-block d-sm-none">
 
 
     {!! Form::password( 'password',
@@ -19,7 +19,7 @@
                         'autocomplete' => 'off',
                         'style'        => 'cursor: auto'] ) !!}
 
-    <br class="d-block.d-sm-none">
+    <br class="d-block d-sm-none">
 
     @dev
     <select name="userGroup" id="userGroup" class="btn btn-sm form-control">
@@ -31,6 +31,6 @@
     {!! Form::submit( Lang::get('mainLang.logIn'),
                       array('class' => ' btn btn-primary btn-sm') ) !!}
 
-    <br class="d-block.d-sm-none">
+    <br class="d-block d-sm-none">
 </div>
 {!! Form::close() !!}
