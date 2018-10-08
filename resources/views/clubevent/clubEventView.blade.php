@@ -109,7 +109,7 @@
 					@auth
 						<table class="table table-hover">
                             @if(isset($clubEvent->facebook_done))
-                                <tr class="d-flex">
+                                <tr class="">
                                     <td width="33%" class="left-padding-16">
                                         <i>{{ trans('mainLang.faceDone') }}?</i>
                                     </td>
@@ -123,7 +123,7 @@
                                 </tr>
                             @endif
 							@if($clubEvent->event_url!=null && $clubEvent->event_url!="")
-								<tr class="d-flex">
+								<tr class="">
 									<td width="33%" class="left-padding-16">
 										<i>{{ trans('mainLang.eventUrl') }}:</i>
 									</td>
@@ -137,7 +137,7 @@
 								</tr>
 							@endif
                             @if(isset($clubEvent->price_tickets_normal))
-                                <tr class="d-flex">
+                                <tr class="">
                                     <td width="33%" class="left-padding-16">
                                         <i>{{ trans('mainLang.priceTickets') }}:</i>
                                     </td>
@@ -152,7 +152,7 @@
                                 </tr>
                             @endif
                             @if(isset($clubEvent->price_normal))
-                                <tr class="d-flex">
+                                <tr class="">
                                     <td width="33%" class="left-padding-16">
                                         <i>{{ trans('mainLang.price') }}:</i>
                                     </td>
@@ -242,9 +242,9 @@
 	</div>
 
 
-	<div class="card card bg-warning">
+	<div class="card bg-warning">
 		@if( $clubEvent->getSchedule->schdl_password != '')
-			<div class="hidden-print card card-header">
+			<div class="hidden-print card-header">
 			    {!! Form::password('password', array('required',
 			                                         'class'=>'col-md-4 col-sm-4 col-xs-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
