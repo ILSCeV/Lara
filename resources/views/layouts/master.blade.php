@@ -43,7 +43,7 @@
         <!-- Back to Top button -->
         <a id="back-to-top"
            href="#"
-           class="btn btn-primary btn-lg back-to-top hidden-print d-md-none d-lg-none"
+           class="btn btn-primary btn-lg back-to-top hidden-print d-md-none d-lg-none d-sm-block d-block"
            role="button"
            title="{{ trans("mainLang.backToTop")  }}"
            data-toggle="tooltip"
