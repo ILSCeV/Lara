@@ -1,37 +1,48 @@
 <div class="card bg-warning">
 
 	{{--Check if the event is still going on--}}
-	<?php $classString = "card card-header";?>
+	@php
+	$classString = "card-header";
+	$clubEventClass = "palette-". $clubEvent->section->color;
+    switch ($clubEvent->evnt_type){
+    case 0:
+    $clubEventClass .="-700 bg";
+    break;
+    case 1:
+    $clubEventClass .=" palette-Purple-500 bg";
+    break;
+    case 2:
+    case 3:
+    case 10:
+    case 11:
+    $clubEventClass .= "-900 bg";
+    break;
+    case 4:
+    case 5:
+    case 6:
+    case 9:
+    $clubEventClass .= "-500 bg";
+    break;
+    case 7:
+    case 8:
+    $clubEventClass .= "-300 bg";
+    break;
+    default:
+    $clubEventClass .= "-500 bg";
+    }
+	@endphp
+
 	@if( strtotime($clubEvent->evnt_date_end.' '.$clubEvent->evnt_time_end) < time() )
 		{{-- The event is already over --}}
 		<?php $classString .= " past-event";?>
 	@endif
 
 	{{-- Set card color --}}
-	@if     ($clubEvent->evnt_type == 0)
-        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-700 bg">
-    @elseif ($clubEvent->evnt_type == 1)
-        <div class="{{$classString}} palette-Purple-500 bg">
-    @elseif ($clubEvent->evnt_type == 2
-    	  || $clubEvent->evnt_type == 3
-          || $clubEvent->evnt_type == 10
-          || $clubEvent->evnt_type == 11)
-        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-900 bg">
-    @elseif ($clubEvent->evnt_type == 4
-          || $clubEvent->evnt_type == 5
-          || $clubEvent->evnt_type == 6)
-        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
-    @elseif ($clubEvent->evnt_type == 7
-          || $clubEvent->evnt_type == 8)
-        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-300 bg">
-    @elseif ($clubEvent->evnt_type == 9)
-        <div class="{{$classString}} palette-{!! $clubEvent->section->color !!}-500 bg">
-    @endif
-
-			<h4 class="card-title">
+           <div class="{{$classString}} {{$clubEventClass}}" >
+			<h4 class="card-title ">
 				@include("partials.event-marker")
 				&nbsp;
-				<a href="{{ URL::route('event.show', $clubEvent->id) }}">
+				<a class="{{$clubEventClass}}" href="{{ URL::route('event.show', $clubEvent->id) }}">
 					<span class="name">{{ $clubEvent->evnt_title }}</span>
 				</a>
 			</h4>
@@ -48,11 +59,11 @@
 			&nbsp;
 			DV: {{ date("H:i", strtotime($clubEvent->getSchedule->schdl_time_preparation_start)) }}
 			&nbsp;
-			<i class="fa fa-clock-o"></i> {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
+			<i class="far fa-clock"></i> {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
 			-
 			{{ date("H:i", strtotime($clubEvent->evnt_time_end)) }}
 			&nbsp;
-			<i class="fa fa-map-marker">&nbsp;</i>{{ $clubEvent->section->title }}
+			<i class="fas fa-map-marker">&nbsp;</i>{{ $clubEvent->section->title }}
 
 		</div>
 
@@ -69,13 +80,13 @@
 		    </div>
 		@endif
 
-		<div class="card card-body no-padding">
+		<div class="card-body no-padding">
 
 			{{-- Show shifts --}}
 			@foreach($shifts = $clubEvent->getSchedule->shifts as $shift)
 				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
                 {{-- add a divider if the shift is not the last one --}}
-			    <div class="row{!! $shift !== $shifts->last() ? ' divider': false !!}{!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id == Auth::user()->person->prsn_ldap_id) ? " my-shift" : false !!}">
+			    <div class="row {!! $shift !== $shifts->last() ? ' divider': false !!}{!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id == Auth::user()->person->prsn_ldap_id) ? " my-shift" : false !!}">
 			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 			                                'id' => $shift->id,
 			                                'method' => 'put',
@@ -88,17 +99,17 @@
 			        </div>
 
 			        {{-- Shift TITLE --}}
-			        <div class="col-4 padding-right-minimal">
+			        <div class="col-2 padding-right-minimal">
 			            @include("partials.shiftTitle")
 			        </div>
 
 			        {{-- SHIFT STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-					<div class="col-4 input-append btn-group padding-left-minimal">
+					<div class="col-5 input-append btn-group padding-left-minimal">
 					    @include("partials.shiftName")
 					</div>
 
 					{{-- SHIFT CLUB and DROPDOWN CLUB --}}
-					<div class="col-3 no-padding">
+					<div class="col-4 no-padding">
 					    @include("partials.shiftClub")
 					</div>
 
@@ -106,11 +117,11 @@
 					<div class="col-1 no-padding">
 				        @if( $shift->comment == "" )
 				            <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
-				                <i class="fa fa-comment-o"></i>
+				                <i class="far fa-comment-alt"></i>
 				            </button>
 				        @else
 				            <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
-				                <i class="fa fa-comment"></i>
+				                <i class="fas fa-comment"></i>
 				            </button>
 				        @endif
 					</div>
