@@ -9,7 +9,7 @@
 
 @if( is_null($shift->getPerson) )
 
-    <i class="fa fa-question"
+    <i class="fas fa-question"
        name="status-icon"
        style="color:lightgrey;"
        data-toggle="tooltip"
