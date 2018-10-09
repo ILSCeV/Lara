@@ -30,13 +30,14 @@
 
         </div>
 
-        <div class="col-12">
+
             @foreach($events as $clubEvent)
-
+                <div class="row col-md-8 col-xs-auto">
                     @include('partials.clubEventByIdSmall', $clubEvent)
-
+                </div>
+                <div class="w-100"></div>
             @endforeach
-        </div>
+
 
         <div class="col-md-12 col-xs-12">
             {{-- Legend --}}
