@@ -1,12 +1,12 @@
-<div class="card section-filter {!! "section-" . $clubEvent->section->id !!} col-12">
+<div class="card section-filter {!! "section-" . $clubEvent->section->id !!} w-100 {{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}">
     {{-- show only a placeholder for private events --}}
     @if($clubEvent->evnt_is_private && !Auth::user())
-        <div class="card-header">
+        <div class="card-header {{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}">
             <h4><span class="name">{{ trans('mainLang.internalEvent') }}</span></h4>
         </div>
     @else
         {{-- Set card color --}}
-        <div class="card-header {{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}">
+        <div class="card-header ">
             <h4 class="card-title">
                 @include("partials.event-marker")&nbsp;<a class="{{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}" href="{{ URL::route('event.show', $clubEvent->id) }}">{{ $clubEvent->evnt_title }}</a>
             </h4>
@@ -14,7 +14,7 @@
         </div>
 	@endif
 
-	<div class="card-body ">
+	<div class="card-body text-dark">
 		<strong>{{ trans('mainLang.begin') }}:</strong> {{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start)) }}
 		um {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
 		<br />
