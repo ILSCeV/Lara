@@ -70,136 +70,44 @@
 
                             @foreach($events as $clubEvent)
                                 {{-- Filter: we add a css class later below if a club is mentioned in filter data --}}
+                                {{-- we compare the current week number with the week the event happens in
+                                                 to catch and hide any events on mondays and tuesdays (day < 3) next week
+                                                 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view. --}}
+                                @php
+                                $elementClass = 'element-item private section-filter col-4';
+                                foreach($sections as $section){
+                                    if(in_array( $section->id, $clubEvent->showToSectionIds() )){
+                                    $elementClass.=" section-" . $section->id;
+                                    }
+                                }
+                                if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
+                                          && date('N', strtotime($clubEvent->evnt_date_start)) < 3 ) {
+                                          $elementClass.=' week-mo-so';
+                                } elseif (date("W", strtotime($clubEvent->evnt_date_start) )
+                                              === date("W", strtotime("next Week".$weekStart))
+                                              && date('N', strtotime($clubEvent->evnt_date_start)) < 3) {
+                                              $elementClass.=' week-mi-di hide';
+                                }
+                                if($clubEvent->evnt_is_private){
+                                   $elementClass.=' private';
+                                }
 
+                                @endphp
+                                <div class="{{$elementClass}}">
                                 {{-- guests see private events as placeholders only, so check if user is logged in --}}
                                 @guest
-
-                                    {{-- show only a placeholder for private events --}}
                                     @if($clubEvent->evnt_is_private)
-                                        {{-- we compare the current week number with the week the event happens in
-                                             to catch and hide any events on mondays and tuesdays (day < 3) next week
-                                             in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view. --}}
-                                        @if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-                                          && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-                                            <div class="element-item private section-filter
-                                                        @foreach($sections as $section)
-                                                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                                        @endforeach
-                                                        week-mo-so">
-                                        @elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
-                                              === date("W", strtotime("next Week".$weekStart))
-                                              && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-                                            <div class="element-item private section-filter
-                                                        @foreach($sections as $section)
-                                                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                                        @endforeach
-                                                        week-mi-di hide">
-                                        @else
-                                            <div class="element-item private section-filter
-                                                        @foreach($sections as $section)
-                                                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                                        @endforeach">
-                                        @endif
-                                            @include('partials.weekCellHidden')
-                                        </div>
-
+                                     @include('partials.weekCellHidden')
                                     {{-- show public events, but protect members' entries from being changed by guests --}}
                                     @else
-
-                                        {{-- we compare the current week number with the week the event happens in
-                                             to catch and hide any events on mondays and tuesdays (day < 3) next week
-                                             in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view.
-                                             Formatting: "Section Name 123" => "section-name-123"  --}}
-                                        @if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-                                          && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-                                            <div class="element-item section-filter
-                                                        @foreach($sections as $section)
-                                                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                                        @endforeach
-                                                        week-mo-so">
-                                        @elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
-                                              === date("W", strtotime("next Week".$weekStart))
-                                              && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-                                            <div class="element-item section-filter
-                                                        @foreach($sections as $section)
-                                                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                                        @endforeach
-                                                        week-mi-di hide">
-                                        @else
-                                            <div class="element-item section-filter
-                                                        @foreach($sections as $section)
-                                                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                                        @endforeach ">
-                                        @endif
-
-                                            @include('partials.weekCellProtected')
-                                        </div>
-
+                                      @include('partials.weekCellProtected')
                                     @endif
-
                                 {{-- show everything for members --}}
                                 @else
-
                                     {{-- members see both private and public events, but still need to manage color scheme --}}
-                                    @if($clubEvent->evnt_is_private)
-
-                                        {{-- we compare the current week number with the week the event happens in
-                                             to catch and hide any events on mondays and tuesdays (day < 3) next week
-                                             in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view.
-                                             Formatting: "Section Name 123" => "section-name-123"  --}}
-                                        @if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-                                          && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-                                            <div class="element-item private section-filter
-                                                        @foreach($sections as $section)
-                                                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                                        @endforeach
-                                                        week-mo-so">
-                                        @elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
-                                              === date("W", strtotime("next Week".$weekStart))
-                                              && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-                                            <div class="element-item private section-filter
-                                                        @foreach($sections as $section)
-                                                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                                        @endforeach
-                                                        week-mi-di hide">
-                                        @else
-                                            <div class="element-item private section-filter
-                                                        @foreach($sections as $section)
-                                                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                                        @endforeach">
-                                        @endif
-
-                                    @else
-
-                                        @if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-                                          && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-                                            <div class="element-item section-filter
-                                                        @foreach($sections as $section)
-                                                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                                        @endforeach
-                                                        week-mo-so">
-                                        @elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
-                                              === date("W", strtotime("next Week".$weekStart))
-                                              && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-                                            <div class="element-item section-filter
-                                                        @foreach($sections as $section)
-                                                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                                        @endforeach
-                                                        week-mi-di hide">
-                                        @else
-                                            <div class="element-item section-filter
-                                                        @foreach($sections as $section)
-                                                            {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                                        @endforeach">
-                                        @endif
-
-                                    @endif
-
-                                        @include('partials.weekCellFull')
-
-                                    </div>
-
+                                 @include('partials.weekCellFull')
                                 @endguest
+                                </div>
                             @endforeach
 
                             @foreach($surveys as $survey)
