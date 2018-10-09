@@ -215,107 +215,11 @@
 
 		<div class="card-body no-padding ">
 			@foreach($shifts as $shift)
-				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
-				<div class="row paddingTop {!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
-			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
-			                                'id' => $shift->id,
-			                                'method' => 'PUT',
-			                                'class' => 'shift form-inline')  ) !!}
-
-			        {{-- SPAMBOT HONEYPOT - this field will be hidden, so if it's filled, then it's a bot or a user tampering with page source --}}
-			        <div id="welcome-to-our-mechanical-overlords">
-			            <small>If you can read this this - refresh the page to update CSS styles or switch CSS support on.</small>
-			            <input type="text" id="{!! 'website' . $shift->id !!}" name="{!! 'website' . $shift->id !!}" value="" />
-			        </div>
-
-			        {{-- SHIFT TITLE --}}
-			        <div class="col left-padding-8">
-			            @include("partials.shiftTitle")
-			        </div>
-
-			        {{-- show public events, but protect members' shifts from being changed by guests --}}
-			        @if( isset($shift->getPerson->prsn_ldap_id) && !Auth::user())
-						<div class="col input-append btn-group">
-						    {{-- SHIFT STATUS --}}
-						    <div class="col form-control" id="clubStatus{{ $shift->id }}">
-						        @include("partials.shiftStatus")
-						    </div>
-                            @php
-                            /** @var \Lara\Shift $shift*/
-                            @endphp
-                            @if($shift->getPerson->isNamePrivate() == 0)
-                                {{-- Shift USERNAME--}}
-                                <div id="{!! 'userName' . $shift->id !!}" >
-                                    {!! $shift->getPerson->prsn_name !!}
-                                </div>
-                            @else
-                                <div id="{!! 'userName' . $shift->id !!}" >
-                                    @if(isset($shift->person->user))
-                                        {{ trans($shift->person->user->section->title . '.' . $shift->person->user->status) }}
-                                    @endif
-                                </div>
-                            @endif
-
-						    {{-- no need to show LDAP ID or TIMESTAMP in this case --}}
-						</div>
-
-						{{-- SHIFT CLUB --}}
-						<div id="{!! 'club' . $shift->id !!}" class="col no-padding">
-						    {!! "(" . $shift->getPerson->getClub->clb_title . ")" !!}
-						</div>
-
-						<br class="d-block d-sm-none d-sm-none">
-
-						{{-- COMMENT SECTION --}}
-						<div class="col hidden-print word-break no-margin">
-						    <span class="float-left">
-						    	{!! $shift->comment === "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
-						    	&nbsp;&nbsp;
-						    </span>
-
-						    <span class="col-10 no-padding no-margin">
-							    {!! !empty($shift->comment) ? $shift->comment : "-" !!}
-							</span>
-						</div>
-
-
-			        {{-- show everything for members --}}
-					@else
-
-			        	{{-- SHIFT STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-						<div class="col-md-2 col-sm-2 col-xs-5 input-append btn-group">
-						    @include("partials.shiftName")
-						</div>
-
-						{{-- SHIFT CLUB and DROPDOWN CLUB --}}
-						<div class="col-md-2 col-sm-2 col-xs-3 no-padding">
-						    @include("partials.shiftClub")
-						</div>
-
-						{{-- COMMENT SECTION --}}
-						<br class="visible-print d-md-none d-sm-none d-none">
-						<br class="visible-print d-md-none d-sm-none d-none">
-						<div class="col-md-6 col-sm-12 col-xs-12 no-margin">
-						    <span class="float-left">
-						    	{!! $shift->comment === "" ? '<i class="fa fa-comment-o"></i>' : '<i class="fa fa-comment"></i>' !!}
-						    	&nbsp;&nbsp;
-						    </span>
-
-						    {!! Form::text('comment' . $shift->id,
-					                   $shift->comment,
-					                   array('placeholder'=>Lang::get('mainLang.addCommentHere'),
-					                         'id'=>'comment' . $shift->id,
-			                     			 'name'=>'comment' . $shift->id,
-					                         'class'=>'col-md-11 col-sm-11 col-xs-10 no-padding no-margin'))
-					    	!!}
-						</div>
-						<br class="visible-print d-md-none d-sm-none d-none">
-
-			        @endif
-
-			        {!! Form::close() !!}
-
-				</div>
+                {{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
+                <div class="row paddingTop  {!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
+                    @include('partials.shifts.takeShiftBar',['shift'=>$shift])
+                </div>
+                <div class="w-100"></div>
 
 				{{-- Show a line after each row except the last one --}}
 				@if($shift !== $shifts->last() )
