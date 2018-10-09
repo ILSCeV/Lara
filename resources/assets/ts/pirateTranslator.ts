@@ -10,6 +10,9 @@ declare var enviroment: any;
 if ( typeof localStorage !== "undefined" && (localStorage.getItem("language") || 'de') === 'pirate') {
     $(window).on('load',
         function () {
+
+            $('section.container-fluid.containerNopadding').first().css('opacity',0.9);
+
             let navLogoField = $('#nav-logo-field');
             let srcfield  = navLogoField.attr('src');
 
