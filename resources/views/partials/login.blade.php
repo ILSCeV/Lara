@@ -5,7 +5,7 @@
     {!! Form::text( 'username',
                     Input::old( 'username' ),
                     ['placeholder'  => Lang::get('mainLang.clubNumber') . " / " . trans('auth.email'),
-                          'class'        => 'form-control',
+                          'class'        => 'form-control form-control-sm',
                           'autocomplete' => 'on',
                           'style'        => 'cursor: auto',
                           'autofocus'=>'autofocus'])  !!}
@@ -15,14 +15,14 @@
 
     {!! Form::password( 'password',
                        ['placeholder'  => Lang::get('mainLang.password' ),
-                        'class'        => 'form-control',
+                        'class'        => 'form-control form-control-sm',
                         'autocomplete' => 'off',
                         'style'        => 'cursor: auto'] ) !!}
 
     <br class="d-block d-sm-none">
 
     @dev
-    <select name="userGroup" id="userGroup" class="btn btn-sm form-control">
+    <select name="userGroup" id="userGroup" data-style="btn btn-sm " class="selectpicker">
         @foreach(Roles::ALL_PRIVILEGES as $privilege)
             <option value="{{ $privilege }}"> {{ ucwords($privilege) }}</option>
         @endforeach
