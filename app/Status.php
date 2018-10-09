@@ -44,17 +44,17 @@ class Status {
     {
         switch ($status) {
             case STATUS::CANDIDATE:
-                return ["status" => "fa fa-adjust", "style" => "color:yellowgreen;", "title" => "Kandidat"];
+                return ["status" => "fas fa-adjust", "style" => "color:yellowgreen;", "title" => "Kandidat"];
             case STATUS::VETERAN:
-                return ["status" => "fa fa-star", "style" => "color:gold;", "title" => "Veteran"];
+                return ["status" => "fas fa-star", "style" => "color:gold;", "title" => "Veteran"];
             case STATUS::MEMBER:
-                return ["status" => "fa fa-circle", "style" => "color:forestgreen;", "title" => "Aktiv"];
+                return ["status" => "fas fa-circle", "style" => "color:forestgreen;", "title" => "Aktiv"];
             case STATUS::EXMEMBER:
-                return ["status" => "fa fa-star-o", "style" => "color:gold;", "title" => "ex-Mitglied"];
+                return ["status" => "far fa-star", "style" => "color:gold;", "title" => "ex-Mitglied"];
             case STATUS::EXCANDIDATE:
-                return ["status"=>"fa fa-circle", "style"=>"color:lightgrey;", "title"=>"ex-Kandidat"];
+                return ["status"=>"fas fa-circle", "style"=>"color:lightgrey;", "title"=>"ex-Kandidat"];
             default:
-                return ["status" => "fa fa-circle", "style" => "color:lightgrey;", "title" => "Extern"];
+                return ["status" => "fas fa-circle", "style" => "color:lightgrey;", "title" => "Extern"];
         }
     }
 
