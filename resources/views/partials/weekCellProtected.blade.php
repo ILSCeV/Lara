@@ -1,4 +1,4 @@
-<div class="card bg-warning">
+<div class="card border-warning">
 
 	{{-- Check if the event is still going on --}}
     @php
