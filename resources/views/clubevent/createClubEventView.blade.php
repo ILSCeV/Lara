@@ -223,7 +223,7 @@
                             }
                             else {
                             $allowedSections = Auth::user()->roles->filter(function (\Lara\Role $r){
-                            return $r->name == \Lara\utilities\RoleUtility::PRIVILEGE_MARKETING;
+                            return $r->name == \Lara\utilities\RoleUtility::PRIVILEGE_MARKETING || $r->name == \Lara\utilities\RoleUtility::PRIVILEGE_MEMBER;
                             })->map(function (\Lara\Role $r){
                             return $r->section;
                             });
