@@ -727,7 +727,7 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.shift' ).find("input[id^='userName'], input[id^=comment]").on('input', function() {
+    $( '.shift.autocomplete' ).find("input[id^='userName'], input[id^=comment]").on('input', function() {
         // show only current button
         $('[name^=btn-submit-change]')
             .addClass('hide')
@@ -976,16 +976,16 @@ jQuery( document ).ready( function( $ ) {
 
         // Switch comment icon in week view
         if ( $commentInput.val() == "" ) {
-            $commentInput.parent().children().children("button").children("i").removeClass().addClass("fa fa-comment-o");
+            $commentInput.parent().children().children("button").children("i").removeClass().addClass("fas fa-comment-alt");
         } else {
             $commentInput.parent().children().children("button").children("i").removeClass().addClass("fa fa-comment");
         }
 
         // Switch comment in event view
         if ( $commentInput.val() == "" ) {
-            $commentInput.parent().children("span").children("i").removeClass().addClass("fa fa-comment-o");
+            $commentInput.parent().children("span").children("i").removeClass().addClass("fas fa-comment-alt");
         } else {
-            $commentInput.parent().children("span").children("i").removeClass().addClass("fa fa-comment");
+            $commentInput.parent().children("span").children("i").removeClass().addClass("fasfa-comment");
         }
 
         let $colorDiv = $userNameInput.parent().prev().find("div");
