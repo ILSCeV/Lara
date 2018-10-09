@@ -121,7 +121,7 @@ $ldapid
                        style="float: right"
                        class="btn btn-secondary btn-sm"
                        data-placement="bottom">
-                        <i class="fa fa-pencil-square-o" style="color: black"></i>
+                        <i class="fas fa-pen-square text-dark-grey" style="color: black"></i>
                     </a>
                 @endif
             </h4>
@@ -320,7 +320,7 @@ $ldapid
                                                                name="deleteRow"
                                                                rel="nofollow"
                                                                data-confirm="{{ trans('mainLang.confirmDeleteAnswer') }}">
-                                                                <i class="fa fa-trash"></i>
+                                                                <i class="fas fa-trash"></i>
                                                             </a>
                                                         </td>
                                                     @endif
