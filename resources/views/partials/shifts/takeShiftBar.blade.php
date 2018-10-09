@@ -8,6 +8,12 @@ $autocomplete = 'autocomplete';
 } else {
 $autocomplete = '';
 }
+if($hideComments){
+$commentClass = 'hide';
+} else {
+$commentClass = '';
+}
+
 @endphp
 {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
 			                                'id' => $shift->id,
@@ -71,7 +77,7 @@ $autocomplete = '';
     {{-- COMMENT SECTION --}}
     {{-- Hidden comment field to be opened after the click on the icon
 							     see vedst-scripts "Show/hide comments" function --}}
-    <div class="form-group from-group-sm hidden-print word-break pl-5">
+    <div class="form-group from-group-sm hidden-print word-break ">
         <div class="form-control form-control-sm">
             <span class="float-left">
 		     @if($shift->comment === "") <i class="fas fa-comment-alt"></i> @else <i class="fas fa-comment"></i> @endif
@@ -83,7 +89,7 @@ $autocomplete = '';
 					                   array('placeholder'=>Lang::get('mainLang.addCommentHere'),
 					                         'id'=>'comment' . $shift->id,
 			                     			 'name'=>'comment' . $shift->id,
-					                         'class'=>'form-control form-control-sm w-auto '. isset($hideComments)?'hide':''))
+					                         'class'=>'form-control form-control-sm  '. $commentClass))
 					    	!!}
 
     </div>
