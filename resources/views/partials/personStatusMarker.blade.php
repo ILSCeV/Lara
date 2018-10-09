@@ -9,7 +9,7 @@
        data-placement="top"
        title="{{ Lara\Status::localize($status, $section)}}"></i>
 @else
-    <i class="fa fa-circle"
+    <i class="fas fa-circle"
        name="status-icon"
        style="color:lightgrey;"
        data-toggle="tooltip"
