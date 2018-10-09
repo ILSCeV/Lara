@@ -92,7 +92,7 @@ use Carbon\Carbon;
                     </div>
                     {{-- show everything for public events --}}
                 @else
-                <div class="cal-event {{$classString}} {{\Lara\utilities\ViewUtility::getEventPaletteClass($ClubEvent) }}">
+                <div class="cal-event {{$classString}} {{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent) }}">
                     @include("partials.event-marker", $clubEvent)
                         <span class="event-time">&nbsp;{{  date ('H:i',strtotime($clubEvent->evnt_time_start))}}</span>
                     <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}"
