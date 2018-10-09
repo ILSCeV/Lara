@@ -67,21 +67,21 @@
                                     <strong>{{ trans('mainLang.privateClubName') }}</strong>
                                 </label>
                                 <br class="d-block d-md-none d-lg-none">
-                                <div class="radio-inline">
+                                <div class="form-check-inline">
                                     <label class="form-check">
                                         {!! Form::radio( 'is_name_private','null', is_null($user->is_name_private )) !!}
                                         {{ trans('mainLang.privateClubNameNull') }}
                                     </label>
                                 </div>
-                                <br>
-                                <div class="radio-inline">
+                                <br class="d-block d-md-none d-lg-none">
+                                <div class="form-check-inline">
                                     <label class="form-check">
                                         {!! Form::radio( 'is_name_private','true', !is_null($user->is_name_private ) && $user->is_name_private == 1 ) !!}
                                         {{ trans('mainLang.privateClubNameYes') }}
                                     </label>
                                 </div>
-                                <br>
-                                <div class="radio-inline">
+                                <br class="d-block d-md-none d-lg-none">
+                                <div class="form-check-inline">
                                     <label class="form-check">
                                         {!! Form::radio( 'is_name_private','false', !is_null($user->is_name_private ) && $user->is_name_private == 0) !!}
                                         {{ trans('mainLang.privateClubNameNo') }}
