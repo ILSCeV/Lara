@@ -32,7 +32,9 @@
                 data-actions-box="true"
                 data-select-all-text="{{ trans('mainLang.selectAll') }}"
                 data-deselect-all-text="{{ trans('mainLang.selectNone') }}"
-                data-count-selected-text="{{ trans('mainLang.countSectionsSelected') }}">
+                data-count-selected-text="{{ trans('mainLang.countSectionsSelected') }}"
+                data-style="btn btn-sm btn-light"
+                >
             @foreach($sections as $section)
                 <option value="filter-section-{!! $section["id"] !!}"
                         class="palette-{{$section->color}}-500-Primary bg option-shadow">
