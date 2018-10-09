@@ -124,12 +124,12 @@ Disabling iCal until fully functional.
 {{-- CREATE BUTTONS / members only --}}
     {{-- Desktop version --}}
                     <li class=" d-none d-md-block d-lg-block nav-item">
-                        <div style="padding-top:2px" class="btn-group">
-                            <a class="btn btn-primary dropdown-toggle nav-link text-white" data-toggle="dropdown" href="#">+</a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-item" ><a href="{{ URL::route('event.create') }}">{{ trans('mainLang.createNewEvent') }}</a></li>
-                                <li class="dropdown-item" ><a href="{{ URL::route('survey.create') }}">{{ trans('mainLang.createNewSurvey') }}</a></li>
-                            </ul>
+                        <div style="padding-top:2px" class="btn-group dropleft">
+                            <button class="btn btn-primary dropdown-toggle nav-link text-white" data-toggle="dropdown" >+</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ URL::route('event.create') }}">{{ trans('mainLang.createNewEvent') }}</a>
+                                <a class="dropdown-item" href="{{ URL::route('survey.create') }}">{{ trans('mainLang.createNewSurvey') }}</a>
+                            </div>
                         </div>
                     </li>
 
