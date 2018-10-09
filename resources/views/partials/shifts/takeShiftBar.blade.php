@@ -1,5 +1,8 @@
 @php
-    /*** @var \Lara\Shift $shift*/
+    /***
+    * @var \Lara\Shift $shift
+    * @var boolean hideComments
+    */
 if(Auth::user()){
 $autocomplete = 'autocomplete';
 } else {
@@ -50,7 +53,7 @@ $autocomplete = '';
 		   @if($shift->comment === "") <i class="fas fa-comment-alt"></i> @else <i class="fas fa-comment"></i> @endif
             &nbsp;&nbsp;
 		</span>
-         <span class="w-auto">
+         <span class="w-auto @if(isset($hideComments)) hide @endif" id="{{'comment'.$shift->id}}" name="{{'comment' . $shift->id}}">
 		  {!! !empty($shift->comment) ? $shift->comment : "-" !!}
 		</span>
         </div>
@@ -66,6 +69,8 @@ $autocomplete = '';
         @include('partials.shifts.shiftClub',['shift'=>$shift])
     </div>
     {{-- COMMENT SECTION --}}
+    {{-- Hidden comment field to be opened after the click on the icon
+							     see vedst-scripts "Show/hide comments" function --}}
     <div class="form-group from-group-sm hidden-print word-break pl-5">
         <div class="form-control form-control-sm">
             <span class="float-left">
@@ -73,6 +78,7 @@ $autocomplete = '';
                 &nbsp;&nbsp;
 		    </span>
         </div>
+        <div class="@if(isset($hideComments)) hide @endif" id="{{'comment'.$shift->id}}">
             {!! Form::text('comment' . $shift->id,
 					                   $shift->comment,
 					                   array('placeholder'=>Lang::get('mainLang.addCommentHere'),
@@ -80,6 +86,7 @@ $autocomplete = '';
 			                     			 'name'=>'comment' . $shift->id,
 					                         'class'=>'form-control form-control-sm w-auto'))
 					    	!!}
+        </div>
 
     </div>
 

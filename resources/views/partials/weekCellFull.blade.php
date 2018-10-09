@@ -58,63 +58,11 @@
 
 			{{-- Show shifts --}}
 			@foreach($shifts = $clubEvent->getSchedule->shifts as $shift)
-				{{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
-                {{-- add a divider if the shift is not the last one --}}
-			    <div class="row {!! $shift !== $shifts->last() ? ' divider': false !!}{!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id == Auth::user()->person->prsn_ldap_id) ? " my-shift" : false !!}">
-			        {!! Form::open(  array( 'route' => ['shift.update', $shift->id],
-			                                'id' => $shift->id,
-			                                'method' => 'put',
-			                                'class' => 'shift form-inline')  ) !!}
-
-			        {{-- SPAMBOT HONEYPOT - this field will be hidden, so if it's filled, then it's a bot or a user tampering with page source --}}
-			        <div id="welcome-to-our-mechanical-overlords">
-			            <small>If you can read this this - refresh the page to update CSS styles or switch CSS support on.</small>
-			            <input type="text" id="{!! 'website' . $shift->id !!}" name="{!! 'website' . $shift->id !!}" value="" />
-			        </div>
-
-			        {{-- Shift TITLE --}}
-			        <div class="col-2 padding-right-minimal">
-			            @include("partials.shiftTitle")
-			        </div>
-
-			        {{-- SHIFT STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-					<div class="col-5 input-append btn-group padding-left-minimal">
-					    @include("partials.shiftName")
-					</div>
-
-					{{-- SHIFT CLUB and DROPDOWN CLUB --}}
-					<div class="col-4 no-padding">
-					    @include("partials.shiftClub")
-					</div>
-
-					{{-- SMALL COMMENT ICON --}}
-					<div class="col-1 no-padding">
-				        @if( $shift->comment == "" )
-				            <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
-				                <i class="far fa-comment-alt"></i>
-				            </button>
-				        @else
-				            <button type="button" class="showhide btn-small btn-secondary hidden-print" data-dismiss="alert">
-				                <i class="fas fa-comment"></i>
-				            </button>
-				        @endif
-					</div>
-
-					{{-- Hidden comment field to be opened after the click on the icon
-						 see vedst-scripts "Show/hide comments" function --}}
-					{!! Form::text('comment' . $shift->id,
-					               $shift->comment,
-					               array('placeholder'=>Lang::get('mainLang.addCommentHere'),
-					                     'id'=>'comment' . $shift->id,
-					                     'name'=>'comment' . $shift->id,
-					                     'class'=>'col-10 hidden-print hide offset-2 offset-2 word-break' ))
-					!!}
-
-			        {!! Form::submit( 'save', array('id' => 'btn-submit-changes' . $shift->id, 'hidden') ) !!}
-			        {!! Form::close() !!}
-			    </div>
-
-			@endforeach
+                <div class="row">
+                   @include('partials.shifts.takeShiftBar',['shift'=>$shift,'hideComments'=>true])
+                </div>
+                <div class="w-100"></div>
+                @endforeach
 
 			{{-- Show a "hide" button for management, that allows removal of an event from current view - needed for printing --}}
 	        @is('marketing', 'clubleitung', 'admin')
