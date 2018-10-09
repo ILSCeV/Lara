@@ -194,10 +194,10 @@
     <div class="panelEventView">
         {{-- show time button Ger.: Zeiten einblenden --}}
 		&nbsp;&nbsp;
-		<button class="btn btn-xs hidden-print"  type="button" id="toggle-shift-time">{{ trans('mainLang.hideTimes') }}</button>
+		<button class="btn btn-sm hidden-print"  type="button" id="toggle-shift-time">{{ trans('mainLang.hideTimes') }}</button>
 
 		{{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
-		<button class="btn btn-xs hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button>
+		<button class="btn btn-sm hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button>
 	</div>
 
 
