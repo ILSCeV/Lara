@@ -78,15 +78,13 @@ $autocomplete = '';
                 &nbsp;&nbsp;
 		    </span>
         </div>
-        <div class="@if(isset($hideComments)) hide @endif" id="{{'comment'.$shift->id}}">
             {!! Form::text('comment' . $shift->id,
 					                   $shift->comment,
 					                   array('placeholder'=>Lang::get('mainLang.addCommentHere'),
 					                         'id'=>'comment' . $shift->id,
 			                     			 'name'=>'comment' . $shift->id,
-					                         'class'=>'form-control form-control-sm w-auto'))
+					                         'class'=>'form-control form-control-sm w-auto '. isset($hideComments)?'hide':''))
 					    	!!}
-        </div>
 
     </div>
 
