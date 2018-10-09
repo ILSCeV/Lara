@@ -5,7 +5,7 @@
                 array('type' => 'submit',
                       'name' => 'btn-submit-change' . $shift->id,
                       'id' => 'btn-submit-changes' . $shift->id,
-                      'class' => 'btn btn-small btn-success d-none')) }}
+                      'class' => 'btn btn-sm btn-success hide')) }}
 
 @if( is_null($shift->getPerson) )
 
