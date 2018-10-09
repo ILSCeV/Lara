@@ -1,4 +1,4 @@
-{{ Form::button('<i class="fa fa-check"
+{{ Form::button('<i class="fas fa-check"
                    data-toggle="tooltip"
                    data-placement="top"
                    title="Änderungen speichern"></i>',
@@ -22,7 +22,7 @@
     /** @var \Lara\Shift $shift */
         $person = $shift->person;
         $attributes = Lara\Status::style($person->prsn_status);
-        $section = $person->club->section();
+        $section = !is_null($person->club)?$person->club->section():null;
     @endphp
 
     @if ($section)
