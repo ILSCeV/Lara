@@ -1,10 +1,10 @@
 import * as $ from "jquery"
 
-function getRowName(a: string | HTMLElement) {
+function getRowName(a: string | Element) {
     return $(a).children("td").eq(0).text();
 }
 
-function getRowShifts(a: string | HTMLElement) {
+function getRowShifts(a: string | Element) {
     return $(a).children("td").eq(1).text();
 }
 
@@ -16,7 +16,7 @@ function sortTable($table: JQuery, byName: boolean, descending: boolean) {
         .find("tbody")
         .find("tr")
         .toArray()
-        .sort((a, b) => rowCatcher(a.toString()).localeCompare(rowCatcher(b.toString()), undefined, {'numeric': true}));
+        .sort((a, b) => rowCatcher(a).localeCompare(rowCatcher(b), undefined, {'numeric': true}));
     if (descending) {
         rows.reverse();
     }
