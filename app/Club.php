@@ -45,7 +45,8 @@ class Club extends Model
     {
         return $this->persons()->whereNotNull('prsn_ldap_id')->where('prsn_ldap_id','<>','9999');
     }
-
+    
+    /** \Illuminate\Database\Eloquent\Builder|Club */
     public static function activeClubs()
     {
         $club_ids = Section::all()->map(function(Section $section) {
