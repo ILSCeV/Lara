@@ -1,16 +1,21 @@
-@if($shift->optional)
-    @if( is_null($shift->getPerson))
-        <div class="shift_free shift_optional">
-        @else
-        <div class="shift_taken shift_optional">
-    @endif
-@else
-    @if( is_null($shift->getPerson))
-        <div class="shift_free">
-        @else
-        <div class="shift_taken">
-    @endif
-@endif
+@php
+    if($shift->optional) {
+        if( is_null($shift->getPerson)) {
+            $shiftClass="shift_free shift_optional";
+            }
+            else {
+            $shiftClass="shift_taken shift_optional";
+            }
+    }
+    else
+        if( is_null($shift->getPerson)) {
+            $shiftClass="shift_free";
+            }
+            else {
+            $shiftClass="shift_taken";
+            }
+@endphp
+<div class="{{$shiftClass}}">
         <span class="word-break"
               data-toggle="tooltip"
               data-placement="top"
@@ -22,7 +27,7 @@
                         {{ $shift->type->title() }}
                     </strong>
                     @if($shift->optional)
-                    ({{Lang::get('mainLang.optionalShort')}})
+                        ({{Lang::get('mainLang.optionalShort')}})
                     @endif
                     <div class="shift-time hide text-dark-grey">
                         {!! "(" . date("H:i", strtotime($shift->start))
@@ -31,4 +36,4 @@
                     </div>
                 </small>
         </span>
-    </div>
+</div>
