@@ -32,7 +32,7 @@ $factory->define(Lara\Person::class, function (Faker\Generator $faker) {
         'prsn_ldap_id' => $faker->boolean(60) ? $faker->numberBetween(2000, 9999):null,
         'prsn_status' => $faker->randomElement(Status::ACTIVE),
         'prsn_uid' => hash("sha512", uniqid()),
-        'clb_id' => $faker->randomElement((new Lara\Club)->inRandomOrder()->get()->map(function(\Lara\Club $club){return $club->id;})->toArray())
+        'clb_id' => $faker->randomElement(\Lara\Club::query()->inRandomOrder()->get()->map(function(\Lara\Club $club){return $club->id;})->toArray())
     ];
 });
 
@@ -153,7 +153,7 @@ $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
 
 $factory->define(Lara\Club::class, function(Faker\Generator $faker) {
     return [
-        'clb_title' => $faker->word(),
+        'clb_title' => $faker->randomElement(["bi-Club","bc-Club","FEM","iStuff","bh-Club","bc-Cafe","bd-Club","MFK","Band"]),
     ];
 });
 
