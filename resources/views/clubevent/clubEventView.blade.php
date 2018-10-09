@@ -217,7 +217,7 @@
 			@foreach($shifts as $shift)
                 {{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
                 <div class="row paddingTop  {!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
-                    @include('partials.shifts.takeShiftBar',['shift'=>$shift])
+                    @include('partials.shifts.takeShiftBar',['shift'=>$shift,'hideComments'=>false])
                 </div>
                 <div class="w-100"></div>
 
