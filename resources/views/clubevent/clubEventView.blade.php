@@ -201,7 +201,7 @@
 	</div>
 
 
-	<div class="card bg-warning">
+	<div class="card border-warning">
 		@if( $clubEvent->getSchedule->schdl_password != '')
 			<div class="hidden-print card-header">
 			    {!! Form::password('password', array('required',
