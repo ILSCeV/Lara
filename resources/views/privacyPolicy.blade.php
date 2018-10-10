@@ -12,8 +12,8 @@
 
     @auth
         @if(Auth::user()->privacy_accepted == 0)
-        <div class="card card bg-danger">
-            <div class="card-header text-white">
+        <div class="card ">
+            <div class="card-header bg-danger text-white">
                 <h3 class="card-title">{{ trans("mainLang.waitOneSecond") }}</h3>
             </div>
 
@@ -25,8 +25,8 @@
         @endif
     @endauth
 
-    <div class="card card bg-primary">
-        <div class="card-header text-white">
+    <div class="card ">
+        <div class="card-header bg-primary text-white">
             <h3 class="card-title">{{ trans("mainLang.privacyPolicy") }}</h3>
         </div>
 
