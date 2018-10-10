@@ -57,6 +57,7 @@
         </section>
         <script> var enviroment = '{{App::environment()}}'; </script>
         <script src="{{asset(WebpackBuiltFiles::$jsFiles['lara'])}}" ></script>
+        @yield('moreScripts')
         {{--
         <script src="{{ mix('/manifest.js') }}"></script>
         <script src="{{ mix('/vendor.js') }}"></script>
