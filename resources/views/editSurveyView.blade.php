@@ -3,7 +3,9 @@
 @section('title')
     {{ trans('mainLang.editSurvey') }}
 @stop
-
+@section('moreScripts')
+    <script src="{{asset(WebpackBuiltFiles::$jsFiles['survey'])}}"></script>
+@endsection
 @section('moreStylesheets')
     <style>
         .dropdown-toggle {
