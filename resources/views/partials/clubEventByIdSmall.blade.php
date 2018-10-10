@@ -1,4 +1,4 @@
-<div class="card section-filter {!! "section-" . $clubEvent->section->id !!} w-100 {{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}">
+<div class="card section-filter {!! "section-" . $clubEvent->section->id !!} w-100 ">
     {{-- show only a placeholder for private events --}}
     @if($clubEvent->evnt_is_private && !Auth::user())
         <div class="card-header {{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}">
@@ -6,7 +6,7 @@
         </div>
     @else
         {{-- Set card color --}}
-        <div class="card-header ">
+        <div class="card-header {{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}">
             <h4 class="card-title">
                 @include("partials.event-marker")&nbsp;<a class="{{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}" href="{{ URL::route('event.show', $clubEvent->id) }}">{{ $clubEvent->evnt_title }}</a>
             </h4>
