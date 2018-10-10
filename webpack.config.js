@@ -9,6 +9,7 @@ const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   entry: {
+    survey:'./resources/assets/ts/surveys/surveyEntry.ts',
     lara: './resources/assets/ts/lara.ts',
   },
   module: {

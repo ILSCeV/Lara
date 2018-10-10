@@ -1,5 +1,5 @@
 import * as $ from "jquery"
-import { translate } from "./Translate"
+import { translate } from "../Translate"
 import * as bootbox from "bootbox"
 
 $("#button-create-survey").click(() => {

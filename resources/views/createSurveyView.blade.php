@@ -3,6 +3,9 @@
 @section('title')
     {{ trans('mainLang.createNewSurvey') }}
 @stop
+@section('moreScripts')
+    <script src="{{asset(WebpackBuiltFiles::$jsFiles['survey'])}}"></script>
+@endsection
 
 @section('moreStylesheets')
     <style>
@@ -19,3 +22,4 @@
         {!! Form::close() !!}
     </div>
 @stop
+ph

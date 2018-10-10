@@ -6,6 +6,8 @@
 gitrevision.txt
 
 # Webpack generated files
+public/survey.css
+public/survey.js
 public/lara.css
 public/lara.css.map
 public/surveys.css
@@ -52,4 +54,3 @@ _ide_helper_models.php
 # Misc
 .DS_Store
 Thumbs.db
-

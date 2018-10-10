@@ -1,5 +1,5 @@
 require ('../sass/lara.scss');
-require ('../sass/surveys.scss');
+
 import "jquery"
 import "popper.js/dist/umd/popper"
 import "popper.js/dist/umd/popper-utils"
@@ -12,7 +12,7 @@ import "cookieconsent"
 
 import "./create-shift"
 import "./CreateEditEvent"
-import "./CreateSurvey"
+
 import "./edit-shift"
 import "./EventView"
 import "./pirateTranslator"
@@ -20,8 +20,7 @@ import "./Question"
 import "./ShiftSorting"
 import "./ShiftType"
 import "./StatisticsView"
-import "./surveyEdit-Create-scripts"
-import "./surveyView-scripts"
+
 import "./Translate"
 import "./Utilities"
 import "./templateOverView"
