@@ -7,7 +7,7 @@
                  Input::old('userName' . $shift->id),
                  array('placeholder'=>'=FREI=',
                        'id'=>'userName' . $shift->id,
-                       'class'=>'form-control form-control-sm',
+                       'class'=>'form-control form-control-sm word-break',
                        'autocomplete'=>'off'))
     !!}
 @else
@@ -15,7 +15,7 @@
     {!! Form::text('userName' . $shift->id,
                  $shift->getPerson->prsn_name,
                  array('id'=>'userName' . $shift->id,
-                       'class'=>'form-control form-control-sm',
+                       'class'=>'form-control form-control-sm word-break',
                        'data-toggle' => "tooltip",
                        'data-placement' =>"top",
                        'title' => $shift->getPerson->fullName(),
@@ -26,7 +26,7 @@
 
 {{-- Show dropdowns only for members --}}
 @auth
-    <ul class="dropdown-menu dropdown-username" style="position: absolute;">
+    <ul class="small dropdown-menu dropdown-username" style="position: absolute;">
         <li class="dropdown-item" id="yourself">
             <a href="javascript:void(0);"
                onClick="document.getElementById('userName{{ ''. $shift->id }}').value='{{Auth::user()->name}}';

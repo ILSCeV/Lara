@@ -759,7 +759,7 @@ jQuery( document ).ready( function( $ ) {
                 if(data.get_user) {
                     // add found persons to the array
                     $(document.activeElement).parent().children('.dropdown-username').append(
-                        '<li><a href="javascript:void(0);">'
+                        '<li class="dropdown-item"><a href="javascript:void(0);">'
                         + '<span name="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
                         + '<span name="currentName">' + data.prsn_name + '</span>'
                         + data.prsn_status
