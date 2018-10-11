@@ -8,26 +8,26 @@
 	<div class="container-fluid no-padding">
       <div class="row">
 		{{-- prev/next week --}}
-		<div class="btn-group col-xs-12 col-md-6 hidden-print">
+		<div class="btn-group btn-group-lg col-xs-12 col-md-6 hidden-print">
 			<a class="btn btn-secondary hidden-print col-md-1 col-xs-2"
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}">
 			   	&lt;&lt;</a>
 
-			<h6 class="col-md-8 col-xs-8 week-mo-so no-margin centered">
+			<h6 class="col-md-8 col-xs-8 week-mo-so no-margin centered btn btn-lg">
 				<br class="d-none">
 				{{ "KW" . $date['week']}}:
-				<br class="d-block.d-sm-none">
+				<br class="d-block d-sm-none">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart))) }} -
-				<br class="d-block.d-sm-none">
+				<br class="d-block d-sm-none">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd . '- 2 days'))) }}
 			</h6>
 
 			<h6 class="col-md-8 col-xs-8 week-mi-di no-margin centered hide">
 				<br class="d-none">
 				{{ "KW" . $date['week']}}:
-				<br class="d-block.d-sm-none">
+				<br class="d-block d-sm-none">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart . '+  2 days'))) }} -
-				<br class="d-block.d-sm-none">
+				<br class="d-block d-sm-none">
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd))) }}
 			</h6>
 
