@@ -27,4 +27,4 @@
 
 
 </div>
-<ul class="dropdown-menu dropdown-club" style="position: absolute;"></ul>
+<ul class="dropdown-menu dropdown-club btn-sm" style="position: absolute;"></ul>

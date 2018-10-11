@@ -1,6 +1,6 @@
 @if(!Auth::user() && $survey->is_private === 1)
     {{-- Hide internal surveys from guests --}}
-    <div class="card bg-warning word-break section-filter section-survey">
+    <div class="card border-warning word-break section-filter section-survey">
 
         <div class="palette-Grey-500 bg text-white"
              style="padding: 15px 15px 8px 15px;">
@@ -18,7 +18,7 @@
     </div>
 @else
     {{-- Show everything to memebers --}}
-    <div class="card bg-warning word-break section-filter section-survey">
+    <div class="card border-warning word-break section-filter section-survey">
 
         <div class="card-header palette-Purple-900 bg text-white">
             <h4 class="card-title">
