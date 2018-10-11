@@ -24,15 +24,15 @@ $commentClass = '';
     <small>If you can read this this - refresh the page to update CSS styles or switch CSS support on.</small>
     <input type="text" id="{!! 'website' . $shift->id !!}" name="{!! 'website' . $shift->id !!}" value=""/>
 </div>
-<div class="form-group form-group-sm pl-2 pr-5 col-1">
+<div class="form-group form-group-sm pl-md-2 pl-xs-0 col-md-1 col-xs-1">
     @include("partials.shiftTitle")
 </div>
-<div class="form-group form-group-sm pl-2" id="clubStatus{{ $shift->id }}">
+<div class="form-group form-group-sm pl-md-2 pl-xs-0 col-1" id="clubStatus{{ $shift->id }}">
     @include("partials.shiftStatus")
 </div>
 @if( isset($shift->getPerson->prsn_ldap_id) && !Auth::user())
 
-    <div class="form-group form-group-sm pl-5 pr-2 col-2">
+    <div class="form-group form-group-sm  col-md-3 col-xs-4 pl-2">
         @if($shift->getPerson->isNamePrivate() == 0)
             {{-- Shift USERNAME--}}
             <div id="{!! 'userName' . $shift->id !!}" class="form-control form-control-sm">
@@ -53,7 +53,7 @@ $commentClass = '';
         </div>
     </div>
     {{-- COMMENT SECTION --}}
-    <div class="form-group from-group-sm hidden-print word-break pl-5">
+    <div class="form-group from-group-sm hidden-print word-break pl-2">
         <div class="form-control form-control-sm">
 		<span class="float-left">
 		   @if($shift->comment === "") <i class="fas fa-comment-alt"></i> @else <i class="fas fa-comment"></i> @endif
@@ -67,17 +67,17 @@ $commentClass = '';
 @else
     {{-- show everything for members --}}
     {{-- SHIFT STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-    <div class="form-group form-group-sm col-2 pl-5">
+    <div class="form-group form-group-sm col-md-3 col-xs-4 pl-2">
         @include('partials.shifts.shiftName',['shift'=>$shift])
     </div>
     {{-- SHIFT CLUB and DROPDOWN CLUB --}}
-    <div class="form-group form-group-sm pl-2 col-2">
+    <div class="form-group form-group-sm pl-2 col-md-2 col-xs-4 ">
         @include('partials.shifts.shiftClub',['shift'=>$shift])
     </div>
     {{-- COMMENT SECTION --}}
     {{-- Hidden comment field to be opened after the click on the icon
 							     see vedst-scripts "Show/hide comments" function --}}
-    <div class="form-group from-group-sm hidden-print word-break ">
+    <div class="form-group from-group-sm hidden-print word-break p-2">
         <div class="form-control form-control-sm">
             <span class="float-left">
 		     @if($shift->comment === "") <i class="fas fa-comment-alt"></i> @else <i class="fas fa-comment"></i> @endif
@@ -89,7 +89,7 @@ $commentClass = '';
 					                   array('placeholder'=>Lang::get('mainLang.addCommentHere'),
 					                         'id'=>'comment' . $shift->id,
 			                     			 'name'=>'comment' . $shift->id,
-					                         'class'=>'form-control form-control-sm  '. $commentClass))
+					                         'class'=>'form-control form-control-sm '. $commentClass))
 					    	!!}
 
     </div>
