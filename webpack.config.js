@@ -29,8 +29,14 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
+        use: [{
+          loader:'ts-loader',
+          options: {
+            transpileOnly: true,
+            experimentalWatchApi: true,
+          }
+        }],
+        exclude: '/node_modules/',
       },
       {
         test: /\.(sa|sc|c)ss$/,
@@ -92,8 +98,17 @@ module.exports = {
       filename: devMode ? '[name].css' : '[name].[hash].css',
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
+    new webpack.ProvidePlugin({
+      'jQuery': 'jquery',
+      'window.jQuery': 'jquery',
+      'jquery': 'jquery',
+      'window.jquery': 'jquery',
+      '$'     : 'jquery',
+      'window.$'     : 'jquery'
+    }),
     new PhpManifestPlugin(),
-    new webpack.SourceMapDevToolPlugin({})
+    new webpack.SourceMapDevToolPlugin({}),
+
   ],
   optimization: {
     minimize: !devMode,

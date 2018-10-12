@@ -1,4 +1,3 @@
-import * as $ from "jquery"
 import { translate } from "./Translate"
 import "isotope-layout"
 import * as Isotope  from "../../../node_modules/isotope-layout/js/isotope.js"
