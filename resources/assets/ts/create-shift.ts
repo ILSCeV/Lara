@@ -1,4 +1,3 @@
-import * as $ from "jquery"
 
 $(() => {
     $('#createAndPublishBtn').click(

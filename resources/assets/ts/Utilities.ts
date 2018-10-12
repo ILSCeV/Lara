@@ -1,4 +1,3 @@
-import * as $ from "jquery"
 
 function showErrorModal(message: string) {
     $("#errorModal").modal("show");

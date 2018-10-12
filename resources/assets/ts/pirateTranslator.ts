@@ -1,4 +1,4 @@
-import * as $ from "jquery"
+
 import {translate} from "./Translate"
 
 function replaceAll(string, search, replacement) {
