@@ -56,9 +56,7 @@
             @include('partials.footer')
         </section>
         <script> var enviroment = '{{App::environment()}}'; </script>
-        <script src="{{asset(WebpackBuiltFiles::$jsFiles['vendor'])}}" ></script>
         <script src="{{asset(WebpackBuiltFiles::$jsFiles['lara'])}}" ></script>
-
         @yield('moreScripts')
         {{--
         <script src="{{ mix('/manifest.js') }}"></script>

@@ -113,14 +113,14 @@ module.exports = {
   optimization: {
     minimize: !devMode,
     splitChunks: {
-      chunks: 'all',
+      chunks: 'async',
       minSize: 30000,
       maxSize: 0,
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
       automaticNameDelimiter: '~',
-      name: 'vendor',
+      name: true,
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
