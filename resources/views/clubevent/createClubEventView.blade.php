@@ -393,7 +393,7 @@
         </div>
     </div>
     <div class="row">
-		{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'hidden', 'id'=>'button-create-submit')) !!}
+		{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'d-none', 'id'=>'button-create-submit')) !!}
 	    <input class="d-none" name="evntIsPublished" type="text" value="0" />
 
 	    {{--
