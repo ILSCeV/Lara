@@ -1,7 +1,7 @@
-
+import * as $ from "jquery"
 import * as bootbox from "bootbox"
 
-
+const jQuery = $;
 /*
     Scripts for surveyView
     Reaction to click on edit delete buttons
