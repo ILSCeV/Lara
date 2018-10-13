@@ -12,8 +12,8 @@
     $inputClass = 'col-6';
     @endphp
     <div class="col-md-8 col-sm-auto">
-        <div class="card bg-info">
-            <div class="card-header text-white">
+        <div class="card ">
+            <div class="card-header bg-info text-white">
                 <h4 class="card-title">#{{ $current_section->id }}: "{!! $current_section->title !!}" </h4>
             </div>
 
