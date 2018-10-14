@@ -1,7 +1,7 @@
 <div name="question">
     <div class="card col-md-8 col-sm-12 col-xs-12">
         <div class="card-body">
-            <div class="col-md-11 col-sm-11 col-xs-10" style="padding-left: 0;">
+            <div class="col-md-11 col-sm-11 col-xs-10 pl-0">
                 <h4 class="heading-reference">{{ trans('mainLang.question') }} #</h4>
             </div>
 
@@ -11,7 +11,7 @@
                        value="&#xf1f8;">
             </div>
 
-            <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 1px;">
+            <div class="col-md-6 col-sm-6 col-xs-12 pl-0">
                 <fieldset>
                     <label name="quest_label">{{ trans('mainLang.question') }}: &nbsp</label>
 
@@ -24,7 +24,7 @@
                 <br>
             </div>
 
-            <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 28px;">
+            <div class="col-md-6 col-sm-6 col-xs-12 pl-4">
                 <fieldset>
                     <select class="form-control" name="type_select[{{$id}}]" onChange="javascript:updateQuestionDisplay(this)">
                         <option value="1" data-icon="fa fa-file-text-o"
@@ -38,7 +38,7 @@
                 </fieldset>
             </div>
 
-            <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 5px;">
+            <div class="col-md-6 col-sm-6 col-xs-12 pl-2">
                 <fieldset class="checkbox entrylist">
                     <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
                     <label><input type="checkbox" name="required[{{$id}}]" @if($question->is_required) checked
@@ -48,7 +48,7 @@
             </div>
 
 
-            <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0;" name="answerOptionsDiv">
+            <div class="col-md-6 col-sm-6 col-xs-12 pl-0" name="answerOptionsDiv">
                 <div class="answ_option">
                     @include('partials.survey.edit.answerOptions')
                     <input class="btn btn-success btn-sm" name="answerButton"

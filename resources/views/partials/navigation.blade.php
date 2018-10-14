@@ -134,7 +134,7 @@ Disabling iCal until fully functional.
                 <li class="d-none d-md-block d-lg-block nav-item">
                     <div class="btn-group">
                         <button type="button"
-                                class="btn btn-sm btn-primary nav-link text-white margin-right-8px"
+                                class="btn btn-sm btn-primary nav-link text-white mr-2"
                                 data-toggle="dropdown">
                             &nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;
                         </button>
