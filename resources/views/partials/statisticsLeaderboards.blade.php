@@ -1,7 +1,7 @@
 
 <div class="card no-padding">
     <div class="card-header ">
-        <h4 class="card-title all-sides-padding-16">
+        <h4 class="card-title padding-all-sides-16px">
             {{ trans('mainLang.leaderBoards') }}
         </h4>
     </div>

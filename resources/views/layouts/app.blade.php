@@ -40,7 +40,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav ml-auto">
+                    <ul class="nav navbar-nav">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item"><a href="{{ route('login') }}">Login</a></li>

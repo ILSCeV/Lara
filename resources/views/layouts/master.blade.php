@@ -22,21 +22,28 @@
         <![endif]-->
 	</head>
 
-    <body @if(Session::get("applocale","de")  == "pirate") style="background-image:url( {{asset('/background-pirate.jpg')}} ) !important; background-size:initial; background-position:center;"  @endif>
+    <body @if(Session::get("applocale","de")  == "pirate")
+              style="background-image:url( {{asset('/background-pirate.jpg')}} ) !important;
+                     background-size:initial;
+                     background-position:center;"
+          @endif>
+
         <!-- Set the language to the same as the server -->
         <script type="text/javascript">
-                localStorage.setItem('language', "{{ Session::get("applocale","de") }}");
+            localStorage.setItem('language', "{{ Session::get("applocale","de") }}");
         </script>
 
 		<header class="navigation">
 			@include('partials.navigation')
 		</header>
 
+        <br>
+
 		<div class="message" id="centerpoint">
 			@include('partials.message')
 		</div>
 
-        <section class="container-fluid containerNopadding">
+        <section class="container-fluid">
             @yield('content')
         </section>
 
@@ -52,17 +59,19 @@
         </a>
 
         <br>
+
      	<section class="footer">
             @include('partials.footer')
         </section>
+
         <script> var enviroment = '{{App::environment()}}'; </script>
         <script src="{{asset(WebpackBuiltFiles::$jsFiles['lara'])}}" ></script>
         @yield('moreScripts')
         {{--
-        <script src="{{ mix('/manifest.js') }}"></script>
-        <script src="{{ mix('/vendor.js') }}"></script>
-        <script src="{{ mix('/static.js') }}"></script>
-        <script src="{{ mix('/lara.js') }}"></script>
-    --}}
+            <script src="{{ mix('/manifest.js') }}"></script>
+            <script src="{{ mix('/vendor.js') }}"></script>
+            <script src="{{ mix('/static.js') }}"></script>
+            <script src="{{ mix('/lara.js') }}"></script>
+        --}}
     </body>
 </html>

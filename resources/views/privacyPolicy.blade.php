@@ -40,7 +40,7 @@
                         Version</a></li>
             </ul>
 
-            <div id="myTabContent" class="tab-content all-sides-padding-16 pre-scrollable">
+            <div id="myTabContent" class="tab-content padding-all-sides-16px pre-scrollable">
                 <div class="tab-pane fade in active show" id="complete">
                     <p><strong>Datenschutzerklärung</strong></p>
                     <p><strong></strong></p>

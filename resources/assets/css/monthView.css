@@ -1,6 +1,65 @@
-/*
-    Add the styles to vedst.css ?
-*/
+/*******************************************************************************
+ *
+ * Month view
+ *
+ ******************************************************************************/
+
+.cal-event {
+    width: 100%;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    vertical-align: middle;
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+    line-height: normal;
+    padding: 8px;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    min-height: 42px;
+}
+
+.past-eventOrSurvey, .past-event {
+    opacity:0.3;
+}
+
+.today-marker {
+    background-color: #efefef !important;
+}
+
+.today-marker-today {
+    background-color: #cccccc !important;
+}
+
+.light-grey {
+    background-color: #efefef;
+}
+
+.dark-grey {
+    background-color: darkgrey;
+}
+
+.text-dark-grey {
+    color: darkgrey;
+}
+
+.white-text {
+    color: #ffffff !important;
+}
+
+.black-text {
+    color: #000000 !important;
+}
+
+.centered {
+    text-align: center;
+}
+
+.cal-event a {
+    text-decoration: none;
+    color: inherit;
+}
 
 .calendarWrapper {
     overflow: hidden;
