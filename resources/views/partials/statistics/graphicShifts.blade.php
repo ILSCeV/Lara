@@ -1,4 +1,4 @@
-<div class="progress centered">
+<div class="progress text-center">
     {{-- Progress bar for shifts in own club --}}
     <div class="progress-bar" style="width: {{$info->shiftsPercentIntern}}%;"
          data-toggle="tooltip"
