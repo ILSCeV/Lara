@@ -113,7 +113,7 @@ $ldapid
 @stop
 @section('content')
 
-    <div class="card no-padding">
+    <div class="card p-0">
         <div class="card-title-box">
             <h4 class="card-title">
                 <i class="fa fa-bar-chart white-text"></i>
@@ -208,7 +208,7 @@ $ldapid
                             <td>
                                 {{--autocomplete for clubs is not working right now--}}
                                 <div id="dropdown_club" class="dropdown">
-                                    <div class="btn-group col-md-8 no-padding">
+                                    <div class="btn-group col-md-8 p-0">
                                         {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                                     </div>
                                     <ul id="dropdown-menu_club" class="dropdown-menu dropdown-club"></ul>

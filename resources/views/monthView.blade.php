@@ -5,27 +5,28 @@
 @stop
 
 @section('content')
-    <!-- prev/next month -->
-    <div class="col-xs-12 col-md-12 month-view-header">
-        <div class="col-xs-12 col-md-4 btn-group no-padding">
-            <a class="btn btn-secondary hidden-print"
+
+{{-- Prev/next month selector --}}
+    <div class="row month-view-header">
+        <div class="col-xs-12 col-md-3 m-auto p-auto btn-group">
+            <a class="btn align-bottom hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
                                 strtotime("previous month", $date['startStamp'])) }}">
-                &lt;&lt;
+                <i class="fas fa-chevron-left"></i>
             </a>
 
-            <span class="btn btn-lg disabled mobile72Width" style="text-align: center !important;">
-                {{ $date['monthName'] . " " . $date['year'] }}
+            <span class="row align-items-center mx-auto px-auto">
+                <strong>{{ $date['monthName'] . " " . $date['year'] }}</strong>
             </span>
-            <a class="btn btn-secondary hidden-print"
+
+            <a class="btn align-baseline hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m", strtotime("next month", $date['startStamp'])) }}">
-                &gt;&gt;
+                <i class="fas fa-chevron-right"></i>
             </a>
         </div>
 
         <!-- Section filter -->
-        <div class="col-xs-12 col-md-8 no-padding float-right">
-            <br class="d-block.d-sm-none">
+        <div class="col-xs-12 col-md-9 p-0 m-0 d-print-none" id="section-filter">
             @include('partials.filter')
         </div>
     </div>
@@ -72,7 +73,7 @@
                 <div class="calendarRow clearfix group WeekMarkerRow" >
                     <div class="calendarWeek WeekMarker">
                         <a href="{!! Request::getBasePath() !!}/calendar/{{$weekStart->format('Y\/\K\WW')}}"
-                           data-toggle="tooltip" 
+                           data-toggle="tooltip"
                            data-placement="top"
                            title="{{ trans('mainLang.showWeek')}}">
                             <span class="onlyOnMobile">{{ trans('mainLang.Cw') }}</span> {{$weekStart->format('W')}}.
@@ -88,7 +89,7 @@
                 <div class="calendarRow clearfix group">
                     <div class="calendarWeek ">
                         <a href="{!! Request::getBasePath() !!}/calendar/{{$weekStart->format('Y\/\K\WW')}}"
-                           data-toggle="tooltip" 
+                           data-toggle="tooltip"
                            data-placement="top"
                            title="{{ trans('mainLang.showWeek')}}">
                             <span class="onlyOnMobile">{{ trans('mainLang.Cw') }}</span> {{$weekStart->format('W')}}.

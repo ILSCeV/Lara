@@ -1,4 +1,4 @@
-<div class="card no-padding">
+<div class="card p-0">
 	<div class="card-header">
 		<h4 class="card-title">{{ trans('mainLang.adjustRoster') }}:</h4>
 	</div>

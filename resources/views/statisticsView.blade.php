@@ -10,7 +10,7 @@
 
     {{-- prev/next month --}}
     <div class="col-xs-12 col-md-12">
-        <div class="col-xs-12 col-md-5 btn-group no-padding">
+        <div class="col-xs-12 col-md-5 btn-group p-0">
             @if($isMonthStatistic)
                 <a class="btn btn-secondary hidden-print"
                    href="{{ action('StatisticsController@showStatistics') . date("/Y/m",
@@ -18,7 +18,7 @@
                     &lt;&lt;
                 </a>
 
-                <span class="btn btn-lg disabled mobile72Width" style="text-align: center !important;">
+                <span class="btn btn-lg disabled mobile-width-72-percent" style="text-align: center !important;">
                     {{ date('F Y', mktime(0, 0, 0, $month, 1, $year))}}
                 </span>
 
@@ -32,7 +32,7 @@
                     &lt;&lt;
                 </a>
 
-                <span class="btn btn-lg disabled mobile72Width" style="text-align: center !important;">
+                <span class="btn btn-lg disabled mobile-width-72-percent" style="text-align: center !important;">
                 {{ date('Y', mktime(0, 0, 0, $month, 1, $year))}}
                 </span>
 
@@ -70,12 +70,12 @@
     <div class="row">
 
         {{-- Club member stats --}}
-        <div class="col no-padding">
+        <div class="col p-0">
             @include('partials.statisticsMembers')
         </div>
 
         {{-- Leaderboard --}}
-        <div class="col no-padding-xs">
+        <div class="col p-0-xs">
             <br class="d-block.d-sm-none">
             @include('partials.statisticsLeaderboards')
         </div>

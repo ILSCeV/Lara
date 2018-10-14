@@ -56,7 +56,7 @@
             <hr class="col-md-12 col-xs-12">
 
             <div class="form-group">
-                <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                     @if (empty($survey->password))
                         <div id="password_note" style="color: #BDBDBD;">
                             <small>({{ trans('mainLang.passwordSetOptional') }})</small>
@@ -70,7 +70,7 @@
                     <div class="col-md-4 col-sm-4 col-xs-12"></div>
                 </div>
 
-                <div class="form-groupcol-md-12 col-sm-12 col-xs-12 no-padding">
+                <div class="form-groupcol-md-12 col-sm-12 col-xs-12 p-0">
                     <label for="passwordDouble" class="col-form-label col-md-4 col-sm-5 col-xs-12"
                            style="padding-left: 0" ;>{{ trans('mainLang.passwordRepeat') }}:</label>
                     <div class="col-md-4 col-sm-7 col-xs-12" style="padding-left: 0;">

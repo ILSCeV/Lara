@@ -279,7 +279,7 @@ span.event-time{
 */
 
 @media screen and (max-width: 978px) {
-    .mobile72Width {
+    .mobile-width-72-percent {
         width: 72%;
     }
 }
