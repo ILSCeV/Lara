@@ -30,7 +30,7 @@
                         <th>
                             #
                         </th>
-                        <th class="col-md-1 col-xs-1 padding-left-15">
+                        <th class="col-md-1 col-xs-1 pl-3">
                             {{ trans('mainLang.section') }}
                         </th>
                         <th class="col-md-3 col-xs-3">
@@ -45,7 +45,7 @@
                         <th class="col-md-1 col-xs-1">
                             {{ trans('mainLang.end') }}
                         </th>
-                        <th class="col-md-1 col-xs-1 padding-right-15">
+                        <th class="col-md-1 col-xs-1 pl-3">
                             &nbsp;
                         </th>
                     </tr>
@@ -57,7 +57,7 @@
                             <td>
                                 {{ $index }}
                             </td>
-                            <td class="padding-left-15">
+                            <td class="pl-3">
                                 {{ $template->section->title }}
                             </td>
                             <td>
@@ -72,7 +72,7 @@
                             <td>
                                 {{ $template->time_end }}
                             </td>
-                            <td class="padding-right-15">
+                            <td class="pr-3">
                                 <button data-id="{{$template->id}}"
                                         data-templatename="{{$template->title}}"
                                         class="btn btn-danger delete-template">
