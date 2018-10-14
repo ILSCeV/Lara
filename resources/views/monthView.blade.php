@@ -36,25 +36,25 @@
             <div class="calendarWeek noBorderTop" style="border-top: 0px">
                 {{ trans('mainLang.Cw') }}
             </div>
-            <div class="weekDay padleft">
+            <div class="weekDay padding-left-8px">
                 {{ trans('mainLang.Mo') }}
             </div>
-            <div class="weekDay padleft">
+            <div class="weekDay padding-left-8px">
                 {{ trans('mainLang.Tu') }}
             </div>
-            <div class="weekDay padleft">
+            <div class="weekDay padding-left-8px">
                 {{ trans('mainLang.We') }}
             </div>
-            <div class="weekDay padleft">
+            <div class="weekDay padding-left-8px">
                 {{ trans('mainLang.Th') }}
             </div>
-            <div class="weekDay padleft">
+            <div class="weekDay padding-left-8px">
                 {{ trans('mainLang.Fr') }}
             </div>
-            <div class="weekDay padleft">
+            <div class="weekDay padding-left-8px">
                 {{ trans('mainLang.Sa') }}
             </div>
-            <div class="weekDay padleft">
+            <div class="weekDay padding-left-8px">
                 {{ trans('mainLang.Su') }}
             </div>
         </div>

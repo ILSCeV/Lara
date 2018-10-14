@@ -53,7 +53,7 @@
                 </div>
             </div>
 
-            <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
+            <hr class="col-md-12 col-xs-12">
 
             <div class="form-group">
                 <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
@@ -124,7 +124,7 @@
         <div class="card col-md-8 col-sm-12 col-xs-12" style="color: #b0141a">
             <br>
             @foreach($errors->all() as $error)
-                <ul class="left-padding-16">
+                <ul class="padding-left-16px">
                     <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> {{$error}}
                 </ul>
             @endforeach
