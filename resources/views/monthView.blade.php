@@ -9,7 +9,7 @@
 {{-- Prev/next month selector --}}
     <div class="row pb-3">
         <div class="col-xs-12 col-md-3 m-auto p-auto btn-group">
-            <a class="btn align-bottom hidden-print"
+            <a class="btn hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
                                 strtotime("previous month", $date['startStamp'])) }}">
                 <i class="fas fa-chevron-left"></i>
@@ -19,7 +19,7 @@
                 <strong>{{ $date['monthName'] . " " . $date['year'] }}</strong>
             </span>
 
-            <a class="btn align-baseline hidden-print"
+            <a class="btn hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m", strtotime("next month", $date['startStamp'])) }}">
                 <i class="fas fa-chevron-right"></i>
             </a>
