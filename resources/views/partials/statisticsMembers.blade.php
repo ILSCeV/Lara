@@ -1,6 +1,6 @@
 <div class="card p-0">
     <div class="card-header">
-        <h4 class="card-title padding-all-sides-16px">
+        <h4 class="card-title p-3">
             {{ trans('mainLang.infoFor') }}
         </h4>
     </div>

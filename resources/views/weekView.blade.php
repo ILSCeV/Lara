@@ -13,7 +13,7 @@
 			   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}">
 			   	&lt;&lt;</a>
 
-			<h6 class="col-md-8 col-xs-8 week-mo-so no-margin centered btn btn-lg">
+			<h6 class="col-md-8 col-xs-8 week-mo-so m-0 centered btn btn-lg">
 				<br class="d-none">
 				{{ "KW" . $date['week']}}:
 				<br class="d-block d-sm-none">
@@ -22,7 +22,7 @@
 				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd . '- 2 days'))) }}
 			</h6>
 
-			<h6 class="col-md-8 col-xs-8 week-mi-di no-margin centered hide">
+			<h6 class="col-md-8 col-xs-8 week-mi-di m-0 centered hide">
 				<br class="d-none">
 				{{ "KW" . $date['week']}}:
 				<br class="d-block d-sm-none">
