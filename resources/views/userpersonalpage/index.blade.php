@@ -11,8 +11,8 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="card bg-info">
-            <div class="card-header text-white">
+        <div class="card ">
+            <div class="card-header text-white bg-info">
                 <h4 class="card-title ">
                     {{ trans('mainLang.userPersonalPage') }}:
                     {{ $user->name }} ({{ $user->section->title }})
@@ -89,11 +89,11 @@
                                 </div>
                                 <br>
                                 <br>
-                                <div class="btn-group">
+                                <div class="btn-group btn-group-sm">
                                     <button type="reset"
-                                            class="btn btn-secondary">{{ trans('mainLang.reset') }}</button>
+                                            class="btn btn-sm btn-secondary">{{ trans('mainLang.reset') }}</button>
                                     <button type="submit"
-                                            class="btn btn-success">{{ trans('mainLang.update') }}</button>
+                                            class="btn btn-sm btn-success">{{ trans('mainLang.update') }}</button>
                                 </div>
                             {{Form::close()}}
                         </div>
