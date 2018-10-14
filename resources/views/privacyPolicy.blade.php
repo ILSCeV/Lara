@@ -30,7 +30,7 @@
             <h3 class="card-title">{{ trans("mainLang.privacyPolicy") }}</h3>
         </div>
 
-        <div class="card-body no-padding">
+        <div class="card-body p-0">
             <ul class="nav nav-tabs">
                 <li class="nav-item"><a class="nav-link active" href="#complete" data-toggle="tab" aria-expanded="true">Datenschutzerklärung -
                         deutsche Version</a></li>

@@ -4,10 +4,6 @@
  *
  ******************************************************************************/
 
-.no-padding {
-    padding: 0px;
-}
-
 .padding-all-sides-16px {
     padding: 16px;
 }
@@ -42,7 +38,7 @@
 
 
 @media (max-width: 1000px) {
-    .no-padding-xs {
+    .p-0-xs {
         padding: 0px;
     }
 }

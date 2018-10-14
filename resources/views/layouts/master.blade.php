@@ -37,8 +37,6 @@
 			@include('partials.navigation')
 		</header>
 
-        <br>
-
 		<div class="message" id="centerpoint">
 			@include('partials.message')
 		</div>

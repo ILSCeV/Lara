@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-	<div class="container-fluid no-padding">
+	<div class="container-fluid p-0">
       <div class="row">
 		{{-- prev/next week --}}
 		<div class="btn-group btn-group-lg col-xs-12 col-md-6 hidden-print">

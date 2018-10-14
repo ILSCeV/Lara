@@ -10,11 +10,11 @@
 
 @is('marketing', 'clubleitung', 'admin')
 
-	<div class="card card.text-white.bg-info col-xs-12 no-padding">
+	<div class="card card.text-white.bg-info col-xs-12 p-0">
 		<div class="card-header">
 				<h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.shiftTypes') }}</h4>
 		</div>
-		<div class="card card-body no-padding">
+		<div class="card card-body p-0">
             {{Form::open( ['id'=>'shiftTypeFilterForm','class'=>' padding-top-8px form-inline rounded', 'route'=>'searchShiftType'] ) }}
             <div class="form-group col-md-2">
                 {{ Form::text('filter','',['class'=>'form-control border', 'placeholder'=>trans('mainLang.search')]) }}
