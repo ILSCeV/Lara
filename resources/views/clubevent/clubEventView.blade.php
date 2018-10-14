@@ -3,7 +3,7 @@
 	{{ $clubEvent->evnt_title }}
 @stop
 @section('content')
-    <div class="panelEventView">
+    <div class="panelEventView padding-bottom-16px">
 		<div class="row no-margin">
 			<div class="card col no-padding">
                 @php
@@ -17,7 +17,7 @@
 				</div>
 					<table class="table table-hover">
 						<tr>
-							<td width="20%" class="left-padding-16 text-align-right">
+							<td width="20%" class="padding-left-16px text-align-right">
 								<i>{{ trans('mainLang.type') }}:</i>
 							</td>
 							<td>
@@ -25,7 +25,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td width="20%" class="left-padding-16">
+							<td width="20%" class="padding-left-16px">
 								<i>{{ trans('mainLang.begin') }}:</i>
 							</td>
 							<td>
@@ -34,7 +34,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td width="20%" class="left-padding-16">
+							<td width="20%" class="padding-left-16px">
 								<i>{{ trans('mainLang.end') }}:</i>
 							</td>
 							<td>
@@ -43,7 +43,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td width="20%" class="left-padding-16">
+							<td width="20%" class="padding-left-16px">
 								<i>{{ trans('mainLang.DV-Time') }}:</i>
 							</td>
 							<td>
@@ -51,7 +51,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td width="20%" class="left-padding-16">
+							<td width="20%" class="padding-left-16px">
 								<i>{{ trans('mainLang.club') }}:</i>
 							</td>
 							<td>
@@ -69,7 +69,7 @@
 						<table class="table table-hover">
                             @if(isset($clubEvent->facebook_done))
                                 <tr class="">
-                                    <td width="33%" class="left-padding-16">
+                                    <td width="33%" class="padding-left-16px">
                                         <i>{{ trans('mainLang.faceDone') }}?</i>
                                     </td>
                                     <td>
@@ -83,7 +83,7 @@
                             @endif
 							@if($clubEvent->event_url!=null && $clubEvent->event_url!="")
 								<tr class="">
-									<td width="33%" class="left-padding-16">
+									<td width="33%" class="padding-left-16px">
 										<i>{{ trans('mainLang.eventUrl') }}:</i>
 									</td>
 									<td class="d-block">
@@ -97,7 +97,7 @@
 							@endif
                             @if(isset($clubEvent->price_tickets_normal))
                                 <tr class="">
-                                    <td width="33%" class="left-padding-16">
+                                    <td width="33%" class="padding-left-16px">
                                         <i>{{ trans('mainLang.priceTickets') }}:</i>
                                     </td>
                                     <td>
@@ -112,7 +112,7 @@
                             @endif
                             @if(isset($clubEvent->price_normal))
                                 <tr class="">
-                                    <td width="33%" class="left-padding-16">
+                                    <td width="33%" class="padding-left-16px">
                                         <i>{{ trans('mainLang.price') }}:</i>
                                     </td>
                                     <td>
@@ -132,7 +132,7 @@
 
 
 							<tr>
-								<td width="20%" class="left-padding-16">
+								<td width="20%" class="padding-left-16px">
 									<i>{{ trans('mainLang.iCal') }}:</i>
 								</td>
 								<td>
@@ -191,7 +191,7 @@
 
 	<br>
 
-    <div class="panelEventView">
+    <div class="panelEventView padding-bottom-16px">
         {{-- show time button Ger.: Zeiten einblenden --}}
 		&nbsp;&nbsp;
 		<button class="btn btn-sm hidden-print"  type="button" id="toggle-shift-time">{{ trans('mainLang.hideTimes') }}</button>
@@ -216,14 +216,14 @@
 		<div class="card-body no-padding ">
 			@foreach($shifts as $shift)
                 {{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
-                <div class="row paddingTop  {!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
+                <div class="row padding-top-8px  {!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
                     @include('partials.shifts.takeShiftBar',['shift'=>$shift,'hideComments'=>false])
                 </div>
                 <div class="w-100"></div>
 
 				{{-- Show a line after each row except the last one --}}
 				@if($shift !== $shifts->last() )
-					<hr class="col-md-12 col-md-12 col-xs-12 top-padding no-margin no-padding">
+					<hr class="col-md-12 col-md-12 col-xs-12">
 				@endif
 
 			@endforeach

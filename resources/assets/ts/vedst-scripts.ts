@@ -598,7 +598,7 @@ $('[name^=icalfeeds]').click(function () {
                     remindPersonalIcalInput = "";
                 }
             } else {
-                remindPersonalIcalInput = '<div class="form-group left-padding-16 padding-right-16 col-md-12 col-xs-12">' +
+                remindPersonalIcalInput = '<div class="form-group padding-left-16px padding-right-16px col-md-12 col-xs-12">' +
                     translate('remindsBeforeShiftStart') + '&nbsp;&nbsp;' +
                     '<input id="personalIcalRemindValue" type="number" value="0" width="20%"/>' + translate('minutes') +
                     '</div>';
@@ -606,7 +606,7 @@ $('[name^=icalfeeds]').click(function () {
 
             var legend = "";
             if (typeof response['isPublic'] !== 'undefined' && response['isPublic'] !== true) {
-                legend = '<div class="all-sides-padding-16">' + translate('legend') + ': <span class="bg-warning" style="border: 1px solid black;"> <span class="glyphicon">&nbsp;</span></span> ' + translate("internalUsageOnly") + '</div>  ';
+                legend = '<div class="padding-all-sides-16px">' + translate('legend') + ': <span class="bg-warning" style="border: 1px solid black;"> <span class="glyphicon">&nbsp;</span></span> ' + translate("internalUsageOnly") + '</div>  ';
             }
 
             dialog.find('.modal-body').addClass("no-padding").html("" +

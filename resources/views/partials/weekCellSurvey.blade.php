@@ -36,8 +36,8 @@
             {{-- gives a session from privileged users the option to hide the event--}}
             @is('marketing', 'clubleitung', 'admin')
 
-                <hr class="col-md-12 col-xs-12 top-padding no-margin no-padding">
-                <div class="padding-right-16 bottom-padding float-right hidden-print">
+                <hr class="col-md-12 col-xs-12">
+                <div class="float-right hidden-print">
                     <small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
                 </div>
 
