@@ -62,18 +62,20 @@
                             <small>({{ trans('mainLang.passwordSetOptional') }})</small>
                         </div>
                     @endif
-                    <label for="password" class="col-form-label col-md-4 col-sm-5 col-xs-12"
-                           style="padding-left: 0;">{{ trans('mainLang.passwordEntry') }}:</label>
-                    <div class="col-md-4 col-sm-7 col-xs-12" style="padding-left: 0;">
+                    <label for="password" class="col-form-label col-md-4 col-sm-5 col-xs-12 pl-0">
+                        {{ trans('mainLang.passwordEntry') }}:
+                    </label>
+                    <div class="col-md-4 col-sm-7 col-xs-12 pl-0">
                         {!! Form::password('password', [''] ) !!}
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-12"></div>
                 </div>
 
                 <div class="form-groupcol-md-12 col-sm-12 col-xs-12 p-0">
-                    <label for="passwordDouble" class="col-form-label col-md-4 col-sm-5 col-xs-12"
-                           style="padding-left: 0" ;>{{ trans('mainLang.passwordRepeat') }}:</label>
-                    <div class="col-md-4 col-sm-7 col-xs-12" style="padding-left: 0;">
+                    <label for="passwordDouble" class="col-form-label col-md-4 col-sm-5 col-xs-12 pl-0">
+                        {{ trans('mainLang.passwordRepeat') }}:
+                    </label>
+                    <div class="col-md-4 col-sm-7 col-xs-12 pl-0">
                         {!! Form::password('password_confirmation', ['']) !!}
                     </div>
                     <div class="col-md-4 col-sm-2 col-xs-12"></div>
