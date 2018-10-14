@@ -1,5 +1,5 @@
 
-<div class="card no-padding">
+<div class="card p-0">
     <div class="card-header ">
         <h4 class="card-title padding-all-sides-16px">
             {{ trans('mainLang.leaderBoards') }}
@@ -21,7 +21,7 @@
     </ul>
 </div>
 
-<div class="card card-body no-padding">
+<div class="card card-body p-0">
     <div id="myTabContent" class="tab-content">
         @include('partials.statistics.leaderboardsOfClub', ['infos' => $infos, 'showClubName' => true, 'name' => 'all'])
         @foreach($clubInfos as $title => $clubInfo)

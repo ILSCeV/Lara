@@ -13,7 +13,7 @@
             {{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->deadline))) }}
         </div>
 
-        <div class="card card-body no-padding">
+        <div class="card card-body p-0">
         </div>
     </div>
 @else
@@ -32,7 +32,7 @@
             {{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->deadline))) }}
         </div>
 
-        <div class="card-body no-padding">
+        <div class="card-body p-0">
             {{-- gives a session from privileged users the option to hide the event--}}
             @is('marketing', 'clubleitung', 'admin')
 

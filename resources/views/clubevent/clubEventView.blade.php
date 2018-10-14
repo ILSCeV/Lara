@@ -5,7 +5,7 @@
 @section('content')
     <div class="panelEventView padding-bottom-16px">
 		<div class="row no-margin">
-			<div class="card col no-padding">
+			<div class="card col p-0">
                 @php
                     $clubEventClass = \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent);
                     $commonHeader = 'card-header '. $clubEventClass;
@@ -62,7 +62,7 @@
 						</tr>
 					</table>
 
-					<hr class="no-margin no-padding">
+					<hr class="no-margin p-0">
 
 					{{-- Internat event metadata --}}
 					@auth
@@ -161,7 +161,7 @@
 	                            <br>	&nbsp;
 	                        </span>
 
-			<div class="col-xs-12 col-md-6 col-sm-12 no-padding-xs">
+			<div class="col-xs-12 col-md-6 col-sm-12 p-0-xs">
 				@if( $clubEvent->evnt_public_info != '')
 				<div class="card">
 					<div class="card-body more-info">
@@ -213,7 +213,7 @@
 
 		@endif
 
-		<div class="card-body no-padding ">
+		<div class="card-body p-0 ">
 			@foreach($shifts as $shift)
                 {{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
                 <div class="row padding-top-8px  {!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">

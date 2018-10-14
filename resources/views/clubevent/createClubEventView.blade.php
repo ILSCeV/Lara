@@ -16,10 +16,10 @@
 
 @auth
     <div class="row">
-        <div class="card col no-padding">
+        <div class="card col p-0">
             @if($createClubEvent)
                 {!! Form::open(['method' => 'POST', 'class'=>'form-inline','id'=>'templateSelectorForm']) !!}
-                <div class="form-group col-12 no-padding">
+                <div class="form-group col-12 p-0">
                     <label for="templateSelector"
                            class="col-form-label col-2">{{ trans('mainLang.template') }}:
                         &nbsp;</label>
@@ -50,7 +50,7 @@
                 </div>
                 {!! Form::close() !!}
             @elseIf(isset($baseTemplate) && !is_null($baseTemplate))
-                <div class="form-group col-12 no-padding">
+                <div class="form-group col-12 p-0">
                     <label class="col-form-label col-2">{{ trans('mainLang.template') }}:
                         &nbsp;</label>
                     <div class="col-6">
@@ -77,7 +77,7 @@
     @endif
 
 	<div class="row">
-		<div class="card col-6 no-padding">
+		<div class="card col-6 p-0">
 
 			<div class="card-header bg-white">
 				<h4 class="card-title">
@@ -92,7 +92,7 @@
 
 			<br>
 
-			<div class="card-body no-padding">
+			<div class="card-body p-0">
 			   	<div class="form-group col-12 ">
 			   		<span class="col-2">&nbsp;</span>
 					{!! Form::checkbox('saveAsTemplate', '1', false, array('class'=>'col-2 form-check')) !!}
@@ -128,7 +128,7 @@
 			    </div>
                 <br>
 			    @is('marketing', 'clubleitung', 'admin')
-					<div class="form-group col-12 no-padding">
+					<div class="form-group col-12 p-0">
 						<label for="facebookDone" class="col-4">{{trans('mainLang.faceDone')}}?</label>
                         <select class="selectpicker" name="facebookDone" id="facebookDone">
                             <option value="-1" @if($facebookNeeded === null) selected @endif> {{ trans('mainLang.=FREI=') }} </option>
@@ -142,7 +142,7 @@
 						{!! Form::text('eventUrl', $eventUrl, ['class'=>$inputClass,'style'=>'cursor: auto']) !!}
 					</div>
                     <br>
-				    <div class="form-group col-12 no-padding">
+				    <div class="form-group col-12 p-0">
                         <label for="evnt_type" class="col-3">{{ trans('mainLang.type') }}:</label>
                         <div class="col-8">
                             @for($i = 0;$i<12;$i++)
@@ -157,7 +157,7 @@
                         </div>
 				    </div>
 				@else
-					<div class="form-group col-12 no-padding">
+					<div class="form-group col-12 p-0">
 				     	<label for="evnt_type" class="col-form-label {{$labelClass}}">Typ:</label>
 				     	<div class="col-9">
 				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
@@ -214,7 +214,7 @@
 				    </div>
 				@endis
 
-				<div class="form-group col-12 no-padding">
+				<div class="form-group col-12 p-0">
                     <label for="section" class="col-form-label col-3">{{ trans('mainLang.section') }}: &nbsp;</label>
                     <select id="section" class="selectpicker" name="section" >
                         @php
@@ -237,7 +237,7 @@
                     </select>
 			   	</div>
                 <br>
-			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
+			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 p-0" id="filter-checkboxes">
                     <label for="filter" class="col-form-label col-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
                     <div id="filter" class="input-group form-check col-6">
 
@@ -337,7 +337,7 @@
 		    </div>
 		</div>
 
-		<div class="container col no-padding-xs">
+		<div class="container col p-0-xs">
 			<br class="d-block d-sm-none d-none d-sm-block d-md-none">
 			<div class="card">
 				<div class="card-header">

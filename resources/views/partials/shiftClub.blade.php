@@ -1,5 +1,5 @@
 @if( is_null($shift->getPerson) )
-    <div class="btn-group col-xs-10 col-md-10 hidden-print no-padding">
+    <div class="btn-group col-xs-10 col-md-10 hidden-print p-0">
         {!! Form::text('club' . $shift->id, Input::old('club' . $shift->id),
                        array( 'placeholder'=>'-',
                        'id'=>'club' . $shift->id,
@@ -7,7 +7,7 @@
                        'autocomplete'=>'off')) !!}
     </div>
 @else
-    <div class="btn-group col-xs-10 col-md-10 no-padding"
+    <div class="btn-group col-xs-10 col-md-10 p-0"
     >
         @if(!is_null($shift->getPerson->getClub))
             {!! Form::text('club' . $shift->id,
