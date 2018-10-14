@@ -41,7 +41,7 @@
 			@include('partials.message')
 		</div>
 
-        <section class="container-fluid">
+        <section class="container-fluid px-0">
             @yield('content')
         </section>
 
