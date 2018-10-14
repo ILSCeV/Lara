@@ -3,8 +3,8 @@
 	{{ $clubEvent->evnt_title }}
 @stop
 @section('content')
-    <div class="panelEventView padding-bottom-16px">
-		<div class="row no-margin">
+    <div class="panelEventView pb-3">
+		<div class="row m-0">
 			<div class="card col p-0">
                 @php
                     $clubEventClass = \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent);
@@ -17,7 +17,7 @@
 				</div>
 					<table class="table table-hover">
 						<tr>
-							<td width="20%" class="padding-left-16px text-align-right">
+							<td width="20%" class="pl-3 text-align-right">
 								<i>{{ trans('mainLang.type') }}:</i>
 							</td>
 							<td>
@@ -25,7 +25,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td width="20%" class="padding-left-16px">
+							<td width="20%" class="pl-3">
 								<i>{{ trans('mainLang.begin') }}:</i>
 							</td>
 							<td>
@@ -34,7 +34,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td width="20%" class="padding-left-16px">
+							<td width="20%" class="pl-3">
 								<i>{{ trans('mainLang.end') }}:</i>
 							</td>
 							<td>
@@ -43,7 +43,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td width="20%" class="padding-left-16px">
+							<td width="20%" class="pl-3">
 								<i>{{ trans('mainLang.DV-Time') }}:</i>
 							</td>
 							<td>
@@ -51,7 +51,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td width="20%" class="padding-left-16px">
+							<td width="20%" class="pl-3">
 								<i>{{ trans('mainLang.club') }}:</i>
 							</td>
 							<td>
@@ -62,14 +62,14 @@
 						</tr>
 					</table>
 
-					<hr class="no-margin p-0">
+					<hr class="m-0 p-0">
 
 					{{-- Internat event metadata --}}
 					@auth
 						<table class="table table-hover">
                             @if(isset($clubEvent->facebook_done))
                                 <tr class="">
-                                    <td width="33%" class="padding-left-16px">
+                                    <td width="33%" class="pl-3">
                                         <i>{{ trans('mainLang.faceDone') }}?</i>
                                     </td>
                                     <td>
@@ -83,7 +83,7 @@
                             @endif
 							@if($clubEvent->event_url!=null && $clubEvent->event_url!="")
 								<tr class="">
-									<td width="33%" class="padding-left-16px">
+									<td width="33%" class="pl-3">
 										<i>{{ trans('mainLang.eventUrl') }}:</i>
 									</td>
 									<td class="d-block">
@@ -97,7 +97,7 @@
 							@endif
                             @if(isset($clubEvent->price_tickets_normal))
                                 <tr class="">
-                                    <td width="33%" class="padding-left-16px">
+                                    <td width="33%" class="pl-3">
                                         <i>{{ trans('mainLang.priceTickets') }}:</i>
                                     </td>
                                     <td>
@@ -112,7 +112,7 @@
                             @endif
                             @if(isset($clubEvent->price_normal))
                                 <tr class="">
-                                    <td width="33%" class="padding-left-16px">
+                                    <td width="33%" class="pl-3">
                                         <i>{{ trans('mainLang.price') }}:</i>
                                     </td>
                                     <td>
@@ -132,7 +132,7 @@
 
 
 							<tr>
-								<td width="20%" class="padding-left-16px">
+								<td width="20%" class="pl-3">
 									<i>{{ trans('mainLang.iCal') }}:</i>
 								</td>
 								<td>
@@ -191,7 +191,7 @@
 
 	<br>
 
-    <div class="panelEventView padding-bottom-16px">
+    <div class="panelEventView pb-3">
         {{-- show time button Ger.: Zeiten einblenden --}}
 		&nbsp;&nbsp;
 		<button class="btn btn-sm hidden-print"  type="button" id="toggle-shift-time">{{ trans('mainLang.hideTimes') }}</button>
@@ -216,7 +216,7 @@
 		<div class="card-body p-0 ">
 			@foreach($shifts as $shift)
                 {{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
-                <div class="row padding-top-8px  {!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
+                <div class="row pt-2  {!! ( isset($shift->getPerson->prsn_ldap_id) && Auth::user() && $shift->getPerson->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
                     @include('partials.shifts.takeShiftBar',['shift'=>$shift,'hideComments'=>false])
                 </div>
                 <div class="w-100"></div>

@@ -15,7 +15,7 @@
 				<h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.shiftTypes') }}</h4>
 		</div>
 		<div class="card card-body p-0">
-            {{Form::open( ['id'=>'shiftTypeFilterForm','class'=>' padding-top-8px form-inline rounded', 'route'=>'searchShiftType'] ) }}
+            {{Form::open( ['id'=>'shiftTypeFilterForm','class'=>' pt-2 form-inline rounded', 'route'=>'searchShiftType'] ) }}
             <div class="form-group col-md-2">
                 {{ Form::text('filter','',['class'=>'form-control border', 'placeholder'=>trans('mainLang.search')]) }}
             </div>
@@ -23,7 +23,7 @@
                 <button type="submit" class="btn btn-success"> {{trans('mainLang.search') }}</button>
             </div>
             {{Form::close()}}
-            <div class="clearfix padding-top-8px"></div>
+            <div class="clearfix pt-2"></div>
             <div class="table-responsive">
                 <table class="table info table-hover table-sm">
                     <thead>

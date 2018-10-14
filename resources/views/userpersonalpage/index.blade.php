@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="tab-pane fade" id="settings">
-                        <div class="padding-all-sides-16px">
+                        <div class="p-3">
                             {{Form::open(['route' => 'user.updatePersonalSettings'])}}
                                 <label for="privateClubName">
                                     <strong>{{ trans('mainLang.privateClubName') }}</strong>
@@ -98,9 +98,9 @@
                             {{Form::close()}}
                         </div>
 
-                        <hr class="p-0 no-margin">
+                        <hr class="p-0 m-0">
 
-                        <div class="padding-all-sides-16px">
+                        <div class="p-3">
                             @auth
                                 @noLdapUser
                                     <a href="{{route('password.change')}}">
