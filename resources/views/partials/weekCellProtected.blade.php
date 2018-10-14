@@ -38,7 +38,7 @@
 		    </div>
 		@endif
 
-		<div class="card-body no-padding">
+		<div class="card-body p-0">
 
 			@if (!is_null($clubEvent->getSchedule))
 

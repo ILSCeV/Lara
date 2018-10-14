@@ -476,8 +476,8 @@ $(document).ready(function() {
             dialog.init(function(){
 
                 // Initialise table structure
-                dialog.find('.modal-body').addClass("no-padding").html(
-                    "<table id=\"person-shifts-overview\" class=\"table table-hover no-padding\">"
+                dialog.find('.modal-body').addClass("p-0").html(
+                    "<table id=\"person-shifts-overview\" class=\"table table-hover p-0\">"
                         + "<thead>"
                         + "<tr>"
                         + "<th>#</th>"
@@ -609,7 +609,7 @@ $('[name^=icalfeeds]').click(function () {
                 legend = '<div class="padding-all-sides-16px">' + translate('legend') + ': <span class="bg-warning" style="border: 1px solid black;"> <span class="glyphicon">&nbsp;</span></span> ' + translate("internalUsageOnly") + '</div>  ';
             }
 
-            dialog.find('.modal-body').addClass("no-padding").html("" +
+            dialog.find('.modal-body').addClass("p-0").html("" +
                 remindPersonalIcalInput +
                 legend +
                 "<table class='table table-hover'>" +

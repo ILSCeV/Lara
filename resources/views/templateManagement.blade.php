@@ -6,12 +6,12 @@
 
 @section('content')
 
-    <div class="card col-xs-12 no-padding">
+    <div class="card col-xs-12 p-0">
         <div class="card-header bg-info text-white">
             <h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageTemplates') }}</h4>
         </div>
 
-        <div class="card card-body no-padding">
+        <div class="card card-body p-0">
             <div class="d-inline-block">
                 <div class="col-4 has-feedback d-inline-block">
                     <label for="templateOverviewFilter" class="text-primary"> {{ trans('mainLang.search') }}: </label>

@@ -12,7 +12,7 @@
 		<div class="card-header">
 			<h4 class="card-title">#{{ $current_shiftType->id }}: "{!! $current_shiftType->title !!}" </h4>
 		</div>
-		<div class="card card-body no-padding">
+		<div class="card card-body p-0">
 			<table class="table table-hover">
 				{!! Form::open(  array( 'route' => ['shiftType.update', $current_shiftType->id],
 		                                'id' => $current_shiftType->id,
@@ -94,7 +94,7 @@
 					    </td>
                     </tr>
 					<tr>
-						<td width="100%" colspan="2" class="no-padding">
+						<td width="100%" colspan="2" class="p-0">
 							<table class="table table-hover table-sm" id="events-rows">
 								<thead>
 									<tr class="active">
@@ -161,7 +161,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="100%" colspan="2" class="no-padding">
+                        <td width="100%" colspan="2" class="p-0">
                             <table class="table table-hover table-sm" id="events-rows">
                                 <thead>
                                 <tr class="active">

@@ -54,7 +54,7 @@
 		    </div>
 		@endif
 
-		<div class="card-body no-padding">
+		<div class="card-body p-0">
 
 			{{-- Show shifts --}}
 			@foreach($shifts = $clubEvent->getSchedule->shifts as $shift)

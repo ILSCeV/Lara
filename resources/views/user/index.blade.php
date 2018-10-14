@@ -5,12 +5,12 @@
 @stop
 
 @section('content')
-    <div class="card card.text-white.bg-info col-xs-12 no-padding">
+    <div class="card card.text-white.bg-info col-xs-12 p-0">
         <div class="card-header">
             <h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('users.users') }}</h4>
         </div>
 
-        <div class="card card-body no-padding">
+        <div class="card card-body p-0">
             <table class="table info table-hover table-sm">
                 <thead>
                 <tr class="active">

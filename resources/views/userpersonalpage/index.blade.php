@@ -18,7 +18,7 @@
                     {{ $user->name }} ({{ $user->section->title }})
                 </h4>
             </div>
-            <div class="card-body no-padding">
+            <div class="card-body p-0">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a href="#shifts" class="nav-link active" data-toggle="tab">{{trans('mainLang.upcomingShifts')}}</a>
@@ -98,7 +98,7 @@
                             {{Form::close()}}
                         </div>
 
-                        <hr class="no-padding no-margin">
+                        <hr class="p-0 no-margin">
 
                         <div class="padding-all-sides-16px">
                             @auth
