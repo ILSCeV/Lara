@@ -7,7 +7,7 @@
 @section('content')
 
 {{-- Prev/next month selector --}}
-    <div class="row month-view-header">
+    <div class="row pb-3">
         <div class="col-xs-12 col-md-3 m-auto p-auto btn-group">
             <a class="btn align-bottom hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",

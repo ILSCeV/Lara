@@ -32,14 +32,6 @@
     background-color: #cccccc !important;
 }
 
-.light-grey {
-    background-color: #efefef;
-}
-
-.dark-grey {
-    background-color: darkgrey;
-}
-
 .text-dark-grey {
     color: darkgrey;
 }
@@ -50,10 +42,6 @@
 
 .black-text {
     color: #000000 !important;
-}
-
-.centered {
-    text-align: center;
 }
 
 .cal-event a {
@@ -319,11 +307,5 @@ span.event-time{
 
     .noheightmobile{
         height:5vh;
-    }
-}
-
-@media screen and (min-width: @screen-md-min) {
-    .month-view-header {
-        padding-bottom: 8px;
     }
 }

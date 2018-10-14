@@ -215,7 +215,7 @@ $labelClass = 'col-md-2 col-sm-auto';
             </div>
             <div class="w-100"></div>
             <div class="col-md-7 col-sm-auto">
-                <div class="btn-group btn-group-lg centered">
+                <div class="btn-group btn-group-lg text-center">
                     <button type="submit" id="updateUserData"
                             class="btn btn-success"> {{ trans('mainLang.update') }} </button>
                     <a class="btn btn-secondary"

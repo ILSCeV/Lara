@@ -148,14 +148,14 @@ Disabling iCal until fully functional.
     {{-- Mobile version --}}
                 <li class="nav-item d-block d-sm-none">
                     <a href="{{ URL::route('event.create') }}"
-                       class="btn btn-sm btn-primary d-block d-sm-none centered nav-link text-white">
+                       class="btn btn-sm btn-primary d-block d-sm-none text-center nav-link text-white">
                         {{ trans('mainLang.createNewEvent') }}
                     </a>
                 </li>
 
                 <li class="nav-item d-block d-sm-none">
                     <a href="{{ URL::route('survey.create') }}"
-                       class="btn btn-sm btn-primary d-block d-sm-none centered nav-link text-white">
+                       class="btn btn-sm btn-primary d-block d-sm-none text-center nav-link text-white">
                         {{ trans('mainLang.createNewSurvey') }}
                     </a>
                 </li>
