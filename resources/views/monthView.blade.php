@@ -32,8 +32,8 @@
     </div>
 
     {{-- Month Table --}}
-    <div class="col-xs-12 bgWhite col-md-12 calendarWrapper">
-        <div class=" d-none" id="ContentRow">
+    <div class="col-xs-12 bgWhite col-md-12 calendarWrapper p-0">
+        <div class="d-none">
             <div class="calendarWeek noBorderTop" style="border-top: 0px">
                 {{ trans('mainLang.Cw') }}
             </div>
@@ -101,7 +101,7 @@
                 </div>
             @endif
         @endforeach
-
+        <hr class="py-0 my-0">
     </div>
 
     <div class="col-12">
