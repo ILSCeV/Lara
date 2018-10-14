@@ -14,11 +14,14 @@ $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 
 @import "../../../node_modules/cookieconsent/build/cookieconsent.min.css";
 
-@import "../css/vedst.css";
+@import "../css/main.css";
+@import "../css/helpers.css";
+@import "../css/sectionFilters.css";
+@import "../css/eventView.css";
+@import "../css/weekView.css";
 @import "../css/print.css";
 @import "event/createEdit";
-@import "../css/monthViewResponsive.css";
+@import "../css/monthView.css";
 @import "../css/palette.css";
 @import "../css/templateManagement/templateManagement.css";
 @import "backtotop/backToTop";
-

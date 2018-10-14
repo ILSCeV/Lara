@@ -1,11 +1,17 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
-
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top padding-all-sides-8px">
     <div class="navbar-header">
+{{-- HAMBURGER / Mobile only --}}
+        <button type="button"
+                class="navbar-toggler collapsed btn btn-primary"
+                data-toggle="collapse"
+                data-target="#navbar"
+                aria-expanded="false"
+                aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            &#x2630;
+        </button>
 
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse"
-                data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span>
-            &#x2630;</button>
-        {{-- LARA LOGO --}}
+{{-- LARA LOGO --}}
         <a class="navbar-brand" href="{{ asset('/') }}">
             @if (App::environment('development'))
                 <img id="nav-logo-field" src="{{  asset('/logos/lara-logo-dev.png') }}" height="48" alt="LARA dev">
@@ -16,12 +22,13 @@
             @endif
         </a>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-            
-{{-- DAY VIEW / public --}}
 
+    <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav mr-auto mt-2 mt-lg-0">
+
+{{-- DAY VIEW / public --}}
             <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/today') }}">{{ trans('mainLang.today') }}</a></li>
+
 {{-- MONTH VIEW / public --}}
             <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/month') }}">{{ trans('mainLang.month') }}</a></li>
 
@@ -117,21 +124,26 @@ Disabling iCal until fully functional.
             </li>
         </ul>
 
-        <ul class="nav navbar-nav ml-auto">
+        <ul class="nav navbar-nav">
+
 {{-- AUTHENTICATION --}}
-                @auth
+            @auth
 
 {{-- CREATE BUTTONS / members only --}}
     {{-- Desktop version --}}
-                    <li class=" d-none d-md-block d-lg-block nav-item">
-                        <div style="padding-top:2px" class="btn-group dropleft">
-                            <button class="btn btn-primary dropdown-toggle nav-link text-white" data-toggle="dropdown" >+</button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ URL::route('event.create') }}">{{ trans('mainLang.createNewEvent') }}</a>
-                                <a class="dropdown-item" href="{{ URL::route('survey.create') }}">{{ trans('mainLang.createNewSurvey') }}</a>
-                            </div>
+                <li class="d-none d-md-block d-lg-block nav-item">
+                    <div class="btn-group">
+                        <button type="button"
+                                class="btn btn-sm btn-primary nav-link text-white margin-right-8px"
+                                data-toggle="dropdown">
+                            &nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ URL::route('event.create') }}">{{ trans('mainLang.createNewEvent') }}</a>
+                            <a class="dropdown-item" href="{{ URL::route('survey.create') }}">{{ trans('mainLang.createNewSurvey') }}</a>
                         </div>
-                    </li>
+                    </div>
+                </li>
 
     {{-- Mobile version --}}
                 <li class="nav-item d-block d-sm-none">
@@ -147,51 +159,51 @@ Disabling iCal until fully functional.
                         {{ trans('mainLang.createNewSurvey') }}
                     </a>
                 </li>
+
 {{-- MEMBER INFO / members only --}}
                 <li class="nav-item">
-                    <strong>
-                       <span data-toggle="tooltip"
-                         data-placement="bottom"
-                         title="{{ trans('mainLang.userPersonalPage') }}">
-                          <a class="nav-link" href="{{route('user.personalpage')}}">
-                            {{ Auth::user()->name }}
-                           @is(Roles::PRIVILEGE_ADMINISTRATOR)
-                            ({{ Auth::user()->section->title . " / Admin" }})
-                           @elseis(Roles::PRIVILEGE_CL)
-                            ({{ Auth::user()->section->title . " / Clubleitung" }})
-                           @elseis(Roles::PRIVILEGE_MARKETING)
-                            ({{ Auth::user()->section->title . " / Marketing" }})
-                           @else
-                            ({{ Auth::user()->section->title }})
-                           @endis
-                                  @php
-                                      $attributes = Lara\Status::style(Auth::user()->status);
-                                  @endphp
-                                  <i class="{{ $attributes["status"]}}"
-                                     style="{{ $attributes["style"] }}"
-                                     data-toggle="tooltip"
-                                     data-placement="bottom"
-                                     title="{{ Lara\Status::localizeCurrent() }}"></i>
-                             </a>
-                       </span>
+                    <span data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="{{ trans('mainLang.userPersonalPage') }}">
+                              <strong>
+                                  <a class="nav-link" href="{{route('user.personalpage')}}">
+                                      {{ Auth::user()->name }}
+                                   @is(Roles::PRIVILEGE_ADMINISTRATOR)
+                                        ({{ Auth::user()->section->title . " / Admin" }})
+                                   @elseis(Roles::PRIVILEGE_CL)
+                                        ({{ Auth::user()->section->title . " / Clubleitung" }})
+                                   @elseis(Roles::PRIVILEGE_MARKETING)
+                                        ({{ Auth::user()->section->title . " / Marketing" }})
+                                   @else
+                                        ({{ Auth::user()->section->title }})
+                                   @endis
+                                   @php
+                                       $attributes = Lara\Status::style(Auth::user()->status);
+                                   @endphp
+                                       <i class="{{ $attributes["status"]}}"
+                                          style="{{ $attributes["style"] }}"
+                                          data-toggle="tooltip"
+                                          data-placement="bottom"
+                                          title="{{ Lara\Status::localizeCurrent() }}"></i>
+                                   </a>
+                               </strong>
+                    </span>
+                </li>
+                <li  class="nav-item btn-group">
+                    {!! Form::open(array('url' => 'logout',
+                                         'method' => 'POST',
+                                         'class'=>'form-inline')) !!}
+                        <div class="navbar-form">
+                            &nbsp;&nbsp;
 
-                    </strong>
-            </li>
-                    <li  class="nav-item btn-group">
-                        {!! Form::open(array('url' => 'logout',
-                                            'method' => 'POST',
-                                            'class'=>'form-inline')) !!}
-                            <div class="navbar-form">
-                                &nbsp;&nbsp;
-
-                                <br class="d-block d-sm-none">
-                                <br class="d-block d-sm-none">
-                                {!! Form::submit( Lang::get('mainLang.logOut'),
-                                                  array('class' => 'btn btn-secondary btn-sm float-right',
-                                                        'name'  => 'logout') ) !!}
-                            </div>
-                        {!! Form::close() !!}
-                    </li>
+                            <br class="d-block d-sm-none">
+                            <br class="d-block d-sm-none">
+                            {!! Form::submit( Lang::get('mainLang.logOut'),
+                                              array('class' => 'btn btn-secondary btn-sm float-right',
+                                                    'name'  => 'logout') ) !!}
+                        </div>
+                    {!! Form::close() !!}
+                </li>
 
                 @else
 

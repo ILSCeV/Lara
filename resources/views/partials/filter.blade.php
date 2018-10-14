@@ -23,9 +23,9 @@
         @endforeach
     </div>
     <br>
-    <div class="col-md-12 no-padding d-block p-2">
+    <div class="col-md-12 d-block p-2">
         <select id="section-filter-selector"
-                class="d-none show-tick float-right bottom-padding"
+                class="d-none show-tick float-right"
                 multiple
                 title="{{ trans('mainLang.chooseAtLeastOne') }}"
                 data-selected-text-format="count > 2"

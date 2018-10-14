@@ -63,7 +63,7 @@
     </div>
 	<br class="d-block d-sm-none">
         <div class="row">
-                <div class="containerPadding12Mobile container-fluid" >
+                <div class="container-fluid" >
                     {{-- weekdays --}}
                     @if (!$events->isEmpty())
                         <div class="isotope">

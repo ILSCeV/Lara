@@ -19,7 +19,7 @@
 		                                'method' => 'PUT',
 		                                'class' => 'shiftType')  ) !!}
 					<tr>
-						<td width="20%" class="left-padding-16">
+						<td width="20%" class="padding-left-16px">
 							<i>{{ trans('mainLang.shiftType') }}:</i>
 						</td>
 						<td>
@@ -29,7 +29,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td width="20%" class="left-padding-16">
+						<td width="20%" class="padding-left-16px">
 							<i>{{ trans('mainLang.begin') }}:</i>
 						</td>
 						<td>
@@ -39,7 +39,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td width="20%" class="left-padding-16">
+						<td width="20%" class="padding-left-16px">
 							<i>{{ trans('mainLang.end') }}:</i>
 						</td>
 						<td>
@@ -49,7 +49,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td width="20%" class="left-padding-16">
+						<td width="20%" class="padding-left-16px">
 							<i>{{ trans('mainLang.weight') }}:</i>
 						</td>
 						<td>
@@ -71,7 +71,7 @@
 
 				@if( $current_shiftType->shifts->count() == 0 )
 					<tr>
-						<td width="100%" colspan="2" class="left-padding-16">
+						<td width="100%" colspan="2" class="padding-left-16px">
 							{{ trans('mainLang.shiftTypeNeverUsed') }}
 							<a href="../shiftType/{{ $current_shiftType->id }}"
 							   class="btn btn-small btn-danger"
@@ -89,7 +89,7 @@
 					</tr>
 				@else
 					<tr>
-						<td width="100%" colspan="2" class="left-padding-16">
+						<td width="100%" colspan="2" class="padding-left-16px">
 					      	{{ trans('mainLang.shiftTypeUsedInFollowingEvents') }}
 					    </td>
                     </tr>
@@ -156,7 +156,7 @@
 						</td>
                     </tr>
                     <tr>
-                        <td width="100%" colspan="2" class="left-padding-16">
+                        <td width="100%" colspan="2" class="padding-left-16px">
                             {{ trans('mainLang.shiftTypeUsedInFollowingTemplates') }}
                         </td>
                     </tr>
