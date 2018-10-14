@@ -14,7 +14,7 @@
             <table class="table info table-hover table-sm">
                 <thead>
                 <tr class="active">
-                    <th class="col-md-1 col-xs-1 padding-left-15">
+                    <th class="col-md-1 col-xs-1 pl-3">
                         {{ trans('auth.section') }}
                     </th>
                     <th class="col-md-3 col-xs-3">
@@ -35,8 +35,8 @@
                 </tr>
                 </thead>
                 <tbody class="container" id="userOverviewTable">
-                <div class="table-control">
-                    <span class="table-control__search fa-pull-left form-inline has-feedback">
+                <div class="px-3 py-2">
+                    <span class="pb-2 fa-pull-left form-inline has-feedback">
                         <label for="userOverviewFilter" class="test"> {{ trans('mainLang.search') }}: </label>
                         <input type="text" class="form-control" id="userOverviewFilter">
                     </span>
@@ -51,7 +51,7 @@
 
                 @foreach($users as $user)
                     <tr>
-                        <td class="padding-left-15">
+                        <td class="pl-3">
                            {{ $user->section->title }}
                         </td>
                         <td>
