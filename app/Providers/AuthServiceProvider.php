@@ -5,6 +5,8 @@ namespace Lara\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
+use Lara\Policies\ClubEventPolicy;
+use Lara\Policies\SurveyPolicy;
 use Lara\Policies\RolePolicy;
 use Lara\Policies\UserPolicy;
 
@@ -29,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         'Lara\Model' => 'Lara\Policies\ModelPolicy',
         User::class => UserPolicy::class,
         Role::class => RolePolicy::class,
-
+        ClubEvent::class => ClubEventPolicy::class
     ];
 
     /**
