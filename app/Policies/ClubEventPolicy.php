@@ -4,6 +4,7 @@ namespace Lara\Policies;
 
 use Lara\User;
 use Lara\ClubEvent;
+use Lara\utilities\RoleUtility;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -20,7 +21,7 @@ class ClubEventPolicy
      */
     public function view(User $user, ClubEvent $clubEvent)
     {
-        //
+        return true;
     }
 
     /**
@@ -43,7 +44,22 @@ class ClubEventPolicy
      */
     public function update(User $user, ClubEvent $clubEvent)
     {
-        //
+        if ($user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
+            return true;
+        }
+
+        if ($user->is($clubEvent->creator)) {
+            return true;
+        }
+
+        $isClOrMarketing = $user->isAn(RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_MARKETING);
+        $isSameSection = $user->section_id == $clubEvent->section->id;
+
+        if ($isClOrMarketing && $isSameSection) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
