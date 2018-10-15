@@ -15,6 +15,7 @@ use Lara\Section;
 use Lara\User;
 use Lara\ClubEvent;
 use Lara\Schedule;
+use Lara\Survey;
 use Lara\utilities\RoleUtility;
 
 use Lara\Observers\ScheduleObserver;
@@ -31,7 +32,8 @@ class AuthServiceProvider extends ServiceProvider
         'Lara\Model' => 'Lara\Policies\ModelPolicy',
         User::class => UserPolicy::class,
         Role::class => RolePolicy::class,
-        ClubEvent::class => ClubEventPolicy::class
+        ClubEvent::class => ClubEventPolicy::class,
+        Survey::class => SurveyPolicy::class
     ];
 
     /**

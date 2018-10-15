@@ -4,6 +4,8 @@ namespace Lara\Policies;
 
 use Lara\User;
 use Lara\Survey;
+
+use Lara\utilities\RoleUtility;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SurveyPolicy
@@ -42,7 +44,22 @@ class SurveyPolicy
      */
     public function update(User $user, Survey $survey)
     {
-        //
+        if ($user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
+            return true;
+        }
+
+        if ($user->is($survey->creator->user)) {
+            return true;
+        }
+
+        $isClOrMarketing = $user->isAn(RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_MARKETING);
+        $isSameSection = $user->section_id == $survey->section()->id;
+
+        if ($isClOrMarketing && $isSameSection) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -54,6 +71,6 @@ class SurveyPolicy
      */
     public function delete(User $user, Survey $survey)
     {
-        //
+        return $this->update($user, $survey);
     }
 }
