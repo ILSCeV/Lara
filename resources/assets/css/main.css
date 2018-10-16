@@ -75,14 +75,8 @@ input[type=number],
     display: block;
 }
 
-.displayMobile {
-    display: none;
-}
 
 @media screen and (max-width: 978px) {
-    .displayMobile {
-        display: block;
-    }
 
     .displayDesktop {
         display: none;
