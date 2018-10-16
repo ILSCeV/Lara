@@ -10,11 +10,10 @@
 
 @section('content')
     @php
-    $labelClass = 'col-3';
-    $inputClass = 'form-control col-8';
+        $labelClass = 'col-3';
+        $inputClass = 'form-control col-8';
     @endphp
 
-@auth
     <div class="row">
         <div class="card col p-0">
             @if($createClubEvent)
@@ -424,9 +423,4 @@
 		{!! Form::close() !!}
 
 	</div>
-
-@else
-	@include('partials.accessDenied')
-@endauth
-
 @stop
