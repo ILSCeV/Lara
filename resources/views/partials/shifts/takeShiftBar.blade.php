@@ -28,7 +28,7 @@ if($hideComments){
     <input type="text" id="{!! 'website' . $shift->id !!}" name="{!! 'website' . $shift->id !!}" value=""/>
 </div>
 
-<div class="col-1">
+<div class="col-4">
     @include("partials.shiftTitle")
 </div>
 
