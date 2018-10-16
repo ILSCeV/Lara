@@ -6,13 +6,13 @@
 @stop
 
 @section('content')
-
+@php $inputClass="form-control form-control-sm"; @endphp
 @is(Roles::PRIVILEGE_ADMINISTRATOR, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_MARKETING)
-	<div class="card card.text-white.bg-info">
-		<div class="card-header">
+	<div class="card">
+		<div class="card-header text-white bg-info">
 			<h4 class="card-title">#{{ $current_shiftType->id }}: "{!! $current_shiftType->title !!}" </h4>
 		</div>
-		<div class="card card-body p-0">
+		<div class="card-body p-0">
 			<table class="table table-hover">
 				{!! Form::open(  array( 'route' => ['shiftType.update', $current_shiftType->id],
 		                                'id' => $current_shiftType->id,
@@ -25,7 +25,7 @@
 						<td>
 							{!! Form::text('title' . $current_shiftType->id,
 							   $current_shiftType->title,
-							   array('id'=>'title' . $current_shiftType->id)) !!}
+							   array('id'=>'title' . $current_shiftType->id, 'class'=>$inputClass)) !!}
 						</td>
 					</tr>
 					<tr>
@@ -35,7 +35,7 @@
 						<td>
 							{!! Form::input('time','start' . $current_shiftType->id,
 							   $current_shiftType->start,
-							   array('id'=>'start' . $current_shiftType->id)) !!}
+							   array('id'=>'start' . $current_shiftType->id, 'class'=>$inputClass)) !!}
 						</td>
 					</tr>
 					<tr>
@@ -45,7 +45,7 @@
 						<td>
 							{!! Form::input('time','end' . $current_shiftType->id,
 							   $current_shiftType->end,
-							   array('id'=>'end' . $current_shiftType->id)) !!}
+							   array('id'=>'end' . $current_shiftType->id, 'class'=>$inputClass)) !!}
 						</td>
 					</tr>
 					<tr>
@@ -55,7 +55,7 @@
 						<td>
 							{!! Form::text('statistical_weight' . $current_shiftType->id,
 							   $current_shiftType->statistical_weight,
-							   array('id'=>'statistical_weight' . $current_shiftType->id)) !!} <br/>
+							   array('id'=>'statistical_weight' . $current_shiftType->id, 'class'=>$inputClass)) !!} <br/>
 						</td>
 					</tr>
 					<tr>
@@ -63,8 +63,8 @@
 							&nbsp;
 						</td>
 						<td>
-							<button type="reset" class="btn btn-small btn-secondary">{{ trans('mainLang.reset') }}</button>
-					    	<button type="submit" class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
+							<button type="reset" class="btn btn-sm btn-secondary">{{ trans('mainLang.reset') }}</button>
+					    	<button type="submit" class="btn btn-sm btn-success">{{ trans('mainLang.update') }}</button>
 						</td>
 					</tr>
 				{!! Form::close() !!}
@@ -98,19 +98,19 @@
 							<table class="table table-hover table-sm" id="events-rows">
 								<thead>
 									<tr class="active">
-										<th class="col-md-1 col-xs-1 text-center">
+										<th class=" text-center">
 											#
 										</th>
-										<th class="col-md-2 col-xs-2 text-center">
+										<th class="text-center">
 											{{ trans('mainLang.event') }}
 										</th>
-										<th class="col-md-2 col-xs-2 text-center">
+										<th class="text-center">
 											{{ trans('mainLang.section') }}
 										</th>
-										<th class="col-md-2 col-xs-2 text-center">
+										<th class=" text-center">
 											{{ trans('mainLang.date') }}
 										</th>
-										<th class="col-md-2 col-xs-2 text-center">
+										<th class=" text-center">
 											{{ trans('mainLang.actions') }}
 										</th>
 									</tr>
@@ -165,16 +165,16 @@
                             <table class="table table-hover table-sm" id="events-rows">
                                 <thead>
                                 <tr class="active">
-                                    <th class="col-md-3 col-xs-3 text-center">
+                                    <th class="text-center">
                                         #
                                     </th>
-                                    <th class="col-md-3 col-xs-3 text-center">
+                                    <th class="text-center">
                                         {{ trans('mainLang.template') }}
                                     </th>
-                                    <th class="col-md-3 col-xs-3 text-center">
+                                    <th class="text-center">
                                         {{ trans('mainLang.section') }}
                                     </th>
-                                    <th class="col-md-3 col-xs-3 text-center">
+                                    <th class="text-center">
                                         {{ trans('mainLang.actions') }}
                                     </th>
                                 </tr>
