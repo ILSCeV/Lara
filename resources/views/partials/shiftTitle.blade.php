@@ -2,25 +2,23 @@
     if($shift->optional) {
         if( is_null($shift->getPerson)) {
             $shiftClass="shift_free shift_optional";
-            }
-            else {
+        } else {
             $shiftClass="shift_taken shift_optional";
-            }
-    }
-    else
+        }
+    } else
         if( is_null($shift->getPerson)) {
             $shiftClass="shift_free";
-            }
-            else {
+        } else {
             $shiftClass="shift_taken";
-            }
+        }
 @endphp
+
 <div class="{{$shiftClass}}">
         <span class="word-break"
               data-toggle="tooltip"
               data-placement="top"
               title="{{ date("H:i", strtotime($shift->start)) .
-              "-" . 
+              "-" .
               date("H:i", strtotime($shift->end)) }}">
                 <small>
                     <strong>
