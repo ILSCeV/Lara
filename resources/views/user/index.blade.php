@@ -14,22 +14,22 @@
             <table class="table info table-hover table-sm">
                 <thead>
                 <tr class="active">
-                    <th class="col-md-1 col-xs-1 pl-3">
+                    <th class=" pl-3">
                         {{ trans('auth.section') }}
                     </th>
-                    <th class="col-md-3 col-xs-3">
+                    <th class="">
                         {{ trans('auth.nickname') }}
                     </th>
-                    <th class="col-md-3 col-xs-3">
+                    <th class="">
                         {{ trans('auth.givenname') }}
                     </th>
-                    <th class="col-md-3 col-xs-3">
+                    <th class="">
                         {{ trans('auth.lastname') }}
                     </th>
-                    <th class="col-md-6 col-xs-6">
+                    <th class="">
                         {{ trans('auth.email') }}
                     </th>
-                    <th class="col-md-1 col-xs-1">
+                    <th class="">
                         {{ trans('auth.status') }}
                     </th>
                 </tr>
