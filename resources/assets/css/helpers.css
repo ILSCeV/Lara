@@ -14,7 +14,7 @@
 
 /*******************************************************************************
  *
- * Manipulations
+ * Object manipulation
  *
  ******************************************************************************/
 
@@ -36,4 +36,31 @@
         margin-left: 7px;
         float:left;
     }
+}
+
+.hide {
+    overflow: hidden;
+	  display: none !important;
+    height: 0px;
+}
+
+.show {
+    overflow: visible;
+    height: auto;
+}
+
+
+
+/*******************************************************************************
+ *
+ * Text manipulation
+ *
+ ******************************************************************************/
+
+.word-break {
+	-ms-word-break: break-all;
+	word-break: break-all;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	hyphens: auto;
 }
