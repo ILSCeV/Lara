@@ -26,14 +26,14 @@
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav mr-auto mt-2 mt-lg-0">
 
-{{-- DAY VIEW / public --}}
-            <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/today') }}">{{ trans('mainLang.today') }}</a></li>
-
 {{-- MONTH VIEW / public --}}
             <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/month') }}">{{ trans('mainLang.month') }}</a></li>
 
 {{-- WEEK VIEW / public --}}
             <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
+
+{{-- DAY VIEW / public --}}
+            <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/today') }}">{{ trans('mainLang.today') }}</a></li>
 
 {{-- MEMBER STATISTICS / members only --}}
             @auth
