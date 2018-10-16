@@ -23,7 +23,7 @@ if($hideComments){
 	                                'class' => 'shift form-inline col-12 '. $autocomplete)  ) !!}
 
 {{-- SPAMBOT HONEYPOT - this field will be hidden, so if it's filled, then it's a bot or a user tampering with page source --}}
-<div id="welcome-to-our-mechanical-overlords">
+<div class="welcome-to-our-mechanical-overlords">
     <small>If you can read this this - refresh the page to update CSS styles or switch CSS support on.</small>
     <input type="text" id="{!! 'website' . $shift->id !!}" name="{!! 'website' . $shift->id !!}" value=""/>
 </div>

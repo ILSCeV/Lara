@@ -108,7 +108,7 @@ input[type=number],
  * Greeting our mechanical overlords
  */
 
-#welcome-to-our-mechanical-overlords {
+.welcome-to-our-mechanical-overlords {
     display: none;
 }
 
