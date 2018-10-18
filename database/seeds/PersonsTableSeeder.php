@@ -29,6 +29,7 @@ class PersonsTableSeeder extends Seeder
                     $parts = explode(" ", $person->prsn_name, 2);
                     $user->givenname = $parts[0];
                     $user->lastname = $parts[1];
+                    $user->privacy_accepted = new \DateTime();
                     $user->save();
                 }
             }
