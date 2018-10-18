@@ -75,4 +75,9 @@ class Section extends Model
     {
         return $this->hasMany('Lara\User');
     }
+
+    public function templates()
+    {
+        return $this->hasMany('Lara\Template');
+    }
 }

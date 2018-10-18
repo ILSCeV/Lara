@@ -11,6 +11,7 @@ use Lara\Http\Middleware\AdminOnly;
 use Lara\Http\Middleware\ClOnly;
 use Lara\Role;
 use Lara\Section;
+use Lara\Template;
 use Lara\User;
 use Lara\Utilities;
 use Lara\ClubEvent;
@@ -215,6 +216,12 @@ class SectionController extends Controller
         } catch (\Exception $e) {
             Log::error('cannot delete roles',[$e]);
         }
+
+        $templates = $section->templates;
+
+        $templates->each(function (Template $template) {
+            $template->delete();
+        });
 
         // Now delete the section
         Section::destroy($section->id);

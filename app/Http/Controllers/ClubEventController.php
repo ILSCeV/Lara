@@ -317,6 +317,8 @@ class ClubEventController extends Controller
         /* @var $event ClubEvent */
         $event = ClubEvent::findOrFail($id);
 
+        $this->authorize('update', $event);
+
         // find schedule
         $schedule = $event->getSchedule;
 
@@ -418,6 +420,8 @@ class ClubEventController extends Controller
 
         // first we fill objects with data
         // if there is an error, we have not saved yet, so we need no rollback
+        //
+        $this->authorize('update', ClubEvent::find($id));
         $event = $this->editClubEvent($id);
 
         $schedule = (new ScheduleController)->update($event->getSchedule->id);
