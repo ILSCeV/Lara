@@ -6,10 +6,10 @@
     </div>
 
    <ul class="nav nav-tabs">
-        @foreach($clubInfos->keys() as $title)
-            <li class="{{Lara\Section::current()->title == $title? 'active': ''}} statisticClubPicker nav-item">
+       @foreach($clubInfos as $title => $info)
+            <li class="{{Lara\Section::current()->title === $title? 'active': ''}} statisticClubPicker nav-item">
                 <a aria-expanded="{{Lara\Section::current()->title == $title? 'true' : 'false'}}"
-                   href="#{{ str_replace(' ', '-', strtolower($title)) }}"
+                   href="#{{ str_replace(' ', '-', mb_strtolower($title)) }}"
                    data-toggle="tab" class="nav-link">
                     {{$title}}
                 </a>
@@ -22,17 +22,17 @@
     <div id="memberStatisticsTabs" class="tab-content">
         @foreach($clubInfos as $title => $clubInfo)
             <div class="tab-pane fade in {{ Lara\Section::current()->title === $title ? 'active' : '' }}"
-                 id="{{ str_replace(' ', '-', strtolower($title)) }}">
-                <table class="table table-hover" >
+                 id="{{ str_replace(' ', '-', mb_strtolower($title)) }}">
+                <table data-toggle="table">
                     <thead>
                         <tr>
-                            <td data-sort="name" class="col-md-2 col-sm-3 col-xs-4">
-                                {{trans('mainLang.name')}} <i class="fas fa-sort-down fa-pull-right"></i>
-                            </td>
-                            <td data-sort="shifts" class="col-md-2 col-sm-3 col-xs-3">
-                                {{trans('mainLang.totalShifts')}}<i class="fas fa-sort fa-pull-right"></i>
-                            </td>
-                            <td data-sort="shifts" class="col-md-8 col-sm-6 col-xs-5">
+                            <th data-field="name" data-sortable="true">
+                                {{trans('mainLang.name')}}
+                            </th>
+                            <th data-field="shifts" data-sortable="true">
+                                {{trans('mainLang.totalShifts')}}
+                            </th>
+                            <th class="col">
                                 &nbsp;
                             </td>
                         </tr>
