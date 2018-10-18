@@ -3,29 +3,29 @@
 namespace Lara\Policies;
 
 use Lara\User;
-use Lara\ClubEvent;
-use Lara\utilities\RoleUtility;
+use Lara\Survey;
 
+use Lara\utilities\RoleUtility;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ClubEventPolicy
+class SurveyPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the clubEvent.
+     * Determine whether the user can view the survey.
      *
      * @param  \Lara\User  $user
-     * @param  \Lara\ClubEvent  $clubEvent
+     * @param  \Lara\Survey  $survey
      * @return mixed
      */
-    public function view(User $user, ClubEvent $clubEvent)
+    public function view(User $user, Survey $survey)
     {
-        return true;
+
     }
 
     /**
-     * Determine whether the user can create clubEvents.
+     * Determine whether the user can create surveys.
      *
      * @param  \Lara\User  $user
      * @return mixed
@@ -36,24 +36,24 @@ class ClubEventPolicy
     }
 
     /**
-     * Determine whether the user can update the clubEvent.
+     * Determine whether the user can update the survey.
      *
      * @param  \Lara\User  $user
-     * @param  \Lara\ClubEvent  $clubEvent
+     * @param  \Lara\Survey  $survey
      * @return mixed
      */
-    public function update(User $user, ClubEvent $clubEvent)
+    public function update(User $user, Survey $survey)
     {
         if ($user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             return true;
         }
 
-        if ($user->is($clubEvent->creator)) {
+        if ($user->is($survey->creator->user)) {
             return true;
         }
 
         $isClOrMarketing = $user->isAn(RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_MARKETING);
-        $isSameSection = $user->section_id == $clubEvent->section->id;
+        $isSameSection = $user->section_id == $survey->section()->id;
 
         if ($isClOrMarketing && $isSameSection) {
             return true;
@@ -63,14 +63,14 @@ class ClubEventPolicy
     }
 
     /**
-     * Determine whether the user can delete the clubEvent.
+     * Determine whether the user can delete the survey.
      *
      * @param  \Lara\User  $user
-     * @param  \Lara\ClubEvent  $clubEvent
+     * @param  \Lara\Survey  $survey
      * @return mixed
      */
-    public function delete(User $user, ClubEvent $clubEvent)
+    public function delete(User $user, Survey $survey)
     {
-        //
+        return $this->update($user, $survey);
     }
 }

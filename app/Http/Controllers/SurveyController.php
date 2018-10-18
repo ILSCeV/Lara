@@ -43,10 +43,6 @@ class SurveyController extends Controller
         $this->middleware('rejectGuests', ['only' => 'create', 'store']);
         // if survey is private, reject guests
         $this->middleware('privateEntry:Lara\Survey,survey', ['except' => ['create', 'store']]);
-        // only Ersteller/Admin/Marketing/Clubleitung, privileged user groups only
-        $this->middleware('creator:Lara\Survey,survey', ['only' => ['edit', 'update', 'destroy']]);
-        // after deadline, only Ersteller/Admin/Marketing/Clubleitung, privileged user groups only
-        $this->middleware('deadlineSurvey', ['only' => ['edit', 'update', 'destroy']]);
     }
 
     /**
@@ -113,6 +109,8 @@ class SurveyController extends Controller
     {
         //find SurveyID
         $survey = Survey::findorFail($id);
+
+        $this->authorize('delete', $survey);
 
         foreach ($survey->answers as $answer) {
             foreach ($answer->cells as $cell) {
@@ -269,7 +267,7 @@ class SurveyController extends Controller
         unset($revision);
 
         //check if the role of the user allows edit/delete for all answers
-        $userCanEditDueToRole = $user==null?false:Auth::user()->isAn(RoleUtility::PRIVILEGE_CL);
+        $userCanEditDueToRole = $user==null? false :Auth::user()->can('update', $survey);
 
         //evaluation part that shows below the survey, a statistic of answers of the users who already took part in the survey
 
@@ -344,6 +342,8 @@ class SurveyController extends Controller
         //find survey
         $survey = Survey::findOrFail($id);
 
+        $this->authorize('update', $survey);
+
         //find questions and answer options
         $questions = $survey->questions;
         foreach ($questions as $question) {
@@ -367,6 +367,8 @@ class SurveyController extends Controller
     {
         //find survey
         $survey = Survey::findOrFail($id);
+
+        $this->authorize('update', $survey);
         $revision_survey = new Revision($survey);
 
         //edit existing survey
