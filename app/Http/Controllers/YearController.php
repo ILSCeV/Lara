@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Lara\Section;
 use Request;
 use Redirect;
 use View;
@@ -49,7 +50,8 @@ class YearController extends Controller {
                            ->orderBy('evnt_date_start')
                            ->orderBy('evnt_time_start')
                            ->get();
-        $sections = Section::where('id', '>', 0)
+        
+        $sections = Section::query()->where('id', '>', 0)
                            ->orderBy('title')
                            ->get(['id', 'title', 'color']);
 
