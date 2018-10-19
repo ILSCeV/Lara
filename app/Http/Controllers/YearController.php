@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Lara\Section;
 use Request;
 use Redirect;
 use View;
@@ -49,8 +50,12 @@ class YearController extends Controller {
                            ->with('section')
                            ->orderBy('evnt_date_start')
                            ->orderBy('evnt_time_start')
-                           ->paginate(15);
+                           ->get();
+        
+        $sections = Section::query()->where('id', '>', 0)
+                           ->orderBy('title')
+                           ->get(['id', 'title', 'color']);
 
-        return View::make('listView', compact('events','date', 'previous', 'next'));
+        return View::make('listView', compact('sections','events','date', 'previous', 'next'));
     }
 }
