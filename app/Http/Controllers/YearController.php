@@ -11,7 +11,6 @@ use Lara\Http\Requests;
 use Lara\Http\Controllers\Controller;
 
 use Lara\ClubEvent;
-use Lara\Section;
 
 class YearController extends Controller {
 
