@@ -10,11 +10,11 @@
 
 @is('marketing', 'clubleitung', 'admin')
 
-	<div class="card card.text-white.bg-info col-xs-12 p-0">
-		<div class="card-header">
+	<div class="card col-xs-12 p-0">
+		<div class=" text-white bg-info card-header">
 				<h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.shiftTypes') }}</h4>
 		</div>
-		<div class="card card-body p-0">
+		<div class="card-body p-0">
             <div class="clearfix pt-2"></div>
             <div>
                 <table data-toggle="table" data-search="true">
@@ -41,8 +41,6 @@
                     </tr>
                     </thead>
                     <tbody>
-
-                    <div class="container">
                         @foreach($shiftTypes as $shiftType)
                             <tr>
                                 <td >
@@ -63,13 +61,13 @@
                                 </td>
                                 <td >
                                     <a href="../shiftType/{{ $shiftType->id }}"
-                                       class="btn btn-small btn-success"
+                                       class="btn btn-sm btn-success"
                                        rel="nofollow">
                                         {{ trans('mainLang.editDetails') }}
                                     </a>
                                     &nbsp;&nbsp;
                                     <a href="../shiftType/{{ $shiftType->id }}"
-                                       class="btn btn-small btn-danger"
+                                       class="btn btn-sm btn-danger"
                                        data-method="delete"
                                        data-token="{{csrf_token()}}"
                                        rel="nofollow"
@@ -78,15 +76,15 @@
                                     </a>
                                 </td>
                                 <td >
-                                    @include('shifttypes.shiftTypeSelect',['shift'=>$shiftType,'shiftTypes' => $shiftTypes,'route'=>'completeOverrideShiftType','shiftTypeId'=>$shiftType->id, 'selectorClass'=>'shiftTypeReplaceSelector'])
+                                    @include('shifttypes.shiftTypeSelect',['shift'=>$shiftType,'shiftTypes' => $allShiftTypes,'route'=>'completeOverrideShiftType','shiftTypeId'=>$shiftType->id, 'selectorClass'=>'shiftTypeReplaceSelector'])
                                 </td>
                             </tr>
                         @endforeach
-                    </div>
                     </tbody>
                 </table>
             </div>
 		</div>
+        <div class="card-footer"> {{ $shiftTypes->links() }} </div>
 	</div>
 
 	<br/>
