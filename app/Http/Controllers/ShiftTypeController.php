@@ -58,9 +58,10 @@ class ShiftTypeController extends Controller
         if(!is_null($filter)) {
             $shiftTypeQuery->where('title','like','%'.$filter.'%');
         }
-        $shiftTypes = $shiftTypeQuery->orderBy('title', 'ASC')->get();
+        $shiftTypes = $shiftTypeQuery->orderBy('title', 'ASC')->paginate();
+        $allShiftTypes = ShiftType::query()->orderBy('title','ASC')->orderBy('start')->orderBy('end')->get();
 
-        return view('shifttypes.manageShiftTypesView', ['shiftTypes' => $shiftTypes]);
+        return view('shifttypes.manageShiftTypesView', ['shiftTypes' => $shiftTypes,'allShiftTypes'=>$allShiftTypes]);
     }
 
     /**
