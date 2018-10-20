@@ -4,6 +4,7 @@ namespace Lara\Providers;
 
 use Auth;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -96,6 +97,10 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('ldapSection', function($section) {
             return strpos(env('LDAP_SECTIONS', ''), $section->title) !== false;
         });
+    
+        Paginator::defaultView('pagination::bootstrap-4');
+    
+        Paginator::defaultSimpleView('pagination::bootstrap-4');
 
     }
 
