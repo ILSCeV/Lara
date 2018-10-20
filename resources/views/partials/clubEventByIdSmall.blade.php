@@ -14,7 +14,7 @@
         </div>
 	@endif
 
-	<div class="card-body text-dark">
+	<div class="card-body">
 		<strong>{{ trans('mainLang.begin') }}:</strong> {{ strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start)) }}
 		um {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
 		<br />
