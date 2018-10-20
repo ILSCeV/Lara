@@ -453,7 +453,7 @@ return [
     //Misc
     'guest'                         => 'Guest',
     'accessDenied'                  => 'Wait a second... Only logged-in members with verified credentials can get in here! Now go log in, or come to the next meeting and become a member.',
-
+    'filter'                        => 'filter',
 
 
     ////////////////
