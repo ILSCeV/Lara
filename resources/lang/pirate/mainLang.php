@@ -456,7 +456,7 @@ return [
     // Misc.
     'guest'                         => 'Passagier',
     'accessDenied'                  => 'Moment mal... Nur eingeloggte Crewmitglieder mit ausreichendem Rang dürfen hier rein! Logge dich ein, oder komm zur nächsten Versammlung und heuer an.',
-
+    'filter'                        => 'Filtern',
 
 
     ////////////////
