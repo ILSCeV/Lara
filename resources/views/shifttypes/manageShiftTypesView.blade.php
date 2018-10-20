@@ -16,8 +16,20 @@
 		</div>
 		<div class="card-body p-0">
             <div class="clearfix pt-2"></div>
+            <div class="row justify-content-end">
+            <div class="col-2 align-self-end">
+                {{Form::open(['url'=> route('searchShiftType'), 'method'=>'POST' ])}}
+                <div class="form-group form-group-sm">
+                    <input type="text" name="filter" placeholder="{{trans('mainLang.filter')}}" class="form-control form-control-sm form-control-plaintext">
+                </div>
+                <div class="form-group form-group-sm">
+                    {{Form::submit('',['class'=>'d-none'])}}
+                </div>
+                {{Form::close()}}
+            </div>
+            </div>
             <div>
-                <table data-toggle="table" data-search="true">
+                <table data-toggle="table" >
                     <thead>
                     <tr class="active">
                         <th data-sortable="true">
@@ -32,10 +44,10 @@
                         <th data-searchable="true">
                             {{ trans('mainLang.weight') }}
                         </th>
-                        <th>
+                        <th class="text-center">
                             {{ trans("mainLang.actions") }}
                         </th>
-                        <th data-searchable="false">
+                        <th data-searchable="false" class="text-center">
                             {{ trans("mainLang.replaceAll") }}
                         </th>
                     </tr>
@@ -59,7 +71,7 @@
                                 <td >
                                     {!! $shiftType->statistical_weight !!}
                                 </td>
-                                <td >
+                                <td class="text-center">
                                     <a href="../shiftType/{{ $shiftType->id }}"
                                        class="btn btn-sm btn-success"
                                        rel="nofollow">
@@ -75,7 +87,7 @@
                                         {{ trans('mainLang.deleteThisShiftType') }}
                                     </a>
                                 </td>
-                                <td >
+                                <td class="text-center">
                                     @include('shifttypes.shiftTypeSelect',['shift'=>$shiftType,'shiftTypes' => $allShiftTypes,'route'=>'completeOverrideShiftType','shiftTypeId'=>$shiftType->id, 'selectorClass'=>'shiftTypeReplaceSelector'])
                                 </td>
                             </tr>

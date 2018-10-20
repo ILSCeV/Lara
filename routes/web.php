@@ -104,7 +104,6 @@ Route::get('club/{query?}', 				'ClubController@index');
 Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson')
     ->middleware('rejectGuests');
 Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
-Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
 
 // additional route to store a SurveyAnswer
 Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');
@@ -173,7 +172,7 @@ Route::get('/create/template/',                               'TemplateControlle
 Route::post('/overrideShiftType/',                              'ShiftTypeController@overrideShiftType')->name('shiftTypeOverride');
 Route::post('/completeOverrideShiftType',                       'ShiftTypeController@completeOverrideShiftType')->name('completeOverrideShiftType');
 Route::get('/shiftTypeSearch/{filter?}',                               'ShiftTypeController@index')->name('shiftTypeSearch');
-Route::post('/seachShiftType/',                                 'ShiftTypeController@search')->name('searchShiftType');
+Route::post('/searchShiftType/',                                 'ShiftTypeController@search')->name('searchShiftType');
 
 
 
