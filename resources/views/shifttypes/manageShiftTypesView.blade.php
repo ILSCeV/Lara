@@ -29,7 +29,7 @@
             </div>
             </div>
             <div>
-                <table data-toggle="table" >
+                <table class="table table-hover">
                     <thead>
                     <tr class="active">
                         <th data-sortable="true">
