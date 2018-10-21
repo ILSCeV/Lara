@@ -47,4 +47,8 @@ class ViewUtility
         
         return $clubEventClass;
     }
+    
+    public static function isLightMode() {
+        return (isset($_COOKIE['displaymode']) ? $_COOKIE['displaymode'] : "light") == "light";
+    }
 }

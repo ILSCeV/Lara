@@ -7,7 +7,11 @@
         <meta http-equiv="Cache-control" content="no-cache">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        @if( \Lara\utilities\ViewUtility::isLightMode())
         <link rel="stylesheet" type="text/css" href="{{ asset(WebpackBuiltFiles::$cssFiles['lara']) }}">
+        @else
+        <link rel="stylesheet" type="text/css" href="{{ asset(WebpackBuiltFiles::$cssFiles['darkmode']) }}">
+        @endif
         {{--
         <link rel="stylesheet" type="text/css" href="{{ mix('/static.css') }}">
         --}}

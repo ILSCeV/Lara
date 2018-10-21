@@ -437,6 +437,8 @@ return [
     'password'                      => 'Password',
     'logIn'                         => 'Login',
     'logOut'                        => 'Logout',
+    'light'                         => 'Hell',
+    'dark'                          => 'Dunkel',
     //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
 
