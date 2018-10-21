@@ -23,16 +23,16 @@
         @foreach($clubInfos as $title => $clubInfo)
             <div class="tab-pane fade in {{ Lara\Section::current()->title === $title ? 'active' : '' }}"
                  id="{{ str_replace(' ', '-', mb_strtolower($title)) }}">
-                <table data-toggle="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th data-field="name" data-sortable="true">
-                                {{trans('mainLang.name')}}
+                            <th data-sort="name" data-sortable="true">
+                                {{trans('mainLang.name')}} <i class="fas fa-sort-down fa-pull-right"></i>
                             </th>
-                            <th data-field="shifts" data-sortable="true">
-                                {{trans('mainLang.totalShifts')}}
+                            <th data-sort="shifts" data-sortable="true">
+                                {{trans('mainLang.totalShifts')}} <i class="fas fa-sort fa-pull-right"></i>
                             </th>
-                            <th class="col">
+                            <th data-sort="shifts" class="col">
                                 &nbsp;
                             </td>
                         </tr>
