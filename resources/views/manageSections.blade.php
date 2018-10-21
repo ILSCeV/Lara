@@ -27,7 +27,7 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody class="container">
+                <tbody class="">
                 @foreach($sections as $section)
                     <tr>
                         <td>
