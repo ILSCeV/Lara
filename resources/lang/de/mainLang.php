@@ -440,6 +440,8 @@ return [
     'password'                      => 'Passwort',
     'logIn'                         => 'Anmelden',
     'logOut'                        => 'Abmelden',
+    'light'                         => 'Hell',
+    'dark'                          => 'Dunkel',
     //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
 

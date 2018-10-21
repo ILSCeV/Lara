@@ -1,0 +1,24 @@
+@import "~bootstrap-select/sass/variables";
+@import "~bootstrap-select/sass/bootstrap-select";
+@import "~bootstrap-table/dist/bootstrap-table";
+
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+@import "../../../node_modules/cookieconsent/build/cookieconsent.min";
+
+@import "frameworkfixes/bootstrap";
+@import "common/helpers";
+@import "views/sectionFilters";
+@import "views/eventView";
+@import "views/weekView";
+@import "common/print";
+@import "event/createEdit";
+@import "views/monthView";
+@import "common/palette";
+@import "backtotop/backToTop";
+@import "shifttype/shifttypes";
+@import "frameworkfixes/bootbox";

@@ -78,7 +78,7 @@
 	<div class="row">
 		<div class="card col-6 p-0">
 
-			<div class="card-header bg-white">
+			<div class="card-header ">
 				<h4 class="card-title">
                     @if($createClubEvent)
                         {{ trans('mainLang.createNewEvent') }}

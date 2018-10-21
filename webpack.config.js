@@ -11,7 +11,8 @@ module.exports = {
   entry: {
     survey:'./resources/assets/ts/surveys/surveyEntry.ts',
     lara: './resources/assets/ts/lara.ts',
-    legacy:'./resources/assets/ts/legacy/ieDependencys.ts'
+    legacy:'./resources/assets/ts/legacy/ieDependencys.ts',
+    darkmode: './resources/assets/sass/darkmode.scss'
   },
   module: {
     rules: [

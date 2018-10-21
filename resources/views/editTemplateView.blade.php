@@ -12,7 +12,7 @@
     @endif
     <div class="row">
         <div class="card col-md-6 col-sm-12 col-xs-12 ">
-            <div class="card-header bg-white">
+            <div class="card-header">
                 <h4 class="card-title">{{ trans('mainLang.changeEventJob') }}:</h4>
             </div>
             <div class="card-body">

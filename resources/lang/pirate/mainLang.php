@@ -440,6 +440,8 @@ return [
     'password'                      => 'Das geheime Wort',
     'logIn'                         => 'An Bord gehen',
     'logOut'                        => 'Über Bord gehen',
+    'light'                         => 'Tagschicht',
+    'dark'                          => 'Nachtfahrt',
     //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
 
