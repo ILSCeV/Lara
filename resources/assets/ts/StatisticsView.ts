@@ -38,7 +38,8 @@ function updateSortIconStyle($table: JQuery, byName: boolean, descending: boolea
         .addClass(descending ? 'fa-sort-down' : 'fa-sort-up');
 }
 
-function sortLeaderboards(sortIcon: JQuery) {
+function sortLeaderboards(pSortIcon: JQuery) {
+    let sortIcon = $(pSortIcon);
     let $tables = $('#memberStatisticsTabs').find('table');
     let wasAscending = sortIcon.hasClass('fa-sort-up');
     let isNameSort = sortIcon.parent().data('sort') === 'name';
