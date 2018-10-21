@@ -92,7 +92,7 @@ $(function() {
         // init Isotope
         isotope.arrange({
             itemSelector: '.element-item',
-            layoutMode: 'masonry',
+            percentPosition: true,
             masonry:
                 {
                     columnWidth: '.element-item'
@@ -458,13 +458,13 @@ $(document).ready(function() {
     declare var chosenPerson;
     declare var chosenMonth, chosenYear;
     declare var isMonthStatistic;
-    $('[name^=show-stats-person]').click(function() {
-
+    $('[name^=show-stats-person]').click(function(e) {
+      e.preventDefault();
         // Initialise modal and show loading icon and message
         const dialog = <any> bootbox.dialog({
             title: translate('listOfShiftsDone') + chosenPerson,
             size: 'large',
-            message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
+            message: '<p><i class="fas fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
             onEscape: () => {}
         });
 
