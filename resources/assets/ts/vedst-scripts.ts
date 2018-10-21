@@ -95,7 +95,7 @@ $(function() {
             layoutMode: 'masonry',
             masonry:
                 {
-                    columnWidth: '.grid-sizer'
+                    columnWidth: '.element-item'
                 },
             getSortData:
                 {

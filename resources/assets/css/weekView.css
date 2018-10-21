@@ -95,11 +95,19 @@
 .grid-sizer {
     position: relative;
     float: left;
-    width: 360px;
+    width: 35%;
     margin: 10px;
     padding: 0px;
     white-space: normal;
     display: inline-block;
+}
+
+@media screen and (max-width: 900px){
+	.grid-sizer, .element-item{
+		width: 48%;
+		padding: 0;
+		margin: 3px;
+	}
 }
 
 @media screen and (max-width: 480px) {
