@@ -64,14 +64,16 @@
                 <div class="w-100"></div>
                 @endforeach
 
-			{{-- Show a "hide" button for management, that allows removal of an event from current view - needed for printing --}}
-	        @is('marketing', 'clubleitung', 'admin')
-		        <hr class="col-12">
-				<div class="float-right hidden-print">
-					<small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
-				</div>
-			@endis
 
 		</div>
+    <div class="card-footer">
+        {{-- Show a "hide" button for management, that allows removal of an event from current view - needed for printing --}}
+        @is('marketing', 'clubleitung', 'admin')
+        <div class="float-right hidden-print">
+            <small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
+        </div>
+        @endis
+
+    </div>
 
 </div>
