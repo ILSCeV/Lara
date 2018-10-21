@@ -11,11 +11,11 @@
             <h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageTemplates') }}</h4>
         </div>
 
-        <div class="card card-body p-0">
+        <div class="card-body p-0">
             <div class="d-inline-block">
-                <div class="col-4 has-feedback d-inline-block">
+                <div class="col-4 has-feedback d-inline-block ">
                     <label for="templateOverviewFilter" class="text-primary"> {{ trans('mainLang.search') }}: </label>
-                    <input type="text" class="" id="templateOverviewFilter" autofocus>
+                    <input type="text" class="form-control-sm" id="templateOverviewFilter" autofocus>
                 </div>
                 <div class="col-1 float-right">
                     <a class="btn btn-success" href="{{route('template.create')}}">
@@ -30,22 +30,22 @@
                         <th>
                             #
                         </th>
-                        <th class="col-md-1 col-xs-1 pl-3">
+                        <th class="">
                             {{ trans('mainLang.section') }}
                         </th>
-                        <th class="col-md-3 col-xs-3">
+                        <th class="">
                             {{ trans('mainLang.type') }}
                         </th>
-                        <th class="col-md-6 col-xs-6">
+                        <th class="">
                             {{ trans('mainLang.title') }}
                         </th>
-                        <th class="col-md-1 col-xs-1">
+                        <th class="">
                             {{ trans('mainLang.start') }}
                         </th>
-                        <th class="col-md-1 col-xs-1">
+                        <th class="">
                             {{ trans('mainLang.end') }}
                         </th>
-                        <th class="col-md-1 col-xs-1 pl-3">
+                        <th class="">
                             &nbsp;
                         </th>
                     </tr>
