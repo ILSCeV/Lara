@@ -22,10 +22,12 @@ class Creator
     {
         $newObject = new $classpath();
         $object = $newObject->findOrFail($request->route()->parameter($routeParameterName))->first();
-        if($object->creator_id == \Auth::user()->person->prsn_ldap_id
-            || \Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)
-            || \Auth::user()->hasPermissionsInSection($object->section()
-                , RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_MARKETING)
+        $authenicated = \Auth::check();
+        $personId = $authenicated ? \Auth::user()->person->prsn_ldap_id : null;
+        $isAdmin = $authenicated && \Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR);
+        $hasExtendedRoles = $authenicated && \Auth::user()->hasPermissionsInSection($object->section(),RoleUtility::PRIVILEGE_CL,RoleUtility::PRIVILEGE_MARKETING);
+        if($object->creator_id == $personId
+            || $isAdmin || $hasExtendedRoles
             ) {
             return $next($request);
         } else {

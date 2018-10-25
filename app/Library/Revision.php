@@ -75,10 +75,11 @@ class Revision
             return false;
         }
         
+        $personId = Auth::check() ? Auth::user()->person->prsn_ldap_id : null;
         // workaround for getting all revisions created in this request
         // determine if there was a recent related Revision created
         $revision = \Lara\Revision::where( "created_at", ">", Carbon::now()->subSecond(2) )
-                                  ->where( "creator_id", "=", Auth::user()->person->prsn_ldap_id )
+                                  ->where( "creator_id", "=", $personId )
                                   ->where( 'request_uri', "=", request()->getUri() )
                                   ->first();
         if(empty($revision)){
@@ -86,7 +87,7 @@ class Revision
             $revision = new \Lara\Revision();
         }
 
-        $revision->creator_id = Auth::user()->person->prsn_ldap_id;
+        $revision->creator_id = $personId;
         $revision->ip = request()->ip();
         $revision->request_uri = request()->getUri();
         
