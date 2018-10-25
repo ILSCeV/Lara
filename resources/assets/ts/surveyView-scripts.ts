@@ -56,7 +56,8 @@ function confirmDeletion() {
         });
     });
 }
-$(".deleteRow").click(function () {
+$(".deleteRow").click(function (e) {
+  e.preventDefault();
     var link = $(this);
     var passwordField = getPasswordField();
     var doDeletion = function() {
