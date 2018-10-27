@@ -44,27 +44,36 @@
                 @include('partials.filter')
 
 {{-- Week filters --}}
-        		<div class="btn-group p-auto m-auto float-right pt-2">
-        			{{-- show time button Ger.: Zeiten einblenden --}}
-        			<button class="btn btn-sm hidden-print" type="button" id="toggle-shift-time">
-                        {{ trans('mainLang.shiftTime') }}
-                    </button>
+                <div class="h-25"></div>
+                <div class="row float-right">
+                    <div class="btn-toolbar pt-2" role="toolbar">
+                        {{-- show time button Ger.: Zeiten einblenden --}}
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm hidden-print" type="button" id="toggle-shift-time">
+                                {{ trans('mainLang.shiftTime') }}
+                            </button>
 
-        			{{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
-        			<button class="btn btn-sm hidden-print" type="button" id="toggle-taken-shifts">
-                        {{ trans('mainLang.hideTakenShifts') }}
-                    </button>
+                            {{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
+                            <button class="btn btn-sm hidden-print" type="button" id="toggle-taken-shifts">
+                                {{ trans('mainLang.hideTakenShifts') }}
+                            </button>
+                        </div>
 
-        			{{-- show/hide all comment fields --}}
-        			<button class="btn btn-sm hidden-print" type="button" id="toggle-all-comments">
-                        {{ trans('mainLang.comments') }}
-                    </button>
+                        {{-- show/hide all comment fields --}}
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm hidden-print" type="button" id="toggle-all-comments">
+                                {{ trans('mainLang.comments') }}
+                            </button>
+                        </div>
 
-        			{{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
-        			<button class="btn btn-sm btn-primary hidden-print" type="button" id="toggle-week-start">
-                        {{ trans('mainLang.weekStart') }}
-                    </button>
-        		</div>
+                        {{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm btn-primary hidden-print" type="button" id="toggle-week-start">
+                                {{ trans('mainLang.weekStart') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
