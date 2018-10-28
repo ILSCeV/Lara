@@ -1,10 +1,10 @@
 import * as $ from "jquery"
 
-function getRowName(a: string | HTMLElement) {
+function getRowName(a: any) {
     return $(a).children("td").eq(0).text();
 }
 
-function getRowShifts(a: string | HTMLElement) {
+function getRowShifts(a: any) {
     return $(a).children("td").eq(1).text();
 }
 

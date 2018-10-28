@@ -4,6 +4,7 @@ namespace Lara\Http\Controllers;
 
 use Config;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Input;
@@ -41,6 +42,12 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
+    /** Property for max trys to login*/
+    protected $maxAttempts = 3;
+    
+    /** how many minutes the user is locked if login failed to many times */
+    protected $decayMinutes = 5;
+    
     /**
      * Logout current user, delete relevant session data.
      *
@@ -94,11 +101,21 @@ class LoginController extends Controller
      */
     public function doLogin()
     {
+        if($this->hasTooManyLoginAttempts(request())){
+            $this->fireLockoutEvent(request());
+            $seconds = $this->limiter()->availableIn(
+                $this->throttleKey(request())
+            );
+            Utilities::error(trans('auth.throttle',['seconds'=>$seconds]) );
+            return redirect("/");
+        }
+        
         $someLoginWorked = $this->attemtLoginViaDevelop() || $this->attemptLoginViaLDAP()
             || $this->attemtLoginWithClubNumber(request())
             || $this->attemptLoginWithCredentials(request(), 'name')
             || $this->attemptLoginWithCredentials(request(), 'email');
-
+        
+        
         if ($someLoginWorked) {
             $user = Auth::user();
 
@@ -107,7 +124,7 @@ class LoginController extends Controller
             }
 
             $this->logSuccessfulAuthentication($user);
-
+            $this->clearLoginAttempts(request());
             $userSettings = $user->settings;
             if ($userSettings) {
                 Session::put('applocale', $userSettings->language);
@@ -455,6 +472,7 @@ class LoginController extends Controller
     protected function loginFailed()
     {
         Utilities::error(Config::get('messages_de.login-fail'));
+        $this->incrementLoginAttempts(request());
 
         return redirect()->back();
     }
@@ -492,7 +510,7 @@ class LoginController extends Controller
             $rolesString .
             ') just logged in.');
     }
-
+    
 }
 
 /*      This is what the returned bcLDAP object looks like (only useful fields are shown here).
