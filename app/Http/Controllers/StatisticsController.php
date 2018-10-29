@@ -59,7 +59,7 @@ class StatisticsController extends Controller
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next month')->modify('-1 day');
         $isMonthStatistic = 1;
-        list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till, $isMonthStatistic);
+        list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till);
         
         return View::make('statisticsView',
             compact('infos', 'clubInfos', 'userId', 'year', 'month', 'isMonthStatistic'));
@@ -75,7 +75,7 @@ class StatisticsController extends Controller
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next year')->modify('-1 day');
         $isMonthStatistic = 0;
-        list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till, $isMonthStatistic);
+        list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till);
         $month = $till->format("m");
         
         return View::make('statisticsView',
@@ -147,7 +147,7 @@ class StatisticsController extends Controller
      * @param DateTime $till
      * @return array
      */
-    private function generateStatisticInformationForSections($from, $till, $isMonthStatistic)
+    private function generateStatisticInformationForSections($from, $till)
     {
         
         $queryResults = \DB::select(str_replace(':end', '\''.$till->format('Y-m-d').'\'',
