@@ -1,4 +1,4 @@
-import * as $ from "jquery"
+
 import {translate} from "./Translate"
 
 function replaceAll(string, search, replacement) {
@@ -10,6 +10,9 @@ declare var enviroment: any;
 if ( typeof localStorage !== "undefined" && (localStorage.getItem("language") || 'de') === 'pirate') {
     $(window).on('load',
         function () {
+
+            $('section.container-fluid.containerNopadding').first().css('opacity',0.9);
+
             let navLogoField = $('#nav-logo-field');
             let srcfield  = navLogoField.attr('src');
 
@@ -43,7 +46,7 @@ if ( typeof localStorage !== "undefined" && (localStorage.getItem("language") ||
 
             $('div.cal-event a:nth-of-type(2)').each(doTranslations);
             $('span.name').each(doTranslations);
-            $('div.panelEventView .panel-title ').each(doTranslations);
+            $('div.panelEventView .card-title ').each(doTranslations);
         }
     );
 }

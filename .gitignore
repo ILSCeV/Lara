@@ -6,20 +6,14 @@
 gitrevision.txt
 
 # Webpack generated files
-public/lara.css
-public/lara.css.map
-public/surveys.css
-public/lara.js
-public/lara.js.map
-public/manifest.js
-public/mix-manifest.json
-public/manifest.js.map
-public/vendor.js
-public/vendor.js.map
+public/*.js
+public/*.css
 public/fonts
 public/static.css
 public/static.js
-
+public/assets-manifest.php
+Lara.iml
+yarn.lock
 
 package-lock.json
 
@@ -50,4 +44,3 @@ _ide_helper_models.php
 # Misc
 .DS_Store
 Thumbs.db
-

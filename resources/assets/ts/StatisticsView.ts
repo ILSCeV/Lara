@@ -1,10 +1,9 @@
-import * as $ from "jquery"
 
-function getRowName(a: any) {
+function getRowName(a: string | Element) {
     return $(a).children("td").eq(0).text();
 }
 
-function getRowShifts(a: any) {
+function getRowShifts(a: string | Element) {
     return $(a).children("td").eq(1).text();
 }
 
@@ -25,23 +24,24 @@ function sortTable($table: JQuery, byName: boolean, descending: boolean) {
 
 function updateSortIconStyle($table: JQuery, byName: boolean, descending: boolean) {
     // remove specific sorting from all icons
-    $table.find('.fa-sort, .fa-sort-desc, .fa-sort-asc')
-        .removeClass('fa-sort-asc')
-        .removeClass('fa-sort-desc')
+    $table.find('.fa-sort, .fa-sort-up, .fa-sort-down')
+        .removeClass('fa-sort-up')
+        .removeClass('fa-sort-down')
         .addClass('fa-sort');
     // and add the current sorting order to the one that changed
-    let icon = $table.find('.fa-sort, .fa-sort-desc, .fa-sort-asc')
+    let icon = $table.find('.fa-sort, .fa-sort-up, .fa-sort-down')
         .filter(function () {
             let sortIdentifier = byName ? 'name' : 'shifts';
             return $(this).parent().data('sort') === sortIdentifier;
         });
     icon.removeClass('fa-sort')
-        .addClass(descending ? 'fa-sort-desc' : 'fa-sort-asc');
+        .addClass(descending ? 'fa-sort-down' : 'fa-sort-up');
 }
 
-function sortLeaderboards(sortIcon: JQuery) {
+function sortLeaderboards(pSortIcon: JQuery) {
+    let sortIcon = $(pSortIcon);
     let $tables = $('#memberStatisticsTabs').find('table');
-    let wasAscending = sortIcon.hasClass('fa-sort-asc');
+    let wasAscending = sortIcon.hasClass('fa-sort-up');
     let isNameSort = sortIcon.parent().data('sort') === 'name';
 
     localStorage.setItem('preferredSortType', isNameSort ? 'name' : 'shifts');
@@ -53,7 +53,7 @@ function sortLeaderboards(sortIcon: JQuery) {
     });
 }
 
-$(".fa-sort, .fa-sort-desc, .fa-sort-asc").click(function () {
+$(".fa-sort, .fa-sort-up, .fa-sort-down").click(function () {
     sortLeaderboards(this);
 });
 

@@ -7,7 +7,7 @@ const jQuery = $;
     Reaction to click on edit delete buttons
 */
 function getPasswordField() {
-    return $('.panel-warning').find("[name^=password]");
+    return $('.card.bg-warning').find("[name^=password]");
 }
 
 function promptForPassword() {
@@ -580,7 +580,7 @@ jQuery( document ).ready( function( $ ) {
                     $(this).addClass("cellEditing" + i +" dropdown").attr('id', 'cellEditing' + i);
                     $(this).html("<input id='newName2' name='name' type='text' value='" + OriginalContent.trim() + "' />" +
                                     "<ul id='dropdown-menu_name2' class='dropdown-menu edit_drop'>" +
-                                        "<li id='yourself'>" +
+                                        "<li class='dropdown-item' id='yourself'>" +
                                             "<a href='"+'javascript:void(0);'+"' onClick='"+ 'document.getElementById("newName2").value=$("#hdnSession_userName").val(); document.getElementById("newClub").value=$("#hdnSession_userClub").val(); document.getElementById("ldapID_edit").value=$("#hdnSession_userID").val();' +"'</a>" +
                                                 "<b>Mich eintragen!</b>" +
                                             "</a>" +

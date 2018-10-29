@@ -6,59 +6,58 @@
 
 @section('content')
 
-    <div class="panel panel-info col-xs-12 no-padding">
-        <div class="panel-heading">
-            <h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageTemplates') }}</h4>
+    <div class="card col-xs-12 p-0">
+        <div class="card-header bg-info text-white">
+            <h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageTemplates') }}</h4>
         </div>
 
-        <div class="panel panel-body no-padding">
+        <div class="card-body p-0">
+            <div class="d-inline-block">
+                <div class="col-4 has-feedback d-inline-block ">
+                    <label for="templateOverviewFilter" class="text-primary"> {{ trans('mainLang.search') }}: </label>
+                    <input type="text" class="form-control-sm" id="templateOverviewFilter" autofocus>
+                </div>
+                <div class="col-1 float-right">
+                    <a class="btn btn-success" href="{{route('template.create')}}">
+                        {{ trans('mainLang.createTemplate') }}
+                    </a>
+                </div>
+            </div>
             <div class="table-responsive">
-                <table class="table info table-hover table-condensed">
+                <table class="table info table-hover table-sm">
                     <thead>
                     <tr class="active">
                         <th>
                             #
                         </th>
-                        <th class="col-md-1 col-xs-1 padding-left-15">
+                        <th class="">
                             {{ trans('mainLang.section') }}
                         </th>
-                        <th class="col-md-3 col-xs-3">
+                        <th class="">
                             {{ trans('mainLang.type') }}
                         </th>
-                        <th class="col-md-6 col-xs-6">
+                        <th class="">
                             {{ trans('mainLang.title') }}
                         </th>
-                        <th class="col-md-1 col-xs-1">
+                        <th class="">
                             {{ trans('mainLang.start') }}
                         </th>
-                        <th class="col-md-1 col-xs-1">
+                        <th class="">
                             {{ trans('mainLang.end') }}
                         </th>
-                        <th class="col-md-1 col-xs-1 padding-right-15">
+                        <th class="">
                             &nbsp;
                         </th>
                     </tr>
                     </thead>
                     <tbody class="container" id="templateOverviewTable">
 
-                    <div class="table-control form-inline">
-                        <div class="form-group has-feedback">
-                            <label for="templateOverviewFilter" class="text-primary"> {{ trans('mainLang.search') }}: </label>
-                            <input type="text" class="form-control" id="templateOverviewFilter" autofocus>
-                        </div>
-                        <div class="form-group pull-right">
-                           <a class="btn btn-success" href="{{route('template.create')}}">
-                              {{ trans('mainLang.createTemplate') }}
-                           </a>
-                        </div>
-                    </div>
-
                     @foreach($templates as $index=>$template)
                         <tr>
                             <td>
                                 {{ $index }}
                             </td>
-                            <td class="padding-left-15">
+                            <td class="pl-3">
                                 {{ $template->section->title }}
                             </td>
                             <td>
@@ -73,15 +72,15 @@
                             <td>
                                 {{ $template->time_end }}
                             </td>
-                            <td class="padding-right-15">
+                            <td class="pr-3">
                                 <button data-id="{{$template->id}}"
                                         data-templatename="{{$template->title}}"
                                         class="btn btn-danger delete-template">
-                                    <span class="glyphicon glyphicon-trash"></span>
+                                    <i class="fas fa-trash"></i>
                                 </button>
                                 <form id="delete-template-{{$template->id}}"
                                       method="POST"
-                                      class="hidden"
+                                      class="d-none"
                                       action="{{route('template.delete', $template->id)}}">
                                     {{ csrf_field() }}
                                     <button class="hidden" type="submit"></button>

@@ -1,14 +1,14 @@
-import * as $ from "jquery";
+
 import {translate} from "./Translate";
 import * as bootbox from "bootbox";
 
 $(window).on('load', () => {
   $('.shiftTypeSelector').selectpicker({
-    style: 'btn btn-default btn-sm',
+    style: 'btn btn-secondary btn-sm',
     liveSearch: true
   });
   $('.shiftTypeReplaceSelector').selectpicker({
-    style: 'btn btn-default btn-sm',
+    style: 'btn btn-secondary btn-sm',
     liveSearch: true
   });
 });
@@ -38,12 +38,12 @@ $('.shiftTypeReplaceSelector').change((event) => {
     message: '<p>' + translate('replaceShiftTypeConfirmation') + '</p><p class="text-danger">' + shiftName + '</p>',
     buttons: {
       confirm: {
-        label: '<span class="glyphicon glyphicon-ok" ></span>' + translate('replaceAll'),
+        label: '<span class="fas fa-check" ></span>' + translate('replaceAll'),
         className: 'btn-success'
       },
       cancel: {
-        label: '<span class="glyphicon glyphicon-remove" ></span>',
-        className: 'btn-default'
+        label: '<span class="fas fa-window-close" ></span>',
+        className: 'btn-secondary'
       }
     },
     callback: (result) => {

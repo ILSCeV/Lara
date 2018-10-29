@@ -279,7 +279,7 @@ class ShiftController extends Controller
             "userStatus"        => $userStatus,
             "userName"          => is_null( $shift->getPerson()->first() ) ? "" : $shift->getPerson()->first()->prsn_name,
             "ldapId"            => $prsn_ldap_id,
-            "userClub"          => is_null( $shift->getPerson()->first() ) ? "" : $shift->getPerson()->first()->getClub->clb_title,
+            "userClub"          => $userClub,
             "userComment"       => $shift->comment,
             "timestamp"         => $shift->updated_at->toDateTimeString(),
             "is_current_user"   => $prsn_ldap_id == ($user ? $user->person->prsn_ldap_id : NULL)

@@ -1,4 +1,4 @@
-<div class="col-md-3 col-xs-3 no-padding" id="clubStatus{{ $shift->id }}">
+<div class="col-md-3 col-xs-3 p-0" id="clubStatus{{ $shift->id }}">
     @include("partials.shiftStatus")
 </div>
 
@@ -26,7 +26,7 @@
 {{-- Show dropdowns only for members --}}
 @auth
     <ul class="dropdown-menu dropdown-username" style="position: absolute;">
-        <li id="yourself">
+        <li class="dropdown-item" id="yourself">
             <a href="javascript:void(0);"
                onClick="document.getElementById('userName{{ ''. $shift->id }}').value='{{Auth::user()->name}}';
                        document.getElementById('club{{ ''. $shift->id }}').value='{{Lara\Section::current()->title}}';

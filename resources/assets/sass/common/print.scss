@@ -5,7 +5,7 @@
 @media print {
 
 	body {
-		font: 11pt;
+		font-size: 11pt;
 		line-height: 1.0;
 	}
 
@@ -39,21 +39,21 @@
 		overflow: visible;
 		float: left;
 	}
-
-	.panel-heading
+/*
+	.card-header
 	{
 		padding: 0;	
 	}
 	
 
-	.panel-body
+	.card-body
 	{
 		padding: 0;
 		padding-top: 5px;
 		white-space: nowrap;
 
 	}
-
+*/
 	.panel
 	{
 		margin-bottom: 0;

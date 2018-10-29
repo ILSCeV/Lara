@@ -1,4 +1,3 @@
-import * as $ from "jquery"
 import { translate } from "./Translate"
 import "isotope-layout"
 import * as Isotope  from "../../../node_modules/isotope-layout/js/isotope.js"
@@ -30,15 +29,15 @@ $(function() {
         let enabledSections = [];
 
         const showAllActiveSections = () => {
-            $(".section-filter").addClass('hidden');
-            $(".label-filters").addClass('hidden');
+            $(".section-filter").addClass('d-none');
+            $(".label-filters").addClass('d-none');
             if($sectionSelect.val().length == 0){
-                $('#label-none').removeClass('hidden');
+                $('#label-none').removeClass('d-none');
             }
             else {
                 $sectionSelect.val().forEach(filter => {
-                    $(`.${filter.slice(7)}`).removeClass('hidden');
-                    $(`#label-section-${filter.slice(15)}`).removeClass('hidden');
+                    $(`.${filter.slice(7)}`).removeClass('d-none');
+                    $(`#label-section-${filter.slice(15)}`).removeClass('d-none');
                 });
             }
             isotope ? isotope.layout() : null;
@@ -74,7 +73,7 @@ $(function() {
         });
 
         //Enable all sections enabled in the localStorage inside the select
-        $sectionSelect.removeClass("hidden");
+        $sectionSelect.removeClass("d-none");
         $sectionSelect.selectpicker('val', enabledSections);
         showAllActiveSections();
     };
@@ -93,10 +92,10 @@ $(function() {
         // init Isotope
         isotope.arrange({
             itemSelector: '.element-item',
-            layoutMode: 'masonry',
+            percentPosition: true,
             masonry:
                 {
-                    columnWidth: '.grid-sizer'
+                    columnWidth: '.element-item'
                 },
             getSortData:
                 {
@@ -459,13 +458,13 @@ $(document).ready(function() {
     declare var chosenPerson;
     declare var chosenMonth, chosenYear;
     declare var isMonthStatistic;
-    $('[name^=show-stats-person]').click(function() {
-
+    $('[name^=show-stats-person]').click(function(e) {
+      e.preventDefault();
         // Initialise modal and show loading icon and message
         const dialog = <any> bootbox.dialog({
             title: translate('listOfShiftsDone') + chosenPerson,
             size: 'large',
-            message: '<p><i class="fa fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
+            message: '<p><i class="fas fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
             onEscape: () => {}
         });
 
@@ -477,8 +476,8 @@ $(document).ready(function() {
             dialog.init(function(){
 
                 // Initialise table structure
-                dialog.find('.modal-body').addClass("no-padding").html(
-                    "<table id=\"person-shifts-overview\" class=\"table table-hover no-padding\">"
+                dialog.find('.modal-body').addClass("p-0").html(
+                    "<table id=\"person-shifts-overview\" class=\"table table-hover p-0\">"
                         + "<thead>"
                         + "<tr>"
                         + "<th>#</th>"
@@ -599,7 +598,7 @@ $('[name^=icalfeeds]').click(function () {
                     remindPersonalIcalInput = "";
                 }
             } else {
-                remindPersonalIcalInput = '<div class="form-group left-padding-16 padding-right-16 col-md-12 col-xs-12">' +
+                remindPersonalIcalInput = '<div class="form-group pl-3 pr-3 col-md-12 col-xs-12">' +
                     translate('remindsBeforeShiftStart') + '&nbsp;&nbsp;' +
                     '<input id="personalIcalRemindValue" type="number" value="0" width="20%"/>' + translate('minutes') +
                     '</div>';
@@ -607,10 +606,10 @@ $('[name^=icalfeeds]').click(function () {
 
             var legend = "";
             if (typeof response['isPublic'] !== 'undefined' && response['isPublic'] !== true) {
-                legend = '<div class="all-sides-padding-16">' + translate('legend') + ': <span class="bg-warning" style="border: 1px solid black;"> <span class="glyphicon">&nbsp;</span></span> ' + translate("internalUsageOnly") + '</div>  ';
+                legend = '<div class="p-3">' + translate('legend') + ': <span class="bg-warning" style="border: 1px solid black;"> <span class="glyphicon">&nbsp;</span></span> ' + translate("internalUsageOnly") + '</div>  ';
             }
 
-            dialog.find('.modal-body').addClass("no-padding").html("" +
+            dialog.find('.modal-body').addClass("p-0").html("" +
                 remindPersonalIcalInput +
                 legend +
                 "<table class='table table-hover'>" +
@@ -727,7 +726,7 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.shift' ).find("input[id^='userName'], input[id^=comment]").on('input', function() {
+    $( '.shift.autocomplete' ).find("input[id^='userName'], input[id^=comment]").on('input', function() {
         // show only current button
         $('[name^=btn-submit-change]')
             .addClass('hide')
@@ -759,7 +758,7 @@ jQuery( document ).ready( function( $ ) {
                 if(data.get_user) {
                     // add found persons to the array
                     $(document.activeElement).parent().children('.dropdown-username').append(
-                        '<li><a href="javascript:void(0);">'
+                        '<li class="dropdown-item"><a href="javascript:void(0);">'
                         + '<span name="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
                         + '<span name="currentName">' + data.prsn_name + '</span>'
                         + data.prsn_status
@@ -867,7 +866,7 @@ jQuery( document ).ready( function( $ ) {
 
                 // add found clubs to the array$(document.activeElement).parent().children('.dropdown-club')
                 $(document.activeElement).parent().parent().children('.dropdown-club').append(
-                    '<li><a href="javascript:void(0);">'
+                    '<li class="dropdown-item"><a href="javascript:void(0);">'
                     + '<span id="clubTitle">' + data.clb_title + '</span>'
                     + '</a></li>');
             });
@@ -940,7 +939,7 @@ jQuery( document ).ready( function( $ ) {
         {
             let $alert = $('<div id="alert' + entryId + '" class="alert alert-dismissible alert-warning clear-both col-md-12">\n' +
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>\n' +
-                '<strong>'+translate("conflictDetected")+'</strong>\n<i class="fa fa-3x fa-history pull-right"></i>' +
+                '<strong>'+translate("conflictDetected")+'</strong>\n<i class="fa fa-3x fa-history float-right"></i>' +
                 '<p>'+translate("conflictAlertLine1")+'</p>' +
                 '<p>'+translate("conflictAlertLine2")+'</p>\n' +
                 '</div>');
@@ -976,16 +975,16 @@ jQuery( document ).ready( function( $ ) {
 
         // Switch comment icon in week view
         if ( $commentInput.val() == "" ) {
-            $commentInput.parent().children().children("button").children("i").removeClass().addClass("fa fa-comment-o");
+            $commentInput.parent().children().children("button").children("i").removeClass().addClass("fas fa-comment-alt");
         } else {
             $commentInput.parent().children().children("button").children("i").removeClass().addClass("fa fa-comment");
         }
 
         // Switch comment in event view
         if ( $commentInput.val() == "" ) {
-            $commentInput.parent().children("span").children("i").removeClass().addClass("fa fa-comment-o");
+            $commentInput.parent().children("span").children("i").removeClass().addClass("fas fa-comment-alt");
         } else {
-            $commentInput.parent().children("span").children("i").removeClass().addClass("fa fa-comment");
+            $commentInput.parent().children("span").children("i").removeClass().addClass("fasfa-comment");
         }
 
         let $colorDiv = $userNameInput.parent().prev().find("div");
@@ -1044,7 +1043,7 @@ jQuery( document ).ready( function( $ ) {
 
                 // add found shiftTypes and metadata to the dropdown
                 $(document.activeElement).next('.dropdown-shiftTypes').append(
-                    '<li><a href="javascript:void(0);">'
+                    '<li class="dropdown-item"><a href="javascript:void(0);">'
                     + '<span id="shiftTypeTitle">'
                     + data.title
                     + '</span>'
@@ -1119,12 +1118,12 @@ jQuery( document ).ready( function( $ ) {
         // For passworded schedules: check if a password field exists and is not empty
         // We will check correctness on the server side
         let password = "";
-        if ( $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").length
-          && !$(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val() )
+        if ( $(this).parentsUntil( $(this), '.card.bg-warning').find("[name^=password]").length
+          && !$(this).parentsUntil( $(this), '.card.bg-warning').find("[name^=password]").val() )
         {
             password = window.prompt( 'Bitte noch das Passwort für diesen Dienstplan eingeben:' );
         } else {
-            password = <string> $(this).parentsUntil( $(this), '.panel-warning').find("[name^=password]").val();
+            password = <string> $(this).parentsUntil( $(this), '.card.bg-warning').find("[name^=password]").val();
         }
 
         // necessary for the ajax callbacks

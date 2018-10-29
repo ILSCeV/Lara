@@ -1,15 +1,14 @@
-<nav class="navbar navbar-default navbar-static-top navbar-fixed-top">
-  <div class="container">
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top p-2x">
     <div class="navbar-header">
+{{-- HAMBURGER / Mobile only --}}
         <button type="button"
-                class="navbar-toggle collapsed"
+                class="navbar-toggler collapsed btn btn-primary"
                 data-toggle="collapse"
                 data-target="#navbar"
                 aria-expanded="false"
                 aria-controls="navbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+            <span class="sr-only">Toggle navigation</span>
+            &#x2630;
         </button>
 
 {{-- LARA LOGO --}}
@@ -23,43 +22,44 @@
             @endif
         </a>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-            
-{{-- DAY VIEW / public --}}
 
-            <li><a href="{{ asset('/calendar/today') }}">{{ trans('mainLang.today') }}</a></li>
+    <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav mr-auto mt-2 mt-lg-0">
+
 {{-- MONTH VIEW / public --}}
-            <li><a href="{{ asset('/calendar/month') }}">{{ trans('mainLang.month') }}</a></li>
+            <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/month') }}">{{ trans('mainLang.month') }}</a></li>
 
 {{-- WEEK VIEW / public --}}
-            <li><a href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
+            <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/week') }}">{{ trans('mainLang.week') }}</a></li>
+
+{{-- DAY VIEW / public --}}
+            <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/today') }}">{{ trans('mainLang.today') }}</a></li>
 
 {{-- MEMBER STATISTICS / members only --}}
             @auth
-                <li><a href="{{ action('StatisticsController@showStatistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
+                <li class="nav-item" ><a class="nav-link" href="{{ action('StatisticsController@showStatistics') }}">{{ trans('mainLang.statisticalEvaluation') }}</a></li>
             @endauth
 
 {{-- LANGUAGE SWITCHER / public --}}
-        <li class="dropdown">
+        <li class="dropdown nav-item">
             <a href="#"
-             class="dropdown-toggle"
+             class="dropdown-toggle nav-link"
              data-toggle="dropdown"
              role="button" aria-expanded="false">
                 <i class="fa fa-language"></i>&nbsp;<span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
                 @foreach (Config::get('languages') as $lang => $language)
-                    <li class="languageSwitcher"><a href="{{ route('lang.switch', $lang) }}" data-language="{{$lang}}"><i class="fa fa-globe" aria-hidden="true"></i></i> {{$language}}</a></li>
+                    <li class="languageSwitcher dropdown-item"><a class="nav-link" href="{{ route('lang.switch', $lang) }}" data-language="{{$lang}}"><i class="fa fa-globe" aria-hidden="true"></i></i> {{$language}}</a></li>
                 @endforeach
             </ul>
         </li>
 
 {{-- SETTINGS (GEAR ICON) / marketing, section management or admins only --}}
         @is(Roles::PRIVILEGE_MARKETING, Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
-            <li class="dropdown">
+            <li class="dropdown nav-item">
                 <a href="#"
-                 class="dropdown-toggle"
+                 class="dropdown-toggle nav-link"
                  data-toggle="dropdown"
                  role="button" aria-expanded="false">
                     <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
@@ -67,14 +67,14 @@
 
 {{-- SHIFT TYPES AND TEMPLATE MANAGEMENT / marketing, section management or admins only --}}
                 <ul class="dropdown-menu" role="menu">
-                    <li>
-                        <a href="{{ asset('shiftType') }}">
+                    <li class="dropdown-item">
+                        <a class="nav-link" href="{{ asset('shiftType') }}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
                             {{ trans('mainLang.manageShiftType') }}
                         </a>
                     </li>
-                    <li>
-                        <a href="{{route('template.overview')}}">
+                    <li class="dropdown-item">
+                        <a class="nav-link" href="{{route('template.overview')}}">
                             <i class="fa fa-magic" aria-hidden="true"></i>
                             {{ trans('mainLang.manageTemplates')  }}
                         </a>
@@ -82,14 +82,14 @@
 
 {{-- USER AND SECTION MANAGEMENT / section management or admins only --}}
                     @is(Roles::PRIVILEGE_CL, Roles::PRIVILEGE_ADMINISTRATOR)
-                    <li>
-                        <a href="{{ route('user.index') }}">
+                    <li class="dropdown-item">
+                        <a class="nav-link" href="{{ route('user.index') }}">
                             <i class="fa fa-users" aria-hidden="true"> </i>
                             {{ trans('users.userManagement') }}
                         </a>
                     </li>
-                    <li>
-                       <a href="{{ asset('section') }}">
+                    <li class="dropdown-item">
+                       <a class="nav-link" href="{{ asset('section') }}">
                            <i class="fa fa-university" aria-hidden="true"></i>
                            {{ trans('mainLang.manageSections') }}
                        </a>
@@ -99,16 +99,16 @@
 
 {{-- LARA ADMINISTRATION / admins only --}}
                 @is(Roles::PRIVILEGE_ADMINISTRATOR)
-                    <li role="separator" class="divider"></li>
-                    <li>
-                        <a href="{{ asset('/logs') }}">
+                    <li role="separator" class="divider dropdown-item"></li>
+                    <li class="dropdown-item">
+                        <a class="nav-link" href="{{ asset('/logs') }}">
                             <i class="fa fa-list-alt" aria-hidden="true"></i>
                             Logs
                         </a>
                     </li>
-                    <li role="separator" class="divider"></li>
-                    <li>
-                        <a href="{{route("lara.update")}}">
+                    <li role="separator" class="divider dropdown-item"></li>
+                    <li class="dropdown-item">
+                        <a class="nav-link" href="{{route("lara.update")}}">
                             <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                             Lara update </a>
                     </li>
@@ -124,94 +124,105 @@ Disabling iCal until fully functional.
             </li>
         </ul>
 
-        <ul class="nav navbar-nav navbar-right">
-            <span class="col-xs-1 visible-xs">&nbsp;</span>
-            <div class="col-xs-10 col-sm-12 col-md-12 no-margin no-padding">
-
+        <ul class="nav navbar-nav">
+            <li class="nav-item pr-2">
+                <a href="#" id="darkmodeToggle" class="btn btn-sm @if(\Lara\utilities\ViewUtility::isLightMode()) btn-secondary @else btn-primary @endif nav-link">
+                    @if(\Lara\utilities\ViewUtility::isLightMode())
+                        {{ trans('mainLang.light') }}
+                    @else
+                        {{ trans('mainLang.dark') }}
+                    @endif
+                </a>
+            </li>
 {{-- AUTHENTICATION --}}
-                @auth
+            @auth
 
 {{-- CREATE BUTTONS / members only --}}
     {{-- Desktop version --}}
-                    <li style="padding-top:5px" class="btn-group hidden-xs">
-                        <div style="padding-top:2px" class="btn-group">
-                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">+</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ URL::route('event.create') }}">{{ trans('mainLang.createNewEvent') }}</a></li>
-                                <li><a href="{{ URL::route('survey.create') }}">{{ trans('mainLang.createNewSurvey') }}</a></li>
-                            </ul>
+                <li class="d-none d-md-block d-lg-block nav-item">
+                    <div class="btn-group">
+                        <button type="button"
+                                class="btn btn-sm btn-primary nav-link text-white mr-2"
+                                data-toggle="dropdown">
+                            &nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ URL::route('event.create') }}">{{ trans('mainLang.createNewEvent') }}</a>
+                            <a class="dropdown-item" href="{{ URL::route('survey.create') }}">{{ trans('mainLang.createNewSurvey') }}</a>
                         </div>
-                    </li>
+                    </div>
+                </li>
 
     {{-- Mobile version --}}
+                <li class="nav-item d-block d-sm-none">
                     <a href="{{ URL::route('event.create') }}"
-                       class="btn btn-sm btn-primary visible-xs centered">
+                       class="btn btn-sm btn-primary d-block d-sm-none text-center nav-link text-white">
                         {{ trans('mainLang.createNewEvent') }}
                     </a>
+                </li>
 
-                    <br class="visible-xs">
-
+                <li class="nav-item d-block d-sm-none">
                     <a href="{{ URL::route('survey.create') }}"
-                       class="btn btn-sm btn-primary visible-xs centered">
+                       class="btn btn-sm btn-primary d-block d-sm-none text-center nav-link text-white">
                         {{ trans('mainLang.createNewSurvey') }}
                     </a>
+                </li>
 
 {{-- MEMBER INFO / members only --}}
-                    <li style="padding-top: 8px;" class="btn-group">
-                        {!! Form::open(array('url' => 'logout',
-                                            'method' => 'POST',
-                                            'class'=>'form-horizontal')) !!}
-                            <div class="navbar-form">
-                                &nbsp;&nbsp;
-                                @php
-                                    $attributes = Lara\Status::style(Auth::user()->status);
-                                @endphp
-                                <i class="{{ $attributes["status"]}}"
-                                   style="{{ $attributes["style"] }}"
-                                   data-toggle="tooltip"
-                                   data-placement="bottom"
-                                   title="{{ Lara\Status::localizeCurrent() }}"></i>
-                                &nbsp;
-                                <strong>
-                                    <span data-toggle="tooltip"
+                <li class="nav-item">
+                    <span data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="{{ trans('mainLang.userPersonalPage') }}">
+                              <strong>
+                                  <a class="nav-link" href="{{route('user.personalpage')}}">
+                                      {{ Auth::user()->name }}
+                                   @is(Roles::PRIVILEGE_ADMINISTRATOR)
+                                        ({{ Auth::user()->section->title . " / Admin" }})
+                                   @elseis(Roles::PRIVILEGE_CL)
+                                        ({{ Auth::user()->section->title . " / Clubleitung" }})
+                                   @elseis(Roles::PRIVILEGE_MARKETING)
+                                        ({{ Auth::user()->section->title . " / Marketing" }})
+                                   @else
+                                        ({{ Auth::user()->section->title }})
+                                   @endis
+                                   @php
+                                       $attributes = Lara\Status::style(Auth::user()->status);
+                                   @endphp
+                                       <i class="{{ $attributes["status"]}}"
+                                          style="{{ $attributes["style"] }}"
+                                          data-toggle="tooltip"
                                           data-placement="bottom"
-                                          title="{{ trans('mainLang.userPersonalPage') }}">
-                                            <a href="{{route('user.personalpage')}}" >
-                                                {{ Auth::user()->name }}
-                                                @is(Roles::PRIVILEGE_ADMINISTRATOR)
-                                                    ({{ Auth::user()->section->title . " / Admin" }})
-                                                @elseis(Roles::PRIVILEGE_CL)
-                                                    ({{ Auth::user()->section->title . " / Clubleitung" }})
-                                                @elseis(Roles::PRIVILEGE_MARKETING)
-                                                    ({{ Auth::user()->section->title . " / Marketing" }})
-                                                @else
-                                                    ({{ Auth::user()->section->title }})
-                                                @endis
-                                            </a>
-                                    </span>
-                                </strong>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <br class="visible-xs">
-                                <br class="visible-xs">
-                                {!! Form::submit( Lang::get('mainLang.logOut'),
-                                                  array('class' => 'btn btn-default btn-sm pull-right',
-                                                        'name'  => 'logout') ) !!}
-                            </div>
-                        {!! Form::close() !!}
-                    </li>
+                                          title="{{ Lara\Status::localizeCurrent() }}"></i>
+                                   </a>
+                               </strong>
+                    </span>
+                </li>
+                <li  class="nav-item btn-group">
+                    {!! Form::open(array('url' => 'logout',
+                                         'method' => 'POST',
+                                         'class'=>'form-inline')) !!}
+                        <div class="navbar-form">
+                            &nbsp;&nbsp;
+
+                            <br class="d-block d-sm-none">
+                            <br class="d-block d-sm-none">
+                            {!! Form::submit( Lang::get('mainLang.logOut'),
+                                              array('class' => 'btn btn-secondary btn-sm float-right',
+                                                    'name'  => 'logout') ) !!}
+                        </div>
+                    {!! Form::close() !!}
+                </li>
 
                 @else
 
 {{-- LOGIN FORM / public --}}
-                    <li>
+                    <li class="nav-item">
                         @include('partials/login')
                     </li>
 
                 @endauth
-            </div>
-            <span class="col-xs-1 visible-xs">&nbsp;</span>
+
           </ul>
 
         </div>
-    </div>
 </nav>
