@@ -3,7 +3,7 @@
 namespace Lara\Http\Controllers;
 
 use DateTime;
-use Lara\Club;
+use Illuminate\Support\Collection;
 use Lara\Person;
 use Lara\Shift;
 use Lara\StatisticsInformation;
@@ -12,6 +12,41 @@ use View;
 
 class StatisticsController extends Controller
 {
+    CONST STATISTIC_SELECT = /** @lang MariaDB */
+        "select p.id personId,".
+        "u.id userId,".
+        "u.name,".
+        "coalesce((select sum(ssh.statistical_weight)".
+        " from shifts ssh ".
+        "join schedules ssched on ssh.schedule_id = ssched.id ".
+        "join club_events sce on ssched.evnt_id = sce.id ".
+        "join persons sp on sp.id = ssh.person_id ".
+        "join users su on su.person_id = sp.id ".
+        "where su.section_id = sce.plc_id ".
+        "and p.id = sp.id ".
+        "and sce.evnt_date_start >= :start ".
+        "and sce.evnt_date_end <= :end), 0) own_section, ".
+        "coalesce((select sum(ssh.statistical_weight) ".
+        "from shifts ssh ".
+        "join schedules ssched on ssh.schedule_id = ssched.id ".
+        "join club_events sce on ssched.evnt_id = sce.id ".
+        "join persons sp on sp.id = ssh.person_id ".
+        "join users su on su.person_id = sp.id ".
+        "where su.section_id <> sce.plc_id ".
+        "and p.id = sp.id ".
+        "and sce.evnt_date_start >= :start ".
+        "and sce.evnt_date_end <= :end), 0) other_section ".
+        "from shifts sh ".
+        "join schedules sched on sched.id = sh.schedule_id ".
+        "join club_events ce on sched.evnt_id = ce.id ".
+        "join persons p on p.id = sh.person_id ".
+        "join users u on u.person_id = p.id ".
+        "where p.prsn_ldap_id is not null ".
+        "and ce.evnt_date_start >= :start ".
+        "and ce.evnt_date_end <= :end ".
+        "group by p.id, u.id, u.name ".
+        "order by u.name ";
+    
     public function showStatistics($year = null, $month = null)
     {
         if (!isset($year)) {
@@ -91,15 +126,15 @@ class StatisticsController extends Controller
             $clubsOfShift = $shift->schedule->event->showToSectionNames();
             
             $response[] = [
-                'id'            => $shift->id,
-                'shift'         => $shift->type->title(),
-                'event'         => $shift->schedule->event->evnt_title,
-                'event_id'      => $shift->schedule->event->id,
-                'section'       => $shift->schedule->event->section->title,
-                'sectionColor'   => $shift->schedule->event->section->color,
-                'isOwnClub'     => in_array($ownClub, $clubsOfShift),
-                'date'          => strftime("%d.%m.%Y (%a)", strtotime($shift->schedule->event->evnt_date_start)),
-                'weight'        => $shift->statistical_weight,
+                'id'           => $shift->id,
+                'shift'        => $shift->type->title(),
+                'event'        => $shift->schedule->event->evnt_title,
+                'event_id'     => $shift->schedule->event->id,
+                'section'      => $shift->schedule->event->section->title,
+                'sectionColor' => $shift->schedule->event->section->color,
+                'isOwnClub'    => in_array($ownClub, $clubsOfShift),
+                'date'         => strftime("%d.%m.%Y (%a)", strtotime($shift->schedule->event->evnt_date_start)),
+                'weight'       => $shift->statistical_weight,
             ];
         }
         
@@ -114,56 +149,34 @@ class StatisticsController extends Controller
      */
     private function generateStatisticInformationForSections($from, $till, $isMonthStatistic)
     {
-        $year = $from->format("Y");
-        $month = $till->format("m");
         
-        $clubs = Club::activeClubs()->with('accountableForStatistics')->get();
-        $persons = $clubs->flatMap(function ($club) {
-            return $club->accountableForStatistics;
-        });
-        $persons = $persons->filter(function ($person) use ($from, $till) {
-            return null !== $person->lastShift() && $person->shifts()->whereHas('schedule.event',
-                    function ($query) use ($from, $till) {
-                        $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
-                    })->get()->count() > 0;
-        });
-        
-        $personIds = $persons->map(function ($prsn) {
-            return $prsn->id;
-        });
-        $shifts = Shift::whereHas('schedule.event', function ($query) use ($from, $till) {
-            $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
-        })->whereIn('person_id', $personIds)
-            ->with('schedule')->with('schedule.event')
-            ->get();
-        
-        
-        // array with key: clb_title and values: array of infos for user of the club
-        $clubInfos = $clubs->flatMap(function ($club) use ($shifts, $year, $month, $isMonthStatistic, $persons) {
+        $queryResults = \DB::select(str_replace(':end', '\''.$till->format('Y-m-d').'\'',
+            str_replace(':start', '\''.$from->format('Y-m-d').'\'', self::STATISTIC_SELECT)));
+        $groupedInformations = collect($queryResults)->map(function ($row) {
+            $info = new StatisticsInformation();
+            $info->user = Person::query()->whereKey($row->personId)->first();
+            $info->userClub = $info->user->club;
+            $info->inOwnClub = $row->own_section;
+            $info->inOtherClubs = $row->other_section;
             
-            
-            $infosForClub = $persons->filter(function ($person) use ($club) {
-                return $person->clb_id == $club->id;
-            })->map(function ($person) use ($shifts, $club) {
-                $info = new StatisticsInformation();
-                
-                return $info->make($person, $shifts, $club);
-            });
-            $maxShifts = $infosForClub->map(function ($info) {
+            return $info;
+        })->groupBy(function (StatisticsInformation $item) {
+            return $item->userClub->id;
+        });
+        $clubInfos = $groupedInformations->flatMap(function (Collection $item) {
+            $club = $item->first()->userClub;
+            $maxShift = $item->max(function (StatisticsInformation $info) {
                 return $info->inOwnClub + $info->inOtherClubs;
-            })->sort()->last();
+            });
+            $maxShift = max($maxShift, 1);
+            $infos = $item->map(function (StatisticsInformation $info) use ($maxShift) {
+                $info->shiftsPercentIntern = $info->inOwnClub / ($maxShift * 1.5) * 100;
+                $info->shiftsPercentExtern = $info->inOtherClubs / ($maxShift * 1.5) * 100;
+                
+                return $info;
+            });
             
-            // avoid division by zero
-            $maxShifts = max($maxShifts, 1);
-            $infosForClub = $infosForClub->sortBy('user.prsn_name')
-                ->map(function (StatisticsInformation $info) use ($maxShifts) {
-                    $info->shiftsPercentIntern = $info->inOwnClub / ($maxShifts * 1.5) * 100;
-                    $info->shiftsPercentExtern = $info->inOtherClubs / ($maxShifts * 1.5) * 100;
-                    
-                    return $info;
-                });
-            
-            return [$club->clb_title => $infosForClub];
+            return [$club->clb_title => $infos];
         });
         
         $infos = $clubInfos->flatten();
