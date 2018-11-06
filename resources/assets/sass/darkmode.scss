@@ -3,3 +3,12 @@
 @import "~bootswatch/dist/darkly/bootswatch";
 
 @import "imports";
+
+hr {
+    border-style:inset;
+    border-width:1px;
+}
+
+.btn {
+    text-transform: uppercase;
+}
