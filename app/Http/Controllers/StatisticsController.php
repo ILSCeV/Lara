@@ -62,7 +62,7 @@ class StatisticsController extends Controller
         list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till);
         
         return View::make('statisticsView',
-            compact('infos', 'clubInfos', 'userId', 'year', 'month', 'isMonthStatistic'));
+            compact('infos', 'clubInfos', 'year', 'month', 'isMonthStatistic'));
         
     }
     
@@ -75,19 +75,20 @@ class StatisticsController extends Controller
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next year')->modify('-1 day');
         $isMonthStatistic = 0;
+        
         list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till);
         $month = $till->format("m");
         
         return View::make('statisticsView',
-            compact('infos', 'clubInfos', 'userId', 'year', 'month', 'isMonthStatistic'));
+            compact('infos', 'clubInfos', 'year', 'month', 'isMonthStatistic'));
     }
     
     /**
      * Returns list of all shifts a selected person did in a chosen month, with some associated metadata
      *
      * @param  int $id
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function shiftsByPerson($id = null)
     {
@@ -142,7 +143,7 @@ class StatisticsController extends Controller
     }
     
     /**
-     * @param bool $isMonthStatistic
+     *
      * @param DateTime $from
      * @param DateTime $till
      * @return array
@@ -152,7 +153,7 @@ class StatisticsController extends Controller
         
         $queryResults = \DB::select(str_replace(':end', '\''.$till->format('Y-m-d').'\'',
             str_replace(':start', '\''.$from->format('Y-m-d').'\'', self::STATISTIC_SELECT)));
-        $groupedInformations = collect($queryResults)->map(function ($row) {
+        $groupedInformation = collect($queryResults)->map(function ($row) {
             $info = new StatisticsInformation();
             $info->user = Person::query()->whereKey($row->personId)->first();
             $info->userClub = $info->user->club;
@@ -163,7 +164,7 @@ class StatisticsController extends Controller
         })->groupBy(function (StatisticsInformation $item) {
             return $item->userClub->id;
         });
-        $clubInfos = $groupedInformations->flatMap(function (Collection $item) {
+        $clubInfos = $groupedInformation->flatMap(function (Collection $item) {
             $club = $item->first()->userClub;
             $maxShift = $item->max(function (StatisticsInformation $info) {
                 return $info->inOwnClub + $info->inOtherClubs;
