@@ -10,7 +10,7 @@
 
     {{-- prev/next month --}}
     <div class="col-xs-12 col-md-12">
-        <div class="col-xs-12 col-md-5 btn-group p-0">
+        <div class="col-xs-12 col-5 btn-group p-0">
             @if($isMonthStatistic)
                 <a class="btn btn-secondary hidden-print"
                    href="{{ action('StatisticsController@showStatistics') . date("/Y/m",
@@ -45,20 +45,22 @@
         </div>    
 
         {{-- Month/year statstics selector --}}
-        <div class="col-xs-12 col-md-7 btn-group float-right">
-            @if($isMonthStatistic)
-                <a class="btn btn-xs btn-primary float-right"
-                   type="button"
-                   href="{{ action("StatisticsController@showYearStatistics") }}">
-                    {{ trans("mainLang.yearStatistic") }}
-                </a>
-            @else
-                <a class="btn btn-xs btn-primary float-right"
-                   type="button"
-                   href="{{ action("StatisticsController@showStatistics")  }}">
-                    {{ trans("mainLang.monthStatistic") }}
-                </a>
-            @endif
+        <div class="col-xs-12 col-7 btn-group float-right">
+            <div class="col-4">
+                @if($isMonthStatistic)
+                    <a class="btn btn-xs btn-primary float-right"
+                       type="button"
+                       href="{{ action("StatisticsController@showYearStatistics") }}">
+                        {{ trans("mainLang.yearStatistic") }}
+                    </a>
+                @else
+                    <a class="btn btn-xs btn-primary float-right"
+                       type="button"
+                       href="{{ action("StatisticsController@showStatistics")  }}">
+                        {{ trans("mainLang.monthStatistic") }}
+                    </a>
+                @endif
+            </div>
         </div>
 
         <br>
