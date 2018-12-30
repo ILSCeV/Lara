@@ -42,11 +42,12 @@
                     &gt;&gt;
                 </a>
            @endif
-        </div>    
+        </div>
+        <br class="d-xs-block d-md-none">
 
         {{-- Month/year statstics selector --}}
-        <div class="col-xs-12 col-7 btn-group float-right">
-            <div class="col-4">
+        <div class="col-7 col-xs-12 btn-group float-right">
+            <div class="col-4 ">
                 @if($isMonthStatistic)
                     <a class="btn btn-xs btn-primary float-right"
                        type="button"
@@ -69,16 +70,16 @@
     </div>
 
 
-    <div class="row">
+    <div class="row container-fluid">
 
         {{-- Club member stats --}}
-        <div class="col p-0">
+        <div class="col-xs-12 col-md-5 p-0-xs">
             @include('partials.statisticsMembers')
         </div>
 
         {{-- Leaderboard --}}
-        <div class="col p-0-xs">
-            <br class="d-block.d-sm-none">
+        <div class="col-xs-12 col-md-5 p-0-xs">
+            <br class="d-block d-sm-none">
             @include('partials.statisticsLeaderboards')
         </div>
 
