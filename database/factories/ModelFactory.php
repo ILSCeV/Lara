@@ -85,7 +85,7 @@ $factory->define(Lara\SurveyQuestion::class, function(Faker\Generator $faker){
 });
 
 $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
-    $start = $faker->dateTimeBetween('-30 days', '+60 days');
+    $start = $faker->dateTimeBetween('-5 years', '+1 years');
     $end = $faker->dateTimeBetween($start, date("Y-m-d H:i:s", strtotime('+1 day', $start->getTimestamp())));
     $eventName = $faker->randomKey(EventNameDictionary::EVENT_NAMES);
     $eventType = EventNameDictionary::EVENT_NAMES[$eventName];
@@ -138,7 +138,7 @@ $factory->define(Lara\Schedule::class, function(Faker\Generator $faker) {
 $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
     $end = $faker->time('H:i');
     $start = $faker->time('H:i', $end);
-    $personId = $faker->randomElement([Lara\Person::inRandomOrder()->first()->id, NULL]);
+    $personId = $faker->randomElement([Lara\Person::inRandomOrder()->first()->id, Lara\Person::inRandomOrder()->first()->id, NULL]);
     return [
         'schedule_id' => Lara\Schedule::inRandomOrder()->first()->id,
         'shifttype_id' => Lara\ShiftType::inRandomOrder()->first()->id,

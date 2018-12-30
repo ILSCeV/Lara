@@ -5,6 +5,9 @@
 
 For more information visit [Wiki](https://github.com/ILSCeV/Lara/wiki)
 
+![image](https://user-images.githubusercontent.com/11014468/49447246-51120e80-f7d6-11e8-86c1-194405225bba.png)
+
+![image](https://user-images.githubusercontent.com/11014468/49447321-84549d80-f7d6-11e8-99e0-3913a08cbf22.png)
 
 ## Contributing
 We always welcome any help in any form :)

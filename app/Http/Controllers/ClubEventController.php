@@ -389,12 +389,11 @@ class ClubEventController extends Controller
         $userId = Auth::user()->person->prsn_ldap_id;
 
         if(Auth::user()->hasPermissionsInSection($event->section, RoleUtility::PRIVILEGE_MARKETING) || $userId == $created_by) {
-            return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
+            return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes',
                 'shifts', 'title', 'subtitle', 'type',
                 'section', 'filter', 'timeStart', 'timeEnd',
                 'info', 'details', 'private', 'dv',
-                'activeTemplate',
-                'date', 'templateId', 'facebookNeeded', 'createClubEvent',
+                'date', 'facebookNeeded', 'createClubEvent',
                 'event','baseTemplate',
                'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal','eventUrl'));
         } else {

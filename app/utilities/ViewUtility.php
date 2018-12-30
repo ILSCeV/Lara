@@ -49,6 +49,6 @@ class ViewUtility
     }
     
     public static function isLightMode() {
-        return (isset($_COOKIE['displaymode']) ? $_COOKIE['displaymode'] : "light") == "light";
+        return \Session::get('view_mode','light') == 'light';
     }
 }

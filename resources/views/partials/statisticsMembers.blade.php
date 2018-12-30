@@ -45,7 +45,7 @@
                             <tr class="{{Auth::user()->id === $user->id? 'my-shift' : ''}}">
                                 <td>
                                     @include('partials.personStatusMarker', ['status' => $user->status, 'section' => $user->section])
-                                    <a href="#" onclick="chosenPerson = '{{$user->name}}'" name="show-stats-person{{$info->user->id}}" id="{{$info->user->id}}" data-toggle="tooltip" data-placement="top" title="{{ $user->fullName() }}">
+                                    <a href="#" onclick="chosenPerson = '{{$user->name}}'" name="show-stats-person{{$info->user->id}}" id="{{$info->user->id}}" data-toggle="modal" data-placement="top" title="{{ $user->fullName() }}">
                                             {{$user->name}}
                                     </a>
                                 </td>

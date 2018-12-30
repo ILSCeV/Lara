@@ -8,6 +8,7 @@ gitrevision.txt
 # Webpack generated files
 public/*.js
 public/*.css
+public/*.map
 public/fonts
 public/static.css
 public/static.js

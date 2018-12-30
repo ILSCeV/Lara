@@ -114,6 +114,8 @@ Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');
 Route::get('lang', function() {
     return response()->json(['language' => Session::get('applocale')]);
 });
+// ViewMode
+Route::get('viewmode/{mode}', 'ViewModeController@switchMode')->name('viewMode.switch');
 
 // RESTful RESOURCES
 Route::resource('shiftType', 		'ShiftTypeController')

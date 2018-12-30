@@ -32,15 +32,12 @@
             {{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->deadline))) }}
         </div>
 
-        <div class="card-body p-0">
+        <div class="card-footer">
             {{-- gives a session from privileged users the option to hide the event--}}
             @is('marketing', 'clubleitung', 'admin')
-
-                <hr class="col-md-12 col-xs-12">
                 <div class="float-right hidden-print">
                     <small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
                 </div>
-
             @endis
         </div>
     </div>
