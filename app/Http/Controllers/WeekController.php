@@ -29,16 +29,10 @@ class WeekController extends Controller {
 	 * @return RedirectResponse
      */       
     public function currentWeek()
-    {
-    	// A hack to correct wrong date in january starting in week 53 last year
-    	if (date("m") == "01"
-    	&& date("W") == "53") {
-    		return Redirect::action('WeekController@showWeek', array('year' => date("Y",strtotime("-1 year")), 
-                                                                 	 'week' => date('W'))); 
-    	} else {
-	        return Redirect::action('WeekController@showWeek', array('year' => date("Y"), 
-    	                                                             'week' => date('W')));                                                               
-    	}
+    {   $currentDate  = new DateTime();
+        
+	        return Redirect::action('WeekController@showWeek', array('year' => $currentDate->format("Y"),
+    	                                                             'week' => $currentDate->format('W')));
     }
 	/**
 	* Generate the view of the week for given month and given year
@@ -53,18 +47,21 @@ class WeekController extends Controller {
 	public function showWeek($year,$week)
     {
 		// Create week start date on monday (day 1)
-        $weekStart = date('Y-m-d', strtotime($year."W".$week.'1'));  
-
+        $weekStart = date('Y-m-d', strtotime($year."W".$week.'1'));
+        $weekStartDate = new DateTime($weekStart);
+        $weekStartDateNext = (new DateTime($weekStartDate->format('Y-m-d')))->modify('+1 week')->modify('+3 days');
+        $weekStartDatePrev = (new DateTime($weekStartDate->format('Y-m-d')))->modify('-1 week')->modify('+3 days');
+        
         // Create the number of the next week
-		$nextWeek = date("W",strtotime("next Week".$weekStart));
-		$nextYear = date("Y",strtotime("next Week".$weekStart)); 
+		$nextWeek = $weekStartDateNext->format("W");
+		$nextYear = $weekStartDateNext->format('Y');
 
         // Create week end date - we go till tuesday (day 2) because café needs alternative week view (Mi-Di)
         $weekEnd = date('Y-m-d', strtotime($nextYear."W".$nextWeek.'2'));
 		
  	    // Create the number of the previous week
-	    $previousWeek = date("W",strtotime("previous Week".$weekStart));
-	    $previousYear = date("Y",strtotime("previous Week".$weekStart)); 
+	    $previousWeek = $weekStartDatePrev->format("W");
+	    $previousYear = $weekStartDatePrev->format("Y");
 
 		// Convert number of prev/next week to verbatim format - needed for correct << and >> button links
  	    $nextWeek 	  = $nextYear."/KW".$nextWeek;

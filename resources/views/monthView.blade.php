@@ -72,7 +72,7 @@
                 {{-- Current week --}}
                 <div class="calendarRow clearfix group WeekMarkerRow" >
                     <div class="calendarWeek WeekMarker">
-                        <a href="{!! Request::getBasePath() !!}/calendar/{{$weekStart->format('Y\/\K\WW')}}"
+                        <a href="{!! Request::getBasePath() !!}/calendar/{{(new DateTime($weekStart->format('Y-m-d')))->modify('+3 days')->format('Y\/\K\WW')}}"
                            data-toggle="tooltip"
                            data-placement="top"
                            title="{{ trans('mainLang.showWeek')}}">
@@ -88,7 +88,7 @@
                 {{-- Not current week --}}
                 <div class="calendarRow clearfix group">
                     <div class="calendarWeek ">
-                        <a href="{!! Request::getBasePath() !!}/calendar/{{$weekStart->format('Y\/\K\WW')}}"
+                        <a href="{!! Request::getBasePath() !!}/calendar/{{(new DateTime($weekStart->format('Y-m-d')))->modify('+3 days')->format('Y\/\K\WW')}}"
                            data-toggle="tooltip"
                            data-placement="top"
                            title="{{ trans('mainLang.showWeek')}}">
