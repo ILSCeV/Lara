@@ -93,9 +93,9 @@ $(function() {
         isotope.arrange({
             itemSelector: '.element-item',
             percentPosition: true,
-            masonry:
+            masontryHorizontal:
                 {
-                    columnWidth: '.element-item'
+                    columnWidth: '.element-size'
                 },
             getSortData:
                 {
@@ -110,6 +110,7 @@ $(function() {
                     }
                 }
         });
+
 
         (<any>window).isotope = isotope;
 
