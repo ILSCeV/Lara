@@ -474,7 +474,7 @@ $(document).ready(function() {
 
             // Parse and show response
             dialog.init(function(){
-
+              dialog.find('.modal-dialog').attr('role','document');
                 // Initialise table structure
                 dialog.find('.modal-body').addClass("p-0").html(
                     "<table id=\"person-shifts-overview\" class=\"table table-hover p-0\">"
@@ -491,18 +491,19 @@ $(document).ready(function() {
                         + "</thead>"
                     +"</table>"
                 );
+              $("#person-shifts-overview").append("<tbody id='person-shifts-overview-body'></tbody>")
 
                 // check for empty response
                 if (response.length === 0)
                 {
-                    $("#person-shifts-overview").append("<tr><td colspan=6>"  + translate('noShiftsInThisPeriod') + "</td></tr>");
+                    $("#person-shifts-overview").append("<tbody><tr><td colspan=6>"  + translate('noShiftsInThisPeriod') + "</td></tr></tbody>");
                 }
 
                 // Fill with data received
                 for (let i = 0; i < response.length; i++)
                 {
-                    $("#person-shifts-overview").append(
-                        "<tbody>"
+                    $("#person-shifts-overview-body").append(
+                        ""
                         // Change background for shifts in other sections
                         + "<tr" + (!response[i]["isOwnClub"] ? " class=\"other-section text-muted\"" : "") + ">"
                         + "<td>"  + (1+i) + "</td>"
@@ -513,8 +514,7 @@ $(document).ready(function() {
                         + "<td>" + response[i]["section"] + "</td>"
                         + "<td>" + response[i]["date"] + "</td>"
                         + "<td>" + response[i]["weight"] + "</td>"
-                        + "</tr>"
-                        + "</tbody>");
+                        + "</tr>");
                 }
 
             });
