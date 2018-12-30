@@ -220,7 +220,8 @@ class IcalController extends Controller
     public function userScheduleWithAlarm($prsn_uid, $alarm = 0)
     {
         $personal_calendar = Cache::remember("ical".$prsn_uid.$alarm, 4 * 60, function () use ($prsn_uid, $alarm) {
-            $person = Person::where('prsn_uid', '=', $prsn_uid)->first();
+            /** @var $person Person*/
+            $person = Person::query()->where('prsn_uid', '=', $prsn_uid)->first();
 
             if(isset($person)) {
                 $user = $person->user;
@@ -230,7 +231,7 @@ class IcalController extends Controller
                 }
 
                 if (isset($userSettings)) {
-                    Session::put('applocale', $userSettings->language);
+                    $userSettings->applyToSession();
                 }
             }
             $vCalendar = new Calendar('Events');

@@ -128,7 +128,7 @@ class LoginController extends Controller
             $this->clearLoginAttempts(request());
             $userSettings = $user->settings;
             if ($userSettings) {
-                Session::put('applocale', $userSettings->language);
+                $userSettings->applyToSession();
             }
 
             return redirect()->back();
