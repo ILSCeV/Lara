@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Lara\Person;
 use Lara\Shift;
 use Lara\StatisticsInformation;
+use Lara\utilities\CacheUtility;
 use Redirect;
 use View;
 
@@ -55,6 +56,13 @@ class StatisticsController extends Controller
         if (!isset($month)) {
             $month = strftime('%m');
         }
+        return CacheUtility::remember('month-statistics-view-'.$year.'-'.$month, function () use ($year, $month) {
+            return $this->showStatisticsInternal($year, $month);
+        });
+    }
+    
+    private function showStatisticsInternal($year = null, $month = null)
+    {
         $from = new DateTime($year.'-'.$month.'-01');
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next month')->modify('-1 day');
@@ -62,11 +70,21 @@ class StatisticsController extends Controller
         list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till);
         
         return View::make('statisticsView',
-            compact('infos', 'clubInfos', 'year', 'month', 'isMonthStatistic'));
+            compact('infos', 'clubInfos', 'year', 'month', 'isMonthStatistic'))->render();
         
     }
     
     public function showYearStatistics($year = null)
+    {
+        if (!isset($year)) {
+            $year = strftime('%Y');
+        }
+        return CacheUtility::remember('year-statistics-view-'.$year, function () use ($year) {
+            return $this->showYearStatisticsInternal($year);
+        });
+    }
+    
+    private function showYearStatisticsInternal($year = null)
     {
         if (!isset($year)) {
             $year = strftime('%Y');
@@ -80,7 +98,7 @@ class StatisticsController extends Controller
         $month = $till->format("m");
         
         return View::make('statisticsView',
-            compact('infos', 'clubInfos', 'year', 'month', 'isMonthStatistic'));
+            compact('infos', 'clubInfos', 'year', 'month', 'isMonthStatistic'))->render();
     }
     
     /**

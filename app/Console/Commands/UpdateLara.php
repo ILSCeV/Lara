@@ -82,6 +82,7 @@ class UpdateLara extends Command
             'npm run production',
             'php artisan migrate --force',
             $reApplyChangesCommand,
+            'php artisan cache:clear',
             // Apply new database changes
             'php artisan up'
             // Exit maintenance mode

@@ -8,8 +8,10 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Lara\Observers\ShiftObserver;
 use Lara\Role;
 use Lara\Section;
+use Lara\Shift;
 use Lara\User;
 use Lara\utilities\RoleUtility;
 use Illuminate\Support\Facades\Schema;
@@ -102,6 +104,7 @@ class AppServiceProvider extends ServiceProvider
     
         Paginator::defaultSimpleView('pagination::bootstrap-4');
 
+        Shift::observe(ShiftObserver::class);
     }
 
     /**
