@@ -12,7 +12,8 @@ module.exports = {
     survey:'./resources/assets/ts/surveys/surveyEntry.ts',
     lara: './resources/assets/ts/lara.ts',
     legacy:'./resources/assets/ts/legacy/ieDependencys.ts',
-    darkmode: './resources/assets/sass/darkmode.scss'
+    darkmode: './resources/assets/sass/darkmode.scss',
+    monthview:'./resources/assets/ts/monthview/monthview.ts'
   },
   module: {
     rules: [

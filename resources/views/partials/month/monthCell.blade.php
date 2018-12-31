@@ -63,11 +63,7 @@ use Carbon\Carbon;
         @endif
 
         {{-- highlight with cal-month-my-event class if the signed in user has a shift in this event --}}
-        @auth
-            @if($clubEvent->hasShift(Auth::user()->person))
-                <?php $classString .= " cal-month-my-event"; ?>
-            @endif
-        @endauth
+
 
         {{-- Filter --}}
         @if ( $clubEvent->showToSection->isEmpty() )
@@ -107,7 +103,7 @@ use Carbon\Carbon;
 
             {{-- show everything for members, but switch the color theme according to event type --}}
             @else
-                <div class="cal-event {{$classString}} {{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}">
+                <div id="cal-event-{{$clubEvent->id}}" class="cal-event {{$classString}} {{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}">
 
                     @include("partials.event-marker", $clubEvent)
                     {{-- Show starting time with Preparation time in () --}}

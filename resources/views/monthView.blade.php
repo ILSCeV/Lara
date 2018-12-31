@@ -4,6 +4,12 @@
     {{ $date['monthName'] . " " . $date['year'] }}
 @stop
 
+@section('moreScripts')
+    @auth
+        <script src="{{asset(WebpackBuiltFiles::$jsFiles['monthview'])}}" ></script>
+    @endauth
+@stop
+
 @section('content')
 
 {{-- Prev/next month selector --}}
@@ -111,5 +117,10 @@
         {{-- filter hack --}}
         <span id="month-view-marker" hidden>&nbsp;</span>
     </div>
-
+    @auth
+        <script>
+            var year = {{ $date['year'] }};
+            var month = {{ $date['month'] }};
+        </script>
+    @endauth
 @stop
