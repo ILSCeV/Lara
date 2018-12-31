@@ -46,7 +46,6 @@ $ldapid
         }
 
         #dropdown_club {
-            position: absolute;
             overflow: visible;
         }
 
@@ -149,7 +148,7 @@ $ldapid
 
     {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id], 'class' => 'store', 'name' => 'store']) !!}
 
-    <div class="card card.bg-warning">
+    <div class="card bg-warning">
         @if( $survey->password != '')
             <div class="hidden-print card-header">
                 {!! Form::password('password', ['class'=>'col-md-4 col-xs-12 black-text',
@@ -208,7 +207,7 @@ $ldapid
                             <td>
                                 {{--autocomplete for clubs is not working right now--}}
                                 <div id="dropdown_club" class="dropdown">
-                                    <div class="btn-group col-md-8 p-0">
+                                    <div class="btn-group container-fluid p-0">
                                         {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                                     </div>
                                     <ul id="dropdown-menu_club" class="dropdown-menu dropdown-club"></ul>
