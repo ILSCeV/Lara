@@ -3,6 +3,7 @@
 namespace Lara\Console\Commands;
 
 use Illuminate\Console\Command;
+use Lara\utilities\CacheUtility;
 use Log;
 
 class UpdateLara extends Command
@@ -82,7 +83,6 @@ class UpdateLara extends Command
             'npm run production',
             'php artisan migrate --force',
             $reApplyChangesCommand,
-            'php artisan cache:clear',
             // Apply new database changes
             'php artisan up'
             // Exit maintenance mode
@@ -111,6 +111,7 @@ class UpdateLara extends Command
 
         // finish progress bar and end counter
         $bar->finish();
+        CacheUtility::forget();
         $counterEnd = microtime(true);
 
         // Inform the users
