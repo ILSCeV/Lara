@@ -105,6 +105,7 @@ Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson')
     ->middleware('rejectGuests');
 Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
 Route::get('monthViewShifts/{year}/{month}','MonthController@markShiftsOfCurrentUser');
+Route::get('monthViewTable/{year}/{month}', 'MonthController@monthViewTable');
 
 // additional route to store a SurveyAnswer
 Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');

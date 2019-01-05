@@ -1,13 +1,14 @@
 declare var year: any;
 declare var month: any;
+declare var isAuthenticated: any;
 
 $(window).on('load', () => {
-  if((""+month).length < 2){
-    month = "0"+month;
+  if (("" + month).length < 2) {
+    month = "0" + month;
   }
 
   $.ajax({
-    url: "/monthViewShifts/" + year + "/" + month,
+    url: "/monthViewTable/" + year + "/" + month,
 
     data: {
       // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
@@ -16,21 +17,38 @@ $(window).on('load', () => {
 
     dataType: 'json',
 
-    success(data: Array, textStatus: string, jqXHR: JQueryXHR): any {
+    success(data: any, textStatus: string, jqXHR: JQueryXHR): any {
+      $('#monthTableContainer').html(data.data);
+      if(isAuthenticated) {
+        $.ajax({
+          url: "/monthViewShifts/" + year + "/" + month,
 
-      //answer is a array of ids
-      var selector = '';
-      var first = true;
-      data.forEach((value)=>{
-        if(!first){
-          selector+=', ';
-        }
-        selector+='#cal-event-' + value.id;
-        first = false;
-      });
+          data: {
+            // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+            "_token": $(this).find('input[name=_token]').val(),
+          },
 
-      $(selector).addClass('cal-month-my-event');
+          dataType: 'json',
+
+          success(data: Array, textStatus: string, jqXHR: JQueryXHR): any {
+
+            //answer is a array of ids
+            var selector = '';
+            var first = true;
+            data.forEach((value) => {
+              if (!first) {
+                selector += ', ';
+              }
+              selector += '#cal-event-' + value.id;
+              first = false;
+            });
+
+            $(selector).addClass('cal-month-my-event');
+          }
+        });
+      }
     }
-
   });
+
+
 });

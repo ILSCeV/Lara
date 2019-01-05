@@ -56,9 +56,9 @@ class StatisticsController extends Controller
         if (!isset($month)) {
             $month = strftime('%m');
         }
-        return CacheUtility::remember('month-statistics-view-'.$year.'-'.$month, function () use ($year, $month) {
+        //return CacheUtility::remember('month-statistics-view-'.$year.'-'.$month, function () use ($year, $month) {
             return $this->showStatisticsInternal($year, $month);
-        });
+        //});
     }
     
     private function showStatisticsInternal($year = null, $month = null)
@@ -79,9 +79,9 @@ class StatisticsController extends Controller
         if (!isset($year)) {
             $year = strftime('%Y');
         }
-        return CacheUtility::remember('year-statistics-view-'.$year, function () use ($year) {
+       // return CacheUtility::remember('year-statistics-view-'.$year, function () use ($year) {
             return $this->showYearStatisticsInternal($year);
-        });
+       // });
     }
     
     private function showYearStatisticsInternal($year = null)

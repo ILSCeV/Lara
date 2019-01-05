@@ -41,6 +41,7 @@ class ClubEventObserver
         } else {
             Log::info('Event created by sync: ' . '"' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         }
+        CacheUtility::forget();
     }
 
     public function updating(ClubEvent $event) 
