@@ -51,6 +51,6 @@
     <script>
        var year = {{ $date['year'] }};
        var month = {{ $date['month'] }};
-       var isAuthenticated = {{ Auth::hasUser() }};
+       var isAuthenticated = {{ Auth::hasUser() ? 'true':'false' }};
     </script>
 @stop

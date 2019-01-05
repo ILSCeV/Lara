@@ -20,7 +20,7 @@ class CacheUtility
     static function remember($key, \Closure $closure)
     {
         $viewmode = \Session::get('view_mode', 'light');
-        $user = \Auth::hasUser() ? \Auth::user()->id:'';
+        $user = \Auth::hasUser() ;
         
         return \Cache::rememberForever($key.'-'.$viewmode.'-'.$user, $closure);
     }
