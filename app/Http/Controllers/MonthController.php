@@ -37,7 +37,6 @@ class MonthController extends Controller
         ]);
     }
     
-    
     /**
      * Generate the view of the calender for given month and given year
      * with events in this period.
@@ -48,30 +47,79 @@ class MonthController extends Controller
      */
     public function showMonth($year, $month)
     {
-        if(\Auth::user()) {
-            return CacheUtility::remember('monthview-auth'.'-'.$year.'-'.$month,
-                function () use ($year, $month) {
-                    return $this->showMonthInternal($year, $month);
+        list($firstDay, $lastDay, $date) = $this->makeDateArray($year, $month);
+        
+        $sections = Section::where('id', '>', 0)
+            ->orderBy('title')
+            ->get(['id', 'title', 'color']);
+        
+        return View::make('monthView',
+            compact('date', 'firstDay', 'lastDay',  'sections'));
+    }
+    
+    public function monthViewTable($year, $month) {
+        return CacheUtility::remember('monthtable-'.$year.'-'.$month, function () use ($year, $month){
+            list($firstDay, $lastDay, $date) = $this->makeDateArray($year, $month);
+            $events = ClubEvent::where('evnt_date_start', '>=', $firstDay->format("Y-m-d"))
+                ->where('evnt_date_start', '<=', $lastDay->format("Y-m-d"))
+                ->with('showToSection')
+                ->with('shifts')
+                ->with('section')
+                ->orderBy('evnt_date_start')
+                ->orderBy('evnt_time_start')
+                ->orderBy('plc_id')
+                ->get();
+    
+            $surveys = Survey::where('deadline', '>=', $firstDay->format("Y-m-d"))
+                ->where('deadline', '<=', $lastDay->format("Y-m-d"))
+                ->orderBy('deadline')
+                ->get();
+    
+            $mondays = new DatePeriod($firstDay, new DateInterval('P1W'), $lastDay->modify('+1 day'));
+    
+            $sections = Section::where('id', '>', 0)
+                ->orderBy('title')
+                ->get(['id', 'title', 'color']);
+    
+            return response()->json(['data'=> View::make('partials.month.monthTable',compact('events','surveys','mondays','sections','firstDay','lastDay','date'))->render()]);
+        });
+    }
+    
+    public function markShiftsOfCurrentUser($year, $month)
+    {
+        return \Cache::rememberForever('monthshift-'.\Auth::user()->id.'-'.$year.'-'.$month,
+            function () use ($year, $month) {
+                // create a DateTime object represeting the first monday in the timespan we want to display
+                $firstDay = new DateTime($year.$month.'01');
+                if ($firstDay->format('w') !== '1') {
+                    $firstDay->modify('previous Monday');
                 }
-            );
-        } else {
-            return CacheUtility::remember('monthview-guest'.'-'.$year.'-'.$month,
-                function () use ($year, $month) {
-                    return $this->showMonthInternal($year, $month);
+                
+                // create a DateTime object representing the last sunday in the timespan we want to display
+                $lastDay = new DateTime($year.$month.$firstDay->format('t'));
+                if ($lastDay->format('w' !== 0)) {
+                    $lastDay->modify('next Sunday');
                 }
-            );
-        }
+                
+                $clubEventIds = ClubEvent::query()
+                    ->where('evnt_date_start', '>=', $firstDay)
+                    ->where('evnt_date_start', '<=', $lastDay)
+                    ->whereHas('shifts', function (\Illuminate\Database\Eloquent\Builder $query) {
+                        $query->where('person_id', '=', \Auth::user()->person->id);
+                    })->get(['id']);
+                
+                
+                return response()->json($clubEventIds->toArray());
+            });
     }
     
     /**
-     * Generate the view of the calender for given month and given year
-     * with events in this period.
-     *
-     * @param string $year
-     * @param string $month
-     * @return view monthView
+     * @param $year
+     * @param $month
+     * @return array
+     * @throws \Exception
      */
-    private function showMonthInternal($year, $month)
+    private function makeDateArray($year, $month)
     {
         // create a DateTime object represeting the first monday in the timespan we want to display
         $firstDay = new DateTime($year.$month.'01');
@@ -112,57 +160,8 @@ class MonthController extends Controller
             'lastDay'    => $lastDay,
         ];
         
-        $events = ClubEvent::where('evnt_date_start', '>=', $firstDay->format("Y-m-d"))
-            ->where('evnt_date_start', '<=', $lastDay->format("Y-m-d"))
-            ->with('showToSection')
-            ->with('shifts')
-            ->with('section')
-            ->orderBy('evnt_date_start')
-            ->orderBy('evnt_time_start')
-            ->orderBy('plc_id')
-            ->get();
-        
-        $surveys = Survey::where('deadline', '>=', $firstDay->format("Y-m-d"))
-            ->where('deadline', '<=', $lastDay->format("Y-m-d"))
-            ->orderBy('deadline')
-            ->get();
-        
-        $mondays = new DatePeriod($firstDay, new DateInterval('P1W'), $lastDay->modify('+1 day'));
-        
-        $sections = Section::where('id', '>', 0)
-            ->orderBy('title')
-            ->get(['id', 'title', 'color']);
-        
-        return View::make('monthView',
-            compact('events', 'date', 'surveys', 'firstDay', 'lastDay', 'mondays', 'sections'))->render();
+        return [$firstDay, $lastDay, $date];
     }
     
-    public function markShiftsOfCurrentUser($year, $month)
-    {
-        return \Cache::rememberForever('monthshift-'.\Auth::user()->id.'-'.$year.'-'.$month,
-            function () use ($year, $month) {
-                // create a DateTime object represeting the first monday in the timespan we want to display
-                $firstDay = new DateTime($year.$month.'01');
-                if ($firstDay->format('w') !== '1') {
-                    $firstDay->modify('previous Monday');
-                }
-                
-                // create a DateTime object representing the last sunday in the timespan we want to display
-                $lastDay = new DateTime($year.$month.$firstDay->format('t'));
-                if ($lastDay->format('w' !== 0)) {
-                    $lastDay->modify('next Sunday');
-                }
-                
-                $clubEventIds = ClubEvent::query()
-                    ->where('evnt_date_start', '>=', $firstDay)
-                    ->where('evnt_date_start', '<=', $lastDay)
-                    ->whereHas('shifts', function (\Illuminate\Database\Eloquent\Builder $query) {
-                        $query->where('person_id', '=', \Auth::user()->person->id);
-                    })->get(['id']);
-                
-                
-                return response()->json($clubEventIds->toArray());
-            });
-        
-    }
+    
 }
