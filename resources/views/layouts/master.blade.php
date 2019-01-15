@@ -15,7 +15,13 @@
         {{--
         <link rel="stylesheet" type="text/css" href="{{ mix('/static.css') }}">
         --}}
+        @if (App::environment('development'))
+            <link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-demo-48x48.png') }}">
+        @elseif (App::environment('berta'))
+            <link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-berta-48x48.png') }}">
+        @else
     	<link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-48x48.png') }}">
+        @endif
 
         @yield('moreStylesheets')
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
