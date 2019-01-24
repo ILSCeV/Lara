@@ -11,7 +11,7 @@ export const initFilters = () => {
   // Month view without Isotope, section filters only //
   //////////////////////////////////////////////////////
   const isMonthView = $('#month-view-marker').length;
-  const isWeekView = $('.isotope').length > 0;
+  const isWeekView = $('#week-view-marker').length > 0;
   const isDayView = $('#day-view-marker').length;
 
 
@@ -31,7 +31,7 @@ export const initFilters = () => {
           $(`#label-section-${filter.slice(15)}`).removeClass('d-none');
         });
       }
-      isotope ? isotope.layout() : null;
+     // isotope ? isotope.layout() : null;
     };
 
     // Handle clicking on a section label
@@ -74,13 +74,14 @@ export const initFilters = () => {
   }
 
   if (isWeekView) {
-    const isotope = new Isotope('.isotope');
+    //const isotope = new Isotope('.isotope');
 
     /////////////////////////////////////////////////////////
     // Week view with Isotope, section and feature filters //
     /////////////////////////////////////////////////////////
 
     // init Isotope
+    /*
     isotope.arrange({
       itemSelector: '.element-item',
       percentPosition: true,
@@ -111,6 +112,7 @@ export const initFilters = () => {
 
     // get all sections from buttons we created while rendering on the backend side
     initializeSectionFilters(isotope);
+    */
 
     /////////////////////
     // Feature filters //
@@ -124,7 +126,7 @@ export const initFilters = () => {
     shiftTimes.addActions([
       makeLocalStorageAction("shiftTime", "show", "hide"),
       makeClassToggleAction(".shift-time", "hide", false),
-      () => isotope.layout()
+     // () => isotope.layout()
     ])
       .setToggleStatus(safeGetLocalStorage("shiftTime") == "show")
       .setText(translate("shiftTime"));
@@ -135,7 +137,7 @@ export const initFilters = () => {
     takenShifts.addActions([
       makeLocalStorageAction("onlyEmptyShifts", "true", "false"),
       makeClassToggleAction($(".shift_taken").closest(".row"), "hide", true),
-      () => isotope.layout()
+      //() => isotope.layout()
     ])
       .setToggleStatus(safeGetLocalStorage("onlyEmptyShifts") == "true")
       .setText(translate("onlyEmpty"));
@@ -150,7 +152,7 @@ export const initFilters = () => {
       allComments.addActions([
         makeLocalStorageAction("allComments", "show", "hide"),
         makeClassToggleAction("[name^=comment]", "hide", false),
-        () => isotope.layout()
+      //  () => isotope.layout()
       ])
         .setToggleStatus(safeGetLocalStorage("allComments") == "show");
     }
@@ -172,7 +174,7 @@ export const initFilters = () => {
       makeClassToggleAction(".week-mo-so", "hide", true),
       makeClassToggleAction(".week-mi-di", "hide", false),
       (isActive: boolean) => weekStart.setText(isActive ? weekMonSun : weekWedTue),
-      () => isotope.layout()
+      //() => isotope.layout()
     ])
       .setToggleStatus(safeGetLocalStorage("weekStart") == "monday");
 
@@ -180,13 +182,13 @@ export const initFilters = () => {
     $('.showhide').click(function(e) {
       const comment = $(this).parent().next('[name^=comment]');
       comment.toggleClass("hide", comment.is(":visible"));
-      isotope.layout();
+     // isotope.layout();
     });
 
     // button to remove events from week view - mostly for printing
     $('.hide-event').click(function(e) {
       $(this).parents(".element-item").eq(0).addClass("hide");
-      isotope.layout();
+      //isotope.layout();
     });
   }
 };
