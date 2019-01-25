@@ -125,7 +125,7 @@
                     @endforeach
                     @foreach($surveys as $survey)
                         @php
-                            $elementClass = 'element-item section-filter section-survey';
+                            $elementClass = 'element-item section-filter section-survey w-25 ';
 
                         if ( date('W', strtotime($survey->deadline)) === $date['week']
                          &&  date('N', strtotime($survey->deadline)) < 3 ) {
@@ -136,14 +136,13 @@
                             $elementClass.= "week-mi-di hide";
                             }
                         @endphp
-                        <div class="p-2 mb-3 w-25 {{ $elementClass }}">
+                        <div class="p-2 mb-3 {{ $elementClass }}">
                             @include('partials.weekCellSurvey')
                         </div>
                     @endforeach
                 </div>
         </div>
     </div>
-
     @else
         <br>
         <div class="panel" style="margin: 16px;">
@@ -154,7 +153,7 @@
         <div class="d-flex flex-wrap">
             @foreach($surveys as $survey)
                 @php
-                    $elementClass = 'element-item section-filter section-survey';
+                    $elementClass = 'element-item section-filter section-survey w-25';
 
                 if ( date('W', strtotime($survey->deadline)) === $date['week']
                  &&  date('N', strtotime($survey->deadline)) < 3 ) {
@@ -165,7 +164,7 @@
                     $elementClass.= "week-mi-di hide";
                     }
                 @endphp
-                <div class="p-2 mb-3 w-25 {{ $elementClass }}">
+                <div class="p-2 mb-3 {{ $elementClass }}">
                     @include('partials.weekCellSurvey')
                 </div>
             @endforeach
