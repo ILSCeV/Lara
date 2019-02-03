@@ -764,7 +764,7 @@ jQuery( document ).ready( function( $ ) {
                 '</div>');
             $alert.alert();
             $row.append($alert);
-            (<any>window).isotope?(<any>window).isotope.layout() : null;
+           // (<any>window).isotope?(<any>window).isotope.layout() : null;
         }
 
         if(isConflict && $userNameInput.val() !== data.userName){

@@ -330,7 +330,7 @@ class SurveyController extends Controller
 
         //return all the gathered information to the survey view
         return view('surveyView', compact('survey', 'questions', 'questionCount', 'answers', 'clubs', 'userId',
-            'userGroup', 'userStatus', 'userCanEditDueToRole', 'evaluation', 'revisions', 'userParticipatedAlready','username','ldapid'));
+            'userStatus', 'userCanEditDueToRole', 'evaluation', 'revisions', 'userParticipatedAlready','username','ldapid'));
     }
 
     /**

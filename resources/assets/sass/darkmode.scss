@@ -12,3 +12,21 @@ hr {
 .btn {
     text-transform: uppercase;
 }
+
+.my-shift {
+  color: black;
+  &:hover {
+    color:white;
+  }
+}
+
+
+body {
+  padding-top: 140px;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    padding-top: 150px;
+  }
+}
