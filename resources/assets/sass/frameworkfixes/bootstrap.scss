@@ -9,6 +9,12 @@ body {
     padding-top: 80px;
 }
 
+@media screen and (max-width: 768px) {
+  body {
+    padding-top: 120px;
+  }
+}
+
 table {
    /* background-color: #ffffff; */
     margin-bottom: 0 !important;
