@@ -15,7 +15,11 @@ hr {
 
 .my-shift {
   color: black;
+  &:hover {
+    color:white;
+  }
 }
+
 
 body {
   padding-top: 140px;
