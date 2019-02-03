@@ -125,7 +125,7 @@
                     @endforeach
                     @foreach($surveys as $survey)
                         @php
-                            $elementClass = 'element-item section-filter section-survey w-25 ';
+                            $elementClass = 'element-item section-filter section-survey ';
 
                         if ( date('W', strtotime($survey->deadline)) === $date['week']
                          &&  date('N', strtotime($survey->deadline)) < 3 ) {
@@ -153,7 +153,7 @@
         <div class="d-flex flex-wrap">
             @foreach($surveys as $survey)
                 @php
-                    $elementClass = 'element-item section-filter section-survey w-25';
+                    $elementClass = 'element-item section-filter section-survey ';
 
                 if ( date('W', strtotime($survey->deadline)) === $date['week']
                  &&  date('N', strtotime($survey->deadline)) < 3 ) {
