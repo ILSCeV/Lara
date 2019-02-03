@@ -149,7 +149,7 @@ class LoginController extends Controller
         if($username != null && $username != ""){
             $person = Person::query()->where('prsn_ldap_id','=',$username)->first();
         } else {
-            $person = Person::query()->whereIn('clb_id', $clubIdsOfSections)->inRandomOrder()->first();
+            $person = Person::query()->whereIn('clb_id', $clubIdsOfSections)->whereNotNull('prsn_ldap_id')->inRandomOrder()->first();
         }
         if(is_null($person)){
             $person=new Person([
