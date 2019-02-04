@@ -1,3 +1,5 @@
+import {showAllActiveSections} from "../common/filters";
+
 declare var year: any;
 declare var month: any;
 declare var isAuthenticated: any;
@@ -19,6 +21,8 @@ $(window).on('load', () => {
 
     success(data: any, textStatus: string, jqXHR: JQueryXHR): any {
       $('#monthTableContainer').html(data.data);
+      showAllActiveSections();
+
       if(isAuthenticated) {
         $.ajax({
           url: "/monthViewShifts/" + year + "/" + month,
