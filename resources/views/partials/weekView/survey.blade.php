@@ -1,6 +1,6 @@
 @foreach($surveys as $survey)
     @php
-        $elementClass = 'element-item section-filter section-survey ';
+        $elementClass = 'element-item section-filter section-survey flex-grow-1 ';
 
     if ( date('W', strtotime($survey->deadline)) === $date['week']
      &&  date('N', strtotime($survey->deadline)) < 3 ) {
