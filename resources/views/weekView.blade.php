@@ -88,7 +88,7 @@
                                          to catch and hide any events on mondays and tuesdays (day < 3) next week
                                          in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view. --}}
                         @php
-                            $elementClass = 'element-item private section-filter';
+                            $elementClass = 'element-item private section-filter flex-grow-1 ';
                             foreach($sections as $section){
                                 if(in_array( $section->id, $clubEvent->showToSectionIds() )){
                                 $elementClass.=" section-" . $section->id;

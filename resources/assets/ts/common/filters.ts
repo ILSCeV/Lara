@@ -5,6 +5,23 @@ import {makeClassToggleAction, makeLocalStorageAction} from "../ToggleAction";
 import {translate} from "../Translate";
 import 'bootstrap-select';
 
+
+export const showAllActiveSections = () => {
+  let $sectionSelect = $('#section-filter-selector');
+  $(".section-filter").addClass('d-none');
+  $(".label-filters").addClass('d-none');
+  if($sectionSelect.val().length == 0){
+    $('#label-none').removeClass('d-none');
+  }
+  else {
+    $sectionSelect.val().forEach(filter => {
+      $(`.${filter.slice(7)}`).removeClass('d-none');
+      $(`#label-section-${filter.slice(15)}`).removeClass('d-none');
+    });
+  }
+  // isotope ? isotope.layout() : null;
+};
+
 export const initFilters = () => {
 
   //////////////////////////////////////////////////////
@@ -18,21 +35,6 @@ export const initFilters = () => {
   const initializeSectionFilters = (isotope: typeof Isotope = null) => {
 
     let enabledSections = [];
-
-    const showAllActiveSections = () => {
-      $(".section-filter").addClass('d-none');
-      $(".label-filters").addClass('d-none');
-      if($sectionSelect.val().length == 0){
-        $('#label-none').removeClass('d-none');
-      }
-      else {
-        $sectionSelect.val().forEach(filter => {
-          $(`.${filter.slice(7)}`).removeClass('d-none');
-          $(`#label-section-${filter.slice(15)}`).removeClass('d-none');
-        });
-      }
-     // isotope ? isotope.layout() : null;
-    };
 
     // Handle clicking on a section label
     $('.label-filters').click((e) => {
