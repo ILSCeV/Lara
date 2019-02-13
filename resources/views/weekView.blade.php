@@ -4,6 +4,12 @@
     {{ "KW" . $date['week'] . ": " . utf8_encode(strftime("%d. %b", strtotime($weekStart))) }} - {{ utf8_encode(strftime("%d. %b", strtotime($weekEnd))) }}
 @stop
 
+@section('moreScripts')
+    <script>
+        var extraFilter = '{{$extraFilter}}';
+    </script>
+@stop
+
 @section('content')
     <div id="week-view-marker" class="container-fluid pb-3">
         <div class="row">

@@ -1,10 +1,14 @@
 import * as Isotope from "isotope-layout/js/isotope";
 import {safeGetLocalStorage, safeSetLocalStorage} from "../Utilities";
 import {ToggleButton} from "../ToggleButton";
-import {makeClassToggleAction, makeLocalStorageAction} from "../ToggleAction";
+import {makeClassToggleAction, makeLocalStorageAction, ToggleAction} from "../ToggleAction";
 import {translate} from "../Translate";
 import 'bootstrap-select';
 
+/** request param
+ * filter="mi-di"
+ */
+declare var extraFilter: any;
 
 export const showAllActiveSections = () => {
   let $sectionSelect = $('#section-filter-selector');
@@ -171,14 +175,27 @@ export const initFilters = () => {
 
     const weekStart = new ToggleButton("toggle-week-start", () => safeGetLocalStorage("weekStart") == "monday", "btn-primary", "btn-success");
 
-    weekStart.addActions([
-      makeLocalStorageAction("weekStart", "monday", "wednesday"),
+    const actions : Array<ToggleAction> = [
       makeClassToggleAction(".week-mo-so", "hide", true),
       makeClassToggleAction(".week-mi-di", "hide", false),
       (isActive: boolean) => weekStart.setText(isActive ? weekMonSun : weekWedTue),
       //() => isotope.layout()
-    ])
-      .setToggleStatus(safeGetLocalStorage("weekStart") == "monday");
+    ];
+    if(extraFilter === ''){
+      actions.push( makeLocalStorageAction("weekStart", "monday", "wednesday")  );
+    }
+    weekStart.addActions(actions);
+
+    switch (extraFilter) {
+      case 'mi-di':
+        weekStart.setToggleStatus(true);
+        break;
+      case 'mo-so':
+        weekStart.setToggleStatus(false);
+        break;
+      default:
+        weekStart.setToggleStatus(safeGetLocalStorage("weekStart") == "monday");
+    }
 
     // Show/hide comments
     $('.showhide').click(function(e) {

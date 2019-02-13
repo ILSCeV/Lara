@@ -2,6 +2,7 @@
 
 namespace Lara\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Lara\Survey;
 use Request;
 use Redirect;
@@ -20,14 +21,13 @@ use Lara\Club;
 use Lara\Section;
 
 class WeekController extends Controller {
-
-    /** 
+    
+    /**
      * Fills missing parameters: if no week number specified use current year and week.
      *
-     * @return int $week
-     * @return int $year
-	 * @return RedirectResponse
-     */       
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function currentWeek()
     {   $currentDate  = new DateTime();
         
@@ -46,6 +46,9 @@ class WeekController extends Controller {
 	*/
 	public function showWeek($year,$week)
     {
+        //override filter from request parameter , e.g filter="mi-di"
+        $extraFilter = request()->has("filter")? request()->filter : '';
+        
 		// Create week start date on monday (day 1)
         $weekStart = date('Y-m-d', strtotime($year."W".$week.'1'));
         $weekStartDate = new DateTime($weekStart);
@@ -109,6 +112,6 @@ class WeekController extends Controller {
         
         return View::make('weekView', compact('events',   'date',
         									  'weekStart', 'weekEnd', 
-											  'clubs', 'surveys', 'sections'));
+											  'clubs', 'surveys', 'sections', 'extraFilter'));
 	}
 }
