@@ -1,5 +1,13 @@
 @extends('layouts.master')
 
+@php
+$queryParams='';
+if($extraFilter!='')
+{
+    $queryParams='?filter='.$extraFilter;
+}
+@endphp
+
 @section('title')
     {{ "KW" . $date['week'] . ": " . utf8_encode(strftime("%d. %b", strtotime($weekStart))) }} - {{ utf8_encode(strftime("%d. %b", strtotime($weekEnd))) }}
 @stop
@@ -16,7 +24,7 @@
             {{-- Prev/next week selector --}}
             <div class="col-xs-12 col-md-4 m-auto p-auto btn-group">
                 <a class="btn hidden-print"
-                   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}">
+                   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}{{ $queryParams }}">
                     <i class="fas fa-chevron-left"></i>
                 </a>
 
@@ -39,7 +47,7 @@
                 </div>
 
                 <a class="btn hidden-print"
-                   href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}">
+                   href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}{{ $queryParams }}">
                     <i class="fas fa-chevron-right"></i>
                 </a>
             </div>
