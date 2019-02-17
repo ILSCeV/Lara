@@ -175,16 +175,12 @@ export const initFilters = () => {
 
     const weekStart = new ToggleButton("toggle-week-start", () => safeGetLocalStorage("weekStart") == "monday", "btn-primary", "btn-success");
 
-    const actions : Array<ToggleAction> = [
+    weekStart.addActions([makeLocalStorageAction("weekStart", "monday", "wednesday"),
       makeClassToggleAction(".week-mo-so", "hide", true),
       makeClassToggleAction(".week-mi-di", "hide", false),
       (isActive: boolean) => weekStart.setText(isActive ? weekMonSun : weekWedTue),
       //() => isotope.layout()
-    ];
-    if(extraFilter === ''){
-      actions.push( makeLocalStorageAction("weekStart", "monday", "wednesday")  );
-    }
-    weekStart.addActions(actions);
+    ]);
 
     switch (extraFilter) {
       case 'mi-di':

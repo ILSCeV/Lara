@@ -10,4 +10,4 @@ export const makeLocalStorageAction = (key: string, active, inactive) => (
 );
 export const makeClassToggleAction = (selector: string | JQuery, style: string, isActiveOnToggle) => (
     (isActive: boolean) => $(selector).toggleClass(style, isActive ? !isActiveOnToggle : isActiveOnToggle)
-)
+);
