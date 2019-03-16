@@ -262,13 +262,13 @@
 					<div class="col-md-9 col-sm-9 col-xs-9">
 						@if(is_null($filter) || $filter == "")
 							{{-- Set default values to the club the user is a member in.--}}
-							@foreach(Lara\Section::all() as $fSection)
+							@foreach(Lara\Section::all()->sortBy('title') as $fSection)
                                 {{ Form::checkbox("filter[" . $fSection->title ."]", $fSection->id, $fSection->title === \Lara\Section::current()->title) }}
 									{{ $fSection->title }}
                                 	<br>
 							@endforeach
 						@else
-							@foreach(Lara\Section::all() as $fSection)
+							@foreach(Lara\Section::all()->sortBy('title') as $fSection)
 								{{ Form::checkbox("filter[" . $fSection->title ."]", $fSection->id, in_array($fSection->title, $filter)) }}
 								{{ $fSection->title }}
 								<br>
