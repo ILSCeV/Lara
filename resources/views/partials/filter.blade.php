@@ -1,3 +1,7 @@
+@php
+/** @var \Illuminate\Support\Collection/\Lara\Section*/
+$filterSection = $sections->sortBy('title');
+@endphp
 <div id="section-filter"
      class="hidden-print">
     {{-- Show/hide events belonging to a chosen section --}}
@@ -13,7 +17,7 @@
             &nbsp;
             <span class="glyphicon glyphicon-remove-circle"></span>
         </span>
-        @foreach($sections->reverse() as $section)
+        @foreach($filterSection->reverse() as $section)
             <span id="label-section-{!! $section["id"] !!}"
                   class="label label-filters palette-{{$section->color}}-500-Primary bg hidden pull-right">
                 {!! $section["title"] !!}
@@ -33,7 +37,7 @@
                 data-select-all-text="{{ trans('mainLang.selectAll') }}"
                 data-deselect-all-text="{{ trans('mainLang.selectNone') }}"
                 data-count-selected-text="{{ trans('mainLang.countSectionsSelected') }}">
-            @foreach($sections as $section)
+            @foreach($filterSection as $section)
                 <option value="filter-section-{!! $section["id"] !!}"
                         class="palette-{{$section->color}}-500-Primary bg option-shadow">
                             {!! $section["title"] !!}
