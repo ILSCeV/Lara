@@ -37,14 +37,9 @@ class StatisticsController extends Controller
         "and p.id = sp.id ".
         "and sce.evnt_date_start >= :start ".
         "and sce.evnt_date_end <= :end), 0) other_section ".
-        "from shifts sh ".
-        "join schedules sched on sched.id = sh.schedule_id ".
-        "join club_events ce on sched.evnt_id = ce.id ".
-        "join persons p on p.id = sh.person_id ".
+        "from persons p ".
         "join users u on u.person_id = p.id ".
         "where p.prsn_ldap_id is not null ".
-        "and ce.evnt_date_start >= :start ".
-        "and ce.evnt_date_end <= :end ".
         "group by p.id, u.id, u.name ".
         "order by u.name ";
     
