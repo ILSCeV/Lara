@@ -124,7 +124,7 @@ Route::resource('shiftType', 		'ShiftTypeController')
     ->middleware('checkRoles:admin,clubleitung');
 Route::resource('shift', 			'ShiftController', 	        ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('schedule', 		'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
-Route::resource('event', 			'ClubEventController', 		['except' => ['index']]);
+Route::resource('event', 			'ClubEventController', 		['except' => ['index'], 'names'=> ['show'=>'eventView']]);
 Route::resource('person', 			'PersonController', 		['only'   => ['index']])
     ->middleware('rejectGuests');
 Route::resource('club', 			'ClubController', 			['only'   => ['index']]);
