@@ -46,7 +46,7 @@
                                             {{ $shift->type->title }}
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('eventView',$shift->schedule->event->id) }}">{{ $shift->schedule->event->evnt_title }}</a>
+                                            <a href="{{ route('event.show',$shift->schedule->event->id) }}">{{ $shift->schedule->event->evnt_title }}</a>
                                         </td>
                                         <td class="text-center">
                                             {{ (new DateTime($shift->schedule->event->evnt_date_start))->format('D, d.m.Y') }}
