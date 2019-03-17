@@ -162,7 +162,7 @@ class ClubEvent extends Model
     {
         return $this->showToSection()->get()->map(function ($section) {
             return $section->title;
-        })->toArray();
+        })->sort()->toArray();
     }
 
     /**
