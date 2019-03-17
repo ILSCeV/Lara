@@ -534,7 +534,7 @@ class ClubEventController extends Controller
         }
 
         // create new section
-        if (!Section::where('title', '=', Input::get('section'))->first()) {
+        if (!Section::where('id', '=', Input::get('section'))->first()) {
             $section = new Section;
             $section->title = Input::get('section');
             $section->save();
@@ -543,7 +543,7 @@ class ClubEventController extends Controller
         }
         // use existing section
         else {
-            $event->plc_id = Section::where('title', '=', Input::get('section'))->first()->id;
+            $event->plc_id = Section::where('id', '=', Input::get('section'))->first()->id;
         }
 
         // format: date; validate on filled value
