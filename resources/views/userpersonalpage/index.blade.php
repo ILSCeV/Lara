@@ -52,7 +52,7 @@
                                             {{ (new DateTime($shift->schedule->event->evnt_date_start))->format('D, d.m.Y') }}
                                         </td>
                                         <td class="text-center">
-                                            {{ (new DateTime($shift->start))->format('H:i') }}-{{ (new DateTime($shift->end))->format('H:i') }}
+                                            {{ (new DateTime($shift->start))->format('H:i') }} - {{ (new DateTime($shift->end))->format('H:i') }}
                                         </td>
                                     </tr>
                                 @endforeach
