@@ -228,7 +228,7 @@
                             });
                             }
                         @endphp
-                        @foreach($allowedSections as $eventSection)
+                        @foreach($allowedSections->sortBy('title') as $eventSection)
                             <option value="{{$eventSection->id}}"
                                     data-content="<span class='palette-{!! $eventSection->color !!}-900 bg'> {{$eventSection->title}} </span>"
                                     @if($eventSection->id == $section->id) selected @endif >{{ $eventSection->title }}</option>
@@ -241,14 +241,14 @@
                     <div id="filter" class="input-group form-check col-6">
 
                         @if(isset($templateId) && $templateId == null && $createClubEvent)
-                            @foreach($sections as $filterSection)
+                            @foreach($sections->sortBy('title') as $filterSection)
                                 <label>
                                     {{ Form::checkbox("filter[" . $filterSection->title ."]", $filterSection->id, $filterSection->id === Auth::user()->section_id )}}
                                     {{ $filterSection->title }}
                                 </label>
                             @endforeach
                         @else
-                            @foreach($sections as $filterSection)
+                            @foreach($sections->sortBy('title') as $filterSection)
                                 <label>
                                     {{ Form::checkbox("filter[" . $filterSection->title ."]", $filterSection->id, in_array( $filterSection->title, $filter)) }}
                                     {{ $filterSection->title }}
