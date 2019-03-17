@@ -519,7 +519,7 @@ class ClubEventController extends Controller
         $event->evnt_subtitle          = Input::get('subtitle');
         $event->evnt_public_info       = Input::get('publicInfo');
         $event->evnt_private_details   = Input::get('privateDetails');
-        $event->evnt_type              = Input::get('evnt_type');
+        $event->evnt_type              = Input::get('type');
         $event->facebook_done          = $this->getFacebookDoneValue();
         $event->event_url              = Input::get('eventUrl',"");
         $event->price_tickets_normal   = $this->getOrNullNumber('priceTicketsNormal');
