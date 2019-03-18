@@ -20,6 +20,7 @@ class SectionsTableSeeder extends Seeder
         $sectionDefinitions = collect([
             'bc-Club' => 'Red',
             'bc-Café' => 'Blue',
+            'bh-Club' => 'Green',
             'bd-Club' => 'Teal',
             'bi-Club' => 'Blue-Grey',
         ]);
