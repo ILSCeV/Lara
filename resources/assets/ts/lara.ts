@@ -10,6 +10,7 @@ import "bootbox"
 import "sortablejs"
 import "cookieconsent"
 
+import "./common/init"
 import "./create-shift"
 import "./CreateEditEvent"
 
