@@ -7,41 +7,39 @@ use Illuminate\Support\Collection;
 use Lara\Person;
 use Lara\Shift;
 use Lara\StatisticsInformation;
-use Lara\utilities\CacheUtility;
 use Redirect;
 use View;
 
 class StatisticsController extends Controller
 {
     CONST STATISTIC_SELECT = /** @lang MariaDB */
-        "select p.id personId,".
-        "u.id userId,".
-        "u.name,".
-        "coalesce((select sum(ssh.statistical_weight)".
-        " from shifts ssh ".
-        "join schedules ssched on ssh.schedule_id = ssched.id ".
-        "join club_events sce on ssched.evnt_id = sce.id ".
-        "join persons sp on sp.id = ssh.person_id ".
-        "join users su on su.person_id = sp.id ".
-        "where su.section_id = sce.plc_id ".
-        "and p.id = sp.id ".
-        "and sce.evnt_date_start >= :start ".
-        "and sce.evnt_date_end <= :end), 0) own_section, ".
-        "coalesce((select sum(ssh.statistical_weight) ".
-        "from shifts ssh ".
-        "join schedules ssched on ssh.schedule_id = ssched.id ".
-        "join club_events sce on ssched.evnt_id = sce.id ".
-        "join persons sp on sp.id = ssh.person_id ".
-        "join users su on su.person_id = sp.id ".
-        "where su.section_id <> sce.plc_id ".
-        "and p.id = sp.id ".
-        "and sce.evnt_date_start >= :start ".
-        "and sce.evnt_date_end <= :end), 0) other_section ".
-        "from persons p ".
-        "join users u on u.person_id = p.id ".
-        "where p.prsn_ldap_id is not null ".
-        "group by p.id, u.id, u.name ".
-        "order by u.name ";
+        "select p.id personId,
+         u.id userId,
+         u.name,
+         coalesce(sum((select s.statistical_weight
+                       from shifts s
+                       where s.id = relevant_shifts.id
+                         and relevant_shifts.plc_id = u.section_id)), 0)  own_section,
+         coalesce(sum((select s.statistical_weight
+                       from shifts s
+                       where s.id = relevant_shifts.id
+                         and relevant_shifts.plc_id <> u.section_id)), 0) other_section
+        from persons p
+             join users u on u.person_id = p.id
+             join (
+        select ssh.person_id, ssh.id, sce.plc_id
+        from shifts ssh
+               join schedules ssched on ssh.schedule_id = ssched.id
+               join club_events sce on ssched.evnt_id = sce.id
+               join persons sp on sp.id = ssh.person_id
+        where ssh.person_id is not null
+          and sce.evnt_date_start >= cast(:start as date)
+          and sce.evnt_date_end <= cast(:end as date)
+      ) relevant_shifts on relevant_shifts.person_id = p.id
+      where p.prsn_ldap_id is not null
+        and exists(select 1 from shifts s where s.id = relevant_shifts.id and s.person_id = p.id)
+      group by p.id, u.name
+      order by u.name";
     
     public function showStatistics($year = null, $month = null)
     {

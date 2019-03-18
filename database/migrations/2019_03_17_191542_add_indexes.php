@@ -25,6 +25,7 @@ class AddIndexes extends Migration
         });
         Schema::table('users', function (Blueprint $table) {
             $table->index(['name'],'idx_user_name');
+            $table->index(['section_id'],'idx_user_sections');
         });
     }
 
@@ -46,6 +47,7 @@ class AddIndexes extends Migration
         });
         Schema::table('users', function (Blueprint $table) {
             $table->dropIndex('idx_user_name');
+            $table->dropIndex('idx_user_sections');
         });
     }
 }
