@@ -15,10 +15,10 @@
             <div class="d-inline-block">
                 <div class="col-4 has-feedback d-inline-block ">
                     <label for="templateOverviewFilter" class="text-primary"> {{ trans('mainLang.search') }}: </label>
-                    <input type="text" class="form-control-sm" id="templateOverviewFilter" autofocus>
+                    <input type="text" class="form-control form-control-sm" id="templateOverviewFilter" autofocus>
                 </div>
                 <div class="col-1 float-right">
-                    <a class="btn btn-success" href="{{route('template.create')}}">
+                    <a class="btn btn-success btn-sm" href="{{route('template.create')}}">
                         {{ trans('mainLang.createTemplate') }}
                     </a>
                 </div>

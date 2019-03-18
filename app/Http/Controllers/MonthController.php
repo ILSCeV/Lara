@@ -87,30 +87,27 @@ class MonthController extends Controller
     
     public function markShiftsOfCurrentUser($year, $month)
     {
-        return \Cache::rememberForever('monthshift-'.\Auth::user()->id.'-'.$year.'-'.$month,
-            function () use ($year, $month) {
-                // create a DateTime object represeting the first monday in the timespan we want to display
-                $firstDay = new DateTime($year.$month.'01');
-                if ($firstDay->format('w') !== '1') {
-                    $firstDay->modify('previous Monday');
-                }
-                
-                // create a DateTime object representing the last sunday in the timespan we want to display
-                $lastDay = new DateTime($year.$month.$firstDay->format('t'));
-                if ($lastDay->format('w' !== 0)) {
-                    $lastDay->modify('next Sunday');
-                }
-                
-                $clubEventIds = ClubEvent::query()
-                    ->where('evnt_date_start', '>=', $firstDay)
-                    ->where('evnt_date_start', '<=', $lastDay)
-                    ->whereHas('shifts', function (\Illuminate\Database\Eloquent\Builder $query) {
-                        $query->where('person_id', '=', \Auth::user()->person->id);
-                    })->get(['id']);
-                
-                
-                return response()->json($clubEventIds->toArray());
-            });
+        // create a DateTime object represeting the first monday in the timespan we want to display
+        $firstDay = new DateTime($year.$month.'01');
+        if ($firstDay->format('w') !== '1') {
+            $firstDay->modify('previous Monday');
+        }
+        
+        // create a DateTime object representing the last sunday in the timespan we want to display
+        $lastDay = new DateTime($year.$month.$firstDay->format('t'));
+        if ($lastDay->format('w' !== 0)) {
+            $lastDay->modify('next Sunday');
+        }
+        
+        $clubEventIds = ClubEvent::query()
+            ->where('evnt_date_start', '>=', $firstDay)
+            ->where('evnt_date_start', '<=', $lastDay)
+            ->whereHas('shifts', function (\Illuminate\Database\Eloquent\Builder $query) {
+                $query->where('person_id', '=', \Auth::user()->person->id);
+            })->get(['id']);
+        
+        
+        return response()->json($clubEventIds->toArray());
     }
     
     /**

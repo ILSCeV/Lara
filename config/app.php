@@ -244,5 +244,8 @@ return [
         'Roles' => \Lara\utilities\RoleUtility::class,
 
     ],
+    
+    // development
+    'faker_locale' => 'de_DE',
 
 ];

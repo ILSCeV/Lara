@@ -46,13 +46,13 @@
                                             {{ $shift->type->title }}
                                         </td>
                                         <td class="text-center">
-                                            <a href="/event/{{$shift->schedule->event->id}}">{{ $shift->schedule->event->evnt_title }}</a>
+                                            <a href="{{ route('event.show',$shift->schedule->event->id) }}">{{ $shift->schedule->event->evnt_title }}</a>
                                         </td>
                                         <td class="text-center">
                                             {{ (new DateTime($shift->schedule->event->evnt_date_start))->format('D, d.m.Y') }}
                                         </td>
                                         <td class="text-center">
-                                            {{ (new DateTime($shift->start))->format('H:i') }}-{{ (new DateTime($shift->end))->format('H:i') }}
+                                            {{ (new DateTime($shift->start))->format('H:i') }} - {{ (new DateTime($shift->end))->format('H:i') }}
                                         </td>
                                     </tr>
                                 @endforeach

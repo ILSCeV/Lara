@@ -3,18 +3,21 @@ import {safeGetLocalStorage, safeSetLocalStorage} from "../Utilities";
 import {ToggleButton} from "../ToggleButton";
 import {makeClassToggleAction, makeLocalStorageAction} from "../ToggleAction";
 import {translate} from "../Translate";
-import 'bootstrap-select';
 
+
+/** request param
+ * filter="mi-di"
+ */
+declare var extraFilter: any;
 
 export const showAllActiveSections = () => {
   let $sectionSelect = $('#section-filter-selector');
   $(".section-filter").addClass('d-none');
   $(".label-filters").addClass('d-none');
-  if($sectionSelect.val().length == 0){
+  if ((<string[]>$sectionSelect.val()).length == 0) {
     $('#label-none').removeClass('d-none');
-  }
-  else {
-    $sectionSelect.val().forEach(filter => {
+  } else {
+    (<string[]>$sectionSelect.val()).forEach(filter => {
       $(`.${filter.slice(7)}`).removeClass('d-none');
       $(`#label-section-${filter.slice(15)}`).removeClass('d-none');
     });
@@ -171,26 +174,39 @@ export const initFilters = () => {
 
     const weekStart = new ToggleButton("toggle-week-start", () => safeGetLocalStorage("weekStart") == "monday", "btn-primary", "btn-success");
 
-    weekStart.addActions([
-      makeLocalStorageAction("weekStart", "monday", "wednesday"),
+    weekStart.addActions([makeLocalStorageAction("weekStart", "monday", "wednesday"),
       makeClassToggleAction(".week-mo-so", "hide", true),
       makeClassToggleAction(".week-mi-di", "hide", false),
       (isActive: boolean) => weekStart.setText(isActive ? weekMonSun : weekWedTue),
       //() => isotope.layout()
-    ])
-      .setToggleStatus(safeGetLocalStorage("weekStart") == "monday");
+    ]);
+
+    switch (extraFilter) {
+      case 'mi-di':
+        weekStart.setToggleStatus(true);
+        break;
+      case 'mo-so':
+        weekStart.setToggleStatus(false);
+        break;
+      default:
+        weekStart.setToggleStatus(safeGetLocalStorage("weekStart") == "monday");
+    }
 
     // Show/hide comments
-    $('.showhide').click(function(e) {
-      const comment = $(this).parent().next('[name^=comment]');
-      comment.toggleClass("hide", comment.is(":visible"));
-     // isotope.layout();
+    $('.showhide').on({
+      click: function (e) {
+        const comment = $(this).parent().next('[name^=comment]');
+        comment.toggleClass("hide", comment.is(":visible"));
+        // isotope.layout();
+      }
     });
 
     // button to remove events from week view - mostly for printing
-    $('.hide-event').click(function(e) {
-      $(this).parents(".element-item").eq(0).addClass("hide");
-      //isotope.layout();
+    $('.hide-event').on({
+      click: function (e) {
+        $(this).parents(".element-item").eq(0).addClass("hide");
+        //isotope.layout();
+      }
     });
   }
 };

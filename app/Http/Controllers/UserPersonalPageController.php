@@ -25,9 +25,9 @@ class UserPersonalPageController extends Controller
             ->whereHas("schedule.event", function ($query) {
                 $query->where('evnt_date_start', '>=', new \DateTime());
             })
-            ->get();
+            ->get()->sortBy('schedule.event.evnt_date_start');
         
-        return View::make('userpersonalpage.index', compact(['user', 'shifts']));
+        return View::make('userpersonalpage.index', compact('user', 'shifts'));
     }
     
     public function updatePerson()

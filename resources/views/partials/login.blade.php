@@ -22,9 +22,9 @@
     <br class="d-block d-sm-none">
 
     @dev
-    <select name="userGroup" id="userGroup" data-style="btn btn-sm " class="selectpicker">
+    <select name="userGroup" id="userGroupDevelop" data-style="btn btn-sm ">
         @foreach(Roles::ALL_PRIVILEGES as $privilege)
-            <option value="{{ $privilege }}"> {{ ucwords($privilege) }}</option>
+            <option value="{{ $privilege }}">  {{ ucwords($privilege) }}</option>
         @endforeach
     </select>
     @enddev

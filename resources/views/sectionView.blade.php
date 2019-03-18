@@ -20,8 +20,7 @@
             <div class="card-body ">
 
                 @if(!isset($current_section->id))
-                    {!! Form::open(  [ 'route' => ['section.store', $current_section->id],
-                                            'id' => $current_section->id,
+                    {!! Form::open(  [ 'route' => ['section.store', ],
                                             'method' => 'POST',
                                             'class' => 'section ']  ) !!}
                 @else
@@ -54,11 +53,11 @@
                     <div class="{{$inputClass}}">
                         <select
                             id="color" class="selectpicker {{ $errors->has('color') ? ' has-error' : '' }}"
-                            form="{{$current_section->id}}" name="color">
+                            @if(isset($current_section->id)) form="{{$current_section->id}}" @endif name="color">
                             @foreach(config('color.colors') as $color)
                                 <option
                                     data-content="<span class='palette-{{$color}}-500-Primary bg' >{{$color}}</span>"
-                                    @if($color == $current_section->color)selected @endif> {{$color}}</option>
+                                    @if($color == $current_section->color)selected @endif value="{{$color}}" > {{$color}}</option>
                             @endforeach
                         </select>
                     </div>

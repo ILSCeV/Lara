@@ -103,8 +103,6 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView('pagination::bootstrap-4');
     
         Paginator::defaultSimpleView('pagination::bootstrap-4');
-
-        Shift::observe(ShiftObserver::class);
     }
 
     /**

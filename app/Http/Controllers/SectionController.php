@@ -88,7 +88,7 @@ class SectionController extends Controller
 
 
         if ($validator->fails()) {
-           return Redirect::back()->withErrors($validator);
+           return Redirect::back()->withErrors($validator)->withInput(Input::all());
         }
 
         if ($isNew) {
