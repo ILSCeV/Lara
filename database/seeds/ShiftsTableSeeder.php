@@ -22,32 +22,53 @@ class ShiftsTableSeeder extends Seeder
         DB::transaction(function () use ($shiftAmount) {
             factory(Lara\Shift::class, $shiftAmount)->create();
         });
-        $personIds = Lara\Person::all(['id'])->toArray();
-        $scheduleIds = Lara\Schedule::all(['id'])->toArray();
+        
+        $members = Lara\Person::query()->whereIn('id', \Lara\User::all(['person_id']))->get();
+        $guests = Lara\Person::query()->whereNotIn('id', \Lara\User::all(['person_id']))->get();
+        $schedules = Lara\Schedule::query()->whereNotNull('evnt_id')->with('event')->with('event.section')->get();
         $shiftTypeIds = Lara\ShiftType::all(['id'])->toArray();
         $faker = Faker\Factory::create('de_DE');
         
         $shifts = \Lara\Shift::all();
         $shifts->chunk(5000)->each(function (\Illuminate\Support\Collection $chunkedCollection) use (
-            $personIds,
-            $scheduleIds,
+            $members,
+            $guests,
+            $schedules,
             $shiftTypeIds,
             $faker
         ) {
-            DB::transaction(function () use ($personIds, $scheduleIds, $shiftTypeIds, $faker, $chunkedCollection) {
+            DB::transaction(function () use ($members, $guests, $schedules, $shiftTypeIds, $faker, $chunkedCollection) {
                 $chunkedCollection->each(function (\Lara\Shift $shift) use (
-                    $personIds,
-                    $scheduleIds,
+                    $members,
+                    $guests,
+                    $schedules,
                     $shiftTypeIds,
                     $faker
                 ) {
-                    $personId = $faker->randomElement([
-                        $faker->randomElement($personIds)['id'],
-                        $faker->randomElement($personIds)['id'],
-                        null,
-                    ]);
+                    /** @var \Lara\Schedule $schedule */
+                    $schedule = $schedules->random(1)->first();
+                    $shiftSection = $schedule->event->section;
+                    $shiftSectionId = $shiftSection->id;
+                    $shuffledPersons = $members->shuffle();
+                    $ownSectionCandidates = $shuffledPersons->filter(function (\Lara\Person $p) use ($shiftSectionId) {
+                        $pSection = $p->user->section;
+                        
+                        return $pSection->id == $shiftSectionId;
+                    })->map(function (\Lara\Person $p) {
+                        return $p->id;
+                    })->take(2);
+                    $otherSectionCandidate = $shuffledPersons->first(function (\Lara\Person $p) use ($shiftSectionId) {
+                        $pSection = $p->user->section;
+                        
+                        return $pSection->id != $shiftSectionId;
+                    })->id;
+                    $candidates = collect([$guests->random(1)->first()->id])
+                        ->merge($ownSectionCandidates)
+                        ->merge([$otherSectionCandidate, null])
+                        ->toArray();
+                    $personId = $faker->randomElement($candidates);
                     $shift->fill([
-                        'schedule_id'  => $faker->randomElement($scheduleIds)['id'],
+                        'schedule_id'  => $schedule->id,
                         'shifttype_id' => $faker->randomElement($shiftTypeIds)['id'],
                         'person_id'    => $personId,
                         'comment'      => $personId ? $faker->randomElement([$faker->sentence, ""]) : "",
