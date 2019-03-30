@@ -1,4 +1,3 @@
-
 import {translate} from "./Translate"
 
 function replaceAll(string, search, replacement) {
@@ -7,46 +6,55 @@ function replaceAll(string, search, replacement) {
 
 declare var enviroment: any;
 
-if ( typeof localStorage !== "undefined" && (localStorage.getItem("language") || 'de') === 'pirate') {
-    $(window).on('load',
-        function () {
+let arrifier = function (str) {
+  let regex = new RegExp('ar', 'i');
+  return str.replace(regex, 'ARRR');
+};
 
-            $('section.container-fluid.containerNopadding').first().css('opacity',0.9);
+let doTranslations = function (index, elem) {
+  let oldText = $(elem).text().trim();
+  let translation = translate(oldText);
+  let newText = oldText;
+  if (translation.indexOf('Translation necessary:') === -1) {
+    newText = replaceAll($(elem).html(), oldText, translation);
+  }
+  let aRRRRifiedText = arrifier(newText);
+  $(elem).html(aRRRRifiedText);
+};
 
-            let navLogoField = $('#nav-logo-field');
-            let srcfield  = navLogoField.attr('src');
+export const arrifieEvents = () => {
+  $('div.cal-event a:nth-of-type(2)').each(doTranslations);
+  $('span.name').each(doTranslations);
+  $('div.panelEventView .card-title ').each(doTranslations);
+};
 
-            var logonSuffix;
-            if(enviroment === "development"){
-                logonSuffix = "dev";
-            } else if(enviroment === "berta"){
-                logonSuffix = "berta"
-            } else {
-                logonSuffix = "prod"
-            }
+export const isPirateLanguageActive = () => {
+  return typeof localStorage !== "undefined" && (localStorage.getItem("language") || 'de') === 'pirate';
+};
 
-            navLogoField.attr('src', srcfield.replace(/logo-.*\.png/g,'logo-' + logonSuffix + '-pirate.png'));
-            navLogoField.attr('alt','LARRRRA');
+if (isPirateLanguageActive()) {
+  $(window).on('load',
+    function () {
 
-            let arrifier = function (str) {
-                let regex = new RegExp('ar', 'i');
-                return str.replace(regex, 'ARRR');
-            };
+      $('section.container-fluid.containerNopadding').first().css('opacity', 0.9);
 
-            let doTranslations = function (index, elem) {
-                let oldText = $(elem).text().trim();
-                let translation = translate(oldText);
-                let newText = oldText;
-                if (translation.indexOf('Translation necessary:') === -1) {
-                    newText = replaceAll($(elem).html(), oldText, translation);
-                }
-                let aRRRRifiedText = arrifier(newText);
-                $(elem).html(aRRRRifiedText);
-            };
+      let navLogoField = $('#nav-logo-field');
+      let srcfield = navLogoField.attr('src');
 
-            $('div.cal-event a:nth-of-type(2)').each(doTranslations);
-            $('span.name').each(doTranslations);
-            $('div.panelEventView .card-title ').each(doTranslations);
-        }
-    );
+      var logonSuffix;
+      if (enviroment === "development") {
+        logonSuffix = "dev";
+      } else if (enviroment === "berta") {
+        logonSuffix = "berta"
+      } else {
+        logonSuffix = "prod"
+      }
+
+      navLogoField.attr('src', srcfield.replace(/logo-.*\.png/g, 'logo-' + logonSuffix + '-pirate.png'));
+      navLogoField.attr('alt', 'LARRRRA');
+
+      arrifieEvents();
+
+    }
+  );
 }
