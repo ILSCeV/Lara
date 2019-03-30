@@ -1,10 +1,8 @@
-import { translate } from "./Translate"
+import {translate} from "./Translate"
 import "isotope-layout"
-import * as Isotope  from "../../../node_modules/isotope-layout/js/isotope.js"
+
 import * as bootbox from "bootbox"
-import {ToggleButton} from "./ToggleButton";
-import {makeLocalStorageAction, makeClassToggleAction} from "./ToggleAction";
-import {safeGetLocalStorage, safeSetLocalStorage} from "./Utilities";
+
 import {initFilters} from "./common/filters"
 
 const jQuery = $;
@@ -85,35 +83,6 @@ function decodeEntities(encodedString) {
 ////////////////
 // Month view //
 ////////////////
-
-//This event listener is enabled while the scrolling to today anymation is running. If the user touches the screen, the animation is stopped.
-function stopScrollOnTouch(){
-    $('html, body').stop();
-}
-
-// Scroll to current date/event if in mobile view in current month
-$(document).ready(function()
-{
-    // check if we are in month view and if the today-marker exists
-    if ($('#month-view-marker').length && $(".scroll-marker").length)
-    {
-        if ($(window).width() < 978)
-        {
-            //Add event listener to stop scrolling when the user touches the screen.
-            document.addEventListener("touchstart", stopScrollOnTouch, false);
-
-            $('html, body').animate({ scrollTop: $(".scroll-marker").offset().top -80 }, {
-                duration: 1000,
-                always:()=>{
-                    //Scroll completed or Aborted, remove the touch listener
-                    document.removeEventListener("touchstart", stopScrollOnTouch);
-                }});
-        }
-    }
-});
-
-
-
 
 ////////////////
 // Event view //
@@ -1214,24 +1183,29 @@ Examples :
 ////////////////////////
 
 $(() => {
-    $(document).ready(function(){
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 50) {
-                $('#back-to-top').fadeIn();
-            } else {
-                $('#back-to-top').fadeOut();
-            }
-        });
-        // scroll body to 0px on click
-        $('#back-to-top').click(function () {
-            $('#back-to-top').tooltip('hide');
-            $('body,html').animate({
-                scrollTop: 0
-            }, 800);
-            return false;
-        });
-
-    });
+  $(document).on({
+    ready: function () {
+      $(window).on({
+        scroll: function () {
+          if ($(this).scrollTop() > 50) {
+            $('#back-to-top').fadeIn();
+          } else {
+            $('#back-to-top').fadeOut();
+          }
+        }
+      });
+      // scroll body to 0px on click
+      $('#back-to-top').on({
+        click: function () {
+          $('#back-to-top').tooltip('hide');
+          $('body,html').animate({
+            scrollTop: 0
+          }, 800);
+          return false;
+        }
+      });
+    }
+  });
 });
 
 $( ()=> {
