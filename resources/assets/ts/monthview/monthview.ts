@@ -1,5 +1,6 @@
 
 import { showAllActiveSections} from "../common/filters";
+import { scrollToCurrentWeek } from "../common/scrolling"
 
 declare var year: any;
 declare var month: any;
@@ -24,6 +25,7 @@ $(window).on({ load : () => {
       $('#monthTableContainer').html(data.data);
       //initFilters();
       showAllActiveSections();
+      scrollToCurrentWeek();
 
       if(isAuthenticated) {
         $.ajax({

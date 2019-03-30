@@ -10,6 +10,8 @@
 namespace Lara\utilities;
 
 
+use Lara\ClubEvent;
+
 class CacheUtility
 {
     /**
@@ -25,7 +27,17 @@ class CacheUtility
         return \Cache::rememberForever($key.'-'.$viewmode.'-'.$user, $closure);
     }
     
-    static function forget()
+    static function forget($key)
+    {
+        \Cache::forget($key);
+    }
+    
+    static function forgetMonthTable(ClubEvent $event)
+    {
+        self::forget('monthtable-'. (new \DateTime( $event->evnt_date_start))->format('Y-m'));
+    }
+    
+    static function clear()
     {
         \Artisan::call('cache:clear');
     }

@@ -17,7 +17,8 @@ class Kernel extends ConsoleKernel
         Commands\LDAPsync::class,
         Commands\UpdateLara::class,
         Commands\CleanShiftTypes::class,
-        Commands\SyncBDclub::class
+        Commands\SyncBDclub::class,
+        Commands\ResetUserPassword::class
     ];
 
     /**
