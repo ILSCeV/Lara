@@ -18,11 +18,29 @@
                                 strtotime("previous month", $date['startStamp'])) }}">
                 <i class="fas fa-chevron-left"></i>
             </a>
-
-            <span class="row align-items-center mx-auto px-auto">
-                <strong>{{ $date['monthName'] . " " . $date['year'] }}</strong>
-            </span>
-
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle text-center" type="button" data-toggle="dropdown" aria-haspopup="true">
+                        <strong>{{ $date['monthName'] . " " . $date['year'] }}</strong>
+                </button>
+                <div class="dropdown-menu">
+                    <table>
+                        <tbody>
+                        @for($i = 1; $i<13;$i+=3)
+                            <tr>
+                            @for($j = $i; $j<$i+3;$j++)
+                                @php
+                                    $monthDate = date_create_from_format('Y-m',$date['year'].'-'.$j)
+                                @endphp
+                                <td>
+                                    <a class="dropdown-item" href="{{ Request::getBasePath() }}/calendar/{{ $monthDate->format('Y/m') }}">{{ $monthDate->format('F')  }}</a>
+                                </td>
+                            @endfor
+                            </tr>
+                        @endfor
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <a class="btn hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m", strtotime("next month", $date['startStamp'])) }}">
                 <i class="fas fa-chevron-right"></i>
