@@ -34,7 +34,7 @@
     <!--Print Weeks on left side-->
     @foreach($mondays as $weekStart)
         {{-- Add one week to the week start to get the next monday --}}
-        <?php $weekEnd = new DateTime($weekStart->format('Y-m-d')); $weekEnd->modify('+1 week') ?>
+        @php $weekEnd = new DateTime($weekStart->format('Y-m-d')); $weekEnd->modify('+1 week') @endphp
         @if ($weekStart->format('W/o') === date('W/o'))
             {{-- Current week --}}
             <div class="calendarRow clearfix group WeekMarkerRow" >
