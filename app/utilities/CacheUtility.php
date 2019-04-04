@@ -27,6 +27,11 @@ class CacheUtility
         return \Cache::rememberForever($key.'-'.$viewmode.'-'.$user, $closure);
     }
     
+    static function forgetAll()
+    {
+        \Cache::clear();
+    }
+    
     static function forget($key)
     {
         \Cache::forget($key);

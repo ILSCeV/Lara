@@ -111,7 +111,7 @@ class UpdateLara extends Command
 
         // finish progress bar and end counter
         $bar->finish();
-        CacheUtility::forget();
+        CacheUtility::forgetAll();
         $counterEnd = microtime(true);
 
         // Inform the users
