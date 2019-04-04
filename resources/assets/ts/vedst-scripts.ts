@@ -916,6 +916,7 @@ jQuery( document ).ready( function( $ ) {
 
         // necessary for the ajax callbacks
         let currentId = $(this).attr('id');
+        let self = $(this);
 
         $.ajax({
             type: $( this ).prop( 'method' ),
@@ -962,8 +963,11 @@ jQuery( document ).ready( function( $ ) {
                     .css("color", "darkgrey");
             },
 
-            complete: function() {
+            complete: async function() {
                 // console.log('complete');
+              self.addClass('animation').addClass('bg-success');
+              await new Promise(resolve => setTimeout(resolve, 500));
+              self.removeClass('bg-success');
             },
 
             success: function(data) {
