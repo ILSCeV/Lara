@@ -84,10 +84,8 @@ if($hideComments){
             <td>
                 <div class="form-group from-group-sm hidden-print word-break ">
                     <div class="form-control form-control-sm">
-                        <span class="w-auto @if(isset($hideComments)) hide @endif" id="{{'comment'.$shift->id}}"
-                          name="{{'comment' . $shift->id}}">
-		                {!! !empty($shift->comment) ? $shift->comment : "-" !!}
-		                </span>
+                        <span class="w-auto @if(isset($hideComments) && $hideComments) hide @endif" id="{{'comment'.$shift->id}}"
+                          name="{{'comment' . $shift->id}}">{!! !empty($shift->comment) ? $shift->comment : "-" !!}</span>
                     </div>
                 </div>
             </td>
