@@ -10,7 +10,7 @@ $labelClass = 'col-md-2 col-sm-auto';
     <div class="container-fluid">
 
             {{ Form::open(['class'=>'form-inline ','route'=>['user.updateData',$user]])  }}
-            <div class="col-md-7 col-xs-auto">
+            <div class="col-md-7 col-auto">
                 <div class="card bg-secondary ">
                     <div class="card-header ">
                         <h4 class="card-title">
@@ -123,7 +123,7 @@ $labelClass = 'col-md-2 col-sm-auto';
                 </div>
             </div>
             <div class="w-100"></div>
-            <div class="col-md-7 col-xs-auto">
+            <div class="col-md-7 col-auto">
                 <div class="card bg-secondary">
                     <div class="card-header">
                         <h4 class="card-title">

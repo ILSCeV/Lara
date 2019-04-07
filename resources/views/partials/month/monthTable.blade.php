@@ -1,5 +1,5 @@
 {{-- Month Table --}}
-<div class="col-xs-12 bgWhite col-md-12 calendarWrapper p-0">
+<div class="col-12 bgWhite col-md-12 calendarWrapper p-0">
     <div class="d-none">
         <div class="calendarWeek noBorderTop" style="border-top: 0px">
             {{ trans('mainLang.Cw') }}

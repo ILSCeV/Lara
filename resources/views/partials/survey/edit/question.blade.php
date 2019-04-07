@@ -1,17 +1,17 @@
 <div name="question">
-    <div class="card col-md-8 col-sm-12 col-xs-12">
+    <div class="card col-md-8 col-sm-12 col-12">
         <div class="card-body">
-            <div class="col-md-11 col-sm-11 col-xs-10 pl-0">
+            <div class="col-md-11 col-sm-11 col-10 pl-0">
                 <h4 class="heading-reference">{{ trans('mainLang.question') }} #</h4>
             </div>
 
-            <div class="col-md-1 col-sm-1 col-xs-2">
+            <div class="col-md-1 col-sm-1 col-2">
                 <input name="button_del_question" type="button"
                        class="btn btn-sm btn-danger fa fa-trash btnRemoveQuestion"
                        value="&#xf1f8;">
             </div>
 
-            <div class="col-md-6 col-sm-6 col-xs-12 pl-0">
+            <div class="col-md-6 col-sm-6 col-12 pl-0">
                 <fieldset>
                     <label name="quest_label">{{ trans('mainLang.question') }}: &nbsp</label>
 
@@ -20,11 +20,11 @@
                 </fieldset>
             </div>
 
-            <div class="d-block.d-sm-none col-xs-12">
+            <div class="d-block.d-sm-none col-12">
                 <br>
             </div>
 
-            <div class="col-md-6 col-sm-6 col-xs-12 pl-4">
+            <div class="col-md-6 col-sm-6 col-12 pl-4">
                 <fieldset>
                     <select class="form-control" name="type_select[{{$id}}]" onChange="javascript:updateQuestionDisplay(this)">
                         <option value="1" data-icon="fa fa-file-text-o"
@@ -38,7 +38,7 @@
                 </fieldset>
             </div>
 
-            <div class="col-md-6 col-sm-6 col-xs-12 pl-2">
+            <div class="col-md-6 col-sm-6 col-12 pl-2">
                 <fieldset class="checkbox entrylist">
                     <label class="label_checkboxitem" for="checkboxitemitem" name="req_label"></label>
                     <label><input type="checkbox" name="required[{{$id}}]" @if($question->is_required) checked
@@ -48,7 +48,7 @@
             </div>
 
 
-            <div class="col-md-6 col-sm-6 col-xs-12 pl-0" name="answerOptionsDiv">
+            <div class="col-md-6 col-sm-6 col-12 pl-0" name="answerOptionsDiv">
                 <div class="answ_option">
                     @include('partials.survey.edit.answerOptions')
                     <input class="btn btn-success btn-sm" name="answerButton"

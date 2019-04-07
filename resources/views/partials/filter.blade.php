@@ -3,7 +3,7 @@
 /** @var \Illuminate\Support\Collection/\Lara\Section*/
 $filterSection = $sections->sortBy('title');
 @endphp
-<div class="row col-xs-12 col-md-12 d-block p-auto m-auto">
+<div class="row col-12 col-md-12 d-block p-auto m-auto">
     <span id="label-none"
           class="label label-filters palette-Red-900-Primary bg d-none float-right">
         &nbsp;

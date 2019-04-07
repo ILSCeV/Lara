@@ -11,7 +11,7 @@
         {!! Form::open(['method' => 'POST', 'route' => ['template.update', $template->id], 'class'=> 'form-inline']) !!}
     @endif
     <div class="row">
-        <div class="card col-md-6 col-sm-12 col-xs-12 ">
+        <div class="card col-md-6 col-sm-12 col-12 ">
             <div class="card-header">
                 <h4 class="card-title">{{ trans('mainLang.changeEventJob') }}:</h4>
             </div>

@@ -151,7 +151,7 @@ $ldapid
     <div class="card bg-warning">
         @if( $survey->password != '')
             <div class="hidden-print card-header">
-                {!! Form::password('password', ['class'=>'col-md-4 col-xs-12 black-text',
+                {!! Form::password('password', ['class'=>'col-md-4 col-12 black-text',
                                                 'id'=>'password' . $survey->id,
                                                 'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
                 <br>

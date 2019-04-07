@@ -10,7 +10,7 @@
 
 @is('marketing', 'clubleitung', 'admin')
 
-	<div class="card col-xs-12 p-0">
+	<div class="card col-12 p-0">
 		<div class=" text-white bg-info card-header">
 				<h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.shiftTypes') }}</h4>
 		</div>

@@ -5,7 +5,7 @@
 @section('content')
     <div class="panelEventView">
 		<div class="row mx-md-5 mx-sm-1 my-3">
-            <div class="col-xs-12 col-md-6 p-0">
+            <div class="col-12 col-md-6 p-0">
     			<div class="card mx-2">
                     @php
                         $clubEventClass = \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent);
@@ -158,7 +158,7 @@
     			</div>
             </div>
 
-			<div class="col-xs-12 col-md-6 p-0">
+			<div class="col-12 col-md-6 p-0">
 				@if( $clubEvent->evnt_public_info != '')
     				<div class="card mx-2">
     					<div class="card-body more-info">
@@ -204,7 +204,7 @@
         		@if( $clubEvent->getSchedule->schdl_password != '')
         			<div class="card-header hidden-print">
         			    {!! Form::password('password', array('required',
-        			                                         'class'=>'col-md-4 col-sm-4 col-xs-12 black-text',
+        			                                         'class'=>'col-md-4 col-sm-4 col-12 black-text',
         		                                             'id'=>'password' . $clubEvent->getSchedule->id,
         			                                         'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
         			    <br>

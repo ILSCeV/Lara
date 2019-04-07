@@ -386,7 +386,7 @@ $('[name^=icalfeeds]').click(function () {
                     remindPersonalIcalInput = "";
                 }
             } else {
-                remindPersonalIcalInput = '<div class="form-group pl-3 pr-3 col-md-12 col-xs-12">' +
+                remindPersonalIcalInput = '<div class="form-group pl-3 pr-3 col-md-12 col-12">' +
                     translate('remindsBeforeShiftStart') + '&nbsp;&nbsp;' +
                     '<input id="personalIcalRemindValue" type="number" value="0" width="20%"/>' + translate('minutes') +
                     '</div>';

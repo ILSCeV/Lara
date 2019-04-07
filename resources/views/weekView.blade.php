@@ -20,9 +20,9 @@ if($extraFilter!='')
 
 @section('content')
     <div id="week-view-marker" class="container-fluid pb-3">
-        <div class="row">
+        <div class="row pb-3">
             {{-- Prev/next week selector --}}
-            <div class="col-xs-12 col-md-4 m-auto p-auto btn-group">
+            <div class="col-12 col-md-4 m-auto p-auto btn-group">
                 <a class="btn hidden-print"
                    href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}{{ $queryParams }}">
                     <i class="fas fa-chevron-left"></i>
@@ -53,7 +53,7 @@ if($extraFilter!='')
             </div>
 
             {{-- Section filter --}}
-            <div class="col-xs-12 col-md-8 p-0 m-0 d-print-none" id="section-filter">
+            <div class="col-12 col-md-8 p-0 m-0 d-print-none" id="section-filter">
                 @include('partials.filter')
 
                 {{-- Week filters --}}
@@ -152,7 +152,7 @@ if($extraFilter!='')
             @include('partials.weekView.survey')
         </div>
     @endif
-    <div class="col-md-12 col-xs-12">
+    <div class="col-md-12 col-12">
         {{-- Legend --}}
         @include("partials.legend")
 

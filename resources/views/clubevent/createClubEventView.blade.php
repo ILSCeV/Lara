@@ -236,7 +236,7 @@
                     </select>
 			   	</div>
                 <br>
-			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 p-0" id="filter-checkboxes">
+			   	<div class="form-group col-md-12 col-sm-12 col-12 p-0" id="filter-checkboxes">
                     <label for="filter" class="col-form-label col-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
                     <div id="filter" class="input-group form-check col-6">
 
@@ -271,7 +271,7 @@
 					</div>
 				</div>
 
-				<div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
+				<div class="form-group col-md-12 col-sm-12 col-12" id="filter-checkboxes">
 					<label for="price" class="col-form-label {{$labelClass}}">
 						{{ trans('mainLang.price') }}:   <br>
 						({{ trans('mainLang.studentExtern') }})</label>
@@ -329,7 +329,7 @@
 			    	</div>
 			    </div>
 
-			    <div class="col-md-12 col-sm-12 col-xs-12">
+			    <div class="col-md-12 col-sm-12 col-12">
 			    	&nbsp;
 			    </div>
 
