@@ -69,7 +69,7 @@ if($hideComments){
             </td>
             <td>
             <span class="float-left">
-		   @if($shift->comment === "") <i class="fas fa-comment-alt"></i> @else <i class="fas fa-comment"></i> @endif
+		   @if($shift->comment === "") <i class="far fa-comment"></i> @else <i class="fas fa-comment"></i> @endif
             &nbsp;&nbsp;
 		</span>
             </td>
@@ -108,8 +108,7 @@ if($hideComments){
             <td>
                 <div class="form-control form-control-sm">
                 <span class="float-left">
-                 @if($shift->comment === "") <i class="fas fa-comment-alt"></i> @else <i
-                        class="fas fa-comment"></i> @endif
+                 @if($shift->comment === "") <i class="far fa-comment"></i> @else <i class="fas fa-comment"></i> @endif
                     &nbsp;&nbsp;
                 </span>
                 </div>
