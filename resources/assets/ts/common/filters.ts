@@ -195,7 +195,7 @@ export const initFilters = () => {
     // Show/hide comments
     $('.showhide').on({
       click: function (e) {
-        const comment = $(this).parent().next('[name^=comment]');
+        let comment = $(e.target).closest('.shiftRow').find('[name^=comment]');
         comment.toggleClass("hide", comment.is(":visible"));
         // isotope.layout();
       }

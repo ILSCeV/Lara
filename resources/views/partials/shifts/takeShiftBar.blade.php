@@ -69,9 +69,8 @@ if($hideComments){
             </td>
             <td>
             <span class="float-left">
-		   @if($shift->comment === "") <i class="far fa-comment"></i> @else <i class="fas fa-comment"></i> @endif
-            &nbsp;&nbsp;
-		</span>
+                <button class="showhide btn btn-sm btn-secondary">@if($shift->comment === "") <i class="far fa-comment"></i> @else <i class="fas fa-comment"></i> @endif</button>
+		    </span>
             </td>
             {{-- COMMENT SECTION --}}
             <td>
@@ -104,13 +103,12 @@ if($hideComments){
             </td>
             {{-- COMMENT SECTION --}}
             {{-- Hidden comment field to be opened after the click on the icon
-                 see vedst-scripts "Show/hide comments" function --}}
+                 see filter-scripts "Show/hide comments" function --}}
             <td>
                 <div class="form-control form-control-sm">
-                <span class="float-left">
-                 @if($shift->comment === "") <i class="far fa-comment"></i> @else <i class="fas fa-comment"></i> @endif
-                    &nbsp;&nbsp;
-                </span>
+                    <span class="float-left">
+                        <button class="showhide btn btn-sm btn-secondary">@if($shift->comment === "") <i class="far fa-comment"></i> @else <i class="fas fa-comment"></i> @endif</button>                        &nbsp;&nbsp;
+                    </span>
                 </div>
             </td>
             <td>
