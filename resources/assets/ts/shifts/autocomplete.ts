@@ -96,7 +96,7 @@ $(() => {
             $("input[id=userName" + currentEntryId + "]")
               .tooltip('hide')
               .attr('data-original-title', tooltipText)
-              .tooltip('show');
+              .tooltip('show').delay(1000).tooltip('hide');
             $("input[id=ldapId" + currentEntryId + "]").val(currentLdapId);
             $("input[id=club" + currentEntryId + "]").val(currentClub);
             // send to server
@@ -283,10 +283,10 @@ $(() => {
       if ($commentInput.val() == "") {
         $commentInput.parent().children("span").children("i").removeClass().addClass("fas fa-comment-alt");
       } else {
-        $commentInput.parent().children("span").children("i").removeClass().addClass("fasfa-comment");
+        $commentInput.parent().children("span").children("i").removeClass().addClass("fas fa-comment");
       }
 
-      let $colorDiv = $userNameInput.parent().prev().find("div");
+      let $colorDiv = $userNameInput.closest('.shiftRow').find("div.shift_title");
 
       let isShiftEmpty = data["userName"] !== "";
       if (isShiftEmpty) {
@@ -322,9 +322,15 @@ $(() => {
       }
     });
 
-    $('.yourself').on('click', function () {
-      $(this).closest('.shiftRow').addClass('my-shift');
-    });
+    $('.yourself').on(
+      {
+        click: (e) => {
+          $(e.target).closest('.shiftRow').addClass('my-shift');
+          if($(e.target).is('li')){
+            $(e.target).find('a').trigger('click');
+          }
+        }
+      });
 
     $('.box').find("input[name^='shifts\[title\]']").on('input', function () {
       // do all the work here after AJAX response is received

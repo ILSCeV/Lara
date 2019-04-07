@@ -13,7 +13,7 @@
         }
 @endphp
 
-<div class="{{$shiftClass}}">
+<div class="{{$shiftClass}} shift_title">
         <span class="word-break"
               data-toggle="tooltip"
               data-placement="top"
