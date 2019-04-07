@@ -211,20 +211,7 @@
         			</div>
         		@endif
 
-    			@foreach($shifts as $shift)
-                    {{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
-                    <div class="row m-0 p-0 {!! ( isset($shift->person->prsn_ldap_id)
-                                                  && Auth::user()
-                                                  && $shift->person->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
-                        @include('partials.shifts.takeShiftBar',['shift'=>$shift,'hideComments'=>false])
-                    </div>
-                    <div class="w-100"></div>
-
-    				{{-- Show a line after each row except the last one --}}
-    				@if($shift !== $shifts->last() )
-    					<hr class="p-0 m-0">
-    				@endif
-    			@endforeach
+                @include('partials.shifts.takeShiftTable',['shifts'=>$shifts, 'hideComments'=>false])
         	</div>
         </div>
 	</div>

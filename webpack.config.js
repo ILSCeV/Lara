@@ -91,7 +91,7 @@ module.exports = {
     filename: devMode ? '[name].js' : '[name].[hash].js',
     path: path.resolve(__dirname, 'public/'),
   },
-  devtool: devMode ?'inline-source-map' : false,
+  devtool: devMode ?'eval-source-map' : false,
   plugins: [
     new CleanWebpackPlugin(),
     new LiveReloadPlugin(),

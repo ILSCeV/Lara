@@ -514,25 +514,26 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $( '.shift.autocomplete' ).find("input[id^='userName'], input[id^=comment]").on('input', function() {
+    $( '.shift.autocomplete' ).closest('.shiftRow').find("input[id^='userName'], input[id^=comment]").on('input', function() {
+      let self = $(this).closest('.shiftRow');
         // show only current button
-        $('[name^=btn-submit-change]')
+        self.find('[name^=btn-submit-change]')
             .addClass('hide')
             .removeClass('btn-primary');
-        $(this).parents('.shift').find('[name^=btn-submit-change]')
+        self.find('[name^=btn-submit-change]')
             .removeClass('hide')
             .addClass('btn-primary');
 
         // hide only current icon
-        $('[name^=status-icon]').removeClass('hide');
-        $(this).parents('.shift').find('[name^=status-icon]').addClass('hide');
+        self.find('[name^=status-icon]').removeClass('hide');
+        self.find('[name^=status-icon]').addClass('hide');
 
         // do all the work here after AJAX response is received
         function ajaxCallBackUsernames(response) {
 
             // clear array from previous results, but leave first element with current user's data
-            $(document.activeElement).parent().children('.dropdown-username').contents().filter(function () {
-                return this.id != "yourself";
+          $(document.activeElement).parent().children('.dropdown-username').contents().filter(function (index, item) {
+                return !$(item).hasClass("yourself") ;
             }).remove();
 
             // format data received
@@ -557,31 +558,31 @@ jQuery( document ).ready( function( $ ) {
             });
 
             // process clicks inside the dropdown
-            $(document.activeElement).parent().children('.dropdown-username').children('li').click(function(e){
+          $(document.activeElement).parent().children('.dropdown-username').children('li').on({ click : (e) => {
                 // ignore "i'll do it myself" button (handeled in view)
-                if ( this.id == "yourself") return false;
+                e.preventDefault();
+                let startPoint = $(e.target).closest('li');
+                if ( $(startPoint).hasClass("yourself")) return false;
 
                 // gather the data for debugging
-                let currentLdapId = $(this).find('[name="currentLdapId"]').html();
-                let currentName = $(this).find('[name="currentName"]').html();
-                let currentClub = $(this).find('[name="currentClub"]').html();
-                let currentEntryId = $(this).closest(".shift").attr("id");
-                let tooltipText = $(this).find('[name="tooltip"]').html();
+                let currentLdapId = $(startPoint).find('[name="currentLdapId"]').html();
+                let currentName = $(startPoint).find('[name="currentName"]').html();
+                let currentClub = $(startPoint).find('[name="currentClub"]').html();
+                let currentEntryId = $(startPoint).closest(".shift").data("shiftid");
+                let tooltipText = $(startPoint).find('[name="tooltip"]').html();
 
                 // update fields
                 $("input[id=userName" + currentEntryId + "]").val(currentName);
                 $("input[id=userName" + currentEntryId + "]")
                   .tooltip('hide')
                   .attr('data-original-title',tooltipText)
-                  .tooltip(<any> 'fixTitle')
                   .tooltip('show');
                 $("input[id=ldapId"   + currentEntryId + "]").val(currentLdapId);
                 $("input[id=club"     + currentEntryId + "]").val(currentClub);
-
                 // send to server
                 // need to go via click instead of submit because otherwise ajax:beforesend, complete and so on won't be triggered
-                $("#btn-submit-changes"+currentEntryId).click();
-
+                $("#btn-submit-changes"+currentEntryId).trigger('click');
+            }
             });
 
             // reveal newly created dropdown
@@ -639,9 +640,10 @@ jQuery( document ).ready( function( $ ) {
     });
 
     $( '.shift' ).find("input[id^='club']").on( 'input', function() {
+        let self = $(this).closest('.shiftRow');
         // Show save icon on form change
-        $(this).parents('.shift').find('[name^=btn-submit-change]').removeClass('hide');
-        $(this).parents('.shift').find("[name^=status-icon]").addClass('hide');
+        self.find('[name^=btn-submit-change]').removeClass('hide');
+        self.find("[name^=status-icon]").addClass('hide');
 
         // do all the work here after AJAX response is received
         function ajaxCallBackClubs(response) {
@@ -655,24 +657,24 @@ jQuery( document ).ready( function( $ ) {
                 // add found clubs to the array$(document.activeElement).parent().children('.dropdown-club')
                 $(document.activeElement).parent().parent().children('.dropdown-club').append(
                     '<li class="dropdown-item"><a href="javascript:void(0);">'
-                    + '<span id="clubTitle">' + data.clb_title + '</span>'
+                    + '<span class="clubTitle">' + data.clb_title + '</span>'
                     + '</a></li>');
             });
 
             // process clicks inside the dropdown
-            $(document.activeElement).parent().parent().children('.dropdown-club').children('li').click(function(e){
+            $(document.activeElement).parent().parent().children('.dropdown-club').children('li').on({click:function(e){
 
-                var clubTitle = $(this).find('#clubTitle').html();
-                var currentEntryId = $(this).closest(".shift").attr("id");
+                let clubTitle = $(e.target).html();
+                let currentEntryId = $(e.target).closest(".shift").data("shiftid");
 
                 // update fields
                 $("input[id=club"     + currentEntryId + "]").val(clubTitle);
 
                 // send to server
                 // need to go via click instead of submit because otherwise ajax:beforesend, complete and so on won't be triggered
-                $("#btn-submit-changes"+currentEntryId).click();
+                $("#btn-submit-changes"+currentEntryId).trigger('click');
 
-            });
+            }});
 
             // reveal newly created dropdown
             $(document.activeElement).parent().parent().children('.dropdown-club').show();
@@ -793,7 +795,7 @@ jQuery( document ).ready( function( $ ) {
         $spinner.removeClass().addClass(data["userStatus"]["status"]).removeAttr("id");
 
 
-        $userNameInput.closest('form').parent().toggleClass('my-shift', data.is_current_user);
+        $userNameInput.closest('.shiftRow').toggleClass('my-shift', data.is_current_user);
     }
 
 
@@ -814,8 +816,8 @@ jQuery( document ).ready( function( $ ) {
       }
     });
 
-    $('#yourself').on('click', function() {
-        $(this).parents('.row').addClass('my-shift');
+    $('.yourself').on('click', function() {
+        $(this).closest('.shiftRow').addClass('my-shift');
     });
 
     $( '.box' ).find("input[name^='shifts\[title\]']").on( 'input', function()
@@ -903,6 +905,8 @@ jQuery( document ).ready( function( $ ) {
     // Submit changes
     $( '.shift' ).on( 'submit', function() {
 
+        let self = $(this).closest('.shiftRow');
+
         // For passworded schedules: check if a password field exists and is not empty
         // We will check correctness on the server side
         let password = "";
@@ -915,8 +919,8 @@ jQuery( document ).ready( function( $ ) {
         }
 
         // necessary for the ajax callbacks
-        let currentId = $(this).attr('id');
-        let self = $(this);
+        let currentId = $(this).data('shiftid');
+
 
         $.ajax({
             type: $( this ).prop( 'method' ),
@@ -925,15 +929,15 @@ jQuery( document ).ready( function( $ ) {
 
             data: JSON.stringify({
                     // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-                    "_token":       $(this).find( 'input[name=_token]' ).val(),
+                    "_token":       $(self).find( 'input[name=_token]' ).val(),
 
                     // Actual data being sent below
-                    "entryId":      $(this).closest("form").attr("id"),
-                    "userName":     $(this).find("[name^=userName]").val(),
-                    "ldapId":       $(this).find("[name^=ldapId]").val(),
-                    "timestamp":    $(this).find("[name^=timestamp]").val(),
-                    "userClub":     $(this).find("[name^=club]").val(),
-                    "userComment":  $(this).find("[name^=comment]").val(),
+                    "entryId":      currentId,
+                    "userName":     $(self).find("[name^=userName]").val(),
+                    "ldapId":       $(self).find("[name^=ldapId]").val(),
+                    "timestamp":    $(self).find("[name^=timestamp]").val(),
+                    "userClub":     $(self).find("[name^=club]").val(),
+                    "userComment":  $(self).find("[name^=comment]").val(),
                     "password":     password,
 
                     // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
@@ -1081,7 +1085,8 @@ jQuery( document ).ready( function( $ ) {
 
     // Detect shift name change and remove LDAP id from the previous shift
     $('.shift').find("[name^=userName]").on('input propertychange paste', function() {
-        $(this).parent().find("[name^=ldapId]").val("");
+      let self = $(this).closest('.shiftRow');
+      $(self).find("[name^=ldapId]").val("");
     });
 
 });
