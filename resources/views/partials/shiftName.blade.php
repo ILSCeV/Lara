@@ -1,4 +1,4 @@
-<div class="col-md-3 col-xs-3 p-0" id="clubStatus{{ $shift->id }}">
+<div class="col-md-3 col-3 p-0" id="clubStatus{{ $shift->id }}">
     @include("partials.shiftStatus")
 </div>
 
@@ -7,7 +7,7 @@
                  Input::old('userName' . $shift->id),
                  array('placeholder'=>'=FREI=',
                        'id'=>'userName' . $shift->id,
-                       'class'=>'col-xs-8 col-md-8 ',
+                       'class'=>'col-8 col-md-8 ',
                        'autocomplete'=>'off'))
     !!}
 @else
@@ -15,7 +15,7 @@
     {!! Form::text('userName' . $shift->id,
                  $shift->getPerson->prsn_name,
                  array('id'=>'userName' . $shift->id,
-                       'class'=>'col-xs-8 col-md-8',
+                       'class'=>'col-8 col-md-8',
                        'data-toggle' => "tooltip",
                        'data-placement' =>"top",
                        'title' => $shift->getPerson->fullName(),

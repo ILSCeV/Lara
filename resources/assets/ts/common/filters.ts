@@ -138,10 +138,10 @@ export const initFilters = () => {
     ////////////////////////////
     // Show/hide taken shifts //
     ////////////////////////////
-    const takenShifts = new ToggleButton("toggle-taken-shifts", () => $(".shift_taken").closest(".row").hasClass("hide"));
+    const takenShifts = new ToggleButton("toggle-taken-shifts", () => $(".shift_taken").closest(".shiftRow").hasClass("hide"));
     takenShifts.addActions([
       makeLocalStorageAction("onlyEmptyShifts", "true", "false"),
-      makeClassToggleAction($(".shift_taken").closest(".row"), "hide", true),
+      makeClassToggleAction($(".shift_taken").closest(".shiftRow"), "hide", true),
       //() => isotope.layout()
     ])
       .setToggleStatus(safeGetLocalStorage("onlyEmptyShifts") == "true")
@@ -195,7 +195,7 @@ export const initFilters = () => {
     // Show/hide comments
     $('.showhide').on({
       click: function (e) {
-        const comment = $(this).parent().next('[name^=comment]');
+        let comment = $(e.target).closest('.shiftRow').find('[name^=comment]');
         comment.toggleClass("hide", comment.is(":visible"));
         // isotope.layout();
       }

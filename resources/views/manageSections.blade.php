@@ -8,7 +8,7 @@
 
 @section('content')
 
-    <div class="card  col-xs-12 p-0">
+    <div class="card  col-12 p-0">
         <div class="card-header text-white bg-info">
             <h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageSections') }}</h4>
         </div>

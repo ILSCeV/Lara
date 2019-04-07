@@ -2,10 +2,13 @@
 @section('title')
 	{{ $clubEvent->evnt_title }}
 @stop
+@section('moreScripts')
+    <script src="{{asset(WebpackBuiltFiles::$jsFiles['autocomplete'])}}" ></script>
+@endsection
 @section('content')
     <div class="panelEventView">
 		<div class="row mx-md-5 mx-sm-1 my-3">
-            <div class="col-xs-12 col-md-6 p-0">
+            <div class="col-12 col-md-6 p-0">
     			<div class="card mx-2">
                     @php
                         $clubEventClass = \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent);
@@ -158,7 +161,7 @@
     			</div>
             </div>
 
-			<div class="col-xs-12 col-md-6 p-0">
+			<div class="col-12 col-md-6 p-0">
 				@if( $clubEvent->evnt_public_info != '')
     				<div class="card mx-2">
     					<div class="card-body more-info">
@@ -204,27 +207,14 @@
         		@if( $clubEvent->getSchedule->schdl_password != '')
         			<div class="card-header hidden-print">
         			    {!! Form::password('password', array('required',
-        			                                         'class'=>'col-md-4 col-sm-4 col-xs-12 black-text',
+        			                                         'class'=>'col-md-4 col-sm-4 col-12 black-text',
         		                                             'id'=>'password' . $clubEvent->getSchedule->id,
         			                                         'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
         			    <br>
         			</div>
         		@endif
 
-    			@foreach($shifts as $shift)
-                    {{-- highlight with my-shift class if the signed in user is the person to do the shift --}}
-                    <div class="row m-0 p-0 {!! ( isset($shift->person->prsn_ldap_id)
-                                                  && Auth::user()
-                                                  && $shift->person->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
-                        @include('partials.shifts.takeShiftBar',['shift'=>$shift,'hideComments'=>false])
-                    </div>
-                    <div class="w-100"></div>
-
-    				{{-- Show a line after each row except the last one --}}
-    				@if($shift !== $shifts->last() )
-    					<hr class="p-0 m-0">
-    				@endif
-    			@endforeach
+                @include('partials.shifts.takeShiftTable',['shifts'=>$shifts, 'hideComments'=>false])
         	</div>
         </div>
 	</div>

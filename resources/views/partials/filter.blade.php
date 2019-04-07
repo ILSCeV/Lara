@@ -3,21 +3,21 @@
 /** @var \Illuminate\Support\Collection/\Lara\Section*/
 $filterSection = $sections->sortBy('title');
 @endphp
-<div class="row col-xs-12 col-md-12 d-block p-auto m-auto">
+<div class="row col-12 col-md-12 d-block p-auto m-auto">
     <span id="label-none"
-          class="label label-filters palette-Red-900-Primary bg d-none float-right">
+          class="badge label-filters palette-Red-900-Primary bg d-none float-right">
         &nbsp;
         {{trans('mainLang.noSectionSelected')}}
     </span>
     <span id="label-section-survey"
-          class="label label-filters palette-Purple-900 bg d-none float-right">
+          class="badge label-filters palette-Purple-900 bg d-none float-right">
         {{trans('mainLang.survey')}}
         &nbsp;
         <span class="far fa-times-circle"></span>
     </span>
     @foreach( $filterSection->reverse() as $section)
         <span id="label-section-{!! $section["id"] !!}"
-              class="label label-filters palette-{{$section->color}}-500-Primary bg d-none float-right">
+              class="badge label-filters palette-{{$section->color}}-500-Primary bg d-none float-right">
             {!! $section["title"] !!}
             &nbsp;
             <span class="far fa-times-circle"></span>

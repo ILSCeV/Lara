@@ -13,7 +13,8 @@ module.exports = {
     lara: './resources/assets/ts/lara.ts',
     legacy:'./resources/assets/ts/legacy/ieDependencys.ts',
     darkmode: './resources/assets/sass/darkmode.scss',
-    monthview:'./resources/assets/ts/monthview/monthview.ts'
+    monthview:'./resources/assets/ts/monthview/monthview.ts',
+    autocomplete:'./resources/assets/ts/shifts/autocomplete.ts'
   },
   module: {
     rules: [
@@ -91,7 +92,7 @@ module.exports = {
     filename: devMode ? '[name].js' : '[name].[hash].js',
     path: path.resolve(__dirname, 'public/'),
   },
-  devtool: devMode ?'inline-source-map' : false,
+  devtool: devMode ?'eval-source-map' : false,
   plugins: [
     new CleanWebpackPlugin(),
     new LiveReloadPlugin(),

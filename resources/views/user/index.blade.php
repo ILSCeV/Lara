@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-    <div class="card card.text-white.bg-info col-xs-12 p-0">
+    <div class="card card.text-white.bg-info col-12 p-0">
         <div class="card-header">
             <h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('users.users') }}</h4>
         </div>

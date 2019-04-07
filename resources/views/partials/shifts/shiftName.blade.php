@@ -27,7 +27,7 @@
 {{-- Show dropdowns only for members --}}
 @auth
     <ul class="small dropdown-menu dropdown-username" style="position: absolute;">
-        <li class="dropdown-item" id="yourself">
+        <li class="dropdown-item yourself" >
             <a href="javascript:void(0);"
                onClick="document.getElementById('userName{{ ''. $shift->id }}').value='{{Auth::user()->name}}';
                    document.getElementById('club{{ ''. $shift->id }}').value='{{Lara\Section::current()->title}}';

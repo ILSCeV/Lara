@@ -47,7 +47,7 @@
 		@if( $clubEvent->getSchedule->schdl_password != '')
 		    <div class="{{ $classString }} hidden-print">
 		        {!! Form::password('password' . $clubEvent->getSchedule->id, ['required',
-		                                             'class'=>'col-md-12 col-xs-12 black-text',
+		                                             'class'=>'col-md-12 col-12 black-text',
 		                                             'id'=>'password' . $clubEvent->getSchedule->id,
 		                                             'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
 		        <br/>
@@ -57,12 +57,7 @@
 		<div class="card-body p-0">
 
 			{{-- Show shifts --}}
-			@foreach($shifts = $clubEvent->getSchedule->shifts as $shift)
-                <div class="row">
-                   @include('partials.shifts.takeShiftBar',['shift'=>$shift,'hideComments'=>true])
-                </div>
-                <div class="w-100"></div>
-                @endforeach
+            @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true])
 
 
 		</div>

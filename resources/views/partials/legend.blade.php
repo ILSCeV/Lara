@@ -1,5 +1,5 @@
 <br>
-<div class="col-xs-12 col-md-12 text-center hidden-print">
+<div class="col-12 col-md-12 text-center hidden-print">
       <i class="fas fa-calendar-alt"></i>
        - {{ trans('mainLang.normalProgramm') }}
 

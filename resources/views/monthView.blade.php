@@ -12,7 +12,7 @@
 
 {{-- Prev/next month selector --}}
     <div class="row pb-3">
-        <div class="col-xs-12 col-md-3 m-auto p-auto btn-group">
+        <div class="col-12 col-md-3 m-auto p-auto btn-group">
             <a class="btn hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
                                 strtotime("previous month", $date['startStamp'])) }}">
@@ -48,7 +48,7 @@
         </div>
 
         <!-- Section filter -->
-        <div class="col-xs-12 col-md-9 p-0 m-0 d-print-none" id="section-filter">
+        <div class="col-12 col-md-9 p-0 m-0 d-print-none" id="section-filter">
             @include('partials.filter')
         </div>
     </div>
