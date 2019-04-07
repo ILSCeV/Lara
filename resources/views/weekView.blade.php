@@ -13,6 +13,7 @@ if($extraFilter!='')
 @stop
 
 @section('moreScripts')
+    <script src="{{asset(WebpackBuiltFiles::$jsFiles['autocomplete'])}}" ></script>
     <script>
         var extraFilter = '{{$extraFilter}}';
     </script>

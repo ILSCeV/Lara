@@ -2,6 +2,9 @@
 @section('title')
 	{{ $clubEvent->evnt_title }}
 @stop
+@section('moreScripts')
+    <script src="{{asset(WebpackBuiltFiles::$jsFiles['autocomplete'])}}" ></script>
+@endsection
 @section('content')
     <div class="panelEventView">
 		<div class="row mx-md-5 mx-sm-1 my-3">
