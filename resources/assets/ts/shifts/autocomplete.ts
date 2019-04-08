@@ -4,27 +4,27 @@ import "bootstrap";
 // conversion of html entities to text (e.g. "&" as "&amp;")
 // ref: https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery
 let decodeEntities = (encodedString) => {
-  var textArea = document.createElement('textarea');
+  let textArea = document.createElement('textarea');
   textArea.innerHTML = encodedString;
   return textArea.value;
 };
 
 $(() => {
 /////////////////////////////
-// AUTOCOMPELETE USERNAMES //
+// AUTOCOMPLETE USERNAMES //
 /////////////////////////////
     // open username dropdown on input selection and show only "I'll do it!" button at the beginning
     $('.shift').find('input').on('focus', () => {
       // remove all other dropdowns
-      $(document).find('.dropdown-username').hide();
+      $('.dropdown-username').hide();
       // open dropdown for current input
       $(document.activeElement).parent().children('.dropdown-username').show();
     });
 
     // hide all dropdowns on ESC keypress
-    $(document).keyup(function (e) {
-      if (e.keyCode === 27) {
-        $(document).find('.dropdown-username').hide();
+    $(document).on("keyup" , function (e) {
+      if (e.key === "Escape") {
+        $('.dropdown-username').hide();
       }
     });
 
@@ -46,8 +46,11 @@ $(() => {
       function ajaxCallBackUsernames(response) {
 
         // clear array from previous results, but leave first element with current user's data
-        $(document.activeElement).parent().children('.dropdown-username').contents().filter(function (index, item) {
-          return !$(item).hasClass("yourself");
+        const $dropdown = $(document.activeElement).parent().children('.dropdown-username');
+
+        // clear array from previous results, but leave first element with current user's data
+        $dropdown.children().filter(function (index, item) {
+          return index !== 0;
         }).remove();
 
         // format data received
@@ -65,7 +68,7 @@ $(() => {
 
           if (data.get_user) {
             // add found persons to the array
-            $(document.activeElement).parent().children('.dropdown-username').append(
+            $dropdown.append(
               '<li class="dropdown-item"><a href="javascript:void(0);">'
               + '<span name="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
               + '<span name="currentName">' + data.prsn_name + '</span>'
@@ -77,7 +80,7 @@ $(() => {
         });
 
         // process clicks inside the dropdown
-        $(document.activeElement).parent().children('.dropdown-username').children('li').on({
+        $dropdown.children('li').on({
           click: (e) => {
             // ignore "i'll do it myself" button (handeled in view)
             e.preventDefault();
@@ -106,9 +109,8 @@ $(() => {
         });
 
         // reveal newly created dropdown
-        $(document.activeElement).parent().children('.dropdown-username').show();
-
-      }
+        $dropdown.show();
+      } //end of ajaxCallBackUsernames
 
       // short delay to prevents double sending
       $(this).delay(250);
@@ -138,19 +140,19 @@ $(() => {
 
 
 /////////////////////////
-// AUTOCOMPELETE CLUBS //
+// AUTOCOMPLETE CLUBS //
 /////////////////////////
 
     // hide all dropdowns on ESC keypress
-    $(document).keyup(function (e) {
-      if (e.keyCode === 27) {
+    $(document).on("keyup", function (e) {
+      if (e.key === "Escape") {
         $(document).find('.dropdown-club').hide();
       }
     });
     // open club dropdown on input selection
     $('.shift').find('input').on('focus', function () {
       // remove all other dropdowns
-      $(document).find('.dropdown-club').hide();
+      $('.dropdown-club').hide();
       // open dropdown for current input
       $(document.activeElement).parent().parent().children('.dropdown-club').show();
     });
@@ -310,14 +312,14 @@ $(() => {
     // open shiftType dropdown on input selection
     $('.box').find('input[type=text]').on('focus', function () {
       // remove all other dropdowns
-      $(document).find('.dropdown-shiftTypes').hide();
+      $('.dropdown-shiftTypes').hide();
       // open dropdown for current input
       $(document.activeElement).next('.dropdown-shiftTypes').show();
     });
 
     // hide all dropdowns on ESC keypress
-    $(document).keyup(function (e) {
-      if (e.keyCode === 27) {
+    $(document).on("keyup",function (e) {
+      if (e.key === "Escape") {
         $(document).find('.dropdown-shiftTypes').hide();
       }
     });
@@ -365,10 +367,10 @@ $(() => {
 
         // process clicks inside the dropdown
         $(document.activeElement).next('.dropdown-shiftTypes').children('li').click(function (e) {
-          var selectedShiftTypeTitle = decodeEntities($(this).find('#shiftTypeTitle').html());     // decoding html entities in the process
-          var selectedShiftTypeTimeStart = $(this).find('#shiftTypeTimeStart').html();
-          var selectedShiftTypeTimeEnd = $(this).find('#shiftTypeTimeEnd').html();
-          var selectedShiftTypeWeight = $(this).find('#shiftTypeWeight').html();
+          let selectedShiftTypeTitle = decodeEntities($(this).find('#shiftTypeTitle').html());     // decoding html entities in the process
+          let selectedShiftTypeTimeStart = $(this).find('#shiftTypeTimeStart').html();
+          let selectedShiftTypeTimeEnd = $(this).find('#shiftTypeTimeEnd').html();
+          let selectedShiftTypeWeight = $(this).find('#shiftTypeWeight').html();
 
           // update fields
           $(this).parents(".box").find("[name^='shifts[title]']").val(selectedShiftTypeTitle);
@@ -461,8 +463,8 @@ $(() => {
           // console.log("beforesend");
 
           // hide dropdowns because they aren't no longer needed
-          $(document).find('.dropdown-username').hide();
-          $(document).find('.dropdown-club').hide();
+          $('.dropdown-username').hide();
+          $('.dropdown-club').hide();
           $('div#alert' + currentId).remove();
 
           // Remove save icon and show a spinner in the username status while we are waiting for a server response
