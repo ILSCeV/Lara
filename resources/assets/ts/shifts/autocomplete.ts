@@ -1,5 +1,6 @@
 import {translate} from "../Translate";
-import "bootstrap";
+import 'bootstrap/js/dist/tooltip'
+import 'bootstrap/js/dist/alert'
 
 // conversion of html entities to text (e.g. "&" as "&amp;")
 // ref: https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery
@@ -96,7 +97,8 @@ $(() => {
             $("input[id=userName" + currentEntryId + "]")
               .tooltip('hide')
               .attr('data-original-title', tooltipText)
-              .tooltip('show').delay(1000).tooltip('hide');
+              .tooltip('show');
+            setTimeout(()=>{$("input[id=userName" + currentEntryId + "]").tooltip('hide')}, 2000);
             $("input[id=ldapId" + currentEntryId + "]").val(currentLdapId);
             $("input[id=club" + currentEntryId + "]").val(currentClub);
             // send to server
