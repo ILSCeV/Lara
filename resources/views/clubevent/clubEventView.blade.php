@@ -202,8 +202,8 @@
             </button>
         </div>
 
-        <div class="row mx-md-5 mx-sm-1 my-3">
-        	<div class="card col-12 p-0 mx-sm-1">
+        <div class="row justify-content-center">
+        	<div class="card col-12 col-lg-10 mx-sm-1 m-auto">
         		@if( $clubEvent->getSchedule->schdl_password != '')
         			<div class="card-header hidden-print">
         			    {!! Form::password('password', array('required',

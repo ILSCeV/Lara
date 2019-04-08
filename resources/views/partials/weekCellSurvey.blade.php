@@ -1,6 +1,6 @@
 @if(!Auth::user() && $survey->is_private === 1)
     {{-- Hide internal surveys from guests --}}
-    <div class="card border-warning word-break section-filter section-survey">
+    <div class="card rounded border-light word-break section-filter section-survey">
 
         <div class="palette-Grey-500 bg text-white"
              style="padding: 15px 15px 8px 15px;">
@@ -18,9 +18,9 @@
     </div>
 @else
     {{-- Show everything to memebers --}}
-    <div class="card border-warning word-break section-filter section-survey">
+    <div class="card rounded border-light word-break section-filter section-survey">
 
-        <div class="card-header palette-Purple-900 bg text-white">
+        <div class="card-header rounded-top palette-Purple-900 bg text-white">
             <h4 class="card-title">
                 <a class="text-white" href="{{ URL::route('survey.show', $survey->id) }}">
                     <i class="fas fa-chart-bar text-white"></i>
@@ -32,13 +32,6 @@
             {{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->deadline))) }}
         </div>
 
-        <div class="card-footer">
-            {{-- gives a session from privileged users the option to hide the event--}}
-            @is('marketing', 'clubleitung', 'admin')
-                <div class="float-right hidden-print">
-                    <small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
-                </div>
-            @endis
-        </div>
+        @include('partials.weekView.hideEvent')
     </div>
 @endif

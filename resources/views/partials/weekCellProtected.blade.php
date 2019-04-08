@@ -1,8 +1,8 @@
-<div class="card border-warning">
+<div class="card border-light rounded">
 
 	{{-- Check if the event is still going on --}}
     @php
-        $classString = "card-header";
+        $classString = "card-header rounded-top";
         $clubEventClass = \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent);
     @endphp
 	{{-- Set card color --}}
