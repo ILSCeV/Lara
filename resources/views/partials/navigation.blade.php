@@ -135,9 +135,9 @@ Disabling iCal until fully functional.
                 @endphp
                 <a href="{{ $viewModeRoute }}" id="darkmodeToggle" class="btn btn-sm @if(\Lara\utilities\ViewUtility::isLightMode()) btn-secondary @else btn-primary @endif nav-link">
                     @if(\Lara\utilities\ViewUtility::isLightMode())
-                        {{ trans('mainLang.light') }}
-                    @else
                         {{ trans('mainLang.dark') }}
+                    @else
+                        {{ trans('mainLang.light') }}
                     @endif
                 </a>
             </li>

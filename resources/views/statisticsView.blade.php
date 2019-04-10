@@ -46,8 +46,8 @@
         <br class="d-block d-md-none">
 
         {{-- Month/year statstics selector --}}
-        <div class="col-7 col-12 btn-group float-right">
-            <div class="col-4 ">
+        <div class=" col-12 btn-group float-right">
+            <div class="col-12 col-md-10">
                 @if($isMonthStatistic)
                     <a class="btn btn-xs btn-primary float-right"
                        type="button"
