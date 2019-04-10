@@ -1,8 +1,8 @@
-<div class="card border-warning">
+<div class="card border-light rounded">
 
 	{{-- Check if the event is still going on --}}
     @php
-        $classString = "card-header";
+        $classString = "card-header rounded-top";
         $clubEventClass = \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent);
     @endphp
 	{{-- Set card color --}}
@@ -43,7 +43,7 @@
 			@if (!is_null($clubEvent->getSchedule))
 
 				{{-- Show shifts --}}
-                @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true])
+                @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true, 'commentsInSeparateLine' => true])
 			@endif
 
 		</div>

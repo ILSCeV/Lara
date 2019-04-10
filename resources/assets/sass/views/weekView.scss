@@ -4,6 +4,20 @@
  *
  ******************************************************************************/
 
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
+.card-columns {
+  @include media-breakpoint-down(sm) {
+    column-count: 1;
+  }
+  @include media-breakpoint-between(md, lg) {
+    column-count: 2;
+  }
+}
+
 .card {
   margin-bottom: 0px !important;
 }

@@ -10,7 +10,7 @@
     <div class="otherMonth custom-md-85">
 @endif
     <div class="day-cell">
-        <small class="d-lg-none">
+        <small>
             {{-- Display day of the week--}}
             {{ strftime("%a", $weekDay->getTimestamp()) }}
         </small>

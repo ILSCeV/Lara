@@ -202,8 +202,8 @@
             </button>
         </div>
 
-        <div class="row mx-md-5 mx-sm-1 my-3">
-        	<div class="card col-12 p-0 mx-sm-1">
+        <div class="row ">
+        	<div class="card col-12 mx-sm-1 m-auto">
         		@if( $clubEvent->getSchedule->schdl_password != '')
         			<div class="card-header hidden-print">
         			    {!! Form::password('password', array('required',
@@ -214,7 +214,7 @@
         			</div>
         		@endif
 
-                @include('partials.shifts.takeShiftTable',['shifts'=>$shifts, 'hideComments'=>false])
+                @include('partials.shifts.takeShiftTable',['shifts'=>$shifts, 'hideComments'=>false, 'commentsInSeparateLine' => false])
         	</div>
         </div>
 	</div>

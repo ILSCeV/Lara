@@ -92,18 +92,16 @@ if($extraFilter!='')
         </div>
     </div>
 
-    <div class="row">
-        <div class="container-fluid">
+    <div class="card-columns">
             {{-- weekdays --}}
             @if (!$events->isEmpty())
-                <div class="d-flex flex-wrap">
                     @foreach($events as $clubEvent)
                         {{-- Filter: we add a css class later below if a club is mentioned in filter data --}}
                         {{-- we compare the current week number with the week the event happens in
                                          to catch and hide any events on mondays and tuesdays (day < 3) next week
                                          in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view. --}}
                         @php
-                            $elementClass = 'element-item private section-filter flex-grow-1 ';
+                            $elementClass = 'element-item private section-filter ';
                             foreach($sections as $section){
                                 if(in_array( $section->id, $clubEvent->showToSectionIds() )){
                                 $elementClass.=" section-" . $section->id;
@@ -139,13 +137,11 @@ if($extraFilter!='')
                         </div>
                     @endforeach
                     @include('partials.weekView.survey')
-                </div>
-        </div>
     </div>
     @else
         <br>
-        <div class="panel" style="margin: 16px;">
-            <div class="card-header">
+        <div class="card rounded" style="margin: 16px;">
+            <div class="card-header rounded-top">
                 <h5>{{ trans('mainLang.noEventsThisWeek') }}</h5>
             </div>
         </div>

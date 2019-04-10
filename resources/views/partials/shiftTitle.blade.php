@@ -20,18 +20,16 @@
               title="{{ date("H:i", strtotime($shift->start)) .
               "-" .
               date("H:i", strtotime($shift->end)) }}">
-                <small>
-                    <strong>
-                        {{ $shift->type->title() }}
-                    </strong>
-                    @if($shift->optional)
-                        ({{Lang::get('mainLang.optionalShort')}})
-                    @endif
-                    <div class="shift-time hide text-dark-grey">
-                        {!! "(" . date("H:i", strtotime($shift->start))
-                        . "-" .
-                        date("H:i", strtotime($shift->end)) . ")" !!}
-                    </div>
-                </small>
+            <strong>
+                {{ $shift->type->title() }}
+            </strong>
+            @if($shift->optional)
+                ({{Lang::get('mainLang.optionalShort')}})
+            @endif
+            <div class="shift-time hide text-dark-grey">
+                {!! "(" . date("H:i", strtotime($shift->start))
+                . "-" .
+                date("H:i", strtotime($shift->end)) . ")" !!}
+            </div>
         </span>
 </div>

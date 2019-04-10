@@ -1,8 +1,8 @@
-<div class="card border-warning">
+<div class="card border-light rounded-top">
 
 	{{--Check if the event is still going on--}}
     @php
-        $classString = "card-header";
+        $classString = "card-header rounded";
         $clubEventClass = \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent);
     @endphp
 
@@ -57,18 +57,9 @@
 		<div class="card-body p-0">
 
 			{{-- Show shifts --}}
-            @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true])
+            @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true, 'commentsInSeparateLine' => true])
 
 
 		</div>
-    <div class="card-footer">
-        {{-- Show a "hide" button for management, that allows removal of an event from current view - needed for printing --}}
-        @is('marketing', 'clubleitung', 'admin')
-        <div class="float-right hidden-print">
-            <small><a href="#" class="hide-event">{{ trans('mainLang.hide') }}</a></small>
-        </div>
-        @endis
-
-    </div>
-
+	@include('partials.weekView.hideEvent')
 </div>
