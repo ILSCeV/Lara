@@ -43,7 +43,7 @@
 			@if (!is_null($clubEvent->getSchedule))
 
 				{{-- Show shifts --}}
-                @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true, 'commentsInSeparateLine' => false])
+                @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true, 'commentsInSeparateLine' => true])
 			@endif
 
 		</div>
