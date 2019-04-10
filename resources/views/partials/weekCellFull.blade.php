@@ -57,7 +57,7 @@
 		<div class="card-body p-0">
 
 			{{-- Show shifts --}}
-            @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true])
+            @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true, 'commentsInSeparateLine' => true])
 
 
 		</div>
