@@ -7,6 +7,9 @@
             {{ trans('mainLang.changeEventJob') }}
         @endif
 @stop
+@section('moreScripts')
+    <script src="{{asset(WebpackBuiltFiles::$jsFiles['autocomplete'])}}" ></script>
+@endsection
 
 @section('content')
     @php
