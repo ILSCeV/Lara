@@ -4,6 +4,10 @@
     {{ trans('mainLang.editDetails') }}
 @stop
 
+@section('moreScripts')
+    <script src="{{asset(WebpackBuiltFiles::$jsFiles['autocomplete'])}}" ></script>
+@endsection
+
 @section('content')
     @if($template->id == null)
         {!! Form::open(['method' => 'POST', 'route' => ['template.update', 0], 'class'=> 'form-inline']) !!}
