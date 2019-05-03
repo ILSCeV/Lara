@@ -27,7 +27,7 @@ $(()=>{
         const selectedValue = $(target).val();
 
         bootbox.confirm({
-            title: '<h4 class="alert alert-warning text-center"> <span class="glyphicon glyphicon-warning-sign"></span> ' + translate('changeUserStatusHeader') + '&nbsp;<span class="glyphicon glyphicon-warning-sign"></span></h4>',
+            title: '<h4 class="alert alert-warning text-center"> <i class="fas fa-exclamation-triangle"></i> ' + translate('changeUserStatusHeader') + '&nbsp;<i class="fas fa-exclamation-triangle"></i></h4>',
             size: 'large',
             message: '<p>' + translate('changeUserStatus') +  '</p><p class="text-warning">'+ userName + '</p><p class="text-warning">'+ selectedValue +'</p>',
             buttons: {
