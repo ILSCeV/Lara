@@ -32,11 +32,11 @@ $(()=>{
             message: '<p>' + translate('changeUserStatus') +  '</p><p class="text-warning">'+ userName + '</p><p class="text-warning">'+ selectedValue +'</p>',
             buttons: {
                 confirm: {
-                    label:'<span class="glyphicon glyphicon-ok" ></span>',
+                    label:'<i class="fas fa-check"></i>',
                     className:'btn-danger'
                 },
                 cancel: {
-                    label:'<span class="glyphicon glyphicon-remove" ></span>',
+                    label:'<i class="fas fa-times"></i>',
                     className: 'btn-success'
                 }
             },

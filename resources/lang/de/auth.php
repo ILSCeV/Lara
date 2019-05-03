@@ -27,7 +27,7 @@ return [
 
     'email' => 'E-Mail',
     'nickname' => 'Nickname',
-    'givenname' => 'Vornname',
+    'givenname' => 'Vorname',
     'lastname' => 'Nachname',
     'section' => 'Sektion',
     'status' => 'Status',

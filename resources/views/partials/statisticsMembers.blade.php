@@ -6,7 +6,7 @@
     </div>
 
    <ul class="nav nav-tabs">
-       @foreach($clubInfos as $title => $info)
+       @foreach($clubInfos->sortKeys() as $title => $info)
             <li class="{{Lara\Section::current()->title === $title? 'active': ''}} statisticClubPicker nav-item">
                 <a aria-expanded="{{Lara\Section::current()->title == $title? 'true' : 'false'}}"
                    href="#{{ str_replace(' ', '-', mb_strtolower($title)) }}"
@@ -20,7 +20,7 @@
 
 <div class="card card-body p-0">
     <div id="memberStatisticsTabs" class="tab-content">
-        @foreach($clubInfos as $title => $clubInfo)
+        @foreach($clubInfos->sortKeys()  as $title => $clubInfo)
             <div class="tab-pane fade in {{ Lara\Section::current()->title === $title ? 'active' : '' }}"
                  id="{{ str_replace(' ', '-', mb_strtolower($title)) }}">
                 <table class="table table-hover">

@@ -9,7 +9,7 @@
         <li class="leaderboardsClubPicker nav-item">
             <a class="nav-link" aria-expanded="true" href="#all-leaderboards" data-toggle="tab">{{ trans('mainLang.allClubs') }}</a>
         </li>
-        @foreach($clubInfos->keys() as $title)
+        @foreach($clubInfos->sortKeys()->keys() as $title)
             <li class="{{Lara\Section::current()->title == $title? 'active': ''}} leaderboardsClubPicker nav-item">
                 <a aria-expanded="{{Lara\Section::current()->title == $title? 'active': ''}}"
                    href="#{{ str_replace(' ', '-', strtolower($title)) }}-leaderboards"
