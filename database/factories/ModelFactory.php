@@ -32,7 +32,7 @@ $factory->define(Lara\Person::class, function (Faker\Generator $faker) {
         'prsn_ldap_id' => $faker->boolean(60) ? $faker->numberBetween(2000, 9999):null,
         'prsn_status' => $faker->randomElement(Status::ACTIVE),
         'prsn_uid' => hash("sha512", uniqid()),
-        'clb_id' => $faker->randomElement((new Lara\Club)->inRandomOrder()->get()->map(function(\Lara\Club $club){return $club->id;})->toArray())
+        'clb_id' => $faker->randomElement(\Lara\Club::query()->inRandomOrder()->get()->map(function(\Lara\Club $club){return $club->id;})->toArray())
     ];
 });
 
@@ -85,7 +85,7 @@ $factory->define(Lara\SurveyQuestion::class, function(Faker\Generator $faker){
 });
 
 $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
-    $start = $faker->dateTimeBetween('-30 days', '+60 days');
+    $start = $faker->dateTimeBetween('-5 years', '+1 years');
     $end = $faker->dateTimeBetween($start, date("Y-m-d H:i:s", strtotime('+1 day', $start->getTimestamp())));
     $eventName = $faker->randomKey(EventNameDictionary::EVENT_NAMES);
     $eventType = EventNameDictionary::EVENT_NAMES[$eventName];
@@ -138,12 +138,7 @@ $factory->define(Lara\Schedule::class, function(Faker\Generator $faker) {
 $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
     $end = $faker->time('H:i');
     $start = $faker->time('H:i', $end);
-    $personId = $faker->randomElement([Lara\Person::inRandomOrder()->first()->id, NULL]);
     return [
-        'schedule_id' => Lara\Schedule::inRandomOrder()->first()->id,
-        'shifttype_id' => Lara\ShiftType::inRandomOrder()->first()->id,
-        'person_id' => $personId,
-        'comment' => $personId ? $faker->randomElement([$faker->sentence, ""]) : "",
         'start' => $start,
         'end' => $end,
         'statistical_weight' => 1,
@@ -153,7 +148,7 @@ $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
 
 $factory->define(Lara\Club::class, function(Faker\Generator $faker) {
     return [
-        'clb_title' => $faker->word(),
+        'clb_title' => $faker->randomElement(["bi-Club","bc-Club","FEM","iStuff","bh-Club","bc-Cafe","bd-Club","MFK","Band"]),
     ];
 });
 

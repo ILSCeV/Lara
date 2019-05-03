@@ -1,4 +1,3 @@
-import * as $ from "jquery";
 import * as bootbox from "bootbox";
 
 import {translate} from "./Translate";
@@ -11,12 +10,12 @@ $(()=>{
         });
     });
     $('.change-user-status-form > .selectpicker').selectpicker({
-        style: 'btn btn-default btn-sm',
+        style: 'btn btn-secondary btn-sm',
         liveSearch:true
     });
 
   $('.editUserFormselectpicker').selectpicker({
-    style: 'btn btn-default btn-sm',
+    style: 'btn btn-secondary btn-sm',
     liveSearch:true
   });
 
@@ -28,16 +27,16 @@ $(()=>{
         const selectedValue = $(target).val();
 
         bootbox.confirm({
-            title: '<h4 class="alert alert-warning text-center"> <span class="glyphicon glyphicon-warning-sign"></span> ' + translate('changeUserStatusHeader') + '&nbsp;<span class="glyphicon glyphicon-warning-sign"></span></h4>',
+            title: '<h4 class="alert alert-warning text-center"> <i class="fas fa-exclamation-triangle"></i> ' + translate('changeUserStatusHeader') + '&nbsp;<i class="fas fa-exclamation-triangle"></i></h4>',
             size: 'large',
             message: '<p>' + translate('changeUserStatus') +  '</p><p class="text-warning">'+ userName + '</p><p class="text-warning">'+ selectedValue +'</p>',
             buttons: {
                 confirm: {
-                    label:'<span class="glyphicon glyphicon-ok" ></span>',
+                    label:'<i class="fas fa-check"></i>',
                     className:'btn-danger'
                 },
                 cancel: {
-                    label:'<span class="glyphicon glyphicon-remove" ></span>',
+                    label:'<i class="fas fa-times"></i>',
                     className: 'btn-success'
                 }
             },

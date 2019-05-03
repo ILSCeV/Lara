@@ -1,60 +1,62 @@
 <br>
-<div class="col-md-12 col-xs-12 text-dark-grey centered text-dark-grey hidden-print">
-      <i class="fa fa-calendar-o"></i>
+<div class="col-12 col-md-12 text-center hidden-print">
+      <i class="fas fa-calendar-alt"></i>
        - {{ trans('mainLang.normalProgramm') }}
 
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
-      <small>&nbsp;</small><i class="fa fa-info"></i><small>&nbsp;</small>
+      <small>&nbsp;</small><i class="fas fa-info"></i><small>&nbsp;</small>
        - {{ trans('mainLang.information') }}
 
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
-      <i class="fa fa-star text-dark-grey"></i></span>
+      <i class="fas fa-star"></i></span>
        - {{ trans('mainLang.special') }}
 
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
-      <i class="fa fa-music"></i>
+      <i class="fas fa-music"></i>
        - {{ trans('mainLang.LiveBandDJ') }}
 
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
 
-      <i class="fa fa-eur"></i>
+      <i class="fas fa-money-bill-alt"></i>
        - {{ trans('mainLang.utilization') }}
 
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
-      <i class="fa fa-eye-slash"></i>
+      <i class="fas fa-eye-slash"></i>
        - {{ trans('mainLang.internalEvent') }}
 
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
-      <i class="fa fa-life-ring"></i>
+      <i class="fas fa-life-ring"></i>
        - {{ trans('mainLang.flooding') }}
 
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
-      <i class="fa fa-building"></i>
+      <i class="fas fa-building"></i>
        - {{ trans('mainLang.marketingFlyersPlacard') }}
 
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
-      <i class="fa fa-ticket"></i>
+      <i class="fas fa-ticket-alt"></i>
        - {{ trans('mainLang.preSale') }}
 
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
 
-      <i class="fa fa-tree"></i>
+      <i class="fas fa-tree"></i>
        - {{ trans('mainLang.outsideEvent') }}
 
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs">
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
-      <i class="fa fa-cutlery"></i>
+      <i class="fas fa-utensils"></i>
        - {{ trans('mainLang.buffet') }}
 
-      <span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="visible-xs visible-sm">
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
-      <i class="fa fa-list-alt"></i>
+      <i class="fas fa-list-alt"></i>
        - {{ trans('mainLang.others') }}
+
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 </div>

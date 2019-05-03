@@ -7,19 +7,25 @@
             {{ trans('mainLang.changeEventJob') }}
         @endif
 @stop
+@section('moreScripts')
+    <script src="{{asset(WebpackBuiltFiles::$jsFiles['autocomplete'])}}" ></script>
+@endsection
 
 @section('content')
+    @php
+        $labelClass = 'col-3';
+        $inputClass = 'form-control col-8';
+    @endphp
 
-@auth
     <div class="row">
-        <div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
+        <div class="card col p-0">
             @if($createClubEvent)
                 {!! Form::open(['method' => 'POST', 'class'=>'form-inline','id'=>'templateSelectorForm']) !!}
-                <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div class="form-group col-12 p-0">
                     <label for="templateSelector"
-                           class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}:
+                           class="col-form-label col-2">{{ trans('mainLang.template') }}:
                         &nbsp;</label>
-                    <div class="col-md-6 col-sm-6 col-xs-8">
+                    <div class="col-6">
                         <select name="template" id="templateSelector" class="selectpicker" data-live-search="true">
                             <optgroup label="">
                                 <option value="-1"></option>
@@ -41,15 +47,15 @@
                                 </optgroup>
                             @endforeach
                         </select>
-                        <button class="hidden" type="submit"></button>
+                        <button class="d-none" type="submit"></button>
                     </div>
                 </div>
                 {!! Form::close() !!}
             @elseIf(isset($baseTemplate) && !is_null($baseTemplate))
-                <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-                    <label class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.template') }}:
+                <div class="form-group col-12 p-0">
+                    <label class="col-form-label col-2">{{ trans('mainLang.template') }}:
                         &nbsp;</label>
-                    <div class="col-md-6 col-sm-6 col-xs-8">
+                    <div class="col-6">
                         <div class="row">
                             {{ $baseTemplate->title }}
                         </div>
@@ -66,17 +72,17 @@
         </div>
     </div>
     @if($createClubEvent)
-	    {!! Form::open(['method' => 'POST', 'route' => ['event.store']]) !!}
-        <input class="hidden" id="templateValue" name="template" />
+	    {!! Form::open(['method' => 'POST', 'route' => ['event.store'], 'class' => 'form-inline']) !!}
+        <input class="d-none" id="templateValue" name="template" />
     @else
-        {!! Form::open(['method' => 'PUT', 'route' => ['event.update', $event->id]]) !!}
+        {!! Form::open(['method' => 'PUT', 'route' => ['event.update', $event->id], 'class' => 'form-inline']) !!}
     @endif
 
 	<div class="row">
-		<div class="panel col-md-6 col-sm-12 col-xs-12 no-padding">
+		<div class="card col-6 p-0">
 
-			<div class="panel-heading">
-				<h4 class="panel-title">
+			<div class="card-header ">
+				<h4 class="card-title">
                     @if($createClubEvent)
                         {{ trans('mainLang.createNewEvent') }}
                     @else
@@ -88,136 +94,111 @@
 
 			<br>
 
-			<div class="panel-body no-padding">
-			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-			   		<span class="col-md-1 col-sm-1 col-xs-1">&nbsp;</span>
-					{!! Form::checkbox('saveAsTemplate', '1', false, array('class'=>'col-md-1 col-sm-1 col-xs-1')) !!}
-					<span class="col-md-9 col-sm-9 col-xs-9">{{ trans('mainLang.templateNewSaveQ') }}</span>
+			<div class="card-body p-0">
+			   	<div class="form-group col-12 ">
+			   		<span class="col-2">&nbsp;</span>
+					{!! Form::checkbox('saveAsTemplate', '1', false, array('class'=>'col-2 form-check')) !!}
+					<span class="col-7">{{ trans('mainLang.templateNewSaveQ') }}</span>
 			   	</div>
-
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-			      	<label for="title" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.title') }}:</label>
+                <br>
+				<div class="form-group col-12 ">
+			      	<label for="title" class="{{ $labelClass }}">{{ trans('mainLang.title') }}:</label>
 		      		@if(is_null($title))
 			      		{!! Form::text( 'title', '', array('placeholder'=>Lang::get('mainLang.placeholderTitleWineEvening'),
 			      										   'style'=>'cursor: auto',
-			      										   'class'=>'col-md-9 col-sm-9 col-xs-8',
+			      										   'class'=>$inputClass,
 			      										   'required') ) !!}
 			      	@else
 			      		{!! Form::text( 'title', $title, array('placeholder'=>Lang::get('mainLang.placeholderTitleWineEvening'),
 		      										   'style'=>'cursor: auto',
-		      										   'class'=>'col-md-9 col-sm-9 col-xs-8',
+		      										   'class'=>$inputClass,
 		      										   'required') ) !!}
 		      		@endif
 			    </div>
-
-			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="subtitle" class="col-md-2 col-sm-2 col-xs-3">{{ trans('mainLang.subTitle') }}:</label>
+                <br>
+			    <div class="form-group col-12">
+					<label for="subtitle" class="{{ $labelClass }}">{{ trans('mainLang.subTitle') }}:</label>
 					@if(is_null($subtitle))
 						{!! Form::text('subtitle', '', array('placeholder'=>Lang::get('mainLang.placeholderSubTitleWineEvening'),
-															 'class'=>'col-md-9 col-sm-9 col-xs-8',
+															 'class'=>$inputClass,
 			      										     'style'=>'cursor: auto') ) !!}
 			      	@else
 			      		{!! Form::text('subtitle', $subtitle, array('placeholder'=>Lang::get('mainLang.placeholderSubTitleWineEvening'),
-															 'class'=>'col-md-9 col-sm-9 col-xs-8',
+															 'class'=>$inputClass,
 			      										     'style'=>'cursor: auto') ) !!}
 			      	@endif
 			    </div>
-
+                <br>
 			    @is('marketing', 'clubleitung', 'admin')
-					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-						<label for="facebookDone" class="col-md-4 col-sm-4 col-xs-7">{{trans('mainLang.faceDone')}}?</label>
+					<div class="form-group col-12 p-0">
+						<label for="facebookDone" class="col-4">{{trans('mainLang.faceDone')}}?</label>
                         <select class="selectpicker" name="facebookDone" id="facebookDone">
                             <option value="-1" @if($facebookNeeded === null) selected @endif> {{ trans('mainLang.=FREI=') }} </option>
                             <option value="0" @if($facebookNeeded !== null && $facebookNeeded === 0) selected @endif > {{ trans('mainLang.no') }} </option>
                             <option value="1" @if($facebookNeeded) selected @endif > {{ trans('mainLang.yes') }} </option>
                         </select>
 					</div>
-					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-						<label for="eventUrl" class="col-md-3 col-sm-3 col-xs-5">{{trans('mainLang.eventUrl')}}:</label>
-						{!! Form::text('eventUrl', $eventUrl, array('class'=>'col-md-8 col-sm-8 col-xs-6','style'=>'cursor: auto')) !!}
+                    <br>
+					<div class="form-group col-12">
+						<label for="eventUrl" class="{{ $labelClass }}">{{trans('mainLang.eventUrl')}}:</label>
+						{!! Form::text('eventUrl', $eventUrl, ['class'=>$inputClass,'style'=>'cursor: auto']) !!}
 					</div>
-				    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-				     	<label for="evnt_type" class="col-md-3 col-sm-3 col-xs-3">Typ:</label>
-				     	<div class="col-md-9 col-sm-9 col-xs-9">
-				            {!! Form::radio('evnt_type', "0", array("checked")) !!}
-							{{ trans('mainLang.normalProgramm') }}
-				            <br>
-				            {!! Form::radio('evnt_type', "2", $type == 2 ? array("checked") : "") !!}
-							{{ trans('mainLang.special') }}
-				            <br>
-				            {!! Form::radio('evnt_type', "3", $type == 3 ? array("checked") : "") !!}
-							{{ trans('mainLang.LiveBandDJ') }}
-				            <br>
-				            {!! Form::radio('evnt_type', "5", $type == 5 ? array("checked") : "") !!}
-							{{ trans('mainLang.utilization') }}
-				            <br>
-				            {!! Form::radio('evnt_type', "10", $type == 10 ? array("checked") : "") !!}
-							{{ trans('mainLang.outsideEvent') }}
-				            <br>
-				            {!! Form::radio('evnt_type', "11", $type == 11 ? array("checked") : "") !!}
-							{{ trans('mainLang.buffet') }}
-				            <br>
-				            {!! Form::radio('evnt_type', "4", $type == 4 ? array("checked") : "") !!}
-							{{ trans('mainLang.internalEvent') }}
-				            <br>
-				            {!! Form::radio('evnt_type', "6", $type == 6 ? array("checked") : "") !!}
-							{{ trans('mainLang.flooding') }}
-				            <br>
-				            {!! Form::radio('evnt_type', "7", $type == 7 ? array("checked") : "") !!}
-							{{ trans('mainLang.flyersPlacard') }}
-				            <br>
-				            {!! Form::radio('evnt_type', "8", $type == 8 ? array("checked") : "") !!}
-							{{ trans('mainLang.preSale') }}
-				            <br>
-				            {!! Form::radio('evnt_type', "9", $type == 9 ? array("checked") : "") !!}
-							{{ trans('mainLang.others') }}
-				            <br>
-				            {!! Form::radio('evnt_type', "1", $type == 1 ? array("checked") : "") !!}
-							{{ trans('mainLang.information') }}
-				            <br>
-				            <div>
-								{!! Form::checkbox('isPrivate', '1', $private ? false : true) !!}
-								{{ trans('mainLang.showExtern') }}
-							</div>
-				            <br>
-
-						</div>
+                    <br>
+				    <div class="form-group col-12 p-0">
+                        <label for="evnt_type" class="col-3">{{ trans('mainLang.type') }}:</label>
+                        <div class="col-8">
+                            @for($i = 0;$i<12;$i++)
+                                <div class="form-check float-left">
+                                    <label >
+                                        {{ Form::radio('type', $i, $type == $i) }}
+                                        {{ \Lara\Utilities::getEventTypeTranslation($i) }}
+                                    </label>
+                                </div>
+                                <br/>
+                            @endfor
+                        </div>
 				    </div>
 				@else
-					<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-				     	<label for="evnt_type" class="control-label col-md-3 col-sm-3 col-xs-3">Typ:</label>
-				     	<div class="col-md-9 col-sm-9 col-xs-9">
-				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+					<div class="form-group col-12 p-0">
+				     	<label for="evnt_type" class="col-form-label {{$labelClass}}">Typ:</label>
+				     	<div class="col-9">
+				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.normalProgramm') }}
 				            <br>
-				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.special') }}
 				            <br>
-				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.LiveBandDJ') }}
 				            <br>
-				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.utilization') }}
 				            <br>
-				            {!! Form::radio('evnt_type', "4", array("checked")) !!}
+                            &nbsp;{!! Form::radio('evnt_type', "4", ["checked"=>"checked" , "class"=>'form-check']) !!}
 							{{ trans('mainLang.internalEvent') }}
 				            <br>
-				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.flooding') }}
 				            <br>
-				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.flyersPlacard') }}
 				            <br>
-				            &nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.preSale') }}
 				            <br>
-				            {!! Form::radio('evnt_type', "9", $type == 9 ? array("checked") : "") !!}
+                            &nbsp;{!! Form::radio('evnt_type', "9", [$type == 9 ? "checked" : "", "class"=>'form-check']) !!}
 							{{ trans('mainLang.others') }}
 				            <br>
-				            {!! Form::radio('evnt_type', "1", $type == 1 ? array("checked") : "") !!}
+                            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
+                            {{ trans('mainLang.outsideEvent') }}
+                            <br>
+                            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
+                            {{ trans('mainLang.buffet') }}
+                            <br>
+                            &nbsp;{!! Form::radio('evnt_type', "1", [$type == 1 ? "checked" : "", "class"=>'form-check'] ) !!}
 							{{ trans('mainLang.information') }}
 				            <br>
-							&nbsp;<i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+							&nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.survey') }}
 							<br>
 
@@ -235,53 +216,56 @@
 				    </div>
 				@endis
 
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="section" class="control-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.section') }}: &nbsp;</label>
-					<span class="col-md-9 col-sm-9 col-xs-9">
-						@if (!is_null($section))
-							{!! Form::text('section', $section->title, array('id'=>'section', 'readonly') ) !!}
-						@elseif(!is_null(Auth::user()))
-							{!! Form::text('section', Auth::user()->section->title, array('id'=>'section', 'readonly')) !!}
-						@endif
-					 	<a class="btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-					        <span class="caret"></span>
-					    </a>
-					    <ul class="dropdown-menu">
-						    @foreach($sections as $dSection)
-						        <li>
-						        	<a href="javascript:void(0);"
-						        	   onClick="document.getElementById('section').value='{{$dSection->title}}'">{{ $dSection->title }}</a>
-						        </li>
-							@endforeach
-					    </ul>
-				    </span>
+				<div class="form-group col-12 p-0">
+                    <label for="section" class="col-form-label col-3">{{ trans('mainLang.section') }}: &nbsp;</label>
+                    <select id="section" class="selectpicker" name="section" >
+                        @php
+                            if(Auth::user()->isAn(\Lara\utilities\RoleUtility::PRIVILEGE_ADMINISTRATOR)){
+                            $allowedSections = $sections;
+                            }
+                            else {
+                            $allowedSections = Auth::user()->roles->filter(function (\Lara\Role $r){
+                            return $r->name == \Lara\utilities\RoleUtility::PRIVILEGE_MARKETING || $r->name == \Lara\utilities\RoleUtility::PRIVILEGE_MEMBER;
+                            })->map(function (\Lara\Role $r){
+                            return $r->section;
+                            });
+                            }
+                        @endphp
+                        @foreach($allowedSections->sortBy('title') as $eventSection)
+                            <option value="{{$eventSection->id}}"
+                                    data-content="<span class='palette-{!! $eventSection->color !!}-900 bg'> {{$eventSection->title}} </span>"
+                                    @if($eventSection->id == $section->id) selected @endif >{{ $eventSection->title }}</option>
+                        @endforeach
+                    </select>
 			   	</div>
+                <br>
+			   	<div class="form-group col-md-12 col-sm-12 col-12 p-0" id="filter-checkboxes">
+                    <label for="filter" class="col-form-label col-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
+                    <div id="filter" class="input-group form-check col-6">
 
-			   	<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding" id="filter-checkboxes">
-					<label for="filter" class="control-label col-md-3 col-sm-3 col-xs-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
-					<div class="col-md-9 col-sm-9 col-xs-9">
-						@if(is_null($filter) || $filter == "")
-							{{-- Set default values to the club the user is a member in.--}}
-							@foreach(Lara\Section::all()->sortBy('title') as $fSection)
-                                {{ Form::checkbox("filter[" . $fSection->title ."]", $fSection->id, $fSection->title === \Lara\Section::current()->title) }}
-									{{ $fSection->title }}
-                                	<br>
-							@endforeach
-						@else
-							@foreach(Lara\Section::all()->sortBy('title') as $fSection)
-								{{ Form::checkbox("filter[" . $fSection->title ."]", $fSection->id, in_array($fSection->title, $filter)) }}
-								{{ $fSection->title }}
-								<br>
-							@endforeach
-						@endif
-				    </div>
+                        @if(isset($templateId) && $templateId == null && $createClubEvent)
+                            @foreach($sections->sortBy('title') as $filterSection)
+                                <label>
+                                    {{ Form::checkbox("filter[" . $filterSection->title ."]", $filterSection->id, $filterSection->id === Auth::user()->section_id )}}
+                                    {{ $filterSection->title }}
+                                </label>
+                            @endforeach
+                        @else
+                            @foreach($sections->sortBy('title') as $filterSection)
+                                <label>
+                                    {{ Form::checkbox("filter[" . $filterSection->title ."]", $filterSection->id, in_array( $filterSection->title, $filter)) }}
+                                    {{ $filterSection->title }}
+                                </label>
+                            @endforeach
+                        @endif
+                    </div>
 			   	</div>
-
-				<div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
-					<label for="priceTickets" class="control-label col-md-4 col-sm-4 col-xs-12 no-padding">
+                <br>
+				<div class="form-group col-12" id="filter-checkboxes">
+					<label for="priceTickets" class="col-form-label {{$labelClass}}">
 						{{ trans('mainLang.priceTickets') }}:  <br>
 						({{ trans('mainLang.studentExtern') }})</label>
-					<div id="priceTickets" class="input-group col-md-5 col-sm-5 col-xs-12">
+					<div id="priceTickets" class="input-group col-8">
 						<input class="form-control" type="number" name="priceTicketsNormal" step="0.1" min="0" placeholder="Student" value="{{$priceTicketsNormal}}"/>
 						<span class="input-group-addon">€</span>
 						<span class="input-group-addon">/</span>
@@ -290,11 +274,11 @@
 					</div>
 				</div>
 
-				<div class="form-group col-md-12 col-sm-12 col-xs-12" id="filter-checkboxes">
-					<label for="price" class="control-label col-md-4 col-sm-4 col-xs-12 no-padding">
+				<div class="form-group col-md-12 col-sm-12 col-12" id="filter-checkboxes">
+					<label for="price" class="col-form-label {{$labelClass}}">
 						{{ trans('mainLang.price') }}:   <br>
 						({{ trans('mainLang.studentExtern') }})</label>
-					<div id="price" class="input-group col-md-5 col-sm-5 col-xs-12">
+					<div id="price" class="input-group col-8">
 						<input class="form-control" type="number" name="priceNormal" step="0.1" min="0" placeholder="Student" value="{{$priceNormal}}"/>
 						<span class="input-group-addon">€</span>
 						<span class="input-group-addon">/</span>
@@ -303,66 +287,68 @@
 					</div>
 				</div>
 
-			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="preparationTime" class="control-label col-md-2 col-sm-2 col-xs-4">{{ trans('mainLang.DV-Time') }}:</label>
-					<div class="col-md-3 col-sm-3 col-xs-3">
-						<span class="hidden-xs">&nbsp;&nbsp;</span>
-						{!! Form::input('time', 'preparationTime', $dv) !!}
+			    <div class="form-group col-12">
+					<label for="preparationTime" class="col-form-label {{$labelClass}}">{{ trans('mainLang.DV-Time') }}:</label>
+                    <div class="col-8">
+					    {!! Form::input('time', 'preparationTime', $dv,['class'=>'form-control']) !!}
+                    </div>
+			    </div>
+                <br>
+			    <div class="form-group col-12">
+					<label for="beginDate" class="col-form-label {{$labelClass}}">{{ trans('mainLang.begin') }}:</label>
+					<div class="col-8">
+						{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date)),['class'=>'form-control']) !!}
+						{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', $timeStart,['class'=>'form-control']) !!}
 					</div>
 			    </div>
-
-			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="beginDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.begin') }}:</label>
-					<div class="col-md-10 col-sm-10 col-xs-12">
-						{!! Form::input('date', 'beginDate', date("Y-m-d", strtotime($date))) !!}
-						{{ trans('mainLang.um') }} {!! Form::input('time', 'beginTime', $timeStart) !!}
-					</div>
-			    </div>
-
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label for="endDate" class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('mainLang.end') }}:</label>
-					<div class="col-md-10 col-sm-10 col-xs-12">
+                <br>
+				<div class="form-group col-12">
+					<label for="endDate" class="col-form-label {{$labelClass}}">{{ trans('mainLang.end') }}:</label>
+					<div class="col-8">
                         @if($createClubEvent)
-						{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($timeStart) < strtotime($timeEnd) ? strtotime($date) : strtotime("+1 day", strtotime($date)))) !!}
+						{!! Form::input('date', 'endDate', date("Y-m-d", strtotime($timeStart) < strtotime($timeEnd) ? strtotime($date) : strtotime("+1 day", strtotime($date))),['class'=>'form-control']) !!}
                         @else
-                            {!! Form::input('date', 'endDate', $event->evnt_date_end) !!}
+                            {!! Form::input('date', 'endDate', $event->evnt_date_end,['class'=>'form-control']) !!}
                         @endif
-						{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $timeEnd) !!}
+						{{ trans('mainLang.um') }} {!! Form::input('time', 'endTime', $timeEnd,['class'=>'form-control']) !!}
 					</div>
 			    </div>
 
-			    <div class="col-md-12 col-sm-12 col-xs-12">
+			    <div class="col-12">
 			    	&nbsp;
 			    </div>
 
-			    <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-			    	<label for="password" class="control-label col-md-5 col-sm-5 col-xs-12">{{ trans('mainLang.passwordEntry') }}:</label>
-			    	<div class="col-md-7 col-sm-7 col-xs-12">
-			    		{!! Form::password('password', [''] ) !!}
+			    <div class="form-group col-12">
+			    	<label for="password" class="col-form-label {{$labelClass}}">{{ trans('mainLang.passwordEntry') }}:</label>
+			    	<div class="col-8">
+			    		{!! Form::password('password', ['class'=>'form-control','aria-describedby'=>"passwordHelpBlock"]) !!}
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            {{ trans('mainLang.passwordDeleteMessage') }}
+                        </small>
 			    	</div>
 			    </div>
 
-			    <div class="form-groupcol-md-12 col-sm-12 col-xs-12 no-padding">
-			    	<label fro="passwordDouble" class="control-label col-md-5 col-sm-5 col-xs-12">{{ trans('mainLang.passwordRepeat') }}:</label>
-			    	<div class="col-md-7 col-sm-7 col-xs-12">
-			    		{!! Form::password('passwordDouble', ['']) !!}
+			    <div class="form-group col-12 ">
+			    	<label fro="passwordDouble" class="{{$labelClass}}">{{ trans('mainLang.passwordRepeat') }}:</label>
+			    	<div class="col-8">
+			    		{!! Form::password('passwordDouble', ['class'=>'form-control']) !!}
 			    	</div>
 			    </div>
 
-			    <div class="col-md-12 col-sm-12 col-xs-12">
+			    <div class="col-md-12 col-sm-12 col-12">
 			    	&nbsp;
 			    </div>
 
 		    </div>
 		</div>
 
-		<div class="container col-xs-12 col-sm-12 col-md-6 no-padding-xs">
-			<br class="visible-xs visible-sm">
-			<div class="panel">
-				<div class="panel-heading">
-					<h4 class="panel-title">{{ trans('mainLang.moreInfos') }}:</h4>({{ trans('mainLang.public') }})
+		<div class="container col p-0-xs">
+			<br class="d-block d-sm-none d-none d-sm-block d-md-none">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">{{ trans('mainLang.moreInfos') }}:</h4>({{ trans('mainLang.public') }})
 				</div>
-				<div class="panel-body">
+				<div class="card-body">
 				    <div class="form-group">
 						<div class="col-md-12">
 							@if(is_null($info))
@@ -381,11 +367,11 @@
 
 			<br>
 
-			<div class="panel">
-				<div class="panel-heading">
-					<h4 class="panel-title">{{ trans('mainLang.details') }}:</h4>({{ trans('mainLang.showOnlyIntern') }})
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">{{ trans('mainLang.details') }}:</h4>({{ trans('mainLang.showOnlyIntern') }})
 				</div>
-				<div class="panel-body">
+				<div class="card-body">
 				    <div class="form-group">
 						<div class="col-md-12">
 							@if(is_null($details))
@@ -406,11 +392,14 @@
 
 	<br>
 
-	<div class="row">
-		@include('partials.editSchedule')
-		<br>
-		{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'hidden', 'id'=>'button-create-submit')) !!}
-	    <input class="hidden" name="evntIsPublished" type="text" value="0" />
+	<div class="row col-12">
+        <div class="col-8">
+		    @include('partials.editSchedule')
+        </div>
+    </div>
+    <div class="row">
+		{!! Form::submit('Veranstaltung mit Dienstplan erstellen', array('class'=>'d-none', 'id'=>'button-create-submit')) !!}
+	    <input class="d-none" name="evntIsPublished" type="text" value="0" />
 
 	    {{--
 
@@ -422,7 +411,7 @@
 	     , 'admin')
 			<button class="btn btn-primary" id="createAndPublishBtn">{{trans('mainLang.createAndPublish')}}</button>
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<br class="visible-xs">
+			<br class="d-block d-sm-none">
 	    @endis
 
 	    --}}
@@ -433,16 +422,11 @@
         @endif
 
 		&nbsp;&nbsp;&nbsp;&nbsp;
-		<br class="visible-xs">
-		<br class="visible-xs">
-		<a href="javascript:history.back()" class="btn btn-default">{{ trans('mainLang.backWithoutChange') }}</a>
+		<br class="d-block d-sm-none">
+		<br class="d-block d-sm-none">
+		<a href="javascript:history.back()" class="btn btn-secondary">{{ trans('mainLang.backWithoutChange') }}</a>
 
 		{!! Form::close() !!}
 
 	</div>
-
-@else
-	@include('partials.accessDenied')
-@endauth
-
 @stop

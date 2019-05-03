@@ -11,6 +11,7 @@ use Input;
 use Lara\Club;
 use Lara\Person;
 use Lara\Section;
+use Lara\Status;
 use Lara\User;
 use Lara\utilities\RoleUtility;
 use Lara\Utilities;
@@ -127,7 +128,7 @@ class LoginController extends Controller
             $this->clearLoginAttempts(request());
             $userSettings = $user->settings;
             if ($userSettings) {
-                Session::put('applocale', $userSettings->language);
+                $userSettings->applyToSession();
             }
 
             return redirect()->back();
@@ -148,7 +149,17 @@ class LoginController extends Controller
         if($username != null && $username != ""){
             $person = Person::query()->where('prsn_ldap_id','=',$username)->first();
         } else {
-            $person = Person::query()->whereIn('clb_id', $clubIdsOfSections)->inRandomOrder()->first();
+            $person = Person::query()->whereIn('clb_id', $clubIdsOfSections)->whereNotNull('prsn_ldap_id')->inRandomOrder()->first();
+        }
+        if(is_null($person)){
+            $person=new Person([
+                'prsn_name'=>$username,
+                'clb_id'=>Club::activeClubs()->get()->shuffle()->first()->id,
+                'prsn_uid' => hash("sha512", uniqid()),
+                'prsn_status' => collect(Status::ACTIVE)->shuffle()->first(),
+                'prsn_ldap_id' => ''. rand(2000,9999)
+            ]);
+            $person->save();
         }
         /** @var User $user */
         $user = $person->user;

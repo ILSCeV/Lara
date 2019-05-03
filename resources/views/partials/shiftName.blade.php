@@ -1,4 +1,4 @@
-<div class="col-md-3 col-xs-3 no-padding" id="clubStatus{{ $shift->id }}">
+<div class="col-md-3 col-3 p-0" id="clubStatus{{ $shift->id }}">
     @include("partials.shiftStatus")
 </div>
 
@@ -7,7 +7,7 @@
                  Input::old('userName' . $shift->id),
                  array('placeholder'=>'=FREI=',
                        'id'=>'userName' . $shift->id,
-                       'class'=>'col-xs-8 col-md-8 ',
+                       'class'=>'col-8 col-md-8 ',
                        'autocomplete'=>'off'))
     !!}
 @else
@@ -15,7 +15,7 @@
     {!! Form::text('userName' . $shift->id,
                  $shift->getPerson->prsn_name,
                  array('id'=>'userName' . $shift->id,
-                       'class'=>'col-xs-8 col-md-8',
+                       'class'=>'col-8 col-md-8',
                        'data-toggle' => "tooltip",
                        'data-placement' =>"top",
                        'title' => $shift->getPerson->fullName(),
@@ -26,7 +26,7 @@
 {{-- Show dropdowns only for members --}}
 @auth
     <ul class="dropdown-menu dropdown-username" style="position: absolute;">
-        <li id="yourself">
+        <li class="dropdown-item" id="yourself">
             <a href="javascript:void(0);"
                onClick="document.getElementById('userName{{ ''. $shift->id }}').value='{{Auth::user()->name}}';
                        document.getElementById('club{{ ''. $shift->id }}').value='{{Lara\Section::current()->title}}';

@@ -8,26 +8,26 @@
 
 @section('content')
 
-    <div class="panel panel-info col-xs-12 no-padding">
-        <div class="panel-heading">
-            <h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageSections') }}</h4>
+    <div class="card  col-12 p-0">
+        <div class="card-header text-white bg-info">
+            <h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageSections') }}</h4>
         </div>
-        <div class="panel panel-body no-padding">
-            <table class="table info table-hover table-condensed">
+        <div class="card-body p-0">
+            <table class="table info table-hover table-sm">
                 <thead>
                 <tr class="active">
-                    <th class="col-md-1 col-xs-1">
+                    <th class="">
                         #
                     </th>
-                    <th class="col-md-2 col-xs-2">
+                    <th class="">
                         {{ trans('mainLang.section') }}
                     </th>
-                    <th class="col-md-4 col-xs-4">
+                    <th class="">
                         {{ trans("mainLang.color") }}
                     </th>
                 </tr>
                 </thead>
-                <tbody class="container">
+                <tbody class="">
                 @foreach($sections as $section)
                     <tr>
                         <td>

@@ -1,0 +1,32 @@
+@import "~bootswatch/dist/darkly/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/darkly/bootswatch";
+
+@import "imports";
+
+hr {
+    border-style:inset;
+    border-width:1px;
+}
+
+.btn {
+    text-transform: uppercase;
+}
+
+.my-shift {
+  color: black;
+  &:hover {
+    color:white;
+  }
+}
+
+
+body {
+  padding-top: 140px;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    padding-top: 150px;
+  }
+}

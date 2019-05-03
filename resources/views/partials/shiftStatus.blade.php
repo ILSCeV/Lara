@@ -1,15 +1,15 @@
-{{ Form::button('<i class="fa fa-check"
+{{ Form::button('<i class="fas fa-check"
                    data-toggle="tooltip"
                    data-placement="top"
                    title="Änderungen speichern"></i>',
                 array('type' => 'submit',
                       'name' => 'btn-submit-change' . $shift->id,
                       'id' => 'btn-submit-changes' . $shift->id,
-                      'class' => 'btn btn-small btn-success hide')) }}
+                      'class' => 'btn btn-sm btn-success hide')) }}
 
 @if( is_null($shift->getPerson) )
 
-    <i class="fa fa-question"
+    <i class="fas fa-question"
        name="status-icon"
        style="color:lightgrey;"
        data-toggle="tooltip"
@@ -22,7 +22,7 @@
     /** @var \Lara\Shift $shift */
         $person = $shift->person;
         $attributes = Lara\Status::style($person->prsn_status);
-        $section = $person->club->section();
+        $section = !is_null($person->club)?$person->club->section():null;
     @endphp
 
     @if ($section)
@@ -33,7 +33,7 @@
            data-placement="top"
            title="{{ Lara\Status::localize($person->prsn_status, $section) }}"></i>
     @else
-        <i class="fa fa-circle-o"
+        <i class="far fa-circle"
            name="status-icon"
            style="color:yellowgreen;"
            data-toggle="tooltip"

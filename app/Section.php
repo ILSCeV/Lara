@@ -48,6 +48,7 @@ class Section extends Model
 		return $this->hasMany(ClubEvent::class, 'plc_id', 'id');
 	}
 
+	/** @return Section|object*/
 	public static function current() {
         $user = Auth::user();
 

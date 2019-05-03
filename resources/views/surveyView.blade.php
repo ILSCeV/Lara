@@ -14,8 +14,11 @@ $ldapid
 @section('title')
     {{$survey->title}}
 @stop
+@section('moreScripts')
+    <script src="{{asset(WebpackBuiltFiles::$jsFiles['survey'])}}"></script>
+@endsection
 @section('moreStylesheets')
-    <link rel="stylesheet" media="all" type="text/css" href="{{ asset('/surveys.css') }}"/>
+    <link rel="stylesheet" media="all" type="text/css" href="{{ asset(WebpackBuiltFiles::$cssFiles['survey']) }}"/>
     <style>
         #dropdown_name {
             position: absolute;
@@ -43,7 +46,6 @@ $ldapid
         }
 
         #dropdown_club {
-            position: absolute;
             overflow: visible;
         }
 
@@ -110,24 +112,24 @@ $ldapid
 @stop
 @section('content')
 
-    <div class="panel no-padding">
-        <div class="panel-title-box">
-            <h4 class="panel-title">
-                <i class="fa fa-bar-chart-o white-text"></i>
+    <div class="card p-0">
+        <div class="card-title-box">
+            <h4 class="card-title">
+                <i class="fa fa-bar-chart white-text"></i>
                 &nbsp;&nbsp;
                 {{ $survey->title }}
                 @if($userId == $survey->creator_id || $userCanEditDueToRole)
                     <a href="{{$survey->id}}/edit"
                        style="float: right"
-                       class="btn btn-default btn-sm"
+                       class="btn btn-secondary btn-sm"
                        data-placement="bottom">
-                        <i class="fa fa-pencil-square-o" style="color: black"></i>
+                        <i class="fas fa-pen-square text-dark-grey" style="color: black"></i>
                     </a>
                 @endif
             </h4>
 
         </div>
-        <div class="panel-body" >
+        <div class="card-body" >
             @if(!is_null($survey->description))
                 <p><strong>{{ trans('mainLang.description') }}</strong>: {!! $survey->description !!}</p>
             @endif
@@ -146,10 +148,10 @@ $ldapid
 
     {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id], 'class' => 'store', 'name' => 'store']) !!}
 
-    <div class="panel panel-warning">
+    <div class="card bg-warning">
         @if( $survey->password != '')
-            <div class="hidden-print panel-heading">
-                {!! Form::password('password', ['class'=>'col-md-4 col-xs-12 black-text',
+            <div class="hidden-print card-header">
+                {!! Form::password('password', ['class'=>'col-md-4 col-12 black-text',
                                                 'id'=>'password' . $survey->id,
                                                 'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
                 <br>
@@ -168,7 +170,7 @@ $ldapid
                     <input type="hidden" id="hdnSession_userID" value="{{ $ldapid }}">
                     <input type="hidden" id="hdnSession_oldContent" name="hidden_oldContent[]" value="">
 
-                    <table class="table table-striped table-bordered table-condensed table-responsive-custom">
+                    <table class="table table-striped table-bordered table-sm table-responsive-custom">
                         <thead>
                         <tr>
                             <th>{{ trans('mainLang.name') }}</th>
@@ -205,7 +207,7 @@ $ldapid
                             <td>
                                 {{--autocomplete for clubs is not working right now--}}
                                 <div id="dropdown_club" class="dropdown">
-                                    <div class="btn-group col-md-8 no-padding">
+                                    <div class="btn-group container-fluid p-0">
                                         {!! Form::text('club', null, ['class' => 'form-control', 'id' => 'club', 'placeholder' => 'mein Club', 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bist Du mitglied in einem Club?\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
                                     </div>
                                     <ul id="dropdown-menu_club" class="dropdown-menu dropdown-club"></ul>
@@ -298,8 +300,8 @@ $ldapid
                                                     @if($survey->deadline >= date("Y-m-d H:i:s") || $userCanEditDueToRole)
                                                     <!--Edit Delete Buttons-->
                                                         <td class="tdButtons ">
-                                                            <input href="#"
-                                                                   class="editButton btn btn-primary fa fa-pencil"
+                                                            <button href="#"
+                                                                   class="editButton btn btn-primary "
                                                                    id="editButton{{$answer->id}}"
                                                                    value=""
                                                                    style="height: 34px; width: 43px;"
@@ -307,18 +309,20 @@ $ldapid
                                                                    data-toggle="tooltip"
                                                                    data-placement="bottom"
                                                                    onclick="change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
+                                                                <span class="fas fa-pencil-alt"></span>
+                                                            </button>
                                                             <i id="spinner{{$answer->id}}"
-                                                               class="fa fa-spinner fa-spin fa-2x hidden"></i>
+                                                               class="fas fa-spinner fa-spin fa-2x d-none"></i>
 
                                                             <a href="{{$survey->id}}/answer/{{$answer->id}}"
-                                                               class="btn btn-default deleteRow"
+                                                               class="btn btn-secondary deleteRow"
                                                                data-toggle="tooltip"
                                                                data-placement="bottom"
                                                                data-token="{{csrf_token()}}"
                                                                name="deleteRow"
                                                                rel="nofollow"
                                                                data-confirm="{{ trans('mainLang.confirmDeleteAnswer') }}">
-                                                                <i class="fa fa-trash"></i>
+                                                                <i class="fas fa-trash"></i>
                                                             </a>
                                                         </td>
                                                     @endif
@@ -348,13 +352,13 @@ $ldapid
                 {{--only if the results are always visiable or the user has already taken part--}}
                 {{--they can see the change history of the survey--}}
                 <br>
-                <span class="hidden-xs">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
+                <span class="d-none">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
                 <a id="show-hide-history" class="text-muted hidden-print" href="#">
                     {{ trans('mainLang.listChanges') }} &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
                 </a>
 
-                <div class="panel hide" id="change-history">
-                    <table class="table table-responsive table-hover table-condensed">
+                <div class="card hide" id="change-history">
+                    <table class="table table-responsive table-hover table-sm">
                         <thead>
                         <tr>
                             <th>{{ trans('mainLang.who') }}?</th>

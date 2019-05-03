@@ -19,7 +19,7 @@
         @if($shiftType->id === $shiftTypeId)
             @continue
         @endif
-        <option data-icon='fa fa-clock-o' value="{{$shiftType->id}}">
+        <option data-icon='far fa-clock' value="{{$shiftType->id}}">
             {{  date("H:i", strtotime($shiftType->start))
                 . "-" .
                 date("H:i", strtotime($shiftType->end)) . ")" }}

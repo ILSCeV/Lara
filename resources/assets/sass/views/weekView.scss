@@ -1,0 +1,123 @@
+/*******************************************************************************
+ *
+ * Week view
+ *
+ ******************************************************************************/
+
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
+.card-columns {
+  @include media-breakpoint-down(sm) {
+    column-count: 1;
+  }
+  @include media-breakpoint-between(md, lg) {
+    column-count: 2;
+  }
+}
+
+.card {
+  margin-bottom: 0px !important;
+}
+
+.card-title {
+  word-wrap: break-word;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.shift_free {
+  color: red;
+}
+
+.shift_taken {
+  color: green;
+}
+
+.shift_optional {
+  color: #cc7a00;
+}
+
+.shift_taken.shift_optional {
+  color: green;
+}
+
+.btn-small {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 0px 6px;
+  font-size: 10px;
+  line-height: 1.846;
+  border-radius: 3px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.panel-small {
+  margin-bottom: 0px;
+  padding: 5px;
+  background-color: #ffffff;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  vertical-align: top;
+}
+
+
+/*******************************************************************************
+ *
+ * ISOTOPE - animates the week view
+ *
+ ******************************************************************************/
+
+.isotope > * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* clear fix */
+.isotope:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.isotope:before {
+  content: '';
+  display: block;
+  clear: both;
+}
+/*
+.element-item {
+  min-width: 35%;
+}
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+  .element-item {
+    min-width: 48%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .element-item {
+    width: 100%;
+  }
+}
+*/
+

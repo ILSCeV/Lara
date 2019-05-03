@@ -157,7 +157,7 @@ class ClubEventController extends Controller
             $type                   = null;
             $subtitle               = null;
             $section                = Section::current();
-            $filter                 = null;
+            $filter                 = [Section::current()->title];
             $dv                     = $section->preparationTime;
             $timeStart              = $section->startTime;
             $timeEnd                = $section->endTime;
@@ -389,12 +389,11 @@ class ClubEventController extends Controller
         $userId = Auth::user()->person->prsn_ldap_id;
 
         if(Auth::user()->hasPermissionsInSection($event->section, RoleUtility::PRIVILEGE_MARKETING) || $userId == $created_by) {
-            return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
+            return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes',
                 'shifts', 'title', 'subtitle', 'type',
                 'section', 'filter', 'timeStart', 'timeEnd',
                 'info', 'details', 'private', 'dv',
-                'activeTemplate',
-                'date', 'templateId', 'facebookNeeded', 'createClubEvent',
+                'date', 'facebookNeeded', 'createClubEvent',
                 'event','baseTemplate',
                'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal','eventUrl'));
         } else {
@@ -520,7 +519,7 @@ class ClubEventController extends Controller
         $event->evnt_subtitle          = Input::get('subtitle');
         $event->evnt_public_info       = Input::get('publicInfo');
         $event->evnt_private_details   = Input::get('privateDetails');
-        $event->evnt_type              = Input::get('evnt_type');
+        $event->evnt_type              = Input::get('type');
         $event->facebook_done          = $this->getFacebookDoneValue();
         $event->event_url              = Input::get('eventUrl',"");
         $event->price_tickets_normal   = $this->getOrNullNumber('priceTicketsNormal');
@@ -535,7 +534,7 @@ class ClubEventController extends Controller
         }
 
         // create new section
-        if (!Section::where('title', '=', Input::get('section'))->first()) {
+        if (!Section::where('id', '=', Input::get('section'))->first()) {
             $section = new Section;
             $section->title = Input::get('section');
             $section->save();
@@ -544,7 +543,7 @@ class ClubEventController extends Controller
         }
         // use existing section
         else {
-            $event->plc_id = Section::where('title', '=', Input::get('section'))->first()->id;
+            $event->plc_id = Section::where('id', '=', Input::get('section'))->first()->id;
         }
 
         // format: date; validate on filled value

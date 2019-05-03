@@ -3,6 +3,7 @@
 namespace Lara\Console\Commands;
 
 use Illuminate\Console\Command;
+use Lara\utilities\CacheUtility;
 use Log;
 
 class UpdateLara extends Command
@@ -110,6 +111,7 @@ class UpdateLara extends Command
 
         // finish progress bar and end counter
         $bar->finish();
+        CacheUtility::clear();
         $counterEnd = microtime(true);
 
         // Inform the users

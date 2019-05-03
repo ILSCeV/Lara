@@ -3,6 +3,7 @@
 namespace Lara\Observers;
 
 use Auth;
+use Lara\utilities\CacheUtility;
 use Log;
 
 use Lara\ClubEvent;
@@ -16,7 +17,7 @@ class ClubEventObserver
      * This way, manually created events will also receive the 
      * 'was_manually_edited' flag, which seems consistent.
      *
-     * @param  Lara\ClubEvent  $event
+     * @param  \Lara\ClubEvent  $event
      * @return void
      */
     public function saving(ClubEvent $event)
@@ -40,6 +41,7 @@ class ClubEventObserver
         } else {
             Log::info('Event created by sync: ' . '"' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         }
+        CacheUtility::forgetMonthTable($event);
     }
 
     public function updating(ClubEvent $event) 
@@ -67,6 +69,7 @@ class ClubEventObserver
         if ($event->isDirty('evnt_private_details')) {
             Logging::logEventRevision($event, "revisions.eventPrivateDetailsChanged");
         }
+        CacheUtility::forgetMonthTable($event);
     }
 
 
@@ -80,7 +83,7 @@ class ClubEventObserver
         } else {
             Log::info('Event edited by sync: "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         }
-
+        CacheUtility::forgetMonthTable($event);
     }
 
     public function deleted(ClubEvent $event) 
@@ -92,6 +95,6 @@ class ClubEventObserver
         } else {
             Log::info('Event deleted by sync: "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
         }
-
+        CacheUtility::forgetMonthTable($event);
     }
 }

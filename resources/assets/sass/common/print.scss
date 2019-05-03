@@ -1,0 +1,82 @@
+@media all {
+	.page-break	{ display: none; }
+}
+
+@media print {
+
+	body {
+		font-size: 11pt;
+		line-height: 1.0;
+	}
+
+    * { 
+    	background: transparent 	!important; 
+    	color: black 				!important; 
+    	text-shadow: none 			!important; 
+    	filter:none 				!important; 
+    	-ms-filter: none 			!important; 
+    	margin: 0; 
+    	padding: 0;
+    	text-overflow: ellipsis;
+    }
+
+	.day-row 
+	{ 
+		display: block;
+		page-break-inside: avoid;
+	   	white-space: pre;
+	}
+
+
+	.day-container 
+	{
+		page-break-inside: avoid;
+		display: block;
+	  	font-size:.8em;
+	  	line-height:1.2em;
+		width: 45%;
+		margin: 1%;
+		overflow: visible;
+		float: left;
+	}
+/*
+	.card-header
+	{
+		padding: 0;	
+	}
+	
+
+	.card-body
+	{
+		padding: 0;
+		padding-top: 5px;
+		white-space: nowrap;
+
+	}
+*/
+	.panel
+	{
+		margin-bottom: 0;
+	}
+
+	table 
+	{
+		margin-bottom:0 !important;
+	}
+
+	.hidden-print, 
+	.navigation, 
+	.footer {
+		display: none !important;
+	}
+
+	a[href]:after {
+	  	content: none !important;
+	}
+
+  	@page {
+	margin: 1cm;
+}
+}
+
+

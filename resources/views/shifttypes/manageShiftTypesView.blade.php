@@ -10,74 +10,76 @@
 
 @is('marketing', 'clubleitung', 'admin')
 
-	<div class="panel panel-info col-xs-12 no-padding">
-		<div class="panel-heading">
-				<h4 class="panel-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.shiftTypes') }}</h4>
+	<div class="card col-12 p-0">
+		<div class=" text-white bg-info card-header">
+				<h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.shiftTypes') }}</h4>
 		</div>
-		<div class="panel panel-body no-padding">
-            {{Form::open( ['id'=>'shiftTypeFilterForm','class'=>' paddingTop form-inline rounded', 'route'=>'searchShiftType'] ) }}
-            <div class="form-group col-md-2">
-                {{ Form::text('filter','',['class'=>'form-control border', 'placeholder'=>trans('mainLang.search')]) }}
+		<div class="card-body p-0">
+            <div class="clearfix pt-2"></div>
+            <div class="row justify-content-end">
+            <div class="col-2 align-self-end">
+                {{Form::open(['url'=> route('searchShiftType'), 'method'=>'POST' ])}}
+                <div class="form-group form-group-sm">
+                    <input type="text" name="filter" placeholder="{{trans('mainLang.filter')}}" class="form-control form-control-sm form-control-plaintext">
+                </div>
+                <div class="form-group form-group-sm">
+                    {{Form::submit('',['class'=>'d-none'])}}
+                </div>
+                {{Form::close()}}
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-success"> {{trans('mainLang.search') }}</button>
             </div>
-            {{Form::close()}}
-            <div class="clearfix paddingTop"></div>
-            <div class="table-responsive">
-                <table class="table info table-hover table-condensed">
+            <div>
+                <table class="table table-hover">
                     <thead>
                     <tr class="active">
-                        <th class="col-md-1 col-xs-1 text-center">
+                        <th data-sortable="true">
                             #
                         </th>
-                        <th class="col-md-3 col-xs-3 text-center">
+                        <th data-searchable="true" data-field="shift">
                             {{ trans('mainLang.shift') }}
                         </th>
-                        <th class="col-md-2 col-xs-2 text-center">
+                        <th data-searchable="true">
                             {{ trans('mainLang.start') }}-{{ trans('mainLang.end') }}
                         </th>
-                        <th class="col-md-1 col-xs-1 text-center">
+                        <th data-searchable="true">
                             {{ trans('mainLang.weight') }}
                         </th>
-                        <th class="col-md-2 col-xs-2 text-center">
+                        <th class="text-center">
                             {{ trans("mainLang.actions") }}
                         </th>
-                        <th class="col-md-2 col-xs-2 text-center">
+                        <th data-searchable="false" class="text-center">
                             {{ trans("mainLang.replaceAll") }}
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-
-                    <div class="container">
                         @foreach($shiftTypes as $shiftType)
                             <tr>
-                                <td class="text-center">
+                                <td >
                                     {!! $shiftType->id !!}
                                 </td>
-                                <td class="text-center">
+                                <td >
                                     <a href="../shiftType/{{ $shiftType->id }}">
                                         {!! $shiftType->title !!}
                                     </a>
                                 </td>
-                                <td class="text-center">
+                                <td >
                                     {!! date("H:i", strtotime($shiftType->start)) !!}
                                     -
                                     {!! date("H:i", strtotime($shiftType->end)) !!}
                                 </td>
-                                <td class="text-center">
+                                <td >
                                     {!! $shiftType->statistical_weight !!}
                                 </td>
                                 <td class="text-center">
                                     <a href="../shiftType/{{ $shiftType->id }}"
-                                       class="btn btn-small btn-success"
+                                       class="btn btn-sm btn-success"
                                        rel="nofollow">
                                         {{ trans('mainLang.editDetails') }}
                                     </a>
                                     &nbsp;&nbsp;
                                     <a href="../shiftType/{{ $shiftType->id }}"
-                                       class="btn btn-small btn-danger"
+                                       class="btn btn-sm btn-danger"
                                        data-method="delete"
                                        data-token="{{csrf_token()}}"
                                        rel="nofollow"
@@ -86,19 +88,15 @@
                                     </a>
                                 </td>
                                 <td class="text-center">
-                                    @include('shifttypes.shiftTypeSelect',['shift'=>$shiftType,'shiftTypes' => $shiftTypes,'route'=>'completeOverrideShiftType','shiftTypeId'=>$shiftType->id, 'selectorClass'=>'shiftTypeReplaceSelector'])
+                                    @include('shifttypes.shiftTypeSelect',['shift'=>$shiftType,'shiftTypes' => $allShiftTypes,'route'=>'completeOverrideShiftType','shiftTypeId'=>$shiftType->id, 'selectorClass'=>'shiftTypeReplaceSelector'])
                                 </td>
                             </tr>
                         @endforeach
-                    </div>
                     </tbody>
                 </table>
             </div>
 		</div>
-	</div>
-
-	<div class="text-center">
-		{{ $shiftTypes->links() }}
+        <div class="card-footer"> {{ $shiftTypes->links() }} </div>
 	</div>
 
 	<br/>

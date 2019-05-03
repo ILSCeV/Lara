@@ -1,0 +1,355 @@
+/* display Mobile / Desktop */
+.displayDesktop {
+    display: inline-block;
+}
+
+.displayMobile {
+    display: none !important;
+    height: 48px;
+}
+
+@media screen and (max-width: 978px) {
+    .displayDesktop {
+        display: none !important;
+    }
+
+    .displayMobile {
+        display: block !important;
+    }
+
+    .displayMobile a {
+        height: auto;
+    }
+
+    .displayMobile .btn-trash {
+        margin-left: 10px;
+    }
+}
+
+/* Description at the top */
+.card {
+    margin: 15px;
+    background-color: transparent;
+}
+
+.card-title-box {
+    background-color: #89609E;
+    color: white;
+    padding: 15px;
+}
+
+/* Actual Survey */
+#survey-answer {
+    background-color: transparent;
+}
+
+.table-responsive-custom {
+    margin: 0;
+    background-color: #f6f5f3;
+}
+
+.table-responsive-custom > thead > tr > th {
+    background-color: white;
+    color: #333;
+}
+
+@media screen and (max-width: 978px) {
+    .emtpyCell {
+        display: none !important;
+        height: 0px !important
+    }
+}
+
+.table-responsive-custom > thead:first-child > tr:first-child > th:first-child {
+    position: absolute;
+    display: inline-block;
+    background-color: white;
+}
+
+.table-responsive-custom > thead > tr > th:first-child {
+    /* top-left corner */
+    width: 150px;
+}
+
+.table-responsive-custom > thead > tr > th:nth-child(2) {
+    padding-left: 170px !important;
+}
+
+.table-responsive-custom > tbody > tr > td:first-child {
+    position: absolute;
+    display: inline-block;
+    z-index: 10;
+    height: 48px;
+}
+
+@media screen and (max-width: 978px) {
+    .table-responsive-custom > tbody > tr > td:first-child {
+        height: auto;
+    }
+}
+
+.table-responsive-custom > tbody > tr:nth-child(odd) > td {
+    background-color: #f9f9f9;
+}
+
+.table-responsive-custom > tbody > tr:nth-child(even) > td {
+    background-color: white;
+}
+
+.table-responsive-custom > tbody > tr:nth-child(odd) > td:first-child {
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-responsive-custom > tbody > tr:nth-child(even) > td:first-child {
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-responsive-custom > thead:first-child > tr:first-child > th:nth-child(2) {
+    /* what is this? */
+}
+
+.table-responsive-custom > tbody > tr > td:nth-child(2) {
+    padding-left: 170px !important;
+}
+
+td, th {
+    white-space: nowrap;
+}
+
+.table-responsive-custom {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+/*
+Generic Styling, for Desktops/Laptops
+*/
+#survey-answer table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Zebra striping*/
+@media screen and (max-width: 978px) {
+    #survey-answer tr:nth-of-type(odd) {
+        background: #f9f9f9;
+    }
+}
+
+/*
+#survey-answer th {
+    background: #333;
+    color: white;
+    font-weight: bold;
+}
+*/
+
+#survey-answer td, #survey-answer th {
+    padding: 6px;
+    border: 1px solid #eeeeee;
+    text-align: left;
+}
+
+/*
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media screen and (max-width: 978px) {
+    #survey-answer tr:nth-of-type(even) {
+        background-color: white;
+    }
+
+    .table-responsive-custom {
+        width: 100%;
+    }
+
+    /* Force table to not be like tables anymore */
+    #survey-answer table, #survey-answer thead, #survey-answer tbody, #survey-answer th, #survey-answer td, #survey-answer tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    #survey-answer thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    #survey-answer tr {
+        border: 1px solid #eeeeee;
+    }
+
+    #survey-answer td {
+        /* Behave  like a "row" */
+        border: none;
+        position: relative;
+        padding-left: 50% !important;
+    }
+
+    #survey-answer tr:nth-of-type(even) td {
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    #survey-answer tr:nth-of-type(odd) td {
+        border-bottom: 1px solid #c0c0c0;
+    }
+
+    #survey-answer td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+    }
+
+    /* change padding of cells, compared to desktop */
+    .table-responsive-custom > thead > tr > th:nth-child(2) {
+        padding-left: 50% !important;
+    }
+
+    .table-responsive-custom > tbody > tr > td:nth-child(2) {
+        padding-left: 50% !important;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .table-responsive-custom {
+        overflow: hidden;
+    }
+
+    td, th {
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
+    .table-responsive-custom > tbody > tr:nth-child(odd) > td:first-child {
+        width: auto;
+    }
+
+    .table-responsive-custom > tbody > tr:nth-child(even) > td:first-child {
+        width: auto;
+    }
+
+    .tdButtons {
+        display: inline-block !important;
+        position: static !important;
+        margin: 0px;
+    }
+
+    .tdButtons a:first-child {
+        margin-right: 5px;
+    }
+
+ 
+}
+
+/* Desktop */
+@media screen and (min-width: 978px) {
+    /* to use this class again, write tdButtons*/
+    .tdButtonsNotUsed {
+        position: absolute;
+        padding: 0 !important;
+        width: 5em;
+        top: auto;
+        float: right;
+        border-right: 0px none black;
+        border-top-width: 3px; /*only relevant for first row*/
+        margin-top: -3px; /*compensate for top border*/
+    }
+}
+
+tr .card {
+    margin-right: auto;
+}
+
+#panelNoShadow {
+    -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.05);
+    border-width: 0 !important;
+    background-color: transparent;
+}
+
+.tdButtons:after {
+    content: '';
+}
+
+.thAboveButtons {
+
+}
+
+@media screen and (max-width: 978px) {
+    #noMarginMobile {
+        margin-left: 0;
+    }
+}
+
+.transparent {
+    background-color: transparent !important;
+    border-width: 0px !important;
+    border-color: transparent;
+    color: transparent;
+}
+
+@media screen and (max-width: 978px) {
+    .transparent {
+        height: 0;
+        padding: 0 !important;
+    }
+
+    #evaluation {
+        margin-top: 40px;
+        background-color: #F6F5F3;
+    }
+
+    #whiteBackgroundTrasparent {
+        background-color: #f6f5f3 !important;
+        border-color: #f6f5f3 !important;
+        border-width: 0;
+    }
+}
+
+.background {
+    background-color: #f6f5f3 !important;
+}
+
+#EvaluationColor {
+    background-color: lemonchiffon;
+}
+
+#whiteBackground {
+    background-color: white;
+}
+
+#whiteBackgroundTrasparent {
+    background-color: white;
+    border-color: white !important;
+}
+
+@media screen and (max-width: 978px) {
+    .evaluation_heading {
+        height: auto;
+    }
+}
+
+.fa-spinner {
+    position: relative;
+    left: -38px;
+    bottom: -6px;
+}
+
+@media screen and (max-width: 978px) {
+    .fa-spinner {
+        left: -77px;
+    }
+}

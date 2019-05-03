@@ -104,7 +104,8 @@ Route::get('club/{query?}', 				'ClubController@index');
 Route::get('statistics/person/{query?}', 	'StatisticsController@shiftsByPerson')
     ->middleware('rejectGuests');
 Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
-Route::get('shiftTypes/{query?}', 			'ShiftTypeController@find');
+Route::get('monthViewShifts/{year}/{month}','MonthController@markShiftsOfCurrentUser');
+Route::get('monthViewTable/{year}/{month}', 'MonthController@monthViewTable');
 
 // additional route to store a SurveyAnswer
 Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');
@@ -115,6 +116,8 @@ Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');
 Route::get('lang', function() {
     return response()->json(['language' => Session::get('applocale')]);
 });
+// ViewMode
+Route::get('viewmode/{mode}', 'ViewModeController@switchMode')->name('viewMode.switch');
 
 // RESTful RESOURCES
 Route::resource('shiftType', 		'ShiftTypeController')
@@ -173,7 +176,7 @@ Route::get('/create/template/',                               'TemplateControlle
 Route::post('/overrideShiftType/',                              'ShiftTypeController@overrideShiftType')->name('shiftTypeOverride');
 Route::post('/completeOverrideShiftType',                       'ShiftTypeController@completeOverrideShiftType')->name('completeOverrideShiftType');
 Route::get('/shiftTypeSearch/{filter?}',                               'ShiftTypeController@index')->name('shiftTypeSearch');
-Route::post('/seachShiftType/',                                 'ShiftTypeController@search')->name('searchShiftType');
+Route::post('/searchShiftType/',                                 'ShiftTypeController@search')->name('searchShiftType');
 
 
 
@@ -200,6 +203,6 @@ Route::post('/password/change', ['as' => 'password.change.post', 'uses' => 'Auth
     ->middleware('auth');
 
  // LEGAL
- Route::get('/privacy',					'LegalController@showPrivacyPolicy');
- Route::get('/impressum',				'LegalController@showImpressum');
+ Route::get('/privacy',					'LegalController@showPrivacyPolicy')->name('lara.privacy');
+ Route::get('/impressum',				'LegalController@showImpressum')->name('lara.impressum');
  Route::post('userAgreesPrivacy','UserController@agreePrivacy')->name('user.agreePrivacy');

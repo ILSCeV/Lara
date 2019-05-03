@@ -1,5 +1,3 @@
-import * as $ from "jquery"
-
 $(window).on('load',()=>{
   (<any>window).cookieconsent.initialise({
     "palette": {

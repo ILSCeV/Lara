@@ -1,271 +1,159 @@
 @extends('layouts.master')
 
+@php
+$queryParams='';
+if($extraFilter!='')
+{
+    $queryParams='?filter='.$extraFilter;
+}
+@endphp
+
 @section('title')
-	{{ "KW" . $date['week'] . ": " . utf8_encode(strftime("%d. %b", strtotime($weekStart))) }} - {{ utf8_encode(strftime("%d. %b", strtotime($weekEnd))) }}
+    {{ "KW" . $date['week'] . ": " . utf8_encode(strftime("%d. %b", strtotime($weekStart))) }} - {{ utf8_encode(strftime("%d. %b", strtotime($weekEnd))) }}
+@stop
+
+@section('moreScripts')
+    <script src="{{asset(WebpackBuiltFiles::$jsFiles['autocomplete'])}}" ></script>
+    <script>
+        var extraFilter = '{{$extraFilter}}';
+    </script>
 @stop
 
 @section('content')
-	<div class="container-fluid no-padding">
+    <div id="week-view-marker" class="container-fluid pb-3">
+        <div class="row pb-3">
+            {{-- Prev/next week selector --}}
+            <div class="col-12 col-md-4 m-auto p-auto btn-group">
+                <a class="btn hidden-print"
+                   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}{{ $queryParams }}">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
 
-		{{-- prev/next week --}}
-		<div class="btn-group col-xs-12 col-md-6 hidden-print">
-			<a class="btn btn-default hidden-print col-md-1 col-xs-2"
-			   href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}">
-			   	&lt;&lt;</a>
+                <div class="row align-items-center mx-auto px-auto">
+                    <h6 class="week-mo-so m-0 text-center">
+                        {{ "KW" . $date['week']}}:
+                        <br class="d-block d-sm-none">
+                        {{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart))) }} -
+                        <br class="d-block d-sm-none">
+                        {{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd . '- 2 days'))) }}
+                    </h6>
 
-			<h6 class="col-md-8 col-xs-8 week-mo-so no-margin centered">
-				<br class="hidden-xs">
-				{{ "KW" . $date['week']}}:
-				<br class="visible-xs">
-				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart))) }} -
-				<br class="visible-xs">
-				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd . '- 2 days'))) }}
-			</h6>
+                    <h6 class="week-mi-di m-0 text-center hide">
+                        {{ "KW" . $date['week']}}:
+                        <br class="d-block d-sm-none">
+                        {{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart . '+  2 days'))) }} -
+                        <br class="d-block d-sm-none">
+                        {{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd))) }}
+                    </h6>
+                </div>
 
-			<h6 class="col-md-8 col-xs-8 week-mi-di no-margin centered hide">
-				<br class="hidden-xs">
-				{{ "KW" . $date['week']}}:
-				<br class="visible-xs">
-				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart . '+  2 days'))) }} -
-				<br class="visible-xs">
-				{{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd))) }}
-			</h6>
+                <a class="btn hidden-print"
+                   href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}{{ $queryParams }}">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
 
-			<a class="btn btn-default hidden-print col-md-1 col-xs-2"
-			   href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}">
-			   	&gt;&gt;</a>
-		</div>
+            {{-- Section filter --}}
+            <div class="col-12 col-md-8 p-0 m-0 d-print-none" id="section-filter">
+                @include('partials.filter')
 
-		<br class="visible-xs">
-		<br class="visible-xs">
+                {{-- Week filters --}}
+                <div class="h-25"></div>
+                <div class="row float-right">
+                    <div class="btn-toolbar pt-2" role="toolbar">
+                        {{-- show time button Ger.: Zeiten einblenden --}}
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm hidden-print" type="button" id="toggle-shift-time">
+                                {{ trans('mainLang.shiftTime') }}
+                            </button>
 
-		{{-- filter --}}
-		<div class="col-xs-12 col-md-6 hidden-print pull-right">
-    		<br class="visible-xs">
-			@include('partials.filter')
-    		<br class="visible-xs">
+                            {{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
+                            <button class="btn btn-sm hidden-print" type="button" id="toggle-taken-shifts">
+                                {{ trans('mainLang.hideTakenShifts') }}
+                            </button>
+                        </div>
 
-			<div class="btn-group pull-right">
-    			{{-- show time button Ger.: Zeiten einblenden --}}
-    			<button class="btn btn-xs hidden-print" type="button" id="toggle-shift-time">{{ trans('mainLang.shiftTime') }}</button>
+                        {{-- show/hide all comment fields --}}
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm hidden-print" type="button" id="toggle-all-comments">
+                                {{ trans('mainLang.comments') }}
+                            </button>
+                        </div>
 
-    			{{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
-    			<button class="btn btn-xs hidden-print" type="button" id="toggle-taken-shifts">{{ trans('mainLang.hideTakenShifts') }}</button>
-
-    			{{-- show/hide all comment fields --}}
-    			<button class="btn btn-xs hidden-print" type="button" id="toggle-all-comments">{{ trans('mainLang.comments') }}</button>
-
-    			{{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
-    			<button class="btn btn-xs btn-primary hidden-print" type="button" id="toggle-week-start">{{ trans('mainLang.weekStart') }}</button>
-			</div>
-		</div>
-	</div>
-
-	<br class="visible-xs">
-
-	<div class="containerPadding12Mobile" >
-		{{-- weekdays --}}
-		@if (!$events->isEmpty())
-			<div class="isotope">
-
-				@foreach($events as $clubEvent)
-					{{-- Filter: we add a css class later below if a club is mentioned in filter data --}}
-
-					{{-- guests see private events as placeholders only, so check if user is logged in --}}
-					@guest
-
-						{{-- show only a placeholder for private events --}}
-						@if($clubEvent->evnt_is_private)
-							{{-- we compare the current week number with the week the event happens in
-								 to catch and hide any events on mondays and tuesdays (day < 3) next week
-								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view.
-							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-							  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item private section-filter
-                                            @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                            @endforeach
-                                            week-mo-so">
-							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
-								  === date("W", strtotime("next Week".$weekStart))
-								  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item private section-filter
-                                            @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                            @endforeach
-                                            week-mi-di hide">
-							@else
-								<div class="element-item private section-filter
-                                            @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                            @endforeach">
-							@endif
-								@include('partials.weekCellHidden')
-							</div>
-
-						{{-- show public events, but protect members' entries from being changed by guests --}}
-						@else
-
-							{{-- we compare the current week number with the week the event happens in
-								 to catch and hide any events on mondays and tuesdays (day < 3) next week
-								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view.
-                                 Formatting: "Section Name 123" => "section-name-123"  --}}
-							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-							  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item section-filter
-                                            @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                            @endforeach
-                                            week-mo-so">
-							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
-								  === date("W", strtotime("next Week".$weekStart))
-								  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item section-filter
-                                            @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                            @endforeach
-                                            week-mi-di hide">
-							@else
-								<div class="element-item section-filter
-                                            @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                            @endforeach ">
-							@endif
-
-								@include('partials.weekCellProtected')
-							</div>
-
-						@endif
-
-					{{-- show everything for members --}}
-					@else
-
-						{{-- members see both private and public events, but still need to manage color scheme --}}
-						@if($clubEvent->evnt_is_private)
-
-							{{-- we compare the current week number with the week the event happens in
-								 to catch and hide any events on mondays and tuesdays (day < 3) next week
-								 in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view.
-                                 Formatting: "Section Name 123" => "section-name-123"  --}}
-							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-							  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item private section-filter
-                                            @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                            @endforeach
-                                            week-mo-so">
-							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
-								  === date("W", strtotime("next Week".$weekStart))
-								  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item private section-filter
-                                            @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                            @endforeach
-                                            week-mi-di hide">
-							@else
-								<div class="element-item private section-filter
-                                            @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                            @endforeach">
-							@endif
-
-						@else
-
-							@if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-							  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item section-filter
-                                            @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                            @endforeach
-                                            week-mo-so">
-							@elseif ( date("W", strtotime($clubEvent->evnt_date_start) )
-								  === date("W", strtotime("next Week".$weekStart))
-								  && date('N', strtotime($clubEvent->evnt_date_start)) < 3 )
-								<div class="element-item section-filter
-                                            @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                            @endforeach
-                                            week-mi-di hide">
-							@else
-								<div class="element-item section-filter
-                                            @foreach($sections as $section)
-                                                {!! in_array( $section->id, $clubEvent->showToSectionIds() ) ? "section-" . $section->id : false !!}
-                                            @endforeach">
-							@endif
-
-						@endif
-
-							@include('partials.weekCellFull')
-
-						</div>
-
-					@endguest
-				@endforeach
-
-                @foreach($surveys as $survey)
-                    @if ( date('W', strtotime($survey->deadline)) === $date['week']
-                     &&  date('N', strtotime($survey->deadline)) < 3 )
-                        <div class="element-item section-filter section-survey week-mo-so ">
-                    @elseif ( date("W", strtotime($survey->deadline) ) === date("W", strtotime("next Week".$weekStart))
-                     &&      date('N', strtotime($survey->deadline)) < 3 )
-                        <div class="element-item section-filter section-survey week-mi-di hide">
-                    @else
-                        <div class="element-item section-filter section-survey">
-                    @endif
-                        @include('partials.weekCellSurvey')
+                        {{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm btn-primary hidden-print" type="button" id="toggle-week-start">
+                                {{ trans('mainLang.weekStart') }}
+                            </button>
+                        </div>
                     </div>
-                @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    {{-- hack: empty day at the beginning,
-                         prevents isotope collapsing to a single column if the very first element is hidden
-                         by creating an invisible block and putting it out of the way via negative margin --}}
-                    <div class="grid-sizer" style="margin-bottom: -34px;"></div>
-                    {{-- end of hack --}}
-				</div>
-			</div>
-		</div>
+    <div class="card-columns">
+            {{-- weekdays --}}
+            @if (!$events->isEmpty())
+                    @foreach($events as $clubEvent)
+                        {{-- Filter: we add a css class later below if a club is mentioned in filter data --}}
+                        {{-- we compare the current week number with the week the event happens in
+                                         to catch and hide any events on mondays and tuesdays (day < 3) next week
+                                         in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view. --}}
+                        @php
+                            $elementClass = 'element-item private section-filter ';
+                            foreach($sections as $section){
+                                if(in_array( $section->id, $clubEvent->showToSectionIds() )){
+                                $elementClass.=" section-" . $section->id;
+                                }
+                            }
+                            if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
+                                      && date('N', strtotime($clubEvent->evnt_date_start)) < 3 ) {
+                                      $elementClass.=' week-mo-so';
+                            } elseif (date("W", strtotime($clubEvent->evnt_date_start) )
+                                          === date("W", strtotime("next Week".$weekStart))
+                                          && date('N', strtotime($clubEvent->evnt_date_start)) < 3) {
+                                          $elementClass.=' week-mi-di hide';
+                            }
+                            if($clubEvent->evnt_is_private){
+                               $elementClass.=' private';
+                            }
 
-		@else
-			<br>
-			</div>
-			<div class="panel" style="margin: 16px;">
-				<div class="panel-heading">
-					<h5>{{ trans('mainLang.noEventsThisWeek') }}</h5>
-				</div>
-			</div>
-
-			<div class="isotope" style="margin: 6px;">
-				@if(count($surveys)>0)
-					@foreach($surveys as $survey)
-						@if ( date('W', strtotime($survey->deadline)) === $date['week']
-			             &&  date('N', strtotime($survey->deadline)) < 3 )
-							<div class="element-item section-filter section-survey week-mo-so ">
-						@elseif ( date("W", strtotime($survey->deadline) ) === date("W", strtotime("next Week".$weekStart))
-			             &&      date('N', strtotime($survey->deadline)) < 3 )
-							<div class="element-item section-filter section-survey week-mi-di hide">
-						@else
-							<div class="element-item section-filter section-survey">
-						@endif
-							@include('partials.weekCellSurvey')
-						</div>
-					@endforeach
-				@endif
-                {{-- hack: empty day at the beginning,
-                     prevents isotope collapsing to a single column if the very first element is hidden
-                     by creating an invisible block and putting it out of the way via negative margin --}}
-                <div class="grid-sizer" style="margin-bottom: -34px;"></div>
-                {{-- end of hack --}}
-			</div>
-
-		@endif
-	</div>
-
-    <div class="col-md-12 col-xs-12">
+                        @endphp
+                        <div class="p-2 mb-3 {{$elementClass}}">
+                            {{-- guests see private events as placeholders only, so check if user is logged in --}}
+                            @guest
+                                @if($clubEvent->evnt_is_private)
+                                    @include('partials.weekCellHidden')
+                                    {{-- show public events, but protect members' entries from being changed by guests --}}
+                                @else
+                                    @include('partials.weekCellProtected')
+                                @endif
+                                {{-- show everything for members --}}
+                            @else
+                                {{-- members see both private and public events, but still need to manage color scheme --}}
+                                @include('partials.weekCellFull')
+                            @endguest
+                        </div>
+                    @endforeach
+                    @include('partials.weekView.survey')
+    </div>
+    @else
+        <br>
+        <div class="card rounded" style="margin: 16px;">
+            <div class="card-header rounded-top">
+                <h5>{{ trans('mainLang.noEventsThisWeek') }}</h5>
+            </div>
+        </div>
+        <div class="d-flex flex-wrap">
+            @include('partials.weekView.survey')
+        </div>
+    @endif
+    <div class="col-md-12 col-12">
         {{-- Legend --}}
         @include("partials.legend")
 
         {{-- filter hack --}}
         <span id="week-view-marker" hidden>&nbsp;</span>
     </div>
-
 @stop

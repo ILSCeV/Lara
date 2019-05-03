@@ -5,9 +5,10 @@
       "dom",
       "es5"
     ],
-    "module": "es2015",
+    "module": "es6",
     "sourceMap": true,
     "allowJs": true,
+    "noImplicitAny": false,
     "types": [
       "jquery",
       "bootstrap",

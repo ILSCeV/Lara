@@ -1,0 +1,11 @@
+.bootbox {
+  .modal-header {
+    display: block;
+  }
+
+  .modal-body {
+    position: relative;
+    max-height: 50em;
+    overflow-y: auto;
+  }
+}

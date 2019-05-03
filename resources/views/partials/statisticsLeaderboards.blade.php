@@ -1,18 +1,19 @@
 
-<div class="panel panel-heading no-padding">
-    <h4 class="panel-title all-sides-padding-16">
-        {{ trans('mainLang.leaderBoards') }}
-    </h4>
-
+<div class="card p-0">
+    <div class="card-header ">
+        <h4 class="card-title p-3">
+            {{ trans('mainLang.leaderBoards') }}
+        </h4>
+    </div>
     <ul class="nav nav-tabs">
-        <li class="leaderboardsClubPicker">
-            <a aria-expanded="true" href="#all-leaderboards" data-toggle="tab">{{ trans('mainLang.allClubs') }}</a>
+        <li class="leaderboardsClubPicker nav-item">
+            <a class="nav-link" aria-expanded="true" href="#all-leaderboards" data-toggle="tab">{{ trans('mainLang.allClubs') }}</a>
         </li>
-        @foreach($clubInfos->keys() as $title)
-            <li class="{{Lara\Section::current()->title == $title? 'active': ''}} leaderboardsClubPicker">
+        @foreach($clubInfos->sortKeys()->keys() as $title)
+            <li class="{{Lara\Section::current()->title == $title? 'active': ''}} leaderboardsClubPicker nav-item">
                 <a aria-expanded="{{Lara\Section::current()->title == $title? 'active': ''}}"
                    href="#{{ str_replace(' ', '-', strtolower($title)) }}-leaderboards"
-                   data-toggle="tab">
+                   data-toggle="tab" class="nav-link">
                     {{$title}}
                 </a>
             </li>
@@ -20,7 +21,7 @@
     </ul>
 </div>
 
-<div class="panel panel-body no-padding">
+<div class="card card-body p-0">
     <div id="myTabContent" class="tab-content">
         @include('partials.statistics.leaderboardsOfClub', ['infos' => $infos, 'showClubName' => true, 'name' => 'all'])
         @foreach($clubInfos as $title => $clubInfo)

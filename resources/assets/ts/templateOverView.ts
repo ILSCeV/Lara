@@ -1,4 +1,3 @@
-import * as $ from "jquery"
 import * as bootbox from "bootbox";
 
 import {translate} from "./Translate";
@@ -10,7 +9,7 @@ $(()=>{
     });
   });
   $('.selectpicker').selectpicker({
-    style: 'btn btn-default',
+    style: 'btn btn-secondary',
     liveSearch:true
   });
 

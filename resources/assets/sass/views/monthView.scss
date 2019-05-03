@@ -1,0 +1,309 @@
+/*******************************************************************************
+ *
+ * Month view
+ *
+ ******************************************************************************/
+
+.cal-event {
+    width: 100%;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    vertical-align: middle;
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+    line-height: normal;
+    padding: 8px;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    min-height: 42px;
+}
+
+.past-eventOrSurvey, .past-event {
+    opacity:0.3;
+}
+
+.today-marker {
+    background-color: $secondary !important;
+}
+
+.today-marker-today {
+    background-color: #cccccc !important;
+}
+
+.text-dark-grey {
+    color: darkgrey;
+}
+
+.white-text {
+    color: #ffffff !important;
+}
+
+.black-text {
+    color: #000000 !important;
+}
+
+.cal-event a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.calendarWrapper {
+    overflow: hidden;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+@media screen and (max-width: 978px) {
+    .calendarWrapper{
+        overflow: visible;
+        background-color: transparent;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        margin: 0 0 0 0;
+    }
+}
+
+.height10vh {
+    height: 10vh;
+}
+
+.weekDay {
+    text-align: left !important;
+    width: 13.714%;
+    float: left;
+    margin: 0px;
+    line-height: 5vh;
+    height: 5vh;
+    border: solid;
+    border-width: 0px 0px 0px 2px;
+    border-color: #dddddd;
+}
+
+@media screen and (max-width: 978px) {
+    .weekDay {
+        display: none;
+    }
+
+    .calendarWeek {
+        display: none;
+    }
+}
+
+.WeekMarker, .WeekMarkerRow {
+    background-color: $secondary !important;
+}
+
+
+@media screen and (max-width: 978px) {
+    .WeekMarker {
+        background-color: #a1a1a1 !important;
+    }
+
+    .WeekMarkerRow{
+        background-color: #F6F5F3 !important;
+    }
+}
+
+.thisMonth {
+    background-color: $body-bg;
+}
+
+.otherMonth {
+    background-color: $body-bg;
+}
+
+.empty {
+    display: block;
+}
+
+@media screen and (max-width: 978px) {
+    .empty {
+        display: none;
+    }
+}
+
+.calendarRow {
+    height: auto;
+    display: block;
+    min-height: 5vh;
+    position: relative;
+    background-color: transparent;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 978px) {
+    .calendarRow {
+        min-height: 0;
+        overflow: visible;
+    }
+}
+
+/*
+  Custom width of cols
+  no longer default bootstrap cols,
+  because they do not have fitting width
+*/
+.calendarWeek, .custom-md-85{
+    text-align: center;
+    vertical-align: center;
+    float: left;
+    margin: 0px;
+    padding: 8px 0px 0px 4px;
+    min-height: 5vh;
+    border: solid;
+    border-color: #dddddd;
+}
+
+.calendarWeek {
+    width: 4%;
+    float: left;
+    margin: 0px;
+    line-height: 3vh;
+    height: 5vh;
+    border: solid;
+    border-width: 2px 0px 0px 0px;
+    border-color: #dddddd;
+}
+
+
+.day {
+    text-align: left !important;
+    border-left-width: 0px !important;
+}
+
+span.event-time{
+    font-size:x-small;
+}
+
+.day-cell-events{
+    padding-right: 6px;
+    padding-left:2px;
+}
+
+.day-cell-events{
+    word-break: initial;
+    word-wrap: break-word;
+}
+
+.day-cell a:link,
+.calendarWeek a:link {
+    color: #666666;
+}
+
+.day-cell a:hover,
+.calendarWeek a:hover {
+    color: #040303;
+}
+
+.day-cell a:visited,
+.calendarWeek a:visited {
+    color: #666666;
+}
+
+
+.custom-md-85 {
+    width: 13.714%;
+    text-align: left;
+    border-width: 2px 0px 0px 2px;
+}
+
+.nobordertop{
+    border-top-width: 0px !important;
+}
+
+@media screen and (min-width: 978px) {
+    .custom-md-85{
+        margin-bottom: -99999px;
+        padding-bottom: 99999px;
+    }
+}
+
+@media screen and (max-width: 978px) {
+    .custom-md-85, .calendarWeek {
+        width: 100%;
+        border-bottom: solid;
+        border-width: 3px;
+        border-color: #F6F5F3;
+        border-left-width: 0px;
+        border-right-width: 0px;
+    }
+
+    .custom-md-85{
+        height:auto;
+    }
+
+    .custom-md-85:empty, .calendarWeek:empty {
+        display: none;
+        height: 0px;
+    }
+
+    .calendarWeek {
+        background-color: $secondary;
+        border-radius: 15px 15px 0 0;
+        font-weight: bold;
+        display: block;
+    }
+
+    .calendarWeek a:link {
+        color: white;
+    }
+
+    .calendarWeek a:hover {
+        color: black;
+    }
+
+    .calendarWeek a:visited {
+        color: white;
+    }
+}
+
+/*
+    space for number and space for event
+*/
+
+@media screen and (max-width: 978px) {
+    .mobile-width-72-percent {
+        width: 72%;
+    }
+}
+
+.onlyOnMobile{
+    display: none;
+}
+
+@media screen and (max-width: 978px) {
+    .onlyOnMobile{
+        display: inline;
+    }
+}
+
+
+/* Mind the extra big screens! */
+@media screen and (min-height: 1050px) {
+    .weekDay{
+        height:5vh;
+        line-height: 5vh;
+    }
+
+    .calendarWeek{
+        line-height: 5vh;
+        height: 5vh;
+        min-height: 5vh;
+    }
+
+    .calendarRow{
+        min-height: 5vh;
+        height: inherit;
+    }
+
+    .height10vh{
+        min-height: 5vh;
+    }
+
+    .noheightmobile{
+        height:5vh;
+    }
+}

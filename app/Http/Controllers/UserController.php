@@ -62,7 +62,7 @@ class UserController extends Controller
         $users = User::with('section')
             ->get()
             ->sortBy(function (User $user) {
-                return sprintf('%-12s%s%s%s', Auth::user()->section->id != $user->section->id,$user->section->title, $user->name, $user->status);
+                return sprintf('%-12s%s%s%s', Auth::user()->section->id != $user->section->id,$user->section->title,$user->status, $user->name);
             });
 
         return View::make('user.index', compact('users'));

@@ -45,7 +45,7 @@ class SectionController extends Controller
             /** if you are just an CL you can only edit the section  where you have the permissions */
             $sections = Auth::user()->roles()->where('name','=',RoleUtility::PRIVILEGE_CL)->get()->map(function (Role $role){
                 return $role->section;
-            });
+            })->unique();
         }
 
         return view('manageSections', ['sections' => $sections]);
@@ -88,7 +88,7 @@ class SectionController extends Controller
 
 
         if ($validator->fails()) {
-           return Redirect::back()->withErrors($validator);
+           return Redirect::back()->withErrors($validator)->withInput(Input::all());
         }
 
         if ($isNew) {

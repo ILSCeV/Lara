@@ -6,18 +6,18 @@
 
 @section('content')
 
-    <br class="visible-sm">
-    <br class="visible-sm">
+    <br class="d-none d-sm-block d-md-none">
+    <br class="d-none d-sm-block d-md-none">
 
 
     @auth
         @if(Auth::user()->privacy_accepted == 0)
-        <div class="panel panel-danger">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{ trans("mainLang.waitOneSecond") }}</h3>
+        <div class="card ">
+            <div class="card-header bg-danger text-white">
+                <h3 class="card-title">{{ trans("mainLang.waitOneSecond") }}</h3>
             </div>
 
-            <div class="panel-body">
+            <div class="card-body">
                 <strong>{{ trans('mainLang.agreeWithPrivacy') }}</strong>
             </div>
         </div>
@@ -25,23 +25,23 @@
         @endif
     @endauth
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ trans("mainLang.privacyPolicy") }}</h3>
+    <div class="card ">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title">{{ trans("mainLang.privacyPolicy") }}</h3>
         </div>
 
-        <div class="panel-body no-padding">
+        <div class="card-body p-0">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#complete" data-toggle="tab" aria-expanded="true">Datenschutzerklärung -
+                <li class="nav-item"><a class="nav-link active" href="#complete" data-toggle="tab" aria-expanded="true">Datenschutzerklärung -
                         deutsche Version</a></li>
-                <li class=""><a href="#short" data-toggle="tab" aria-expanded="false">Kurze Zusammenfassung - deutsche
+                <li class="nav-item"><a class="nav-link" href="#short" data-toggle="tab" aria-expanded="false">Kurze Zusammenfassung - deutsche
                         Version</a></li>
-                <li class=""><a href="#english" data-toggle="tab" aria-expanded="false">Short Summary - English
+                <li class="nav-item"><a class="nav-link" href="#english" data-toggle="tab" aria-expanded="false">Short Summary - English
                         Version</a></li>
             </ul>
 
-            <div id="myTabContent" class="tab-content all-sides-padding-16 pre-scrollable">
-                <div class="tab-pane fade active in" id="complete">
+            <div id="myTabContent" class="tab-content p-3 pre-scrollable">
+                <div class="tab-pane fade in active show" id="complete">
                     <p><strong>Datenschutzerklärung</strong></p>
                     <p><strong></strong></p>
                     <p>
@@ -747,7 +747,7 @@
             </div>
             @auth
                 @if(Auth::user()->privacy_accepted == 0)
-                    <div class="panel-footer">
+                    <div class="card-footer">
                         <form method="post" action="{{url('userAgreesPrivacy')}}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <button type="submit" class="btn btn-success">{{ trans("mainLang.privacyAgree") }}</button>

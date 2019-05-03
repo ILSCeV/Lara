@@ -1,4 +1,4 @@
-import * as $ from "jquery"
+
 import {translate} from "./Translate"
 import * as bootbox from "bootbox"
 import {ToggleButton} from "./ToggleButton";
@@ -28,10 +28,10 @@ $(() => {
         return;
     }
 
-    const takenShifts = new ToggleButton("toggle-taken-shifts", () => $('.shift_taken').closest('.row').hasClass("hide"));
+    const takenShifts = new ToggleButton("toggle-taken-shifts", () => $('.shift_taken').closest('.shiftRow').hasClass("hide"));
     takenShifts.addActions([
         makeLocalStorageAction("onlyEmptyShifts", "true", "false"),
-        makeClassToggleAction($('.shift_taken').closest('.row'), "hide", true)
+        makeClassToggleAction($('.shift_taken').closest('.shiftRow'), "hide", true)
     ])
         .setToggleStatus(safeGetLocalStorage("onlyEmptyShifts") == "true")
         .setText(translate("onlyEmpty"));

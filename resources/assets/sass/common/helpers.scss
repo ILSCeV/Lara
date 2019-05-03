@@ -1,0 +1,78 @@
+/*******************************************************************************
+ *
+ * Padding
+ *
+ ******************************************************************************/
+
+
+@media (max-width: 1000px) {
+    .p-0-xs {
+        padding: 0px;
+    }
+}
+
+
+/*******************************************************************************
+ *
+ * Object manipulation
+ *
+ ******************************************************************************/
+
+.move-to-bottom-left-corner {
+    position: relative;
+    margin-top: auto;
+    margin-right: -4px;
+    margin-bottom: 0;
+    margin-left: -11px;
+    float: left;
+}
+
+@media (max-width: 768px) {
+    .move-to-bottom-left-corner {
+        position: relative;
+        margin-top: 1px;
+        margin-right: -3px;
+        margin-bottom: 0;
+        margin-left: 7px;
+        float:left;
+    }
+}
+
+.hide {
+    overflow: hidden;
+	  display: none !important;
+    height: 0px;
+}
+
+.show {
+    overflow: visible;
+    height: auto;
+}
+
+
+
+/*******************************************************************************
+ *
+ * Text manipulation
+ *
+ ******************************************************************************/
+
+.word-break {
+	-ms-word-break: break-all;
+	word-break: break-all;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	hyphens: auto;
+}
+
+/*******************************************************************************
+ *
+ * Animation
+ *
+ ******************************************************************************/
+.animation {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}

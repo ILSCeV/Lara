@@ -9,74 +9,96 @@
 @auth
 
     {{-- prev/next month --}}
-    <div class="col-xs-12 col-md-12">
-        <div class="col-xs-12 col-md-5 btn-group no-padding">
-            @if($isMonthStatistic)
-                <a class="btn btn-default hidden-print"
-                   href="{{ action('StatisticsController@showStatistics') . date("/Y/m",
-                                    strtotime("previous month", mktime(0, 0, 0, $month, 1, $year))) }}">
-                    &lt;&lt;
-                </a>
+    <div class="row pb-3">
+        <div class="col-12 col-md-12">
+            <div class="col-12 col-md-3 m-auto p-auto btn-group">
+                @if($isMonthStatistic)
+                    <a class="btn btn-secondary hidden-print"
+                       href="{{ action('StatisticsController@showStatistics') . date("/Y/m",
+                                        strtotime("previous month", mktime(0, 0, 0, $month, 1, $year))) }}">
+                        &lt;&lt;
+                    </a>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle text-center" type="button" data-toggle="dropdown" aria-haspopup="true">
+                            {{ date('F Y', mktime(0, 0, 0, $month, 1, $year))}}
+                        </button>
+                        <div class="dropdown-menu">
+                            <table>
+                                <tbody>
+                                @for($i = 1; $i<13;$i+=3)
+                                    <tr>
+                                        @for($j = $i; $j<$i+3;$j++)
+                                            @php
+                                                $monthDate = date_create_from_format('Y-m',$year.'-'.$j)
+                                            @endphp
+                                            <td>
+                                                <a class="dropdown-item" href="{{action('StatisticsController@showStatistics').$monthDate->format('/Y/m') }}">{{ $monthDate->format('F')  }}</a>
+                                            </td>
+                                        @endfor
+                                    </tr>
+                                @endfor
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <a class="btn btn-secondary hidden-print float-left"
+                       href="{{ action('StatisticsController@showStatistics') . date("/Y/m", strtotime("next month", mktime(0, 0, 0, $month, 1, $year))) }}">
+                        &gt;&gt;
+                    </a>
+               @else
+                    <a class="btn btn-secondary hidden-print"
+                       href="{{ action('StatisticsController@showYearStatistics', date("Y", strtotime("previous year", mktime(0, 0, 0, $month, 1, $year))))  }}">
+                        &lt;&lt;
+                    </a>
 
-                <span class="btn btn-lg disabled mobile72Width" style="text-align: center !important;">
-                    {{ date('F Y', mktime(0, 0, 0, $month, 1, $year))}}
-                </span>
+                    <span class="btn btn-lg disabled mobile-width-72-percent" style="text-align: center !important;">
+                    {{ date('Y', mktime(0, 0, 0, $month, 1, $year))}}
+                    </span>
 
-                <a class="btn btn-default hidden-print pull-left"
-                   href="{{ action('StatisticsController@showStatistics') . date("/Y/m", strtotime("next month", mktime(0, 0, 0, $month, 1, $year))) }}">
-                    &gt;&gt;
-                </a>
-           @else
-                <a class="btn btn-default hidden-print"
-                   href="{{ action('StatisticsController@showYearStatistics', date("Y", strtotime("previous year", mktime(0, 0, 0, $month, 1, $year))))  }}">
-                    &lt;&lt;
-                </a>
+                    <a class="btn btn-secondary hidden-print float-left"
+                       href="{{
+                        action('StatisticsController@showYearStatistics', date("Y", strtotime("next year", mktime(0, 0, 0, $month, 1, $year)))) }}">
+                        &gt;&gt;
+                    </a>
+               @endif
+            </div>
+            <br class="d-block d-md-none">
 
-                <span class="btn btn-lg disabled mobile72Width" style="text-align: center !important;">
-                {{ date('Y', mktime(0, 0, 0, $month, 1, $year))}}
-                </span>
+            {{-- Month/year statstics selector --}}
+            <div class=" col-12 btn-group float-right">
+                <div class="col-12 col-md-10">
+                    @if($isMonthStatistic)
+                        <a class="btn btn-xs btn-primary float-right"
+                           type="button"
+                           href="{{ action("StatisticsController@showYearStatistics") }}">
+                            {{ trans("mainLang.yearStatistic") }}
+                        </a>
+                    @else
+                        <a class="btn btn-xs btn-primary float-right"
+                           type="button"
+                           href="{{ action("StatisticsController@showStatistics")  }}">
+                            {{ trans("mainLang.monthStatistic") }}
+                        </a>
+                    @endif
+                </div>
+            </div>
 
-                <a class="btn btn-default hidden-print pull-left"
-                   href="{{
-                    action('StatisticsController@showYearStatistics', date("Y", strtotime("next year", mktime(0, 0, 0, $month, 1, $year)))) }}">
-                    &gt;&gt;
-                </a>
-           @endif
-        </div>    
-
-        {{-- Month/year statstics selector --}}
-        <div class="col-xs-12 col-md-7 btn-group pull-right">
-            @if($isMonthStatistic)
-                <a class="btn btn-xs btn-primary pull-right"
-                   type="button"
-                   href="{{ action("StatisticsController@showYearStatistics") }}">
-                    {{ trans("mainLang.yearStatistic") }}
-                </a>
-            @else
-                <a class="btn btn-xs btn-primary pull-right"
-                   type="button"
-                   href="{{ action("StatisticsController@showStatistics")  }}">
-                    {{ trans("mainLang.monthStatistic") }}
-                </a>
-            @endif
+            <br>
+            <br>
+            <br class="d-block d-sm-none">
         </div>
-
-        <br>
-        <br>
-        <br class="visible-xs">
     </div>
 
-
-    <div class="row">
+    <div class="row container-fluid">
 
         {{-- Club member stats --}}
-        <div class="col-md-7 col-sm-7 col-xs-12 no-padding">
+        <div class="col-12 col-md-5 p-0-xs">
             @include('partials.statisticsMembers')
         </div>
 
         {{-- Leaderboard --}}
-        <div class="col-md-5 col-sm-5 col-xs-12 no-padding-xs">
-            <br class="visible-xs">
+        <div class="col-12 col-md-5 p-0-xs">
+            <br class="d-block d-sm-none">
             @include('partials.statisticsLeaderboards')
         </div>
 

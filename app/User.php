@@ -23,6 +23,7 @@ use Lara\Status;
  * @property bool is_name_private
  * @property Section section
  * @property Person person
+ * @property Settings settings
  */
 class User extends Authenticatable
 {
