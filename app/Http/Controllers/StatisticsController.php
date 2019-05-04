@@ -26,7 +26,7 @@ class StatisticsController extends Controller
                  join persons sp on sp.id = ssh.person_id
         where ssh.person_id is not null
           and sce.evnt_date_start >= cast(:start as date)
-          and sce.evnt_date_end <= cast(:end as date)
+          and sce.evnt_date_end <= date_add(cast(:end as date),interval 1 day )
     ) relevant_shifts on relevant_shifts.person_id = p.id
              left outer join shifts own_section_shifts
                              on p.id = own_section_shifts.person_id and relevant_shifts.id = own_section_shifts.id and
