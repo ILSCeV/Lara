@@ -94,7 +94,10 @@ module.exports = {
   },
   devtool: devMode ?'eval-source-map' : false,
   plugins: [
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      cleanStaleWebpackAssets: false,
+      cleanOnceBeforeBuildPatterns: ['**/*.js', '**/*.css','**/asset-manifest.php','**/fonts/*'],
+    }),
     new LiveReloadPlugin(),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
