@@ -4,8 +4,7 @@ namespace Lara;
 use Auth;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
-use Lara\Person;
-use Session;
+
 use Request;
 
 class Logging
@@ -33,6 +32,9 @@ class Logging
         self::ensureScheduleHasRevisions($schedule);
 
         $revisions = json_decode($schedule->entry_revisions);
+        if(is_null($revisions)) {
+            $revisions = [];
+        }
 
         $newRevision = self::newScheduleRevision($schedule, $action, $old, $new);
         array_push($revisions, $newRevision);
