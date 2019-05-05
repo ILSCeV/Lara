@@ -148,6 +148,7 @@ class ClubEventController extends Controller
             $priceTicketsNormal     = $template->price_tickets_normal;
             $priceExternal          = $template->price_external;
             $priceTicketsExternal   = $template->price_tickets_external;
+            $clOnlyVisible          = $template->cl_only_visible;
 
         } else {
             // fill variables with no data if no template was chosen
@@ -169,6 +170,7 @@ class ClubEventController extends Controller
             $priceTicketsNormal     = null;
             $priceExternal          = null;
             $priceTicketsExternal   = null;
+            $clOnlyVisible          = false;
         }
         $createClubEvent = true;
         $eventUrl = '';
@@ -179,7 +181,7 @@ class ClubEventController extends Controller
                                                          'info', 'details', 'private', 'dv',
                                                          'activeTemplate',
                                                          'date', 'templateId','facebookNeeded','createClubEvent',
-                                                         'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal','eventUrl'));
+                                                         'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal','eventUrl','clOnlyVisible'));
     }
 
 
@@ -374,7 +376,7 @@ class ClubEventController extends Controller
         $priceTicketsExternal   = $event->price_tickets_external;
         $eventUrl               = $event->event_url;
         $facebookNeeded         = $event->facebook_done;
-
+        $clOnlyVisible          = $event->cl_only_visible;
 
 
         if(!is_null($event->template_id)) {
@@ -395,7 +397,7 @@ class ClubEventController extends Controller
                 'info', 'details', 'private', 'dv',
                 'date', 'facebookNeeded', 'createClubEvent',
                 'event','baseTemplate',
-               'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal','eventUrl'));
+               'priceExternal','priceNormal','priceTicketsExternal','priceTicketsNormal','eventUrl','clOnlyVisible'));
         } else {
             return response()->view('clubevent.notAllowedToEdit',compact('created_by','creator_name'),403);
         }
@@ -544,6 +546,13 @@ class ClubEventController extends Controller
         // use existing section
         else {
             $event->plc_id = Section::where('id', '=', Input::get('section'))->first()->id;
+        }
+        
+        if(\Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)
+            || \Auth::user()->hasPermissionsInSection($event->section, RoleUtility::PRIVILEGE_CL)) {
+            $event->cl_only_visible = Input::get('clOnlyVisible',0) == 1;
+        } elseif(is_null($id)){
+            $event->cl_only_visible = false;
         }
 
         // format: date; validate on filled value

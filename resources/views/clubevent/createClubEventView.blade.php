@@ -216,6 +216,15 @@
 				    </div>
 				@endis
                 <div class="clearfix"></div>
+                @cl
+                    <div class="form-group col-12 p-0">
+                    @if($createClubEvent || \Auth::user()->isAn(\Lara\utilities\RoleUtility::PRIVILEGE_ADMINISTRATOR)
+                    || \Auth::user()->hasPermissionsInSection($eventSection, \Lara\utilities\RoleUtility::PRIVILEGE_CL))
+                        <label for="clOnlyVisible" class="col-form-label {{$labelClass}}">Nur für CL:</label>
+                        {{ Form::checkbox('clOnlyVisible', '1', $clOnlyVisible, ['class'=>'form-check']) }}
+                    @endif
+                    </div>
+                @endcl
 				<div class="form-group col-12 p-0">
                     <label for="section" class="col-form-label col-3">{{ trans('mainLang.section') }}: &nbsp;</label>
                     <select id="section" class="selectpicker" name="section" >

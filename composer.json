@@ -32,7 +32,7 @@
         "ILSCeV"
     ],
     "license": "GPL-3.0",
-    "name": "ILSCeV/Lara",
+    "name": "ilsc-ev/lara",
     "require": {
         "php": ">=5.6.4",
         "barryvdh/laravel-ide-helper": "^2.2",
@@ -48,7 +48,6 @@
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "orangehill/iseed": "dev-master",
-        "phpunit/phpunit": "~6.0",
         "filp/whoops": "~2.0"
     },
     "scripts": {

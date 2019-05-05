@@ -101,6 +101,14 @@ class AppServiceProvider extends ServiceProvider
           return strpos(env('LDAP_SECTIONS', ''), $user->section->title) == false
               || \App::environment('development');
         });
+        
+        Blade::if('cl',function (){
+            $user = Auth::user();
+            if(!$user) {
+                return false;
+            }
+            return $user->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR, RoleUtility::PRIVILEGE_CL);
+        });
 
         Blade::if('ldapSection', function($section) {
             return strpos(env('LDAP_SECTIONS', ''), $section->title) !== false;

@@ -180,6 +180,7 @@ class CreateTemplatesTable extends Migration
     public function down()
     {
         Schema::table("club_events", function(Blueprint $table) {
+           $table->dropForeign('club_events_template_id_foreign');
            $table->dropColumn('template_id');
         });
 

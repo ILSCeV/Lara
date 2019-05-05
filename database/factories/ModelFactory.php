@@ -108,7 +108,8 @@ $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
         'price_external' => $faker->randomFloat(2,1,2),
         'facebook_done' => $faker->boolean(50),
         'event_url' => $faker->url(),
-        'external_id'=> $faker->word()
+        'external_id'=> $faker->word(),
+        'cl_only_visible' => $faker->boolean(30)
     ];
 });
 
@@ -172,6 +173,7 @@ $factory->define(Lara\Template::class, function(Faker\Generator $faker) {
         'price_normal' => $faker->randomFloat(2,0,1),
         'price_external' => $faker->randomFloat(2,1,2),
         'facebook_needed' => $faker->boolean(40),
+        'cl_only_visible' => $faker->boolean(),
     ];
 });
 

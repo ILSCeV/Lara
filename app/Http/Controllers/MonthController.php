@@ -5,11 +5,14 @@ namespace Lara\Http\Controllers;
 use DateInterval;
 use DatePeriod;
 use DateTime;
+use Illuminate\Support\Collection;
 use Lara\ClubEvent;
 use Lara\Http\Middleware\RejectGuests;
+use Lara\Role;
 use Lara\Section;
 use Lara\Survey;
 use Lara\utilities\CacheUtility;
+use Lara\utilities\RoleUtility;
 use Redirect;
 use View;
 
@@ -57,32 +60,116 @@ class MonthController extends Controller
             compact('date', 'firstDay', 'lastDay',  'sections'));
     }
     
-    public function monthViewTable($year, $month) {
-        return CacheUtility::remember('monthtable-'.$year.'-'.$month, function () use ($year, $month){
-            list($firstDay, $lastDay, $date) = $this->makeDateArray($year, $month);
-            $events = ClubEvent::where('evnt_date_start', '>=', $firstDay->format("Y-m-d"))
-                ->where('evnt_date_start', '<=', $lastDay->format("Y-m-d"))
-                ->with('showToSection')
-                ->with('shifts')
-                ->with('section')
-                ->orderBy('evnt_date_start')
-                ->orderBy('evnt_time_start')
-                ->orderBy('plc_id')
-                ->get();
+    public function monthViewTable($year, $month)
+    {
+        if (\Auth::hasUser() && \Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR, RoleUtility::PRIVILEGE_CL)) {
+            if (\Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
+                return CacheUtility::remember('monthtable-admin-'.$year.'-'.$month, function () use ($year, $month) {
+                    list($firstDay, $lastDay, $date) = $this->makeDateArray($year, $month);
+                    $events = ClubEvent::where('evnt_date_start', '>=', $firstDay->format("Y-m-d"))
+                        ->where('evnt_date_start', '<=', $lastDay->format("Y-m-d"))
+                        ->with('showToSection')
+                        ->with('shifts')
+                        ->with('section')
+                        ->orderBy('evnt_date_start')
+                        ->orderBy('evnt_time_start')
+                        ->orderBy('plc_id')
+                        ->get();
+                    $surveys = self::getSurveys($firstDay, $lastDay);
+                    $mondays = new DatePeriod($firstDay, new DateInterval('P1W'), $lastDay->modify('+1 day'));
+                    
+                    $sections = Section::where('id', '>', 0)
+                        ->orderBy('title')
+                        ->get(['id', 'title', 'color']);
+                    
+                    return response()->json([
+                        'data' => View::make('partials.month.monthTable',
+                            compact('events', 'surveys', 'mondays', 'sections', 'firstDay', 'lastDay',
+                                'date'))->render(),
+                    ]);
+                });
+            } else {
+                return CacheUtility::remember('monthtable-cl-'.\Auth::user()->id.'-'.$year.'-'.$month, function () use ($year, $month) {
+                    list($firstDay, $lastDay, $date) = $this->makeDateArray($year, $month);
+                    $sectionIds = \Auth::user()->roles()->where('name','=',RoleUtility::PRIVILEGE_CL)->with('section')->get(['section_id']);
+                    
+                    $events = self::getEvents($firstDay, $lastDay);
+                    $events->merge(ClubEvent::where('evnt_date_start', '>=', $firstDay->format("Y-m-d"))
+                        ->where('evnt_date_start', '<=', $lastDay->format("Y-m-d"))
+                        ->where('cl_only_visible', '=', '1')
+                        ->whereIn('plc_id', $sectionIds->toArray())
+                        ->with('showToSection')
+                        ->with('shifts')
+                        ->with('section')
+                        ->orderBy('evnt_date_start')
+                        ->orderBy('evnt_time_start')
+                        ->orderBy('plc_id')
+                        ->get());
+                    
+                    $surveys = self::getSurveys($firstDay, $lastDay);
+                    $mondays = new DatePeriod($firstDay, new DateInterval('P1W'), $lastDay->modify('+1 day'));
     
-            $surveys = Survey::where('deadline', '>=', $firstDay->format("Y-m-d"))
-                ->where('deadline', '<=', $lastDay->format("Y-m-d"))
-                ->orderBy('deadline')
-                ->get();
+                    $sections = Section::where('id', '>', 0)
+                        ->orderBy('title')
+                        ->get(['id', 'title', 'color']);
     
-            $mondays = new DatePeriod($firstDay, new DateInterval('P1W'), $lastDay->modify('+1 day'));
+                    return response()->json([
+                        'data' => View::make('partials.month.monthTable',
+                            compact('events', 'surveys', 'mondays', 'sections', 'firstDay', 'lastDay', 'date'))->render(),
+                    ]);
+                });
+            }
+        } else {
+            return CacheUtility::remember('monthtable-'.$year.'-'.$month, function () use ($year, $month) {
+                list($firstDay, $lastDay, $date) = $this->makeDateArray($year, $month);
+                $events = self::getEvents($firstDay, $lastDay);
+                $surveys = self::getSurveys($firstDay, $lastDay);
+                $mondays = new DatePeriod($firstDay, new DateInterval('P1W'), $lastDay->modify('+1 day'));
+                
+                $sections = Section::where('id', '>', 0)
+                    ->orderBy('title')
+                    ->get(['id', 'title', 'color']);
+                
+                return response()->json([
+                    'data' => View::make('partials.month.monthTable',
+                        compact('events', 'surveys', 'mondays', 'sections', 'firstDay', 'lastDay', 'date'))->render(),
+                ]);
+            });
+        }
+    }
     
-            $sections = Section::where('id', '>', 0)
-                ->orderBy('title')
-                ->get(['id', 'title', 'color']);
+    /**
+     * @param $firstDay
+     * @param $lastDay
+     * @return mixed
+     */
+    private static function getSurveys($firstDay, $lastDay)
+    {
+        $surveys = Survey::where('deadline', '>=', $firstDay->format("Y-m-d"))
+            ->where('deadline', '<=', $lastDay->format("Y-m-d"))
+            ->orderBy('deadline')
+            ->get();
+        
+        return $surveys;
+    }
     
-            return response()->json(['data'=> View::make('partials.month.monthTable',compact('events','surveys','mondays','sections','firstDay','lastDay','date'))->render()]);
-        });
+    /**
+     * @param $firstDay
+     * @param $lastDay
+     * @return Collection/ClubEvent $events
+     */
+    private static function getEvents($firstDay, $lastDay)
+    {
+        return  ClubEvent::where('evnt_date_start', '>=', $firstDay->format("Y-m-d"))
+            ->where('evnt_date_start', '<=', $lastDay->format("Y-m-d"))
+            ->where('cl_only_visible', '=', '0')
+            ->with('showToSection')
+            ->with('shifts')
+            ->with('section')
+            ->orderBy('evnt_date_start')
+            ->orderBy('evnt_time_start')
+            ->orderBy('plc_id')
+            ->get();
     }
     
     public function markShiftsOfCurrentUser($year, $month)

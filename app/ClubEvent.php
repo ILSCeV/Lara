@@ -28,6 +28,7 @@ use Lara\Shift;
  * @property double price_normal
  * @property double price_external
  * @property int template_id
+ * @property bool cl_only_visible
  */
 class ClubEvent extends Model
 {
@@ -78,6 +79,7 @@ class ClubEvent extends Model
         'template_id',
         'creator_id',
         'was_manually_edited',
+        'cl_only_visible'
     ];
 
     /**

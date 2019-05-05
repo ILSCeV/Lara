@@ -11,6 +11,7 @@ namespace Lara\utilities;
 
 
 use Lara\ClubEvent;
+use Lara\User;
 use Lara\Survey;
 
 class CacheUtility
@@ -41,14 +42,23 @@ class CacheUtility
     
     static function forgetMonthTable(ClubEvent $event)
     {
-        self::forget('monthtable-'.(new \DateTime($event->evnt_date_start))->format('Y-m'));
+        $clUsers = User::query()->whereHas('roles', function (\Illuminate\Database\Eloquent\Builder $query){
+            $query->where('name','=',RoleUtility::PRIVILEGE_CL);
+        })->get();
+        
+        $datePattern = (new \DateTime($event->evnt_date_start))->format('Y-m');
+        self::forget('monthtable-'.$datePattern);
+        self::forget('monthtable-admin-'.$datePattern);
+        $clUsers->map(function (User $user) use ($datePattern) {
+           self::forget('monthtable-cl-'.$user->id.'-'-$datePattern);
+        });
     }
     
-    static function forgetMonthTableSurvey(Survey $survey)
+static function forgetMonthTableSurvey(Survey $survey)
     {
         self::forget('monthtable-'.(new \DateTime($survey->deadline))->format('Y-m'));
     }
-    
+
     static function clear()
     {
         \Artisan::call('cache:clear');

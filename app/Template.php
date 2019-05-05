@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string private_details
  * @property bool is_private
  * @property bool facebook_needed
+ * @property bool cl_only_visible
  *
  */
 class Template extends Model
@@ -60,6 +61,7 @@ class Template extends Model
         'price_normal',
         'price_external',
         'facebook_needed',
+        'cl_only_visible',
     ];
     
     /**
