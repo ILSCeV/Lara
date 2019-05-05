@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top p-2x">
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top p-2x nav-max-height">
     <div class="navbar-header">
 {{-- HAMBURGER / Mobile only --}}
         <button type="button"
