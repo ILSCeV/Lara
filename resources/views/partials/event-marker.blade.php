@@ -14,7 +14,7 @@
     @elseif( $clubEvent->evnt_type == 4)
         <i class="fas fa-eye-slash text"></i>
     @elseif( $clubEvent->evnt_type == 5)
-        <small>&nbsp;</small><i class="fas fa-eur text"></i><small>&nbsp;</small>
+        <small>&nbsp;</small><i class="fas fa-money-bill-alt text"></i><small>&nbsp;</small>
     @elseif( $clubEvent->evnt_type == 6)
         <i class="fas fa-life-ring text"></i>
     @elseif( $clubEvent->evnt_type == 7)
@@ -26,6 +26,6 @@
     @elseif( $clubEvent->evnt_type == 10)
         <i class="fas fa-tree text"></i>
     @elseif( $clubEvent->evnt_type == 11)
-        <i class="fas fa-cutlery text"></i>
+        <i class="fas fa-utensils text"></i>
     @endif
 </a>
