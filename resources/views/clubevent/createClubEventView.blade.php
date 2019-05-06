@@ -13,8 +13,8 @@
 
 @section('content')
     @php
-        $labelClass = 'col-3';
-        $inputClass = 'form-control col-8';
+        $labelClass = 'col-12 col-md-3';
+        $inputClass = 'form-control col-12 col-md-8';
     @endphp
 
     <div class="row">
@@ -23,9 +23,9 @@
                 {!! Form::open(['method' => 'POST', 'class'=>'form-inline','id'=>'templateSelectorForm']) !!}
                 <div class="form-group col-12 p-0">
                     <label for="templateSelector"
-                           class="col-form-label col-2">{{ trans('mainLang.template') }}:
+                           class="col-form-label col-12 col-md-2">{{ trans('mainLang.template') }}:
                         &nbsp;</label>
-                    <div class="col-6">
+                    <div class="col-12 col-md-6">
                         <select name="template" id="templateSelector" class="selectpicker" data-live-search="true">
                             <optgroup label="">
                                 <option value="-1"></option>
@@ -53,9 +53,9 @@
                 {!! Form::close() !!}
             @elseIf(isset($baseTemplate) && !is_null($baseTemplate))
                 <div class="form-group col-12 p-0">
-                    <label class="col-form-label col-2">{{ trans('mainLang.template') }}:
+                    <label class="col-form-label col-12 col-md-2">{{ trans('mainLang.template') }}:
                         &nbsp;</label>
-                    <div class="col-6">
+                    <div class="col-12 col-md-6">
                         <div class="row">
                             {{ $baseTemplate->title }}
                         </div>
@@ -79,7 +79,7 @@
     @endif
 
 	<div class="row">
-		<div class="card col-6 p-0">
+		<div class="card col-12 col-md-6 p-0">
 
 			<div class="card-header ">
 				<h4 class="card-title">
@@ -215,7 +215,7 @@
 						</div>
 				    </div>
 				@endis
-
+                <div class="clearfix"></div>
 				<div class="form-group col-12 p-0">
                     <label for="section" class="col-form-label col-3">{{ trans('mainLang.section') }}: &nbsp;</label>
                     <select id="section" class="selectpicker" name="section" >
@@ -238,10 +238,10 @@
                         @endforeach
                     </select>
 			   	</div>
-                <br>
-			   	<div class="form-group col-md-12 col-sm-12 col-12 p-0" id="filter-checkboxes">
-                    <label for="filter" class="col-form-label col-3">{{ trans('mainLang.showFor') }}: &nbsp;</label>
-                    <div id="filter" class="input-group form-check col-6">
+                <div class="clearfix"></div>
+			   	<div class="form-group col-12 p-0" id="filter-checkboxes">
+                    <label for="filter" class="col-form-label {{$labelClass}}">{{ trans('mainLang.showFor') }}: &nbsp;</label>
+                    <div id="filter" class="input-group form-check {{$inputClass}}">
 
                         @if(isset($templateId) && $templateId == null && $createClubEvent)
                             @foreach($sections->sortBy('title') as $filterSection)
@@ -393,7 +393,7 @@
 	<br>
 
 	<div class="row col-12">
-        <div class="col-8">
+        <div class="col-12 col-md-8">
 		    @include('partials.editSchedule')
         </div>
     </div>

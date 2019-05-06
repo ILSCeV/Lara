@@ -14,7 +14,8 @@ module.exports = {
     legacy:'./resources/assets/ts/legacy/ieDependencys.ts',
     darkmode: './resources/assets/sass/darkmode.scss',
     monthview:'./resources/assets/ts/monthview/monthview.ts',
-    autocomplete:'./resources/assets/ts/shifts/autocomplete.ts'
+    autocomplete:'./resources/assets/ts/shifts/autocomplete.ts',
+    statistics:'./resources/assets/ts/statistics/StatisticsView.ts'
   },
   module: {
     rules: [

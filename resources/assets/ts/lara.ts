@@ -20,7 +20,6 @@ import "./pirateTranslator"
 import "./Question"
 import "./ShiftSorting"
 import "./ShiftType"
-import "./StatisticsView"
 
 import "./Translate"
 import "./Utilities"

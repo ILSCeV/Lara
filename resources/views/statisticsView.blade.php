@@ -1,12 +1,20 @@
+@php
+/**
+* @var int $month
+* @var int $year
+* @var bool $isMonthStatistic
+*/
+@endphp
 @extends('layouts.master')
 @section('title')
     {{ trans('mainLang.statisticalEvaluation') }}
 @stop
 
-@section('content')
+@section('moreScripts')
+    <script src="{{asset(WebpackBuiltFiles::$jsFiles['statistics'])}}" ></script>
+@endsection
 
-{{-- Restrict access to members only --}}
-@auth
+@section('content')
 
     {{-- prev/next month --}}
     <div class="row pb-3">
@@ -68,13 +76,13 @@
             <div class=" col-12 btn-group float-right">
                 <div class="col-12 col-md-10">
                     @if($isMonthStatistic)
-                        <a class="btn btn-xs btn-primary float-right"
+                        <a class="btn btn-sm btn-primary float-right"
                            type="button"
                            href="{{ action("StatisticsController@showYearStatistics") }}">
                             {{ trans("mainLang.yearStatistic") }}
                         </a>
                     @else
-                        <a class="btn btn-xs btn-primary float-right"
+                        <a class="btn btn-sm btn-primary float-right"
                            type="button"
                            href="{{ action("StatisticsController@showStatistics")  }}">
                             {{ trans("mainLang.monthStatistic") }}
@@ -110,10 +118,7 @@
         var chosenYear = {{ $year }};
         var chosenPerson;
         var isMonthStatistic = {{ $isMonthStatistic }};
+        var userSection = '{{ \Auth::user()->section->title }}';
     </script>
-
-@else
-    @include('partials.accessDenied')
-@endauth
 
 @stop

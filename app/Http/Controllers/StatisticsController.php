@@ -4,6 +4,8 @@ namespace Lara\Http\Controllers;
 
 use DateTime;
 use Illuminate\Support\Collection;
+use Lara\Http\Middleware\ClOnly;
+use Lara\Http\Middleware\RejectGuests;
 use Lara\Person;
 use Lara\Shift;
 use Lara\StatisticsInformation;
@@ -37,6 +39,11 @@ class StatisticsController extends Controller
     where prsn_ldap_id is not null
     group by p.id, u.name
     order by u.name, p.id";
+    
+    public function __construct()
+    {
+        $this->middleware(RejectGuests::class);
+    }
     
     public function showStatistics($year = null, $month = null)
     {

@@ -8,10 +8,16 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Lara\ClubEvent;
+use Lara\Observers\ClubEventObserver;
+use Lara\Observers\ScheduleObserver;
 use Lara\Observers\ShiftObserver;
+use Lara\Observers\SurveyObserver;
 use Lara\Role;
+use Lara\Schedule;
 use Lara\Section;
 use Lara\Shift;
+use Lara\Survey;
 use Lara\User;
 use Lara\utilities\RoleUtility;
 use Illuminate\Support\Facades\Schema;
@@ -103,6 +109,10 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView('pagination::bootstrap-4');
     
         Paginator::defaultSimpleView('pagination::bootstrap-4');
+        
+        ClubEvent::observe(ClubEventObserver::class);
+        Schedule::observe(ScheduleObserver::class);
+        Survey::observe(SurveyObserver::class);
     }
 
     /**
