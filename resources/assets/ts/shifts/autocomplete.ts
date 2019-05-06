@@ -423,14 +423,13 @@ $(() => {
 
       // For passworded schedules: check if a password field exists and is not empty
       // We will check correctness on the server side
-      let password = "";
-      if ($(this).parentsUntil($(this), '.card.bg-warning').find("[name^=password]").length
-        && !$(this).parentsUntil($(this), '.card.bg-warning').find("[name^=password]").val()) {
+      var password = "";
+      if ($(this).parentsUntil($(this), '.card').find("[name^=password]").length
+        && !$(this).parentsUntil($(this), '.card').find("[name^=password]").val()) {
         password = window.prompt('Bitte noch das Passwort für diesen Dienstplan eingeben:');
       } else {
-        password = <string>$(this).parentsUntil($(this), '.card.bg-warning').find("[name^=password]").val();
+        password = <string>$(this).parentsUntil($(this), '.card').find("[name^=password]").val();
       }
-
       // necessary for the ajax callbacks
       let currentId = $(this).data('shiftid');
 
