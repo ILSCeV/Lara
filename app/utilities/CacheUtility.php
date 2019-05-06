@@ -11,6 +11,7 @@ namespace Lara\utilities;
 
 
 use Lara\ClubEvent;
+use Lara\Survey;
 
 class CacheUtility
 {
@@ -41,6 +42,11 @@ class CacheUtility
     static function forgetMonthTable(ClubEvent $event)
     {
         self::forget('monthtable-'.(new \DateTime($event->evnt_date_start))->format('Y-m'));
+    }
+    
+    static function forgetMonthTableSurvey(Survey $survey)
+    {
+        self::forget('monthtable-'.(new \DateTime($survey->deadline))->format('Y-m'));
     }
     
     static function clear()
