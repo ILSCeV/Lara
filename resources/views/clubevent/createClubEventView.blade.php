@@ -158,6 +158,16 @@
                             @endfor
                         </div>
 				    </div>
+                <div class="form-group col-12 p-0 ">
+                    <label for="evnt_private" class="col-3"> {{ trans('mainLang.showExtern') }} </label>
+                    <div class="col-8">
+                        <div class="form-check float-left">
+                            <label>
+                                {!! Form::checkbox('isPrivate', '1', ($private + 1)%2,['class'=>'form-control']) !!}
+                            </label>
+                        </div>
+                    </div>
+                </div>
 				@else
 					<div class="form-group col-12 p-0">
 				     	<label for="evnt_type" class="col-form-label {{$labelClass}}">Typ:</label>
