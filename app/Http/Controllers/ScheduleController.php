@@ -146,8 +146,7 @@ class ScheduleController extends Controller
     public static function makeShiftsFromRequest($schedule, $isNewEvent = true)
     {
         $inputShifts = Input::get("shifts");
-        $amount = count($inputShifts["title"]);
-
+        $amount = is_null($inputShifts) ? 0 : count($inputShifts["title"]);
         $currentShiftIds = $inputShifts["id"] ? $inputShifts["id"] : [];
         $schedule->shifts()
             ->whereNotIn('id', $currentShiftIds)
@@ -203,7 +202,7 @@ class ScheduleController extends Controller
      */
     public static function getUpdates($scheduleId, $timestamp)
     {
-        $updated = Schedule::where("id", "=",  $id)->first()->updated_at;
+        $updated = Schedule::where("id", "=",  $scheduleId)->first()->updated_at;
         return response()->json($updated, 200);
     }
 
