@@ -74,8 +74,8 @@ $( window ).on ( { load: () => {
   }
 });
 
-$(".fa-sort, .fa-sort-up, .fa-sort-down").on({ click:  () => {
-    sortLeaderboards(this);
+$(".fa-sort, .fa-sort-up, .fa-sort-down").on({ click:  (e) => {
+    sortLeaderboards($(e.target));
 }});
 
 $('#memberStatisticsTabs').find('thead').find('td').click(function() {
