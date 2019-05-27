@@ -158,14 +158,13 @@
                             @endfor
                         </div>
 				    </div>
+                <div class="clearfix"></div>
                 <div class="form-group col-12 p-0 ">
-                    <label for="evnt_private" class="col-3"> {{ trans('mainLang.showExtern') }} </label>
-                    <div class="col-8">
-                        <div class="form-check float-left">
-                            <label>
-                                {!! Form::checkbox('isPrivate', '1', ($private + 1)%2,['class'=>'form-control']) !!}
-                            </label>
-                        </div>
+                    <div class=" form-control form-check" >
+                        <label for="evnt_private" class="form-check-label"> {{ trans('mainLang.showExtern') }} </label>
+                    <label class="float-right pr-5">
+                        {!! Form::checkbox('isPrivate', '1', ($private + 1)%2,['class'=>'form-check-input ', 'id'=> 'evnt_private']) !!}
+                    </label>
                     </div>
                 </div>
 				@else
