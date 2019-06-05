@@ -183,7 +183,7 @@
 				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.utilization') }}
 				            <br>
-                            &nbsp;{!! Form::radio('evnt_type', "4", ["checked"=>"checked" , "class"=>'form-check']) !!}
+                            &nbsp;{!! Form::radio('type', "4", ["checked"=>"checked" , "class"=>'form-check']) !!}
 							{{ trans('mainLang.internalEvent') }}
 				            <br>
 				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
@@ -195,7 +195,7 @@
 				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.preSale') }}
 				            <br>
-                            &nbsp;{!! Form::radio('evnt_type', "9", [$type == 9 ? "checked" : "", "class"=>'form-check']) !!}
+                            &nbsp;{!! Form::radio('type', "9", [$type == 9 ? "checked" : "", "class"=>'form-check']) !!}
 							{{ trans('mainLang.others') }}
 				            <br>
                             &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
@@ -204,7 +204,7 @@
                             &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
                             {{ trans('mainLang.buffet') }}
                             <br>
-                            &nbsp;{!! Form::radio('evnt_type', "1", [$type == 1 ? "checked" : "", "class"=>'form-check'] ) !!}
+                            &nbsp;{!! Form::radio('type', "1", [$type == 1 ? "checked" : "", "class"=>'form-check'] ) !!}
 							{{ trans('mainLang.information') }}
 				            <br>
 							&nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
