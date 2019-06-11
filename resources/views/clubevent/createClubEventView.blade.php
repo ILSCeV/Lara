@@ -240,7 +240,7 @@
                             });
                             }
                         @endphp
-                        @foreach($allowedSections->sortBy('title') as $eventSection)
+                        @foreach($allowedSections->unique()->sortBy('title') as $eventSection)
                             <option value="{{$eventSection->id}}"
                                     data-content="<span class='palette-{!! $eventSection->color !!}-900 bg'> {{$eventSection->title}} </span>"
                                     @if($eventSection->id == $section->id) selected @endif >{{ $eventSection->title }}</option>
