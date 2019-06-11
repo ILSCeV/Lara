@@ -200,6 +200,11 @@
     		<button class="btn btn-sm hidden-print" type="button" id="toggle-taken-shifts">
                 {{ trans('mainLang.hideTakenShifts') }}
             </button>
+
+            {{-- show/hide all comment fields --}}
+            <button class="btn btn-sm hidden-print" type="button" id="toggle-all-comments">
+                {{ trans('mainLang.comments') }}
+            </button>
         </div>
 
         <div class="row ">
