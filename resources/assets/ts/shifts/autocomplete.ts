@@ -186,7 +186,7 @@ $(() => {
         $(document.activeElement).parent().parent().children('.dropdown-club').children('li').on({
           click: function (e) {
 
-            let clubTitle = $(e.target).html();
+            let clubTitle = $(e.target).text();
             let currentEntryId = $(e.target).closest(".shift").data("shiftid");
 
             // update fields
