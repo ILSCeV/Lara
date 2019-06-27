@@ -3,7 +3,7 @@ import * as bootbox from "bootbox";
 import {translate} from "./Translate";
 
 $(()=>{
-    $("#userOverviewFilter").on("keyup", (event) => {
+    $(".userOverviewFilter").on("keyup", (event) => {
         let value = $(event.target).val().toLowerCase();
         $("#userOverviewTable tr").each(function (index, elem) {
             $(elem).toggle($(elem).text().toLowerCase().indexOf(value) > -1)
