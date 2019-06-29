@@ -42,7 +42,7 @@ $(()=>{
             },
             callback:(result) => {
                 if(result){
-                    $('#change-user-status-' + userId).submit();
+                    $(target).closest('.change-user-status-form').trigger('submit');
                 }
             }
         });

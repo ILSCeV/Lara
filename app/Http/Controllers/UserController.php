@@ -12,6 +12,7 @@ use Lara\Role;
 use Lara\Section;
 use Lara\Status;
 use Lara\User;
+use Lara\UserSectionsRoleView;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
 use Redirect;
@@ -60,14 +61,15 @@ class UserController extends Controller
     public function index()
     {
         $sections = Section::query()->orderBy('title')->get();
-        
-        $users = User::with('section')
+    
+        $userSectionsRoleViews = UserSectionsRoleView::with('section')->with('user')->with('user.section')
             ->get()
-            ->sortBy(function (User $user) {
+            ->sortBy(function (UserSectionsRoleView $userSectionsRoleView) {
+                $user = $userSectionsRoleView->user;
                 return sprintf('%-12s%s%s%s', Auth::user()->section->id != $user->section->id,$user->section->title,$user->status, $user->name);
             });
 
-        return View::make('user.index', compact('users','sections'));
+        return View::make('user.index', compact('userSectionsRoleViews','sections'));
     }
 
     /**
