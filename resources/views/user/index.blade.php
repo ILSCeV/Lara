@@ -41,6 +41,11 @@
                 @foreach($sections as $section)
                     <div class="tab-pane fade @if(\Auth::user()->section->id == $section->id) show active @endif"
                          id="section{{$section->id}}" role="tabpanel">
+                        <nav class="navbar nav nav-pills nav-justified">
+                            @foreach( \Lara\utilities\RoleUtility::ALL_PRIVILEGES as $priv )
+                                <a class="nav-item nav-link rolefilter" data-target="{{$section->title.'_'.$priv}}" href="#">{{$priv}}</a>
+                            @endforeach
+                        </nav>
                         <table class="table info table-hover table-sm">
                             <thead>
                             <tr class="active">
@@ -72,7 +77,13 @@
                             })->map(function (Lara\UserSectionsRoleView $userSectionsRoleView){
                             return $userSectionsRoleView->user;
                             }) as $user)
-                                <tr>
+                                @php
+                                /** @var Lara\User $user */
+                                $rolesPerSection = $user->roles->map(function (\Lara\Role $r){
+                                return $r->section->title . '_'. $r->name;
+                                });
+                                @endphp
+                                <tr class="userRow @foreach($rolesPerSection as $roleString) {{$roleString}} @endforeach">
                                     <td class="pl-3">
                                         {{ $user->section->title }}
                                     </td>
