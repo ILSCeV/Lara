@@ -4,6 +4,7 @@ namespace Lara\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Input;
 use Lara\Http\Middleware\ClOnly;
@@ -164,6 +165,22 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        /** @var User $user */
+        $user = User::query()->findOrFail($id);
+        if($user->id == \Auth::user()->id){
+            Utilities::error(trans('mainLang.accessDenied'));
+            return Redirect::back();
+        }
+        $person = $user->person;
+        $person->prsn_ldap_id = null;
+        $person->prsn_name = 'gelöschte Person';
+        DB::transaction(function () use ($user, $person){
+            $user->delete();
+            $person->save();
+        });
+        Log::info('User: ' . \Auth::user()->name . ' deleted ' . $user->name);
+        Utilities::success(trans('mainLang.changesSaved'));
+        return Redirect::action('UserController@index');
     }
 
     public function agreePrivacy(){

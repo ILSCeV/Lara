@@ -38,6 +38,8 @@ export default {
 
     'changeUserStatus': 'Bist du dir sicher, dass du den Status dieses Nutzers ändern möchtest?',
     'changeUserStatusHeader' : 'Benutzerstatus bearbeiten',
+    'deleteUserHeader': 'Benutzer Löschen',
+    'deleteUser':'Bist du dir sicher, dass du den Benutzer Löschen möchtest?',
     'replaceShiftTypeConfirmation' : 'Möchtest du alle Dienste die den folgenden Diensttyp verwenden wirklich ersetzen?:',
     'replaceAll' : 'Alle ersetzen',
 

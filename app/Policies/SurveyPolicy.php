@@ -48,7 +48,7 @@ class SurveyPolicy
             return true;
         }
 
-        if ($user->is($survey->creator->user)) {
+        if ($survey->creator!=null && $user->is($survey->creator->user)) {
             return true;
         }
 

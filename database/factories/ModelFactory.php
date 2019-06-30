@@ -39,7 +39,7 @@ $factory->define(Lara\Person::class, function (Faker\Generator $faker) {
 
 $factory->define(Lara\Survey::class, function (Faker\Generator $faker) {
     return [
-        'creator_id' => Lara\Person::query()->where('prsn_ldap_id','!=',null)->inRandomOrder()->first()->prsn_ldap_id,
+        'creator_id' => Lara\Person::query()->where('prsn_ldap_id','!=',null)->inRandomOrder()->first()->id,
         'title' => $faker->sentence(2),
         'description' => $faker->paragraphs(4, true),
         'deadline' => $faker->dateTimeBetween('now', '+60 days')->format('Y-m-d H:i:s'),
@@ -52,7 +52,7 @@ $factory->define(Lara\Survey::class, function (Faker\Generator $faker) {
 
 $factory->define(Lara\SurveyAnswer::class, function(Faker\Generator $faker){
     return [
-        'creator_id' => Lara\Person::query()->where('prsn_ldap_id','!=',null)->inRandomOrder()->first()->prsn_ldap_id,
+        'creator_id' => Lara\Person::query()->where('prsn_ldap_id','!=',null)->inRandomOrder()->first()->id,
         'survey_id' => Lara\Survey::inRandomOrder()->first()->id,
         'name' => $faker->firstName,
         'club' => $faker->word

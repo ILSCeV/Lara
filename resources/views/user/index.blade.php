@@ -67,6 +67,9 @@
                                 <th class="">
                                     {{ trans('auth.status') }}
                                 </th>
+                                <th>
+
+                                </th>
                             </tr>
                             </thead>
                             <tbody class="container userOverviewTable">
@@ -115,6 +118,13 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                        {{ Form::close() }}
+                                        @endcanEditUser
+                                    </td>
+                                    <td>
+                                        @canEditUser($user)
+                                        {{Form::open(['route'=>['user.delete',$user->id]])}}
+                                            <button type="button" class="btn btn-danger deleteUserBtn" data-name="{{$user->name}}"><i class="fas fa-trash-alt"></i></button>
                                         {{ Form::close() }}
                                         @endcanEditUser
                                     </td>

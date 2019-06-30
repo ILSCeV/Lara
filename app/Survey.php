@@ -29,7 +29,7 @@ class Survey extends BaseSoftDelete
      */
     public function creator()
     {
-        return $this->belongsTo('Lara\Person', 'creator_id', 'prsn_ldap_id');
+        return $this->belongsTo('Lara\Person', 'creator_id', 'id');
     }
 
     /**

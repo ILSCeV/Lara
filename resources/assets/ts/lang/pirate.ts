@@ -36,6 +36,8 @@ export default {
     'deleteTemplateMessage' : 'Bist du dir sicher, dass du diese Vorlage löschen möchtest?',
     'changeUserStatus': 'Bist du dir sicher, dass du den Status dieses Nutzers ändern möchtest?',
     'changeUserStatusHeader' : 'Benutzerstatus bearbeiten',
+    'deleteUserHeader': 'Über Bord werfen',
+    'deleteUser':'Sollen wir das Crewmitglied wirklich über Bord werfen?',
     'replaceShiftTypeConfirmation' : 'Möchtest du alle Dienste die den folgenden Diensttyp verwenden wirklich ersetzen?:',
     'replaceAll' : 'Alle ersetzen',
 

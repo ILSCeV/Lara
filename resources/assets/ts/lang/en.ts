@@ -37,6 +37,8 @@ export default {
 
     'changeUserStatus': 'Are you sure that you want to change the status of this user?',
     'changeUserStatusHeader' : 'Change user status',
+    'deleteUserHeader': 'delete user',
+    'deleteUser':'Are you sure you want to delete the user?',
     'replaceShiftTypeConfirmation' : 'Do you really want to replace all shifts that use this shift type:',
     'replaceAll' : 'replace all',
 

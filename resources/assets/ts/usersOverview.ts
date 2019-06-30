@@ -22,7 +22,6 @@ $(() => {
   $('.change-user-status-form select[name="status"]').on('change', (event) => {
 
     const target = event.currentTarget;
-    const userId = $(target).data('id');
     const userName = $(target).data('name');
     const selectedValue = $(target).val();
 
@@ -46,6 +45,36 @@ $(() => {
         }
       }
     });
+  });
+
+  $('.deleteUserBtn').on({
+    click:(e) => {
+    e.preventDefault();
+      const target = e.currentTarget;
+      const userName = $(target).data('name');
+
+      bootbox.confirm({
+        title: '<h4 class="alert alert-danger text-center"> <i class="fas fa-exclamation-triangle"></i> ' + translate('deleteUserHeader') + '&nbsp;<i class="fas fa-exclamation-triangle"></i></h4>',
+        size: 'large',
+        message: '<p>' + translate('deleteUser') + '</p><p class="text-warning">' + userName + '</p>',
+        buttons: {
+          confirm: {
+            label: '<i class="fas fa-check"></i>',
+            className: 'btn-danger'
+          },
+          cancel: {
+            label: '<i class="fas fa-times"></i>',
+            className: 'btn-success'
+          }
+        },
+        callback: (result) => {
+          if (result) {
+            $(target).closest('form').trigger('submit');
+          }
+        }
+      });
+    }
+
   });
 
   $('.toggleRoleBtn').on('click', (event) => {
