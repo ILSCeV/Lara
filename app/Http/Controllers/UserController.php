@@ -66,7 +66,7 @@ class UserController extends Controller
     {
         $sections = Section::query()->orderBy('title')->get();
         
-        $userSectionsRoleViews = UserSectionsRoleView::with('section')->with('user')->with('user.section')
+        $userSectionsRoleViews = UserSectionsRoleView::with('section')->with('user')->with('user.section')->with('user.roles')->with('user.roles.section')
             ->get()
             ->sortBy(function (UserSectionsRoleView $userSectionsRoleView) {
                 $user = $userSectionsRoleView->user;
