@@ -24,6 +24,7 @@ use Lara\Status;
  * @property Section section
  * @property Person person
  * @property Settings settings
+ * @property \DateTime on_leave
  */
 class User extends Authenticatable
 {
@@ -38,7 +39,7 @@ class User extends Authenticatable
         // authentication related
         'name', 'email', 'password',
         // Lara related
-        'section_id', 'person_id', 'status', 'givenname', 'lastname','is_name_private'
+        'section_id', 'person_id', 'status', 'givenname', 'lastname','is_name_private','on_leave'
     ];
 
     /**
