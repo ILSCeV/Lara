@@ -200,7 +200,7 @@ class SurveyController extends Controller
             ->get(['creator_id', 'summary', 'created_at', 'revision_id'])->toArray();
 
         foreach ($revisions as &$revision) {
-            $creator = Person::where('prsn_ldap_id', '=', $revision['creator_id'])
+            $creator = Person::where('id', '=', $revision['creator_id'])
                 ->get(['prsn_name'])
                 ->first();
             $isGuest = empty($creator) || is_null($revision['creator_id']);
