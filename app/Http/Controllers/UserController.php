@@ -10,6 +10,7 @@ use Input;
 use Lara\Http\Middleware\ClOnly;
 use Lara\Role;
 use Lara\Section;
+use Lara\Shift;
 use Lara\Status;
 use Lara\SurveyAnswer;
 use Lara\User;
@@ -183,12 +184,19 @@ class UserController extends Controller
         $person = $user->person;
         $person->prsn_ldap_id = null;
         $person->prsn_name = self::DELETED_PERSON;
+        $person->prsn_status = null;
         DB::transaction(function () use ($user, $person) {
             $surveyAnswers = SurveyAnswer::query()->where('creator_id','=',$person->id)->get();
             $surveyAnswers->each(function (SurveyAnswer $answer){
-                $answer->name = self::DELETED_PERSON;
-                $answer->save();
+                $answer->delete();
             });
+            
+            $shifts = Shift::query()->where('person_id','=',$person->id)->get();
+            $shifts->each(function (Shift $shift){
+                $shift->comment = '';
+                $shift->save();
+            });
+            
             $user->delete();
             $person->save();
         });
