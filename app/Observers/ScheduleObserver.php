@@ -25,6 +25,7 @@ class ScheduleObserver
     public function created(Schedule $schedule) 
     {
         Logging::scheduleCreated($schedule);
+        $schedule->save();
     }
 
     public function updating(Schedule $schedule) 
