@@ -54,6 +54,7 @@ class UserController extends Controller
                 ),
             ],
             'status'    => ['required', Rule::in(Status::ACTIVE)],
+            'on_leave' => 'nullable|date'
         ]);
     }
     
@@ -234,7 +235,7 @@ class UserController extends Controller
             if ($validator->fails()) {
                 Utilities::error(trans('mainLang.changesWereReset'));
                 
-                return Redirect::back()->withErrors($validator);
+                return Redirect::back()->withErrors($validator)->withInput(Input::all());
             }
             $data['givenname'] = Input::get('givenname');
             $data['lastname'] = Input::get('lastname');
@@ -242,6 +243,7 @@ class UserController extends Controller
             $data['email'] = Input::get('email');
             $data['section_id'] = Input::get('section');
             $data['status'] = Input::get('status');
+            $data['on_leave'] = Input::get('on_leave');
             
         }
         if (Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {

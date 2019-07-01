@@ -2,6 +2,7 @@
 
 namespace Lara;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Gate;
 use Lara\utilities\RoleUtility;
-use Lara\Status;
 
 /**
  * @property string name
@@ -24,7 +24,7 @@ use Lara\Status;
  * @property Section section
  * @property Person person
  * @property Settings settings
- * @property \DateTime on_leave
+ * @property Carbon on_leave
  */
 class User extends Authenticatable
 {
@@ -49,6 +49,14 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+    
+    protected $dates = [
+      'on_leave'
+    ];
+    
+    protected $casts = [
+        'is_name_private' => 'boolean'
     ];
 
 

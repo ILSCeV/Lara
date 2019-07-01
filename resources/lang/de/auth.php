@@ -31,6 +31,7 @@ return [
     'lastname' => 'Nachname',
     'section' => 'Sektion',
     'status' => 'Status',
+    'on_leave_until' => 'Beurlaubt bis',
     'password' => 'Passwort',
     'confirmPassword' => 'Passwort bestätigen',
     'register_submit' => 'Neuen Nutzer registrieren',

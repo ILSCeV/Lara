@@ -45,6 +45,9 @@
                             @foreach( \Lara\utilities\RoleUtility::ALL_PRIVILEGES as $priv )
                                 <a class="nav-item nav-link rolefilter" data-target="{{$section->title.'_'.$priv}}" href="#">{{$priv}}</a>
                             @endforeach
+                            @foreach(\Lara\Status::ALL as $status)
+                                    <a class="nav-item nav-link rolefilter" data-target="{{$section->title.'-'.$status}}" href="#">{{trans($section->title.'.'.$status)}}</a>
+                            @endforeach
                         </nav>
                         <table class="table info table-hover table-sm">
                             <thead>
@@ -68,6 +71,9 @@
                                     {{ trans('auth.status') }}
                                 </th>
                                 <th>
+                                    {{ trans('auth.on_leave_until') }}
+                                </th>
+                                <th>
 
                                 </th>
                             </tr>
@@ -86,7 +92,7 @@
                                 return $r->section->title . '_'. $r->name;
                                 });
                                 @endphp
-                                <tr class="userRow @foreach($rolesPerSection as $roleString) {{$roleString}} @endforeach">
+                                <tr class="userRow @foreach($rolesPerSection as $roleString) {{$roleString}} @endforeach {{ $user->section->title.'-'.$user->status }}">
                                     <td class="pl-3">
                                         {{ $user->section->title }}
                                     </td>
@@ -120,6 +126,11 @@
                                         </select>
                                         {{ Form::close() }}
                                         @endcanEditUser
+                                    </td>
+                                    <td>
+                                        @if(!is_null($user->on_leave))
+                                            {{ $user->on_leave->format('d.m.Y') }}
+                                        @endif
                                     </td>
                                     <td>
                                         @canEditUser($user)
