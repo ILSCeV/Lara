@@ -52,10 +52,7 @@ class ClubEventPolicy
             return true;
         }
 
-        $isClOrMarketing = $user->isAn(RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_MARKETING);
-        $isSameSection = $user->section_id == $clubEvent->section->id;
-
-        if ($isClOrMarketing && $isSameSection) {
+        if ($user->hasPermissionsInSection($clubEvent->section, RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_MARKETING)) {
             return true;
         }
 
