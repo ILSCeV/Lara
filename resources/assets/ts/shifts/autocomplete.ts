@@ -66,16 +66,23 @@ $(() => {
           } else {
             data.prsn_status = ""
           }
-
-          if (data.get_user) {
+          let onLeave: String = '';
+          if (data.user && data.user.on_leave) {
+            let today = new Date();
+            if (today.getTime() < new Date(data.user.on_leave).getTime()) {
+              onLeave = ' (U: ' + (new Date(data.user.on_leave)).toLocaleDateString() + ') ';
+            }
+          }
+          let onLeaveClass = onLeave ? 'bg-danger' : '';
+          if (data.user) {
             // add found persons to the array
             $dropdown.append(
-              '<li class="dropdown-item"><a href="javascript:void(0);">'
+              `<li class='dropdown-item ${onLeaveClass}'><a href='javascript:void(0);'>`
               + '<span name="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
               + '<span name="currentName">' + data.prsn_name + '</span>'
-              + data.prsn_status
+              + data.prsn_status + onLeave
               + '(<span name="currentClub">' + data.club.clb_title + '</span>)'
-              + '&nbsp;<span name="tooltip" class="text-muted"> ' + data.get_user.givenname + ' ' + data.get_user.lastname + ' </span> '
+              + '&nbsp;<span name="tooltip" class="text-muted"> ' + data.user.givenname + ' ' + data.user.lastname + ' </span> '
               + '</a></li>');
           }
         });
