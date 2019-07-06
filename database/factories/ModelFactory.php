@@ -17,29 +17,35 @@ use Lara\Status;
 
 $factory->define(Lara\User::class, function (Faker\Generator $faker) {
     static $password;
-
+    $onLeave = $faker->boolean(20) ? $faker->dateTimeBetween('-5 months', '+6 months'):null;
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+        'on_leave' => $onLeave,
     ];
 });
 
 $factory->define(Lara\Person::class, function (Faker\Generator $faker) {
+    $isUser = $faker->boolean(60);
+    $clubQuery = \Lara\Club::query()->inRandomOrder();
+    if($isUser) {
+        $clubQuery->where('clb_title', '=', \Lara\Section::query()->inRandomOrder()->first()->title);
+    }
     return [
         'prsn_name' => $faker->name(),
-        'prsn_ldap_id' => $faker->boolean(60) ? $faker->numberBetween(2000, 9999):null,
+        'prsn_ldap_id' => $isUser ? $faker->numberBetween(2000, 9999):null,
         'prsn_status' => $faker->randomElement(Status::ACTIVE),
         'prsn_uid' => hash("sha512", uniqid()),
-        'clb_id' => $faker->randomElement(\Lara\Club::query()->inRandomOrder()->get()->map(function(\Lara\Club $club){return $club->id;})->toArray())
+        'clb_id' => $clubQuery->first()->id
     ];
 });
 
 
 $factory->define(Lara\Survey::class, function (Faker\Generator $faker) {
     return [
-        'creator_id' => Lara\Person::query()->where('prsn_ldap_id','!=',null)->inRandomOrder()->first()->id,
+        'creator_id' => Lara\Person::query()->whereNotNull('prsn_ldap_id')->inRandomOrder()->first()->id,
         'title' => $faker->sentence(2),
         'description' => $faker->paragraphs(4, true),
         'deadline' => $faker->dateTimeBetween('now', '+60 days')->format('Y-m-d H:i:s'),
@@ -52,7 +58,7 @@ $factory->define(Lara\Survey::class, function (Faker\Generator $faker) {
 
 $factory->define(Lara\SurveyAnswer::class, function(Faker\Generator $faker){
     return [
-        'creator_id' => Lara\Person::query()->where('prsn_ldap_id','!=',null)->inRandomOrder()->first()->id,
+        'creator_id' => Lara\Person::query()->whereNotNull('prsn_ldap_id')->inRandomOrder()->first()->id,
         'survey_id' => Lara\Survey::inRandomOrder()->first()->id,
         'name' => $faker->firstName,
         'club' => $faker->word
