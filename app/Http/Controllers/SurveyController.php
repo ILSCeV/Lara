@@ -170,7 +170,7 @@ class SurveyController extends Controller
             $username = null;
             $ldapid = null;
         } else {
-            $userId = Auth::user()->person->prsn_ldap_id;
+            $userId = Auth::user()->person->id;
             $userStatus = Auth::user()->status;
             $username = Auth::user()->name;
             $ldapid = Auth::user()->person->prsn_ldap_id;

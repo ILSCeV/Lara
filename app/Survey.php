@@ -106,7 +106,7 @@ class Survey extends BaseSoftDelete
      */
     public function makeFromRequest(SurveyRequest $request)
     {
-        $this->creator_id = Auth::user()->person->prsn_ldap_id;
+        $this->creator_id = Auth::user()->person->id;
         $this->title = $request->title;
         $this->description = $request->description;
         $this->deadline = strftime("%Y-%m-%d %H:%M:%S", strtotime($request->deadlineDate . $request->deadlineTime));
