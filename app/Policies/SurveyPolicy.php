@@ -48,14 +48,13 @@ class SurveyPolicy
             return true;
         }
 
-        if ($user->is($survey->creator->user)) {
+        if ($survey->creator!=null && $user->is($survey->creator->user)) {
             return true;
         }
 
-        $isClOrMarketing = $user->isAn(RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_MARKETING);
-        $isSameSection = $user->section_id == $survey->section()->id;
+        $isClOrMarketing = $user->hasPermissionsInSection($survey->section(), RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_MARKETING);
 
-        if ($isClOrMarketing && $isSameSection) {
+        if ($isClOrMarketing) {
             return true;
         }
 

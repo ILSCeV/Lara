@@ -31,6 +31,7 @@ return [
     'lastname' => 'Last name',
     'section' => 'Section',
     'status' => 'Status',
+    'on_leave_until' => 'on leave until',
     'password' => 'Password',
     'confirmPassword' => 'Confirm password',
     'register_submit' => 'Register new user',
