@@ -1,4 +1,4 @@
-## Club management software built on top of Laravel 5.7
+## Club management software built on top of Laravel 5.8
 
 ## About
 **Lara** is a planning tool that combines a calender with personnel scheduling, developed for [Ilmenauer Studentenclub e.V.](http://www.il-sc.de)
