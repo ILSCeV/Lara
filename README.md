@@ -21,7 +21,7 @@ For a detailed list of open requirements and change-requests contact [Maxim](htt
 Code published under [GNU GPL v.3](https://github.com/ILSCeV/Lara/blob/master/LICENSE).
 
 Lara VedSt is based on: 
-- [Laravel 5.7](http://laravel.com)
+- [Laravel 5.8](http://laravel.com)
 - [Bootswatch](http://bootswatch.com)
 - [Google Material Color implementation](https://github.com/danlevan/google-material-color)
 - [JQuery](http://jquery.com)
