@@ -237,42 +237,50 @@ class IcalController extends Controller
             $vCalendar = new Calendar('Events');
             $vCalendar->setTimezone(new Timezone("Europe/Berlin"));
 
-            $events = Shift::where('person_id', '=', $person->id)
+            $shifts = Shift::query()->where('person_id', '=', $person->id)
                 ->with("schedule", "schedule.event.section", "schedule.event", "type")
                 ->get();
 
-            $vEvents = $events->map(function ($evt) use ($alarm) {
-                $schedule = $evt->schedule;
+            $vEvents = $shifts->map(function (Shift $shift) use ($alarm) {
+                $schedule = $shift->schedule;
 
                 $start_time = "";
                 $preparationNeeded = false;
-                if ($schedule->event->evnt_time_start == $evt->start) {
+                if ($schedule->event->evnt_time_start == $shift->start) {
                     $start_time = $schedule->schdl_time_preparation_start;
                     $preparationNeeded = true;
-                } else {
-                    $start_time = $evt->start;
+                }
+                else {
+                    $start_time = $shift->start;
                     $preparationNeeded = false;
                 }
 
-                $stopHour = intval(substr($evt->end, 0, 2));
+                $stopHour = intval(substr($shift->end, 0, 2));
                 $stop_date = "";
                 if ($stopHour > 18) {
                     $stop_date = $schedule->event->evnt_date_start;
                 } else {
                     $stop_date = $schedule->event->evnt_date_end;
                 }
+                $startHour = intval(substr($shift->start, 0, 2));
+                //stopdate -> detect date change
+                if(($schedule->event->evnt_date_start != $schedule->event->evnt_date_end) && $startHour>=0 && $startHour<$stopHour ){
+                    $start_date = $stop_date;
+                } else {
+                    $start_date = $schedule->event->evnt_date_start;
+                }
 
                 $vEvent = new Event();
 
                 $start_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT,
-                    "".$schedule->event->evnt_date_start." ".$start_time);
+                    "".$start_date." ".$start_time);
                 $stop_date_time = \DateTime::createFromFormat(self::DATE_TIME_FORMAT,
-                    "".$stop_date." ".$evt->end);
+                    "".$stop_date." ".$shift->end);
 
                 if ($start_date_time != false && $stop_date_time != false) {
                     $vEvent->setDtStart($start_date_time);
                     $vEvent->setDtEnd($stop_date_time);
-                    $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($evt->type->title()));
+                    $vEvent->setSummary("".($schedule->event->evnt_title)." - ".($shift->type->title()));
 
                     $eventLink = "".URL::route('event.show', $schedule->event->id);
                     $eventTimeStart = substr($schedule->event->evnt_time_start, 0, 5);
@@ -288,8 +296,8 @@ class IcalController extends Controller
                         .trans('mainLang.end').": ".$eventTimeEnd."\n"
                         .trans('mainLang.DV-Time').": ".$preparationsTime."\n"
                         ."\n"
-                        .trans('mainLang.shift').": ".$evt->type->title()."\n"
-                        .trans('mainLang.shiftTime').": ".substr($evt->start, 0, 5)." - ".substr($evt->end, 0, 5)."\n"
+                        .trans('mainLang.shift').": ".$shift->type->title()."\n"
+                        .trans('mainLang.shiftTime').": ".substr($shift->start, 0, 5)." - ".substr($shift->end, 0, 5)."\n"
                         ."\n"
                         ."---\n"
                         ."\n"
@@ -309,7 +317,7 @@ class IcalController extends Controller
                     if ($alarm > 0 && ($start_date_time > new \DateTime())) {
                         $vAlarm = new Alarm();
                         $vAlarm->setAction(Alarm::ACTION_DISPLAY);
-                        $vAlarm->setDescription($schedule->event->evnt_title." - ".($evt->type->title()));
+                        $vAlarm->setDescription($schedule->event->evnt_title." - ".($shift->type->title()));
                         $vAlarm->setTrigger("-PT".$alarm."M");
                         $vEvent->addComponent($vAlarm);
                     }
