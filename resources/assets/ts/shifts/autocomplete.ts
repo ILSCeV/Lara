@@ -1,6 +1,7 @@
 import {translate} from "../Translate";
 import 'bootstrap/js/dist/tooltip'
 import 'bootstrap/js/dist/alert'
+import {createMessage} from "../common/messages";
 
 // conversion of html entities to text (e.g. "&" as "&amp;")
 // ref: https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery
@@ -486,13 +487,13 @@ $(() => {
             .css("color", "darkgrey");
         },
 
-        complete: async function () {
+        complete: async function (jqXHR) {
           // console.log('complete');
-          self.addClass('animation').addClass('bg-success');
+          let responsiveClass = jqXHR.status == 200 ? 'bg-success' : 'bg-danger';
+          self.addClass('animation').addClass(responsiveClass);
           await new Promise(resolve => setTimeout(resolve, 500));
-          self.removeClass('bg-success');
+          self.removeClass(responsiveClass);
         },
-
         success: function (data) {
           // console.log("success");
 
@@ -518,14 +519,17 @@ $(() => {
                 updateShiftEntry(json, true);
                 return;
               } else {
-                alert(translate(xhr.responseJSON.errorCode));
+                //alert(translate(xhr.responseJSON.errorCode));
+                createMessage(translate('error'),xhr.responseJSON.errorCode,'bg-danger')
               }
             }
           } else {
-            alert(JSON.stringify(xhr.responseJSON));
+            //alert(JSON.stringify(xhr.responseJSON));
+            createMessage(translate('error') + ' ' + xhr.status, translate('sessionExpired'), 'bg-danger')
           }
           $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!"); //TODO: translate
-        }
+        },
+
       });
 
       // Prevent the form from actually submitting in browser

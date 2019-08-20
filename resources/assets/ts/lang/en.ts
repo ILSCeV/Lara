@@ -46,4 +46,6 @@ export default {
     'conflictAlertLine1' : 'Someone else has edited this shift before you. The new values have been updated.',
     'conflictAlertLine2' : 'Please check the new information and if you really want to override them, perform your changes again.',
 
+    'sessionExpired': 'Error: Your Session is expired, please reload the page and login. Than try again.',
+    'error': 'Fehler',
 };

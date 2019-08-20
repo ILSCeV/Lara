@@ -67,7 +67,7 @@ class ShiftController extends Controller
     {
         // Check if it's our form (CSRF protection)
         if ( Session::token() !== Input::get( '_token' ) ) {
-            return response()->json('Fehler: die Session ist abgelaufen. Bitte aktualisiere die Seite und logge dich ggf. erneut ein.', 401);
+            return response()->json(["errorCode"  =>'sessionExpired'], 401);
         }
 
         Utilities::clearIcalCache();

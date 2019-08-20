@@ -78,4 +78,7 @@ export default {
     'conflictDetected' : 'Arg, da ist ein Konflikt!',
     'conflictAlertLine1' : 'Du hast wohl dem Kapitän nicht zugehört, du Landratte! Ein anderer Matrose ist schon dran!',
     'conflictAlertLine2' : 'Schau\'s dir doch genauer an - wolltest du etwa einen Messer in seinen Rücken stecken?!',
+
+    'sessionExpired': 'Fehler: die Session ist abgelaufen. Bitte aktualisiere die Seite und logge dich ggf. erneut ein.',
+    'error': 'Fehler',
 };
