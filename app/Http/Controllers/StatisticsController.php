@@ -39,12 +39,12 @@ class StatisticsController extends Controller
     where prsn_ldap_id is not null
     group by p.id, u.name
     order by u.name, p.id";
-    
+
     public function __construct()
     {
         $this->middleware(RejectGuests::class);
     }
-    
+
     public function showStatistics($year = null, $month = null)
     {
         if (!isset($year)) {
@@ -57,7 +57,7 @@ class StatisticsController extends Controller
             return $this->showStatisticsInternal($year, $month);
         //});
     }
-    
+
     private function showStatisticsInternal($year = null, $month = null)
     {
         $from = new DateTime($year.'-'.$month.'-01');
@@ -65,12 +65,12 @@ class StatisticsController extends Controller
         $till->modify('next month')->modify('-1 day');
         $isMonthStatistic = 1;
         list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till);
-        
+
         return View::make('statisticsView',
             compact('infos', 'clubInfos', 'year', 'month', 'isMonthStatistic'))->render();
-        
+
     }
-    
+
     public function showYearStatistics($year = null)
     {
         if (!isset($year)) {
@@ -80,7 +80,7 @@ class StatisticsController extends Controller
             return $this->showYearStatisticsInternal($year);
        // });
     }
-    
+
     private function showYearStatisticsInternal($year = null)
     {
         if (!isset($year)) {
@@ -90,14 +90,14 @@ class StatisticsController extends Controller
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next year')->modify('-1 day');
         $isMonthStatistic = 0;
-        
+
         list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till);
         $month = $till->format("m");
-        
+
         return View::make('statisticsView',
             compact('infos', 'clubInfos', 'year', 'month', 'isMonthStatistic'))->render();
     }
-    
+
     /**
      * Returns list of all shifts a selected person did in a chosen month, with some associated metadata
      *
@@ -114,7 +114,7 @@ class StatisticsController extends Controller
         request("year") ? $year = request("year") : $year = strftime('%Y');
         request("month") ? $month = request("month") : $month = strftime('%m');
         $isMonthStatistic = request("isMonthStatistic") == 0 ? 0 : 1;
-        
+
         // set the time window
         if ($isMonthStatistic) {
             $from = new DateTime($year.'-'.$month.'-01');
@@ -136,11 +136,11 @@ class StatisticsController extends Controller
         // format the response
         $response = [];
         $ownClub = Person::find($id)->club->clb_title;
-        
-        
+
+
         foreach ($shifts as $shift) {
             $clubsOfShift = $shift->schedule->event->showToSectionNames();
-            
+
             $response[] = [
                 'id'           => $shift->id,
                 'shift'        => $shift->type->title(),
@@ -153,10 +153,10 @@ class StatisticsController extends Controller
                 'weight'       => $shift->statistical_weight,
             ];
         }
-        
+
         return response()->json($response);
     }
-    
+
     /**
      *
      * @param DateTime $from
@@ -165,16 +165,14 @@ class StatisticsController extends Controller
      */
     private function generateStatisticInformationForSections($from, $till)
     {
-        
-        $queryResults = \DB::select(str_replace(':end', '\''.$till->format('Y-m-d').'\'',
-            str_replace(':start', '\''.$from->format('Y-m-d').'\'', self::STATISTIC_SELECT)));
+        $queryResults = \DB::select(self::STATISTIC_SELECT, ["start" => $from, "end" => $till]);
         $groupedInformation = collect($queryResults)->map(function ($row) {
             $info = new StatisticsInformation();
             $info->user = Person::query()->whereKey($row->personId)->first();
             $info->userClub = $info->user->club;
             $info->inOwnClub = $row->own_section;
             $info->inOtherClubs = $row->other_section;
-            
+
             return $info;
         })->groupBy(function (StatisticsInformation $item) {
             return $item->userClub->id;
@@ -188,15 +186,15 @@ class StatisticsController extends Controller
             $infos = $item->map(function (StatisticsInformation $info) use ($maxShift) {
                 $info->shiftsPercentIntern = $info->inOwnClub / ($maxShift * 1.5) * 100;
                 $info->shiftsPercentExtern = $info->inOtherClubs / ($maxShift * 1.5) * 100;
-                
+
                 return $info;
             });
-            
+
             return [$club->clb_title => $infos];
         });
-        
+
         $infos = $clubInfos->flatten();
-        
+
         return [$clubInfos, $infos];
     }
 }
