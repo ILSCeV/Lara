@@ -1,6 +1,7 @@
 import {translate} from "../Translate";
 import 'bootstrap/js/dist/tooltip'
 import 'bootstrap/js/dist/alert'
+import {createMessage} from "../common/messages";
 
 // conversion of html entities to text (e.g. "&" as "&amp;")
 // ref: https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery
@@ -66,16 +67,23 @@ $(() => {
           } else {
             data.prsn_status = ""
           }
-
-          if (data.get_user) {
+          let onLeave: String = '';
+          if (data.user && data.user.on_leave) {
+            let today = new Date();
+            if (today.getTime() < new Date(data.user.on_leave).getTime()) {
+              onLeave = ' (U: ' + (new Date(data.user.on_leave)).toLocaleDateString() + ') ';
+            }
+          }
+          let onLeaveClass = onLeave ? 'bg-danger' : '';
+          if (data.user) {
             // add found persons to the array
             $dropdown.append(
-              '<li class="dropdown-item"><a href="javascript:void(0);">'
+              `<li class='dropdown-item ${onLeaveClass}'><a href='javascript:void(0);'>`
               + '<span name="currentLdapId" hidden>' + data.prsn_ldap_id + '</span>'
               + '<span name="currentName">' + data.prsn_name + '</span>'
-              + data.prsn_status
+              + data.prsn_status + onLeave
               + '(<span name="currentClub">' + data.club.clb_title + '</span>)'
-              + '&nbsp;<span name="tooltip" class="text-muted"> ' + data.get_user.givenname + ' ' + data.get_user.lastname + ' </span> '
+              + '&nbsp;<span name="tooltip" class="text-muted"> ' + data.user.givenname + ' ' + data.user.lastname + ' </span> '
               + '</a></li>');
           }
         });
@@ -479,13 +487,13 @@ $(() => {
             .css("color", "darkgrey");
         },
 
-        complete: async function () {
+        complete: async function (jqXHR) {
           // console.log('complete');
-          self.addClass('animation').addClass('bg-success');
+          let responsiveClass = jqXHR.status == 200 ? 'bg-success' : 'bg-danger';
+          self.addClass('animation').addClass(responsiveClass);
           await new Promise(resolve => setTimeout(resolve, 500));
-          self.removeClass('bg-success');
+          self.removeClass(responsiveClass);
         },
-
         success: function (data) {
           // console.log("success");
 
@@ -511,14 +519,17 @@ $(() => {
                 updateShiftEntry(json, true);
                 return;
               } else {
-                alert(translate(xhr.responseJSON.errorCode));
+                //alert(translate(xhr.responseJSON.errorCode));
+                createMessage(translate('error'),xhr.responseJSON.errorCode,'bg-danger')
               }
             }
           } else {
-            alert(JSON.stringify(xhr.responseJSON));
+            //alert(JSON.stringify(xhr.responseJSON));
+            createMessage(translate('error') + ' ' + xhr.status, translate('sessionExpired'), 'bg-danger')
           }
           $("#spinner").removeClass().addClass("fa fa-exclamation-triangle").css("color", "red").attr("data-original-title", "Fehler: Änderungen nicht gespeichert!"); //TODO: translate
-        }
+        },
+
       });
 
       // Prevent the form from actually submitting in browser

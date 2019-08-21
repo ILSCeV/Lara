@@ -4,7 +4,9 @@ namespace Lara;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-
+/**
+ * @property Schedule schedule
+ */
 class Shift extends Model
 {
     protected $table = 'shifts';
@@ -131,7 +133,7 @@ class Shift extends Model
 
         return null;
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Schedule
      */

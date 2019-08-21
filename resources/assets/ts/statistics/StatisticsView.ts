@@ -14,10 +14,24 @@ function getRowShifts(a: string | Element) {
     return $(a).children("td").eq(1).text();
 }
 
+function getRowFlood(a: string | Element) {
+  return $(a).children("td").eq(2).text();
+}
+
+
+type SortMode = 'name' | 'shifts' | 'flood'
+
+function getRowCatcher(sortMode : SortMode) {
+  switch (sortMode) {
+  case "name": return getRowName;
+  case "flood": return getRowFlood;
+  case "shifts": return getRowShifts;
+  }
+}
 
 //inspired by http://stackoverflow.com/questions/3160277/jquery-table-sort
-function sortTable($table: JQuery, byName: boolean, descending: boolean) {
-    let rowCatcher = byName ? getRowName : getRowShifts;
+function sortTable($table: JQuery, sortMode: SortMode, descending: boolean) {
+    let rowCatcher = getRowCatcher(sortMode);
     let rows = $table
         .find("tbody")
         .find("tr")
@@ -29,7 +43,7 @@ function sortTable($table: JQuery, byName: boolean, descending: boolean) {
     rows.forEach(row => $table.append($(row)));
 }
 
-function updateSortIconStyle($table: JQuery, byName: boolean, descending: boolean) {
+function updateSortIconStyle($table: JQuery, sortMode: SortMode, descending: boolean) {
     // remove specific sorting from all icons
     $table.find('.fa-sort, .fa-sort-up, .fa-sort-down')
         .removeClass('fa-sort-up')
@@ -38,8 +52,7 @@ function updateSortIconStyle($table: JQuery, byName: boolean, descending: boolea
     // and add the current sorting order to the one that changed
     let icon = $table.find('.fa-sort, .fa-sort-up, .fa-sort-down')
         .filter(function () {
-            let sortIdentifier = byName ? 'name' : 'shifts';
-            return $(this).parent().data('sort') === sortIdentifier;
+            return $(this).parent().data('sort') == sortMode;
         });
     icon.removeClass('fa-sort')
         .addClass(descending ? 'fa-sort-down' : 'fa-sort-up');
@@ -49,14 +62,14 @@ function sortLeaderboards(pSortIcon: JQuery) {
     let sortIcon = $(pSortIcon);
     let $tables = $('#memberStatisticsTabs').find('table');
     let wasAscending = sortIcon.hasClass('fa-sort-up');
-    let isNameSort = sortIcon.parent().data('sort') === 'name';
+    let sortMode = sortIcon.parent().data('sort') ;
 
-    localStorage.setItem('preferredSortType', isNameSort ? 'name' : 'shifts');
+    localStorage.setItem('preferredSortType', sortMode);
     localStorage.setItem('preferredSortOrder', wasAscending ? 'descending' : 'ascending');
 
     $tables.each(function(){
-        sortTable($(this), isNameSort, wasAscending);
-        updateSortIconStyle($(this), isNameSort, wasAscending);
+        sortTable($(this), sortMode, wasAscending);
+        updateSortIconStyle($(this), sortMode, wasAscending);
     });
 }
 
