@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class StatisticsInformation extends Model
 {
 
-    protected $fillable = ['person_id', 'user_id', 'own_section', 'other_section', 'shifts_percent_intern', 'shifts_percent_extern'];
+    protected $fillable = ['person_id', 'user_id', 'own_section', 'other_section', 'shifts_percent_intern', 'shifts_percent_extern','flood_shift'];
 
     protected $casts = ['shifts_percent_intern' => 'double', 'shifts_percent_extern' => 'double'];
 

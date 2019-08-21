@@ -37,6 +37,9 @@
                             <th data-sort="shifts" data-sortable="true">
                                 {{trans('mainLang.totalShifts')}} <i class="fas fa-sort fa-pull-right"></i>
                             </th>
+                            <th data-sort="flood" data-sortable="true">
+                                {{ trans('mainLang.flooding') }} <i class="fas fa-sort fa-pull-right"></i>
+                            </th>
                             <th data-sort="shifts" class="col">
                                 &nbsp;
                             </td>
@@ -56,6 +59,9 @@
                                 </td>
                                 <td>
                                     @include('partials.statistics.amountOfShiftsDisplay')
+                                </td>
+                                <td>
+                                    {{$info->flood_shift}}
                                 </td>
                                 <td>
                                     @include('partials.statistics.graphicShifts')
