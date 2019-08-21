@@ -23,9 +23,11 @@ type SortMode = 'name' | 'shifts' | 'flood'
 
 function getRowCatcher(sortMode : SortMode) {
   switch (sortMode) {
-  case "name": return getRowName;
   case "flood": return getRowFlood;
   case "shifts": return getRowShifts;
+  case "name":
+    default:
+    return getRowName;
   }
 }
 
