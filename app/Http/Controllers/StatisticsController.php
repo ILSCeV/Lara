@@ -3,6 +3,7 @@
 namespace Lara\Http\Controllers;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Lara\Http\Middleware\ClOnly;
 use Lara\Http\Middleware\RejectGuests;
@@ -15,27 +16,30 @@ use View;
 class StatisticsController extends Controller
 {
     CONST STATISTIC_SELECT = /** @lang MariaDB */
-        "select p.id personId,
-           coalesce(SUM(own_section_shifts.statistical_weight), 0)   own_section,
-           coalesce(SUM(other_section_shifts.statistical_weight), 0) other_section
+        "select p.id person_id,
+         u.id user_id,
+       coalesce(SUM(own_section_shifts.statistical_weight), 0)   own_section,
+       coalesce(SUM(other_section_shifts.statistical_weight), 0) other_section,
+       count(own_section_shifts.id) * 100 / (coalesce(count(own_section_shifts.id), 1) + coalesce(count(other_section_shifts.id), 0)) shifts_percent_intern,
+       count(other_section_shifts.id) * 100 / (coalesce(count(own_section_shifts.id), 0) + coalesce(count(other_section_shifts.id), 1)) shifts_percent_extern
     from persons p
-             join users u on u.person_id = p.id
-             join (
-        select ssh.person_id, ssh.id, sce.plc_id
-        from shifts ssh
-                 join schedules ssched on ssh.schedule_id = ssched.id
-                 join club_events sce on ssched.evnt_id = sce.id
-                 join persons sp on sp.id = ssh.person_id
-        where ssh.person_id is not null
-          and sce.evnt_date_start >= cast(:start as date)
-          and sce.evnt_date_end <= date_add(cast(:end as date),interval 1 day )
+         join users u on u.person_id = p.id
+         join (
+    select ssh.person_id, ssh.id, sce.plc_id
+    from shifts ssh
+             join schedules ssched on ssh.schedule_id = ssched.id
+             join club_events sce on ssched.evnt_id = sce.id
+             join persons sp on sp.id = ssh.person_id
+    where ssh.person_id is not null
+      and sce.evnt_date_start >= cast(:start as date)
+      and sce.evnt_date_end <= date_add(cast(:end as date),interval 1 day )
     ) relevant_shifts on relevant_shifts.person_id = p.id
-             left outer join shifts own_section_shifts
-                             on p.id = own_section_shifts.person_id and relevant_shifts.id = own_section_shifts.id and
-                                relevant_shifts.plc_id = u.section_id
-             left outer join shifts other_section_shifts
-                             on p.id = other_section_shifts.person_id and
-                                relevant_shifts.id = other_section_shifts.id and relevant_shifts.plc_id <> u.section_id
+         left outer join shifts own_section_shifts
+                         on p.id = own_section_shifts.person_id and relevant_shifts.id = own_section_shifts.id and
+                            relevant_shifts.plc_id = u.section_id
+         left outer join shifts other_section_shifts
+                         on p.id = other_section_shifts.person_id and
+                            relevant_shifts.id = other_section_shifts.id and relevant_shifts.plc_id <> u.section_id
     where prsn_ldap_id is not null
     group by p.id, u.name
     order by u.name, p.id";
@@ -126,9 +130,11 @@ class StatisticsController extends Controller
             $till->modify('next year')->modify('-1 day');
         }
         // get all shifts in selected time window, for selected person, with their attributes
-        $shifts = Shift::where('person_id', '=', $id)
-            ->whereHas('schedule.event', function ($query) use ($from, $till) {
-                $query->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
+        $shifts = Shift::query()->where('person_id', '=', $id)
+            ->whereHas('schedule.event', function (Builder $query) use ($from, $till) {
+                $query //
+                    ->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]) //
+                    ->orWhereBetween('evnt_date_end', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
             })
             ->with('type', 'schedule.event.section')
             ->get()
@@ -165,32 +171,17 @@ class StatisticsController extends Controller
      */
     private function generateStatisticInformationForSections($from, $till)
     {
-        $queryResults = \DB::select(self::STATISTIC_SELECT, ["start" => $from, "end" => $till]);
-        $groupedInformation = collect($queryResults)->map(function ($row) {
-            $info = new StatisticsInformation();
-            $info->user = Person::query()->whereKey($row->personId)->first();
-            $info->userClub = $info->user->club;
-            $info->inOwnClub = $row->own_section;
-            $info->inOtherClubs = $row->other_section;
-
-            return $info;
-        })->groupBy(function (StatisticsInformation $item) {
-            return $item->userClub->id;
+        $query = \DB::raw(self::STATISTIC_SELECT);
+        $groupedInformation = StatisticsInformation::query()->fromQuery($query, ["start" => $from, "end" => $till])->groupBy(function (StatisticsInformation $item) {
+            return $item->user->section->id;
         });
+
         $clubInfos = $groupedInformation->flatMap(function (Collection $item) {
-            $club = $item->first()->userClub;
-            $maxShift = $item->max(function (StatisticsInformation $info) {
-                return $info->inOwnClub + $info->inOtherClubs;
-            });
-            $maxShift = max($maxShift, 1);
-            $infos = $item->map(function (StatisticsInformation $info) use ($maxShift) {
-                $info->shiftsPercentIntern = $info->inOwnClub / ($maxShift * 1.5) * 100;
-                $info->shiftsPercentExtern = $info->inOtherClubs / ($maxShift * 1.5) * 100;
+            //$club = $item->first()->userClub;
+            $club = $item->first()->user->section->club();
 
-                return $info;
-            });
 
-            return [$club->clb_title => $infos];
+            return [$club->clb_title => $item];
         });
 
         $infos = $clubInfos->flatten();

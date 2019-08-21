@@ -20,6 +20,11 @@
 
 <div class="card card-body p-0">
     <div id="memberStatisticsTabs" class="tab-content">
+        @php
+        /**
+          * @var \Illuminate\Support\Collection|\Lara\StatisticsInformation $clubInfo
+          */
+        @endphp
         @foreach($clubInfos->sortKeys()  as $title => $clubInfo)
             <div class="tab-pane fade in {{ Lara\Section::current()->title === $title ? 'active' : '' }}"
                  id="{{ str_replace(' ', '-', mb_strtolower($title)) }}">
@@ -40,12 +45,12 @@
                     <tbody>
                         @foreach($clubInfo as $info)
                             @php
-                                $user = $info->user->user;
+                                $user = $info->user()->first();
                             @endphp
                             <tr class="{{Auth::user()->id === $user->id? 'my-shift' : ''}}">
                                 <td>
                                     @include('partials.personStatusMarker', ['status' => $user->status, 'section' => $user->section])
-                                    <a href="#" onclick="chosenPerson = '{{$user->name}}'" name="show-stats-person{{$info->user->id}}" id="{{$info->user->id}}" data-toggle="modal" data-placement="top" title="{{ $user->fullName() }}">
+                                    <a href="#" onclick="chosenPerson = '{{$user->name}}'" name="show-stats-person{{$info->person->id}}" id="{{$info->person->id}}" data-toggle="modal" data-placement="top" title="{{ $user->fullName() }}">
                                             {{$user->name}}
                                     </a>
                                 </td>

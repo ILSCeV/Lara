@@ -11,11 +11,16 @@
         </thead>
         <tbody>
         {{-- Only show Top 10 Shifts --}}
+        @php
+        /**
+         * @var \Lara\StatisticsInformation $info
+         */
+        @endphp
         @foreach($infos->sortByDesc('inOwnClub')->take(10) as $info)
             @php
-                $user = $info->user->user;
+                $user = $info->user()->first();
             @endphp
-            <tr class=" {{Auth::user()->id === $info->user->user->id ? 'my-shift' : ''}}">
+            <tr class=" {{Auth::user()->id === $user->id ? 'my-shift' : ''}}">
                 <td>
                     @include('partials.personStatusMarker', ['status' => $user->status, 'section' => $user->section])
                     <span data-toggle="tooltip" data-placement="top" title="{{ $user->fullName() }}" >
@@ -24,7 +29,7 @@
                 </td>
                 @if ($showClubName)
                     <td>
-                        {{$info->userClub->clb_title }}
+                        {{$user->section->club()->clb_title }}
                     </td>
                 @endif
                 <td>

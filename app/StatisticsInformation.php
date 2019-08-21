@@ -3,23 +3,46 @@
 namespace Lara;
 
 
-class StatisticsInformation
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @property int own_section
+ * @property int other_section
+ * @property double shifts_percent_intern
+ * @property double shifts_percent_extern
+ */
+class StatisticsInformation extends Model
 {
 
-    public $inOwnClub = 0;
-    public $inOtherClubs = 0;
-    public $user;
-    public $userClub = null;
-    public $isActive = false;
-    public $shiftsPercentIntern = 0;
-    public $shiftsPercentExtern = 0;
+    protected $fillable = ['person_id', 'user_id', 'own_section', 'other_section', 'shifts_percent_intern', 'shifts_percent_extern'];
+
+    protected $casts = ['shifts_percent_intern' => 'double', 'shifts_percent_extern' => 'double'];
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne|Person
+     */
+    public function person()
+    {
+        return $this->hasOne(Person::class, 'id', 'person_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne|User
+     */
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 
 
     public function make(Person $person, $shifts, Club $club)
     {
-        $usersShifts = $shifts->filter(function ($shift) use($person) { return $shift->person_id == $person->id;});
+        $usersShifts = $shifts->filter(function ($shift) use ($person) {
+            return $shift->person_id == $person->id;
+        });
 
-        $totalWeight = $usersShifts->reduce(function($prev, $current) {
+        $totalWeight = $usersShifts->reduce(function ($prev, $current) {
             return $current->statistical_weight + $prev;
         });
 
@@ -36,7 +59,7 @@ class StatisticsInformation
 
         $this->user = $person;
         $this->userClub = $club;
-        
+
         return $this;
     }
 }
