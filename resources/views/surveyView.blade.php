@@ -292,10 +292,16 @@ $ldapid
                                                 <td class="singleAnswer emtpyCell">
                                             @else
                                                 <td class="singleAnswer">
-                                                    @endif
-                                                    {{$cell->answer}}
+                                            @endif
+                                                    @switch($cell->question->field_type)
+                                                        @case(\Lara\QuestionType::Checkbox)
+                                                            {{trans($cell->answer)}}
+                                                        @break
+                                                        @default
+                                                            {{$cell->answer}}
+                                                    @endswitch
                                                 </td>
-                                                @endforeach
+                                        @endforeach
                                                 @if($userId == $answer->creator_id || $userCanEditDueToRole || empty($answer->creator_id))
                                                     @if($survey->deadline >= date("Y-m-d H:i:s") || $userCanEditDueToRole)
                                                     <!--Edit Delete Buttons-->
