@@ -44,8 +44,7 @@ class StatisticsController extends Controller
                          on p.id = other_section_shifts.person_id and
                             relevant_shifts.id = other_section_shifts.id and relevant_shifts.plc_id <> u.section_id
          left outer join club_events flood_event
-                         on flood_event.id = relevant_shifts.sce_id and flood_event.evnt_type = 6 and
-                            flood_event.plc_id = u.section_id
+                         on flood_event.id = relevant_shifts.sce_id and flood_event.evnt_type = 6                             
          left outer join schedules flood_schedule on flood_event.id = flood_schedule.evnt_id
          left outer join shifts flood_shifts
                          on flood_shifts.schedule_id = flood_schedule.id and flood_shifts.id = relevant_shifts.id
