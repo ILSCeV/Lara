@@ -127,16 +127,16 @@ $(() => {
             .click();
     }
 
-    let preferredSortType = localStorage.getItem('preferredSortType');
+    let preferredSortType = <SortMode> localStorage.getItem('preferredSortType');
     let preferredSortOrder = localStorage.getItem('preferredSortOrder');
 
     let $tables = $('#memberStatisticsTabs').find('table');
-    let isNameSort = preferredSortType === 'name';
+    let sortMode = preferredSortType ;
     let isDescending = preferredSortOrder === 'descending';
 
     $tables.each(function() {
-        sortTable($(this), isNameSort, isDescending);
-        updateSortIconStyle($(this), isNameSort, isDescending);
+        sortTable($(this), sortMode, isDescending);
+        updateSortIconStyle($(this), sortMode, isDescending);
     })
 
 });
