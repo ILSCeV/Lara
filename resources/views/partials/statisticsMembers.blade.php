@@ -61,7 +61,9 @@
                                     @include('partials.statistics.amountOfShiftsDisplay')
                                 </td>
                                 <td>
-                                    {{$info->flood_shift}}
+                                    <span data-toggle="tooltip" title="{{trans('mainLang.floodShifts')}}">
+                                        {{$info->flood_shift}}
+                                    </span>
                                 </td>
                                 <td>
                                     @include('partials.statistics.graphicShifts')
