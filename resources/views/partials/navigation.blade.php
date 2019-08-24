@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top p-2x nav-max-height">
-    <div class="navbar-header">
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top p-2 ">
+    <div class="navbar-header ">
 {{-- HAMBURGER / Mobile only --}}
         <button type="button"
                 class="navbar-toggler collapsed btn btn-primary"
@@ -24,7 +24,7 @@
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav mr-auto mt-2 mt-lg-0">
+        <ul class="nav navbar-nav flex-row ml-auto justify-content-between small">
 
 {{-- MONTH VIEW / public --}}
             <li class="nav-item" ><a class="nav-link" href="{{ asset('/calendar/month') }}">{{ trans('mainLang.month') }}</a></li>
@@ -133,7 +133,7 @@ Disabling iCal until fully functional.
                     $viewModeRoute = route('viewMode.switch','light');
                 }
                 @endphp
-                <a href="{{ $viewModeRoute }}" id="darkmodeToggle" class="btn btn-sm @if(\Lara\utilities\ViewUtility::isLightMode()) btn-secondary @else btn-primary @endif nav-link">
+                <a href="{{ $viewModeRoute }}" id="darkmodeToggle" class="btn btn-sm  @if(\Lara\utilities\ViewUtility::isLightMode()) btn-secondary @else btn-primary @endif nav-link">
                     @if(\Lara\utilities\ViewUtility::isLightMode())
                         {{ trans('mainLang.dark') }}
                     @else

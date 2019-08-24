@@ -1,4 +1,4 @@
-{!! Form::open(['url' => 'login', 'method' => 'POST', 'class' => 'form-horizontal ml-auto']) !!}
+{!! Form::open(['url' => 'login', 'method' => 'POST', 'class' => 'form-inline ml-auto']) !!}
 
 
 <div class="navbar-form form-inline login-forms">
