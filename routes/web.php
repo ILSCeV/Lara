@@ -196,6 +196,7 @@ Route::post('/user/updateData/{user}', 'UserController@updateData')->name('user.
 Route::resource('user', 'UserController');
 Route::get('/personalpage','UserPersonalPageController@showPersonalPage')->name('user.personalpage');
 Route::post('/updatePersonalSettings', 'UserPersonalPageController@updatePerson')->name('user.updatePersonalSettings');
+Route::post('/user/deleteUer/{userId}', 'UserController@destroy')->name('user.delete');
 
 Route::get('/password/change', ['as' => 'password.change', 'uses' => 'Auth\PasswordChangeController@showChangePasswordForm'])
     ->middleware('auth');

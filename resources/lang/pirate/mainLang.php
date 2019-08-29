@@ -320,6 +320,7 @@ return [
     // /resources/view/partials/statistics/amountOfShiftsDisplay.blade.php
     'shiftsInOtherSection'      => 'Dienste auf anderen Schiffen',
     'shiftsInOwnSection'        => 'Dienste auf eigenem Schiff',
+    'floodShifts'               => 'Anzahl geleisteter Deckschrubben',
 
     // /resources/views/partials/clubStatistics.blade.php
     'infoFor'               => 'Thekenrechnung',

@@ -320,6 +320,7 @@ return [
     // /resources/view/partials/statistics/amountOfShiftsDisplay.blade.php
     'shiftsInOtherSection'      => 'Dienste in anderen Sektionen',
     'shiftsInOwnSection'        => 'Dienste in eigener Sektion',
+    'floodShifts'               => 'Anzahl geleisteter Flutdienste',
 
     // /resources/views/partials/clubStatistics.blade.php
     'infoFor'               => 'Mitgliederstatistik',

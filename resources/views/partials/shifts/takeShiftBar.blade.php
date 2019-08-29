@@ -1,8 +1,8 @@
 @php
     /***
     * @var \Lara\Shift $shift
-    * @var boolean hideComments
-    * @var boolean commentsInSeparateLine
+    * @var boolean $hideComments
+    * @var boolean $commentsInSeparateLine
     */
 
 if(Auth::user()){

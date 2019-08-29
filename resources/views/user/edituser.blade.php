@@ -66,11 +66,20 @@ $labelClass = 'col-md-2 col-sm-auto';
                                     </span>
                             @endif
                         </div>
+                        <div class="form-group {{ $errors->has('on_leave') ? ' has-error' : '' }} ">
+                            <label class="col-form-label {{$labelClass}}" for="on_leave"> {{ trans('auth.on_leave_until') }} </label>
+                            {{ Form::date('on_leave',$user->on_leave,['class'=>"form-control" ,'id'=>'on_leave']) }}
+                            @if ($errors->has('on_leave'))
+                                <span class="form-text">
+                                        <strong>{{ $errors->first('on_leave') }}</strong>
+                                </span>
+                            @endif
+                        </div>
                         <div class="form-group {{ $errors->has('section') ? ' has-error' : '' }} ">
                             <label for="section" class=" col-form-label {{$labelClass}}">{{trans('mainLang.section')}}</label>
                             <div>
                                 <select name="section" id="section" class="editUserFormselectpicker">
-                                    @foreach(Lara\Section::all() as $section)
+                                    @foreach(Lara\Section::all()->sortBy('title') as $section)
                                         <option
                                             value="{{$section->id}}" {{ Gate::denies('createUserOfSection', $section->id) ? "disabled" : "" }} {{$section->id === $user->section->id ? "selected" : ""}} >
                                             {{$section->title}}

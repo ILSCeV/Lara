@@ -45,11 +45,11 @@ class PersonController extends Controller
             'clb_id',
             'id'];
         
-        $givenNameQuery = Person::query()->whereHas('getUser', function ($subquery) use ($query) {
+        $givenNameQuery = Person::query()->whereHas('user', function ($subquery) use ($query) {
             return $subquery->where('givenname','like','%'. $query . '%');
         })->select($columns);
     
-        $lastNameQuery = Person::query()->whereHas('getUser', function ($subquery) use ($query) {
+        $lastNameQuery = Person::query()->whereHas('user', function ($subquery) use ($query) {
             return $subquery->where('lastname','like','%'. $query . '%');
         })->select($columns);
 
@@ -59,8 +59,8 @@ class PersonController extends Controller
                                 ->union($givenNameQuery)
                                 ->union($lastNameQuery)
                                 ->with('club')
-                                ->with(['getUser' => function( $userQuery){
-                                  return $userQuery->select(['givenname','lastname','person_id','id']);
+                                ->with(['user' => function( $userQuery){
+                                  return $userQuery->select(['givenname','lastname','person_id','on_leave','id']);
                                 }])
                                 ->orderBy('prsn_name')
                                 ->get($columns);

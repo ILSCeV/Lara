@@ -3,6 +3,7 @@
 * @var int $month
 * @var int $year
 * @var bool $isMonthStatistic
+* @var \Illuminate\Support\Collection|Lara\StatisticsInformation $clubInfos
 */
 @endphp
 @extends('layouts.master')
@@ -114,7 +115,7 @@
 
     {{-- JS helpers --}}
     <script>
-        var chosenMonth = {{ $month }}; 
+        var chosenMonth = {{ $month }};
         var chosenYear = {{ $year }};
         var chosenPerson;
         var isMonthStatistic = {{ $isMonthStatistic }};

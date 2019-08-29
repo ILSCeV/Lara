@@ -64,7 +64,7 @@ class SurveyAnswerController extends Controller
         // prevent entries with foreign usernames but valid ldap_id
         $user = Auth::user();
         if($user && $user->name  === $input->name) {
-            $survey_answer->creator_id = $input->ldapId;
+            $survey_answer->creator_id = $user->person->id;
         }
         else {
             $survey_answer->creator_id = null;
@@ -142,7 +142,7 @@ class SurveyAnswerController extends Controller
         $survey_answer = SurveyAnswer::findOrFail($answerid);
         $revision_answer = new Revision($survey_answer);
         // prevent guestentries with ldapId
-        (Auth::user()) ? ($survey_answer->creator_id = $input->ldapId) : ($survey_answer->creator_id = null);
+        (Auth::user()) ? ($survey_answer->creator_id = Auth::user()->person->id) : ($survey_answer->creator_id = null);
         $survey_answer->survey_id = $surveyid;
         $survey_answer->name = $input->name;
         $survey_answer->club = $input->club;
