@@ -1,6 +1,6 @@
 <div class="box row">
     <div class="fas fa-bars"></div>
-    <div class="form-inline input-group input-group-sm">
+    <div class="form-inline input-group">
 
         <div class="form-group">
             <input type="text"

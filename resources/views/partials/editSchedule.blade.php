@@ -18,7 +18,7 @@
 					"counter" => $counter,
 					'shiftTypeId' => $shift->type->id
 				])
-				<br class="d-block.d-sm-none">
+				<br class="d-block d-sm-none">
 				<?php $counter = $counter+1;?>
 			@endforeach
 
