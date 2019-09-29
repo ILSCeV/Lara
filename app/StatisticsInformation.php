@@ -35,31 +35,4 @@ class StatisticsInformation extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-
-    public function make(Person $person, $shifts, Club $club)
-    {
-        $usersShifts = $shifts->filter(function ($shift) use ($person) {
-            return $shift->person_id == $person->id;
-        });
-
-        $totalWeight = $usersShifts->reduce(function ($prev, $current) {
-            return $current->statistical_weight + $prev;
-        });
-
-        $shiftsInOwnClub = $usersShifts->filter(function ($shift) use ($club) {
-            $visibleClubs = $shift->schedule->event->showToSectionNames();
-            return in_array($club->clb_title, $visibleClubs);
-        });
-
-        $this->inOwnClub = $shiftsInOwnClub->reduce(function ($prev, $current) {
-            return $current->statistical_weight + $prev;
-        }, 0);
-
-        $this->inOtherClubs = $totalWeight - $this->inOwnClub;
-
-        $this->user = $person;
-        $this->userClub = $club;
-
-        return $this;
-    }
 }
