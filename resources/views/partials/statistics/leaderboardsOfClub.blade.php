@@ -16,7 +16,7 @@
          * @var \Lara\StatisticsInformation $info
          */
         @endphp
-        @foreach($infos->sortByDesc('inOwnClub')->take(10) as $info)
+        @foreach($infos->sortByDesc('own_section')->take(10) as $info)
             @php
                 $user = $info->user()->first();
             @endphp
