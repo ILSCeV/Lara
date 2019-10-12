@@ -167,6 +167,14 @@
                 {!! Form::close() !!}
             </div>
         </div>
+        <div class="card ">
+            <div class="card-header bg-info text-white">
+                <h4 class="card-title">Zeiten zu denen keine Veranstaltung stattfinden sollte</h4>
+            </div>
+            <div class="card-body">
+                @include('partials.sections.warnConditions')
+            </div>
+        </div>
     </div>
 
 @stop

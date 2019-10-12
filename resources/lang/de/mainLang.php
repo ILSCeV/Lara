@@ -565,4 +565,16 @@ return [
     ///////////////////
     'userPersonalPage' => 'Persönliche Seite',
     'settings'         => 'Einstellungen',
+
+    ///////////////////
+    // Inputs        //
+    ///////////////////
+
+    'monday'        => 'Montag',
+    'tuesday'        => 'Dienstag',
+    'wednesday'        => 'Mittwoch',
+    'thursday'        => 'Donnerstag',
+    'friday'        => 'Freitag',
+    'saturday'        => 'Samstag',
+    'sunday'        => 'Sonntag',
 ];
