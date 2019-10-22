@@ -1,31 +1,37 @@
 @php
-/**  */
+/**
+ * @var \Lara\EventWarnConditions $eventWarnCondition
+ * @var int $counter
+ */
 @endphp
-{!! Form::open(['class' => 'form-inline']) !!}
+
 <div class="form-row">
-    <div class="col">
-        <label for="theDateStart">Datum von </label>
-        <input id="theDateStart" class="form-control" type="date" name="warnDateFrom" placeholder="Datum" />
+    <div class="col align-content-center">
+        <label for="theDateStart{{$counter}}">Datum von </label>
+        <input id="theDateStart{{$counter}}" class="form-control" type="date" name="warnDateStart[]" placeholder="Datum" />
     </div>
     <div class="col">
-        <label for="theDateEnd">Datum bis </label>
-        <input id="theDateEnd" class="form-control" type="date" name="warnDateUntil" placeholder="Datum" />
+        <label for="theDateEnd{{$counter}}">Datum bis </label>
+        <input id="theDateEnd{{$counter}}" class="form-control" type="date" name="warnDateEnd[]" placeholder="Datum" />
     </div>
     <div class="col">
-        <label for="weekday">Wochentag</label>
-        @include('partials.inputs.weekdayInput', ['id' => 'weekday', 'name'=>'weekday', 'class'=> 'selectpicker'])
+        <label for="weekday{{$counter}}">Wochentag</label>
+        @include('partials.inputs.weekdayInput', ['id' => 'weekday'.$counter, 'name'=>'weekday[]', 'class'=> 'selectpicker'])
     </div>
     <div class="col">
-        <label for="warnTimeStart">Uhrzeit von</label>
-        <input class="form-control" id="warnTimeStart" type="time" name="warnTimeStart"/>
+        <label for="warnTimeStart{{$counter}}">Uhrzeit von</label>
+        <input class="form-control" id="warnTimeStart{{$counter}}" type="time" name="warnTimeStart[]"/>
     </div>
     <div class="col">
-        <label for="warnTimeEnd">Uhrzeit bis</label>
-        <input class="form-control" id="warnTimeEnd" type="time" name="warnTimeEnd"/>
+        <label for="warnTimeEnd{{$counter}}">Uhrzeit bis</label>
+        <input class="form-control" id="warnTimeEnd{{$counter}}" type="time" name="warnTimeEnd[]"/>
+    </div>
+    <div class="col w-auto">
+        <label for="reason{{$counter}}">Begründung</label>
+        <input id="reason{{$counter}}" class="form-control" type="text" name="reason[]" required />
     </div>
     <div class="col">
-        <label for="reason">Begründung</label>
-        <input id="reason" class="form-control" type="text" name="reason" required />
+        <button type="button" role="button" class="btn btn-success add-warn-condition-btn">+</button>
     </div>
 </div>
-{{Form::close()}}
+

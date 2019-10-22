@@ -1,4 +1,8 @@
 {{-- Needs variable: $current_section --}}
+@php
+/** @var \Lara\Section $current_section */
+$counter = 0;
+@endphp
 @extends('layouts.master')
 
 @section('title')
@@ -11,7 +15,7 @@
     $labelClass='col-6 w-25';
     $inputClass = 'col-6';
     @endphp
-    <div class="col-md-8 col-sm-auto">
+    <div class="col-md-9 col-sm-auto">
         <div class="card ">
             <div class="card-header bg-info text-white">
                 <h4 class="card-title">#{{ $current_section->id }}: "{!! $current_section->title !!}" </h4>
@@ -172,7 +176,13 @@
                 <h4 class="card-title">Zeiten zu denen keine Veranstaltung stattfinden sollte</h4>
             </div>
             <div class="card-body">
-                @include('partials.sections.warnConditions')
+                {!! Form::open(['class' => 'form-inline']) !!}
+                  @foreach($current_section->eventWarnConditions() as $eventWarnCondition)
+                    @include('partials.sections.warnConditions', ['eventWarnCondition' => $eventWarnCondition, 'counter'=>$counter])
+                    @php($counter++)
+                  @endforeach
+                @include('partials.sections.warnConditions', ['eventWarnCondition' => new \Lara\EventWarnConditions(), 'counter'=>$counter])
+                {{Form::close()}}
             </div>
         </div>
     </div>
