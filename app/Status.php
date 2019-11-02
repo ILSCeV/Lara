@@ -56,7 +56,7 @@ class Status {
             case STATUS::MEMBER:
                 return ["status" => "fas fa-circle", "style" => "color:forestgreen;", "title" => "Aktiv"];
             case STATUS::EXMEMBER:
-                return ["status" => "far fa-star", "style" => "color:gold;", "title" => "ex-Mitglied"];
+                return ["status" => "fas fa-user-times", "style" => "color:#CD7F32;", "title" => "ex-Mitglied"];
             case STATUS::EXCANDIDATE:
                 return ["status"=>"fas fa-circle", "style"=>"color:lightgrey;", "title"=>"ex-Kandidat"];
             default:
