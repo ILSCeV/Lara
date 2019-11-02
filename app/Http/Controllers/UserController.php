@@ -25,12 +25,12 @@ use View;
 class UserController extends Controller
 {
     const DELETED_PERSON = 'gelöschte Person';
-    
+
     public function __construct()
     {
         $this->middleware(ClOnly::class, ['except' => ['agreePrivacy']]);
     }
-    
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -58,7 +58,7 @@ class UserController extends Controller
             'on_leave' => 'nullable|date'
         ]);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -67,19 +67,19 @@ class UserController extends Controller
     public function index()
     {
         $sections = Section::query()->orderBy('title')->get();
-        
+
         $userSectionsRoleViews = UserSectionsRoleView::with('section')->with('user')->with('user.section')->with('user.roles')->with('user.roles.section')
             ->get()
             ->sortBy(function (UserSectionsRoleView $userSectionsRoleView) {
                 $user = $userSectionsRoleView->user;
-                
+
                 return sprintf('%-12s%s%s%s', Auth::user()->section->id != $user->section->id, $user->section->title,
                     $user->status, $user->name);
             });
-        
+
         return View::make('user.index', compact('userSectionsRoleViews', 'sections'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -89,7 +89,7 @@ class UserController extends Controller
     {
         //
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -100,7 +100,7 @@ class UserController extends Controller
     {
         //
     }
-    
+
     /**
      * Display the specified resource.
      *
@@ -111,7 +111,7 @@ class UserController extends Controller
     {
         //
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -122,21 +122,21 @@ class UserController extends Controller
     {
         /** @var User $editUser */
         $user = User::findOrFail($id);
-        
+
         $permissionsPersection = [];
         $sectionQuery = Section::query();
         if (!Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             $sectionQuery->whereIn('id', Auth::user()->getSectionsIdForRoles(RoleUtility::PRIVILEGE_CL));
         }
-        
+
         foreach ($sectionQuery->get() as $section) {
             $roles = Role::query()->where('section_id', '=', $section->id)->get();
             $permissionsPersection[$section->id] = $roles;
         }
-        
+
         return View::make('user.edituser', compact('user', 'permissionsPersection'));
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -147,24 +147,24 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         //$this->authorize('update', $user);
-        
+
         if (!Auth::user()->can('update', $user)) {
             Utilities::error(trans('mainLang.accessDenied'));
-            
+
             return Redirect::back();
         }
-        
+
         $user->fill($request->all())->save();
-        
+
         $person = $user->person;
         $person->prsn_status = $user->status;
         $person->save();
-        
+
         Utilities::success(trans('mainLang.update'));
-        
+
         return Redirect::back();
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -178,7 +178,7 @@ class UserController extends Controller
         $user = User::query()->findOrFail($id);
         if ($user->id == \Auth::user()->id) {
             Utilities::error(trans('mainLang.accessDenied'));
-            
+
             return Redirect::back();
         }
         $person = $user->person;
@@ -190,22 +190,22 @@ class UserController extends Controller
             $surveyAnswers->each(function (SurveyAnswer $answer){
                 $answer->delete();
             });
-            
+
             $shifts = Shift::query()->where('person_id','=',$person->id)->get();
             $shifts->each(function (Shift $shift){
                 $shift->comment = '';
                 $shift->save();
             });
-            
+
             $user->delete();
             $person->save();
         });
         Log::info('User: '.\Auth::user()->name.' deleted '.$user->name);
         Utilities::success(trans('mainLang.changesSaved'));
-        
+
         return Redirect::action('UserController@index');
     }
-    
+
     public function agreePrivacy()
     {
         $user = Auth::user();
@@ -214,14 +214,14 @@ class UserController extends Controller
             Log::info('User: '.$user->name.' ('.$user->person->prsn_ldap_id.') accepted the privacy policy.');
             Session::put('message', trans('mainLang.privacyAccepted'));
             Session::put('msgType', 'success');
-            
+
             return redirect('/');
         }
         Session::put('message', 'mainLang.fatalErrorUponSaving');
         Session::put('msgType', 'danger');
         redirect();
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -233,7 +233,7 @@ class UserController extends Controller
     {
         if (!Auth::user()->can('update', $user)) {
             Utilities::error(trans('mainLang.accessDenied'));
-            
+
             return Redirect::back();
         }
         $data = [];
@@ -242,7 +242,7 @@ class UserController extends Controller
             $validator = $this->validator($user, Input::all());
             if ($validator->fails()) {
                 Utilities::error(trans('mainLang.changesWereReset'));
-                
+
                 return Redirect::back()->withErrors($validator)->withInput(Input::all());
             }
             $data['givenname'] = Input::get('givenname');
@@ -252,7 +252,8 @@ class UserController extends Controller
             $data['section_id'] = Input::get('section');
             $data['status'] = Input::get('status');
             $data['on_leave'] = Input::get('on_leave');
-            
+            $data['on_leave'] = $data['on_leave'] == '' ? null : $data['on_leave']; // prevent showing the date 30.11.-0001
+
         }
         if (Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             $sectionIds = Section::all()->map(function (Section $section) {
@@ -266,26 +267,26 @@ class UserController extends Controller
         foreach ($sectionIds as $sectionId) {
             $lAssignedRoleIds = explode(',', \Input::get('role-assigned-section-'.$sectionId));
             $assignedRoleIds = array_merge($lAssignedRoleIds, $assignedRoleIds);
-            
+
             $lUnassignedRoleIds = explode(',', \Input::get('role-unassigned-section-'.$sectionId));
             $unassignedRoleIds = array_merge($lUnassignedRoleIds, $unassignedRoleIds);
         }
-        
-        
+
+
         $previousRoles = $user->roles;
-        
+
         $assignedRoles = Role::query()->whereIn('id', $assignedRoleIds)->get();
         $unassignedRoles = Role::query()->whereIn('id', $unassignedRoleIds)->get();
-        
+
         $user->fill($data);
-        
+
         $person = $user->person;
         $person->prsn_status = $user->status;
         $person->save();
-        
+
         $changedSection = $user->isDirty('section_id');
         $user->save();
-        
+
         $assignedRoles->each(function (Role $role) use ($user) {
             if (!Auth::user()->can('assign', $role)) {
                 Log::warning(trans('mainLang.accessDenied').' '.$role->name);
@@ -293,7 +294,7 @@ class UserController extends Controller
                 $user->roles()->syncWithoutDetaching($role);
             }
         });
-        
+
         $unassignedRoles->each(function (Role $role) use ($user) {
             if (!Auth::user()->can('remove', $role)) {
                 Log::warning(trans('mainLang.accessDenied').' '.$role->name.' '.$user->name);
@@ -301,30 +302,30 @@ class UserController extends Controller
                 $user->roles()->detach($role);
             }
         });
-        
+
         if ($changedSection) {
             Utilities::success(trans('mainLang.changesSaved').trans('mainLang.sectionChanged'));
         } else {
             Utilities::success(trans('mainLang.changesSaved'));
         }
-        
+
         $newRoles = $user->roles()->distinct()->get();
         $rolesChanged = $newRoles->diff($previousRoles)->count() != 0 || $previousRoles->diff($newRoles)->count() != 0;
-        
+
         if ($rolesChanged) {
-            
+
             $previousRolesString = $previousRoles->map(function (Role $role) {
                 return $role->section->title.": ".$role->name;
             })->implode(', ');
-            
+
             $currentRolesString = $newRoles->map(function (Role $role) {
                 return $role->section->title.": ".$role->name;
             })->implode(', ');
-            
+
             Log::info('Roles for user '.$user->givenname." ".$user->lastname.'('.$user->id.').  Changes made by '.Auth::user()->firstname.' '.Auth::user()->lastname.'('.Auth::user()->id.')'."\nPrevious roles: ".$previousRolesString."\nNew roles: ".$currentRolesString);
         }
-        
-        
+
+
         return Redirect::back();
     }
 }
