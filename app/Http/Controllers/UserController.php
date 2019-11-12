@@ -54,7 +54,7 @@ class UserController extends Controller
                     )->toArray()
                 ),
             ],
-            'status'    => ['required', Rule::in(Status::ACTIVE)],
+            'status'    => ['required', Rule::in(Status::ALL)],
             'on_leave' => 'nullable|date'
         ]);
     }
@@ -158,6 +158,7 @@ class UserController extends Controller
 
         $person = $user->person;
         $person->prsn_status = $user->status;
+        $person->prsn_name = $user->name;
         $person->save();
 
         Utilities::success(trans('mainLang.update'));
@@ -282,6 +283,7 @@ class UserController extends Controller
 
         $person = $user->person;
         $person->prsn_status = $user->status;
+        $person->prsn_name = $user->name;
         $person->save();
 
         $changedSection = $user->isDirty('section_id');
