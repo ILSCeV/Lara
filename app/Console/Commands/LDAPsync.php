@@ -19,14 +19,14 @@ class LDAPsync extends Command
      * @var string
      */
     protected $signature = 'lara:ldapsync';
-    
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Overwrite name & status for every Person in Lara DB with the latest state from LDAP.';
-    
+
     /**
      * Create a new command instance.
      *
@@ -36,7 +36,7 @@ class LDAPsync extends Command
     {
         parent::__construct();
     }
-    
+
     /**
      * Execute the console command.
      *
@@ -51,30 +51,30 @@ class LDAPsync extends Command
         // Inform the users
         Log::info('Starting LDAP sync...');
         $this->info('Starting LDAP sync...');
-        
+
         // get a list of all persons saved in Lara, except ldap-override
         $persons = Person::query()
             ->whereNotNull('prsn_ldap_id')
             ->whereRaw('convert( prsn_ldap_id, unsigned integer) < 9999')
             ->orderByRaw('convert( prsn_ldap_id, unsigned integer) desc')
             ->get();
-        
+
         // start counting time before processing every person
         $counterStart = microtime(true);
-        
+
         // Initiate progress bar
         $bar = $this->output->createProgressBar(count($persons) + LdapPlatform::query()->count());
 
 // CONNECTING TO LDAP SERVER
-        
+
         $ldapConn = ldap_connect(Config::get('bcLDAP.server'), Config::get('bcLDAP.port'));
-        
+
         // Set some ldap options for talking to AD
         // LDAP_OPT_PROTOCOL_VERSION: LDAP protocol version
         ldap_set_option($ldapConn, LDAP_OPT_PROTOCOL_VERSION, 3);
         // LDAP_OPT_REFERRALS: Specifies whether to automatically follow referrals returned by the LDAP server
         ldap_set_option($ldapConn, LDAP_OPT_REFERRALS, 0);
-        
+
         // Bind as a domain admin
         $ldap_bind = ldap_bind($ldapConn,
             Config::get('bcLDAP.admin-username'),
@@ -97,78 +97,78 @@ class LDAPsync extends Command
                 return;
             }
 // AUTHENTICATING BC-CLUB
-            
+
             // Search for a bc-Club user with the uid number entered
             $search = ldap_search($ldapConn,
                 Config::get('bcLDAP.bc-club-ou').
                 Config::get('bcLDAP.base-dn'),
                 '(uid='.$person->prsn_ldap_id.')');
-            
+
             $info = ldap_get_entries($ldapConn, $search);
 
 // AUTHENTICATING BC-CAFE
-            
+
             // If no such user found in the bc-Club - check bc-Café next.
             if ($info['count'] === 0) {
-                
+
                 // Search for a Café-user with the uid number entered
                 $search = ldap_search($ldapConn,
                     Config::get('bcLDAP.bc-cafe-ou').
                     Config::get('bcLDAP.base-dn'),
                     '(uid='.$person->prsn_ldap_id.')');
-                
+
                 $info = ldap_get_entries($ldapConn, $search);
-                
+
             }
 
 // HANDLING ERRORS
-            
+
             // If no match found in all clubs - log an error
             if ($info['count'] === 0) {
                 Log::info('LDAP sync error: could not authenticate '.$person->prsn_ldap_id.' in LDAP!');
             }
 
 // GETTING USER CREDENTIALS
-            
+
             // Get user nickname if it exists or first name instead
             $userName = (!empty($info[0]['mozillanickname'][0])) ?
                 $info[0]['mozillanickname'][0] :
                 $info[0]['givenname'][0];
-            
+
             // Get user active status
             $userStatus = $info[0]['ilscstate'][0];
             if ($userStatus == "resigned") {
                 $userStatus = "ex-member";
             }
-            
+
             if ($userStatus == "guest") {
                 $userStatus = "ex-candidate";
             }
-            
+
             if (array_key_exists('mail', $info[0])) {
                 $userEmail = $info[0]['mail'][0];
             }
-            
+
             $userGivenName = $info[0]['givenname'][0];
             $userLastName = $info[0]['sn'][0];
 
 // UPDATE AND SAVE CHANGES
-            
+
             if ($person->prsn_name !== $userName) {
                 Log::info('LDAP sync: Changing '.$person->prsn_name." (".$person->prsn_ldap_id.") name from ".$person->prsn_name." to ".$userName.'.');
-                
+
                 $person->prsn_name = $userName;
                 $user->name = $userName;
             }
-            
-            
+
+
             if ($person->prsn_status !== $userStatus) {
                 Log::info('LDAP sync: Changing '.$person->prsn_name." (".$person->prsn_ldap_id.") status from ".$person->prsn_status." to ".$userStatus.'.');
-                
+
                 $person->prsn_status = $userStatus;
                 $user->status = $userStatus;
             }
-            
+
             if (isset($userEmail) && $userEmail != $user->email) {
                 if (!User::query()->where('email', '=', $userEmail)->where('id', '<>', $user->id)->exists()) {
                     $user->email = $userEmail;
@@ -180,7 +180,7 @@ class LDAPsync extends Command
             }
             $user->givenname = $userGivenName;
             $user->lastname = $userLastName;
-            
+
             try {
                 $person->save();
                 $user->save();
@@ -190,11 +190,17 @@ class LDAPsync extends Command
             }
         });
 
-
+        foreach (User::all() as $user) {
+            /** @var Person $person */
+            $person = $user->person();
+            $person->prsn_name = $user->name;
+            $person->prsn_status = $user->status;
+            $person->save();
+        }
 // FINISH UPDATE
-        
+
         ldap_unbind($ldapConn);
-        
+
         $userIds = LdapPlatform::query()->select('user_id')->distinct()->get();
         foreach ($userIds as $userId) {
             $entry = [];
@@ -218,11 +224,11 @@ class LDAPsync extends Command
             }
             Log::info("LDAP sync: Changing ".$userId->user_id." ".implode(', ', $entry));
         }
-        
+
         $bar->finish();
-        
+
         $counterEnd = microtime(true);
-        
+
         // report update time
         $this->info('');        // Linebreak
         $this->info('');        // Linebreak
