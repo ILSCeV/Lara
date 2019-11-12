@@ -192,7 +192,7 @@ class LDAPsync extends Command
 
         foreach (User::all() as $user) {
             /** @var Person $person */
-            $person = $user->person();
+            $person = $user->person;
             $person->prsn_name = $user->name;
             $person->prsn_status = $user->status;
             $person->save();
