@@ -20,10 +20,10 @@ class StatisticsController extends Controller
        u.id                                                                                      user_id,
        coalesce(SUM(own_section_shifts.statistical_weight), 0)                                   own_section,
        coalesce(SUM(other_section_shifts.statistical_weight), 0)                                 other_section,
-       count(own_section_shifts.id) * 100 /
-       (coalesce(count(own_section_shifts.id), 1) + coalesce(count(other_section_shifts.id), 0)) shifts_percent_intern,
-       count(other_section_shifts.id) * 100 /
-       (coalesce(count(own_section_shifts.id), 0) + coalesce(count(other_section_shifts.id), 1)) shifts_percent_extern,
+       round(count(own_section_shifts.id) * 100 /
+       (coalesce(count(own_section_shifts.id), 1) + coalesce(count(other_section_shifts.id), 0)),1) shifts_percent_intern,
+       round(count(other_section_shifts.id) * 100 /
+       (coalesce(count(own_section_shifts.id), 0) + coalesce(count(other_section_shifts.id), 1)),1) shifts_percent_extern,
        count(flood_shifts.id)                                                                    flood_shift
     from persons p
          join users u on u.person_id = p.id
