@@ -214,44 +214,8 @@ $ldapid
                                 </div>
                             </td>
                             @foreach($questions as $key => $question)
-                                <input type="hidden" id="field_type{{$question->order-1}}"
-                                       value="{{$question->field_type}}"/>
-                                <input type="hidden" id="question_order" value="{{$question->order}}"/>
-                                <input type="hidden" id="question_required{{$question->order}}"
-                                       value="{{$question->is_required}}"/>
                                 <td class="question{{$question->order}}" style="vertical-align: middle;">
-                                @if($question->field_type == 1)
-                                    <!-- Freitext -->
-                                    @if(!$question->is_required)
-                                        <!--Answer not required-->
-                                        {!! Form::text('answers['.$key.']', null, ['rows' => 2, 'class' => 'form-control', 'placeholder' => Lang::get('mainLang.addAnswerHere'), 'autocomplete' => 'off']) !!}
-                                    @else
-                                        <!--Answer* required-->
-                                        {!! Form::text('answers['.$key.']', null, ['required', 'rows' => 2, 'class' => 'form-control', 'placeholder' => Lang::get('mainLang.addAnswerHere'), 'autocomplete' => 'off', 'oninvalid' => 'setCustomValidity(\'Bitte gib eine Antwort\')', 'oninput' => 'setCustomValidity(\'\')']) !!}
-                                    @endif
-                                @elseif($question->field_type == 2)
-                                    <!-- Ja/Nein -->
-                                    {{ Form::radio('answers['.$key.']', 1, '' , ['id' => 'radio'.$question->order.'-0']) }} {{ trans('mainLang.yes') }}
-                                    @if(!$question->is_required)
-                                        <!--Answer not required-->
-                                        {{ Form::radio('answers['.$key.']', 0, '' , ['id' => 'radio'.$question->order.'-1']) }} {{ trans('mainLang.no') }}
-                                        {{ Form::radio('answers['.$key.']', -1, true, ['id' => 'radio'.$question->order.'-2'])}} {{ trans('mainLang.noInformation') }}
-                                    @else
-                                        <!--Answer* required-->
-                                        {{ Form::radio('answers['.$key.']', 0, true, ['id' => 'radio'.$question->order.'-1']) }} {{ trans('mainLang.no') }}
-                                    @endif
-                                @elseif($question->field_type == 3)
-                                    <!-- Dropdown -->
-                                        <select class="form-control" id="options{{$question->order}}"
-                                                name="answers[{{$key}}]" style="font-size: 13px;">
-                                            @if(!$question->is_required)
-                                                <option>{{ trans('mainLang.noInformation') }}</option>
-                                            @endif
-                                            @foreach($question->getAnswerOptions as $answerOption)
-                                                <option id="option">{{$answerOption->answer_option}}</option>
-                                            @endforeach
-                                        </select>
-                                    @endif
+                                @include('partials.survey.view.question', ['$question'=>$question])
                                 </td>
                             @endforeach
                             <td class="tdButtons " id="panelNoShadow">
@@ -287,12 +251,12 @@ $ldapid
                                                 {{ trans('mainLang.noClub') }}
                                             @endif
                                         </td>
-                                        @foreach($answer->getAnswerCells as $cell)
-                                            @if($cell->answer == null || $cell->answer == "")
-                                                <td class="singleAnswer emtpyCell">
+                                        @foreach($answer->getAnswerCells as $key => $cell)
+                                           <td class="singleAnswer @if($cell->answer == null || $cell->answer == "")
+                                                emtpyCell
                                             @else
-                                                <td class="singleAnswer">
-                                            @endif
+                                                singleAnswer
+                                            @endif">
                                                     @switch($cell->question->field_type)
                                                         @case(\Lara\QuestionType::Checkbox)
                                                             {{trans($cell->answer)}}
@@ -307,14 +271,16 @@ $ldapid
                                                     <!--Edit Delete Buttons-->
                                                         <td class="tdButtons ">
                                                             <button href="#"
-                                                                   class="editButton btn btn-primary "
+                                                                   class="editButton btn btn-primary editSurveyAnswerBtn"
                                                                    id="editButton{{$answer->id}}"
                                                                    value=""
                                                                    style="height: 34px; width: 43px;"
                                                                    type="button"
                                                                    data-toggle="tooltip"
                                                                    data-placement="bottom"
-                                                                   onclick="change_to_submit({{$answer->id}}); get_answer_row({{$answer->id}});">
+                                                                   data-token="{{csrf_token()}}"
+                                                                   data-id="{{$answer->id}}"
+                                                                   >
                                                                 <span class="fas fa-pencil-alt"></span>
                                                             </button>
                                                             <i id="spinner{{$answer->id}}"
