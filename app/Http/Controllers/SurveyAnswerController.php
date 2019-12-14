@@ -240,7 +240,7 @@ class SurveyAnswerController extends Controller
      */
     private function updateStatus($user_status)
     {
-        return Status::style($status);
+        return Status::style($user_status);
     }
 }
 
