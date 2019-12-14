@@ -84,7 +84,7 @@ class SyncBDclub extends Command
 
 
         passthru('sh backup-calendars.sh ' . config('bd_credentials.host'), $result);
-        
+
         $this->info('result: ' . $result);
         $calendars = file_get_contents(config('bd_credentials.searchdir') . '/filelist');
         $events = explode("\n", $calendars);
@@ -162,7 +162,7 @@ class SyncBDclub extends Command
                     $schedule = new Schedule();
                     //Logging::scheduleCreated($schedule);
                 }
-                $schedule->evnt_id = $clubEvent->id;
+                $schedule->club_event_id = $clubEvent->id;
                 $schedule->schdl_title = $clubEvent->evnt_title;
                 $schedule->schdl_time_preparation_start = '20:00:00';
 
@@ -191,7 +191,7 @@ class SyncBDclub extends Command
             }
         }
         $this->deleteDir(config('bd_credentials.searchdir'));
-        
+
         return 0;
     }
 

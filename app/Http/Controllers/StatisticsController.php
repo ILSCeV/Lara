@@ -31,7 +31,7 @@ class StatisticsController extends Controller
     select ssh.person_id, ssh.id, sce.plc_id, sce.id sce_id
     from shifts ssh
              join schedules ssched on ssh.schedule_id = ssched.id
-             join club_events sce on ssched.evnt_id = sce.id
+             join club_events sce on ssched.club_event_id = sce.id
              join persons sp on sp.id = ssh.person_id
     where ssh.person_id is not null
       and sce.evnt_date_start >= cast(:start as date)
@@ -44,8 +44,8 @@ class StatisticsController extends Controller
                          on p.id = other_section_shifts.person_id and
                             relevant_shifts.id = other_section_shifts.id and relevant_shifts.plc_id <> u.section_id
          left outer join club_events flood_event
-                         on flood_event.id = relevant_shifts.sce_id and flood_event.evnt_type = 6                             
-         left outer join schedules flood_schedule on flood_event.id = flood_schedule.evnt_id
+                         on flood_event.id = relevant_shifts.sce_id and flood_event.evnt_type = 6
+         left outer join schedules flood_schedule on flood_event.id = flood_schedule.club_event_id
          left outer join shifts flood_shifts
                          on flood_shifts.schedule_id = flood_schedule.id and flood_shifts.id = relevant_shifts.id
     where prsn_ldap_id is not null

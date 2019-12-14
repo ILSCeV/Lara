@@ -41,7 +41,7 @@ class CreateBdTemplate extends Migration
             'schdl_title'                  => self::BD_TEMPLATE_NAME,
             'schdl_time_preparation_start' => '20:00:00',
             'schdl_is_template'            => '1',
-            'entry_revisions'              => '',
+            'entry_revisions'              => ''
         ]);
         $template->save();
         /* @var $shiftType ShiftType */

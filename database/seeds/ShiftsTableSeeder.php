@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 
 class ShiftsTableSeeder extends Seeder
 {
-    
+
     /**
      * Auto generated seed file
      *
@@ -22,13 +22,13 @@ class ShiftsTableSeeder extends Seeder
         DB::transaction(function () use ($shiftAmount) {
             factory(Lara\Shift::class, $shiftAmount)->create();
         });
-        
+
         $members = Lara\Person::query()->whereIn('id', \Lara\User::all(['person_id']))->get();
         $guests = Lara\Person::query()->whereNotIn('id', \Lara\User::all(['person_id']))->get();
-        $schedules = Lara\Schedule::query()->whereNotNull('evnt_id')->with('event')->with('event.section')->get();
+        $schedules = Lara\Schedule::query()->whereNotNull('club_event_id')->with('event')->with('event.section')->get();
         $shiftTypeIds = Lara\ShiftType::all(['id'])->toArray();
         $faker = Faker\Factory::create('de_DE');
-        
+
         $shifts = \Lara\Shift::all();
         $shifts->chunk(5000)->each(function (\Illuminate\Support\Collection $chunkedCollection) use (
             $members,
@@ -52,14 +52,14 @@ class ShiftsTableSeeder extends Seeder
                     $shuffledPersons = $members->shuffle();
                     $ownSectionCandidates = $shuffledPersons->filter(function (\Lara\Person $p) use ($shiftSectionId) {
                         $pSection = $p->user->section;
-                        
+
                         return $pSection->id == $shiftSectionId;
                     })->map(function (\Lara\Person $p) {
                         return $p->id;
                     })->take(2);
                     $otherSectionCandidate = $shuffledPersons->first(function (\Lara\Person $p) use ($shiftSectionId) {
                         $pSection = $p->user->section;
-                        
+
                         return $pSection->id != $shiftSectionId;
                     })->id;
                     $candidates = collect([$guests->random(1)->first()->id])

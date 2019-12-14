@@ -37,7 +37,7 @@ class Template extends Model
      * @var string
      */
     protected $table = 'templates';
-    
+
     /**
      * The database columns used by the model.
      * This attributes are mass assignable.
@@ -61,7 +61,7 @@ class Template extends Model
         'price_external',
         'facebook_needed',
     ];
-    
+
     /**
      * Get the corresponding section.
      * Looks up in table sections for that entry, which has the same id like plc_id of ClubEvent instance.
@@ -72,7 +72,7 @@ class Template extends Model
     {
         return $this->belongsTo('Lara\Section');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany/Section
      */
@@ -80,7 +80,7 @@ class Template extends Model
     {
         return $this->belongsToMany('Lara\Section');
     }
-    
+
     /**
      * @return array/String
      */
@@ -90,7 +90,7 @@ class Template extends Model
             return $section->title;
         })->toArray();
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany/Shift
      */
@@ -98,7 +98,7 @@ class Template extends Model
     {
         return $this->belongsToMany('Lara\Shift');
     }
-    
+
     /** @return ClubEvent */
     public function toClubEvent()
     {
@@ -142,7 +142,7 @@ class Template extends Model
         $clubEvent->plc_id = $section->id;
         $schedule = new Schedule();
         $schedule->save();
-        
+
         // get template data
         $shifts = $this->shifts()
             ->with('type')
@@ -155,12 +155,12 @@ class Template extends Model
                     'comment',
                 ])->fill(['schedule_id' => $schedule->id]);
             });
-        
+
         $shifts->each(function(Shift $shift){
             $shift->save();
         });
-        
-        $schedule->evnt_id = $clubEvent->id;
+
+        $schedule->club_event_id = $clubEvent->id;
         $schedule->fill([
             'schdl_title'                  => $title,
             'schdl_time_preparation_start' => $dv,
@@ -168,8 +168,8 @@ class Template extends Model
         $schedule->save();
         //refresh from database
         $clubEvent = $clubEvent->refresh();
-        
+
         return $clubEvent;
     }
-    
+
 }

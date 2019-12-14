@@ -101,14 +101,14 @@ class ClubEvent extends Model
 
     /**
      * Get the corresponding schedule.
-     * Looks up in table schedules for that entry, which has the same evnt_id like id of ClubEvent instance.
+     * Looks up in table schedules for that entry, which has the same club_event_id like id of ClubEvent instance.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne|Schedule
      *
      */
     public function getSchedule()
     {
-        return $this->hasOne('Lara\Schedule', 'evnt_id', 'id');
+        return $this->hasOne('Lara\Schedule');
     }
 
     /**
@@ -116,7 +116,7 @@ class ClubEvent extends Model
      */
     public function schedule()
     {
-        return $this->hasOne('Lara\Schedule', 'evnt_id', 'id');
+        return $this->hasOne('Lara\Schedule');
     }
 
     /**
@@ -138,7 +138,7 @@ class ClubEvent extends Model
      */
     public function shifts()
     {
-        return $this->hasManyThrough('Lara\Shift', 'Lara\Schedule', 'evnt_id', 'schedule_id', 'id');
+        return $this->hasManyThrough('Lara\Shift', 'Lara\Schedule', 'club_event_id', 'schedule_id', 'id');
     }
 
     /**

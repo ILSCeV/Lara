@@ -31,7 +31,7 @@
 			--}}
 			{{ utf8_encode(strftime("%a, %d. %b", strtotime($clubEvent->evnt_date_start))) }}
 			&nbsp;
-			DV: {{ date("H:i", strtotime($clubEvent->getSchedule->schdl_time_preparation_start)) }}
+			DV: {{ date("H:i", strtotime($clubEvent->schedule->schdl_time_preparation_start)) }}
 			&nbsp;
 			<i class="far fa-clock"></i> {{ date("H:i", strtotime($clubEvent->evnt_time_start)) }}
 			-
@@ -44,7 +44,7 @@
 
 
 		{{-- Show password input if schedule needs one --}}
-		@if( $clubEvent->getSchedule->schdl_password != '')
+		@if( $clubEvent->schedule->schdl_password != '')
 		    <div class="{{ $classString }} hidden-print">
 		        {!! Form::password('password' . $clubEvent->getSchedule->id, ['required',
 		                                             'class'=>'col-md-12 col-12 black-text',
@@ -57,7 +57,7 @@
 		<div class="card-body p-0">
 
 			{{-- Show shifts --}}
-            @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true, 'commentsInSeparateLine' => true])
+            @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->schedule->shifts,'hideComments'=>true, 'commentsInSeparateLine' => true])
 
 
 		</div>

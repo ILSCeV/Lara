@@ -109,7 +109,7 @@
                         <tbody>
                         @foreach($shifts as $shift)
                             {{-- ignore shifts without an event, example: shifts from bd-template  --}}
-                            @if(is_null($shift->schedule) || is_null($shift->schedule->evnt_id))
+                            @if(is_null($shift->schedule) || is_null($shift->schedule->club_event_id))
                                 @continue
                             @endif
                             @php

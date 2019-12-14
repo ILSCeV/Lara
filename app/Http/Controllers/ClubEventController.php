@@ -203,7 +203,7 @@ class ClubEventController extends Controller
         $newEvent->save();
 
         $newSchedule = (new ScheduleController)->update(null);
-        $newSchedule->evnt_id = $newEvent->id;
+        $newSchedule->club_event_id = $newEvent->id;
 
 
         $newSchedule->save();
