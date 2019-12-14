@@ -130,6 +130,18 @@ function change_to_submit(number) {
     }
 }
 
+$(window).on({
+  load: () => {
+    $('.editSurveyAnswerBtn').on({
+      click: (e) => {
+        let id : Number = $(e.target).data('id');
+        change_to_submit(id);
+        get_answer_row(id);
+      }
+    });
+  }
+});
+
 ////////////////////////////////////////
 // AUTOCOMPLETE USERNAMES EDIT ANSWER //
 ////////////////////////////////////////
