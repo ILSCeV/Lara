@@ -16,7 +16,8 @@
       "bootbox",
       "sortablejs",
       "es6-promise",
-      "isotope-layout"
+      "isotope-layout",
+      "moment"
     ]
   },
   "exclude": [
