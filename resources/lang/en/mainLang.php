@@ -120,6 +120,8 @@ return [
     'passwordEntry'         => 'Password to enter',
     'passwordRepeat'        => 'Confirm Password',
     'passwordDeleteMessage' => 'To delete the password, enter "delete" (without quotation marks) in both fields.',
+    'unlockDate'           => 'Unlock Timestamp',
+    'availableAt'           => 'available at',
 
     'moreInfos'             => 'Additional details',
     'public'                => 'public',

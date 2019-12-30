@@ -2,6 +2,10 @@
 
 	{{--Check if the event is still going on--}}
     @php
+        /** @var \Lara\ClubEvent $clubEvent */
+        $createPersonLdapId = $clubEvent->creator?$clubEvent->creator->person->prsn_ldap_id:null;
+        $isAllowedToSee = \Auth::hasUser() && \Auth::user()->hasPermissionsInSection($clubEvent->section,\Lara\utilities\RoleUtility::PRIVILEGE_CL) || Lara\Person::isCurrent($createPersonLdapId) ;
+        $isUnBlocked = is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greaterThanOrEqualTo($clubEvent->unlock_date)  || $isAllowedToSee;
         $classString = "card-header rounded";
         $clubEventClass = \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent);
     @endphp
@@ -45,6 +49,7 @@
 
 		{{-- Show password input if schedule needs one --}}
 		@if( $clubEvent->getSchedule->schdl_password != '')
+           @if($isUnBlocked)
 		    <div class="{{ $classString }} hidden-print">
 		        {!! Form::password('password' . $clubEvent->getSchedule->id, ['required',
 		                                             'class'=>'col-md-12 col-12 black-text',
@@ -52,13 +57,18 @@
 		                                             'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
 		        <br/>
 		    </div>
+           @endif
 		@endif
 
 		<div class="card-body p-0">
-
+          @if($isUnBlocked)
 			{{-- Show shifts --}}
             @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true, 'commentsInSeparateLine' => true])
-
+          @else
+              <div class="text-center">
+                {{trans('mainLang.availableAt')}}  {{$clubEvent->unlock_date->isoFormat('DD.MM.YYYY hh:mm')}}
+              </div>
+          @endif
 
 		</div>
 	@include('partials.weekView.hideEvent')

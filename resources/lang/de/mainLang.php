@@ -121,6 +121,8 @@ return [
     'passwordEntry'         => 'Passwort zum Eintragen',
     'passwordRepeat'        => 'Passwort wiederholen',
     'passwordDeleteMessage' => 'Um das Passwort zu löschen trage in beide Felder "delete" ein (ohne Anführungszeichen).',
+    'unlockDate'           => 'Entsperrzeitpunkt',
+    'availableAt'           => 'Verfügbar ab',
 
     'moreInfos'             => 'Weitere Details',
     'public'                => 'öffentlich',
