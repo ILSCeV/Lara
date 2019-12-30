@@ -1,3 +1,8 @@
+@php
+/** @var \Lara\ClubEvent $clubEvent */
+$isAllowedToSee = \Auth::hasUser() && \Auth::user()->hasPermissionsInSection($clubEvent->section,\Lara\utilities\RoleUtility::PRIVILEGE_CL) || Lara\Person::isCurrent($created_by) ;
+$isUnBlocked = is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greaterThanOrEqualTo($clubEvent->unlock_date)  || $isAllowedToSee;
+@endphp
 @extends('layouts.master')
 @section('title')
 	{{ $clubEvent->evnt_title }}
@@ -210,16 +215,23 @@
         <div class="row ">
         	<div class="card col-12 mx-sm-1 m-auto">
         		@if( $clubEvent->getSchedule->schdl_password != '')
-        			<div class="card-header hidden-print">
-        			    {!! Form::password('password', array('required',
-        			                                         'class'=>'col-md-4 col-sm-4 col-12 black-text',
-        		                                             'id'=>'password' . $clubEvent->getSchedule->id,
-        			                                         'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
-        			    <br>
-        			</div>
+                    @if(is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greaterThanOrEqualTo($clubEvent->unlock_date))
+                        <div class="card-header hidden-print">
+                            {!! Form::password('password', array('required',
+                                                                 'class'=>'col-md-4 col-sm-4 col-12 black-text',
+                                                                 'id'=>'password' . $clubEvent->getSchedule->id,
+                                                                 'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
+                            <br>
+                        </div>
+                    @endif
         		@endif
-
-                @include('partials.shifts.takeShiftTable',['shifts'=>$shifts, 'hideComments'=>false, 'commentsInSeparateLine' => false])
+                @if($isUnBlocked)
+                 @include('partials.shifts.takeShiftTable',['shifts'=>$shifts, 'hideComments'=>false, 'commentsInSeparateLine' => false])
+                @else
+                  <div class="card col-12 mx-sm-1 m-auto text-center">
+                     {{trans('mainLang.availableAt')}}  {{$clubEvent->unlock_date->isoFormat('DD.MM.YYYY hh:mm')}}
+                  </div>
+                @endif
         	</div>
         </div>
 	</div>
