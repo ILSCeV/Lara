@@ -85,9 +85,8 @@ class ClubEvent extends Model
 
     protected $dates = [
         'unlock_date',
-        'evnt_date_start',
-        'evnt_date_end',
     ];
+
 
     /**
      * Get the corresponding section.
