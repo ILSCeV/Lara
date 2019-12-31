@@ -14,6 +14,7 @@ use Lara\Shift;
 use Lara\ShiftType;
 use Lara\Status;
 use Lara\Utilities;
+use Lara\utilities\RoleUtility;
 use Session;
 
 class ShiftController extends Controller
@@ -61,7 +62,7 @@ class ShiftController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
@@ -76,7 +77,8 @@ class ShiftController extends Controller
         if ( !empty($request->get('shiftTypeId')) && is_numeric($request->get('shiftTypeId')) ) {
 
             // Find the corresponding shift object
-            $shift = Shift::where('id', '=', $request->get('entryId'))
+            /** @var Shift $shift */
+            $shift = Shift::query()->where('id', '=', $request->get('entryId'))->with('schedule')->with('schedule.event')
                 ->first();
 
             // Substitute values
@@ -118,6 +120,11 @@ class ShiftController extends Controller
         if ($shift->getSchedule->schdl_password !== ''
             && !Hash::check( $password, $shift->getSchedule->schdl_password ) ) {
             return response()->json("Fehler: das angegebene Passwort ist falsch, keine Änderungen wurden gespeichert. Bitte versuche erneut oder frage einen anderen Mitglied oder CL.", 401);
+        }
+        $isAllowedToChange = $this->isAllowedToChange($shift);
+        // check if event is blocked by date
+        if(!is_null($shift->schedule->event->unlock_date) && Carbon::now()->isBefore($shift->schedule->event->unlock_date) && !$isAllowedToChange) {
+            return response()->json("Fehler: Die Veranstaltung ist noch nicht freigeschaltet.", 401);
         }
 
         // Control if the updated_at matches with the request timestamp
@@ -530,6 +537,16 @@ class ShiftController extends Controller
         return ["status"=>"fa fa-question", "style"=>"color:lightgrey;", "title"=>"Dienst frei"];
     }
 
+    /**
+     * @param $shift
+     * @return bool
+     */
+    public function isAllowedToChange($shift): bool
+    {
+        $clubEvent = $shift->schedule->event;
+        $createPersonLdapId = $clubEvent->creator ? $clubEvent->creator->person->prsn_ldap_id : null;
+        return \Auth::hasUser() && \Auth::user()->hasPermissionsInSection($clubEvent->section, RoleUtility::PRIVILEGE_CL) || Person::isCurrent($createPersonLdapId);
+    }
 
 
 }
