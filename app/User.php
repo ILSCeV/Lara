@@ -25,6 +25,7 @@ use Lara\utilities\RoleUtility;
  * @property Person person
  * @property Settings settings
  * @property Carbon on_leave
+ * @property string google_2fa
  */
 class User extends Authenticatable
 {
@@ -37,7 +38,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         // authentication related
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'google2fa_secret',
         // Lara related
         'section_id', 'person_id', 'status', 'givenname', 'lastname','is_name_private','on_leave'
     ];
@@ -48,13 +49,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'google2fa_secret',
     ];
-    
+
     protected $dates = [
       'on_leave'
     ];
-    
+
     protected $casts = [
         'is_name_private' => 'boolean'
     ];
@@ -207,5 +208,27 @@ class User extends Authenticatable
             return $this->givenname . " " . $this->lastname;
         }
         return "";
+    }
+
+    /**
+     * Ecrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function setGoogle2faSecretAttribute($value)
+    {
+        $this->attributes['google2fa_secret'] = encrypt($value);
+    }
+
+    /**
+     * Decrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getGoogle2faSecretAttribute($value)
+    {
+        return decrypt($value);
     }
 }
