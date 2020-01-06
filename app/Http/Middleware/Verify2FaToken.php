@@ -3,9 +3,8 @@
 namespace Lara\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
-class CheckPrivacyPolicy
+class Verify2FaToken
 {
     /**
      * Handle an incoming request.
@@ -16,13 +15,15 @@ class CheckPrivacyPolicy
      */
     public function handle($request, Closure $next)
     {
-        if($request->isMethod('get') and ! ($request->is('privacy') or $request->is('lang*') or $request->is('2fa'))) {
-            if (Auth::check()) {
-                if (Auth::user()->privacy_accepted == 0) {
-                    return redirect("/privacy");
+
+        if($request->isMethod('get') and ! ($request->is('2fa') or $request->is('lang*'))) {
+            if (\Auth::check()) {
+                if(!empty(\Auth::user()->google_2fa) and ! \Session::get("2faVeryfied", false)){
+                    return \Redirect::route('lara.2fa');
                 }
             }
         }
+
         return $next($request);
     }
 }

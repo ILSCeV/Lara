@@ -67,6 +67,10 @@ Route::get('logout', 							'LoginController@doLogout')->name('logout');
 Route::post('login', 							'LoginController@doLogin')->name('login.post');
 Route::post('logout', 							'LoginController@doLogout')->name('logout.post');
 
+//2fa
+Route::get('2fa',                               'SecondFactorController@index')->name("lara.2fa");
+Route::post("2fa",                              'SecondFactorController@verify')->name('verify.2fa');
+
 
 // TIMESTAMP
 Route::get('updates/{id}', 						'ScheduleController@getUpdates');

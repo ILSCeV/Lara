@@ -54,6 +54,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -64,7 +65,7 @@ class Kernel extends HttpKernel
         // Added for Lara
         'creator' => \Lara\Http\Middleware\Creator::class,
         // _ is used because "Private" would be a taken word in php: "private function ..."
-        'privateEntry' => \Lara\Http\Middleware\PrivateEntry::class,    
+        'privateEntry' => \Lara\Http\Middleware\PrivateEntry::class,
         'deadlineSurvey' => \Lara\Http\Middleware\DeadlineSurvey::class,
         'rejectGuests' => \Lara\Http\Middleware\RejectGuests::class,
         'managingUsersOnly' => \Lara\Http\Middleware\ManagingUsersOnly::class,

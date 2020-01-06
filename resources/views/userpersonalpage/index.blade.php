@@ -125,11 +125,11 @@
                             <p>Set up your two factor authentication by scanning the barcode below. Alternatively, you
                                 can use the code {{ $secret }}</p>
                             <img src="{{ $qrImage }}">
-                            <div class="row">
-                                <label class="col-form-label" for="currentCode">Aktueller code</label>
-                                {{ Form::text('currentCode','', ['class'=>'form-control','id'=>'currentCode']) }}
-                            </div>
-                            <div class="row">
+                                <div class="form-group">
+                                    <label for="currentCode">Aktueller code</label>
+                                    {{ Form::number('currentCode','', ['class'=>'form-control','id'=>'currentCode']) }}
+                                </div>
+                            <div class="form-group">
                                 <div class="btn-group btn-group-sm">
                                     <button type="reset"
                                             class="btn btn-sm btn-secondary">{{ trans('mainLang.reset') }}</button>
