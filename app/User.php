@@ -25,7 +25,7 @@ use Lara\utilities\RoleUtility;
  * @property Person person
  * @property Settings settings
  * @property Carbon on_leave
- * @property string google_2fa
+ * @property string google2fa_secret
  */
 class User extends Authenticatable
 {

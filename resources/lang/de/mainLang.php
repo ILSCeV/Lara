@@ -462,6 +462,7 @@ return [
     'guest'                         => 'Gast',
     'accessDenied'                  => 'Moment mal... Nur eingeloggte Mitglieder mit ausreichender Berechtigung dürfen hier rein! Logge dich ein, oder komm zur nächsten Versammlung und werde Mitglied.',
     'filter'                        => 'Filtern',
+    'submit'                        => 'Absenden',
 
 
     ////////////////
