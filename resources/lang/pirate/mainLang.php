@@ -567,4 +567,11 @@ return [
     'userPersonalPage' => 'Persönliche Kajüte',
     'settings'         => 'Einstellungen',
 
+    ///////////////////
+    // 2fa           //
+    ///////////////////
+    '2fa'             => 'Aktuelle Losung',
+    '2fa.setup'       => 'Richten Sie Ihre Zwei-Faktor-Authentifizierung ein, indem Sie den folgenden Barcode scannen. Alternativ können Sie den Code verwenden',
+    '2fa.verifyWorking' => 'Um Sicherzugehen, dass die Losung übergeben ist geben Sie bitte den aktuellen Code ein.',
+    '2fa.unregister'       => 'Zwei-Faktor-Authentisierung entfernen',
 ];

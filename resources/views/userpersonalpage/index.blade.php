@@ -30,7 +30,7 @@
                         <a class="nav-link" href="#settings" data-toggle="tab">{{trans('mainLang.settings')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#secondFa" data-toggle="tab"> 2fa </a>
+                        <a class="nav-link" href="#secondFa" data-toggle="tab"> {{trans('mainLang.2fa')}} </a>
                     </li>
                 </ul>
                 <div id="tabContent" class="tab-content">
@@ -120,26 +120,43 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="secondFa">
-                        {{ Form::open(['method' => 'POST', 'route' => ['user.registerGoogleAuth'], 'class' => 'form-inline']) }}
-                        <div class="p-3 text-center">
-                            <p>Set up your two factor authentication by scanning the barcode below. Alternatively, you
-                                can use the code {{ $secret }}</p>
-                            <img src="{{ $qrImage }}">
+                        @if(empty($user->google2fa_secret))
+                            {{ Form::open(['method' => 'POST', 'route' => ['user.registerGoogleAuth'], 'class' => 'form-inline      ']) }}
+                            <div class="p-3 ">
+                                <p>{{trans('mainLang.2fa.setup')}} {{ $secret }}</p>
+                                <img src="{{ $qrImage }}">
+                                <p> {{trans('mainLang.2fa.verifyWorking')}} </p>
+                                <div class="form-group ">
+                                    <label for="currentCode">Code</label>
+                                    <div class="p-2">
+                                        {{ Form::number('currentCode','', ['class'=>'form-control','id'=>'currentCode']) }}
+                                    </div>
+                                </div>
                                 <div class="form-group">
-                                    <label for="currentCode">Aktueller code</label>
-                                    {{ Form::number('currentCode','', ['class'=>'form-control','id'=>'currentCode']) }}
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="reset"
+                                                class="btn btn-sm btn-secondary">{{ trans('mainLang.reset') }}</button>
+                                        <button type="submit"
+                                                class="btn btn-sm btn-success">{{ trans('mainLang.update') }}</button>
+                                    </div>
                                 </div>
-                            <div class="form-group">
-                                <div class="btn-group btn-group-sm">
-                                    <button type="reset"
-                                            class="btn btn-sm btn-secondary">{{ trans('mainLang.reset') }}</button>
-                                    <button type="submit"
-                                            class="btn btn-sm btn-success">{{ trans('mainLang.update') }}</button>
-                                </div>
+                                {{ Form::text("secret",$secret,['class'=>'hide']) }}
                             </div>
-                            {{ Form::text("secret",$secret,['class'=>'hide']) }}
-                        </div>
-                        {{ Form::close() }}
+                            {{ Form::close() }}
+                        @else
+                            {{ Form::open(['method' => 'POST', 'route' => ['user.unregisterGoogleAuth'], 'class' => 'form-inline      ']) }}
+                            <div class="p-3 ">
+                                <p>{{trans('mainLang.2fa.unregister')}}</p>
+                                <div class="form-group">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="submit"
+                                                class="btn btn-sm btn-danger"> <i class="fas fa-trash-alt"></i> {{ trans('mainLang.delete') }}</button>
+                                    </div>
+                                </div>
+                                {{ Form::text("secret",$secret,['class'=>'hide']) }}
+                            </div>
+                            {{ Form::close() }}
+                        @endif
                     </div>
                 </div>
             </div>

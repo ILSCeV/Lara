@@ -70,6 +70,15 @@ class UserPersonalPageController extends Controller
         return Redirect::route('user.personalpage');
     }
 
+    public function unregisterGoogleAuth()
+    {
+        /** @var User $user */
+        $user = \Auth::user();
+        $user->google2fa_secret = '';
+        $user->save();
+        return Redirect::back();
+    }
+
     private function validateGoogle2fa(Google2FA $google2fa, $key, $secret)
     {
         try {

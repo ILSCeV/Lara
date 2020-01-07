@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-8 offset-2">
             <div class="card panel-default">
-                <div class="card-header">Zweifaktorauthentifizierung</div>
+                <div class="card-header">{{trans('mainLang.2fa')}}</div>
 
                 <div class="card-body">
                     {{ Form::open(['class'=>"form-horizontal","method"=>"POST","route"=>'verify.2fa']) }}

@@ -566,4 +566,13 @@ return [
     ///////////////////
     'userPersonalPage' => 'Personal page',
     'settings'         => 'Settings',
+
+    ///////////////////
+    // 2fa           //
+    ///////////////////
+    '2fa'             => 'two factor authentication',
+    '2fa.setup'       => 'Set up your two factor authentication by scanning the barcode below. Alternatively, you can use the code',
+    '2fa.verifyWorking' => 'To ensure that the setup is complete, please enter the current code.',
+    '2fa.unregister'       => 'remove two factor authentication',
+
 ];

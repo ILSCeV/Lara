@@ -2,12 +2,12 @@
 
 namespace Lara\Http\Controllers;
 
-use Illuminate\Http\Request;
+
+use Illuminate\Http\RedirectResponse;
 use Lara\Http\Middleware\RejectGuests;
-use PragmaRX\Google2FA\Exceptions\IncompatibleWithGoogleAuthenticatorException;
-use PragmaRX\Google2FA\Exceptions\InvalidCharactersException;
-use PragmaRX\Google2FA\Exceptions\SecretKeyTooShortException;
+
 use PragmaRX\Google2FA\Google2FA;
+use Redirect;
 
 class SecondFactorController extends Controller
 {
@@ -21,13 +21,17 @@ class SecondFactorController extends Controller
         return \View::make('secondfactor.index');
     }
 
+    /** verifys current code
+     *
+     * @return RedirectResponse
+     */
     public function verify()
     {
         $validator = \Validator::make(\Input::all(), [
             'code' => 'required|digits:6'
         ]);
         if ($validator->fails()) {
-            return \Redirect::back()->withErrors($validator->errors());
+            return Redirect::back()->withErrors($validator->errors());
         }
         $targeturl = \Session::get('targeturl', "/");
         if (is_array($targeturl)) {
@@ -40,14 +44,13 @@ class SecondFactorController extends Controller
             if ($google2fa->verify(\Input::get("code"), $secret)) {
                 \Session::forget('targeturl');
                 \Session::put('2faVeryfied', true);
-                return \Redirect::to($targeturl);
+                return Redirect::to($targeturl);
             } else {
-                return \Redirect::back()->withErrors(['code' => 'invalid code']);
+                return Redirect::back()->withErrors(['code' => 'invalid code']);
             }
         } catch (\Exception $e) {
-            return \Redirect::back()->withErrors(['code' => $e->getMessage()]);
+            return Redirect::back()->withErrors(['code' => $e->getMessage()]);
         }
     }
-
 
 }

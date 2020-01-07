@@ -201,6 +201,7 @@ Route::resource('user', 'UserController');
 Route::get('/personalpage','UserPersonalPageController@showPersonalPage')->name('user.personalpage');
 Route::post('/updatePersonalSettings', 'UserPersonalPageController@updatePerson')->name('user.updatePersonalSettings');
 Route::post('/registerAuthenticator', 'UserPersonalPageController@registerGoogleAuth')->name('user.registerGoogleAuth');
+Route::post('/unregisterAuthenticator', 'UserPersonalPageController@unregisterGoogleAuth')->name('user.unregisterGoogleAuth');
 Route::post('/user/deleteUer/{userId}', 'UserController@destroy')->name('user.delete');
 
 Route::get('/password/change', ['as' => 'password.change', 'uses' => 'Auth\PasswordChangeController@showChangePasswordForm'])

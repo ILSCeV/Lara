@@ -568,4 +568,12 @@ return [
     ///////////////////
     'userPersonalPage' => 'Persönliche Seite',
     'settings'         => 'Einstellungen',
+
+    ///////////////////
+    // 2fa           //
+    ///////////////////
+    '2fa'             => 'Zwei-Faktor-Authentisierung',
+    '2fa.setup'       => 'Richten Sie Ihre Zwei-Faktor-Authentifizierung ein, indem Sie den folgenden Barcode scannen. Alternativ können Sie den Code verwenden',
+    '2fa.verifyWorking' => 'Um Sicherzugehen, dass die Einrichtung vollständig ist geben Sie bitte den aktuellen Code ein.',
+    '2fa.unregister'       => 'Zwei-Faktor-Authentisierung entfernen',
 ];
