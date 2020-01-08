@@ -61,12 +61,13 @@ class UserPersonalPageController extends Controller
         $secret = Input::get("secret");
         $currentCode = Input::get('currentCode');
         if (!$this->validateGoogle2fa($google2fa, $currentCode, $secret)) {
-            return Redirect::back()->withInput(Input::all());
+            return Redirect::back()->withInput(Input::all())->withErrors(['code'=>'invalid code']);
         }
         /** @var User $user */
         $user = \Auth::user();
         $user->setGoogle2faSecretAttribute($secret);
         $user->save();
+        \Session::put('2faVeryfied', true);
         return Redirect::route('user.personalpage');
     }
 
