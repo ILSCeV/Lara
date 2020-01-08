@@ -16,7 +16,7 @@ class Verify2FaToken
     public function handle($request, Closure $next)
     {
 
-        if ($request->isMethod('get') and !($request->is('2fa') or $request->is('lang*'))) {
+        if (!($request->is('2fa') or $request->is('lang*'))) {
             if (\Auth::check()) {
                 if (!empty(\Auth::user()->google2fa_secret ) and !\Session::get("2faVeryfied", false)) {
                     \Session::push('targeturl',$request->url());
