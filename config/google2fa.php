@@ -43,7 +43,7 @@ return [
     /*
      * Forbid user to reuse One Time Passwords.
      */
-    'forbid_old_passwords' => false,
+    'forbid_old_passwords' => true,
 
     /*
      * User's table column for google2fa secret.
