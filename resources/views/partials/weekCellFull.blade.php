@@ -48,8 +48,7 @@
 
 
 		{{-- Show password input if schedule needs one --}}
-		@if( $clubEvent->getSchedule->schdl_password != '')
-           @if($isUnBlocked)
+		@if($isUnBlocked && $clubEvent->getSchedule->schdl_password != '')
 		    <div class="{{ $classString }} hidden-print">
 		        {!! Form::password('password' . $clubEvent->getSchedule->id, ['required',
 		                                             'class'=>'col-md-12 col-12 black-text',
@@ -57,7 +56,6 @@
 		                                             'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
 		        <br/>
 		    </div>
-           @endif
 		@endif
 
 		<div class="card-body p-0">
