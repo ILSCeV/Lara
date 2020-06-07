@@ -545,7 +545,7 @@ class ShiftController extends Controller
     {
         $clubEvent = $shift->schedule->event;
         $createPersonLdapId = $clubEvent->creator ? $clubEvent->creator->person->prsn_ldap_id : null;
-        return \Auth::hasUser() && \Auth::user()->hasPermissionsInSection($clubEvent->section, RoleUtility::PRIVILEGE_CL) || Person::isCurrent($createPersonLdapId);
+        return \Auth::hasUser() && (\Auth::user()->hasPermissionsInSection($clubEvent->section, RoleUtility::PRIVILEGE_CL) || Person::isCurrent($createPersonLdapId));
     }
 
 
