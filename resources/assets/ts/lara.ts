@@ -23,7 +23,6 @@ import "./ShiftType"
 
 import "./Translate"
 import "./Utilities"
-import "./templateOverView"
 import "./usersOverview"
 import "./vedst-scripts"
 import "./CookieConsistent"

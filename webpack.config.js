@@ -16,7 +16,8 @@ module.exports = {
     darkmode: './resources/assets/sass/darkmode.scss',
     monthview:'./resources/assets/ts/monthview/monthview.ts',
     autocomplete:'./resources/assets/ts/shifts/autocomplete.ts',
-    statistics:'./resources/assets/ts/statistics/StatisticsView.ts'
+    statistics:'./resources/assets/ts/statistics/StatisticsView.ts',
+    templates:'./resources/assets/ts/template/templateEntry.ts'
   },
   module: {
     rules: [
