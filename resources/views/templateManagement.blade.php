@@ -3,6 +3,9 @@
 @section('title')
     {{ trans('mainLang.manageTemplates') }}
 @stop
+@section('moreScripts')
+    <script src="{{asset(WebpackBuiltFiles::$jsFiles['templates'])}}"></script>
+@endsection
 
 @section('content')
 
@@ -94,6 +97,6 @@
         </div>
     </div>
 
-    <br/>
+    <div class="w-100"></div>
 
 @stop

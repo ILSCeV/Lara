@@ -3,8 +3,11 @@
 namespace Lara\Http\Controllers;
 
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\View\View;
 use Lara\ClubEvent;
 use Lara\Http\Middleware\ManagingUsersOnly;
 use Lara\Logging;
@@ -29,7 +32,7 @@ class TemplateController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -40,7 +43,7 @@ class TemplateController extends Controller
                 return $role->section_id;
             })->toArray();
             $templatesQuery = Template::whereHas('section', function ($query) use ($allowedSections) {
-                $query->whereIn('id', $allowedSections );
+                $query->whereIn('id', $allowedSections);
             });
         }
         $templates = $templatesQuery->orderBy('section_id')->orderBy('title')->get();
@@ -60,7 +63,7 @@ class TemplateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $templateId)
@@ -132,10 +135,10 @@ class TemplateController extends Controller
             $start = $inputShifts["start"][$i];
             $end = $inputShifts["end"][$i];
             $weight = $inputShifts["weight"][$i];
-            $optional = $inputShifts["optional"][$i] === "on"? 1 : 0;
+            $optional = $inputShifts["optional"][$i] === "on" ? 1 : 0;
 
             $position = $i;
-            $shift = ShiftController::createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position,null,$optional);
+            $shift = ShiftController::createShiftsFromEditSchedule($id, $title, $type, $start, $end, $weight, $position, null, $optional);
             if ($shift != null) {
                 array_push($results, $shift->id);
             }
@@ -146,13 +149,13 @@ class TemplateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Lara\Template $template
-     * @return \Illuminate\Http\Response
+     * @param int $templateId
+     * @return Application|Factory|View
      */
     public function show($templateId)
     {
         /** @var Template $template */
-        $template = Template::with('section')->firstOrNew(['id' => $templateId]);
+        $template = Template::query()->with('section')->firstOrNew(['id' => $templateId]);
         $sections = Section::all();
         if ($template->id == null) {
             /** @var Section $userSection */
@@ -177,7 +180,7 @@ class TemplateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Lara\Template $template
+     * @param \Lara\Template $template
      * @return \Illuminate\Http\Response
      */
     public function edit(Template $template)
@@ -188,8 +191,8 @@ class TemplateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Lara\Template $template
+     * @param \Illuminate\Http\Request $request
+     * @param \Lara\Template $template
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Template $template)
@@ -200,7 +203,7 @@ class TemplateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Lara\Template $template
+     * @param \Lara\Template $template
      * @return \Illuminate\Http\Response
      */
     public function destroy($templateId)

@@ -8,6 +8,7 @@
 
 namespace Lara;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 use Lara\Shift;
@@ -16,8 +17,8 @@ use Lara\Shift;
  * @property int evnt_type
  * @property string evnt_title
  * @property string evnt_subtitle
- * @property \DateTime evnt_date_start
- * @property \DateTime evnt_date_end
+ * @property Carbon evnt_date_start
+ * @property Carbon evnt_date_end
  * @property \DateTime evnt_time_start
  * @property \DateTime evnt_time_end
  * @property string external_id
@@ -28,6 +29,7 @@ use Lara\Shift;
  * @property double price_normal
  * @property double price_external
  * @property int template_id
+ * @property Carbon unlock_date
  */
 class ClubEvent extends Model
 {
@@ -78,7 +80,13 @@ class ClubEvent extends Model
         'template_id',
         'creator_id',
         'was_manually_edited',
+        'unlock_date',
     ];
+
+    protected $dates = [
+        'unlock_date',
+    ];
+
 
     /**
      * Get the corresponding section.

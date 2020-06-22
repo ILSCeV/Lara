@@ -25,6 +25,7 @@ use Lara\utilities\RoleUtility;
  * @property Person person
  * @property Settings settings
  * @property Carbon on_leave
+ * @property string google2fa_secret
  */
 class User extends Authenticatable
 {
@@ -37,9 +38,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         // authentication related
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'google2fa_secret',
         // Lara related
-        'section_id', 'person_id', 'status', 'givenname', 'lastname','is_name_private','on_leave'
+        'section_id', 'person_id', 'status', 'givenname', 'lastname', 'is_name_private', 'on_leave'
     ];
 
     /**
@@ -48,13 +49,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'google2fa_secret',
     ];
-    
+
     protected $dates = [
-      'on_leave'
+        'on_leave'
     ];
-    
+
     protected $casts = [
         'is_name_private' => 'boolean'
     ];
@@ -87,7 +88,7 @@ class User extends Authenticatable
     public static function createNew($data)
     {
         // workaround, since most of the legacy depends on an LDAP id being present
-        $newLDAPId = key_exists('prsn_ldap_id', $data) ? $data['prsn_ldap_id'] : DB::table('persons')->select(DB::raw('max(convert( prsn_ldap_id, unsigned integer)) ldap_id'))->first()->ldap_id +1;;
+        $newLDAPId = key_exists('prsn_ldap_id', $data) ? $data['prsn_ldap_id'] : DB::table('persons')->select(DB::raw('max(convert( prsn_ldap_id, unsigned integer)) ldap_id'))->first()->ldap_id + 1;;
 
         $section = Section::find($data['section']);
         $person = Person::create([
@@ -174,15 +175,16 @@ class User extends Authenticatable
      */
     public function hasPermission(Role $role)
     {
-        return $this->roles()->where('id','=',$role->id)->exists();
+        return $this->roles()->where('id', '=', $role->id)->exists();
     }
 
     /**
      * @param string $type
      * @return \Illuminate\Database\Eloquent\Collection|Role
      */
-    public function getRolesOfType($type){
-        return $this->roles()->where('name','=',$type)->get();
+    public function getRolesOfType($type)
+    {
+        return $this->roles()->where('name', '=', $type)->get();
     }
 
     /**
@@ -191,7 +193,7 @@ class User extends Authenticatable
      */
     public function getSectionsIdForRoles($type)
     {
-        return $this->getRolesOfType($type)->map(function (Role $role){
+        return $this->getRolesOfType($type)->map(function (Role $role) {
             return $role->section_id;
         });
     }
@@ -210,5 +212,34 @@ class User extends Authenticatable
             return $this->givenname . " " . $this->lastname;
         }
         return "";
+    }
+
+    /**
+     * Ecrypt the user's google_2fa secret.
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setGoogle2faSecretAttribute($value)
+    {
+        $savingValue = $value;
+        if (!empty($value)) {
+            $savingValue = encrypt($value);
+        }
+        $this->attributes['google2fa_secret'] = $savingValue;
+    }
+
+    /**
+     * Decrypt the user's google_2fa secret.
+     *
+     * @param string $value
+     * @return string
+     */
+    public function getGoogle2faSecretAttribute($value)
+    {
+        if (!empty($value)) {
+            return decrypt($value);
+        }
+        return $value;
     }
 }

@@ -121,6 +121,8 @@ return [
     'passwordEntry'         => 'Passwort zum Eintragen',
     'passwordRepeat'        => 'Passwort wiederholen',
     'passwordDeleteMessage' => 'Um das Passwort zu löschen trage in beide Felder "delete" ein (ohne Anführungszeichen).',
+    'unlockDate'            => 'Abfahrtszeitpunkt',
+    'availableAt'           => 'Verfügbar ab',
 
     'moreInfos'             => 'Weitere Details',
     'public'                => 'öffentlich',
@@ -460,6 +462,7 @@ return [
     'guest'                         => 'Passagier',
     'accessDenied'                  => 'Moment mal... Nur eingeloggte Crewmitglieder mit ausreichendem Rang dürfen hier rein! Logge dich ein, oder komm zur nächsten Versammlung und heuer an.',
     'filter'                        => 'Filtern',
+    'submit'                        => 'Absenden',
 
 
     ////////////////
@@ -564,4 +567,11 @@ return [
     'userPersonalPage' => 'Persönliche Kajüte',
     'settings'         => 'Einstellungen',
 
+    ///////////////////
+    // 2fa           //
+    ///////////////////
+    '2fa'             => 'Aktuelle Losung',
+    '2fa.setup'       => 'Richten Sie Ihre Zwei-Faktor-Authentifizierung ein, indem Sie den folgenden Barcode scannen. Alternativ können Sie den Code verwenden',
+    '2fa.verifyWorking' => 'Um Sicherzugehen, dass die Losung übergeben ist geben Sie bitte den aktuellen Code ein.',
+    '2fa.unregister'       => 'Zwei-Faktor-Authentisierung entfernen',
 ];

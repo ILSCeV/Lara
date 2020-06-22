@@ -45,20 +45,20 @@ class LoginController extends Controller
 
     /** Property for max trys to login*/
     protected $maxAttempts = 3;
-    
+
     /** how many minutes the user is locked if login failed to many times */
     protected $decayMinutes = 5;
-    
+
     /**
      * Logout current user, delete relevant session data.
      *
-     * @return RedirectResponse
+     * @return RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function doLogout()
     {
         Session::flush();
         if (Auth::user()) {
-            return $this->logout();
+            return $this->logout( request());
         }
         return redirect('/');
     }
@@ -110,13 +110,13 @@ class LoginController extends Controller
             Utilities::error(trans('auth.throttle',['seconds'=>$seconds]) );
             return redirect("/");
         }
-        
+
         $someLoginWorked = $this->attemtLoginViaDevelop() || $this->attemptLoginViaLDAP()
             || $this->attemtLoginWithClubNumber(request())
             || $this->attemptLoginWithCredentials(request(), 'name')
             || $this->attemptLoginWithCredentials(request(), 'email');
-        
-        
+
+
         if ($someLoginWorked) {
             $user = Auth::user();
 
@@ -410,7 +410,7 @@ class LoginController extends Controller
                     $user = User::createFromPerson($person);
                 }
                 Auth::login($user);
-    
+
                 if (array_key_exists('mail', $info[0])) {
                     $userEmail = $info[0]['mail'][0];
                 }
@@ -521,7 +521,7 @@ class LoginController extends Controller
             $rolesString .
             ') just logged in.');
     }
-    
+
 }
 
 /*      This is what the returned bcLDAP object looks like (only useful fields are shown here).

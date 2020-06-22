@@ -4,6 +4,7 @@ const LiveReloadPlugin = require('webpack-livereload-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PhpManifestPlugin = require('webpack-php-manifest');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+
 const devMode = process.env.NODE_ENV !== 'production';
 //const devMode = false;
 
@@ -15,7 +16,8 @@ module.exports = {
     darkmode: './resources/assets/sass/darkmode.scss',
     monthview:'./resources/assets/ts/monthview/monthview.ts',
     autocomplete:'./resources/assets/ts/shifts/autocomplete.ts',
-    statistics:'./resources/assets/ts/statistics/StatisticsView.ts'
+    statistics:'./resources/assets/ts/statistics/StatisticsView.ts',
+    templates:'./resources/assets/ts/template/templateEntry.ts'
   },
   module: {
     rules: [
@@ -106,13 +108,15 @@ module.exports = {
       filename: devMode ? '[name].css' : '[name].[hash].css',
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
+
     new webpack.ProvidePlugin({
       'jQuery': 'jquery',
       'window.jQuery': 'jquery',
       'jquery': 'jquery',
       'window.jquery': 'jquery',
       '$'     : 'jquery',
-      'window.$'     : 'jquery'
+      'window.$'     : 'jquery',
+      'moment':'moment',
     }),
     new PhpManifestPlugin(),
     new webpack.SourceMapDevToolPlugin({}),

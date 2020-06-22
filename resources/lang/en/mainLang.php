@@ -120,6 +120,8 @@ return [
     'passwordEntry'         => 'Password to enter',
     'passwordRepeat'        => 'Confirm Password',
     'passwordDeleteMessage' => 'To delete the password, enter "delete" (without quotation marks) in both fields.',
+    'unlockDate'           => 'Unlock Timestamp',
+    'availableAt'           => 'available at',
 
     'moreInfos'             => 'Additional details',
     'public'                => 'public',
@@ -457,6 +459,7 @@ return [
     'guest'                         => 'Guest',
     'accessDenied'                  => 'Wait a second... Only logged-in members with verified credentials can get in here! Now go log in, or come to the next meeting and become a member.',
     'filter'                        => 'filter',
+    'submit'                        => 'submit',
 
 
     ////////////////
@@ -563,4 +566,13 @@ return [
     ///////////////////
     'userPersonalPage' => 'Personal page',
     'settings'         => 'Settings',
+
+    ///////////////////
+    // 2fa           //
+    ///////////////////
+    '2fa'             => 'two factor authentication',
+    '2fa.setup'       => 'Set up your two factor authentication by scanning the barcode below. Alternatively, you can use the code',
+    '2fa.verifyWorking' => 'To ensure that the setup is complete, please enter the current code.',
+    '2fa.unregister'       => 'remove two factor authentication',
+
 ];

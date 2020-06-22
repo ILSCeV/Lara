@@ -67,6 +67,10 @@ Route::get('logout', 							'LoginController@doLogout')->name('logout');
 Route::post('login', 							'LoginController@doLogin')->name('login.post');
 Route::post('logout', 							'LoginController@doLogout')->name('logout.post');
 
+//2fa
+Route::get('2fa',                               'SecondFactorController@index')->name("lara.2fa");
+Route::post("2fa",                              'SecondFactorController@verify')->name('verify.2fa');
+
 
 // TIMESTAMP
 Route::get('updates/{id}', 						'ScheduleController@getUpdates');
@@ -196,6 +200,8 @@ Route::post('/user/updateData/{user}', 'UserController@updateData')->name('user.
 Route::resource('user', 'UserController');
 Route::get('/personalpage','UserPersonalPageController@showPersonalPage')->name('user.personalpage');
 Route::post('/updatePersonalSettings', 'UserPersonalPageController@updatePerson')->name('user.updatePersonalSettings');
+Route::post('/registerAuthenticator', 'UserPersonalPageController@registerGoogleAuth')->name('user.registerGoogleAuth');
+Route::post('/unregisterAuthenticator', 'UserPersonalPageController@unregisterGoogleAuth')->name('user.unregisterGoogleAuth');
 Route::post('/user/deleteUer/{userId}', 'UserController@destroy')->name('user.delete');
 
 Route::get('/password/change', ['as' => 'password.change', 'uses' => 'Auth\PasswordChangeController@showChangePasswordForm'])
