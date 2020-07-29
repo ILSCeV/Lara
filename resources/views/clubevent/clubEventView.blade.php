@@ -26,7 +26,7 @@ $isUnBlocked = is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greate
     				</div>
     					<table class="table table-hover px-3">
     						<tr>
-    							<td width="20%" class="text-align-right">
+    							<td width="20%" class="text-align-right ">
     								<i>{{ trans('mainLang.type') }}:</i>
     							</td>
     							<td>
@@ -171,7 +171,7 @@ $isUnBlocked = is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greate
     				<div class="card mx-2">
     					<div class="card-body more-info">
     						<h5 class="card-title">{{ trans('mainLang.additionalInfo') }}:</h5>
-    						{!! nl2br($clubEvent->evnt_public_info) !!}
+    						{!! $clubEvent->publicInfoMd() !!}
     					</div>
     					<button type="button" class="moreless-more-info btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showMore') }}</button>
     					<button type="button" class="moreless-less-info btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showLess') }}</button>
@@ -184,7 +184,7 @@ $isUnBlocked = is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greate
     					<div class="card mx-2 hidden-print">
     						<div class="card-body more-details">
     							<h5 class="card-title">{{ trans('mainLang.moreDetails') }}:</h5>
-    							{!! nl2br($clubEvent->evnt_private_details) !!}
+    							{!! $clubEvent->privateDetailsMd() !!}
     						</div>
     						<button type="button" class="moreless-more-details btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showMore') }}</button>
     						<button type="button" class="moreless-less-details btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showLess') }}</button>
