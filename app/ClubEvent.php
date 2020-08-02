@@ -11,7 +11,10 @@ namespace Lara;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\HtmlString;
+use Lara\Http\Middleware\MarkdownParser;
 use Lara\Shift;
+use PhpParser\Node\Scalar\String_;
 
 /**
  * @property int evnt_type
@@ -30,9 +33,13 @@ use Lara\Shift;
  * @property double price_external
  * @property int template_id
  * @property Carbon unlock_date
+ * @property string evnt_public_info
+ * @property string evnt_private_details
  */
 class ClubEvent extends Model
 {
+    use MarkdownParser;
+
     /**
      * The database table used by the model.
      *
@@ -47,18 +54,18 @@ class ClubEvent extends Model
      * @var $fillable array
      */
     protected $fillable = [
-        'evnt_type',            // 0  -> default -> "normales Programm"         Shade:     700
+        'evnt_type',            // 0  -> default -> "normales Programm"         Shade:    700
                                 // 1  -> info only                              Shade:    500, always purple
-                                // 2  -> highlight / special                    Shade:       900
-                                // 3  -> live band / DJ / reading               Shade:       900
+                                // 2  -> highlight / special                    Shade:    900
+                                // 3  -> live band / DJ / reading               Shade:    900
                                 // 4  -> internal event                         Shade:    500
                                 // 5  -> private party -> "Nutzung"             Shade:    500
                                 // 6  -> cleaning -> "Fluten"                   Shade:    500
-                                // 7  -> flyer / poster                         Shade:  300
-                                // 8  -> tickets -> "Vorverkauf"                Shade:  300
+                                // 7  -> flyer / poster                         Shade:    300
+                                // 8  -> tickets -> "Vorverkauf"                Shade:    300
                                 // 9  -> internal task -> everything else       Shade:    500
-                                // 10 -> outside event -> "Außenveranstaltung"  Shade:       900
-                                // 11 -> buffet                                 Shade:       900
+                                // 10 -> outside event -> "Außenveranstaltung"  Shade:    900
+                                // 11 -> buffet                                 Shade:    900
         'evnt_title',
         'evnt_subtitle',
         'plc_id',
@@ -104,7 +111,7 @@ class ClubEvent extends Model
      */
     public function template()
     {
-        return $this->belongsTo(Template::class,'template_id','id');
+        return $this->belongsTo(Template::class, 'template_id', 'id');
     }
 
     /**
@@ -136,8 +143,8 @@ class ClubEvent extends Model
      */
     public function hasShift($person)
     {
-        return $this->shifts->contains(function(Shift $shift) use($person){
-            return $shift->person_id == $person->id;
+        return $this->shifts->contains(function (Shift $shift) use ($person) {
+            return $shift->person_id === $person->id;
         });
     }
 
@@ -179,5 +186,23 @@ class ClubEvent extends Model
     public function creator()
     {
         return $this->belongsTo('Lara\User', 'creator_id');
+    }
+
+    /**
+     * formats the content of evnt_public_info as html
+     * @return HtmlString
+     */
+    public function publicInfoMd()
+    {
+        return $this->mdToHtmlCached($this->evnt_public_info);
+    }
+
+    /**
+     * formats the content of evnt_private_details as html
+     * @return HtmlString
+     */
+    public function privateDetailsMd()
+    {
+        return $this->mdToHtmlCached($this->evnt_private_details);
     }
 }

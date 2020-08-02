@@ -12,12 +12,13 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+
 use Carbon\Carbon;
 use Lara\Status;
 
 $factory->define(Lara\User::class, function (Faker\Generator $faker) {
     static $password;
-    $onLeave = $faker->boolean(20) ? $faker->dateTimeBetween('-5 months', '+6 months'):null;
+    $onLeave = $faker->boolean(20) ? $faker->dateTimeBetween('-5 months', '+6 months') : null;
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -30,12 +31,12 @@ $factory->define(Lara\User::class, function (Faker\Generator $faker) {
 $factory->define(Lara\Person::class, function (Faker\Generator $faker) {
     $isUser = $faker->boolean(60);
     $clubQuery = \Lara\Club::query()->inRandomOrder();
-    if($isUser) {
+    if ($isUser) {
         $clubQuery->where('clb_title', '=', \Lara\Section::query()->inRandomOrder()->first()->title);
     }
     return [
         'prsn_name' => $faker->name(),
-        'prsn_ldap_id' => $isUser ? $faker->numberBetween(2000, 9999):null,
+        'prsn_ldap_id' => $isUser ? $faker->numberBetween(2000, 9999) : null,
         'prsn_status' => $faker->randomElement(Status::ACTIVE),
         'prsn_uid' => hash("sha512", uniqid()),
         'clb_id' => $clubQuery->first()->id
@@ -56,7 +57,7 @@ $factory->define(Lara\Survey::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Lara\SurveyAnswer::class, function(Faker\Generator $faker){
+$factory->define(Lara\SurveyAnswer::class, function (Faker\Generator $faker) {
     return [
         'creator_id' => Lara\Person::query()->whereNotNull('prsn_ldap_id')->inRandomOrder()->first()->id,
         'survey_id' => Lara\Survey::inRandomOrder()->first()->id,
@@ -65,14 +66,14 @@ $factory->define(Lara\SurveyAnswer::class, function(Faker\Generator $faker){
     ];
 });
 
-$factory->define(Lara\SurveyAnswerOption::class, function(Faker\Generator $faker){
+$factory->define(Lara\SurveyAnswerOption::class, function (Faker\Generator $faker) {
     return [
         'survey_question_id' => Lara\SurveyQuestion::inRandomOrder()->first()->id,
         'answer_option' => $faker->sentence(),
     ];
 });
 
-$factory->define(Lara\SurveyAnswerCell::class, function(Faker\Generator $faker){
+$factory->define(Lara\SurveyAnswerCell::class, function (Faker\Generator $faker) {
     return [
         'survey_answer_id' => Lara\SurveyAnswer::inRandomOrder()->first()->id,
         'survey_question_id' => Lara\SurveyQuestion::inRandomOrder()->first()->id,
@@ -80,7 +81,7 @@ $factory->define(Lara\SurveyAnswerCell::class, function(Faker\Generator $faker){
     ];
 });
 
-$factory->define(Lara\SurveyQuestion::class, function(Faker\Generator $faker){
+$factory->define(Lara\SurveyQuestion::class, function (Faker\Generator $faker) {
     return [
         'survey_id' => Lara\Survey::inRandomOrder()->first()->id,
         'order' => $faker->numberBetween(0, 5),
@@ -90,11 +91,17 @@ $factory->define(Lara\SurveyQuestion::class, function(Faker\Generator $faker){
     ];
 });
 
-$factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
+$factory->define(Lara\ClubEvent::class, function (Faker\Generator $faker) {
     $start = $faker->dateTimeBetween('-5 years', '+1 years');
     $end = $faker->dateTimeBetween($start, date("Y-m-d H:i:s", strtotime('+1 day', $start->getTimestamp())));
     $eventName = $faker->randomKey(EventNameDictionary::EVENT_NAMES);
     $eventType = EventNameDictionary::EVENT_NAMES[$eventName];
+    $privateInfoAdditionalLine = "|Mo|Di|Mi|Do|Fr|Sa|So|
+|--|--|--|--|--|--|--|
+|  |  | **C** | **D** |**H** | **I** |**C** |
+
+
+    ";
     return [
         'evnt_type' => $eventType,
         'evnt_title' => $eventName,
@@ -105,20 +112,20 @@ $factory->define(Lara\ClubEvent::class, function(Faker\Generator $faker) {
         'evnt_time_start' => $start->format('H:i'),
         'evnt_time_end' => $end->format('H:i'),
         'evnt_public_info' => $faker->sentence(),
-        'evnt_private_details' => $faker->sentence(),
+        'evnt_private_details' => $faker->boolean(70) ? $privateInfoAdditionalLine : '' . $faker->sentence(),
         'evnt_is_private' => $faker->boolean(10),
         'evnt_is_published' => 0,
-        'price_tickets_normal'=> $faker->numberBetween(0,5),
-        'price_tickets_external'=>$faker->numberBetween(0,10),
-        'price_normal' => $faker->randomFloat(2,0,1),
-        'price_external' => $faker->randomFloat(2,1,2),
+        'price_tickets_normal' => $faker->numberBetween(0, 5),
+        'price_tickets_external' => $faker->numberBetween(0, 10),
+        'price_normal' => $faker->randomFloat(2, 0, 1),
+        'price_external' => $faker->randomFloat(2, 1, 2),
         'facebook_done' => $faker->boolean(50),
         'event_url' => $faker->url(),
-        'external_id'=> $faker->word()
+        'external_id' => $faker->word()
     ];
 });
 
-$factory->define(Lara\ShiftType::class, function(Faker\Generator $faker) {
+$factory->define(Lara\ShiftType::class, function (Faker\Generator $faker) {
     $types = ['Einlass', 'Bar', 'Tresen', 'AV', 'Disko', 'Licht'];
     $end = $faker->time('H:i');
     $start = $faker->time('H:i', $end);
@@ -132,7 +139,7 @@ $factory->define(Lara\ShiftType::class, function(Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Lara\Schedule::class, function(Faker\Generator $faker) {
+$factory->define(Lara\Schedule::class, function (Faker\Generator $faker) {
     return [
         'schdl_title' => $faker->word(),
         'schdl_time_preparation_start' => $faker->time('H:i'),
@@ -141,7 +148,7 @@ $factory->define(Lara\Schedule::class, function(Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
+$factory->define(Lara\Shift::class, function (Faker\Generator $faker) {
     $end = $faker->time('H:i');
     $start = $faker->time('H:i', $end);
     return [
@@ -152,13 +159,13 @@ $factory->define(Lara\Shift::class, function(Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Lara\Club::class, function(Faker\Generator $faker) {
+$factory->define(Lara\Club::class, function (Faker\Generator $faker) {
     return [
-        'clb_title' => $faker->randomElement(["bi-Club","bc-Club","FEM","iStuff","bh-Club","bc-Cafe","bd-Club","MFK","Band"]),
+        'clb_title' => $faker->randomElement(["bi-Club", "bc-Club", "FEM", "iStuff", "bh-Club", "bc-Cafe", "bd-Club", "MFK", "Band"]),
     ];
 });
 
-$factory->define(Lara\Template::class, function(Faker\Generator $faker) {
+$factory->define(Lara\Template::class, function (Faker\Generator $faker) {
     $start = $faker->dateTimeBetween('-30 days', '+60 days');
     $end = $faker->dateTimeBetween($start, date("Y-m-d H:i:s", strtotime('+1 day', $start->getTimestamp())));
     $eventName = $faker->randomKey(EventNameDictionary::EVENT_NAMES);
@@ -173,17 +180,17 @@ $factory->define(Lara\Template::class, function(Faker\Generator $faker) {
         'public_info' => $faker->sentence(),
         'private_details' => $faker->sentence(),
         'is_private' => $faker->boolean(10),
-        'price_tickets_normal'=> $faker->numberBetween(0,5),
-        'price_tickets_external'=>$faker->numberBetween(0,10),
-        'price_normal' => $faker->randomFloat(2,0,1),
-        'price_external' => $faker->randomFloat(2,1,2),
+        'price_tickets_normal' => $faker->numberBetween(0, 5),
+        'price_tickets_external' => $faker->numberBetween(0, 10),
+        'price_normal' => $faker->randomFloat(2, 0, 1),
+        'price_external' => $faker->randomFloat(2, 1, 2),
         'facebook_needed' => $faker->boolean(40),
     ];
 });
 
-$factory->define(Lara\Role::class, function(Faker\Generator $faker) {
+$factory->define(Lara\Role::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->title(),
-        'section_id'=> (new Lara\Section)->inRandomOrder()->first()->id
+        'section_id' => (new Lara\Section)->inRandomOrder()->first()->id
     ];
 });
