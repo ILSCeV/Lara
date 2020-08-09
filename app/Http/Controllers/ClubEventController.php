@@ -4,6 +4,7 @@ namespace Lara\Http\Controllers;
 
 use Auth;
 use Cache;
+use Carbon\Carbon;
 use Config;
 use DateInterval;
 use DateTime;
@@ -565,6 +566,11 @@ class ClubEventController extends Controller
         else
         {
             $event->evnt_date_end = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));;
+        }
+        if(!empty(Input::get('unlockDate'))){
+            $event->unlock_date = Carbon::createFromFormat('Y-m-d\TH:i', Input::get('unlockDate'));
+        } else {
+            $event->unlock_date = null;
         }
 
         // format: time; validate on filled value

@@ -2,6 +2,10 @@
 
 	{{-- Check if the event is still going on --}}
     @php
+        /** @var \Lara\ClubEvent $clubEvent */
+        $createPersonLdapId = $clubEvent->creator?$clubEvent->creator->person->prsn_ldap_id:null;
+        $isAllowedToSee = \Auth::hasUser() && \Auth::user()->hasPermissionsInSection($clubEvent->section,\Lara\utilities\RoleUtility::PRIVILEGE_CL) || Lara\Person::isCurrent($createPersonLdapId) ;
+        $isUnBlocked = is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greaterThanOrEqualTo($clubEvent->unlock_date)  || $isAllowedToSee;
         $classString = "card-header rounded-top";
         $clubEventClass = \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent);
     @endphp
@@ -39,13 +43,17 @@
 		@endif
 
 		<div class="card-body p-0">
+            @if($isUnBlocked)
+                @if (!is_null($clubEvent->getSchedule))
 
-			@if (!is_null($clubEvent->getSchedule))
-
-				{{-- Show shifts --}}
-                @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true, 'commentsInSeparateLine' => true])
-			@endif
-
+                    {{-- Show shifts --}}
+                    @include('partials.shifts.takeShiftTable',['shifts' => $clubEvent->getSchedule->shifts,'hideComments'=>true, 'commentsInSeparateLine' => true])
+                @endif
+            @else
+                <div class="text-center">
+                    {{trans('mainLang.availableAt')}}  {{$clubEvent->unlock_date->isoFormat('DD.MM.YYYY hh:mm')}}
+                </div>
+            @endif
 		</div>
 
 </div>

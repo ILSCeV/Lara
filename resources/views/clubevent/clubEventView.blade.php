@@ -1,3 +1,8 @@
+@php
+/** @var \Lara\ClubEvent $clubEvent */
+$isAllowedToSee = \Auth::hasUser() && \Auth::user()->hasPermissionsInSection($clubEvent->section,\Lara\utilities\RoleUtility::PRIVILEGE_CL) || Lara\Person::isCurrent($created_by) ;
+$isUnBlocked = is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greaterThanOrEqualTo($clubEvent->unlock_date)  || $isAllowedToSee;
+@endphp
 @extends('layouts.master')
 @section('title')
 	{{ $clubEvent->evnt_title }}
@@ -21,7 +26,7 @@
     				</div>
     					<table class="table table-hover px-3">
     						<tr>
-    							<td width="20%" class="text-align-right">
+    							<td width="20%" class="text-align-right ">
     								<i>{{ trans('mainLang.type') }}:</i>
     							</td>
     							<td>
@@ -166,7 +171,7 @@
     				<div class="card mx-2">
     					<div class="card-body more-info">
     						<h5 class="card-title">{{ trans('mainLang.additionalInfo') }}:</h5>
-    						{!! nl2br($clubEvent->evnt_public_info) !!}
+    						{!! $clubEvent->publicInfoMd() !!}
     					</div>
     					<button type="button" class="moreless-more-info btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showMore') }}</button>
     					<button type="button" class="moreless-less-info btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showLess') }}</button>
@@ -179,7 +184,7 @@
     					<div class="card mx-2 hidden-print">
     						<div class="card-body more-details">
     							<h5 class="card-title">{{ trans('mainLang.moreDetails') }}:</h5>
-    							{!! nl2br($clubEvent->evnt_private_details) !!}
+    							{!! $clubEvent->privateDetailsMd() !!}
     						</div>
     						<button type="button" class="moreless-more-details btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showMore') }}</button>
     						<button type="button" class="moreless-less-details btn btn-primary btn-margin" data-dismiss="alert">{{ trans('mainLang.showLess') }}</button>
@@ -210,16 +215,23 @@
         <div class="row ">
         	<div class="card col-12 mx-sm-1 m-auto">
         		@if( $clubEvent->getSchedule->schdl_password != '')
-        			<div class="card-header hidden-print">
-        			    {!! Form::password('password', array('required',
-        			                                         'class'=>'col-md-4 col-sm-4 col-12 black-text',
-        		                                             'id'=>'password' . $clubEvent->getSchedule->id,
-        			                                         'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
-        			    <br>
-        			</div>
+                    @if(is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greaterThanOrEqualTo($clubEvent->unlock_date))
+                        <div class="card-header hidden-print">
+                            {!! Form::password('password', array('required',
+                                                                 'class'=>'col-md-4 col-sm-4 col-12 black-text',
+                                                                 'id'=>'password' . $clubEvent->getSchedule->id,
+                                                                 'placeholder'=>Lang::get('mainLang.enterPasswordHere'))) !!}
+                            <br>
+                        </div>
+                    @endif
         		@endif
-
-                @include('partials.shifts.takeShiftTable',['shifts'=>$shifts, 'hideComments'=>false, 'commentsInSeparateLine' => false])
+                @if($isUnBlocked)
+                 @include('partials.shifts.takeShiftTable',['shifts'=>$shifts, 'hideComments'=>false, 'commentsInSeparateLine' => false])
+                @else
+                  <div class="card col-12 mx-sm-1 m-auto text-center">
+                     {{trans('mainLang.availableAt')}}  {{$clubEvent->unlock_date->isoFormat('DD.MM.YYYY hh:mm')}}
+                  </div>
+                @endif
         	</div>
         </div>
 	</div>

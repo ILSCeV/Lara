@@ -338,9 +338,20 @@
 			    </div>
 
 			    <div class="form-group col-12 ">
-			    	<label fro="passwordDouble" class="{{$labelClass}}">{{ trans('mainLang.passwordRepeat') }}:</label>
+			    	<label for="passwordDouble" class="{{$labelClass}}">{{ trans('mainLang.passwordRepeat') }}:</label>
 			    	<div class="col-8">
 			    		{!! Form::password('passwordDouble', ['class'=>'form-control']) !!}
+			    	</div>
+			    </div>
+
+                    <div class="col-12">
+                        &nbsp;
+                    </div>
+
+                <div class="form-group col-12 ">
+			    	<label for="unlockDate" class="{{$labelClass}}">{{ trans('mainLang.unlockDate') }}:</label>
+			    	<div class="col-8 date">
+			    		{!! Form::datetimeLocal('unlockDate', $createClubEvent ? '': $event->unlock_date, ['class'=>'form-control ','id'=>'unlockDateInput']) !!}
 			    	</div>
 			    </div>
 

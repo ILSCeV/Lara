@@ -105,11 +105,11 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('ldapSection', function($section) {
             return strpos(env('LDAP_SECTIONS', ''), $section->title) !== false;
         });
-    
+
         Paginator::defaultView('pagination::bootstrap-4');
-    
+
         Paginator::defaultSimpleView('pagination::bootstrap-4');
-        
+
         ClubEvent::observe(ClubEventObserver::class);
         Schedule::observe(ScheduleObserver::class);
         Survey::observe(SurveyObserver::class);
@@ -125,5 +125,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() !== 'production') {
             $this->app->register(IdeHelperServiceProvider::class);
         }
+
+        $this->app->singleton(\Parsedown::class);
     }
 }
