@@ -23,7 +23,7 @@
         </div>
 
 {{-- Section filter --}}
-        <div class="col-12 col-md-7 hidden-print float-right">
+        <div class="col-12 col-md-4 hidden-print float-right">
             <br class="d-block d-sm-none">
             @include('partials.filter')
             <br class="d-block d-sm-none">
