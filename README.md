@@ -14,9 +14,6 @@ We always welcome any help in any form :)
 
 If you want to contribute, please read this short overview first: [Contributing](https://github.com/ILSCeV/Lara/wiki/Contributing)
 
-For a detailed list of open requirements and change-requests contact [Maxim](https://github.com/4D44H) for access to the Trello boards.
-
-
 ## License
 Code published under [GNU GPL v.3](https://github.com/ILSCeV/Lara/blob/master/LICENSE).
 
