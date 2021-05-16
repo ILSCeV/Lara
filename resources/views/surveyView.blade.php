@@ -15,10 +15,10 @@ $ldapid
     {{$survey->title}}
 @stop
 @section('moreScripts')
-    <script src="{{asset(WebpackBuiltFiles::$jsFiles['survey'])}}"></script>
+    <script src="{{asset(WebpackBuiltFiles::$assets['survey.js'])}}"></script>
 @endsection
 @section('moreStylesheets')
-    <link rel="stylesheet" media="all" type="text/css" href="{{ asset(WebpackBuiltFiles::$cssFiles['survey']) }}"/>
+    <link rel="stylesheet" media="all" type="text/css" href="{{ asset(WebpackBuiltFiles::$assets['survey.css']) }}"/>
     <style>
         #dropdown_name {
             position: absolute;
