@@ -45,14 +45,14 @@ class Utilities
      * @param string | array $permissions the permissions the user is needing
      * @return boolean true or false
      */
-    static function requirePermission($permissions)
+    static function requirePermission(...$permissions)
     {
         $user = Auth::user();
         if (!$user) {
             return false;
         }
 
-        return $user->isAn($permissions);
+        return $user->isAn(...$permissions);
     }
 
     static function getEventTypeTranslation($typeNumber)
