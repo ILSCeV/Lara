@@ -2,11 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-//const PhpManifestPlugin = require('webpack-php-manifest');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-
+const TerserPlugin = require("terser-webpack-plugin");
 const devMode = process.env.NODE_ENV !== 'production';
 //const devMode = false;
 
@@ -63,17 +62,18 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
           },
 
-          {loader:  'css-loader'},
+          {loader: 'css-loader'},
           {
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
-              plugins: function () { // post css plugins, can be exported to postcss.config.js
-                return [
-                  require('precss'),
-                  require('autoprefixer')
-                ];
-              }},
+                plugins: function () { // post css plugins, can be exported to postcss.config.js
+                  return [
+                    require('precss'),
+                    require('autoprefixer')
+                  ];
+                }
+              },
               sourceMap: devMode
             },
           },
@@ -81,7 +81,7 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               sourceMap: devMode,
-              sassOptions:{
+              sassOptions: {
                 outputStyle: 'expanded'
               }
             }
@@ -111,7 +111,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
-      cleanOnceBeforeBuildPatterns: ['**/*.js', '**/*.css','**/*LICENSE.txt', '**/assets-manifest.json', '**/fonts/*'],
+      cleanOnceBeforeBuildPatterns: ['**/*.js', '**/*.css', '**/*LICENSE.txt', '**/assets-manifest.json', '**/fonts/*'],
     }),
     new LiveReloadPlugin(),
 
@@ -140,7 +140,8 @@ module.exports = {
     minimizer: [
       new CssMinimizerPlugin({
         parallel: true,
-      })
+      }),
+      new TerserPlugin()
     ]
   }
 };
