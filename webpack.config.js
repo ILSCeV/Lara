@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //const PhpManifestPlugin = require('webpack-php-manifest');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
 //const devMode = false;
@@ -60,9 +61,6 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-              esModule: false
-            }
           },
 
           {loader:  'css-loader'},
@@ -106,22 +104,22 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js', '.css', '.scss']
   },
   output: {
-    filename: devMode ? '[name].js' : '[name].[hash].js',
+    filename: devMode ? '[name].js' : '[name].[fullhash].js',
     path: path.resolve(__dirname, 'public/'),
   },
   devtool: devMode ? 'eval-source-map' : false,
   plugins: [
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
-      cleanOnceBeforeBuildPatterns: ['**/*.js', '**/*.css', '**/asset-manifest.php', '**/fonts/*'],
+      cleanOnceBeforeBuildPatterns: ['**/*.js', '**/*.css','**/*LICENSE.txt', '**/assets-manifest.json', '**/fonts/*'],
     }),
     new LiveReloadPlugin(),
 
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: devMode ? '[name].css' : '[name].[hash].css',
-      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+      filename: devMode ? '[name].css' : '[name].[fullhash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[fullhash].css',
     }),
 
     new webpack.ProvidePlugin({
@@ -138,6 +136,11 @@ module.exports = {
     new webpack.SourceMapDevToolPlugin({}),
   ],
   optimization: {
-    minimize: !devMode
+    minimize: !devMode,
+    minimizer: [
+      new CssMinimizerPlugin({
+        parallel: true,
+      })
+    ]
   }
 };

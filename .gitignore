@@ -9,6 +9,7 @@ gitrevision.txt
 public/*.js
 public/*.css
 public/*.map
+public/*.LICENSE.txt
 public/fonts
 public/static.css
 public/static.js
