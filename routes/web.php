@@ -125,7 +125,7 @@ Route::get('viewmode/{mode}', 'ViewModeController@switchMode')->name('viewMode.s
 
 // RESTful RESOURCES
 Route::resource('shiftType', 		'ShiftTypeController')
-    ->middleware('checkRoles:admin,clubleitung');
+    ->middleware('checkRoles:admin,clubleitung,marketing');
 Route::resource('shift', 			'ShiftController', 	        ['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('schedule', 		'ScheduleController', 		['except' => ['index', 'create', 'store', 'edit', 'destroy']]);
 Route::resource('event', 			'ClubEventController', 		['except' => ['index']]);
