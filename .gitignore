@@ -12,7 +12,7 @@ public/*.map
 public/fonts
 public/static.css
 public/static.js
-public/assets-manifest.php
+public/assets-manifest.json
 Lara.iml
 yarn.lock
 

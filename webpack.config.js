@@ -4,6 +4,7 @@ const LiveReloadPlugin = require('webpack-livereload-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //const PhpManifestPlugin = require('webpack-php-manifest');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const WebpackAssetsManifest = require('webpack-assets-manifest');
 
 const devMode = process.env.NODE_ENV !== 'production';
 //const devMode = false;
@@ -133,6 +134,7 @@ module.exports = {
       'moment': 'moment',
     }),
     //new PhpManifestPlugin(),
+    new WebpackAssetsManifest(),
     new webpack.SourceMapDevToolPlugin({}),
   ],
   optimization: {
