@@ -1,4 +1,5 @@
-import * as Sortable from "sortablejs"
+import  Sortable from "sortablejs"
+
 
 let shiftContainer = document.getElementById("shiftContainer");
 if (shiftContainer) {
