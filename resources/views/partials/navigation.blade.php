@@ -103,6 +103,7 @@
                             {{ trans('mainLang.manageSections') }}
                         </a>
                     </li>
+                    @endis
                     {{-- LARA ADMINISTRATION / admins only --}}
                     @is(Roles::PRIVILEGE_ADMINISTRATOR)
                     <li role="separator" class="divider dropdown-item"></li>
@@ -121,7 +122,6 @@
                     @endis
                 </ul>
             </li>
-            @endis
             @endis
 
 
