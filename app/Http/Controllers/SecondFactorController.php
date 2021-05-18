@@ -27,7 +27,8 @@ class SecondFactorController extends Controller
      */
     public function verify()
     {
-        $validator = \Validator::make(\Input::all(), [
+        $request=request();
+        $validator = \Validator::make($request->all(), [
             'code' => 'required|digits:6'
         ]);
         if ($validator->fails()) {
@@ -41,7 +42,7 @@ class SecondFactorController extends Controller
         $google2fa = app('pragmarx.google2fa');
         $secret = \Auth::user()->google2fa_secret;
         try {
-            if ($google2fa->verify(\Input::get("code"), $secret)) {
+            if ($google2fa->verify($request->input("code"), $secret)) {
                 \Session::forget('targeturl');
                 \Session::put('2faVeryfied', true);
                 return Redirect::to($targeturl);

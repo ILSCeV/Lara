@@ -5,7 +5,7 @@
 @stop
 
 @section('moreScripts')
-    <script src="{{asset(WebpackBuiltFiles::$jsFiles['monthview'])}}" ></script>
+    <script src="{{asset(WebpackBuiltFiles::$assets['monthview.js'])}}" ></script>
 @stop
 
 @section('content')

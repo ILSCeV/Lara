@@ -4,7 +4,7 @@
     {{ trans('mainLang.createNewSurvey') }}
 @stop
 @section('moreScripts')
-    <script src="{{asset(WebpackBuiltFiles::$jsFiles['survey'])}}"></script>
+    <script src="{{asset(WebpackBuiltFiles::$assets['survey.js'])}}"></script>
 @endsection
 
 @section('moreStylesheets')

@@ -24,7 +24,7 @@
         "sort-packages": true,
         "optimize-autoloader": true
     },
-    "description": "A calender with personnel scheduling for club management, built on top of Laravel 5.",
+    "description": "A calender with personnel scheduling for club management, built on top of Laravel 7.",
     "keywords": [
         "calendar",
         "scheduling",
@@ -34,24 +34,29 @@
     "license": "GPL-3.0",
     "name": "ilsc-ev/lara",
     "require": {
-        "php": ">=7.1.3",
+        "php": ">=7.2",
+        "ext-json": "*",
         "bacon/bacon-qr-code": "^2.0",
         "barryvdh/laravel-ide-helper": "^2.6",
         "eluceo/ical": "^0.11.6",
+        "erusev/parsedown": "^1.7",
+        "facade/ignition": "^2.0",
+        "fakerphp/faker": "^1.14",
         "johngrogg/ics-parser": "^2",
-        "laravel/framework": "5.8.*",
-        "laravel/tinker": "^1.0",
-        "laravelcollective/html": "^5.8.0",
+        "laravel/framework": "^7",
+        "laravel/tinker": "^2.0",
+        "laravel/ui": "^2.0",
+        "laravelcollective/html": "^6",
+        "nunomaduro/collision": "^4.1",
         "pragmarx/google2fa-laravel": "^1.3",
-        "rap2hpoutre/laravel-log-viewer": "^0.8.1"
+        "rap2hpoutre/laravel-log-viewer": "^1.6"
     },
     "require-dev": {
         "doctrine/dbal": "^2.9",
-        "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
+        "mockery/mockery": "~0.9.11",
         "orangehill/iseed": "dev-master",
-        "phpunit/phpunit": "~6.0",
-        "filp/whoops": "~2.4"
+        "phpunit/phpunit": "^8.5",
+        "filp/whoops": "^2.7.3"
     },
     "scripts": {
         "post-create-project-cmd": [
