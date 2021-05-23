@@ -10,7 +10,7 @@
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
-      <i class="fas fa-star"></i></span>
+      <i class="fas fa-star"></i>
        - {{ trans('mainLang.special') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">

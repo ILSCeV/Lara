@@ -8,9 +8,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         @if( \Lara\utilities\ViewUtility::isLightMode())
-        <link rel="stylesheet" type="text/css" href="{{ asset(WebpackBuiltFiles::$cssFiles['lara']) }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset(WebpackBuiltFiles::$assets['lara.css']) }}">
         @else
-        <link rel="stylesheet" type="text/css" href="{{ asset(WebpackBuiltFiles::$cssFiles['darkmode']) }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset(WebpackBuiltFiles::$assets['darkmode.css']) }}">
         @endif
         {{--
         <link rel="stylesheet" type="text/css" href="{{ mix('/static.css') }}">
@@ -27,7 +27,7 @@
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
-        <script src="{{asset(WebpackBuiltFiles::$jsFiles['legacy'])}}" ></script>
+        <script src="{{asset(WebpackBuiltFiles::$assets['legacy.js'])}}" ></script>
         <![endif]-->
 	</head>
 
@@ -72,7 +72,7 @@
         </section>
 
         <script> var enviroment = '{{App::environment()}}'; </script>
-        <script src="{{asset(WebpackBuiltFiles::$jsFiles['lara'])}}" ></script>
+        <script src="{{asset(WebpackBuiltFiles::$assets['lara.js'])}}" ></script>
         @yield('moreScripts')
         {{--
             <script src="{{ mix('/manifest.js') }}"></script>

@@ -3,6 +3,7 @@ export default {
     "onlyEmpty": "Nur FREIe Dienste",
     "mondayToSunday": "Montag - Sonntag",
     "wednesdayToTuesday": "Mittwoch - Dienstag",
+    "tuesdayToMonday" : "Dienstag - Montag",
     "endBeforeStart": "Die Endzeit liegt vor der Startzeit!",
     "forgotFilter": "Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.",
     "forgotPreparation": "Die Dienstvorbereitungszeit vergessen!",

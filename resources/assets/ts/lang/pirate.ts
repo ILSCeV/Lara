@@ -3,6 +3,7 @@ export default {
     "onlyEmpty": "Nur FREIe Dienste",
     "mondayToSunday": "Manendach - Sonnendach",
     "wednesdayToTuesday": "Woensdach - Dinxendach",
+    "tuesdayToMonday" : "Dinxendach - Monedach",
     "endBeforeStart": "Die Endzeit liegt vor der Startzeit!",
     "forgotFilter": "Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.",
     "forgotPreparation": "Die Dienstvorbereitungszeit vergessen!",
