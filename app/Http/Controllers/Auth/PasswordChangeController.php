@@ -11,6 +11,7 @@ use Lara\User;
 use Lara\Utilities;
 use Lara\utilities\LdapUtility;
 use Redirect;
+use Request;
 use Validator;
 use View;
 
@@ -23,12 +24,14 @@ class PasswordChangeController extends Controller
 
     public function changePassword()
     {
+        /** @var Request $request */
+        $request=request();
         // Get old password and check that it matches the one stored in the DB
-        $validator = $this->validator(Input::all());
+        $validator = $this->validator($request->all());
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
-        $oldPassword = Input::get('old-password');
+        $oldPassword = $request->input('old-password');
 
         $user = Auth::user();
 
@@ -39,7 +42,7 @@ class PasswordChangeController extends Controller
             return Redirect::back();
         }
 
-        $newPassword = Input::get('password');
+        $newPassword = $request->input('password');
         $user->password = bcrypt($newPassword);
         $user->save();
 /*
@@ -69,7 +72,7 @@ class PasswordChangeController extends Controller
      */
     private function changePasswordInLDAP(User $user)
     {
-        $encoded_newPassword = '{md5}' . base64_encode(mhash(MHASH_MD5, Input::get('password')));
+        $encoded_newPassword = '{md5}' . base64_encode(mhash(MHASH_MD5, $request->input('password')));
         $ldapPlatform = new LdapPlatform();
         $ldapPlatform->entry_name = 'userpassword';
         $ldapPlatform->entry_value = $encoded_newPassword;

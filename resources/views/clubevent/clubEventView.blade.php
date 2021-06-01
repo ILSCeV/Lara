@@ -8,7 +8,7 @@ $isUnBlocked = is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greate
 	{{ $clubEvent->evnt_title }}
 @stop
 @section('moreScripts')
-    <script src="{{asset(WebpackBuiltFiles::$jsFiles['autocomplete'])}}" ></script>
+    <script src="{{asset(WebpackBuiltFiles::$assets['autocomplete.js'])}}" ></script>
 @endsection
 @section('content')
     <div class="panelEventView">

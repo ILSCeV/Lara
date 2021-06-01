@@ -4,7 +4,7 @@
     {{ trans('mainLang.manageTemplates') }}
 @stop
 @section('moreScripts')
-    <script src="{{asset(WebpackBuiltFiles::$jsFiles['templates'])}}"></script>
+    <script src="{{asset(WebpackBuiltFiles::$assets['templates.js'])}}"></script>
 @endsection
 
 @section('content')

@@ -170,19 +170,19 @@ export const initFilters = () => {
 
     // set translated strings
     const weekMonSun = translate('mondayToSunday');
-    const weekWedTue = translate('wednesdayToTuesday');
+    const weekWedTue = translate('tuesdayToMonday');
 
     const weekStart = new ToggleButton("toggle-week-start", () => safeGetLocalStorage("weekStart") == "monday", "btn-primary", "btn-success");
 
     weekStart.addActions([makeLocalStorageAction("weekStart", "monday", "wednesday"),
       makeClassToggleAction(".week-mo-so", "hide", true),
-      makeClassToggleAction(".week-mi-di", "hide", false),
+      makeClassToggleAction(".week-di-mo", "hide", false),
       (isActive: boolean) => weekStart.setText(isActive ? weekMonSun : weekWedTue),
       //() => isotope.layout()
     ]);
 
     switch (extraFilter) {
-      case 'mi-di':
+      case 'di-mo':
         weekStart.setToggleStatus(true);
         break;
       case 'mo-so':

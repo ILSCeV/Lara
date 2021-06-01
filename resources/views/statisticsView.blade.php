@@ -12,7 +12,7 @@
 @stop
 
 @section('moreScripts')
-    <script src="{{asset(WebpackBuiltFiles::$jsFiles['statistics'])}}" ></script>
+    <script src="{{asset(WebpackBuiltFiles::$assets['statistics.js'])}}" ></script>
 @endsection
 
 @section('content')

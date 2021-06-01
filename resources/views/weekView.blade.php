@@ -13,7 +13,7 @@ if($extraFilter!='')
 @stop
 
 @section('moreScripts')
-    <script src="{{asset(WebpackBuiltFiles::$jsFiles['autocomplete'])}}" ></script>
+    <script src="{{asset(WebpackBuiltFiles::$assets['autocomplete.js'])}}" ></script>
     <script>
         var extraFilter = '{{$extraFilter}}';
     </script>
@@ -38,12 +38,12 @@ if($extraFilter!='')
                         {{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd . '- 2 days'))) }}
                     </h6>
 
-                    <h6 class="week-mi-di m-0 text-center hide">
+                    <h6 class="week-di-mo m-0 text-center hide">
                         {{ "KW" . $date['week']}}:
                         <br class="d-block d-sm-none">
-                        {{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart . '+  2 days'))) }} -
+                        {{ utf8_encode(strftime("%a %d. %B", strtotime($weekStart . '+  1 days'))) }} -
                         <br class="d-block d-sm-none">
-                        {{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd))) }}
+                        {{ utf8_encode(strftime("%a %d. %B", strtotime($weekEnd. '- 1 days'))) }}
                     </h6>
                 </div>
 
@@ -98,22 +98,23 @@ if($extraFilter!='')
                     @foreach($events as $clubEvent)
                         {{-- Filter: we add a css class later below if a club is mentioned in filter data --}}
                         {{-- we compare the current week number with the week the event happens in
-                                         to catch and hide any events on mondays and tuesdays (day < 3) next week
-                                         in Mo-So or alternatively mondays/tuesdays this week in Mi-Di view. --}}
+                                         to catch and hide any events on mondays and tuesdays (day < 2) next week
+                                         in Mo-So or alternatively mondays/tuesdays this week in Di-Mo view. --}}
                         @php
                             $elementClass = 'element-item private section-filter ';
+                            $isEventBeforeWeekDayStart=date('N', strtotime($clubEvent->evnt_date_start)) < 2;
                             foreach($sections as $section){
                                 if(in_array( $section->id, $clubEvent->showToSectionIds() )){
                                 $elementClass.=" section-" . $section->id;
                                 }
                             }
                             if ( date('W', strtotime($clubEvent->evnt_date_start)) === $date['week']
-                                      && date('N', strtotime($clubEvent->evnt_date_start)) < 3 ) {
+                                      &&  $isEventBeforeWeekDayStart) {
                                       $elementClass.=' week-mo-so';
                             } elseif (date("W", strtotime($clubEvent->evnt_date_start) )
                                           === date("W", strtotime("next Week".$weekStart))
-                                          && date('N', strtotime($clubEvent->evnt_date_start)) < 3) {
-                                          $elementClass.=' week-mi-di hide';
+                                          && $isEventBeforeWeekDayStart) {
+                                          $elementClass.=' week-di-mo hide';
                             }
                             if($clubEvent->evnt_is_private){
                                $elementClass.=' private';
