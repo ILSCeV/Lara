@@ -5,17 +5,17 @@ namespace Lara\Http\Controllers;
 use Config;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Input;
 use Lara\Club;
-use Lara\Http\Requests\Request;
+
 use Lara\Person;
 use Lara\Section;
 use Lara\Status;
 use Lara\User;
-use Lara\utilities\RoleUtility;
 use Lara\Utilities;
+use Lara\utilities\RoleUtility;
 use Log;
 use Session;
 
@@ -137,7 +137,7 @@ class LoginController extends Controller
         return $this->loginFailed();
     }
 
-    private function attemtLoginViaDevelop(\Illuminate\Http\Request $request){
+    private function attemtLoginViaDevelop(Request $request){
         if (!App::environment('development')) {
             return false;
         }
