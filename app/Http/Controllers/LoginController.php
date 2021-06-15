@@ -485,7 +485,7 @@ class LoginController extends Controller
     {
         Utilities::error(Config::get('messages_de.login-fail'));
         $this->incrementLoginAttempts(request());
-        return redirect()->back()->withInput(Request::all());
+        return redirect()->back()->withInput(request()->all());
     }
 
     /**
