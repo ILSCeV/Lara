@@ -5,6 +5,7 @@
     *   @var \Illuminate\Support\Collection|\Lara\Shift $shifts
     *   @var String $secret
     *   @var String $qrImage
+    *   @var \LaravelWebauthn\Models\WebauthnKey $webautnKey
     */
 @endphp
 @section('title')
@@ -169,20 +170,45 @@
                         @endif
                     </div>
                     <div class="tab-pane fade" id="webauth">
-                        <div class="align-content-center">
-                            <div class="form-inline">
-                                <!-- form to send datas to -->
-                                <form class="form-group" method="POST" action="{{ route('user.registerWebauthnKey') }}"
-                                      id="webauth-form">
-                                    @csrf
-                                    <input type="hidden" name="register" id="webauth-register"/>
-                                    <input type="text" name="name" id="name"/>
-                                </form>
+                        <div class="p-3">
+                            <!-- form to send datas to -->
+                            <form class="hide" method="POST" action="{{ route('user.registerWebauthnKey') }}"
+                                  id="webauth-form">
+                                @csrf
+                                <input type="hidden" name="register" id="webauth-register"/>
+                                <input type="hidden" name="name" id="webauth-name"/>
+                            </form>
+                            <form class="form-inline" id="webauth-submit">
                                 <div class="form-group">
-                                    <button class="btn btn-success btn-small" id="webauth-submit">
-                                        <i class="far fa-plus-square"></i>
-                                    </button>
+                                    <div class="input-group">
+                                        <label for="webauth-input-name">Schlüsselname: </label>
+                                        <input type="text" name="webauth-input-name" id="webauth-input-name">
+                                    </div>
+                                    <div class="input-group-addon">
+                                        <button type="submit" class="btn btn-success btn-small">
+                                            <i class="far fa-plus-square"></i>
+                                        </button>
+                                    </div>
                                 </div>
+                            </form>
+                            <div class="table table-striped">
+                                <table>
+                                    <thead>
+                                    <th>{{ trans('mainLang.name') }}</th>
+                                    <th></th>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($webauthnKeys as $webautnKey )
+                                        <tr>
+                                            <td>{{$webautnKey->getKeyName()}}</td>
+                                            <td>
+                                                <button class="deleteKey" data-key="{{$webautnKey->id}}"><i
+                                                        class="far fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

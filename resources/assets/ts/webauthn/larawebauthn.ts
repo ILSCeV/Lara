@@ -4,7 +4,9 @@ let larawebauthn = new WebAuthn();
 declare let  publicKey: any;
 
 $('#webauth-submit').on({
-  'click':function (){
+  'submit':function (e){
+    e.preventDefault();
+    $('#webauth-name').val($('#webauth-input-name').val());
     larawebauthn.register(
       publicKey,
       function (datas) {

@@ -11,6 +11,8 @@ use Lara\Http\Middleware\RejectGuests;
 use Lara\Http\Requests\Request;
 use Lara\Shift;
 use Lara\User;
+use Lara\Utilities;
+use LaravelWebauthn\Models\WebauthnKey;
 use LaravelWebauthn\Services\Webauthn;
 use PragmaRX\Google2FA\Exceptions\IncompatibleWithGoogleAuthenticatorException;
 use PragmaRX\Google2FA\Exceptions\InvalidCharactersException;
@@ -42,6 +44,7 @@ class UserPersonalPageController extends Controller
                 $query->where('evnt_date_start', '>=', new \DateTime());
             })
             ->get()->sortBy('schedule.event.evnt_date_start');
+        $webauthnKeys = WebauthnKey::query()->where('user_id','=', $user->id);
         /** @var Google2FA $google2fa */
         $google2fa = app('pragmarx.google2fa');
         $secret = $google2fa->generateSecretKey();
@@ -49,7 +52,7 @@ class UserPersonalPageController extends Controller
         $publicKey = Session::get(self::SESSION_PUBLICKEY_CREATION, app(Webauthn::class)->getRegisterData($user));
         Session::put(self::SESSION_PUBLICKEY_CREATION, $publicKey);
 
-        return View::make('userpersonalpage.index', compact('user', 'shifts', 'secret', 'qrImage', 'publicKey'));
+        return View::make('userpersonalpage.index', compact('user', 'shifts', 'secret', 'qrImage', 'publicKey','webauthnKeys'));
     }
 
     public function updatePerson()
@@ -116,13 +119,19 @@ class UserPersonalPageController extends Controller
         $webauthn = app(Webauthn::class);
         $publicKey = Session::get(self::SESSION_PUBLICKEY_CREATION, $webauthn->getRegisterData($request->user()));
         $webauthn->forceAuthenticate();
-        if($webauthn->canRegister($request->user())){
-            $webauthnKey = $webauthn->doRegister(
-                $request->user(),
-                $publicKey,
-                $this->input($request, 'register'),
-                $this->input($request, 'name')
-            );
+        try {
+            if ($webauthn->canRegister($request->user())) {
+                $webauthn->doRegister(
+                    $request->user(),
+                    $publicKey,
+                    $this->input($request, 'register'),
+                    $this->input($request, 'name')
+                );
+                Utilities::success(trans('mainLang.changesSaved'));
+            }
+        } catch (\Exception $exception){
+            logger("error registering key", [$exception]);
+            Utilities::error(trans('mainLang.error'));
         }
         return Redirect::route('user.personalpage');
     }
