@@ -202,8 +202,8 @@
                                         <tr>
                                             <td>{{$webautnKey->getKeyName()}}</td>
                                             <td>
-                                                <button class="deleteKey" data-key="{{$webautnKey->id}}"><i
-                                                        class="far fa-trash"></i></button>
+                                                <button class="deleteKey btn btn-danger" data-key="{{$webautnKey->id}}">
+                                                    <i class="fas fa-trash-alt"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
