@@ -36,6 +36,7 @@
     "require": {
         "php": ">=7.2",
         "ext-json": "*",
+        "asbiin/laravel-webauthn": "^1.0",
         "bacon/bacon-qr-code": "^2.0",
         "barryvdh/laravel-ide-helper": "^2.6",
         "eluceo/ical": "^0.11.6",

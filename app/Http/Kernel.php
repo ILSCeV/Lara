@@ -71,5 +71,6 @@ class Kernel extends HttpKernel
         'rejectGuests' => \Lara\Http\Middleware\RejectGuests::class,
         'managingUsersOnly' => \Lara\Http\Middleware\ManagingUsersOnly::class,
         'checkRoles' => \Lara\Http\Middleware\CheckRoles::class,
+        'webauthn' => \LaravelWebauthn\Http\Middleware\WebauthnMiddleware::class,
     ];
 }

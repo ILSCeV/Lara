@@ -10,6 +10,12 @@
 @section('title')
     {{ trans('mainLang.userPersonalPage') }} - {{ $user->name }} ({{ $user->section->title }})
 @endsection
+@section('moreScripts')
+    <script>
+        var publicKey = {!! json_encode($publicKey) !!};
+    </script>
+    <script src="{{asset(WebpackBuiltFiles::$assets['webauthn.js'])}}"></script>
+@endsection
 
 @section('content')
     <div class="container-fluid">
@@ -31,6 +37,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#secondFa" data-toggle="tab"> {{trans('mainLang.2fa')}} </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#webauth" data-toggle="tab"> {{trans('mainLang.2fa')}} </a>
                     </li>
                 </ul>
                 <div id="tabContent" class="tab-content">
@@ -150,13 +159,32 @@
                                 <div class="form-group">
                                     <div class="btn-group btn-group-sm">
                                         <button type="submit"
-                                                class="btn btn-sm btn-danger"> <i class="fas fa-trash-alt"></i> {{ trans('mainLang.delete') }}</button>
+                                                class="btn btn-sm btn-danger"><i
+                                                class="fas fa-trash-alt"></i> {{ trans('mainLang.delete') }}</button>
                                     </div>
                                 </div>
                                 {{ Form::text("secret",$secret,['class'=>'hide']) }}
                             </div>
                             {{ Form::close() }}
                         @endif
+                    </div>
+                    <div class="tab-pane fade" id="webauth">
+                        <div class="align-content-center">
+                            <div class="form-inline">
+                                <!-- form to send datas to -->
+                                <form class="form-group" method="POST" action="{{ route('user.registerWebauthnKey') }}"
+                                      id="webauth-form">
+                                    @csrf
+                                    <input type="hidden" name="register" id="webauth-register"/>
+                                    <input type="text" name="name" id="name"/>
+                                </form>
+                                <div class="form-group">
+                                    <button class="btn btn-success btn-small" id="webauth-submit">
+                                        <i class="far fa-plus-square"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

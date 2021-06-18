@@ -18,7 +18,8 @@ module.exports = {
     monthview: './resources/assets/ts/monthview/monthview.ts',
     autocomplete: './resources/assets/ts/shifts/autocomplete.ts',
     statistics: './resources/assets/ts/statistics/StatisticsView.ts',
-    templates: './resources/assets/ts/template/templateEntry.ts'
+    templates: './resources/assets/ts/template/templateEntry.ts',
+    webauthn:'./resources/assets/ts/webauthn/larawebauthn.ts',
   },
   module: {
     rules: [
