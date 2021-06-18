@@ -200,7 +200,7 @@
                                     <tbody>
                                     @foreach($webauthnKeys as $webautnKey )
                                         <tr>
-                                            <td>{{$webautnKey->getKeyName()}}</td>
+                                            <td>{{$webautnKey->name}}</td>
                                             <td>
                                                 <button class="deleteKey btn btn-danger" data-key="{{$webautnKey->id}}">
                                                     <i class="fas fa-trash-alt"></i></button>
