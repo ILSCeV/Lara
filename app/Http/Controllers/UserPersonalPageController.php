@@ -44,7 +44,7 @@ class UserPersonalPageController extends Controller
                 $query->where('evnt_date_start', '>=', new \DateTime());
             })
             ->get()->sortBy('schedule.event.evnt_date_start');
-        $webauthnKeys = WebauthnKey::query()->where('user_id','=', $user->id);
+        $webauthnKeys = WebauthnKey::query()->where('user_id','=', $user->id)->get();
         /** @var Google2FA $google2fa */
         $google2fa = app('pragmarx.google2fa');
         $secret = $google2fa->generateSecretKey();
