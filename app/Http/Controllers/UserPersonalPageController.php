@@ -118,7 +118,7 @@ class UserPersonalPageController extends Controller
          */
         $webauthn = app(Webauthn::class);
         $publicKey = Session::get(self::SESSION_PUBLICKEY_CREATION, $webauthn->getRegisterData($request->user()));
-        $webauthn->forceAuthenticate();
+
         try {
             if ($webauthn->canRegister($request->user())) {
                 $webauthn->doRegister(
@@ -134,6 +134,14 @@ class UserPersonalPageController extends Controller
             Utilities::error(trans('mainLang.error'));
         }
         return Redirect::route('user.personalpage');
+    }
+
+    public function unregisterWebauthnKey(){
+        $request = \request();
+        $keyId = $request->input('webauthnKey');
+        $webauthnKey = WebauthnKey::query()->where('user_id','=', \Auth::user()->id)->where('id','=',$keyId)->firstOrFail();
+        $webauthnKey->delete();
+        return Redirect::back();
     }
 
     /**

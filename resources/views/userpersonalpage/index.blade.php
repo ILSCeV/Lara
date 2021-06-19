@@ -202,8 +202,11 @@
                                         <tr>
                                             <td>{{$webautnKey->name}}</td>
                                             <td>
-                                                <button class="deleteKey btn btn-danger" data-key="{{$webautnKey->id}}">
+                                                {{Form::open(['route'=>'user.unregisterWebauthnKey']) }}
+                                                <input type="hidden" name="webauthnKey" value="{{$webautnKey->id}}">
+                                                <button type="submit" class="deleteKey btn btn-danger">
                                                     <i class="fas fa-trash-alt"></i></button>
+                                                {{Form::close()}}
                                             </td>
                                         </tr>
                                     @endforeach

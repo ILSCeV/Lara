@@ -203,6 +203,7 @@ Route::post('/updatePersonalSettings', 'UserPersonalPageController@updatePerson'
 Route::post('/registerAuthenticator', 'UserPersonalPageController@registerGoogleAuth')->name('user.registerGoogleAuth');
 Route::post('/unregisterAuthenticator', 'UserPersonalPageController@unregisterGoogleAuth')->name('user.unregisterGoogleAuth');
 Route::post('/registerWebautnKey','UserPersonalPageController@registerWebauthnKey')->name('user.registerWebauthnKey');
+Route::post('/unregisterWebautnKey','UserPersonalPageController@unregisterWebauthnKey')->name('user.unregisterWebauthnKey');
 Route::post('/user/deleteUer/{userId}', 'UserController@destroy')->name('user.delete');
 
 Route::get('/password/change', ['as' => 'password.change', 'uses' => 'Auth\PasswordChangeController@showChangePasswordForm'])

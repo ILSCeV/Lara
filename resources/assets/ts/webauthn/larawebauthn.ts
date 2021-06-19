@@ -1,10 +1,10 @@
 import WebAuthn from '../../js/webauthn/webauthn'
 
 let larawebauthn = new WebAuthn();
-declare let  publicKey: any;
+declare let publicKey: any;
 
 $('#webauth-submit').on({
-  'submit':function (e){
+  'submit': function (e) {
     e.preventDefault();
     $('#webauth-name').val($('#webauth-input-name').val());
     larawebauthn.register(
@@ -14,6 +14,12 @@ $('#webauth-submit').on({
           $('#webauth-form').trigger('submit');
       }
     );
+  }
+});
+
+$('.deleteKey').on({
+  'click': function () {
+
   }
 });
 
