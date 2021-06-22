@@ -49,7 +49,7 @@ class UserPersonalPageController extends Controller
         $google2fa = app('pragmarx.google2fa');
         $secret = $google2fa->generateSecretKey();
         $qrImage = $google2fa->getQRCodeInline(config('app.name'), \Auth::user()->email, $secret);
-        $publicKey = Session::get(self::SESSION_PUBLICKEY_CREATION, app(Webauthn::class)->getRegisterData($user));
+        $publicKey = Session::get(self::SESSION_PUBLICKEY_CREATION, $this->loadWebauthnPublicKey($user));
         Session::put(self::SESSION_PUBLICKEY_CREATION, $publicKey);
 
         return View::make('userpersonalpage.index', compact('user', 'shifts', 'secret', 'qrImage', 'publicKey','webauthnKeys'));
@@ -117,7 +117,7 @@ class UserPersonalPageController extends Controller
          * @var PublicKeyCredentialRpEntity $publicKey
          */
         $webauthn = app(Webauthn::class);
-        $publicKey = Session::get(self::SESSION_PUBLICKEY_CREATION, $webauthn->getRegisterData($request->user()));
+        $publicKey = Session::get(self::SESSION_PUBLICKEY_CREATION, $this->loadWebauthnPublicKey(\Auth::user()));
 
         try {
             if ($webauthn->canRegister($request->user())) {
@@ -157,5 +157,17 @@ class UserPersonalPageController extends Controller
         $result = $request->input($name);
 
         return is_string($result) ? $result : $default;
+    }
+
+    /**
+     * @param User $user
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|\Webauthn\PublicKeyCredentialCreationOptions|null
+     */
+    private function loadWebauthnPublicKey(User $user){
+        $publicKey = WebauthnKey::query()->where('user_id','=', $user->id)->first();
+        if($publicKey == null){
+            $publicKey = app(Webauthn::class)->getRegisterData($user);
+        }
+        return $publicKey;
     }
 }
