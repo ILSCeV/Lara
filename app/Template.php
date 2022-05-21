@@ -142,6 +142,7 @@ class Template extends Model
         }));
         $clubEvent->plc_id = $section->id;
         $schedule = new Schedule();
+        $schedule->evnt_id = $clubEvent->id;
         $schedule->save();
 
         // get template data
