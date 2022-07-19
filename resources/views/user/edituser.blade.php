@@ -123,6 +123,15 @@ $labelClass = 'col-md-2 col-sm-auto';
                                 <label for="section" class=" col-form-label {{$labelClass}}">{{trans('mainLang.section')}}</label>
                                 {{ Form::text('section',$user->section->title,['class'=>"form-control" ,'id'=>'section', 'disabled']) }}
                             </div>
+                            <div class="form-group {{ $errors->has('on_leave') ? ' has-error' : '' }} ">
+                            <label class="col-form-label {{$labelClass}}" for="on_leave"> {{ trans('auth.on_leave_until') }} </label>
+                                {{ Form::date('on_leave',$user->on_leave,['class'=>"form-control" ,'id'=>'on_leave']) }}
+                                @if ($errors->has('on_leave'))
+                                    <span class="form-text">
+                                            <strong>{{ $errors->first('on_leave') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                             <div class="form-group ">
                                 <label for="status" class="col-form-label {{$labelClass}}">Status</label>
                                 {{ Form::text('section',trans(Auth::user()->section->title . "." . $user->status) ,['class'=>"form-control" ,'id'=>'status', 'disabled']) }}
