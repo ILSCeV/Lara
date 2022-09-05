@@ -18,6 +18,9 @@ class Logging
 
         $schedule = $shift->schedule;
         $revisions = json_decode($schedule->entry_revisions);
+        if($revisions == null){
+            $revisions=array();
+        }
 
         $newRevision = self::newShiftRevision($shift, $action, $old, $new);
         array_push($revisions, $newRevision);
