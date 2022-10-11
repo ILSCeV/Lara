@@ -18,7 +18,7 @@ trait MarkdownParser
     function mdToHtml(string $text)
     {
         return new HtmlString(
-            app(\Parsedown::class)->setSafeMode(true)->text($text)
+            app(\Parsedown::class)->setSafeMode(false)->text($text)
         );
     }
 
