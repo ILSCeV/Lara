@@ -18,6 +18,13 @@ jobs:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.0'
+    - name: setup database
+      uses: shogo82148/actions-setup-mysql@v1
+      with:
+       distribution: 'mariadb'
+       mysql-version: '10.9'
+       root-password: 'lara'
+    - run: mysql -uroot -h127.0.0.1 -e 'create database lara'
     - uses: actions/checkout@v3
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -46,8 +53,12 @@ jobs:
         touch database/database.sqlite
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
+        DB_CONNECTION: mysql
+        DB_HOST: 127.0.0.1
+        DB_PORT: 3306
+        DB_DATABASE: lara
+        DB_USERNAME: root
+        DB_PASSWORD: lara
       run: |
         npm install
         php artisan migrate:fresh --seed
