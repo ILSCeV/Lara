@@ -11,7 +11,9 @@
             "database"
         ],
         "psr-4": {
-            "Lara\\": "app/"
+            "Lara\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
@@ -34,20 +36,21 @@
     "license": "GPL-3.0",
     "name": "ilsc-ev/lara",
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.3",
         "ext-json": "*",
         "bacon/bacon-qr-code": "^2.0",
         "barryvdh/laravel-ide-helper": "^2.6",
         "eluceo/ical": "^0.11.6",
         "erusev/parsedown": "^1.7",
-        "facade/ignition": "^2.0",
+        "facade/ignition": "^2.3.6",
         "fakerphp/faker": "^1.14",
         "johngrogg/ics-parser": "^2",
-        "laravel/framework": "^7",
+        "laravel/framework": "^8",
+        "laravel/legacy-factories": "^1.3",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.0",
+        "laravel/ui": "^3.0",
         "laravelcollective/html": "^6",
-        "nunomaduro/collision": "^4.1",
+        "nunomaduro/collision": "^5.0",
         "pragmarx/google2fa-laravel": "^1.3",
         "rap2hpoutre/laravel-log-viewer": "^1.6"
     },
@@ -55,7 +58,7 @@
         "doctrine/dbal": "^2.9",
         "mockery/mockery": "~0.9.11",
         "orangehill/iseed": "dev-master",
-        "phpunit/phpunit": "^8.5",
+        "phpunit/phpunit": "^9",
         "filp/whoops": "^2.7.3"
     },
     "scripts": {
