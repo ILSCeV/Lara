@@ -50,5 +50,5 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: |
         npm install
-        php artisan migrate --fresh
+        php artisan migrate:fresh --seed
         vendor/bin/phpunit
