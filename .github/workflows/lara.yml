@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 env:
   # renovate: datasource=github-tags depName=nodejs/node versioning=node
-  NODE_VERSION: 18
+  NODE_VERSION: 17
 
 jobs:
   laravel-tests:
