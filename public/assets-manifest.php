@@ -6,7 +6,7 @@
 class WebpackBuiltFiles {
   static $assets;
   static function init(){
-      self::$assets=json_decode(file_get_contents('assets-manifest.json'), true);
+      self::$assets=json_decode(file_get_contents(__DIR__.'/assets-manifest.json'), true);
   }
 }
 

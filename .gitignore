@@ -46,3 +46,5 @@ _ide_helper_models.php
 # Misc
 .DS_Store
 Thumbs.db
+
+.phpunit.*

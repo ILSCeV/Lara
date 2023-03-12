@@ -1,85 +1,93 @@
 {
-    "authors": [
-        {
-            "email": "4d44h@protonmail.com",
-            "name": "Maxim Drachinskiy",
-            "role": "Project Manager"
-        }
+  "authors": [
+    {
+      "email": "4d44h@protonmail.com",
+      "name": "Maxim Drachinskiy",
+      "role": "Project Manager"
+    }
+  ],
+  "autoload": {
+    "classmap": [
+      "database"
     ],
-    "autoload": {
-        "classmap": [
-            "database"
-        ],
-        "psr-4": {
-            "Lara\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "config": {
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "optimize-autoloader": true
-    },
-    "description": "A calender with personnel scheduling for club management, built on top of Laravel 7.",
-    "keywords": [
-        "calendar",
-        "scheduling",
-        "Lara",
-        "ILSCeV"
+    "psr-4": {
+      "Lara\\": "app/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests",
+      "database"
     ],
-    "license": "GPL-3.0",
-    "name": "ilsc-ev/lara",
-    "require": {
-        "php": ">=7.3",
-        "ext-json": "*",
-        "bacon/bacon-qr-code": "^2.0",
-        "barryvdh/laravel-ide-helper": "^2.6",
-        "eluceo/ical": "^0.11.6",
-        "erusev/parsedown": "^1.7",
-        "facade/ignition": "^2.3.6",
-        "fakerphp/faker": "^1.14",
-        "johngrogg/ics-parser": "^2",
-        "laravel/framework": "^8",
-        "laravel/legacy-factories": "^1.3",
-        "laravel/tinker": "^2.0",
-        "laravel/ui": "^3.0",
-        "laravelcollective/html": "^6",
-        "nunomaduro/collision": "^5.0",
-        "pragmarx/google2fa-laravel": "^1.3",
-        "rap2hpoutre/laravel-log-viewer": "^1.6"
-    },
-    "require-dev": {
-        "doctrine/dbal": "^2.9",
-        "mockery/mockery": "~0.9.11",
-        "orangehill/iseed": "dev-master",
-        "phpunit/phpunit": "^9",
-        "filp/whoops": "^2.7.3"
-    },
-    "scripts": {
-        "post-create-project-cmd": [
-            "php artisan key:generate"
-        ],
-        "post-install-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postInstall"
-        ],
-        "post-root-package-install": [
-            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan ide-helper:generate",
-            "php artisan ide-helper:meta"
-        ],
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover"
-        ]
-    },
-    "type": "project"
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "description": "A calender with personnel scheduling for club management, built on top of Laravel 7.",
+  "keywords": [
+    "calendar",
+    "scheduling",
+    "Lara",
+    "ILSCeV"
+  ],
+  "license": "GPL-3.0",
+  "name": "ilsc-ev/lara",
+  "require": {
+    "php": ">=7.3",
+    "ext-json": "*",
+    "bacon/bacon-qr-code": "^2.0",
+    "barryvdh/laravel-ide-helper": "^2.6",
+    "eluceo/ical": "^0.11.6",
+    "erusev/parsedown": "^1.7",
+
+
+    "johngrogg/ics-parser": "^2",
+    "laravel/framework": "^8",
+    "laravel/legacy-factories": "^1.3",
+    "laravel/tinker": "^2.0",
+    "laravel/ui": "^3.0",
+    "laravelcollective/html": "^6",
+    "pragmarx/google2fa-laravel": "^1.3",
+    "rap2hpoutre/laravel-log-viewer": "^1.6"
+  },
+  "require-dev": {
+    "nunomaduro/collision": "^5.0",
+    "fakerphp/faker": "^1.14",
+    "facade/ignition": "^2.5",
+    "doctrine/dbal": "^2.9",
+    "mockery/mockery": "~0.9.11",
+    "orangehill/iseed": "dev-master",
+    "phpunit/phpunit": "^9",
+    "filp/whoops": "^2.7.3"
+  },
+  "scripts": {
+    "post-create-project-cmd": [
+      "php artisan key:generate"
+    ],
+    "post-install-cmd": [
+      "Illuminate\\Foundation\\ComposerScripts::postInstall"
+    ],
+    "post-root-package-install": [
+      "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ],
+    "post-update-cmd": [
+      "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+      "php artisan ide-helper:generate",
+      "php artisan ide-helper:meta"
+    ],
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover --ansi"
+    ]
+  },
+  "type": "project",
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
