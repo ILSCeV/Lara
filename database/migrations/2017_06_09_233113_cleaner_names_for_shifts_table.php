@@ -47,7 +47,7 @@ class CleanerNamesForShiftsTable extends Migration
     */
     private function alterShiftTable($from, $to)
     {
-        Schema::table("shifts", function (Blueprint $table) {
+        Schema::table("shifts", function (Blueprint $table) use ($from, $to) {
             $table->renameColumn($from, $to);
         });
     }
