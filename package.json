@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.0.0",
-    "@types/bootbox": "^4.4.32",
+    "@types/bootbox": "^5.0.0",
     "@types/bootstrap": "^4",
     "@types/bootstrap-select": "^1.13.1",
     "@types/clipboard": "^2.0.1",
