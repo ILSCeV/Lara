@@ -13,15 +13,13 @@ class CleanerNamesForShiftsTable extends Migration
      */
     public function up()
     {
-        Schema::table("shifts", function(Blueprint $table) {
-            $table->renameColumn("schdl_id", "schedule_id");
-            $table->renameColumn("jbtyp_id", "shifttype_id");
-            $table->renameColumn("prsn_id", "person_id");
-            $table->renameColumn("entry_user_comment", "comment");
-            $table->renameColumn("entry_statistical_weight", "statistical_weight");
-            $table->renameColumn("entry_time_start", "start");
-            $table->renameColumn("entry_time_end", "end");
-        });
+        alterShiftTable("schdl_id", "schedule_id");
+        alterShiftTable("jbtyp_id", "shifttype_id");
+        alterShiftTable("prsn_id", "person_id");
+        alterShiftTable("entry_user_comment", "comment");
+        alterShiftTable("entry_statistical_weight", "statistical_weight");
+        alterShiftTable("entry_time_start", "start");
+        alterShiftTable("entry_time_end", "end");
     }
 
     /**
@@ -31,14 +29,26 @@ class CleanerNamesForShiftsTable extends Migration
      */
     public function down()
     {
-        Schema::table("shifts", function(Blueprint $table) {
-            $table->renameColumn("schedule_id", "schdl_id");
-            $table->renameColumn("shifttype_id", "jbtyp_id");
-            $table->renameColumn("person_id", "prsn_id");
-            $table->renameColumn("comment", "entry_user_comment");
-            $table->renameColumn("statistical_weight", "entry_statistical_weight");
-            $table->renameColumn("start", "entry_time_start");
-            $table->renameColumn("end", "entry_time_end");
+
+        alterShiftTable("schedule_id", "schdl_id");
+        alterShiftTable("shifttype_id", "jbtyp_id");
+        alterShiftTable("person_id", "prsn_id");
+        alterShiftTable("comment", "entry_user_comment");
+        alterShiftTable("statistical_weight", "entry_statistical_weight");
+        alterShiftTable("start", "entry_time_start");
+        alterShiftTable("end", "entry_time_end");
+
+    }
+
+    /**
+    * @param string $from
+    * @param string $to
+    * @return void
+    */
+    private function alterShiftTable($from, $to)
+    {
+        Schema::table("shifts", function (Blueprint $table) {
+            $table->renameColumn($from, $to);
         });
     }
 }
