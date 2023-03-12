@@ -8,6 +8,7 @@ on:
 env:
   # renovate: datasource=github-tags depName=nodejs/node versioning=node
   NODE_VERSION: 14
+  MARIADB_PASSWORD: lara
 
 jobs:
   laravel-tests:
@@ -23,8 +24,8 @@ jobs:
       with:
        distribution: 'mariadb'
        mysql-version: '10.9'
-       root-password: 'lara'
-    - run: mysql -uroot -h127.0.0.1 -e 'create database lara'
+       root-password: ${{env.MARIADB_PASSWORD}}
+    - run: mysql -uroot -p${{env.MARIADB_PASSWORD}} -h127.0.0.1 -e 'create database lara'
     - uses: actions/checkout@v3
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -58,7 +59,7 @@ jobs:
         DB_PORT: 3306
         DB_DATABASE: lara
         DB_USERNAME: root
-        DB_PASSWORD: lara
+        DB_PASSWORD: ${{env.MARIADB_PASSWORD}}
       run: |
         npm install
         php artisan migrate:fresh --seed
