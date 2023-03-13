@@ -39,7 +39,7 @@
     "isotope-layout": "^3.0.3",
     "jquery": "^3.5.1",
     "lodash": "^4.17.20",
-    "mini-css-extract-plugin": "^1.6.0",
+    "mini-css-extract-plugin": "^2.0.0",
     "moment-locales-webpack-plugin": "^1.1.2",
     "node-sass": "^6.0.0",
     "popper.js": "^1.14.7",
