@@ -171,43 +171,43 @@
 					<div class="form-group col-12 p-0">
 				     	<label for="evnt_type" class="col-form-label {{$labelClass}}">Typ:</label>
 				     	<div class="col-9">
-				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fa-solid  fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.normalProgramm') }}
 				            <br>
-				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fa-solid  fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.special') }}
 				            <br>
-				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fa-solid  fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.LiveBandDJ') }}
 				            <br>
-				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fa-solid  fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.utilization') }}
 				            <br>
                             &nbsp;{!! Form::radio('type', "4", ["checked"=>"checked" , "class"=>'form-check']) !!}
 							{{ trans('mainLang.internalEvent') }}
 				            <br>
-				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fa-solid  fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.flooding') }}
 				            <br>
-				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fa-solid  fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.flyersPlacard') }}
 				            <br>
-				            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
+				            &nbsp;<i class="fa-solid  fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.preSale') }}
 				            <br>
                             &nbsp;{!! Form::radio('type', "9", [$type == 9 ? "checked" : "", "class"=>'form-check']) !!}
 							{{ trans('mainLang.others') }}
 				            <br>
-                            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
+                            &nbsp;<i class="fa-solid  fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
                             {{ trans('mainLang.outsideEvent') }}
                             <br>
-                            &nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
+                            &nbsp;<i class="fa-solid  fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
                             {{ trans('mainLang.buffet') }}
                             <br>
                             &nbsp;{!! Form::radio('type', "1", [$type == 1 ? "checked" : "", "class"=>'form-check'] ) !!}
 							{{ trans('mainLang.information') }}
 				            <br>
-							&nbsp;<i class="fas fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
+							&nbsp;<i class="fa-solid  fa-times-circle form-checked" aria-hidden="true"></i>&nbsp;&nbsp;
 							{{ trans('mainLang.survey') }}
 							<br>
 

@@ -79,7 +79,7 @@
                                 <button data-id="{{$template->id}}"
                                         data-templatename="{{$template->title}}"
                                         class="btn btn-danger delete-template">
-                                    <i class="fas fa-trash"></i>
+                                    <i class="fa-solid  fa-trash"></i>
                                 </button>
                                 <form id="delete-template-{{$template->id}}"
                                       method="POST"

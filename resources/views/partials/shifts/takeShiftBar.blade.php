@@ -80,7 +80,7 @@ if($commentsInSeparateLine){
         </div>
         <div class="col-1">
             <button class="showhide btn btn-sm btn-secondary">@if($shift->comment === "") <i
-                    class="far fa-comment"></i> @else <i class="fas fa-comment"></i> @endif</button>
+                    class="far fa-comment"></i> @else <i class="fa-solid  fa-comment"></i> @endif</button>
         </div>
         {{-- COMMENT SECTION --}}
         <div class="{{$commentColumnClass}}">
@@ -115,7 +115,7 @@ if($commentsInSeparateLine){
              see filter-scripts "Show/hide comments" function --}}
         <div class="col-1">
             <button class="showhide btn btn-sm btn-secondary">@if($shift->comment === "") <i
-                    class="far fa-comment"></i> @else <i class="fas fa-comment"></i> @endif</button>
+                    class="far fa-comment"></i> @else <i class="fa-solid  fa-comment"></i> @endif</button>
         </div>
         <div class="{{$commentColumnClass}}">
             @include('partials.shifts.updateShiftFormOpener',['shift'=>$shift, 'autocomplete'=>$autocomplete])

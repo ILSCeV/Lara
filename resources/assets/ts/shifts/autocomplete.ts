@@ -286,16 +286,16 @@ $(() => {
 
       // Switch comment icon in week view
       if ($commentInput.val() == "") {
-        $commentInput.parent().children().children("button").children("i").removeClass().addClass("fas fa-comment-alt");
+        $commentInput.parent().children().children("button").children("i").removeClass().addClass("fa-solid  fa-comment-alt");
       } else {
         $commentInput.parent().children().children("button").children("i").removeClass().addClass("fa fa-comment");
       }
 
       // Switch comment in event view
       if ($commentInput.val() == "") {
-        $commentInput.parent().children("span").children("i").removeClass().addClass("fas fa-comment-alt");
+        $commentInput.parent().children("span").children("i").removeClass().addClass("fa-solid  fa-comment-alt");
       } else {
-        $commentInput.parent().children("span").children("i").removeClass().addClass("fas fa-comment");
+        $commentInput.parent().children("span").children("i").removeClass().addClass("fa-solid  fa-comment");
       }
 
       let $colorDiv = $userNameInput.closest('.shiftRow').find("div.shift_title");

@@ -36,7 +36,7 @@
            data-toggle="tooltip"
            data-placement="bottom"
            title="{{ trans('mainLang.changeEvent') }}">
-           <i class="fas fa-pencil-alt"></i>
+           <i class="fa-solid  fa-pencil-alt"></i>
         </a>
         &nbsp;&nbsp;
         <a href="{{ $event->id }}"
@@ -48,7 +48,7 @@
            data-token="{{csrf_token()}}"
            rel="nofollow"
            data-confirm="{{ trans('mainLang.confirmDeleteEvent') }}">
-           <i class="fas fa-trash"></i>
+           <i class="fa-solid  fa-trash"></i>
         </a>
     </span>
 </div>

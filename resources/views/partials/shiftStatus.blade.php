@@ -1,4 +1,4 @@
-{{ Form::button('<i class="fas fa-check"
+{{ Form::button('<i class="fa-solid  fa-check"
                    data-toggle="tooltip"
                    data-placement="top"
                    title="Änderungen speichern"></i>',
@@ -9,7 +9,7 @@
 
 @if( is_null($shift->getPerson) )
 
-    <i class="fas fa-question"
+    <i class="fa-solid  fa-question"
        name="status-icon"
        style="color:lightgrey;"
        data-toggle="tooltip"

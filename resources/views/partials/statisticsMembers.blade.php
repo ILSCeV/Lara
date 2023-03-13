@@ -32,13 +32,13 @@
                     <thead>
                         <tr>
                             <th data-sort="name" data-sortable="true">
-                                {{trans('mainLang.name')}} <i class="fas fa-sort-down fa-pull-right"></i>
+                                {{trans('mainLang.name')}} <i class="fa-solid  fa-sort-down fa-pull-right"></i>
                             </th>
                             <th data-sort="shifts" data-sortable="true">
-                                {{trans('mainLang.totalShifts')}} <i class="fas fa-sort fa-pull-right"></i>
+                                {{trans('mainLang.totalShifts')}} <i class="fa-solid  fa-sort fa-pull-right"></i>
                             </th>
                             <th data-sort="flood" data-sortable="true">
-                                {{ trans('mainLang.flooding') }} <i class="fas fa-sort fa-pull-right"></i>
+                                {{ trans('mainLang.flooding') }} <i class="fa-solid  fa-sort fa-pull-right"></i>
                             </th>
                             <th data-sort="shifts" class="col">
                                 &nbsp;

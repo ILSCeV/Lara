@@ -123,7 +123,7 @@ $ldapid
                        style="float: right"
                        class="btn btn-secondary btn-sm"
                        data-placement="bottom">
-                        <i class="fas fa-pen-square text-dark-grey" style="color: black"></i>
+                        <i class="fa-solid  fa-pen-square text-dark-grey" style="color: black"></i>
                     </a>
                 @endif
             </h4>
@@ -281,10 +281,10 @@ $ldapid
                                                                    data-token="{{csrf_token()}}"
                                                                    data-id="{{$answer->id}}"
                                                                    >
-                                                                <span class="fas fa-pencil-alt"></span>
+                                                                <span class="fa-solid  fa-pencil-alt"></span>
                                                             </button>
                                                             <i id="spinner{{$answer->id}}"
-                                                               class="fas fa-spinner fa-spin fa-2x d-none"></i>
+                                                               class="fa-solid  fa-spinner fa-spin fa-2x d-none"></i>
 
                                                             <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                                                class="btn btn-secondary deleteRow"
@@ -294,7 +294,7 @@ $ldapid
                                                                name="deleteRow"
                                                                rel="nofollow"
                                                                data-confirm="{{ trans('mainLang.confirmDeleteAnswer') }}">
-                                                                <i class="fas fa-trash"></i>
+                                                                <i class="fa-solid  fa-trash"></i>
                                                             </a>
                                                         </td>
                                                     @endif

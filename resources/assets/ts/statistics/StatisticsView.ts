@@ -162,7 +162,7 @@ $('[name^=show-stats-person]').click(function(e) {
   const dialog = <any> bootbox.dialog({
     title: translate('listOfShiftsDone') + chosenPerson,
     size: 'large',
-    message: '<p><i class="fas fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
+    message: '<p><i class="fa-solid  fa-spin fa-spinner"></i>' + translate('loading') + '</p>',
     onEscape: () => {}
   });
 

@@ -38,11 +38,11 @@ $('.shiftTypeReplaceSelector').change((event) => {
     message: '<p>' + translate('replaceShiftTypeConfirmation') + '</p><p class="text-danger">' + shiftName + '</p>',
     buttons: {
       confirm: {
-        label: '<span class="fas fa-check" ></span>' + translate('replaceAll'),
+        label: '<span class="fa-solid  fa-check" ></span>' + translate('replaceAll'),
         className: 'btn-success'
       },
       cancel: {
-        label: '<span class="fas fa-window-close" ></span>',
+        label: '<span class="fa-solid  fa-window-close" ></span>',
         className: 'btn-secondary'
       }
     },

@@ -21,11 +21,11 @@ $(()=>{
       message: '<p>' + translate('deleteTemplateMessage') +  '</p><p class="text-danger">'+ templateName + '</p>',
       buttons: {
         confirm: {
-          label:'<i class="fas fa-check"></i>',
+          label:'<i class="fa-solid  fa-check"></i>',
           className:'btn-danger'
         },
         cancel: {
-          label:'<i class="fas fa-times"></i>',
+          label:'<i class="fa-solid  fa-times"></i>',
           className: 'btn-success'
         }
       },
