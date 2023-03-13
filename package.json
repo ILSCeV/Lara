@@ -41,7 +41,7 @@
     "lodash": "^4.17.20",
     "mini-css-extract-plugin": "^2.0.0",
     "moment-locales-webpack-plugin": "^1.1.2",
-    "node-sass": "^6.0.0",
+    "node-sass": "^7.0.0",
     "popper.js": "^1.14.7",
     "postcss-loader": "^7.0.0",
     "precss": "^4.0.0",
