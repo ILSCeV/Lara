@@ -26,16 +26,16 @@ $(() => {
     const selectedValue = $(target).val();
 
     bootbox.confirm({
-      title: '<h4 class="alert alert-warning text-center"> <i class="fas fa-exclamation-triangle"></i> ' + translate('changeUserStatusHeader') + '&nbsp;<i class="fas fa-exclamation-triangle"></i></h4>',
+      title: '<h4 class="alert alert-warning text-center"> <i class="fa-solid  fa-exclamation-triangle"></i> ' + translate('changeUserStatusHeader') + '&nbsp;<i class="fa-solid  fa-exclamation-triangle"></i></h4>',
       size: 'large',
       message: '<p>' + translate('changeUserStatus') + '</p><p class="text-warning">' + userName + '</p><p class="text-warning">' + selectedValue + '</p>',
       buttons: {
         confirm: {
-          label: '<i class="fas fa-check"></i>',
+          label: '<i class="fa-solid  fa-check"></i>',
           className: 'btn-danger'
         },
         cancel: {
-          label: '<i class="fas fa-times"></i>',
+          label: '<i class="fa-solid  fa-times"></i>',
           className: 'btn-success'
         }
       },
@@ -54,16 +54,16 @@ $(() => {
       const userName = $(target).data('name');
 
       bootbox.confirm({
-        title: '<h4 class="alert alert-danger text-center"> <i class="fas fa-exclamation-triangle"></i> ' + translate('deleteUserHeader') + '&nbsp;<i class="fas fa-exclamation-triangle"></i></h4>',
+        title: '<h4 class="alert alert-danger text-center"> <i class="fa-solid  fa-exclamation-triangle"></i> ' + translate('deleteUserHeader') + '&nbsp;<i class="fa-solid  fa-exclamation-triangle"></i></h4>',
         size: 'large',
         message: '<p>' + translate('deleteUser') + '</p><p class="text-warning">' + userName + '</p>',
         buttons: {
           confirm: {
-            label: '<i class="fas fa-check"></i>',
+            label: '<i class="fa-solid  fa-check"></i>',
             className: 'btn-danger'
           },
           cancel: {
-            label: '<i class="fas fa-times"></i>',
+            label: '<i class="fa-solid  fa-times"></i>',
             className: 'btn-success'
           }
         },

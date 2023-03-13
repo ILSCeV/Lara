@@ -16,7 +16,7 @@ $labelClass = 'col-md-2 col-sm-auto';
                         <h4 class="card-title">
                             {{ trans('mainLang.editUser') }}
                             <a data-toggle="collapse" href="#userInformation" class="text-dark-grey float-right">
-                                <i class="fas fa-chevron-down"></i>
+                                <i class="fa-solid  fa-chevron-down"></i>
                             </a>
                         </h4>
                     </div>
@@ -148,7 +148,7 @@ $labelClass = 'col-md-2 col-sm-auto';
                             {{ trans('mainLang.roleManagement') }}
                             <a data-toggle="collapse" href="#roleInformation"
                                class="float-right text-dark-grey collapse-toggle">
-                                <i class="fas fa-chevron-down"></i>
+                                <i class="fa-solid  fa-chevron-down"></i>
                             </a>
                         </h4>
                     </div>

@@ -27,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'Lara\Model' => 'Lara\Policies\ModelPolicy',
+        //'Lara\Model' => 'Lara\Policies\ModelPolicy',
         User::class => UserPolicy::class,
         Role::class => RolePolicy::class,
         ClubEvent::class => ClubEventPolicy::class,
@@ -61,6 +61,6 @@ class AuthServiceProvider extends ServiceProvider
 
             return true;
         });
-        
+
     }
 }

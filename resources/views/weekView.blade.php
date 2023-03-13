@@ -26,7 +26,7 @@ if($extraFilter!='')
             <div class="col-12 col-md-4 m-auto p-auto btn-group">
                 <a class="btn hidden-print"
                    href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}{{ $queryParams }}">
-                    <i class="fas fa-chevron-left"></i>
+                    <i class="fa-solid  fa-chevron-left"></i>
                 </a>
 
                 <div class="row align-items-center mx-auto px-auto">
@@ -49,7 +49,7 @@ if($extraFilter!='')
 
                 <a class="btn hidden-print"
                    href="{{ Request::getBasePath() }}/calendar/{{$date['nextWeek']}}{{ $queryParams }}">
-                    <i class="fas fa-chevron-right"></i>
+                    <i class="fa-solid  fa-chevron-right"></i>
                 </a>
             </div>
 

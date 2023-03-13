@@ -19,7 +19,7 @@ use Carbon\Carbon;
 
             {{--if so show a grey placeholder for the guest--}}
             <div class="cal-event {{$classString}} palette-Grey-500 bg word-break section-filter section-survey">
-                <i class="fas fa-chart-bar"></i>
+                <i class="fa-solid  fa-chart-bar"></i>
                 &nbsp;&nbsp;
                 {{--and show him thats a private survey(=Interne Umfrage in german) only for users--}}
                 <span class="event-name">

@@ -50,17 +50,17 @@ class Status {
         }
         switch ($status) {
             case STATUS::CANDIDATE:
-                return ["status" => "fas fa-adjust", "style" => "color:yellowgreen;", "title" => "Kandidat"];
+                return ["status" => "fa-solid  fa-adjust", "style" => "color:yellowgreen;", "title" => "Kandidat"];
             case STATUS::VETERAN:
-                return ["status" => "fas fa-star", "style" => "color:gold;", "title" => "Veteran"];
+                return ["status" => "fa-solid  fa-star", "style" => "color:gold;", "title" => "Veteran"];
             case STATUS::MEMBER:
-                return ["status" => "fas fa-circle", "style" => "color:forestgreen;", "title" => "Aktiv"];
+                return ["status" => "fa-solid  fa-circle", "style" => "color:forestgreen;", "title" => "Aktiv"];
             case STATUS::EXMEMBER:
-                return ["status" => "fas fa-user-times", "style" => "color:#CD7F32;", "title" => "ex-Mitglied"];
+                return ["status" => "fa-solid  fa-user-times", "style" => "color:#CD7F32;", "title" => "ex-Mitglied"];
             case STATUS::EXCANDIDATE:
-                return ["status"=>"fas fa-circle", "style"=>"color:lightgrey;", "title"=>"ex-Kandidat"];
+                return ["status"=>"fa-solid  fa-circle", "style"=>"color:lightgrey;", "title"=>"ex-Kandidat"];
             default:
-                return ["status" => "fas fa-circle", "style" => "color:lightgrey;", "title" => "Extern"];
+                return ["status" => "fa-solid  fa-circle", "style" => "color:lightgrey;", "title" => "Extern"];
         }
     }
 

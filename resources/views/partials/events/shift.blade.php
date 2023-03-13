@@ -1,5 +1,5 @@
 <div class="box row">
-    <div class="fas fa-bars"></div>
+    <div class="fa-solid  fa-bars"></div>
     <div class="form-inline input-group">
 
         <div class="form-group">
@@ -57,7 +57,7 @@
         @if(!is_null($shiftId) && $shiftId!='' && \Lara\Utilities::requirePermission('admin','marketing','clubleitung'))
             &nbsp;&nbsp;
             <a href="{{ route('shiftType.show',[$shiftTypeId]) }}" target="_blank"
-               class="btn btn-primary btn-small" title="{{trans("mainLang.editShiftType")}}"> <i class="fas fa-pencil-alt"></i>  </a>
+               class="btn btn-primary btn-small" title="{{trans("mainLang.editShiftType")}}"> <i class="fa-solid  fa-pencil-alt"></i>  </a>
         @endif
         <br class="d-block d-sm-none">
     </div>

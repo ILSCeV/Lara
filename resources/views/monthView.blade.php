@@ -16,7 +16,7 @@
             <a class="btn hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
                                 strtotime("previous month", $date['startStamp'])) }}">
-                <i class="fas fa-chevron-left"></i>
+                <i class="fa-solid  fa-chevron-left"></i>
             </a>
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle text-center" type="button" data-toggle="dropdown" aria-haspopup="true">
@@ -43,7 +43,7 @@
             </div>
             <a class="btn hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m", strtotime("next month", $date['startStamp'])) }}">
-                <i class="fas fa-chevron-right"></i>
+                <i class="fa-solid  fa-chevron-right"></i>
             </a>
         </div>
 

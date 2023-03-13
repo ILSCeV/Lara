@@ -135,7 +135,7 @@
                                     <td>
                                         @canEditUser($user)
                                         {{Form::open(['route'=>['user.delete',$user->id]])}}
-                                            <button type="button" class="btn btn-danger deleteUserBtn" data-name="{{$user->name}}"><i class="fas fa-trash-alt"></i></button>
+                                            <button type="button" class="btn btn-danger deleteUserBtn" data-name="{{$user->name}}"><i class="fa-solid  fa-trash-alt"></i></button>
                                         {{ Form::close() }}
                                         @endcanEditUser
                                     </td>

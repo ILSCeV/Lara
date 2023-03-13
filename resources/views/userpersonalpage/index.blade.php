@@ -150,7 +150,7 @@
                                 <div class="form-group">
                                     <div class="btn-group btn-group-sm">
                                         <button type="submit"
-                                                class="btn btn-sm btn-danger"> <i class="fas fa-trash-alt"></i> {{ trans('mainLang.delete') }}</button>
+                                                class="btn btn-sm btn-danger"> <i class="fa-solid  fa-trash-alt"></i> {{ trans('mainLang.delete') }}</button>
                                     </div>
                                 </div>
                                 {{ Form::text("secret",$secret,['class'=>'hide']) }}
