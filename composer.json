@@ -54,7 +54,7 @@
     "laravel/tinker": "^2.0",
     "laravel/ui": "^3.0",
     "laravelcollective/html": "^6",
-    "pragmarx/google2fa-laravel": "^1.3",
+    "pragmarx/google2fa-laravel": "^2.0",
     "rap2hpoutre/laravel-log-viewer": "^1.6"
   },
   "require-dev": {
