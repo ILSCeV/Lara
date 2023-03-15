@@ -61,7 +61,7 @@
     "nunomaduro/collision": "^5.0",
     "fakerphp/faker": "^1.14",
     "facade/ignition": "^2.5",
-    "doctrine/dbal": "^2.9",
+    "doctrine/dbal": "^3.0",
     "mockery/mockery": "~0.9.11",
     "orangehill/iseed": "dev-master",
     "phpunit/phpunit": "^9",
