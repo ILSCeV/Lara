@@ -55,7 +55,7 @@
     "laravel/ui": "^3.0",
     "laravelcollective/html": "^6",
     "pragmarx/google2fa-laravel": "^2.0",
-    "rap2hpoutre/laravel-log-viewer": "^1.6"
+    "rap2hpoutre/laravel-log-viewer": "^2.0"
   },
   "require-dev": {
     "nunomaduro/collision": "^5.0",
