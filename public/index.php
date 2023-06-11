@@ -19,7 +19,7 @@
 |
 */
 
-require __DIR__.'/../bootstrap/autoload.php';
+require __DIR__ . '/../bootstrap/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ require __DIR__.'/../bootstrap/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+$app = require_once __DIR__ . '/../bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -48,10 +48,12 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 */
 require_once 'assets-manifest.php';
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-define('LARAVEL_START', microtime(true));
+if (!defined('LARAVEL_START')) {
+    define('LARAVEL_START', microtime(true));
+}
 
-if (file_exists(__DIR__.'/../storage/framework/maintenance.php')) {
-    require __DIR__.'/../storage/framework/maintenance.php';
+if (file_exists(__DIR__ . '/../storage/framework/maintenance.php')) {
+    require __DIR__ . '/../storage/framework/maintenance.php';
 }
 
 $response = $kernel->handle(
