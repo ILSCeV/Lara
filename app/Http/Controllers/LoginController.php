@@ -138,7 +138,7 @@ class LoginController extends Controller
     }
 
     private function attemtLoginViaDevelop(Request $request){
-        if (!App::environment('development')) {
+        if (!(App::environment('development') || App::environment('local'))) {
             return false;
         }
         $userGroup = request('userGroup');

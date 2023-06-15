@@ -15,7 +15,7 @@
         {{--
         <link rel="stylesheet" type="text/css" href="{{ mix('/static.css') }}">
         --}}
-        @if (App::environment('development'))
+        @if (App::environment('development') || App::environment('local'))
             <link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-demo-48x48.png') }}">
         @elseif (App::environment('berta'))
             <link rel="shortcut icon" type="image/png" href="{{ asset('/favicon-berta-48x48.png') }}">

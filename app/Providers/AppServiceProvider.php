@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         Blade::if('dev', function() {
-            return App::environment('development');
+            return App::environment('development') || App::environment('local');
         });
 
         Blade::if('berta', function() {
@@ -78,7 +78,7 @@ class AppServiceProvider extends ServiceProvider
                 ($user->getSectionsIdForRoles(RoleUtility::PRIVILEGE_CL)
                     ->contains($editUser->section_id)
                     && (strpos(env('LDAP_SECTIONS', ''), $editUser->section->title) == false
-                    || \App::environment('development'))
+                    || (\App::environment('development') || \App::environment('local')))
                 );
         });
 
@@ -99,7 +99,7 @@ class AppServiceProvider extends ServiceProvider
                 return true;
           }
           return strpos(env('LDAP_SECTIONS', ''), $user->section->title) == false
-              || \App::environment('development');
+              || \App::environment('development') || \App::environment('local');
         });
 
         Blade::if('ldapSection', function($section) {
