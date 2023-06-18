@@ -35,6 +35,7 @@ use PhpParser\Node\Scalar\String_;
  * @property Carbon unlock_date
  * @property string evnt_public_info
  * @property string evnt_private_details
+ * @property boolean canceled
  */
 class ClubEvent extends Model
 {
@@ -88,11 +89,13 @@ class ClubEvent extends Model
         'creator_id',
         'was_manually_edited',
         'unlock_date',
+        'canceled'
     ];
 
     protected $dates = [
         'unlock_date',
     ];
+
 
 
     /**
