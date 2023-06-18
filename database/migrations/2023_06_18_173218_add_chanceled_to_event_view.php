@@ -41,18 +41,18 @@ class AddChanceledToEventView extends Migration
             ce.updated_at updated_on,
             s.id section_id,
             CASE
-                when ce.evnt_type = 0 then 'fa-solid fa-calendar-days'
-                when ce.evnt_type = 1 then 'fa-solid  fa-info'
-                when ce.evnt_type = 2 then 'fa-solid  fa-star'
-                when ce.evnt_type = 3 then 'fa-solid  fa-music'
-                when ce.evnt_type = 4 then 'fa-solid  fa-eye-slash'
-                when ce.evnt_type = 5 then 'fa-solid  fa-money-bill'
-                when ce.evnt_type = 6 then 'fa-solid  fa-life-ring'
-                when ce.evnt_type = 7 then 'fa-solid  fa-building'
-                when ce.evnt_type = 8 then 'fa-solid  fa-ticket'
-                when ce.evnt_type = 9 then 'fa-solid  fa-list'
-                when ce.evnt_type = 10 then 'fa-solid  fa-tree'
-                when ce.evnt_type = 11 then 'fa-solid  fa-utensils'
+                when ce.evnt_type = 0 then 'calendar-days'
+                when ce.evnt_type = 1 then 'info'
+                when ce.evnt_type = 2 then 'star'
+                when ce.evnt_type = 3 then 'music'
+                when ce.evnt_type = 4 then 'eye-slash'
+                when ce.evnt_type = 5 then 'money-bill'
+                when ce.evnt_type = 6 then 'life-ring'
+                when ce.evnt_type = 7 then 'building'
+                when ce.evnt_type = 8 then 'ticket'
+                when ce.evnt_type = 9 then 'list'
+                when ce.evnt_type = 10 then 'tree'
+                when ce.evnt_type = 11 then 'utensils'
                 ELSE null
             END
             icon
