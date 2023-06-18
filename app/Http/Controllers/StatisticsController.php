@@ -15,42 +15,75 @@ use View;
 
 class StatisticsController extends Controller
 {
-    CONST STATISTIC_SELECT = /** @lang MariaDB */
-       "select p.id                                                                              person_id,
-       u.id                                                                                      user_id,
-       coalesce(SUM(own_section_shifts.statistical_weight), 0)                                   own_section,
-       coalesce(SUM(other_section_shifts.statistical_weight), 0)                                 other_section,
+    const STATISTIC_SELECT = /** @lang MariaDB */
+        "select
+       p.id person_id,
+       u.id user_id,
+       coalesce(SUM(own_section_shifts.statistical_weight), 0) own_section,
+       coalesce(SUM(other_section_shifts.statistical_weight), 0) other_section,
        round(count(own_section_shifts.id) * 100 /
-       (coalesce(count(own_section_shifts.id), 1) + coalesce(count(other_section_shifts.id), 0)),1) shifts_percent_intern,
+          (coalesce(count(own_section_shifts.id), 1) + coalesce(count(other_section_shifts.id), 0)),
+       1) shifts_percent_intern,
        round(count(other_section_shifts.id) * 100 /
-       (coalesce(count(own_section_shifts.id), 0) + coalesce(count(other_section_shifts.id), 1)),1) shifts_percent_extern,
-       count(flood_shifts.id)                                                                    flood_shift
-    from persons p
-         join users u on u.person_id = p.id
-         join (
-    select ssh.person_id, ssh.id, sce.plc_id, sce.id sce_id
-    from shifts ssh
-             join schedules ssched on ssh.schedule_id = ssched.id
-             join club_events sce on ssched.evnt_id = sce.id
-             join persons sp on sp.id = ssh.person_id
-    where ssh.person_id is not null
-      and sce.evnt_date_start >= cast(:start as date)
-      and sce.evnt_date_end <= date_add(cast(:end as date), interval 1 day)
-    ) relevant_shifts on relevant_shifts.person_id = p.id
-         left outer join shifts own_section_shifts
-                         on p.id = own_section_shifts.person_id and relevant_shifts.id = own_section_shifts.id and
-                            relevant_shifts.plc_id = u.section_id
-         left outer join shifts other_section_shifts
-                         on p.id = other_section_shifts.person_id and
-                            relevant_shifts.id = other_section_shifts.id and relevant_shifts.plc_id <> u.section_id
-         left outer join club_events flood_event
-                         on flood_event.id = relevant_shifts.sce_id and flood_event.evnt_type = 6                             
-         left outer join schedules flood_schedule on flood_event.id = flood_schedule.evnt_id
-         left outer join shifts flood_shifts
-                         on flood_shifts.schedule_id = flood_schedule.id and flood_shifts.id = relevant_shifts.id
-    where prsn_ldap_id is not null
-    group by p.id, u.name
-    order by u.name, p.id";
+          (coalesce(count(own_section_shifts.id), 0) + coalesce(count(other_section_shifts.id), 1)),
+       1) shifts_percent_extern,
+       count(flood_shifts.id) flood_shift
+   from
+       persons p
+   join users u on
+       u.person_id = p.id
+   join (
+       select
+           ssh.person_id,
+           ssh.id,
+           sce.plc_id,
+           sce.id sce_id
+       from
+           shifts ssh
+       join schedules ssched on
+           ssh.schedule_id = ssched.id
+       join club_events sce on
+           ssched.evnt_id = sce.id
+           and sce.canceled = 0
+       join persons sp on
+           sp.id = ssh.person_id
+       where
+           ssh.person_id is not null
+           and sce.evnt_date_start >= cast(:start as date)
+               and sce.evnt_date_end <= date_add(cast(:end as date), interval 1 day)
+       ) relevant_shifts on
+       relevant_shifts.person_id = p.id
+   left outer join shifts own_section_shifts
+                            on
+       p.id = own_section_shifts.person_id
+       and relevant_shifts.id = own_section_shifts.id
+       and
+                               relevant_shifts.plc_id = u.section_id
+   left outer join shifts other_section_shifts
+                            on
+       p.id = other_section_shifts.person_id
+       and
+                               relevant_shifts.id = other_section_shifts.id
+       and relevant_shifts.plc_id <> u.section_id
+   left outer join club_events flood_event
+                            on
+       flood_event.id = relevant_shifts.sce_id
+       and flood_event.evnt_type = 6
+       and flood_event.canceled = 0
+   left outer join schedules flood_schedule on
+       flood_event.id = flood_schedule.evnt_id
+   left outer join shifts flood_shifts
+                            on
+       flood_shifts.schedule_id = flood_schedule.id
+       and flood_shifts.id = relevant_shifts.id
+   where
+       prsn_ldap_id is not null
+   group by
+       p.id,
+       u.name
+   order by
+       u.name,
+       p.id";
 
     public function __construct()
     {
@@ -66,20 +99,22 @@ class StatisticsController extends Controller
             $month = strftime('%m');
         }
         //return CacheUtility::remember('month-statistics-view-'.$year.'-'.$month, function () use ($year, $month) {
-            return $this->showStatisticsInternal($year, $month);
+        return $this->showStatisticsInternal($year, $month);
         //});
     }
 
     private function showStatisticsInternal($year = null, $month = null)
     {
-        $from = new DateTime($year.'-'.$month.'-01');
+        $from = new DateTime($year . '-' . $month . '-01');
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next month')->modify('-1 day');
         $isMonthStatistic = 1;
         list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till);
 
-        return View::make('statisticsView',
-            compact('infos', 'clubInfos', 'year', 'month', 'isMonthStatistic'))->render();
+        return View::make(
+            'statisticsView',
+            compact('infos', 'clubInfos', 'year', 'month', 'isMonthStatistic')
+        )->render();
 
     }
 
@@ -88,9 +123,9 @@ class StatisticsController extends Controller
         if (!isset($year)) {
             $year = strftime('%Y');
         }
-       // return CacheUtility::remember('year-statistics-view-'.$year, function () use ($year) {
-            return $this->showYearStatisticsInternal($year);
-       // });
+        // return CacheUtility::remember('year-statistics-view-'.$year, function () use ($year) {
+        return $this->showYearStatisticsInternal($year);
+        // });
     }
 
     private function showYearStatisticsInternal($year = null)
@@ -98,7 +133,7 @@ class StatisticsController extends Controller
         if (!isset($year)) {
             $year = strftime('%Y');
         }
-        $from = new DateTime($year.'-'.'01-01');
+        $from = new DateTime($year . '-' . '01-01');
         $till = new DateTime($from->format('Y-m-d'));
         $till->modify('next year')->modify('-1 day');
         $isMonthStatistic = 0;
@@ -106,8 +141,10 @@ class StatisticsController extends Controller
         list($clubInfos, $infos) = $this->generateStatisticInformationForSections($from, $till);
         $month = $till->format("m");
 
-        return View::make('statisticsView',
-            compact('infos', 'clubInfos', 'year', 'month', 'isMonthStatistic'))->render();
+        return View::make(
+            'statisticsView',
+            compact('infos', 'clubInfos', 'year', 'month', 'isMonthStatistic')
+        )->render();
     }
 
     /**
@@ -129,11 +166,11 @@ class StatisticsController extends Controller
 
         // set the time window
         if ($isMonthStatistic) {
-            $from = new DateTime($year.'-'.$month.'-01');
+            $from = new DateTime($year . '-' . $month . '-01');
             $till = new DateTime($from->format('Y-m-d'));
             $till->modify('next month')->modify('-1 day');
         } else {
-            $from = new DateTime($year.'-'.'01-01');
+            $from = new DateTime($year . '-' . '01-01');
             $till = new DateTime($from->format('Y-m-d'));
             $till->modify('next year')->modify('-1 day');
         }
@@ -142,7 +179,11 @@ class StatisticsController extends Controller
             ->whereHas('schedule.event', function (Builder $query) use ($from, $till) {
                 $query //
                     ->whereBetween('evnt_date_start', [$from->format('Y-m-d'), $till->format('Y-m-d')]) //
-                    ->orWhereBetween('evnt_date_end', [$from->format('Y-m-d'), $till->format('Y-m-d')]);
+                    ->orWhereBetween('evnt_date_end', [$from->format('Y-m-d'), $till->format('Y-m-d')])
+                ;
+            })
+            ->whereHas('schedule.event', function (Builder $query) {
+                $query->where('canceled', '=', '0');
             })
             ->with('type', 'schedule.event.section')
             ->get()
@@ -156,15 +197,15 @@ class StatisticsController extends Controller
             $clubsOfShift = $shift->schedule->event->showToSectionNames();
 
             $response[] = [
-                'id'           => $shift->id,
-                'shift'        => $shift->type->title(),
-                'event'        => $shift->schedule->event->evnt_title,
-                'event_id'     => $shift->schedule->event->id,
-                'section'      => $shift->schedule->event->section->title,
+                'id' => $shift->id,
+                'shift' => $shift->type->title(),
+                'event' => $shift->schedule->event->evnt_title,
+                'event_id' => $shift->schedule->event->id,
+                'section' => $shift->schedule->event->section->title,
                 'sectionColor' => $shift->schedule->event->section->color,
-                'isOwnClub'    => in_array($ownClub, $clubsOfShift),
-                'date'         => strftime("%d.%m.%Y (%a)", strtotime($shift->schedule->event->evnt_date_start)),
-                'weight'       => $shift->statistical_weight,
+                'isOwnClub' => in_array($ownClub, $clubsOfShift),
+                'date' => strftime("%d.%m.%Y (%a)", strtotime($shift->schedule->event->evnt_date_start)),
+                'weight' => $shift->statistical_weight,
             ];
         }
 

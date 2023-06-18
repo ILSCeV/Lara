@@ -26,7 +26,7 @@ class EventApiController extends Controller
         $eventData = new EventData();
         $eventData->generated_on = Carbon::now()->toIso8601ZuluString();
         $eventData->events = $events->toArray();
-        $json =  preg_replace('/,\s*"[^"]+":null|"[^"]+":null,?/', '',json_encode($eventData));
+        $json = preg_replace('/,\s*"[^"]+":null|"[^"]+":null,?/', '', json_encode($eventData));
         return response($json)->header('Content-Type', 'application/json');
     }
 }
