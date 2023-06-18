@@ -121,7 +121,8 @@ $factory->define(Lara\ClubEvent::class, function (Faker\Generator $faker) {
         'price_external' => $faker->randomFloat(2, 1, 2),
         'facebook_done' => $faker->boolean(50),
         'event_url' => str_replace("http://","https://", $faker->url()),
-        'external_id' => $faker->word()
+        'external_id' => $faker->word(),
+        'canceled' => $faker->boolean(30)
     ];
 });
 
