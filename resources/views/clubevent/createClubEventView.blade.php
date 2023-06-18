@@ -167,6 +167,15 @@
                     </label>
                     </div>
                 </div>
+                <div class="clearfix"></div>
+                <div class="form-group col-12 p-0 ">
+                    <div class=" form-control form-check" >
+                        <label for="canceled" class="form-check-label"> {{ trans('mainLang.canceled') }} </label>
+                    <label class="float-right pr-5">
+                        {!! Form::checkbox('isCanceled', '1', $canceled,['class'=>'form-check-input ', 'id'=> 'canceled']) !!}
+                    </label>
+                    </div>
+                </div>
 				@else
 					<div class="form-group col-12 p-0">
 				     	<label for="evnt_type" class="col-form-label {{$labelClass}}">Typ:</label>
