@@ -77,7 +77,7 @@ class ClubEventController extends Controller
         }
 
         if (is_null($templateId)) {
-            $templateId = 0;    // 0 = no template
+            $templateId = 0; // 0 = no template
         }
 
 
@@ -149,6 +149,7 @@ class ClubEventController extends Controller
             $priceTicketsNormal = $template->price_tickets_normal;
             $priceExternal = $template->price_external;
             $priceTicketsExternal = $template->price_tickets_external;
+            $canceled = 0;
 
         } else {
             // fill variables with no data if no template was chosen
@@ -171,16 +172,41 @@ class ClubEventController extends Controller
             $priceExternal = null;
             $priceTicketsExternal = null;
         }
+        $canceled = 0;
         $createClubEvent = true;
         $eventUrl = '';
 
-        return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes', 'templates',
-            'shifts', 'title', 'subtitle', 'type',
-            'section', 'filter', 'timeStart', 'timeEnd',
-            'info', 'details', 'private', 'dv',
-            'activeTemplate',
-            'date', 'templateId', 'facebookNeeded', 'createClubEvent',
-            'priceExternal', 'priceNormal', 'priceTicketsExternal', 'priceTicketsNormal', 'eventUrl'));
+        return View::make(
+            'clubevent.createClubEventView',
+            compact(
+                'sections',
+                'shiftTypes',
+                'templates',
+                'shifts',
+                'title',
+                'subtitle',
+                'type',
+                'section',
+                'filter',
+                'timeStart',
+                'timeEnd',
+                'info',
+                'details',
+                'private',
+                'dv',
+                'activeTemplate',
+                'date',
+                'templateId',
+                'facebookNeeded',
+                'createClubEvent',
+                'priceExternal',
+                'priceNormal',
+                'priceTicketsExternal',
+                'priceTicketsNormal',
+                'eventUrl',
+                'canceled'
+            )
+        );
     }
 
 
@@ -241,8 +267,13 @@ class ClubEventController extends Controller
         if (!$user && $clubEvent->evnt_is_private == 1) {
             Session::put('message', Config::get('messages_de.access-denied'));
             Session::put('msgType', 'danger');
-            return Redirect::action('MonthController@showMonth', array('year' => date('Y'),
-                'month' => date('m')));
+            return Redirect::action(
+                'MonthController@showMonth',
+                array(
+                    'year' => date('Y'),
+                    'month' => date('m')
+                )
+            );
         }
 
         //ignore html tags in the info boxes
@@ -256,9 +287,11 @@ class ClubEventController extends Controller
         $schedule = Schedule::findOrFail($clubEvent->getSchedule->id);
 
         $shifts = Shift::where('schedule_id', '=', $schedule->id)
-            ->with('type',
+            ->with(
+                'type',
                 'getPerson',
-                'getPerson.getClub')
+                'getPerson.getClub'
+            )
             ->orderByRaw('position IS NULL, position ASC, id ASC')
             ->get();
 
@@ -371,7 +404,7 @@ class ClubEventController extends Controller
         $priceTicketsExternal = $event->price_tickets_external;
         $eventUrl = $event->event_url;
         $facebookNeeded = $event->facebook_done;
-
+        $canceled = $event->canceled == 1;
 
         if (!is_null($event->template_id)) {
             $baseTemplate = $event->template;
@@ -385,13 +418,36 @@ class ClubEventController extends Controller
         $userId = Auth::user()->person->prsn_ldap_id;
 
         if (Auth::user()->hasPermissionsInSection($event->section, RoleUtility::PRIVILEGE_MARKETING) || $userId == $created_by) {
-            return View::make('clubevent.createClubEventView', compact('sections', 'shiftTypes',
-                'shifts', 'title', 'subtitle', 'type',
-                'section', 'filter', 'timeStart', 'timeEnd',
-                'info', 'details', 'private', 'dv',
-                'date', 'facebookNeeded', 'createClubEvent',
-                'event', 'baseTemplate',
-                'priceExternal', 'priceNormal', 'priceTicketsExternal', 'priceTicketsNormal', 'eventUrl'));
+            return View::make(
+                'clubevent.createClubEventView',
+                compact(
+                    'sections',
+                    'shiftTypes',
+                    'shifts',
+                    'title',
+                    'subtitle',
+                    'type',
+                    'section',
+                    'filter',
+                    'timeStart',
+                    'timeEnd',
+                    'info',
+                    'details',
+                    'private',
+                    'dv',
+                    'date',
+                    'facebookNeeded',
+                    'createClubEvent',
+                    'event',
+                    'baseTemplate',
+                    'priceExternal',
+                    'priceNormal',
+                    'priceTicketsExternal',
+                    'priceTicketsNormal',
+                    'eventUrl',
+                    'canceled'
+                )
+            );
         } else {
             return response()->view('clubevent.notAllowedToEdit', compact('created_by', 'creator_name'), 403);
         }
@@ -467,8 +523,13 @@ class ClubEventController extends Controller
         if (!$user || !$user->isAn(RoleUtility::PRIVILEGE_MARKETING, RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             Session::put('message', 'Du darfst diese Veranstaltung/Aufgabe nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
             Session::put('msgType', 'danger');
-            return Redirect::action('MonthController@showMonth', array('year' => date('Y'),
-                'month' => date('m')));
+            return Redirect::action(
+                'MonthController@showMonth',
+                array(
+                    'year' => date('Y'),
+                    'month' => date('m')
+                )
+            );
         }
 
         Utilities::clearIcalCache();
@@ -482,15 +543,17 @@ class ClubEventController extends Controller
         // show current month afterwards
         Session::put('message', Config::get('messages_de.event-delete-ok'));
         Session::put('msgType', 'success');
-        return Redirect::action('MonthController@showMonth', ['year' => $date->format('Y'),
-            'month' => $date->format('m')]);
+        return Redirect::action('MonthController@showMonth', [
+            'year' => $date->format('Y'),
+            'month' => $date->format('m')
+        ]);
     }
 
 
 
 
 
-//--------- PRIVATE FUNCTIONS ------------
+    //--------- PRIVATE FUNCTIONS ------------
 
 
     /**
@@ -545,14 +608,16 @@ class ClubEventController extends Controller
             $newBeginDate = new DateTime(request('beginDate'), new DateTimeZone(Config::get('app.timezone')));
             $event->evnt_date_start = $newBeginDate->format('Y-m-d');
         } else {
-            $event->evnt_date_start = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));;
+            $event->evnt_date_start = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));
+            ;
         }
 
         if (!empty(request('endDate'))) {
             $newEndDate = new DateTime(request('endDate'), new DateTimeZone(Config::get('app.timezone')));
             $event->evnt_date_end = $newEndDate->format('Y-m-d');
         } else {
-            $event->evnt_date_end = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));;
+            $event->evnt_date_end = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));
+            ;
         }
         if (!empty(request('unlockDate'))) {
             $event->unlock_date = Carbon::createFromFormat('Y-m-d\TH:i', request('unlockDate'));
@@ -567,11 +632,13 @@ class ClubEventController extends Controller
         // format: tinyInt; validate on filled value
         // reversed this: input=1 means "event is public", input=0 means "event is private"
         $event->evnt_is_private = (request('isPrivate') == '1') ? 0 : 1;
+        $event->canceled = (request('isCanceled') == '1');
+        //dd((request('isCanceled') == '1'));
         $eventIsPublished = request('evntIsPublished');
 
         if (!is_null($eventIsPublished)) {
             //event is pubished
-            $event->evnt_is_published = (int)$eventIsPublished;
+            $event->evnt_is_published = (int) $eventIsPublished;
         } elseif (Auth::user()->hasPermissionsInSection($section, RoleUtility::PRIVILEGE_MARKETING)) {
             // event was unpublished
             $event->evnt_is_published = 0;
@@ -604,7 +671,7 @@ class ClubEventController extends Controller
                 return true;
             case "0":
                 return false;
-            case "-1" :
+            case "-1":
             default:
                 return null;
         }
@@ -632,6 +699,3 @@ class ClubEventController extends Controller
         return str_replace("/create", '', $result);
     }
 }
-
-
-

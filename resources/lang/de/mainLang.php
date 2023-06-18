@@ -135,6 +135,7 @@ return [
 
     // resources/views/editClubEventView.blade.php
     'changeEventJob'        => 'Veranstaltung/Aufgabe ändern',
+    'canceled'              => 'abgesagt',
 
     //Lines for editing only with permission
     'noNotThisWay'          => 'Ne, das geht so nicht...',

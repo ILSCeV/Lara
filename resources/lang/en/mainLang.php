@@ -134,6 +134,7 @@ return [
 
     // resources/views/editClubEventView.blade.php
     'changeEventJob'        => 'Change Event/Task',
+    'canceled'              => 'canceled',
 
     //Lines for editing only with permission
     'noNotThisWay'          => 'No, not this way...',
