@@ -65,7 +65,7 @@
     "facade/ignition": "^2.5",
     "fakerphp/faker": "^1.14",
     "filp/whoops": "^2.7.3",
-    "mockery/mockery": "~0.9.11",
+    "mockery/mockery": "~1.6.0",
     "nunomaduro/collision": "^5.0",
     "orangehill/iseed": "dev-master",
     "phpunit/phpunit": "^9",
