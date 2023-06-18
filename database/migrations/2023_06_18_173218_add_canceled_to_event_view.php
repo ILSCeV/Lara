@@ -63,8 +63,7 @@ class AddCanceledToEventView extends Migration
             join sections s on
             s.id = ce.plc_id
             where
-            ce.evnt_is_published = 1
-            and ce.evnt_is_private = 0
+             ce.evnt_is_private = 0
             AND (
             STR_TO_DATE(CONCAT(ce.evnt_date_start,
             ' ',
