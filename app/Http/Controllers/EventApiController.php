@@ -3,6 +3,7 @@
 namespace Lara\Http\Controllers;
 
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Lara\EventApi\EventData;
@@ -23,7 +24,9 @@ class EventApiController extends Controller
         });
 
         $eventData = new EventData();
+        $eventData->generated_on = Carbon::now()->toIso8601ZuluString();
         $eventData->events = $events->toArray();
-        return response()->json($eventData, 200);
+        $json =  preg_replace('/,\s*"[^"]+":null|"[^"]+":null,?/', '',json_encode($eventData));
+        return response($json)->header('Content-Type', 'application/json');
     }
 }

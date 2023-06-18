@@ -49,20 +49,24 @@
 
 
     "johngrogg/ics-parser": "^3",
+    "justinrainbow/json-schema": "^5.2",
     "laravel/framework": "^8",
     "laravel/legacy-factories": "^1.3",
     "laravel/tinker": "^2.0",
     "laravel/ui": "^3.0",
     "laravelcollective/html": "^6",
     "pragmarx/google2fa-laravel": "^2.0",
-    "rap2hpoutre/laravel-log-viewer": "^2.0"
+    "rap2hpoutre/laravel-log-viewer": "^2.0",
+    "wol-soft/php-json-schema-model-generator-production": "^0.18.1"
   },
   "require-dev": {
     "nunomaduro/collision": "^5.0",
-    "fakerphp/faker": "^1.14",
-    "facade/ignition": "^2.5",
     "doctrine/dbal": "^3.0",
-    "mockery/mockery": "~1.6.0",
+    "facade/ignition": "^2.5",
+    "fakerphp/faker": "^1.14",
+    "filp/whoops": "^2.7.3",
+    "mockery/mockery": "~0.9.11",
+    "nunomaduro/collision": "^5.0",
     "orangehill/iseed": "dev-master",
     "phpunit/phpunit": "^9",
     "filp/whoops": "^2.7.3"
