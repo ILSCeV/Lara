@@ -28,11 +28,12 @@ class EventView extends Model
 
     protected $table = 'EVENT_VIEW';
 
-    protected $fillable = ['import_id', 'name', 'start', 'start_time', 'end', 'end_time', 'place', 'marquee', 'link', 'cancelled', 'updated_on', 'section_id'];
+    protected $fillable = ['import_id', 'name', 'start', 'start_time', 'end', 'end_time', 'place', 'marquee', 'link', 'cancelled', 'updated_on', 'section_id', 'icon'];
 
-    protected $casts = ['start' => 'date', 'start_time'=>'datetime', 'end' => 'date', 'end_time'=>'datetime', 'updated_on' => 'datetime'];
+    protected $casts = ['start' => 'date', 'start_time' => 'datetime', 'end' => 'date', 'end_time' => 'datetime', 'updated_on' => 'datetime'];
 
-    public function toEvent(){
+    public function toEvent()
+    {
         $event = new Event();
         $event->import_id = $this->import_id;
         $event->name = $this->name;
