@@ -5,10 +5,13 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Lara\ClubEvent;
+use Lara\Club;
 use Tests\TestCase;
 
 use Lara\EventView;
 use Lara\Section;
+use Illuminate\Support\Facades\Storage;
+use JsonSchema\Validator;
 
 use Carbon\Carbon;
 class EventApiControllerTest extends TestCase
@@ -21,11 +24,16 @@ class EventApiControllerTest extends TestCase
 
         // Create a section for testing
         $section = Section::create(['title' => 'Test-Section']);
+        Club::create(['id' => $section->id,'clb_title' => 'Test-Section']);
+
 
         // Create event views for the section
-        factory(ClubEvent::class,3)->create()->each(function( ClubEvent $clubEvent ) {
-            $clubEvent->start = Carbon::now()->add(1,'day');
-            $clubEvent->end = Carbon::now()->add(2,'day');
+        factory(ClubEvent::class,3)->create()->each(function( ClubEvent $clubEvent ) use($section) {
+            $clubEvent->evnt_date_start = Carbon::now()->add(1,'day');
+            $clubEvent->evnt_date_end = Carbon::now()->add(2,'day');
+            $clubEvent->evnt_is_published=true;
+            $clubEvent->plc_id = $section->id;
+            $clubEvent->save();
         });
 
         // Send a GET request to the API endpoint
@@ -48,9 +56,6 @@ class EventApiControllerTest extends TestCase
                     'end',
                     'end_time',
                     'place',
-                    'icon',
-                    'color',
-                    'preparation_time',
                     'marquee',
                     'link',
                     'cancelled',

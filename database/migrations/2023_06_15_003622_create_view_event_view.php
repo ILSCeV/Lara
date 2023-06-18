@@ -47,15 +47,18 @@ class CreateViewEventView extends Migration
             join sections s on
             s.id = ce.plc_id
             where
+            ce.evnt_is_published = 1
+            and ce.evnt_is_private = 0
+            AND (
             STR_TO_DATE(CONCAT(ce.evnt_date_start,
             ' ',
             ce.evnt_time_start),
             '%Y-%m-%d %H:%i:%s') > now()
-            or
+                or
             STR_TO_DATE(CONCAT(ce.evnt_date_end,
-            ' ',
-            ce.evnt_time_end),
-            '%Y-%m-%d %H:%i:%s') > now()
+                ' ',
+                ce.evnt_time_end),
+                '%Y-%m-%d %H:%i:%s') > now())
             order by
             STR_TO_DATE(CONCAT(ce.evnt_date_start,
             ' ',

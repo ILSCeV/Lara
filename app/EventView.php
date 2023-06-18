@@ -2,22 +2,24 @@
 
 namespace Lara;
 
+use Illuminate\Support\Carbon;
 use Lara\EventApi\Event;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\AsStringable;
 
 /** EVENT_VIEW
  * @property string import_id
  * @property string name
- * @property \DateTime start
+ * @property Carbon\Carbon start
  * @property string start_time
- * @property \DateTime end
+ * @property Carbon\Carbon end
  * @property string end_time
  * @property string place
  * @property string marquee
  * @property string link
  * @property bool cancelled
- * @property \DateTime updated_on
+ * @property Carbon\Carbon updated_on
  * @property int section_id
  */
 class EventView extends Model
@@ -28,14 +30,16 @@ class EventView extends Model
 
     protected $fillable = ['import_id', 'name', 'start', 'start_time', 'end', 'end_time', 'place', 'marquee', 'link', 'cancelled', 'updated_on', 'section_id'];
 
+    protected $casts = ['start' => 'date', 'start_time'=>'datetime', 'end' => 'date', 'end_time'=>'datetime', 'updated_on' => 'datetime'];
+
     public function toEvent(){
         $event = new Event();
         $event->import_id = $this->import_id;
         $event->name = $this->name;
-        $event->start = $this->start;
-        $event->start_time = $this->start_time;
-        $event->end = $this->end;
-        $event->end_time = $this->end_time;
+        $event->start = $this->start->toDateString();
+        $event->start_time = $this->start_time->toTimeString();
+        $event->end = $this->end->toDateString();
+        $event->end_time = $this->end_time->toTimeString();
         $event->place = $this->place;
         $event->icon = $this->icon;
         $event->color = $this->color;
@@ -43,7 +47,7 @@ class EventView extends Model
         $event->marquee = $this->marquee;
         $event->link = $this->link;
         $event->cancelled = $this->cancelled;
-        $event->updated_on = new \DateTime($this->updated_on);
+        $event->updated_on = Carbon::create($this->updated_on)->toIso8601ZuluString();
         return $event;
     }
 }

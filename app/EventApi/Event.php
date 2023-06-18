@@ -2,14 +2,16 @@
 
 namespace Lara\EventApi;
 
+use Carbon\Carbon;
+
 class Event
 {
     public string $import_id;
     public string $name;
     public string $start;
-    public \DateTime $start_time;
+    public string $start_time;
     public string $end;
-    public \DateTime $end_time;
+    public string $end_time;
     public ?string $place;
     public ?string $icon;
     public ?string $color;
@@ -17,5 +19,5 @@ class Event
     public ?string $marquee;
     public ?string $link;
     public bool $cancelled;
-    public \DateTime $updated_on;
+    public string $updated_on;
 }
