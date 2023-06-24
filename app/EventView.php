@@ -32,34 +32,43 @@ class EventView extends Model
 
     protected $casts = ['start' => 'date', 'start_time' => 'datetime', 'end' => 'date', 'end_time' => 'datetime', 'updated_on' => 'datetime'];
 
-    public function toEvent()
+    public function toEvent(): Event
     {
         $this->setEmptyStringToNull();
 
         $event = new Event();
+
+        // Checking if $this->start and $this->end are not null before calling the toDateString() method
+        $event->start = $this->start ? $this->start->toDateString() : null;
+        $event->start_time = $this->start_time ? $this->start_time->toTimeString() : null;
+        $event->end = $this->end ? $this->end->toDateString() : null;
+        $event->end_time = $this->end_time ? $this->end_time->toTimeString() : null;
+
         $event->import_id = $this->import_id;
         $event->name = $this->name;
-        $event->start = $this->start->toDateString();
-        $event->start_time = $this->start_time->toTimeString();
-        $event->end = $this->end->toDateString();
-        $event->end_time = $this->end_time->toTimeString();
         $event->place = $this->place;
         $event->icon = $this->icon;
         $event->color = $this->color;
         $event->preparation_time = $this->preparation_time;
         $event->marquee = $this->marquee;
         $event->link = $this->link;
-        $event->cancelled = $this->cancelled;
+
+        // Using the null coalescing operator to set the value of $event->cancelled
+        $event->cancelled = $this->cancelled ?? false;
+
+        // Checking if $this->updated_on is not null before calling the Carbon::create() and toIso8601ZuluString() methods
         $event->updated_on = Carbon::create($this->updated_on)->toIso8601ZuluString();
+
         return $event;
     }
+
 
     private function setEmptyStringToNull()
     {
         $columns = $this->getFillable();
         $attributes = $this->getAttributes();
         foreach ($columns as $column) {
-            if (array_key_exists($column, $attributes) && $attributes[$column] == '') {
+            if (array_key_exists($column, $attributes) && empty($attributes[$column])) {
                 $this->attributes[$column] = null;
             }
         }

@@ -34,9 +34,6 @@ class EventApiControllerTest extends TestCase
             $clubEvent->evnt_date_end = Carbon::now()->add(2, 'day');
             $clubEvent->evnt_is_published = true;
             $clubEvent->plc_id = $section->id;
-            if(is_null($clubEvent->canceled )){
-                $clubEvent->canceled=false;
-            }
             $clubEvent->save();
         });
 
