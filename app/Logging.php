@@ -217,6 +217,10 @@ class Logging
         self::attributeChanged($event, "evnt_subtitle", "revisions.eventSubtitleChanged");
     }
 
+    public static function eventeventCancelledChanged($event){
+        self::attributeChanged($event, "cancelled", "revisions.cancelledChanged");
+    }
+
 
     public static function shiftStatisticalWeightChanged($shift)
     {

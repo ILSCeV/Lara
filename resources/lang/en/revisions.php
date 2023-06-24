@@ -27,5 +27,6 @@ return [
     'shiftWeightChanged' => 'Statistical weight changed',
     'shiftOptionalChanged' => 'Optional changed',
     'shiftStartChanged' => 'Start changed',
-    'shiftEndChanged' => 'End changed'
+    'shiftEndChanged' => 'End changed',
+    'cancelledChanged' => 'Cancelled changed'
 ];

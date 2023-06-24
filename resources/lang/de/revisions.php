@@ -27,5 +27,6 @@ return [
     'shiftWeightChanged' => 'Gewichtung geändert',
     'shiftOptionalChanged' => 'Optional geändert',
     'shiftStartChanged' => 'Startzeit geändert',
-    'shiftEndChanged' => 'Endzeit geändert'
+    'shiftEndChanged' => 'Endzeit geändert',
+    'cancelledChanged' => 'Abgesagt'
 ];
