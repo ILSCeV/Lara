@@ -59,8 +59,8 @@ class EventView extends Model
         $columns = $this->getFillable();
         $attributes = $this->getAttributes();
         foreach ($columns as $column) {
-            if (empty($attributes[$column])) {
-                $attributes[$column] = null;
+            if (array_key_exists($column, $attributes) && $attributes[$column] == '') {
+                $this->attributes[$column] = null;
             }
         }
     }

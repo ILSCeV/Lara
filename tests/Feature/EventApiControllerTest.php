@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use JsonSchema\Validator;
 
 use Carbon\Carbon;
+
 class EventApiControllerTest extends TestCase
 {
     use RefreshDatabase;
@@ -24,15 +25,18 @@ class EventApiControllerTest extends TestCase
 
         // Create a section for testing
         $section = Section::create(['title' => 'Test-Section']);
-        Club::create(['id' => $section->id,'clb_title' => 'Test-Section']);
+        Club::create(['id' => $section->id, 'clb_title' => 'Test-Section']);
 
 
         // Create event views for the section
-        factory(ClubEvent::class,3)->create()->each(function( ClubEvent $clubEvent ) use($section) {
-            $clubEvent->evnt_date_start = Carbon::now()->add(1,'day');
-            $clubEvent->evnt_date_end = Carbon::now()->add(2,'day');
-            $clubEvent->evnt_is_published=true;
+        factory(ClubEvent::class, 3)->create()->each(function (ClubEvent $clubEvent) use ($section) {
+            $clubEvent->evnt_date_start = Carbon::now()->add(1, 'day');
+            $clubEvent->evnt_date_end = Carbon::now()->add(2, 'day');
+            $clubEvent->evnt_is_published = true;
             $clubEvent->plc_id = $section->id;
+            if(is_null($clubEvent->canceled )){
+                $clubEvent->canceled=false;
+            }
             $clubEvent->save();
         });
 
@@ -75,5 +79,23 @@ class EventApiControllerTest extends TestCase
 
         // Assert that the response body contains the "not found" message
         $response->assertSeeText('not found');
+    }
+
+    public function testEmtyValuesShouldReplacedWithNull()
+    {
+        $eventView = new EventView();
+        $eventView->fill([
+            'id' => 5,
+            'link' => '',
+            'import_id' => "import",
+            "name" => "name",
+            "start" => Carbon::now(),
+            "start_time" => Carbon::now(),
+            "end" => Carbon::now(),
+            "end_time" => Carbon::now(),
+            "cancelled" => true
+        ]);
+        $event = $eventView->toEvent();
+        $this->assertNull($event->link);
     }
 }
