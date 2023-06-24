@@ -41,7 +41,7 @@ class AddCanceledToEventView extends Migration
                         ce.updated_at updated_on,
                         s.id section_id,
                         CASE
-                when ce.evnt_type = 0 then 'calendar-days'
+                when ce.evnt_type = 0 then null
                 when ce.evnt_type = 1 then 'info'
                 when ce.evnt_type = 2 then 'star'
                 when ce.evnt_type = 3 then 'music'

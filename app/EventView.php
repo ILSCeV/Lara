@@ -34,6 +34,8 @@ class EventView extends Model
 
     public function toEvent()
     {
+        $this->setEmptyStringToNull();
+
         $event = new Event();
         $event->import_id = $this->import_id;
         $event->name = $this->name;
@@ -50,5 +52,16 @@ class EventView extends Model
         $event->cancelled = $this->cancelled;
         $event->updated_on = Carbon::create($this->updated_on)->toIso8601ZuluString();
         return $event;
+    }
+
+    private function setEmptyStringToNull()
+    {
+        $columns = $this->getFillable();
+        $attributes = $this->getAttributes();
+        foreach ($columns as $column) {
+            if (empty($attributes[$column])) {
+                $attributes[$column] = null;
+            }
+        }
     }
 }
