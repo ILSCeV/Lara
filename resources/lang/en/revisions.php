@@ -28,5 +28,5 @@ return [
     'shiftOptionalChanged' => 'Optional changed',
     'shiftStartChanged' => 'Start changed',
     'shiftEndChanged' => 'End changed',
-    'cancelledChanged' => 'Cancelled changed'
+    'cancelledChanged' => 'Canceled changed'
 ];

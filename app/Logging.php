@@ -18,8 +18,8 @@ class Logging
 
         $schedule = $shift->schedule;
         $revisions = json_decode($schedule->entry_revisions);
-        if($revisions == null){
-            $revisions=array();
+        if ($revisions == null) {
+            $revisions = array();
         }
 
         $newRevision = self::newShiftRevision($shift, $action, $old, $new);
@@ -30,12 +30,12 @@ class Logging
         $schedule->save();
     }
 
-    public static function logScheduleRevision(Schedule $schedule, $action, $old = "" , $new = "")
+    public static function logScheduleRevision(Schedule $schedule, $action, $old = "", $new = "")
     {
         self::ensureScheduleHasRevisions($schedule);
 
         $revisions = json_decode($schedule->entry_revisions);
-        if(is_null($revisions)) {
+        if (is_null($revisions)) {
             $revisions = [];
         }
 
@@ -91,7 +91,7 @@ class Logging
 
 
         return [
-            "entry id" => is_null($shift) ?  "" : $shift->id,
+            "entry id" => is_null($shift) ? "" : $shift->id,
             "job type" => is_null($shift) ? "" : (is_null($shift->shifttype_id) ? "" : ShiftType::find($shift->shifttype_id)->title()),
             "action" => $action,
             "old value" => $old,
@@ -142,7 +142,7 @@ class Logging
 
     public static function commentChanged($shift, $old, $new)
     {
-        if ($old !== $new ) {
+        if ($old !== $new) {
             self::logShiftRevision($shift, "revisions.commentChanged", $old, $new);
         }
     }
@@ -217,8 +217,9 @@ class Logging
         self::attributeChanged($event, "evnt_subtitle", "revisions.eventSubtitleChanged");
     }
 
-    public static function eventeventCancelledChanged($event){
-        self::attributeChanged($event, "cancelled", "revisions.cancelledChanged");
+    public static function eventeventCancelledChanged($event)
+    {
+        self::attributeChanged($event, "canceled", "revisions.cancelledChanged");
     }
 
 
@@ -242,7 +243,8 @@ class Logging
         self::attributeChanged($shift, "end", "revisions.shiftEndChanged");
     }
 
-    public static function preparationTimeChanged($schedule) {
+    public static function preparationTimeChanged($schedule)
+    {
         self::attributeChanged($schedule, "schdl_time_preparation_start", "revisions.preparationStartChanged");
     }
 
@@ -250,7 +252,6 @@ class Logging
     {
         $old = $model->getOriginal($attribute);
         $new = $model->$attribute;
-
         $logger = self::loggerForModel($model);
         if ($old != $new) {
             self::$logger($model, $action, $old, $new);

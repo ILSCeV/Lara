@@ -62,15 +62,16 @@ class ClubEventObserver
             Logging::eventEndChanged($event);
         }
 
+        if ($event->isDirty('canceled')) {
+            Logging::eventeventCancelledChanged($event);
+        }
+
         if ($event->isDirty('evnt_public_info')) {
             Logging::logEventRevision($event, "revisions.eventPublicInfoChanged");
         }
 
         if ($event->isDirty('evnt_private_details')) {
             Logging::logEventRevision($event, "revisions.eventPrivateDetailsChanged");
-        }
-        if($event->isDirty('canceled')){
-            Logging::eventeventCancelledChanged($event);
         }
         CacheUtility::forgetMonthTable($event);
     }
