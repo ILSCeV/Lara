@@ -35,7 +35,7 @@ class AddCanceledToEventView extends Migration
             end,
                         ce.evnt_time_end end_time,
                         club.clb_title place,
-                        ce.evnt_public_info marquee ,
+                        ce.evnt_subtitle marquee ,
                         ce.event_url link,
                         ce.canceled cancelled,
                         ce.updated_at updated_on,
