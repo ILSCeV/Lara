@@ -177,7 +177,7 @@ $(function(){
 //////////////////////
 
 // Shows dynamic form fields for new job types
-jQuery(function() {
+jQuery(() => {
     // initialise counter
     let iCnt = parseInt(<string>$('#counter').val());
 
@@ -191,7 +191,7 @@ jQuery(function() {
     };
 
     // Add one more job with every click on "+"
-    $('.btnAdd').on('click', function(e) {
+    $('.btnAdd').on('click', (e) => {
         e.preventDefault();
         const elementToCopy = $(this).closest('.box');
         elementToCopy.find(".dropdown-menu").hide();
@@ -202,7 +202,7 @@ jQuery(function() {
     });
 
     // Remove selected job
-    $('.btnRemove').on('click', function(e) {
+    $('.btnRemove').on('click', (e) => {
         e.preventDefault();
         $(this).closest('.box').remove();
         updateIsOptionalCheckboxes();
