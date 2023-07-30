@@ -38,10 +38,10 @@
 
 
     <div class="col-12">
-        <button class="btn btn-small btn-success btnAdd" ><i class="fa fa-copy" data-bs-toggle="tooltip" data-bs-placement="top" title="Duplicate"></i></button>
+        <button type="button" class="btn btn-small btn-success btnAdd" ><i class="fa fa-copy" data-bs-toggle="tooltip" data-bs-placement="top" title="Duplicate"></i></button>
     </div>
     <div class="col-12">
-        <button class="btn btn-small btn-danger btnRemove"><i class="fa fa-trash-can" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"></i></button>
+        <button type="button" class="btn btn-small btn-danger btnRemove"><i class="fa fa-trash-can" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"></i></button>
     </div>
 
 
