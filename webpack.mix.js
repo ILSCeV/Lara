@@ -84,7 +84,7 @@ mix.webpackConfig({
     'node_modules/cookieconsent/build/cookieconsent.min.js'
   ], 'public/static.js')
   .ts('resources/assets/ts/lara.ts', 'public/')
-  .extract(['jquery', 'bootstrap', 'bootbox', 'bootstrap-select', 'popper.js'])
+  .extract(['jquery', 'bootstrap', 'bootbox', 'popper.js'])
   .styles(['node_modules/cookieconsent/build/cookieconsent.min.css'], 'public/static.css')
   .sourceMaps()
   .version();

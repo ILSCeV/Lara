@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    {{ trans('mainLang.manageTemplates') }}
+    {{ __('mainLang.manageTemplates') }}
 @stop
 @section('moreScripts')
     <script src="{{asset(WebpackBuiltFiles::$assets['templates.js'])}}"></script>
@@ -11,18 +11,18 @@
 
     <div class="card col-12 p-0">
         <div class="card-header bg-info text-white">
-            <h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageTemplates') }}</h4>
+            <h4 class="card-title">{{ __('mainLang.management') }}: {{ __('mainLang.manageTemplates') }}</h4>
         </div>
 
         <div class="card-body p-0">
             <div class="d-inline-block">
                 <div class="col-4 has-feedback d-inline-block ">
-                    <label for="templateOverviewFilter" class="text-primary"> {{ trans('mainLang.search') }}: </label>
+                    <label for="templateOverviewFilter" class="text-primary"> {{ __('mainLang.search') }}: </label>
                     <input type="text" class="form-control form-control-sm" id="templateOverviewFilter" autofocus>
                 </div>
-                <div class="col-1 float-right">
+                <div class="col-1 float-end">
                     <a class="btn btn-success btn-sm" href="{{route('template.create')}}">
-                        {{ trans('mainLang.createTemplate') }}
+                        {{ __('mainLang.createTemplate') }}
                     </a>
                 </div>
             </div>
@@ -34,19 +34,19 @@
                             #
                         </th>
                         <th class="">
-                            {{ trans('mainLang.section') }}
+                            {{ __('mainLang.section') }}
                         </th>
                         <th class="">
-                            {{ trans('mainLang.type') }}
+                            {{ __('mainLang.type') }}
                         </th>
                         <th class="">
-                            {{ trans('mainLang.title') }}
+                            {{ __('mainLang.title') }}
                         </th>
                         <th class="">
-                            {{ trans('mainLang.start') }}
+                            {{ __('mainLang.start') }}
                         </th>
                         <th class="">
-                            {{ trans('mainLang.end') }}
+                            {{ __('mainLang.end') }}
                         </th>
                         <th class="">
                             &nbsp;
@@ -60,7 +60,7 @@
                             <td>
                                 {{ $index }}
                             </td>
-                            <td class="pl-3">
+                            <td class="ps-3">
                                 {{ $template->section->title }}
                             </td>
                             <td>
@@ -75,7 +75,7 @@
                             <td>
                                 {{ $template->time_end }}
                             </td>
-                            <td class="pr-3">
+                            <td class="pe-3">
                                 <button data-id="{{$template->id}}"
                                         data-templatename="{{$template->title}}"
                                         class="btn btn-danger delete-template">

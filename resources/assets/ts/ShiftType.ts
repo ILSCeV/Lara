@@ -2,16 +2,16 @@
 import {translate} from "./Translate";
 import * as bootbox from "bootbox";
 
-$(window).on('load', () => {
-  $('.shiftTypeSelector').selectpicker({
-    style: 'btn btn-secondary btn-sm',
-    liveSearch: true
-  });
-  $('.shiftTypeReplaceSelector').selectpicker({
-    style: 'btn btn-secondary btn-sm',
-    liveSearch: true
-  });
-});
+// $(window).on('load', () => {
+//   $('.shiftTypeSelector').selectpicker({
+//     style: 'btn btn-secondary btn-sm',
+//     liveSearch: true
+//   });
+//   $('.shiftTypeReplaceSelector').selectpicker({
+//     style: 'btn btn-secondary btn-sm',
+//     liveSearch: true
+//   });
+// });
 
 $('.shiftTypeSelector').change((event) => {
   let selectElement = $(event.target);

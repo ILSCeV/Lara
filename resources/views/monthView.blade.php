@@ -12,14 +12,14 @@
 
 {{-- Prev/next month selector --}}
     <div class="row pb-3">
-        <div class="col-12 col-md-3 m-auto p-auto btn-group">
+        <div class="col-12 col-md-4 m-auto p-auto btn-group">
             <a class="btn hidden-print"
                href="{{ Request::getBasePath() }}/calendar/{{ date("Y/m",
                                 strtotime("previous month", $date['startStamp'])) }}">
                 <i class="fa-solid  fa-chevron-left"></i>
             </a>
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle text-center" type="button" data-toggle="dropdown" aria-haspopup="true">
+                <button class="btn btn-secondary dropdown-toggle text-center" type="button" data-bs-toggle="dropdown" aria-haspopup="true">
                         <strong>{{ $date['monthName'] . " " . $date['year'] }}</strong>
                 </button>
                 <div class="dropdown-menu">
@@ -47,8 +47,8 @@
             </a>
         </div>
 
-        <!-- Section filter -->
-        <div class="col-12 col-md-9 p-0 m-0 d-print-none" id="section-filter">
+        {{-- Section filter --}}
+        <div class="col-12 col-md-8 d-print-none" id="section-filter">
             @include('partials.filter')
         </div>
     </div>

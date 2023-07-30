@@ -11,7 +11,7 @@ return [
     | That means that new lines in this file only appear, when they appeared
     | for the first time while locating the files.
     |
-    | -Structure,etc. can be changed, but remember to change all trans() and strings accordingly
+    | -Structure,etc. can be changed, but remember to change all __() and strings accordingly
     |
     | You want to add a new language? Steps:
     | in config/language.php add it in the following form: 'de' => 'Deutsch',
@@ -30,6 +30,7 @@ return [
     'notWorkingMail'        => 'Something isn\'t working? Write us an e-mail!',
     'moreInfosProjectsite'  => 'Want to know more? Visit us on GitHub!',
     'backToTop'             => 'Back to top',
+    'language'              => 'Language',
 
     //-----------------------------------------------------------------------------------------------------
 
@@ -162,7 +163,7 @@ return [
     // resources/views/surveyView.blade.php
     'description'           => 'Description',
     'surveyDeadlineTo'      => 'The Survey is open till',
-    'um'                    => 'at', //better translation needed TODO change key to "at" and change trans() in views
+    'at'                    => 'at',
 
     //result messages; can be changed with pluralization
     'noPersonAnswered'      => 'No person has voted yet',
@@ -266,8 +267,10 @@ return [
     'chooseAtLeastOne'      => 'Choose at least one...',
     'selectAll'             => 'Select all',
     'selectNone'            => 'Deselect all',
-    'countSectionsSelected' => '{0} of {1} sections',
+    'countSectionsSelected' => ':sel of :total sections',
     'noSectionSelected'     => 'No section selected!',
+    'enableAll'             => 'Enable all',
+    'disableAll'            => 'Disable all',
     //-----------------------------------------------------------------------------------------------------------
 
     // /resources/views/partials/legend.blade.php
@@ -284,6 +287,7 @@ return [
     'today'                 => 'Day',
     'month'                 => 'Month',
     'week'                  => 'Week',
+    'toggleTheme'           => 'Toggle theme',
 
     //not translated the term 'logs'
     'manageClub'            => 'Manage clubs',
@@ -572,7 +576,7 @@ return [
     // 2fa           //
     ///////////////////
     '2fa'             => 'two factor authentication',
-    '2fa.setup'       => 'Set up your two factor authentication by scanning the barcode below. Alternatively, you can use the code',
+    '2fa.setup'       => 'Set up your two factor authentication by scanning the QR code below. Alternatively, you can use the code',
     '2fa.verifyWorking' => 'To ensure that the setup is complete, please enter the current code.',
     '2fa.unregister'       => 'remove two factor authentication',
 

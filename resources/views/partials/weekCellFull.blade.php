@@ -1,15 +1,15 @@
-<div class="card border-light rounded-top">
+<div class="card">
 
-    {{-- Check if the event is still going on --}}
     @php
         /** @var \Lara\ClubEvent $clubEvent */
         $createPersonLdapId = $clubEvent->creator ? $clubEvent->creator->person->prsn_ldap_id : null;
         $isAllowedToSee = (\Auth::hasUser() && \Auth::user()->hasPermissionsInSection($clubEvent->section, \Lara\utilities\RoleUtility::PRIVILEGE_CL)) || Lara\Person::isCurrent($createPersonLdapId);
         $isUnBlocked = is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greaterThanOrEqualTo($clubEvent->unlock_date) || $isAllowedToSee;
-        $classString = 'card-header rounded';
+        $classString = 'card-header rounded-top';
         $clubEventClass = \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent);
     @endphp
 
+    {{-- Check if the event is still going on --}}
     @if (strtotime($clubEvent->evnt_date_end . ' ' . $clubEvent->evnt_time_end) < time())
         {{-- The event is already over --}}
         <?php $classString .= ' past-event'; ?>
@@ -17,18 +17,12 @@
 
     {{-- Set card color --}}
     <div class="{{ $classString }} {{ $clubEventClass }}">
-        <h4 class="card-title ">
+        <h4 @class([$clubEvent->canceled == 1 => 'event-cancelled', 'card-title'])>
             @include('partials.event-marker')
             &nbsp;
-            @if ($clubEvent->canceled == 1)
-                <del>
-            @endif
             <a class="{{ $clubEventClass }}" href="{{ URL::route('event.show', $clubEvent->id) }}">
                 <span class="name">{{ $clubEvent->evnt_title }}</span>
             </a>
-            @if ($clubEvent->canceled == 1)
-                </del>
-            @endif
         </h4>
 
         {{--
@@ -58,7 +52,7 @@
         <div class="{{ $classString }} hidden-print">
             {!! Form::password('password' . $clubEvent->getSchedule->id, [
                 'required',
-                'class' => 'col-md-12 col-12 black-text',
+                'class' => 'col-md-12 col-12',
                 'id' => 'password' . $clubEvent->getSchedule->id,
                 'placeholder' => Lang::get('mainLang.enterPasswordHere'),
             ]) !!}
@@ -66,7 +60,7 @@
         </div>
     @endif
 
-    <div class="card-body p-0">
+    <div class="card-body p-2">
         @if ($isUnBlocked)
             {{-- Show shifts --}}
             @include('partials.shifts.takeShiftTable', [
@@ -76,7 +70,7 @@
             ])
         @else
             <div class="text-center">
-                {{ trans('mainLang.availableAt') }} {{ $clubEvent->unlock_date->isoFormat('DD.MM.YYYY hh:mm') }}
+                {{ __('mainLang.availableAt') }} {{ $clubEvent->unlock_date->isoFormat('DD.MM.YYYY hh:mm') }}
             </div>
         @endif
 

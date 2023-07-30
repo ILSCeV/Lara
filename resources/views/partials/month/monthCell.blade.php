@@ -24,7 +24,7 @@
                 &nbsp;&nbsp;
                 {{-- and show him thats a private survey(=Interne Umfrage in german) only for users --}}
                 <span class="event-name">
-                    {{ trans('mainLang.internalSurvey') }}
+                    {{ __('mainLang.internalSurvey') }}
                 </span>
             </div>
         @else
@@ -34,8 +34,8 @@
                 <i class="fa fa-chart-bar"></i>
                 &nbsp;&nbsp;<span class="event-time">{{ date('H:i', strtotime($survey->deadline)) }}</span>
                 {{-- provide a URL to the survey --}}
-                <a href="{{ URL::route('survey.show', $survey->id) }}" class="event-name" data-toggle="tooltip"
-                    data-placement="right" title="{{ trans('mainLang.showDetails') }}">
+                <a href="{{ URL::route('survey.show', $survey->id) }}" class="event-name" data-bs-toggle="tooltip"
+                    data-bs-placement="right" title="{{ __('mainLang.showDetails') }}">
                     {{-- instead of private survey show the actual title of the survey --}}
                     <span> {{ $survey->title }} </span>
                 </a>
@@ -76,9 +76,9 @@
             {{-- show only a placeholder for private events --}}
             @if ($clubEvent->evnt_is_private)
                 <div class="cal-event {{ $classString }} palette-Grey-500 bg">
-                    <i class="fa fa-eye-slash white-text"></i>
+                    <i class="fa fa-eye-slash"></i>
                     &nbsp;&nbsp;
-                    <span class="white-text">{{ trans('mainLang.internEventP') }}</span>
+                    <span>{{ __('mainLang.internEventP') }}</span>
                 </div>
                 {{-- show everything for public events --}}
             @else
@@ -86,15 +86,11 @@
                     class="cal-event {{ $classString }} {{ \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent) }}">
                     @include('partials.event-marker', $clubEvent)
                     <span class="event-time">&nbsp;{{ date('H:i', strtotime($clubEvent->evnt_time_start)) }}</span>
-                    <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}" data-toggle="tooltip"
-                        data-placement="right" title="{{ trans('mainLang.showDetails') }}">
-                        @if ($clubEvent->canceled == 1)
-                            <del>
-                        @endif
+                    <a @class([$clubEvent->canceled == 1 => 'event-cancelled', 'event-name']) 
+                        href="{{ URL::route('event.show', $clubEvent->id) }}" 
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right" title="{{ __('mainLang.showDetails') }}">
                         {{ $clubEvent->evnt_title }}
-                        @if ($clubEvent->canceled == 1)
-                            </del>
-                        @endif
                     </a>
                 </div>
             @endif
@@ -118,8 +114,8 @@
 
                 --}}
 
-                <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}" data-toggle="tooltip"
-                    data-placement="right" title="{{ trans('mainLang.showDetails') }}">
+                <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}" data-bs-toggle="tooltip"
+                    data-bs-placement="right" title="{{ __('mainLang.showDetails') }}">
                     @if ($clubEvent->canceled == 1)
                         <del>
                     @endif

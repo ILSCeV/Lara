@@ -7,7 +7,7 @@
             <h4 class="card-title">
                 <i class="fa-solid  fa-chart-bar text-white"></i>
                 &nbsp;
-                <span class="name">{{ trans('mainLang.internalSurvey') }}</span>
+                <span class="name">{{ __('mainLang.internalSurvey') }}</span>
             </h4>
             <i class="fa fa-times" aria-hidden="true"></i>
             {{ utf8_encode(strftime("%a, %d. %b", strtotime($survey->deadline))) }}

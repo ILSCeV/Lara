@@ -360,7 +360,7 @@
                             <div class="col-sm">
                             {!! Form::input('date', 'beginDate', date('Y-m-d', strtotime($date)), ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-sm-2 form-text">{{ __('mainLang.um') }}</div>
+                            <div class="col-sm-2 form-text">{{ __('mainLang.at') }}</div>
                             <div class="col-sm-3">
                             {!! Form::input('time', 'beginTime', $timeStart, ['class' => 'form-control']) !!}
                             </div>
@@ -386,7 +386,7 @@
                                 {!! Form::input('date', 'endDate', $event->evnt_date_end, ['class' => 'form-control']) !!}
                             @endif
                                 </div>
-                            <div class="col-sm-2 form-text">{{ __('mainLang.um') }}</div>
+                            <div class="col-sm-2 form-text">{{ __('mainLang.at') }}</div>
                             <div class="col-sm-3">
                             {!! Form::input('time', 'endTime', $timeEnd, ['class' => 'form-control']) !!}
                             </div>

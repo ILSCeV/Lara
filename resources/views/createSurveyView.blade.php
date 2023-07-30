@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    {{ trans('mainLang.createNewSurvey') }}
+    {{ __('mainLang.createNewSurvey') }}
 @stop
 @section('moreScripts')
     <script src="{{asset(WebpackBuiltFiles::$assets['survey.js'])}}"></script>
@@ -22,4 +22,3 @@
         {!! Form::close() !!}
     </div>
 @stop
-ph

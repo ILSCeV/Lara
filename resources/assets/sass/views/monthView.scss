@@ -24,26 +24,6 @@
     opacity:0.3;
 }
 
-.today-marker {
-    background-color: $secondary !important;
-}
-
-.today-marker-today {
-    background-color: #cccccc !important;
-}
-
-.text-dark-grey {
-    color: darkgrey;
-}
-
-.white-text {
-    color: #ffffff !important;
-}
-
-.black-text {
-    color: #000000 !important;
-}
-
 .cal-event a {
     text-decoration: none;
     color: inherit;
@@ -94,25 +74,6 @@
 
 .WeekMarker, .WeekMarkerRow {
     background-color: $secondary !important;
-}
-
-
-@media screen and (max-width: 978px) {
-    .WeekMarker {
-        background-color: #a1a1a1 !important;
-    }
-
-    .WeekMarkerRow{
-        background-color: #F6F5F3 !important;
-    }
-}
-
-.thisMonth {
-    background-color: $body-bg;
-}
-
-.otherMonth {
-    background-color: $body-bg;
 }
 
 .empty {

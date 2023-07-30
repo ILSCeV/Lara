@@ -44,13 +44,13 @@ $(() => {
     // if user sets the club manually, we want to keep his selection
     let hasUserChangedClubs = false;
     let allClubCheckBoxes = $("#filter").find("input[type=checkbox]");
-    allClubCheckBoxes.click(() => {
+    allClubCheckBoxes.on("click", () => {
         hasUserChangedClubs = true;
     });
 
     // important to use function() (anonymous function) here an not an arrow function
     // using an arrow function will change the "this" inside
-    $("[name='evnt_type']").click(function () {
+    $("[name='evnt_type']").on("click", function () {
         let prop = $(this).val();
         let isInternalEvent = internalEventValues.indexOf(prop) !== -1;
         const $filterCheckboxes = $("#filter").find("input[type=checkbox]");
@@ -69,13 +69,13 @@ $(() => {
             }
         }
     });
-  $('#templateSelector').selectpicker({
+  /*$('#templateSelector').selectpicker({
     style: 'btn-primary',
     liveSearch:true
-  });
-  $('#templateSelector').change(() => {
-    var selectedValue = $('#templateSelector').val();
-    $('#templateSelectorForm').attr('action',selectedValue).submit();
+  });*/
+  $('#templateSelector').on("change", () => {
+    const selectedValue = $('#templateSelector').val() as string;
+    $('#templateSelectorForm').attr('action', selectedValue).trigger("submit");
   });
 });
 

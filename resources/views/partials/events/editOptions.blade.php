@@ -1,5 +1,5 @@
 <div class="card-footer col-12 hidden-print">
-    <span class="float-right">
+    <span class="float-end">
         {{-- Event publishing only for CL/marketing -> exclude creator
         Disabling iCal until fully functional.
 
@@ -8,9 +8,9 @@
                 data-href="{{ URL::route('togglePublishState', $event->id) }}"
                 class="btn btn-danger @if($event->evnt_is_published === 0) hidden @endif"
                 name="toggle-publish-state"
-                data-toggle="tooltip"
-                data-placement="bottom"
-                title="{{trans("mainLang.unpublishEvent")}}"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="{{__("mainLang.unpublishEvent")}}"
                 data-token="{{csrf_token()}}"
                 >
                 <i class="fa fa-bullhorn" aria-hidden="true"></i>
@@ -19,9 +19,9 @@
                 data-href="{{ URL::route('togglePublishState', $event->id) }}"
                 class="btn btn-success @if($event->evnt_is_published === 1) hidden @endif"
                 name="toggle-publish-state"
-                data-toggle="tooltip"
-                data-placement="bottom"
-                title="{{trans("mainLang.publishEvent")}}"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="{{__("mainLang.publishEvent")}}"
                 data-token="{{csrf_token()}}"
                 >
                 <i class="fa fa-bullhorn" aria-hidden="true"></i>
@@ -33,21 +33,21 @@
 
         <a href="{{ URL::route('event.edit', $event->id) }}"
            class="btn btn-primary"
-           data-toggle="tooltip"
-           data-placement="bottom"
-           title="{{ trans('mainLang.changeEvent') }}">
+           data-bs-toggle="tooltip"
+           data-bs-placement="bottom"
+           title="{{ __('mainLang.changeEvent') }}">
            <i class="fa-solid  fa-pencil-alt"></i>
         </a>
         &nbsp;&nbsp;
         <a href="{{ $event->id }}"
-           class="btn btn-secondary"
-           data-toggle="tooltip"
-           data-placement="bottom"
-           title="{{ trans('mainLang.deleteEvent') }}"
+           class="btn btn-danger"
+           data-bs-toggle="tooltip"
+           data-bs-placement="top"
+           title="{{ __('mainLang.deleteEvent') }}"
            data-method="delete"
            data-token="{{csrf_token()}}"
            rel="nofollow"
-           data-confirm="{{ trans('mainLang.confirmDeleteEvent') }}">
+           data-confirm="{{ __('mainLang.confirmDeleteEvent') }}">
            <i class="fa-solid  fa-trash"></i>
         </a>
     </span>

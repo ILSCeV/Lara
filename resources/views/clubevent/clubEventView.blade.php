@@ -12,37 +12,33 @@
 @endsection
 @section('content')
     <div class="panelEventView">
-        <div class="row mx-md-5 mx-sm-1 my-3">
-            <div class="col-12 col-md-6 p-0">
-                <div class="card mx-2">
+        <div class="row g-2">
+            <div class="col-12 col-md-6">
+                <div class="card">
                     @php
                         $clubEventClass = \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent);
                         $commonHeader = 'card-header ' . $clubEventClass;
                     @endphp
                     {{-- Set card color --}}
-                    <div class="{{ $commonHeader }}">
-                        @if ($clubEvent->canceled == 1)
-                            <del>
-                        @endif
-                        <h4 class="card-title">@include('partials.event-marker')&nbsp;{{ $clubEvent->evnt_title }}</h4>
-                        <h5 class="card-title">{{ $clubEvent->evnt_subtitle }}</h5>
-                        @if ($clubEvent->canceled == 1)
-                            </del>
-                        @endif
-
+                    <div class="{{$commonHeader}}">
+                        <div class="card-title">
+                            <h4 @class([$clubEvent->canceled == 1 => 'event-cancelled']) >@include('partials.event-marker')&nbsp;{{ $clubEvent->evnt_title }}</h4>
+                            <h5>{{ $clubEvent->evnt_subtitle }}</h5>
+                        </div>
                     </div>
-                    <table class="table table-hover px-3">
+                    <div class="card-body">
+                    <table class="table table-hover table-sm">
                         <tr>
-                            <td width="20%" class="text-align-right ">
-                                <i>{{ trans('mainLang.type') }}:</i>
+                            <td>
+                                <i>{{ __('mainLang.type') }}:</i>
                             </td>
                             <td>
                                 {{ \Lara\Utilities::getEventTypeTranslation($clubEvent->evnt_type) }}
                             </td>
                         </tr>
                         <tr>
-                            <td width="20%">
-                                <i>{{ trans('mainLang.begin') }}:</i>
+                            <td>
+                                <i>{{ __('mainLang.begin') }}:</i>
                             </td>
                             <td>
                                 {{ strftime('%a, %d. %b %Y', strtotime($clubEvent->evnt_date_start)) }} um
@@ -51,7 +47,7 @@
                         </tr>
                         <tr>
                             <td width="20%">
-                                <i>{{ trans('mainLang.end') }}:</i>
+                                <i>{{ __('mainLang.end') }}:</i>
                             </td>
                             <td>
                                 {{ strftime('%a, %d. %b %Y', strtotime($clubEvent->evnt_date_end)) }} um
@@ -60,7 +56,7 @@
                         </tr>
                         <tr>
                             <td width="20%">
-                                <i>{{ trans('mainLang.DV-Time') }}:</i>
+                                <i>{{ __('mainLang.DV-Time') }}:</i>
                             </td>
                             <td>
                                 {{ date('H:i', strtotime($clubEvent->getSchedule->schdl_time_preparation_start)) }}
@@ -68,42 +64,42 @@
                         </tr>
                         <tr>
                             <td width="20%">
-                                <i>{{ trans('mainLang.club') }}:</i>
+                                <i>{{ __('mainLang.club') }}:</i>
                             </td>
                             <td>
                                 {{ $clubEvent->section->title }}
-                                &nbsp;&nbsp;<br class="d-block d-sm-none">
-                                <i>({{ trans('mainLang.willShowFor') }}:
-                                    {{ implode(', ', $clubEvent->showToSectionNames()) }})</i>
                             </td>
                         </tr>
-                    </table>
+                        <tr>
+                            <td width="20%">
+                                <i>{{ __('mainLang.willShowFor') }}:</i>
+                            </td>
+                            <td>{{ implode(', ', $clubEvent->showToSectionNames()) }}</td>
+                        </tr>
 
-                    <hr class="m-0 p-0">
 
-                    {{-- Internal event metadata --}}
-                    @auth
-                        <table class="table table-hover">
+                        {{-- Internal event metadata --}}
+                        @auth
                             @if (isset($clubEvent->facebook_done))
                                 <tr>
-                                    <td width="33%">
-                                        <i>{{ trans('mainLang.faceDone') }}?</i>
+                                    <td style="width:33%">
+                                        <i>{{ __('mainLang.faceDone') }}?</i>
                                     </td>
                                     <td>
                                         @if ($clubEvent->facebook_done == 1)
-                                            <i class="text-success" aria-hidden="true">{{ trans('mainLang.yes') }}</i>
+                                            <i class="text-success" aria-hidden="true">{{ __('mainLang.yes') }}</i>
                                         @else
-                                            <i class="text-danger" aria-hidden="true">{{ trans('mainLang.no') }}</i>
+                                            <i class="text-danger" aria-hidden="true">{{ __('mainLang.no') }}</i>
                                         @endif
                                     </td>
                                 </tr>
                             @endif
                             @if ($clubEvent->event_url != null && $clubEvent->event_url != '')
                                 <tr>
-                                    <td width="33%">
-                                        <i>{{ trans('mainLang.eventUrl') }}:</i>
+                                    <td style="width:33%">
+                                        <i>{{ __('mainLang.eventUrl') }}:</i>
                                     </td>
-                                    <td>
+                                    <td style="max-width:100px">
                                         <a target="_blank" class="d-inline-block text-truncate" style="max-width: 45%;"
                                             href="{{ $clubEvent->event_url }}">
                                             {{ $clubEvent->event_url }}
@@ -113,8 +109,8 @@
                             @endif
                             @if (isset($clubEvent->price_tickets_normal))
                                 <tr>
-                                    <td width="33%" class="pl-3">
-                                        <i>{{ trans('mainLang.priceTickets') }}:</i>
+                                    <td style="width:33%">
+                                        <i>{{ __('mainLang.priceTickets') }}:</i>
                                     </td>
                                     <td>
                                         {{ $clubEvent->price_tickets_normal !== null ? $clubEvent->price_tickets_normal : '--' }}
@@ -122,24 +118,20 @@
                                         /
                                         {{ $clubEvent->price_tickets_external !== null ? $clubEvent->price_tickets_external : '--' }}
                                         €
-                                        &nbsp;&nbsp;
-                                        <br class="d-block d-sm-none">
-                                        ({{ trans('mainLang.studentExtern') }})
+                                        ({{ __('mainLang.studentExtern') }})
                                     </td>
                                 </tr>
                             @endif
                             @if (isset($clubEvent->price_normal))
                                 <tr>
-                                    <td width="33%" class="pl-3">
-                                        <i>{{ trans('mainLang.price') }}:</i>
+                                    <td style="width:33%">
+                                        <i>{{ __('mainLang.price') }}:</i>
                                     </td>
                                     <td>
                                         {{ $clubEvent->price_normal !== null ? $clubEvent->price_normal : '--' }} €
                                         /
                                         {{ $clubEvent->price_external !== null ? $clubEvent->price_external : '--' }} €
-                                        &nbsp;&nbsp;
-                                        <br class="d-block d-sm-none">
-                                        ({{ trans('mainLang.studentExtern') }})
+                                        ({{ __('mainLang.studentExtern') }})
                                     </td>
                                 </tr>
                             @endif
@@ -150,23 +142,26 @@
 
 
     							<tr>
-    								<td width="20%" class="pl-3">
-    									<i>{{ trans('mainLang.iCal') }}:</i>
+    								<td width="20%" class="ps-3">
+    									<i>{{ __('mainLang.iCal') }}:</i>
     								</td>
     								<td>
     									@if ($clubEvent->evnt_is_published === '1')
     										<i class="fa fa-check-square-o" aria-hidden="true"></i>
-    										&nbsp;&nbsp;{{trans('mainLang.eventIsPublished')}}
+    										&nbsp;&nbsp;{{__('mainLang.eventIsPublished')}}
     									@else
     										<i class="fa fa-square-o" aria-hidden="true"></i>
-    										&nbsp;&nbsp;{{trans('mainLang.eventIsUnpublished')}}
+    										&nbsp;&nbsp;{{__('mainLang.eventIsUnpublished')}}
     									@endif
     								</td>
     							</tr>
 
     							--}}
                         </table>
+                    @else
+                        </table>
                     @endauth
+                    </div>
 
                     {{-- CRUD --}}
                     @isInSection(['marketing', 'clubleitung', 'admin'], $clubEvent->section)
@@ -181,13 +176,13 @@
                 @if ($clubEvent->evnt_public_info != '')
                     <div class="card mx-2">
                         <div class="card-body more-info">
-                            <h5 class="card-title">{{ trans('mainLang.additionalInfo') }}:</h5>
+                            <h5 class="card-title">{{ __('mainLang.additionalInfo') }}:</h5>
                             {!! $clubEvent->publicInfoMd() !!}
                         </div>
                         <button type="button" class="moreless-more-info btn btn-primary btn-margin"
-                            data-dismiss="alert">{{ trans('mainLang.showMore') }}</button>
+                            data-dismiss="alert">{{ __('mainLang.showMore') }}</button>
                         <button type="button" class="moreless-less-info btn btn-primary btn-margin"
-                            data-dismiss="alert">{{ trans('mainLang.showLess') }}</button>
+                            data-dismiss="alert">{{ __('mainLang.showLess') }}</button>
                     </div>
                 @endif
 
@@ -196,63 +191,69 @@
                         <br>
                         <div class="card mx-2 hidden-print">
                             <div class="card-body more-details">
-                                <h5 class="card-title">{{ trans('mainLang.moreDetails') }}:</h5>
+                                <h5 class="card-title">{{ __('mainLang.moreDetails') }}:</h5>
                                 {!! $clubEvent->privateDetailsMd() !!}
                             </div>
                             <button type="button" class="moreless-more-details btn btn-primary btn-margin"
-                                data-dismiss="alert">{{ trans('mainLang.showMore') }}</button>
+                                data-dismiss="alert">{{ __('mainLang.showMore') }}</button>
                             <button type="button" class="moreless-less-details btn btn-primary btn-margin"
-                                data-dismiss="alert">{{ trans('mainLang.showLess') }}</button>
+                                data-dismiss="alert">{{ __('mainLang.showLess') }}</button>
                         </div>
                     @endif
                 @endauth
             </div>
         </div>
 
-        <div class="row mx-md-5 mx-sm-1 my-3">
-            {{-- show time button Ger.: Zeiten einblenden --}}
-            &nbsp;&nbsp;
-            <button class="btn btn-sm hidden-print" type="button" id="toggle-shift-time">
-                {{ trans('mainLang.hideTimes') }}
-            </button>
+        <div class="row my-3 hidden-print justify-content-start">
+            <div class="col-md-5">
+                <div class="btn-group" role="group" aria-label="Filters">
+                    {{-- show time button Ger.: Zeiten einblenden --}}
+                    <button class="btn btn-sm" type="button" id="toggle-shift-time">
+                        {{ __('mainLang.hideTimes') }}
+                    </button>
 
-            {{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
-            <button class="btn btn-sm hidden-print" type="button" id="toggle-taken-shifts">
-                {{ trans('mainLang.hideTakenShifts') }}
-            </button>
+                    {{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
+                    <button class="btn btn-sm" type="button" id="toggle-taken-shifts">
+                        {{ __('mainLang.hideTakenShifts') }}
+                    </button>
 
-            {{-- show/hide all comment fields --}}
-            <button class="btn btn-sm hidden-print" type="button" id="toggle-all-comments">
-                {{ trans('mainLang.comments') }}
-            </button>
+                    {{-- show/hide all comment fields --}}
+                    <button class="btn btn-sm" type="button" id="toggle-all-comments">
+                        {{ __('mainLang.comments') }}
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <div class="row ">
-            <div class="card col-12 mx-sm-1 m-auto">
-                @if ($clubEvent->getSchedule->schdl_password != '')
-                    @if (is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greaterThanOrEqualTo($clubEvent->unlock_date))
-                        <div class="card-header hidden-print">
-                            {!! Form::password('password', [
-                                'required',
-                                'class' => 'col-md-4 col-sm-4 col-12 black-text',
-                                'id' => 'password' . $clubEvent->getSchedule->id,
-                                'placeholder' => Lang::get('mainLang.enterPasswordHere'),
-                            ]) !!}
-                            <br>
+        <div class="row mb-3 justify-content-center">
+            <div class="col-12 mx-sm-1 m-auto">
+                <div class="card">
+                    @if ($clubEvent->getSchedule->schdl_password != '')
+                        @if (is_null($clubEvent->unlock_date) || \Carbon\Carbon::now()->greaterThanOrEqualTo($clubEvent->unlock_date))
+                            <div class="card-header hidden-print">
+                                {!! Form::password('password', [
+                                    'required',
+                                    'class' => 'col-md-4 col-sm-4 col-12',
+                                    'id' => 'password' . $clubEvent->getSchedule->id,
+                                    'placeholder' => __('mainLang.enterPasswordHere'),
+                                ]) !!}
+                            </div>
+                        @endif
+                    @endif
+                    @if ($isUnBlocked)
+                        <div class="card-body">
+                        @include('partials.shifts.takeShiftTable', [
+                            'shifts' => $shifts,
+                            'hideComments' => false,
+                            'commentsInSeparateLine' => false,
+                        ])
+                        </div>
+                    @else
+                        <div class="card col-12 mx-sm-1 m-auto text-center">
+                            {{ __('mainLang.availableAt') }} {{ $clubEvent->unlock_date->isoFormat('DD.MM.YYYY hh:mm') }}
                         </div>
                     @endif
-                @endif
-                @if ($isUnBlocked)
-                    @include('partials.shifts.takeShiftTable', [
-                        'shifts' => $shifts,
-                        'hideComments' => false,
-                        'commentsInSeparateLine' => false,
-                    ])
-                @else
-                    <div class="card col-12 mx-sm-1 m-auto text-center">
-                        {{ trans('mainLang.availableAt') }} {{ $clubEvent->unlock_date->isoFormat('DD.MM.YYYY hh:mm') }}
-                    </div>
-                @endif
+                </div>
             </div>
         </div>
     </div>
@@ -260,8 +261,8 @@
     @auth
         {{-- REVISIONS --}}
         <div class="row mx-md-5 mx-sm-1 m-0">
-            <a id="show-hide-history" class="text-muted hidden-print" href="#">
-                {{ trans('mainLang.listChanges') }} &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
+            <a id="show-hide-history" class="text-body-secondary hidden-print" href="#">
+                {{ __('mainLang.listChanges') }} &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
             </a>
         </div>
 
@@ -270,22 +271,22 @@
                 <table class="table table-hover">
                     <thead>
                         <th scope="col">
-                            {{ trans('mainLang.work') }}
+                            {{ __('mainLang.work') }}
                         </th>
                         <th scope="col">
-                            {{ trans('mainLang.whatChanged') }}
+                            {{ __('mainLang.whatChanged') }}
                         </th>
                         <th scope="col">
-                            {{ trans('mainLang.oldEntry') }}
+                            {{ __('mainLang.oldEntry') }}
                         </th>
                         <th scope="col">
-                            {{ trans('mainLang.newEntry') }}
+                            {{ __('mainLang.newEntry') }}
                         </th>
                         <th scope="col">
-                            {{ trans('mainLang.whoBlame') }}
+                            {{ __('mainLang.whoBlame') }}
                         </th>
                         <th scope="col">
-                            {{ trans('mainLang.whenWasIt') }}
+                            {{ __('mainLang.whenWasIt') }}
                         </th>
                     </thead>
                     <tbody>
@@ -295,7 +296,7 @@
                                     {{ $revision['job type'] }}
                                 </td>
                                 <td>
-                                    {{ trans($revision['action']) }}
+                                    {{ __($revision['action']) }}
                                 </td>
                                 <td>
                                     {{ $revision['old value'] }}

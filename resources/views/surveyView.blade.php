@@ -13,50 +13,14 @@ $ldapid
 @extends('layouts.master')
 @section('title')
     {{$survey->title}}
-@stop
+@endsection
 @section('moreScripts')
     <script src="{{asset(WebpackBuiltFiles::$assets['survey.js'])}}"></script>
 @endsection
+
 @section('moreStylesheets')
     <link rel="stylesheet" media="all" type="text/css" href="{{ asset(WebpackBuiltFiles::$assets['survey.css']) }}"/>
     <style>
-        #dropdown_name {
-            position: absolute;
-            overflow: visible;
-            z-index: 12;
-        }
-
-        #dropdown-menu_name {
-            position: absolute;
-            top: 44px;
-            left: 4%;
-            right: 4%;
-        }
-
-        #dropdown-menu_name2 {
-            position: absolute;
-            left: inherit;
-            top: 30px;
-        }
-
-        #cellEditing-2 {
-            position: absolute;
-            overflow: visible;
-            z-index: 11;
-        }
-
-        #dropdown_club {
-            overflow: visible;
-        }
-
-        #dropdown-menu_club {
-            position: absolute;
-        }
-
-        #question_row {
-            height: 50px
-        }
-
         @media screen and (max-width: 978px) {
             {{-- we use the before element in our table implementation of the view, this can cause a bug that will cut of parts of the before element.
                  if it is too long while the table element is too short(gets sized over the table element)
@@ -105,25 +69,25 @@ $ldapid
                 white-space: normal;
                 height: 100%;
             }
-
-        @endforeach
-            }
+            @endforeach
+        }
     </style>
-@stop
+@endsection
+
 @section('content')
 
     <div class="card p-0">
         <div class="card-title-box">
             <h4 class="card-title">
-                <i class="fa fa-bar-chart white-text"></i>
+                <i class="fa fa-bar-chart"></i>
                 &nbsp;&nbsp;
                 {{ $survey->title }}
                 @if($userId == $survey->creator_id || $userCanEditDueToRole)
                     <a href="{{$survey->id}}/edit"
                        style="float: right"
                        class="btn btn-secondary btn-sm"
-                       data-placement="bottom">
-                        <i class="fa-solid  fa-pen-square text-dark-grey" style="color: black"></i>
+                       data-bs-placement="bottom">
+                        <i class="fa-solid  fa-pen-square" style="color: black"></i>
                     </a>
                 @endif
             </h4>
@@ -131,14 +95,14 @@ $ldapid
         </div>
         <div class="card-body" >
             @if(!is_null($survey->description))
-                <p><strong>{{ trans('mainLang.description') }}</strong>: {!! $survey->description !!}</p>
+                <p><strong>{{ __('mainLang.description') }}</strong>: {!! $survey->description !!}</p>
             @endif
             <br>
-            <strong>{{ trans('mainLang.surveyDeadlineTo') }}</strong>: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} {{ trans('mainLang.um') }}
+            <strong>{{ __('mainLang.surveyDeadlineTo') }}</strong>: {{ strftime("%a, %d %b", strtotime($survey->deadline)) }} {{ __('mainLang.at') }}
             {{ date("H:i", strtotime($survey->deadline)) }}.
-            <br>@if(count($answers) === 0) {{ trans('mainLang.noPersonAnswered') }} @endif
-            @if(count($answers) === 1) {{ trans('mainLang.onePersonAnswered') }} @endif
-            @if(count($answers) > 1) {{ trans('mainLang.fewPersonAnswered1') }} <strong>{{count($answers)}}</strong> {{ trans('mainLang.fewPersonAnswered2') }} @endif
+            <br>@if(count($answers) === 0) {{ __('mainLang.noPersonAnswered') }} @endif
+            @if(count($answers) === 1) {{ __('mainLang.onePersonAnswered') }} @endif
+            @if(count($answers) > 1) {{ __('mainLang.fewPersonAnswered1') }} <strong>{{count($answers)}}</strong> {{ __('mainLang.fewPersonAnswered2') }} @endif
         </div>
     </div>
 
@@ -151,7 +115,7 @@ $ldapid
     <div class="card bg-warning">
         @if( $survey->password != '')
             <div class="hidden-print card-header">
-                {!! Form::password('password', ['class'=>'col-md-4 col-12 black-text',
+                {!! Form::password('password', ['class'=>'col-md-4 col-12',
                                                 'id'=>'password' . $survey->id,
                                                 'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
                 <br>
@@ -173,8 +137,8 @@ $ldapid
                     <table class="table table-striped table-bordered table-sm table-responsive-custom">
                         <thead>
                         <tr>
-                            <th>{{ trans('mainLang.name') }}</th>
-                            <th>{{ trans('mainLang.myClub') }}</th>
+                            <th>{{ __('mainLang.name') }}</th>
+                            <th>{{ __('mainLang.myClub') }}</th>
                             @foreach($questions as $question)
                                 <th class="question">
                                     {{$question->question}}
@@ -197,7 +161,7 @@ $ldapid
                                                onClick="document.getElementById('newName').value='{{ $username }}';
                                                        document.getElementById('club').value='{{Lara\Section::current()->title}}';
                                                        document.getElementById('ldapId').value='{{ $ldapid }}'">
-                                                <b>{{ trans('mainLang.addMe') }}</b>
+                                                <b>{{ __('mainLang.addMe') }}</b>
                                             </a>
                                         </li>
                                     </ul>
@@ -237,7 +201,7 @@ $ldapid
                                                     {{$answer->name}}
                                                 @else
                                                     @if(isset($answer->person->user))
-                                                        {{ trans($answer->person->user->section->title . '.' . $answer->person->user->status) }}
+                                                        {{ __($answer->person->user->section->title . '.' . $answer->person->user->status) }}
                                                     @endif
                                                 @endif
                                             @else
@@ -248,7 +212,7 @@ $ldapid
                                             @if(!empty($answer->club))
                                                 {{$answer->club}}
                                             @else
-                                                {{ trans('mainLang.noClub') }}
+                                                {{ __('mainLang.noClub') }}
                                             @endif
                                         </td>
                                         @foreach($answer->getAnswerCells as $key => $cell)
@@ -259,7 +223,7 @@ $ldapid
                                             @endif">
                                                     @switch($cell->question->field_type)
                                                         @case(\Lara\QuestionType::Checkbox)
-                                                            {{trans($cell->answer)}}
+                                                            {{__($cell->answer)}}
                                                         @break
                                                         @default
                                                             {{$cell->answer}}
@@ -276,8 +240,8 @@ $ldapid
                                                                    value=""
                                                                    style="height: 34px; width: 43px;"
                                                                    type="button"
-                                                                   data-toggle="tooltip"
-                                                                   data-placement="bottom"
+                                                                   data-bs-toggle="tooltip"
+                                                                   data-bs-placement="bottom"
                                                                    data-token="{{csrf_token()}}"
                                                                    data-id="{{$answer->id}}"
                                                                    >
@@ -288,12 +252,12 @@ $ldapid
 
                                                             <a href="{{$survey->id}}/answer/{{$answer->id}}"
                                                                class="btn btn-secondary deleteRow"
-                                                               data-toggle="tooltip"
-                                                               data-placement="bottom"
+                                                               data-bs-toggle="tooltip"
+                                                               data-bs-placement="bottom"
                                                                data-token="{{csrf_token()}}"
                                                                name="deleteRow"
                                                                rel="nofollow"
-                                                               data-confirm="{{ trans('mainLang.confirmDeleteAnswer') }}">
+                                                               data-confirm="{{ __('mainLang.confirmDeleteAnswer') }}">
                                                                 <i class="fa-solid  fa-trash"></i>
                                                             </a>
                                                         </td>
@@ -325,20 +289,20 @@ $ldapid
                 {{--they can see the change history of the survey--}}
                 <br>
                 <span class="d-none">&nbsp;&nbsp;</span><span>&nbsp;&nbsp;</span>
-                <a id="show-hide-history" class="text-muted hidden-print" href="#">
-                    {{ trans('mainLang.listChanges') }} &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
+                <a id="show-hide-history" class="text-body-secondary hidden-print" href="#">
+                    {{ __('mainLang.listChanges') }} &nbsp;&nbsp;<i class="fa fa-caret-right" id="arrow-icon"></i>
                 </a>
 
                 <div class="card hide" id="change-history">
                     <table class="table table-responsive table-hover table-sm">
                         <thead>
                         <tr>
-                            <th>{{ trans('mainLang.who') }}?</th>
-                            <th>{{ trans('mainLang.summary') }}</th>
-                            <th>{{ trans('mainLang.affectedColumn') }}</th>
-                            <th>{{ trans('mainLang.oldValue') }}</th>
-                            <th>{{ trans('mainLang.newValue') }}</th>
-                            <th>{{ trans('mainLang.when') }}?</th>
+                            <th>{{ __('mainLang.who') }}?</th>
+                            <th>{{ __('mainLang.summary') }}</th>
+                            <th>{{ __('mainLang.affectedColumn') }}</th>
+                            <th>{{ __('mainLang.oldValue') }}</th>
+                            <th>{{ __('mainLang.newValue') }}</th>
+                            <th>{{ __('mainLang.when') }}?</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -369,4 +333,4 @@ $ldapid
             @endif
         @endif
     @endif
-@stop
+@endsection

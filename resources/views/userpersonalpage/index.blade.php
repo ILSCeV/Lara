@@ -8,7 +8,7 @@
     */
 @endphp
 @section('title')
-    {{ trans('mainLang.userPersonalPage') }} - {{ $user->name }} ({{ $user->section->title }})
+    {{ __('mainLang.userPersonalPage') }} - {{ $user->name }} ({{ $user->section->title }})
 @endsection
 
 @section('content')
@@ -16,7 +16,7 @@
         <div class="card ">
             <div class="card-header text-white bg-info">
                 <h4 class="card-title ">
-                    {{ trans('mainLang.userPersonalPage') }}:
+                    {{ __('mainLang.userPersonalPage') }}:
                     {{ $user->name }} ({{ $user->section->title }})
                 </h4>
             </div>
@@ -24,13 +24,13 @@
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a href="#shifts" class="nav-link active"
-                           data-toggle="tab">{{trans('mainLang.upcomingShifts')}}</a>
+                           data-bs-toggle="tab">{{__('mainLang.upcomingShifts')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#settings" data-toggle="tab">{{trans('mainLang.settings')}}</a>
+                        <a class="nav-link" href="#settings" data-bs-toggle="tab">{{__('mainLang.settings')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#secondFa" data-toggle="tab"> {{trans('mainLang.2fa')}} </a>
+                        <a class="nav-link" href="#secondFa" data-bs-toggle="tab"> {{__('mainLang.2fa')}} </a>
                     </li>
                 </ul>
                 <div id="tabContent" class="tab-content">
@@ -39,11 +39,11 @@
                             <caption class="text-center"></caption>
                             <thead>
                             <tr>
-                                <th class="text-center col-md-3">{{trans('mainLang.shift')}}</th>
-                                <th class="text-center col-md-3">{{trans('mainLang.event')}}</th>
-                                <th class="text-center col-md-3">{{trans('mainLang.date')}}</th>
-                                <th class="text-center col-md-3">{{trans('mainLang.begin')}}
-                                    -{{trans('mainLang.end')}}</th>
+                                <th class="text-center col-md-3">{{__('mainLang.shift')}}</th>
+                                <th class="text-center col-md-3">{{__('mainLang.event')}}</th>
+                                <th class="text-center col-md-3">{{__('mainLang.date')}}</th>
+                                <th class="text-center col-md-3">{{__('mainLang.begin')}}
+                                    -{{__('mainLang.end')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -72,36 +72,36 @@
                         <div class="p-3">
                             {{Form::open(['route' => 'user.updatePersonalSettings'])}}
                             <label for="privateClubName">
-                                <strong>{{ trans('mainLang.privateClubName') }}</strong>
+                                <strong>{{ __('mainLang.privateClubName') }}</strong>
                             </label>
                             <br class="d-block d-md-none d-lg-none">
                             <div class="form-check-inline">
                                 <label class="form-check">
                                     {!! Form::radio( 'is_name_private','null', is_null($user->is_name_private )) !!}
-                                    {{ trans('mainLang.privateClubNameNull') }}
+                                    {{ __('mainLang.privateClubNameNull') }}
                                 </label>
                             </div>
                             <br class="d-block d-md-none d-lg-none">
                             <div class="form-check-inline">
                                 <label class="form-check">
                                     {!! Form::radio( 'is_name_private','true', !is_null($user->is_name_private ) && $user->is_name_private == 1 ) !!}
-                                    {{ trans('mainLang.privateClubNameYes') }}
+                                    {{ __('mainLang.privateClubNameYes') }}
                                 </label>
                             </div>
                             <br class="d-block d-md-none d-lg-none">
                             <div class="form-check-inline">
                                 <label class="form-check">
                                     {!! Form::radio( 'is_name_private','false', !is_null($user->is_name_private ) && $user->is_name_private == 0) !!}
-                                    {{ trans('mainLang.privateClubNameNo') }}
+                                    {{ __('mainLang.privateClubNameNo') }}
                                 </label>
                             </div>
                             <br>
                             <br>
                             <div class="btn-group btn-group-sm">
                                 <button type="reset"
-                                        class="btn btn-sm btn-secondary">{{ trans('mainLang.reset') }}</button>
+                                        class="btn btn-sm btn-secondary">{{ __('mainLang.reset') }}</button>
                                 <button type="submit"
-                                        class="btn btn-sm btn-success">{{ trans('mainLang.update') }}</button>
+                                        class="btn btn-sm btn-success">{{ __('mainLang.update') }}</button>
                             </div>
                             {{Form::close()}}
                         </div>
@@ -113,7 +113,7 @@
                                 @noLdapUser
                                 <a href="{{route('password.change')}}">
                                     <i class="fa fa-key fa-rotate-90" aria-hidden="true"></i>
-                                    <strong>{{ trans('auth.changePassword') }}</strong>
+                                    <strong>{{ __('auth.changePassword') }}</strong>
                                 </a>
                                 @endnoLdapUser
                             @endauth
@@ -121,11 +121,11 @@
                     </div>
                     <div class="tab-pane fade" id="secondFa">
                         @if(empty($user->google2fa_secret))
-                            {{ Form::open(['method' => 'POST', 'route' => ['user.registerGoogleAuth'], 'class' => 'form-inline      ']) }}
+                            {{ Form::open(['method' => 'POST', 'route' => ['user.registerGoogleAuth'], 'class' => 'form-inline  ']) }}
                             <div class="p-3 ">
-                                <p>{{trans('mainLang.2fa.setup')}} {{ $secret }}</p>
+                                <p>{{__('mainLang.2fa.setup')}} {{ $secret }}</p>
                                 <img src="{{ $qrImage }}">
-                                <p> {{trans('mainLang.2fa.verifyWorking')}} </p>
+                                <p> {{__('mainLang.2fa.verifyWorking')}} </p>
                                 <div class="form-group ">
                                     <label for="currentCode">Code</label>
                                     <div class="p-2">
@@ -135,22 +135,22 @@
                                 <div class="form-group">
                                     <div class="btn-group btn-group-sm">
                                         <button type="reset"
-                                                class="btn btn-sm btn-secondary">{{ trans('mainLang.reset') }}</button>
+                                                class="btn btn-sm btn-secondary">{{ __('mainLang.reset') }}</button>
                                         <button type="submit"
-                                                class="btn btn-sm btn-success">{{ trans('mainLang.update') }}</button>
+                                                class="btn btn-sm btn-success">{{ __('mainLang.update') }}</button>
                                     </div>
                                 </div>
                                 {{ Form::text("secret",$secret,['class'=>'hide']) }}
                             </div>
                             {{ Form::close() }}
                         @else
-                            {{ Form::open(['method' => 'POST', 'route' => ['user.unregisterGoogleAuth'], 'class' => 'form-inline      ']) }}
+                            {{ Form::open(['method' => 'POST', 'route' => ['user.unregisterGoogleAuth'], 'class' => 'form-inline  ']) }}
                             <div class="p-3 ">
-                                <p>{{trans('mainLang.2fa.unregister')}}</p>
+                                <p>{{__('mainLang.2fa.unregister')}}</p>
                                 <div class="form-group">
                                     <div class="btn-group btn-group-sm">
                                         <button type="submit"
-                                                class="btn btn-sm btn-danger"> <i class="fa-solid  fa-trash-alt"></i> {{ trans('mainLang.delete') }}</button>
+                                                class="btn btn-sm btn-danger"> <i class="fa-solid  fa-trash-alt"></i> {{ __('mainLang.delete') }}</button>
                                     </div>
                                 </div>
                                 {{ Form::text("secret",$secret,['class'=>'hide']) }}

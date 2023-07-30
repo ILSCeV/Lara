@@ -13,8 +13,8 @@ module.exports = {
   entry: {
     survey: "./resources/assets/ts/surveys/surveyEntry.ts",
     lara: "./resources/assets/ts/lara.ts",
+    darkmode: "./resources/assets/ts/DarkMode.ts",
     legacy: "./resources/assets/ts/legacy/ieDependencys.ts",
-    darkmode: "./resources/assets/sass/darkmode.scss",
     monthview: "./resources/assets/ts/monthview/monthview.ts",
     autocomplete: "./resources/assets/ts/shifts/autocomplete.ts",
     statistics: "./resources/assets/ts/statistics/StatisticsView.ts",

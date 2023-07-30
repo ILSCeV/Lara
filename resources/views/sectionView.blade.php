@@ -2,7 +2,7 @@
 @extends('layouts.master')
 
 @section('title')
-    {{ trans('mainLang.management') }}: #{{ $current_section->id }} - {!! $current_section->title !!}
+    {{ __('mainLang.management') }}: #{{ $current_section->id }} - {!! $current_section->title !!}
 @stop
 
 @section('content')
@@ -32,7 +32,7 @@
                 {{-- Title --}}
 
                 <div class="form-group row">
-                    <label class="col-form-label {{$labelClass}}" for="title"> <i>{{ trans('mainLang.section') }}:</i></label>
+                    <label class="col-form-label {{$labelClass}}" for="title"> <i>{{ __('mainLang.section') }}:</i></label>
                     <div class="{{$inputClass}}">
                         {!!Form::hidden('id',
                            $current_section->id,
@@ -48,11 +48,11 @@
                 {{-- Color --}}
                 <div class="form-group row">
                     <label class="col-form-label {{$labelClass}}" for="color">
-                          <i>{{ trans('mainLang.color') }}:</i>
+                          <i>{{ __('mainLang.color') }}:</i>
                     </label>
                     <div class="{{$inputClass}}">
                         <select
-                            id="color" class="selectpicker {{ $errors->has('color') ? ' has-error' : '' }}"
+                            id="color" class="form-select {{ $errors->has('color') ? ' has-error' : '' }}"
                             @if(isset($current_section->id)) form="{{$current_section->id}}" @endif name="color">
                             @foreach(config('color.colors') as $color)
                                 <option
@@ -65,13 +65,13 @@
                 <div class="w-100"></div>
                 {{-- Event defaults --}}
                 <div class="form-group row col-form-label">
-                    {{ trans('mainLang.eventDefaults')}}
+                    {{ __('mainLang.eventDefaults')}}
                 </div>
                 <div class="w-100"></div>
                 {{-- Event DV time --}}
                 <div class="form-group row">
                         <label class="col-form-label {{$labelClass}}" for="preparationTime">
-                            <i>{{ trans('mainLang.DV-Time') }}:</i>
+                            <i>{{ __('mainLang.DV-Time') }}:</i>
                         </label>
 
                     <div class="{{$inputClass}}">
@@ -83,7 +83,7 @@
                 <div class="form-group row">
                     <div class="{{$labelClass}}">
                         <label class="col-form-label" for="startTime">
-                            <i>{{ trans('mainLang.begin') }}:</i>
+                            <i>{{ __('mainLang.begin') }}:</i>
                         </label>
                     </div>
                     <div class="{{$inputClass}}">
@@ -95,7 +95,7 @@
                 <div class="form-group row">
                     <div class="{{$labelClass}}">
                         <label class="col-form-label" for="endTime">
-                            <i>{{ trans('mainLang.end') }}:</i>
+                            <i>{{ __('mainLang.end') }}:</i>
                         </label>
                     </div>
                     <div class="{{$inputClass}}">
@@ -107,20 +107,20 @@
                 <div class="form-group row">
                     <div class="{{$labelClass}}">
                     <label class="col-form-label" for="private_name">
-                        <i>{{ trans('mainLang.privateClubName') }}:</i>
+                        <i>{{ __('mainLang.privateClubName') }}:</i>
                     </label>
                     </div>
                     <div class="{{$inputClass}}">
                     <div class="radio-inline" id="private_name">
                         <label class="form-check">
                             {!! Form::radio( 'is_name_private','true', !is_null($current_section->is_name_private ) && $current_section->is_name_private == 1) !!}
-                            {{ trans('mainLang.privateClubNameYes') }}
+                            {{ __('mainLang.privateClubNameYes') }}
                         </label>
                     </div>
                     <div class="radio-inline">
                         <label class="form-check">
                             {!! Form::radio( 'is_name_private','false', !is_null($current_section->is_name_private ) && $current_section->is_name_private == 0) !!}
-                            {{ trans('mainLang.privateClubNameNo') }}
+                            {{ __('mainLang.privateClubNameNo') }}
                         </label>
                     </div>
                     </div>
@@ -133,24 +133,24 @@
                         @if(isset($current_section->id))
                             <a href="{!! action('SectionController@destroy',$current_section->id) !!}"
                                class="btn btn-small btn-danger"
-                               data-toggle="tooltip"
-                               data-placement="bottom"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="bottom"
                                title="&#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }}) löschen"
                                data-method="delete"
                                data-token="{{csrf_token()}}"
                                rel="nofollow"
-                               data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }})? {{ trans('mainLang.warningNotReversible') }}">
-                                {{ trans('mainLang.delete') }}?
+                               data-confirm="{{ __('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_section->title !!}&#39;&#39; (#{{ $current_section->id }})? {{ __('mainLang.warningNotReversible') }}">
+                                {{ __('mainLang.delete') }}?
                             </a>
                         @endif
                         @endis
-                        <button type="reset" class="btn btn-small btn-secondary">{{ trans('mainLang.reset') }}</button>
+                        <button type="reset" class="btn btn-small btn-secondary">{{ __('mainLang.reset') }}</button>
                         @if(!isset($current_section->id))
                             <button type="submit"
-                                    class="btn btn-small btn-success">{{ trans('mainLang.createSection') }}</button>
+                                    class="btn btn-small btn-success">{{ __('mainLang.createSection') }}</button>
                         @else
                             <button type="submit"
-                                    class="btn btn-small btn-success">{{ trans('mainLang.update') }}</button>
+                                    class="btn btn-small btn-success">{{ __('mainLang.update') }}</button>
                         @endif
                     </div>
                 </div>

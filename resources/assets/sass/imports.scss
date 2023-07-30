@@ -1,5 +1,3 @@
-@import "~bootstrap-select/sass/variables";
-@import "~bootstrap-select/sass/bootstrap-select";
 @import "~bootstrap-table/dist/bootstrap-table";
 //@import "~tempusdominus-bootstrap-4/src/sass/tempusdominus-bootstrap-4";
 
@@ -11,7 +9,6 @@ $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 
 @import "../../../node_modules/cookieconsent/build/cookieconsent.min";
 
-@import "frameworkfixes/bootstrap";
 @import "common/helpers";
 @import "views/sectionFilters";
 @import "views/eventView";
@@ -22,5 +19,3 @@ $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 @import "common/palette";
 @import "backtotop/backToTop";
 @import "shifttype/shifttypes";
-@import "frameworkfixes/bootbox";
-@import "nav/navbar";

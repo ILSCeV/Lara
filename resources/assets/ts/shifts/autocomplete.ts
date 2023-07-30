@@ -83,7 +83,7 @@ $(() => {
               + '<span name="currentName">' + data.prsn_name + '</span>'
               + data.prsn_status + onLeave
               + '(<span name="currentClub">' + data.club.clb_title + '</span>)'
-              + '&nbsp;<span name="tooltip" class="text-muted"> ' + data.user.givenname + ' ' + data.user.lastname + ' </span> '
+              + '&nbsp;<span name="tooltip" class="text-body-secondary"> ' + data.user.givenname + ' ' + data.user.lastname + ' </span> '
               + '</a></li>');
           }
         });
@@ -251,9 +251,9 @@ $(() => {
       const $row = $userNameInput.closest('.row');
 
       if (isConflict) {
-        let $alert = $('<div id="alert' + entryId + '" class="alert alert-dismissible alert-warning clear-both col-md-12">\n' +
-          '<button type="button" class="close" data-dismiss="alert">&times;</button>\n' +
-          '<strong>' + translate("conflictDetected") + '</strong>\n<i class="fa fa-3x fa-history float-right"></i>' +
+        let $alert = $('<div id="alert' + entryId + '" class="alert alert-dismissible alert-warning clear-both col-12">\n' +
+          '<button type="button" class="btn-close float-end" data-dismiss="alert"></button>\n' +
+          '<strong>' + translate("conflictDetected") + '</strong>\n<i class="fa fa-3x fa-history float-start"></i>' +
           '<p>' + translate("conflictAlertLine1") + '</p>' +
           '<p>' + translate("conflictAlertLine2") + '</p>\n' +
           '</div>');

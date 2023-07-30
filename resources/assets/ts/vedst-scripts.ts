@@ -32,7 +32,7 @@ $(function() {
 
 
 // Enable Tooltips
-$(function () { $("[data-toggle='tooltip']").tooltip({trigger: "hover"}); }).tooltip("hide");
+$(function () { $("[data-bs-toggle='tooltip']").tooltip({trigger: "hover"}).tooltip("hide"); });
 
 // Automatically close notifications after 4 seconds (4000 milliseconds)
 window.setTimeout(function() {
@@ -44,14 +44,14 @@ window.setTimeout(function() {
 
 
 // Own shift highlighting
-$('[name^=btn-submit-change]').click(function() {
+$('[name^=btn-submit-change]').on('click',function() {
     $(this).parents('.row').removeClass('my-shift');
 });
 
 
 
 // Dropdown hiding fix
-$('input').focusout(function() {
+$('input').on('focusout', function() {
     if ($(this).prop('placeholder') === '=FREI=') {
         // hack to allow for click to register before focusout is called
         setTimeout(function () {
@@ -63,7 +63,7 @@ $('input').focusout(function() {
 
 
 // Language switcher
-$('.languageSwitcher').find('a').click(function() {
+$('.languageSwitcher').find('a').on('click', function() {
     var language = $(this).data('language');
     localStorage.setItem('language', language);
 });
@@ -82,7 +82,7 @@ $('.languageSwitcher').find('a').click(function() {
 
 // Show/hide more button for infos
 $(function(){
-	$('.moreless-more-info').click(function(e) {
+	$('.moreless-more-info').on('click', function(e) {
 		$(this).parent().children('.more-info').toggleClass('moreshow-info');
         $(this).parent().children('.more-info').css('height','auto');
         $(this).parent().children('.moreless-less-info').show();
@@ -91,7 +91,7 @@ $(function(){
 });
 
 $(function(){
-    $('.moreless-less-info').click(function(e) {
+    $('.moreless-less-info').on('click', function(e) {
         $(this).parent().children('.more-info').toggleClass('moreshow-info');
         $(this).parent().children('.more-info').css('height','100');
         $(this).parent().children('.more-info').height(100);
@@ -110,7 +110,7 @@ $(function(){
 });
 
 $(function(){
-    $('.moreless-more-details').click(function(e) {
+    $('.moreless-more-details').on('click', function(e) {
         $(this).parent().children('.more-details').toggleClass('moreshow-details');
         $(this).parent().children('.more-details').css('height','auto');
         $(this).parent().children('.moreless-less-details').show();
@@ -119,7 +119,7 @@ $(function(){
 });
 
 $(function(){
-    $('.moreless-less-details').click(function(e) {
+    $('.moreless-less-details').on('click', function(e) {
         $(this).parent().children('.more-details').toggleClass('moreshow-details');
         $(this).parent().children('.more-details').css('height','100');
         $(this).parent().children('.more-details').height(100);
@@ -142,7 +142,7 @@ $(function(){
 
 // Show/hide change history
 $(function(){
-    $('#show-hide-history').click(function(e) {
+    $('#show-hide-history').on('click', function(e) {
         e.preventDefault();
         if ($('#change-history').hasClass("hide"))
         {
@@ -176,10 +176,8 @@ $(function(){
 // Create/edit view //
 //////////////////////
 
-
-
 // Shows dynamic form fields for new job types
-$(document).ready(function() {
+jQuery(function() {
     // initialise counter
     let iCnt = parseInt(<string>$('#counter').val());
 
@@ -193,17 +191,19 @@ $(document).ready(function() {
     };
 
     // Add one more job with every click on "+"
-    $('.btnAdd').click(function() {
-        let elementToCopy = $(this).closest('.box');
+    $('.btnAdd').on('click', function(e) {
+        e.preventDefault();
+        const elementToCopy = $(this).closest('.box');
         elementToCopy.find(".dropdown-menu").hide();
-        let clone = elementToCopy.clone(true);
+        const clone = elementToCopy.clone(true);
         clone.insertAfter(elementToCopy);
         clone.find('.shiftId').val("");
         updateIsOptionalCheckboxes();
     });
 
     // Remove selected job
-    $('.btnRemove').click(function(e) {
+    $('.btnRemove').on('click', function(e) {
+        e.preventDefault();
         $(this).closest('.box').remove();
         updateIsOptionalCheckboxes();
     });
@@ -272,7 +272,7 @@ $('[name^=icalfeeds]').click(function () {
                     remindPersonalIcalInput = "";
                 }
             } else {
-                remindPersonalIcalInput = '<div class="form-group pl-3 pr-3 col-md-12 col-12">' +
+                remindPersonalIcalInput = '<div class="form-group ps-3 pe-3 col-md-12 col-12">' +
                     translate('remindsBeforeShiftStart') + '&nbsp;&nbsp;' +
                     '<input id="personalIcalRemindValue" type="number" value="0" width="20%"/>' + translate('minutes') +
                     '</div>';
@@ -375,7 +375,7 @@ Disabling iCal until fully functional. */
 
 
 // Update shifts
-jQuery( document ).ready( function( $ ) {
+jQuery( function( $ ) {
 
 
 
@@ -578,7 +578,7 @@ $(() => {
 });
 
 $( ()=> {
-  $(window).scroll(()=>{
-    $('.alert-fixed').css('top',window.pageYOffset + 'px')
+  $(window).on('scroll', ()=>{
+    $('.alert-fixed').css('top',window.scrollY + 'px')
   });
 } );

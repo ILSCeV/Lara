@@ -8,21 +8,21 @@
         <i class="{{$attributes["status"] }}"
            name="status-icon"
            style=" {{ $attributes["style"] }}"
-           {{--data-toggle="tooltip"--}}
-           {{--data-placement="top"--}}
+           {{--data-bs-toggle="tooltip"--}}
+           {{--data-bs-placement="top"--}}
            title="{{ Lara\Status::localize($person->prsn_status, $section) }}"></i>
     @else
         <i class="fa fa-circle"
            style="color:lightgrey;"
-           {{--data-toggle="tooltip"--}}
-           {{--data-placement="top"--}}
-           title="{{ trans('mainLang.external') }}"></i>
+           {{--data-bs-toggle="tooltip"--}}
+           {{--data-bs-placement="top"--}}
+           title="{{ __('mainLang.external') }}"></i>
     @endif
 @else
     <i class="fa fa-circle"
        name="status-icon"
        style="color:lightgrey;"
-       {{--data-toggle="tooltip"--}}
-       {{--data-placement="top"--}}
-       title="{{ trans('mainLang.external') }}"></i>
+       {{--data-bs-toggle="tooltip"--}}
+       {{--data-bs-placement="top"--}}
+       title="{{ __('mainLang.external') }}"></i>
 @endif

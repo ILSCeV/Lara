@@ -47,8 +47,4 @@ class ViewUtility
         
         return $clubEventClass;
     }
-    
-    public static function isLightMode() {
-        return \Session::get('view_mode','light') == 'light';
-    }
 }

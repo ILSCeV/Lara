@@ -21,12 +21,12 @@ if($extraFilter!='')
 
 @section('content')
     <div id="week-view-marker" class="container-fluid pb-3">
-        <div class="row pb-3">
+        <div class="row pb-3 hidden-print">
             {{-- Prev/next week selector --}}
             <div class="col-12 col-md-4 m-auto p-auto btn-group">
                 <a class="btn hidden-print"
                    href="{{ Request::getBasePath() }}/calendar/{{$date['previousWeek']}}{{ $queryParams }}">
-                    <i class="fa-solid  fa-chevron-left"></i>
+                    <i class="fa fa-chevron-left"></i>
                 </a>
 
                 <div class="row align-items-center mx-auto px-auto">
@@ -59,31 +59,31 @@ if($extraFilter!='')
 
                 {{-- Week filters --}}
                 <div class="h-25"></div>
-                <div class="row float-right">
+                <div class="row float-end">
                     <div class="btn-toolbar pt-2" role="toolbar">
                         {{-- show time button Ger.: Zeiten einblenden --}}
                         <div class="btn-group" role="group">
                             <button class="btn btn-sm hidden-print" type="button" id="toggle-shift-time">
-                                {{ trans('mainLang.shiftTime') }}
+                                {{ __('mainLang.shiftTime') }}
                             </button>
 
                             {{-- hide taken shifts button Ger.: Vergebenen Diensten ausblenden --}}
                             <button class="btn btn-sm hidden-print" type="button" id="toggle-taken-shifts">
-                                {{ trans('mainLang.hideTakenShifts') }}
+                                {{ __('mainLang.hideTakenShifts') }}
                             </button>
                         </div>
 
                         {{-- show/hide all comment fields --}}
                         <div class="btn-group" role="group">
                             <button class="btn btn-sm hidden-print" type="button" id="toggle-all-comments">
-                                {{ trans('mainLang.comments') }}
+                                {{ __('mainLang.comments') }}
                             </button>
                         </div>
 
                         {{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
                         <div class="btn-group" role="group">
                             <button class="btn btn-sm btn-primary hidden-print" type="button" id="toggle-week-start">
-                                {{ trans('mainLang.weekStart') }}
+                                {{ __('mainLang.weekStart') }}
                             </button>
                         </div>
                     </div>
@@ -121,7 +121,7 @@ if($extraFilter!='')
                             }
 
                         @endphp
-                        <div class="p-2 mb-3 {{$elementClass}}">
+                        <div class="g-2 mb-2 {{$elementClass}}">
                             {{-- guests see private events as placeholders only, so check if user is logged in --}}
                             @guest
                                 @if($clubEvent->evnt_is_private)
@@ -143,7 +143,7 @@ if($extraFilter!='')
         <br>
         <div class="card rounded" style="margin: 16px;">
             <div class="card-header rounded-top">
-                <h5>{{ trans('mainLang.noEventsThisWeek') }}</h5>
+                <h5>{{ __('mainLang.noEventsThisWeek') }}</h5>
             </div>
         </div>
         <div class="d-flex flex-wrap">

@@ -10,13 +10,13 @@
 @section('content')
     <div class="card col-12 p-0">
         <div class="card-header text-white bg-info">
-            <h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('users.users') }}</h4>
+            <h4 class="card-title">{{ __('mainLang.management') }}: {{ __('users.users') }}</h4>
         </div>
 
         <div class="card card-body p-0">
             <div class="px-3 py-2">
                     <span class="pb-2 fa-pull-left form-inline has-feedback">
-                        <label for="userOverviewFilter" class="test"> {{ trans('mainLang.search') }}: </label>
+                        <label for="userOverviewFilter" class="test"> {{ __('mainLang.search') }}: </label>
                         <input type="text" class="form-control" id="userOverviewFilter">
                     </span>
                 @noLdapUser
@@ -31,7 +31,7 @@
                 @foreach($sections as $section)
                     <li class="nav-item">
                         <a class="nav-link @if(\Auth::user()->section->id == $section->id) active @endif"
-                           data-toggle="tab" href="#section{{$section->id}}" role="tab"
+                           data-bs-toggle="tab" href="#section{{$section->id}}" role="tab"
                            aria-controls="section{{$section->id}}"
                            aria-selected="{{\Auth::user()->section->id == $section->id}}">{{$section->title}}</a>
                     </li>
@@ -43,35 +43,35 @@
                          id="section{{$section->id}}" role="tabpanel">
                         <nav class="navbar nav nav-pills nav-justified">
                             @foreach( \Lara\utilities\RoleUtility::ALL_PRIVILEGES as $priv )
-                                <a class="nav-item nav-link rolefilter" data-target="{{$section->title.'_'.$priv}}" href="#">{{$priv}}</a>
+                                <a class="nav-item nav-link rolefilter" data-bs-target="{{$section->title.'_'.$priv}}" href="#">{{$priv}}</a>
                             @endforeach
                             @foreach(\Lara\Status::ALL as $status)
-                                    <a class="nav-item nav-link rolefilter" data-target="{{$section->title.'-'.$status}}" href="#">{{trans($section->title.'.'.$status)}}</a>
+                                    <a class="nav-item nav-link rolefilter" data-bs-target="{{$section->title.'-'.$status}}" href="#">{{__($section->title.'.'.$status)}}</a>
                             @endforeach
                         </nav>
                         <table class="table info table-hover table-sm">
                             <thead>
                             <tr class="active">
-                                <th class=" pl-3">
-                                    {{ trans('auth.section') }}
+                                <th class=" ps-3">
+                                    {{ __('auth.section') }}
                                 </th>
                                 <th class="">
-                                    {{ trans('auth.nickname') }}
+                                    {{ __('auth.nickname') }}
                                 </th>
                                 <th class="">
-                                    {{ trans('auth.givenname') }}
+                                    {{ __('auth.givenname') }}
                                 </th>
                                 <th class="">
-                                    {{ trans('auth.lastname') }}
+                                    {{ __('auth.lastname') }}
                                 </th>
                                 <th class="">
-                                    {{ trans('auth.email') }}
+                                    {{ __('auth.email') }}
                                 </th>
                                 <th class="">
-                                    {{ trans('auth.status') }}
+                                    {{ __('auth.status') }}
                                 </th>
                                 <th>
-                                    {{ trans('auth.on_leave_until') }}
+                                    {{ __('auth.on_leave_until') }}
                                 </th>
                                 <th>
 
@@ -93,7 +93,7 @@
                                 });
                                 @endphp
                                 <tr class="userRow @foreach($rolesPerSection as $roleString) {{$roleString}} @endforeach {{ $user->section->title.'-'.$user->status }}">
-                                    <td class="pl-3">
+                                    <td class="ps-3">
                                         {{ $user->section->title }}
                                     </td>
                                     <td>
@@ -115,12 +115,12 @@
                                     <td>
                                         @canEditUser($user)
                                         {{ Form::model($user, ['route' => ['user.update', $user->id], 'class'=>'change-user-status-form', 'method' => 'PUT']) }}
-                                        <select name="status" class="selectpicker" data-id="{{$user->id}}"
+                                        <select name="status" class="form-select" data-id="{{$user->id}}"
                                                 data-name="{{$user->name}}">
                                             @foreach(Lara\Status::ALL as $status)
                                                 <option
                                                     value="{{ $status }}" {{ $status === $user->status ? "selected" : "" }}>
-                                                    {{ trans($user->section->title . "." . $status) }}
+                                                    {{ __($user->section->title . "." . $status) }}
                                                 </option>
                                             @endforeach
                                         </select>

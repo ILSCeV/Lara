@@ -1,62 +1,62 @@
 <br>
 <div class="col-12 col-md-12 text-center hidden-print">
       <i class="fa-solid  fa-calendar-alt"></i>
-       - {{ trans('mainLang.normalProgramm') }}
+       - {{ __('mainLang.normalProgramm') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
       <small>&nbsp;</small><i class="fa-solid  fa-info"></i><small>&nbsp;</small>
-       - {{ trans('mainLang.information') }}
+       - {{ __('mainLang.information') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
       <i class="fa-solid  fa-star"></i>
-       - {{ trans('mainLang.special') }}
+       - {{ __('mainLang.special') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
       <i class="fa-solid  fa-music"></i>
-       - {{ trans('mainLang.LiveBandDJ') }}
+       - {{ __('mainLang.LiveBandDJ') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
 
       <i class="fa-solid  fa-money-bill-alt"></i>
-       - {{ trans('mainLang.utilization') }}
+       - {{ __('mainLang.utilization') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
       <i class="fa-solid  fa-eye-slash"></i>
-       - {{ trans('mainLang.internalEvent') }}
+       - {{ __('mainLang.internalEvent') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
       <i class="fa-solid  fa-life-ring"></i>
-       - {{ trans('mainLang.flooding') }}
+       - {{ __('mainLang.flooding') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
       <i class="fa-solid  fa-building"></i>
-       - {{ trans('mainLang.marketingFlyersPlacard') }}
+       - {{ __('mainLang.marketingFlyersPlacard') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
       <i class="fa-solid  fa-ticket-alt"></i>
-       - {{ trans('mainLang.preSale') }}
+       - {{ __('mainLang.preSale') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
 
       <i class="fa-solid  fa-tree"></i>
-       - {{ trans('mainLang.outsideEvent') }}
+       - {{ __('mainLang.outsideEvent') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
       <i class="fa-solid  fa-utensils"></i>
-       - {{ trans('mainLang.buffet') }}
+       - {{ __('mainLang.buffet') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
       <i class="fa-solid  fa-list-alt"></i>
-       - {{ trans('mainLang.others') }}
+       - {{ __('mainLang.others') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 </div>

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    {{ trans('mainLang.privacyPolicy') }}
+    {{ __('mainLang.privacyPolicy') }}
 @stop
 
 @section('content')
@@ -14,11 +14,11 @@
         @if(Auth::user()->privacy_accepted == 0)
         <div class="card ">
             <div class="card-header bg-danger text-white">
-                <h3 class="card-title">{{ trans("mainLang.waitOneSecond") }}</h3>
+                <h3 class="card-title">{{ __("mainLang.waitOneSecond") }}</h3>
             </div>
 
             <div class="card-body">
-                <strong>{{ trans('mainLang.agreeWithPrivacy') }}</strong>
+                <strong>{{ __('mainLang.agreeWithPrivacy') }}</strong>
             </div>
         </div>
         <br>
@@ -27,20 +27,20 @@
 
     <div class="card ">
         <div class="card-header bg-primary text-white">
-            <h3 class="card-title">{{ trans("mainLang.privacyPolicy") }}</h3>
+            <h3 class="card-title">{{ __("mainLang.privacyPolicy") }}</h3>
         </div>
 
         <div class="card-body p-0">
             <ul class="nav nav-tabs">
-                <li class="nav-item"><a class="nav-link active" href="#complete" data-toggle="tab" aria-expanded="true">Datenschutzerklärung -
+                <li class="nav-item"><a class="nav-link active" href="#complete" data-bs-toggle="tab" aria-expanded="true">Datenschutzerklärung -
                         deutsche Version</a></li>
-                <li class="nav-item"><a class="nav-link" href="#short" data-toggle="tab" aria-expanded="false">Kurze Zusammenfassung - deutsche
+                <li class="nav-item"><a class="nav-link" href="#short" data-bs-toggle="tab" aria-expanded="false">Kurze Zusammenfassung - deutsche
                         Version</a></li>
-                <li class="nav-item"><a class="nav-link" href="#english" data-toggle="tab" aria-expanded="false">Short Summary - English
+                <li class="nav-item"><a class="nav-link" href="#english" data-bs-toggle="tab" aria-expanded="false">Short Summary - English
                         Version</a></li>
             </ul>
 
-            <div id="myTabContent" class="tab-content p-3 pre-scrollable">
+            <div id="myTabContent" class="tab-content p-3" style="max-height: 340px; overflow-y: scroll">
                 <div class="tab-pane fade in active show" id="complete">
                     <p><strong>Datenschutzerklärung</strong></p>
                     <p><strong></strong></p>
@@ -750,7 +750,7 @@
                     <div class="card-footer">
                         <form method="post" action="{{url('userAgreesPrivacy')}}" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            <button type="submit" class="btn btn-success">{{ trans("mainLang.privacyAgree") }}</button>
+                            <button type="submit" class="btn btn-success">{{ __("mainLang.privacyAgree") }}</button>
                         </form>
                     </div>
                 @endif

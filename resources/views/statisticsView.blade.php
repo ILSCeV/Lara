@@ -8,7 +8,7 @@
 @endphp
 @extends('layouts.master')
 @section('title')
-    {{ trans('mainLang.statisticalEvaluation') }}
+    {{ __('mainLang.statisticalEvaluation') }}
 @stop
 
 @section('moreScripts')
@@ -22,13 +22,13 @@
         <div class="col-12 col-md-12">
             <div class="col-12 col-md-3 m-auto p-auto btn-group">
                 @if($isMonthStatistic)
-                    <a class="btn btn-secondary hidden-print"
+                    <a class="btn hidden-print"
                        href="{{ action('StatisticsController@showStatistics') . date("/Y/m",
                                         strtotime("previous month", mktime(0, 0, 0, $month, 1, $year))) }}">
-                        &lt;&lt;
+                        <i class="fa fa-chevron-left"></i>
                     </a>
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle text-center" type="button" data-toggle="dropdown" aria-haspopup="true">
+                        <button class="btn btn-secondary dropdown-toggle text-center" type="button" data-bs-toggle="dropdown" aria-haspopup="true">
                             {{ date('F Y', mktime(0, 0, 0, $month, 1, $year))}}
                         </button>
                         <div class="dropdown-menu">
@@ -50,43 +50,43 @@
                             </table>
                         </div>
                     </div>
-                    <a class="btn btn-secondary hidden-print float-left"
+                    <a class="btn hidden-print float-start"
                        href="{{ action('StatisticsController@showStatistics') . date("/Y/m", strtotime("next month", mktime(0, 0, 0, $month, 1, $year))) }}">
-                        &gt;&gt;
+                       <i class="fa fa-chevron-right"></i>
                     </a>
                @else
-                    <a class="btn btn-secondary hidden-print"
+                    <a class="btn hidden-print"
                        href="{{ action('StatisticsController@showYearStatistics', date("Y", strtotime("previous year", mktime(0, 0, 0, $month, 1, $year))))  }}">
-                        &lt;&lt;
+                       <i class="fa fa-chevron-left"></i>
                     </a>
 
                     <span class="btn btn-lg disabled mobile-width-72-percent" style="text-align: center !important;">
                     {{ date('Y', mktime(0, 0, 0, $month, 1, $year))}}
                     </span>
 
-                    <a class="btn btn-secondary hidden-print float-left"
+                    <a class="btn hidden-print float-start"
                        href="{{
                         action('StatisticsController@showYearStatistics', date("Y", strtotime("next year", mktime(0, 0, 0, $month, 1, $year)))) }}">
-                        &gt;&gt;
+                        <i class="fa fa-chevron-right"></i>
                     </a>
                @endif
             </div>
             <br class="d-block d-md-none">
 
             {{-- Month/year statstics selector --}}
-            <div class=" col-12 btn-group float-right">
+            <div class=" col-12 btn-group float-end">
                 <div class="col-12 col-md-10">
                     @if($isMonthStatistic)
-                        <a class="btn btn-sm btn-primary float-right"
+                        <a class="btn btn-sm btn-primary float-end"
                            type="button"
                            href="{{ action("StatisticsController@showYearStatistics") }}">
-                            {{ trans("mainLang.yearStatistic") }}
+                            {{ __("mainLang.yearStatistic") }}
                         </a>
                     @else
-                        <a class="btn btn-sm btn-primary float-right"
+                        <a class="btn btn-sm btn-primary float-end"
                            type="button"
                            href="{{ action("StatisticsController@showStatistics")  }}">
-                            {{ trans("mainLang.monthStatistic") }}
+                            {{ __("mainLang.monthStatistic") }}
                         </a>
                     @endif
                 </div>
@@ -101,12 +101,12 @@
     <div class="row container-fluid">
 
         {{-- Club member stats --}}
-        <div class="col-12 col-md-5 p-0-xs">
+        <div class="col-12 col-md-8 p-0-xs">
             @include('partials.statisticsMembers')
         </div>
 
         {{-- Leaderboard --}}
-        <div class="col-12 col-md-5 p-0-xs">
+        <div class="col-12 col-md-4 p-0-xs">
             <br class="d-block d-sm-none">
             @include('partials.statisticsLeaderboards')
         </div>

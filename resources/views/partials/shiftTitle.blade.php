@@ -15,8 +15,8 @@
 
 <div class="{{$shiftClass}} shift_title">
         <span class="word-break"
-              data-toggle="tooltip"
-              data-placement="top"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
               title="{{ date("H:i", strtotime($shift->start)) .
               "-" .
               date("H:i", strtotime($shift->end)) }}">
@@ -26,7 +26,7 @@
             @if($shift->optional)
                 ({{Lang::get('mainLang.optionalShort')}})
             @endif
-            <div class="shift-time hide text-dark-grey">
+            <div class="shift-time hide">
                 {!! "(" . date("H:i", strtotime($shift->start))
                 . "-" .
                 date("H:i", strtotime($shift->end)) . ")" !!}

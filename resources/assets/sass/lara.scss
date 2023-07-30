@@ -1,5 +1,105 @@
-@import "~bootswatch/dist/materia/variables";
+//@import "~bootswatch/dist/materia/variables";
 @import "~bootstrap/scss/bootstrap";
-@import "~bootswatch/dist/materia/bootswatch";
+//@import "~bootswatch/dist/materia/bootswatch";
+@import "_variables"; // <- This file seems to get ignored
 
 @import "imports";
+
+// Padding to make the fixed navbar not cover the content
+body { 
+    padding-top: 60px;
+    min-width: 320px;
+}
+
+/**
+ * System messages
+ */
+
+ #centerpoint {
+    left: 50%;
+    position: absolute;
+}
+
+.alert-centered {
+    position: relative;
+    width: 100%;
+    margin-left: -50%;
+    z-index: 999999;
+}
+
+
+
+/**
+ * Greeting our mechanical overlords
+ */
+
+.welcome-to-our-mechanical-overlords {
+    display: none;
+}
+
+
+
+/*
+ * Back to top button
+ */
+
+.back-to-top {
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display:none;
+    z-index: 999;
+}
+
+
+
+/*
+ * Own event highlighter
+ */
+
+.cal-month-my-event {
+    border: 3px solid #FFEA58;
+    border-radius: 5px;
+}
+
+.tooltip {
+    position: fixed
+}
+
+/* Events */
+.event-cancelled{
+    text-decoration: line-through;
+}
+
+.my-shift{
+    background-color: var(--bs-warning-bg-subtle);
+}
+
+
+/* Statistics */
+
+.statistics-section-highlight {
+    width: 5px;
+    max-width: 5px;
+    min-width: 5px;
+    overflow: hidden;
+    padding:0 !important;
+}
+
+.other-section {
+    background-color: #eeeeee;
+}
+
+
+
+/* Conflict management */
+
+input.input-warning{
+    border-bottom: none;
+    box-shadow: inset 0 -2px 0 gold;
+}
+
+.clear-both{
+    clear:both;
+}

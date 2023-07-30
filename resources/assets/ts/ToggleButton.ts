@@ -11,7 +11,7 @@ export class ToggleButton {
 
     private actions: Array<ToggleAction> = [];
 
-    constructor(buttonId, isActive: () => boolean, activeStyle = "btn-primary", inactiveStyle = "") {
+    constructor(buttonId, isActive: () => boolean, activeStyle = "btn-primary", inactiveStyle = "btn-outline-primary") {
         this.$button = $(`#${buttonId}`);
         this.isActive = isActive;
         this.activeStyle = activeStyle;
