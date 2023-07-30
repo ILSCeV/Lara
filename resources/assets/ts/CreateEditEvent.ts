@@ -69,10 +69,7 @@ $(() => {
             }
         }
     });
-  /*$('#templateSelector').selectpicker({
-    style: 'btn-primary',
-    liveSearch:true
-  });*/
+
   $('#templateSelector').on("change", () => {
     const selectedValue = $('#templateSelector').val() as string;
     $('#templateSelectorForm').attr('action', selectedValue).trigger("submit");
