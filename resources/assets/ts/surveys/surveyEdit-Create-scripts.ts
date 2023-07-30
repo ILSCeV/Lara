@@ -1,4 +1,4 @@
-import * as $ from "jquery"
+import $ from "jquery";
 
 var questionIdCounter = 0;
 
@@ -16,26 +16,21 @@ $(function() {
     setQuestionNumberDisplayed();
     setDeleteQuestionButtonStatus();
 
-    // Changes dropdown style for mobile view
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-        //$('.selectpicker').selectpicker('mobile');
-    }
-
     $('.form-group').on('change',function() {
-        $(window).bind('beforeunload', function() {
+        $(window).on('beforeunload', function() {
             return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
         });
     });
 
     $("form").on('submit', function () {
         if (<any>$('#btnAdd') !== '.click') {
-            $(window).unbind('beforeunload');
+            $(window).off('beforeunload');
         }
     });
 
     // Checks if user has made input -> if yes, a popup appears if user wants to leave the site
-    $('.questions').add('.input_checkboxitem').add('.selectpicker').change(function () {
-        $(window).bind('beforeunload', function () {
+    $('.questions').add('.input_checkboxitem').add('.selectpicker').on('change', function () {
+        $(window).on('beforeunload', function () {
             return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
         });
     });
@@ -73,7 +68,7 @@ $('#btnAdd').on('click', function () {
         .prop('name', 'questionText[' + questionIdCounter + ']');
     $clone.find('select')
         .val(1)
-        .change()
+        .trigger('change')
         .prop('name', 'type_select['+ questionIdCounter +']');
     $clone.find('[name^=required]')
         .prop('checked', false)
@@ -85,7 +80,7 @@ $('#btnAdd').on('click', function () {
     return false;
 });
 
-$('.btnRemoveQuestion').click(function() {
+$('.btnRemoveQuestion').on('click', function() {
     $(this).closest('[name=question]').remove();
     setQuestionNumberDisplayed();
     setDeleteQuestionButtonStatus();
@@ -96,7 +91,7 @@ export function updateQuestionDisplay (select) {
     var $typeSelect = $(select);
     var $question = $typeSelect.closest('[name^=question]');
     var $answerOptionsDiv = $question.find('.answ_option');
-    var type = parseInt($typeSelect.find('option:selected').val());
+    var type = parseInt(String($typeSelect.find('option:selected').val()));
     switch (type) {
         case 1:
             $answerOptionsDiv.hide();
