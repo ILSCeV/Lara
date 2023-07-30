@@ -12,7 +12,7 @@
             </tr>
             <tr id="evaluation">
                 <td class="evaluation_heading" id="EvaluationColor">
-                    {{ trans('mainLang.evaluation') }}
+                    {{ __('mainLang.evaluation') }}
                 </td>
                 <td class="emtpyCell    " id="EvaluationColor"></td>
                 @foreach($evaluation as $eva_question)
@@ -25,16 +25,16 @@
                                 @foreach($eva_question as $answer_option => $counter)
                                     @if($counter == 1)
                                         @if($answer_option === 'keine Angabe')
-                                            <div>{{$counter}} {{ trans('mainLang.personDidNotAnswer') }}</div>
+                                            <div>{{$counter}} {{ __('mainLang.personDidNotAnswer') }}</div>
                                         @else
-                                            <div>{{$counter}} {{ trans('mainLang.personAnswered') }}
+                                            <div>{{$counter}} {{ __('mainLang.personAnswered') }}
                                                 : {{$answer_option}}</div>
                                         @endif
                                     @else
                                         @if($answer_option === 'keine Angabe')
-                                            <div>{{$counter}} {{ trans('mainLang.personsDidNotAnswer') }}</div>
+                                            <div>{{$counter}} {{ __('mainLang.personsDidNotAnswer') }}</div>
                                         @else
-                                            <div>{{$counter}} {{ trans('mainLang.personsAnswered') }}
+                                            <div>{{$counter}} {{ __('mainLang.personsAnswered') }}
                                                 : {{$answer_option}}</div>
                                         @endif
                                     @endif

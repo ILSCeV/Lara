@@ -3,9 +3,9 @@
      * @var \Lara\StatisticsInformation $info
      */
 @endphp
-<span data-toggle="tooltip" title="{{trans('mainLang.shiftsInOwnSection')}}">
+<span data-bs-toggle="tooltip" title="{{__('mainLang.shiftsInOwnSection')}}">
     {{$info->own_section}}
 </span>
-<span data-toggle="tooltip" title="{{trans('mainLang.shiftsInOtherSection')}}" style="color: lightgrey">
+<span data-bs-toggle="tooltip" title="{{__('mainLang.shiftsInOtherSection')}}" style="color: lightgrey">
     {{ $info->other_section > 0 ? '+ ' . $info->other_section : '' }}
 </span>

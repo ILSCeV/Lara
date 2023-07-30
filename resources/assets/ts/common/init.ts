@@ -8,9 +8,9 @@ let checkInputSupport = (type: String) => {
 
 $(window).on({
   load: () => {
-    $('#userGroupDevelop').selectpicker({
-      style: 'btn-sm',
-    });
+    // $('#userGroupDevelop').selectpicker({
+    //   style: 'btn-sm',
+    // });
 
     // Show/hide comments
     $('.showhide').on({
@@ -26,8 +26,8 @@ $(window).on({
           let targetElement = $(element);
           let targetId = '#' + targetElement.attr('id');
           targetElement.attr('type','text');
-          targetElement.attr('data-toggle', 'datetimepicker');
-          targetElement.attr('data-target', targetId);
+          targetElement.attr('data-bs-toggle', 'datetimepicker');
+          targetElement.attr('data-bs-target', targetId);
           targetElement.datetimepicker({
             icons: {
               time: 'fas fa-clock',

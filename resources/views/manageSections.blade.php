@@ -3,14 +3,14 @@
 @extends('layouts.master')
 
 @section('title')
-    {{ trans('mainLang.manageSections') }}
+    {{ __('mainLang.manageSections') }}
 @stop
 
 @section('content')
 
     <div class="card  col-12 p-0">
         <div class="card-header text-white bg-info">
-            <h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.manageSections') }}</h4>
+            <h4 class="card-title">{{ __('mainLang.management') }}: {{ __('mainLang.manageSections') }}</h4>
         </div>
         <div class="card-body p-0">
             <table class="table info table-hover table-sm">
@@ -20,10 +20,10 @@
                         #
                     </th>
                     <th class="">
-                        {{ trans('mainLang.section') }}
+                        {{ __('mainLang.section') }}
                     </th>
                     <th class="">
-                        {{ trans("mainLang.color") }}
+                        {{ __("mainLang.color") }}
                     </th>
                 </tr>
                 </thead>
@@ -49,7 +49,7 @@
                 <tr>
                     <td></td>
                     <td><a class="btn btn-success"
-                           href="{!! action('SectionController@create') !!}">{{ trans('mainLang.createSection') }}</a>
+                           href="{!! action('SectionController@create') !!}">{{ __('mainLang.createSection') }}</a>
                     </td>
                     <td></td>
                 </tr>

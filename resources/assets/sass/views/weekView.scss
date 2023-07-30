@@ -5,7 +5,6 @@
  ******************************************************************************/
 
 @import "~bootstrap/scss/_functions.scss";
-@import "~bootstrap/scss/_variables.scss";
 @import "~bootstrap/scss/mixins/_breakpoints.scss";
 @import "~bootstrap/scss/mixins/_breakpoints.scss";
 
@@ -16,6 +15,12 @@
   @include media-breakpoint-between(md, lg) {
     column-count: 2;
   }
+  @include media-breakpoint-up(lg) {
+    column-count: 2;
+  }
+}
+.card-columns i,a{
+  text-decoration: none;
 }
 
 .card {

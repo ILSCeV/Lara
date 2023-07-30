@@ -30,6 +30,7 @@ return [
     'notWorkingMail'        => 'Etwas funktioniert nicht? Schreibe uns eine Mail!',
     'moreInfosProjectsite'  => 'Mehr Infos? Besuche uns auf GitHub!',
     'backToTop'             => 'Zurück zum Seitenanfang',
+    'language'              => 'Sprache',
 
     //-----------------------------------------------------------------------------------------------------
 
@@ -163,7 +164,7 @@ return [
     // resources/views/surveyView.blade.php
     'description'           => 'Beschreibung',
     'surveyDeadlineTo'      => 'Die Umfrage läuft noch bis',
-    'um'                    => 'um', //better translation needed
+    'at'                    => 'um',
 
     //result messages; can be changed with pluralization
     'noPersonAnswered'      => 'Es hat noch keine Person abgestimmt.',
@@ -268,8 +269,10 @@ return [
     'chooseAtLeastOne'      => 'Wähle mind. eine...',
     'selectAll'             => 'Alle',
     'selectNone'            => 'Keine',
-    'countSectionsSelected' => '{0} von {1} Sektionen',
+    'countSectionsSelected' => ':sel von :total Sektionen',
     'noSectionSelected'     => 'Keine Sektion ausgewählt!',
+    'enableAll'             => 'Alle an',
+    'disableAll'            => 'Alle aus',
 
     //-----------------------------------------------------------------------------------------------------------
 
@@ -287,6 +290,8 @@ return [
     'today'                 => 'Tag',
     'month'                 => 'Monat',
     'week'                  => 'Woche',
+    'toggleTheme'           => 'Thema umstellen',
+
     //not translated the term 'logs'
     'manageClub'            => 'Clubs verwalten',
     'manageShiftType'       => 'Diensttypen verwalten',
@@ -574,7 +579,7 @@ return [
     // 2fa           //
     ///////////////////
     '2fa'             => 'Zwei-Faktor-Authentisierung',
-    '2fa.setup'       => 'Richten Sie Ihre Zwei-Faktor-Authentifizierung ein, indem Sie den folgenden Barcode scannen. Alternativ können Sie den Code verwenden.',
+    '2fa.setup'       => 'Richten Sie Ihre Zwei-Faktor-Authentifizierung ein, indem Sie den folgenden QR-Code scannen. Alternativ können Sie den Code verwenden.',
     '2fa.verifyWorking' => 'Um sicher zu gehen, dass die Einrichtung vollständig ist geben Sie bitte den aktuellen Code ein.',
     '2fa.unregister'       => 'Zwei-Faktor-Authentisierung entfernen?',
 ];

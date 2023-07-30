@@ -16,8 +16,8 @@
                  $shift->getPerson->prsn_name,
                  array('id'=>'userName' . $shift->id,
                        'class'=>'col-8 col-md-8',
-                       'data-toggle' => "tooltip",
-                       'data-placement' =>"top",
+                       'data-bs-toggle' => "tooltip",
+                       'data-bs-placement' =>"top",
                        'title' => $shift->getPerson->fullName(),
                         'autocomplete'=>'off') )
     !!}
@@ -32,7 +32,7 @@
                        document.getElementById('club{{ ''. $shift->id }}').value='{{Lara\Section::current()->title}}';
                        document.getElementById('ldapId{{ ''. $shift->id }}').value='{{Auth::user()->person->prsn_ldap_id}}';
                        document.getElementById('btn-submit-changes{{ ''. $shift->id }}').click();">
-                <b>{{ trans('mainLang.IDoIt') }}</b>
+                <b>{{ __('mainLang.IDoIt') }}</b>
             </a>
         </li>
     </ul>

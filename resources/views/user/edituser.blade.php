@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    {{ trans('mainLang.editUser') }}
+    {{ __('mainLang.editUser') }}
 @stop
 @php
 $labelClass = 'col-md-2 col-sm-auto';
@@ -14,8 +14,8 @@ $labelClass = 'col-md-2 col-sm-auto';
                 <div class="card bg-secondary ">
                     <div class="card-header ">
                         <h4 class="card-title">
-                            {{ trans('mainLang.editUser') }}
-                            <a data-toggle="collapse" href="#userInformation" class="text-dark-grey float-right">
+                            {{ __('mainLang.editUser') }}
+                            <a data-bs-toggle="collapse" href="#userInformation" class="float-end">
                                 <i class="fa-solid  fa-chevron-down"></i>
                             </a>
                         </h4>
@@ -24,7 +24,7 @@ $labelClass = 'col-md-2 col-sm-auto';
 
                         @ldapSection($user->section)
                         <div class="form-group input-group">
-                            <label class="col-form-label {{$labelClass}}" for="clubNumber"> {{ trans('mainLang.clubNumber') }} </label>
+                            <label class="col-form-label {{$labelClass}}" for="clubNumber"> {{ __('mainLang.clubNumber') }} </label>
                             {{ Form::text('clubnumber', $user->person->prsn_ldap_id,['class'=>"form-control" ,'id'=>'clubNumber','required'=>"",'autofocus'=>'','disabled'=>''])  }}
                         </div>
                         @endldapSection
@@ -40,7 +40,7 @@ $labelClass = 'col-md-2 col-sm-auto';
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('givenname') ? ' has-error' : '' }} ">
-                            <label class="col-form-label {{$labelClass}}" for="givenname"> {{ trans('auth.givenname') }} </label>
+                            <label class="col-form-label {{$labelClass}}" for="givenname"> {{ __('auth.givenname') }} </label>
                             {{ Form::text('givenname',$user->givenname,['class'=>"form-control" ,'id'=>'givenname','required'=>"",'autofocus'=>'']) }}
                             @if ($errors->has('givenname'))
                                 <span class="form-text">
@@ -49,7 +49,7 @@ $labelClass = 'col-md-2 col-sm-auto';
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('lastname') ? ' has-error' : '' }} ">
-                            <label class="col-form-label {{$labelClass}}" for="lastname"> {{ trans('auth.lastname') }} </label>
+                            <label class="col-form-label {{$labelClass}}" for="lastname"> {{ __('auth.lastname') }} </label>
                             {{ Form::text('lastname',$user->lastname,['class'=>"form-control" ,'id'=>'lastname','required'=>"",'autofocus'=>'']) }}
                             @if ($errors->has('lastname'))
                                 <span class="form-text">
@@ -67,7 +67,7 @@ $labelClass = 'col-md-2 col-sm-auto';
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('on_leave') ? ' has-error' : '' }} ">
-                            <label class="col-form-label {{$labelClass}}" for="on_leave"> {{ trans('auth.on_leave_until') }} </label>
+                            <label class="col-form-label {{$labelClass}}" for="on_leave"> {{ __('auth.on_leave_until') }} </label>
                             {{ Form::date('on_leave',$user->on_leave,['class'=>"form-control" ,'id'=>'on_leave']) }}
                             @if ($errors->has('on_leave'))
                                 <span class="form-text">
@@ -76,9 +76,9 @@ $labelClass = 'col-md-2 col-sm-auto';
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('section') ? ' has-error' : '' }} ">
-                            <label for="section" class=" col-form-label {{$labelClass}}">{{trans('mainLang.section')}}</label>
+                            <label for="section" class=" col-form-label {{$labelClass}}">{{__('mainLang.section')}}</label>
                             <div>
-                                <select name="section" id="section" class="editUserFormselectpicker">
+                                <select name="section" id="section" class="form-select editUserFormselectpicker">
                                     @foreach(Lara\Section::all()->sortBy('title') as $section)
                                         <option
                                             value="{{$section->id}}" {{ Gate::denies('createUserOfSection', $section->id) ? "disabled" : "" }} {{$section->id === $user->section->id ? "selected" : ""}} >
@@ -96,10 +96,10 @@ $labelClass = 'col-md-2 col-sm-auto';
                         <div class="form-group {{ $errors->has('status') ? ' has-error' : '' }} ">
                             <label for="status" class="col-form-label {{$labelClass}}">Status</label>
                             <div>
-                                <select name="status" id="status" class="editUserFormselectpicker">
+                                <select name="status" id="status" class="form-select editUserFormselectpicker">
                                     @foreach(Lara\Status::ALL as $status)
                                         <option value="{{$status}}" {{$status === $user->status ? "selected" : ""}}>
-                                            {{trans(Auth::user()->section->title . "." . $status) }}
+                                            {{__(Auth::user()->section->title . "." . $status) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -120,11 +120,11 @@ $labelClass = 'col-md-2 col-sm-auto';
                                 {{ Form::email('email',$user->email,['class'=>"form-control" ,'id'=>'email', 'disabled']) }}
                             </div>
                             <div class="form-group ">
-                                <label for="section" class=" col-form-label {{$labelClass}}">{{trans('mainLang.section')}}</label>
+                                <label for="section" class=" col-form-label {{$labelClass}}">{{__('mainLang.section')}}</label>
                                 {{ Form::text('section',$user->section->title,['class'=>"form-control" ,'id'=>'section', 'disabled']) }}
                             </div>
                             <div class="form-group {{ $errors->has('on_leave') ? ' has-error' : '' }} ">
-                            <label class="col-form-label {{$labelClass}}" for="on_leave"> {{ trans('auth.on_leave_until') }} </label>
+                            <label class="col-form-label {{$labelClass}}" for="on_leave"> {{ __('auth.on_leave_until') }} </label>
                                 {{ Form::date('on_leave',$user->on_leave,['class'=>"form-control" ,'id'=>'on_leave']) }}
                                 @if ($errors->has('on_leave'))
                                     <span class="form-text">
@@ -134,7 +134,7 @@ $labelClass = 'col-md-2 col-sm-auto';
                             </div>
                             <div class="form-group ">
                                 <label for="status" class="col-form-label {{$labelClass}}">Status</label>
-                                {{ Form::text('section',trans(Auth::user()->section->title . "." . $user->status) ,['class'=>"form-control" ,'id'=>'status', 'disabled']) }}
+                                {{ Form::text('section',__(Auth::user()->section->title . "." . $user->status) ,['class'=>"form-control" ,'id'=>'status', 'disabled']) }}
                             </div>
                             @endcanEditUser
                     </div>
@@ -145,9 +145,9 @@ $labelClass = 'col-md-2 col-sm-auto';
                 <div class="card bg-secondary">
                     <div class="card-header">
                         <h4 class="card-title">
-                            {{ trans('mainLang.roleManagement') }}
-                            <a data-toggle="collapse" href="#roleInformation"
-                               class="float-right text-dark-grey collapse-toggle">
+                            {{ __('mainLang.roleManagement') }}
+                            <a data-bs-toggle="collapse" href="#roleInformation"
+                               class="float-end collapse-toggle">
                                 <i class="fa-solid  fa-chevron-down"></i>
                             </a>
                         </h4>
@@ -159,7 +159,7 @@ $labelClass = 'col-md-2 col-sm-auto';
                                     @foreach($permissionsPersection as $sectionId => $roles)
                                             <a class="permissionsPicker nav-item nav-link {{Auth::user()->section_id == $sectionId ? 'active': ''}}" aria-expanded="{{Auth::user()->section_id == $sectionId? 'active': ''}}"
                                                href="#Permissions{{$sectionId}}"
-                                               data-toggle="tab" id="{{$sectionId}}Nav" role="tab"
+                                               data-bs-toggle="tab" id="{{$sectionId}}Nav" role="tab"
                                                aria-expanded="{{Auth::user()->section_id == $sectionId}}"
                                             >
                                                 {{Lara\Section::find($sectionId)->title}}
@@ -177,13 +177,13 @@ $labelClass = 'col-md-2 col-sm-auto';
                                                 <thead>
                                                 <tr>
                                                     <th class="text-center">
-                                                        {{ trans('mainLang.availableRoles') }}
+                                                        {{ __('mainLang.availableRoles') }}
                                                     </th>
                                                     <th class="text-center">
 
                                                     </th>
                                                     <th class="text-center">
-                                                        {{ trans('mainLang.activeRoles') }}
+                                                        {{ __('mainLang.activeRoles') }}
                                                     </th>
                                                 </tr>
                                                 </thead>
@@ -202,7 +202,7 @@ $labelClass = 'col-md-2 col-sm-auto';
                                                             @hasRole($role)
                                                             <button type="button"
                                                                     class="btn btn-sm btn-primary toggleRoleBtn"
-                                                                    data-target="{{$user->hasPermission($role) ? 'src' : 'target'}}-{{$role->id}}"
+                                                                    data-bs-target="{{$user->hasPermission($role) ? 'src' : 'target'}}-{{$role->id}}"
                                                                     data-src="{{$user->hasPermission($role) ? 'target' : 'src'}}-{{$role->id}}">
                                                                 {{$user->hasPermission($role) ? '<' : '>' }}
                                                             </button>
@@ -235,9 +235,9 @@ $labelClass = 'col-md-2 col-sm-auto';
             <div class="col-md-7 col-sm-auto">
                 <div class="btn-group btn-group-lg text-center">
                     <button type="submit" id="updateUserData"
-                            class="btn btn-success"> {{ trans('mainLang.update') }} </button>
+                            class="btn btn-success"> {{ __('mainLang.update') }} </button>
                     <a class="btn btn-secondary"
-                       href="javascript:history.back()">{{ trans('mainLang.backWithoutChange') }}</a>
+                       href="javascript:history.back()">{{ __('mainLang.backWithoutChange') }}</a>
 
                 </div>
             </div>

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    {{ trans('mainLang.editSurvey') }}
+    {{ __('mainLang.editSurvey') }}
 @stop
 @section('moreScripts')
     <script src="{{asset(WebpackBuiltFiles::$assets['survey.js'])}}"></script>

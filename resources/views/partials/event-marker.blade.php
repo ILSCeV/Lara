@@ -1,8 +1,8 @@
 <a href="{{action('IcalController@singleEvent', $clubEvent->id)}}"
-   data-toggle="tooltip"
-   data-placement="top"
+   data-bs-toggle="tooltip"
+   data-bs-placement="top"
    class="{{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}"
-   title="{{ trans('mainLang.addToCalendar')}}">
+   title="{{ __('mainLang.addToCalendar')}}">
     @if( $clubEvent->evnt_type == 0)
         <i class="fa-solid  fa-calendar-alt text"></i>
     @elseif( $clubEvent->evnt_type == 1)

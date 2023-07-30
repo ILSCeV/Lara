@@ -11,18 +11,12 @@
     @endphp
     {{-- Set card color --}}
     <div class="{{ $classString }} {{ $clubEventClass }}">
-        <h4 class="card-title">
+        <h4 @class([$clubEvent->canceled == 1 => 'event-cancelled', 'card-title'])>
             @include('partials.event-marker')
             &nbsp;
-            @if ($clubEvent->canceled == 1)
-                <del>
-            @endif
             <a class="{{ $clubEventClass }}" href="{{ URL::route('event.show', $clubEvent->id) }}">
                 <span class="name">{{ $clubEvent->evnt_title }}</span>
             </a>
-            @if ($clubEvent->canceled == 1)
-                </del>
-            @endif
         </h4>
 
         {{ utf8_encode(strftime('%a, %d. %b', strtotime($clubEvent->evnt_date_start))) }}
@@ -42,7 +36,7 @@
         <div class="{{ $classString }} hidden-print">
             {!! Form::password('password' . $clubEvent->getSchedule->id, [
                 'required',
-                'class' => 'col-md-12 col-12 black-text',
+                'class' => 'col-md-12 col-12',
                 'id' => 'password' . $clubEvent->getSchedule->id,
                 'placeholder' => Lang::get('mainLang.enterPasswordHere'),
             ]) !!}
@@ -50,7 +44,7 @@
         </div>
     @endif
 
-    <div class="card-body p-0">
+    <div class="card-body p-2">
         @if ($isUnBlocked)
             @if (!is_null($clubEvent->getSchedule))
                 {{-- Show shifts --}}
@@ -62,7 +56,7 @@
             @endif
         @else
             <div class="text-center">
-                {{ trans('mainLang.availableAt') }} {{ $clubEvent->unlock_date->isoFormat('DD.MM.YYYY hh:mm') }}
+                {{ __('mainLang.availableAt') }} {{ $clubEvent->unlock_date->isoFormat('DD.MM.YYYY hh:mm') }}
             </div>
         @endif
     </div>

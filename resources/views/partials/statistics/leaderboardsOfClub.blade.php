@@ -2,11 +2,11 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <td>{{trans('mainLang.name')}}</td>
+            <td>{{__('mainLang.name')}}</td>
             @if ($showClubName)
-                <td>{{trans('mainLang.club')}}</td>
+                <td>{{__('mainLang.club')}}</td>
             @endif
-            <td>{{trans('mainLang.totalShifts')}}</td>
+            <td>{{__('mainLang.totalShifts')}}</td>
         </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
             <tr class=" {{Auth::user()->id === $user->id ? 'my-shift' : ''}}">
                 <td>
                     @include('partials.personStatusMarker', ['status' => $user->status, 'section' => $user->section])
-                    <span data-toggle="tooltip" data-placement="top" title="{{ $user->fullName() }}" >
+                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->fullName() }}" >
                         {{$user->name }}
                     </span>
                 </td>

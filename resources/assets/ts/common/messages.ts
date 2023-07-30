@@ -10,8 +10,8 @@ export function createMessage(header: String, message: String, bgClass: String) 
     `
  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="${uidString}" data-autohide="false" style="position: fixed; top: 50%; right: 50%;">
  <div class="toast-header text-primary ${bgClass}">
-    <strong class="mr-auto"> ${header} </strong>
-    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+    <strong class="me-auto"> ${header} </strong>
+    <button type="button" class="ms-2 mb-1 close" data-dismiss="toast" aria-label="Close">
         <span aria-hidden="true">&times;</span>
      </button>
  </div>

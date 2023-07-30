@@ -6,12 +6,9 @@
 		<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
         <meta http-equiv="Cache-control" content="no-cache">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        @if( \Lara\utilities\ViewUtility::isLightMode())
+        {{-- to avoid flickering, this is loaded before the stylesheet: --}}
+        <script src="{{asset(WebpackBuiltFiles::$assets['darkmode.js'])}}" ></script>
         <link rel="stylesheet" type="text/css" href="{{ asset(WebpackBuiltFiles::$assets['lara.css']) }}">
-        @else
-        <link rel="stylesheet" type="text/css" href="{{ asset(WebpackBuiltFiles::$assets['darkmode.css']) }}">
-        @endif
         {{--
         <link rel="stylesheet" type="text/css" href="{{ mix('/static.css') }}">
         --}}
@@ -42,15 +39,14 @@
             localStorage.setItem('language', "{{ Session::get("language","de") }}");
         </script>
 
-		<header class="navigation">
-			@include('partials.navigation')
-		</header>
+
+		@include('partials.navigation')
 
 		<div class="message" id="centerpoint">
 			@include('partials.message')
 		</div>
 
-        <section class="container-fluid px-0">
+        <section id="main-container" class="container-fluid p-4">
             @yield('content')
         </section>
 
@@ -59,9 +55,9 @@
            href="#"
            class="btn btn-primary btn-lg back-to-top hidden-print d-md-none d-lg-none d-sm-block d-block"
            role="button"
-           title="{{ trans("mainLang.backToTop")  }}"
-           data-toggle="tooltip"
-           data-placement="right">
+           title="{{ __("mainLang.backToTop")  }}"
+           data-bs-toggle="tooltip"
+           data-bs-placement="right">
             <i class="fa-solid  fa-chevron-up"></i>
         </a>
 

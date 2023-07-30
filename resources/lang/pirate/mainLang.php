@@ -30,6 +30,7 @@ return [
     'notWorkingMail'        => 'Eine Planke ist lose? Versende uns eine Taube!',
     'moreInfosProjectsite'  => 'Land in Sicht? Kletter\' in den Mast!',
     'backToTop'             => 'Ins Krähennest klettern!',
+    'language'              => 'Sprache',
 
     //-----------------------------------------------------------------------------------------------------
 
@@ -163,7 +164,7 @@ return [
     // resources/views/surveyView.blade.php
     'description'           => 'Beschreibung',
     'surveyDeadlineTo'      => 'Die Umfrage läuft noch bis',
-    'um'                    => 'um', //better translation needed
+    'at'                    => 'um',
 
     //result messages; can be changed with pluralization
     'noPersonAnswered'      => 'Es hat noch keine Person abgestimmt.',
@@ -268,8 +269,10 @@ return [
     'chooseAtLeastOne'      => 'Wähle mind. eine...',
     'selectAll'             => 'Alle',
     'selectNone'            => 'Keine',
-    'countSectionsSelected' => '{0} von {1} Sektionen',
+    'countSectionsSelected' => ':sel von :total Schiffen',
     'noSectionSelected'     => 'Keine Sektion ausgewählt!',
+    'enableAll'             => 'Alle an',
+    'disableAll'            => 'Alle aus',
 
     //-----------------------------------------------------------------------------------------------------------
 
@@ -287,6 +290,8 @@ return [
     'today'                 => 'Tag',
     'month'                 => 'Jahreszwölftel',
     'week'                  => 'Trinkzeit',
+    'toggleTheme'           => 'Mach das Licht aus!',
+    
     //not translated the term 'logs'
     'manageClub'            => 'Schiffe verwalten',
     'manageShiftType'       => 'Diensttypen verwalten',
@@ -572,7 +577,7 @@ return [
     // 2fa           //
     ///////////////////
     '2fa'             => 'Aktuelle Losung',
-    '2fa.setup'       => 'Richten Sie Ihre Zwei-Faktor-Authentifizierung ein, indem Sie den folgenden Barcode scannen. Alternativ können Sie den Code verwenden',
+    '2fa.setup'       => 'Richten Sie Ihre Zwei-Faktor-Authentifizierung ein, indem Sie den folgenden QR-Code scannen. Alternativ können Sie den Code verwenden',
     '2fa.verifyWorking' => 'Um Sicherzugehen, dass die Losung übergeben ist geben Sie bitte den aktuellen Code ein.',
     '2fa.unregister'       => 'Zwei-Faktor-Authentisierung entfernen',
 ];

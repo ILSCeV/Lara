@@ -18,16 +18,16 @@ $(function() {
 
     // Changes dropdown style for mobile view
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-        $('.selectpicker').selectpicker('mobile');
+        //$('.selectpicker').selectpicker('mobile');
     }
 
-    $('.form-group').change(function() {
+    $('.form-group').on('change',function() {
         $(window).bind('beforeunload', function() {
             return 'Beim Verlassen der Seite gehen alle Eingaben verloren.';
         });
     });
 
-    $("form").submit(function () {
+    $("form").on('submit', function () {
         if (<any>$('#btnAdd') !== '.click') {
             $(window).unbind('beforeunload');
         }
@@ -52,7 +52,7 @@ function setDeleteQuestionButtonStatus() {
     $('.btnRemoveQuestion').prop('disabled', amountOfQuestions === 1);
 }
 
-$('#btnAdd').click(function () {
+$('#btnAdd').on('click', function () {
     questionIdCounter++;
     var $questions = $('.questions');
     var $lastQuestion = $questions.children().last();

@@ -1,3 +1,3 @@
 <div class="card card-body">
-	{{ trans('mainLang.accessDenied') }}
+	{{ __('mainLang.accessDenied') }}
 </div>

@@ -2,7 +2,7 @@
 @extends('layouts.master')
 
 @section('title')
-    {{ trans('mainLang.management') }}: #{{ $current_shiftType->id }} - {!! $current_shiftType->title !!}
+    {{ __('mainLang.management') }}: #{{ $current_shiftType->id }} - {!! $current_shiftType->title !!}
 @stop
 
 @section('content')
@@ -19,8 +19,8 @@
                                         'method' => 'PUT',
                                         'class' => 'shiftType form-inline')  ) !!}
 
-                <div class="pl-3 col">
-                    <i>{{ trans('mainLang.shiftType') }}:</i>
+                <div class="ps-3 col">
+                    <i>{{ __('mainLang.shiftType') }}:</i>
                 </div>
                 <div class="col">
                     {!! Form::text('title' . $current_shiftType->id,
@@ -28,8 +28,8 @@
                        array('id'=>'title' . $current_shiftType->id, 'class'=>$inputClass)) !!}
                 </div>
                 <div class="w-100"></div>
-                <div class="pl-3 w-25 col">
-                    <i>{{ trans('mainLang.begin') }}:</i>
+                <div class="ps-3 w-25 col">
+                    <i>{{ __('mainLang.begin') }}:</i>
                 </div>
                 <div class="col">
                     {!! Form::input('time','start' . $current_shiftType->id,
@@ -38,8 +38,8 @@
                 </div>
                 <div class="w-100"></div>
 
-                <div class="pl-3 w-25 col">
-                    <i>{{ trans('mainLang.end') }}:</i>
+                <div class="ps-3 w-25 col">
+                    <i>{{ __('mainLang.end') }}:</i>
                 </div>
                 <div class="col">
                     {!! Form::input('time','end' . $current_shiftType->id,
@@ -47,8 +47,8 @@
                        array('id'=>'end' . $current_shiftType->id, 'class'=>$inputClass)) !!}
                 </div>
                 <div class="w-100"></div>
-                <div class="pl-3 w-25 col">
-                    <i>{{ trans('mainLang.weight') }}:</i>
+                <div class="ps-3 w-25 col">
+                    <i>{{ __('mainLang.weight') }}:</i>
                 </div>
                 <div class="col">
                     {!! Form::text('statistical_weight' . $current_shiftType->id,
@@ -58,25 +58,25 @@
                 </div>
                 <div class="w-100"></div>
                 <div class="btn-group btn-group-sm">
-                    <button type="reset" class="btn btn-sm btn-secondary">{{ trans('mainLang.reset') }}</button>
-                    <button type="submit" class="btn btn-sm btn-success">{{ trans('mainLang.update') }}</button>
+                    <button type="reset" class="btn btn-sm btn-secondary">{{ __('mainLang.reset') }}</button>
+                    <button type="submit" class="btn btn-sm btn-success">{{ __('mainLang.update') }}</button>
                 </div>
 
                 {!! Form::close() !!}
                 <div class="w-100"></div>
                 @if( $current_shiftType->shifts->count() == 0 )
-                    <div class="pl-3 col-2">
-                        {{ trans('mainLang.shiftTypeNeverUsed') }}
+                    <div class="ps-3 col-2">
+                        {{ __('mainLang.shiftTypeNeverUsed') }}
                         <a href="../shiftType/{{ $current_shiftType->id }}"
                            class="btn btn-small btn-danger"
-                           data-toggle="tooltip"
-                           data-placement="bottom"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="bottom"
                            title="&#39;&#39;{!! $current_shiftType->title !!}&#39;&#39; (#{{ $current_shiftType->id }}) löschen"
                            data-method="delete"
                            data-token="{{csrf_token()}}"
                            rel="nofollow"
-                           data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_shiftType->title !!}&#39;&#39; (#{{ $current_shiftType->id }})? {{ trans('mainLang.warningNotReversible') }}">
-                            {{ trans('mainLang.delete') }}
+                           data-confirm="{{ __('mainLang.deleteConfirmation') }} &#39;&#39;{!! $current_shiftType->title !!}&#39;&#39; (#{{ $current_shiftType->id }})? {{ __('mainLang.warningNotReversible') }}">
+                            {{ __('mainLang.delete') }}
                         </a>
                         ?
                     </div>
@@ -86,23 +86,23 @@
 
                     <table class="table table-hover table-sm" id="events-rows">
                         <caption
-                            class="caption text-center caption-top">{{ trans('mainLang.shiftTypeUsedInFollowingEvents') }}</caption>
+                            class="caption text-center caption-top">{{ __('mainLang.shiftTypeUsedInFollowingEvents') }}</caption>
                         <thead>
                         <tr class="active">
                             <th class=" text-center">
                                 #
                             </th>
                             <th class="text-center">
-                                {{ trans('mainLang.event') }}
+                                {{ __('mainLang.event') }}
                             </th>
                             <th class="text-center">
-                                {{ trans('mainLang.section') }}
+                                {{ __('mainLang.section') }}
                             </th>
                             <th class=" text-center">
-                                {{ trans('mainLang.date') }}
+                                {{ __('mainLang.date') }}
                             </th>
                             <th class=" text-center">
-                                {{ trans('mainLang.actions') }}
+                                {{ __('mainLang.actions') }}
                             </th>
                         </tr>
                         </thead>
@@ -149,7 +149,7 @@
                     <div class="w-100"></div>
                     <table class="table table-hover table-sm" id="events-rows">
                         <caption class="caption text-center caption-top">
-                            {{ trans('mainLang.shiftTypeUsedInFollowingTemplates') }}
+                            {{ __('mainLang.shiftTypeUsedInFollowingTemplates') }}
                         </caption>
                         <thead>
                         <tr class="active">
@@ -157,13 +157,13 @@
                                 #
                             </th>
                             <th class="text-center">
-                                {{ trans('mainLang.template') }}
+                                {{ __('mainLang.template') }}
                             </th>
                             <th class="text-center">
-                                {{ trans('mainLang.section') }}
+                                {{ __('mainLang.section') }}
                             </th>
                             <th class="text-center">
-                                {{ trans('mainLang.actions') }}
+                                {{ __('mainLang.actions') }}
                             </th>
                         </tr>
                         </thead>

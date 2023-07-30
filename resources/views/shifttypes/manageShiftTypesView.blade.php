@@ -3,7 +3,7 @@
 @extends('layouts.master')
 
 @section('title')
-	{{ trans('mainLang.management') }}: {{ trans('mainLang.shiftTypes') }}
+	{{ __('mainLang.management') }}: {{ __('mainLang.shiftTypes') }}
 @stop
 
 @section('content')
@@ -12,7 +12,7 @@
 
 	<div class="card col-12 p-0">
 		<div class=" text-white bg-info card-header">
-				<h4 class="card-title">{{ trans('mainLang.management') }}: {{ trans('mainLang.shiftTypes') }}</h4>
+				<h4 class="card-title">{{ __('mainLang.management') }}: {{ __('mainLang.shiftTypes') }}</h4>
 		</div>
 		<div class="card-body p-0">
             <div class="clearfix pt-2"></div>
@@ -20,7 +20,7 @@
             <div class="col-2 align-self-end">
                 {{Form::open(['url'=> route('searchShiftType'), 'method'=>'POST' ])}}
                 <div class="form-group form-group-sm">
-                    <input type="text" name="filter" placeholder="{{trans('mainLang.filter')}}" class="form-control form-control-sm form-control-plaintext">
+                    <input type="text" name="filter" placeholder="{{__('mainLang.filter')}}" class="form-control form-control-sm form-control-plaintext">
                 </div>
                 <div class="form-group form-group-sm">
                     {{Form::submit('',['class'=>'d-none'])}}
@@ -36,19 +36,19 @@
                             #
                         </th>
                         <th data-searchable="true" data-field="shift">
-                            {{ trans('mainLang.shift') }}
+                            {{ __('mainLang.shift') }}
                         </th>
                         <th data-searchable="true">
-                            {{ trans('mainLang.start') }}-{{ trans('mainLang.end') }}
+                            {{ __('mainLang.start') }}-{{ __('mainLang.end') }}
                         </th>
                         <th data-searchable="true">
-                            {{ trans('mainLang.weight') }}
+                            {{ __('mainLang.weight') }}
                         </th>
                         <th class="text-center">
-                            {{ trans("mainLang.actions") }}
+                            {{ __("mainLang.actions") }}
                         </th>
                         <th data-searchable="false" class="text-center">
-                            {{ trans("mainLang.replaceAll") }}
+                            {{ __("mainLang.replaceAll") }}
                         </th>
                     </tr>
                     </thead>
@@ -75,7 +75,7 @@
                                     <a href="../shiftType/{{ $shiftType->id }}"
                                        class="btn btn-sm btn-success"
                                        rel="nofollow">
-                                        {{ trans('mainLang.editDetails') }}
+                                        {{ __('mainLang.editDetails') }}
                                     </a>
                                     &nbsp;&nbsp;
                                     <a href="../shiftType/{{ $shiftType->id }}"
@@ -83,8 +83,8 @@
                                        data-method="delete"
                                        data-token="{{csrf_token()}}"
                                        rel="nofollow"
-                                       data-confirm="{{ trans('mainLang.deleteConfirmation') }} &#39;&#39;{!! $shiftType->title !!}&#39;&#39; (#{{ $shiftType->id }})? {{ trans('mainLang.warningNotReversible') }}">
-                                        {{ trans('mainLang.deleteThisShiftType') }}
+                                       data-confirm="{{ __('mainLang.deleteConfirmation') }} &#39;&#39;{!! $shiftType->title !!}&#39;&#39; (#{{ $shiftType->id }})? {{ __('mainLang.warningNotReversible') }}">
+                                        {{ __('mainLang.deleteThisShiftType') }}
                                     </a>
                                 </td>
                                 <td class="text-center">

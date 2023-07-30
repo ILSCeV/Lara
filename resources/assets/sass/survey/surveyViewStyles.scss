@@ -353,3 +353,40 @@ tr .card {
         left: -77px;
     }
 }
+
+#dropdown_name {
+    position: absolute;
+    overflow: visible;
+    z-index: 12;
+}
+
+#dropdown-menu_name {
+    position: absolute;
+    top: 44px;
+    left: 4%;
+    right: 4%;
+}
+
+#dropdown-menu_name2 {
+    position: absolute;
+    left: inherit;
+    top: 30px;
+}
+
+#cellEditing-2 {
+    position: absolute;
+    overflow: visible;
+    z-index: 11;
+}
+
+#dropdown_club {
+    overflow: visible;
+}
+
+#dropdown-menu_club {
+    position: absolute;
+}
+
+#question_row {
+    height: 50px
+}

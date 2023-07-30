@@ -1,20 +1,20 @@
-{{ Form::button('<i class="fa-solid  fa-check"
-                   data-toggle="tooltip"
-                   data-placement="top"
+{{ Form::button('<i class="fa fa-check"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="top"
                    title="Änderungen speichern"></i>',
-                array('type' => 'submit',
+                ['type' => 'submit',
                       'name' => 'btn-submit-change' . $shift->id,
                       'id' => 'btn-submit-changes' . $shift->id,
-                      'class' => 'btn btn-sm btn-success hide')) }}
+                      'class' => 'btn btn-sm btn-success hide']) }}
 
 @if( is_null($shift->getPerson) )
 
-    <i class="fa-solid  fa-question"
+    <i class="fa fa-question"
        name="status-icon"
        style="color:lightgrey;"
-       data-toggle="tooltip"
-       data-placement="top"
-       title="{{ trans('mainLang.jobFree') }}"></i>
+       data-bs-toggle="tooltip"
+       data-bs-placement="top"
+       title="{{ __('mainLang.jobFree') }}"></i>
 
 @else
 
@@ -29,16 +29,16 @@
         <i class="{{ $attributes["status"]}}"
            name="status-icon"
            style="{{ $attributes["style"] }}"
-           data-toggle="tooltip"
-           data-placement="top"
+           data-bs-toggle="tooltip"
+           data-bs-placement="top"
            title="{{ Lara\Status::localize($person->prsn_status, $section) }}"></i>
     @else
         <i class="far fa-circle"
            name="status-icon"
            style="color:yellowgreen;"
-           data-toggle="tooltip"
-           data-placement="top"
-           title="{{ trans('mainLang.external') }}"></i>
+           data-bs-toggle="tooltip"
+           data-bs-placement="top"
+           title="{{ __('mainLang.external') }}"></i>
     @endif
 
 @endif

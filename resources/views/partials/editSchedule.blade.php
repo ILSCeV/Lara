@@ -1,11 +1,11 @@
-<div class="card p-0">
+<div class="card">
 	<div class="card-header">
-		<h4 class="card-title">{{ trans('mainLang.adjustRoster') }}:</h4>
+		<h4 class="card-title">{{ __('mainLang.adjustRoster') }}</h4>
 	</div>
 
 	<div class="card-body" id="main">
 		{{-- shiftType fields --}}
-	    <div id="shiftContainer" class="container shiftContainer">
+	    <div id="shiftContainer">
             <?php $counter=0;?>
 			@foreach($shifts as $shift)
 				@include('partials.events.shift', [
@@ -16,9 +16,8 @@
 					"shiftId" => $shift->id,
 					"optional" => $shift->optional,
 					"counter" => $counter,
-					'shiftTypeId' => $shift->type->id
+					"shiftTypeId" => $shift->type->id
 				])
-				<br class="d-block d-sm-none">
 				<?php $counter = $counter+1;?>
 			@endforeach
 
@@ -31,7 +30,6 @@
 				"optional" => 0,
 				'shiftTypeId' => ""
 			])
-
 		</div>
 	</div>
 </div>

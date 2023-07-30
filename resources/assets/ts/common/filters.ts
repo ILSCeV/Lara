@@ -1,78 +1,86 @@
 import * as Isotope from "isotope-layout/js/isotope";
-import {safeGetLocalStorage, safeSetLocalStorage} from "../Utilities";
-import {ToggleButton} from "../ToggleButton";
-import {makeClassToggleAction, makeLocalStorageAction} from "../ToggleAction";
-import {translate} from "../Translate";
-
+import { safeGetLocalStorage, safeSetLocalStorage } from "../Utilities";
+import { ToggleButton } from "../ToggleButton";
+import { makeClassToggleAction, makeLocalStorageAction } from "../ToggleAction";
+import { translate } from "../Translate";
 
 /** request param
  * filter="mi-di"
  */
 declare var extraFilter: any;
 
+const allSectionsCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('#offcanvas input[type=checkbox]');
+declare var sectionCountString: string;
+
 export const showAllActiveSections = () => {
-  let $sectionSelect = $('#section-filter-selector');
+  let enabledSections = Array.from(allSectionsCheckboxes, (c, i) => { return c.checked ? c.dataset : null })
+    .filter(e => e !== null);
+  console.dir(enabledSections);
+
   $(".section-filter").addClass('d-none');
-  $(".label-filters").addClass('d-none');
-  if ((<string[]>$sectionSelect.val()).length == 0) {
-    $('#label-none').removeClass('d-none');
-  } else {
-    (<string[]>$sectionSelect.val()).forEach(filter => {
-      $(`.${filter.slice(7)}`).removeClass('d-none');
-      $(`#label-section-${filter.slice(15)}`).removeClass('d-none');
-    });
-  }
-  // isotope ? isotope.layout() : null;
+  enabledSections.forEach(s => {
+    $(`.section-${s.sectionId}`).removeClass('d-none');
+  });
+
+  const filterButton = <HTMLButtonElement>document.getElementById('filterCountButtonText');
+
+  // Set x of y selected
+  filterButton.textContent =
+    sectionCountString.replace(':sel', String(enabledSections.length))
+      .replace(':total', String(allSectionsCheckboxes.length));
+
+  // Set the tooltip text
+  filterButton.title = enabledSections.map(e => e.section).join(', ');
 };
 
 export const initFilters = () => {
-
   //////////////////////////////////////////////////////
   // Month view without Isotope, section filters only //
   //////////////////////////////////////////////////////
-  const isMonthView = $('#month-view-marker').length;
-  const isWeekView = $('#week-view-marker').length > 0;
-  const isDayView = $('#day-view-marker').length;
+  const isMonthView: boolean = $('#month-view-marker').length > 0;
+  const isWeekView: boolean = $('#week-view-marker').length > 0;
+  const isDayView: boolean = $('#day-view-marker').length > 0;
 
 
   const initializeSectionFilters = (isotope: typeof Isotope = null) => {
 
-    let enabledSections = [];
+    const enableAllButton: HTMLButtonElement = document.querySelector("#sections-filter-enable-all");
+    const disableAllButton: HTMLButtonElement = document.querySelector("#sections-filter-disable-all");
 
-    // Handle clicking on a section label
-    $('.label-filters').click((e) => {
-      // Deselect the clicked section
-      let section = (<HTMLSpanElement>e.target).id.slice(14);
-      // Update the local storage
-      safeSetLocalStorage("filter-section-" + section, "hide");
-      // Uncheck the select option
-      $sectionSelect.selectpicker('val',  $sectionSelect.val().filter(sec => sec !== "filter-section-"+section));
-      // Refresh elements
-      showAllActiveSections();
-      e.preventDefault();
-    });
-
-    let $sectionSelect = $('#section-filter-selector');
-
-    $sectionSelect.on('changed.bs.select', (event, clickedIndex, newValue, oldValue) => {
-      //Always set all of them, in case the user selected "Select/Deselect all"
-      $sectionSelect.find('option').each((i: number, option: HTMLOptionElement) => {
-        safeSetLocalStorage(option.value, option.selected ? "show" : "hide");
+    enableAllButton.addEventListener("click", () => {
+      allSectionsCheckboxes.forEach((c: HTMLInputElement) => {
+        c.checked = true
+        safeSetLocalStorage(`filter-section-${c.dataset.sectionId}`, "show");
+        showAllActiveSections();
       });
+    });
+    disableAllButton.addEventListener("click", () => {
+      allSectionsCheckboxes.forEach((c: HTMLInputElement) => {
+        c.checked = false
+        safeSetLocalStorage(`filter-section-${c.dataset.sectionId}`, "hide");
+        showAllActiveSections();
+      });
+    });
+
+    // Handle toggling on a section label
+    allSectionsCheckboxes.forEach((c: HTMLInputElement) => {
+      c.addEventListener("change", handleSectionCheckboxChanged)
+    });
+
+    function handleSectionCheckboxChanged(ev: Event): any {
+      safeSetLocalStorage(`filter-section-${this.dataset.sectionId}`, this.checked ? "show" : "hide");
       showAllActiveSections();
-    });
+    }
 
-    $sectionSelect.find('option').each((i: number, option: HTMLOptionElement) => {
-      if (safeGetLocalStorage(option.value) !== "hide") {
-        enabledSections.push(option.value);
-      }
-    });
-
-    //Enable all sections enabled in the localStorage inside the select
-    $sectionSelect.removeClass("d-none");
-    $sectionSelect.selectpicker('val', enabledSections);
+    //read the saved state from localstorage
+    allSectionsCheckboxes.forEach(c => {
+      c.checked = !(safeGetLocalStorage(`filter-section-${c.dataset.sectionId}`) === "hide")
+    })
     showAllActiveSections();
   };
+
+
+
 
   if (isMonthView || isWeekView || isDayView) {
     initializeSectionFilters();
@@ -131,7 +139,7 @@ export const initFilters = () => {
     shiftTimes.addActions([
       makeLocalStorageAction("shiftTime", "show", "hide"),
       makeClassToggleAction(".shift-time", "hide", false),
-     // () => isotope.layout()
+      // () => isotope.layout()
     ])
       .setToggleStatus(safeGetLocalStorage("shiftTime") == "show")
       .setText(translate("shiftTime"));
@@ -152,12 +160,12 @@ export const initFilters = () => {
 
     // Constraint: limits usage of this filter to week view only
     if ($('#week-view-marker').length) {
-      const allComments = new ToggleButton("toggle-all-comments", () => ! $('[name^=comment]').hasClass("hide"));
+      const allComments = new ToggleButton("toggle-all-comments", () => !$('[name^=comment]').hasClass("hide"));
 
       allComments.addActions([
         makeLocalStorageAction("allComments", "show", "hide"),
         makeClassToggleAction("[name^=comment]", "hide", false),
-      //  () => isotope.layout()
+        //  () => isotope.layout()
       ])
         .setToggleStatus(safeGetLocalStorage("allComments") == "show");
     }
@@ -175,9 +183,9 @@ export const initFilters = () => {
     const weekStart = new ToggleButton("toggle-week-start", () => safeGetLocalStorage("weekStart") == "monday", "btn-primary", "btn-success");
 
     weekStart.addActions([makeLocalStorageAction("weekStart", "monday", "wednesday"),
-      makeClassToggleAction(".week-mo-so", "hide", true),
-      makeClassToggleAction(".week-di-mo", "hide", false),
-      (isActive: boolean) => weekStart.setText(isActive ? weekMonSun : weekWedTue),
+    makeClassToggleAction(".week-mo-so", "hide", true),
+    makeClassToggleAction(".week-di-mo", "hide", false),
+    (isActive: boolean) => weekStart.setText(isActive ? weekMonSun : weekWedTue),
       //() => isotope.layout()
     ]);
 

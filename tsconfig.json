@@ -13,7 +13,6 @@
     "types": [
       "jquery",
       "bootstrap",
-      "bootstrap-select",
       "bootbox",
       "sortablejs",
       "es6-promise",
