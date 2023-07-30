@@ -30,7 +30,7 @@ export const showAllActiveSections = () => {
       .replace(':total', String(allSectionsCheckboxes.length));
 
   // Set the tooltip text
-  filterButton.title = enabledSections.map(e => e.section).join(', ');
+  filterButton.dataset.bsTitle = enabledSections.map(e => e.section).join(', ');
 };
 
 export const initFilters = () => {
