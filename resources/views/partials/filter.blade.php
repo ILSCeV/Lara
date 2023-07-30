@@ -44,56 +44,5 @@ $filterSection = $sections->sortByDesc('title');
             data-section="survey">
             <label class="form-check-label badge palette-Purple-900-Primary bg align-text-bottom" for="section-filter-survey"> {{__('mainLang.survey')}}</label>
         </div>
-
-        <!--
-        <div class="d-block p-auto m-auto">
-            <span id="label-none"
-                  class="badge label-filters palette-Red-900-Primary bg d-none float-end">
-                &nbsp;
-                {{__('mainLang.noSectionSelected')}}
-            </span>
-            <span id="label-section-survey"
-                  class="badge label-filters palette-Purple-900 bg d-none float-end">
-                {{__('mainLang.survey')}}
-                &nbsp;
-                <span class="far fa-times-circle"></span>
-            </span>
-            @foreach( $filterSection->reverse() as $section)
-                <span id="label-section-{!! $section["id"] !!}"
-                      class="badge label-filters palette-{{$section->color}}-500-Primary bg d-none float-end">
-                    {!! $section["title"] !!}
-                    &nbsp;
-                    <span class="far fa-times-circle"></span>
-                </span>
-            @endforeach
-        </div>
-        
-        <br>
-        
-        <div class="row col-md-12 d-block p-auto m-auto align-right">
-            <select id="section-filter-selector"
-                    class="form-select d-none show-tick float-end"
-                    multiple
-                    title="{{ __('mainLang.chooseAtLeastOne') }}"
-                    data-selected-text-format="count > 2"
-                    data-actions-box="true"
-                    data-select-all-text="{{ __('mainLang.selectAll') }}"
-                    data-deselect-all-text="{{ __('mainLang.selectNone') }}"
-                    data-count-selected-text="{{ __('mainLang.countSectionsSelected') }}"
-                    data-style="btn btn-sm btn-light"
-                    >
-                @foreach($filterSection as $section)
-                    <option value="filter-section-{!! $section["id"] !!}"
-                            class="palette-{{$section->color}}-500-Primary bg option-shadow">
-                                {!! $section["title"] !!}
-                    </option>
-                @endforeach
-                <option value="filter-section-survey"
-                        class="palette-Purple-900 bg option-shadow">
-                            {{__('mainLang.survey')}}
-                </option>
-            </select>
-        </div>
-    -->
     </div>
 </div>
