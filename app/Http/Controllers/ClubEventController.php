@@ -584,7 +584,7 @@ class ClubEventController extends Controller
         $event->price_tickets_external = $this->getOrNullNumber('priceTicketsExternal');
         $event->price_normal = $this->getOrNullNumber('priceNormal');
         $event->price_external = $this->getOrNullNumber('priceExternal');
-        $event->template_id = $this->getTemplateId();
+        $event->template_id = $this->getOrNullNumber('templateId');
 
         // Check if event URL is properly formatted: if the protocol is missing, we have to add it.
         if ($event->event_url !== "" && parse_url($event->event_url, PHP_URL_SCHEME) === null) {
@@ -675,27 +675,5 @@ class ClubEventController extends Controller
             default:
                 return null;
         }
-    }
-
-    private function getTemplateId()
-    {
-        $templateValue = request('template', -1);
-        if ($templateValue == -1) {
-            return null;
-        }
-        /**
-         * from input event we get the link to create a template
-         * e.g. <code>/event/2018/02/16/81/create</code>
-         * in this case we need the 81
-         * php can only search from beginning
-         * so we reverse the string, use offset 7 to look after create
-         * we get the position of the /
-         * now we get the substring -> 81/create
-         * after this we remove the /create -> 81
-         */
-        $reverse = strrev($templateValue);
-        $pos = strpos($reverse, "/", 7);
-        $result = substr($templateValue, strlen($templateValue) - $pos);
-        return str_replace("/create", '', $result);
     }
 }
