@@ -1,6 +1,6 @@
 import { safeGetLocalStorage, safeSetLocalStorage } from "../Utilities";
 import 'bootstrap/js/dist/modal';
-import 'bootstrap/js/dist/tab';
+import Tab from 'bootstrap/js/dist/tab';
 import * as bootbox from "bootbox"
 import { translate } from "../Translate";
 
@@ -112,9 +112,6 @@ $(() => {
     preferredLeaderboards = userSection;
   }
 
-  (document.querySelector(`.statisticClubPicker a[data-section='${preferredStatistics}']`) as HTMLAnchorElement)?.click();
-  (document.querySelector(`.leaderboardsClubPicker a[data-section='${preferredLeaderboards}']`) as HTMLAnchorElement)?.click();
-
   let preferredSortType = <SortMode>localStorage.getItem('preferredSortType');
   let preferredSortOrder = localStorage.getItem('preferredSortOrder');
 
@@ -125,8 +122,10 @@ $(() => {
   $tables.each(function () {
     sortTable($(this), sortMode, isDescending);
     updateSortIconStyle($(this), sortMode, isDescending);
-  })
+  });
 
+  Tab.getOrCreateInstance(document.querySelector(`.statisticClubPicker a[data-section='${preferredStatistics}']`)).show();
+  Tab.getOrCreateInstance(document.querySelector(`.leaderboardsClubPicker a[data-section='${preferredLeaderboards}']`)).show();
 });
 
 ////////////////
