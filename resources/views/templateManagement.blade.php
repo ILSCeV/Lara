@@ -9,18 +9,18 @@
 
 @section('content')
 
-    <div class="card col-12 p-0">
+    <div class="card col-12">
         <div class="card-header bg-info text-white">
             <h4 class="card-title">{{ __('mainLang.management') }}: {{ __('mainLang.manageTemplates') }}</h4>
         </div>
 
-        <div class="card-body p-0">
-            <div class="d-inline-block">
-                <div class="col-4 has-feedback d-inline-block ">
-                    <label for="templateOverviewFilter" class="text-primary"> {{ __('mainLang.search') }}: </label>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4 has-feedback me-auto">
+                    <label for="templateOverviewFilter" class="form-label"> {{ __('mainLang.search') }}: </label>
                     <input type="text" class="form-control form-control-sm" id="templateOverviewFilter" autofocus>
                 </div>
-                <div class="col-1 float-end">
+                <div class="col-3">
                     <a class="btn btn-success btn-sm" href="{{route('template.create')}}">
                         {{ __('mainLang.createTemplate') }}
                     </a>
