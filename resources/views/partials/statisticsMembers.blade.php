@@ -5,9 +5,11 @@
         </h4>
         <ul class="nav nav-tabs card-header-tabs">
             @foreach ($clubInfos->sortKeys() as $title => $info)
-                <li class="{{ Lara\Section::current()->title === $title ? 'active' : '' }} statisticClubPicker nav-item">
-                    <a data-section="{{$title}}" aria-current="{{ Lara\Section::current()->title == $title ? 'true' : 'false' }}"
-                        href="#{{ str_replace(' ', '-', mb_strtolower($title)) }}" data-bs-toggle="tab" class="nav-link">
+                <li class="statisticClubPicker nav-item">
+                    <a data-section="{{$title}}" 
+                    href="#{{ str_replace(' ', '-', mb_strtolower($title)) }}" 
+                    data-bs-toggle="tab" 
+                    class="nav-link">
                         {{ $title }}
                     </a>
                 </li>
@@ -23,7 +25,7 @@
                  */
             @endphp
             @foreach ($clubInfos->sortKeys() as $title => $clubInfo)
-                <div class="tab-pane fade in {{ Lara\Section::current()->title === $title ? 'active' : '' }}"
+                <div class="tab-pane fade"
                     id="{{ str_replace(' ', '-', mb_strtolower($title)) }}">
                     <table class="table table-hover">
                         <thead>

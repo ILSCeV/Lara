@@ -3,14 +3,14 @@
         <h4 class="card-title">
             {{ __('mainLang.leaderBoards') }}
         </h4>
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs card-header-tabs">
             <li class="leaderboardsClubPicker nav-item">
                 <a class="nav-link" aria-expanded="true" href="#all-leaderboards"
                     data-bs-toggle="tab">{{ __('mainLang.allClubs') }}</a>
             </li>
             @foreach ($clubInfos->sortKeys()->keys() as $title)
-                <li class="{{ Lara\Section::current()->title == $title ? 'active' : '' }} leaderboardsClubPicker nav-item">
-                    <a data-section="{{$title}}" aria-expanded="{{ Lara\Section::current()->title == $title ? 'active' : '' }}"
+                <li class="leaderboardsClubPicker nav-item">
+                    <a data-section="{{$title}}"
                         href="#{{ str_replace(' ', '-', strtolower($title)) }}-leaderboards" data-bs-toggle="tab"
                         class="nav-link">
                         {{ $title }}

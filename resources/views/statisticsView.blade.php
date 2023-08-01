@@ -91,23 +91,18 @@
                     @endif
                 </div>
             </div>
-
-            <br>
-            <br>
-            <br class="d-block d-sm-none">
         </div>
     </div>
 
     <div class="row container-fluid">
 
         {{-- Club member stats --}}
-        <div class="col-12 col-md-8 p-0-xs">
+        <div class="col-12 col-md-8 p-0-xs mb-3">
             @include('partials.statisticsMembers')
         </div>
 
         {{-- Leaderboard --}}
         <div class="col-12 col-md-4 p-0-xs">
-            <br class="d-block d-sm-none">
             @include('partials.statisticsLeaderboards')
         </div>
 

@@ -41,7 +41,7 @@
             </ul>
 
             <div id="myTabContent" class="tab-content p-3" style="max-height: 340px; overflow-y: scroll">
-                <div class="tab-pane fade in active show" id="complete">
+                <div class="tab-pane fade active show" id="complete">
                     <p><strong>Datenschutzerklärung</strong></p>
                     <p><strong></strong></p>
                     <p>
