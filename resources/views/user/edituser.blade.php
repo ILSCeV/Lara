@@ -7,11 +7,11 @@ $labelClass = 'col-md-2 col-sm-auto';
 @endphp
 
 @section('content')
-    <div class="container-fluid">
+    <div class="row g-3">
 
             {{ Form::open(['class'=>'form-inline ','route'=>['user.updateData',$user]])  }}
             <div class="col-md-7 col-auto">
-                <div class="card bg-secondary ">
+                <div class="card">
                     <div class="card-header ">
                         <h4 class="card-title">
                             {{ __('mainLang.editUser') }}
@@ -140,9 +140,8 @@ $labelClass = 'col-md-2 col-sm-auto';
                     </div>
                 </div>
             </div>
-            <div class="w-100"></div>
             <div class="col-md-7 col-auto">
-                <div class="card bg-secondary">
+                <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">
                             {{ __('mainLang.roleManagement') }}
@@ -154,7 +153,7 @@ $labelClass = 'col-md-2 col-sm-auto';
                     </div>
                     <div id="roleInformation" class="card-body show collapse in">
                         @if (count($permissionsPersection) > 0)
-                            <div class="card bg-secondary">
+                            <div class="card">
                                 <nav class="nav nav-tabs" role="tablist">
                                     @foreach($permissionsPersection as $sectionId => $roles)
                                             <a class="permissionsPicker nav-item nav-link {{Auth::user()->section_id == $sectionId ? 'active': ''}}" aria-expanded="{{Auth::user()->section_id == $sectionId? 'active': ''}}"
@@ -231,7 +230,6 @@ $labelClass = 'col-md-2 col-sm-auto';
                     </div>
                 </div>
             </div>
-            <div class="w-100"></div>
             <div class="col-md-7 col-sm-auto">
                 <div class="btn-group btn-group-lg text-center">
                     <button type="submit" id="updateUserData"
@@ -243,5 +241,4 @@ $labelClass = 'col-md-2 col-sm-auto';
             </div>
             {{ Form::close() }}
         </div>
-
-@stop
+@endsection
