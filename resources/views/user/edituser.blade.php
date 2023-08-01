@@ -202,7 +202,7 @@ $labelClass = 'col-md-2 col-sm-auto';
                                                             @hasRole($role)
                                                             <button type="button"
                                                                     class="btn btn-sm btn-primary toggleRoleBtn"
-                                                                    data-bs-target="{{$user->hasPermission($role) ? 'src' : 'target'}}-{{$role->id}}"
+                                                                    data-target="{{$user->hasPermission($role) ? 'src' : 'target'}}-{{$role->id}}"
                                                                     data-src="{{$user->hasPermission($role) ? 'target' : 'src'}}-{{$role->id}}">
                                                                 {{$user->hasPermission($role) ? '<' : '>' }}
                                                             </button>
