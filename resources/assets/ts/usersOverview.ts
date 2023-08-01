@@ -1,5 +1,4 @@
 import * as bootbox from "bootbox";
-
 import {translate} from "./Translate";
 
 $(() => {
@@ -9,15 +8,6 @@ $(() => {
       $(elem).toggle($(elem).text().toLowerCase().indexOf(value) > -1)
     });
   });
-  // $('.change-user-status-form > .selectpicker').selectpicker({
-  //   style: 'btn btn-secondary btn-sm',
-  //   liveSearch: true
-  // });
-
-  // $('.editUserFormselectpicker').selectpicker({
-  //   style: 'btn btn-secondary btn-sm',
-  //   liveSearch: true
-  // });
 
   $('.change-user-status-form select[name="status"]').on('change', (event) => {
 
