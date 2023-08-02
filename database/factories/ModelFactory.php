@@ -183,8 +183,8 @@ $factory->define(Lara\Template::class, function (Faker\Generator $faker) {
         'is_private' => $faker->boolean(10),
         'price_tickets_normal' => $faker->numberBetween(0, 5),
         'price_tickets_external' => $faker->numberBetween(0, 10),
-        'price_normal' => $faker->randomFloat(2, 0, 1),
-        'price_external' => $faker->randomFloat(2, 1, 2),
+        'price_normal' => $faker->randomFloat(1, 0, 1),
+        'price_external' => $faker->randomFloat(1, 1, 2),
         'facebook_needed' => $faker->boolean(40),
     ];
 });
