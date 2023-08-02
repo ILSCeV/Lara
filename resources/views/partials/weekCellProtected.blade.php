@@ -11,7 +11,7 @@
     @endphp
     {{-- Set card color --}}
     <div class="{{ $classString }} {{ $clubEventClass }}">
-        <h4 @class([$clubEvent->canceled == 1 => 'event-cancelled', 'card-title'])>
+        <h4 @class(['event-cancelled' => $clubEvent->canceled == 1, 'card-title'])>
             @include('partials.event-marker')
             &nbsp;
             <a class="{{ $clubEventClass }}" href="{{ URL::route('event.show', $clubEvent->id) }}">

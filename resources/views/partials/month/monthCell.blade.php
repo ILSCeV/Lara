@@ -86,7 +86,7 @@
                     class="cal-event {{ $classString }} {{ \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent) }}">
                     @include('partials.event-marker', $clubEvent)
                     <span class="event-time">&nbsp;{{ date('H:i', strtotime($clubEvent->evnt_time_start)) }}</span>
-                    <a @class([$clubEvent->canceled == 1 => 'event-cancelled', 'event-name']) 
+                    <a @class(['event-cancelled' => $clubEvent->canceled == 1, 'event-name']) 
                         href="{{ URL::route('event.show', $clubEvent->id) }}" 
                         data-bs-toggle="tooltip"
                         data-bs-placement="right" title="{{ __('mainLang.showDetails') }}">
@@ -114,9 +114,11 @@
 
                 --}}
 
-                <a class="event-name" href="{{ URL::route('event.show', $clubEvent->id) }}" data-bs-toggle="tooltip"
+                <a @class(['event-cancelled'=> $clubEvent->canceled == 1, 'event-name'])
+                href="{{ URL::route('event.show', $clubEvent->id) }}" 
+                data-bs-toggle="tooltip"
                     data-bs-placement="right" title="{{ __('mainLang.showDetails') }}">
-                    @if ($clubEvent->canceled == 1)
+                    {{$clubEvent->evnt_title }}
                         <del>
                     @endif
                     {{ $clubEvent->evnt_title }}
