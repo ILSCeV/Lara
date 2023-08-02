@@ -22,7 +22,7 @@
                     {{-- Set card color --}}
                     <div class="{{$commonHeader}}">
                         <div class="card-title">
-                            <h4 @class([$clubEvent->canceled == 1 => 'event-cancelled']) >@include('partials.event-marker')&nbsp;{{ $clubEvent->evnt_title }}</h4>
+                            <h4 @class(['event-cancelled' => $clubEvent->canceled == 1]) >@include('partials.event-marker')&nbsp;{{ $clubEvent->evnt_title }}</h4>
                             <h5>{{ $clubEvent->evnt_subtitle }}</h5>
                         </div>
                     </div>
