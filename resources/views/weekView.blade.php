@@ -71,17 +71,16 @@ if($extraFilter!='')
                             <button class="btn btn-sm hidden-print" type="button" id="toggle-taken-shifts">
                                 {{ __('mainLang.hideTakenShifts') }}
                             </button>
-                        </div>
 
                         {{-- show/hide all comment fields --}}
-                        <div class="btn-group" role="group">
+
                             <button class="btn btn-sm hidden-print" type="button" id="toggle-all-comments">
                                 {{ __('mainLang.comments') }}
                             </button>
-                        </div>
+
 
                         {{-- week: Monday - Sunday button Ger.: Woche: Montag - Sonntag --}}
-                        <div class="btn-group" role="group">
+
                             <button class="btn btn-sm btn-primary hidden-print" type="button" id="toggle-week-start">
                                 {{ __('mainLang.weekStart') }}
                             </button>

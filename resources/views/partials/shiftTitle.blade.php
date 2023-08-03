@@ -15,7 +15,7 @@
             @if($shift->optional)
                 ({{Lang::get('mainLang.optionalShort')}})
             @endif
-            <div class="shift-time hide">
+            <div class="shift-time hide fs-6">
                 {!! "(" . date("H:i", strtotime($shift->start))
                 . "-" .
                 date("H:i", strtotime($shift->end)) . ")" !!}

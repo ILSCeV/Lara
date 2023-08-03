@@ -2,7 +2,7 @@
     /***
     * @var \Lara\Shift $shift
     * @var boolean $hideComments
-    * @var boolean $commentsInSeparateLine
+    * @var @deprecated boolean $commentsInSeparateLine
     */
 
 if(Auth::user()){
@@ -16,21 +16,10 @@ if($hideComments){
 } else {
     $commentClass = '';
 }
-if($commentsInSeparateLine){
-    $shiftTitleColumnClass = 'col-3 p-0';
-    $personNameColumnClass = 'col-4';
-    $clubColumnClass = 'col-2';
-    $commentColumnClass = 'col-12';
-} else {
-    $shiftTitleColumnClass = 'col-md-3 col-4 p-0';
-    $personNameColumnClass = 'col-md-2 col-4';
-    $clubColumnClass = 'col-md-1 col-2';
-    $commentColumnClass = 'col-md col-12';
-}
 @endphp
 
 
-<div class="row row-cols-md-auto align-items-center shiftRow mt-2 mb-2 border-bottom  {!! ( isset($shift->person->prsn_ldap_id)
+<div class="d-flex flex-wrap gap-1 align-items-center justify-content-between p-2 shiftRow mt-2 mb-2 border-bottom  {!! ( isset($shift->person->prsn_ldap_id)
                                                   && Auth::user()
                                                   && $shift->person->prsn_ldap_id === Auth::user()->person->prsn_ldap_id) ? "my-shift" : false !!}">
     <div class="d-none">
@@ -45,12 +34,12 @@ if($commentsInSeparateLine){
     </div>
 
     {{-- Name and time of the shift --}}
-    <div class="{{$shiftTitleColumnClass}} p-0 align-content-center">
+    <div class="align-content-center" style="width:15%; min-width:92px">
         @include("partials.shiftTitle")
     </div>
 
     {{-- User status icon --}}
-    <div class="col-auto" style="width:31px">
+    <div style="width:30px">
         @include('partials.shifts.updateShiftFormOpener',['shift'=>$shift, 'autocomplete'=>$autocomplete])
         <div id="clubStatus{{ $shift->id }}">
             @include("partials.shiftStatus")
@@ -58,7 +47,7 @@ if($commentsInSeparateLine){
         {!! Form::close() !!}
     </div>
     @if( isset($shift->getPerson->prsn_ldap_id) && !Auth::user())
-        <div class="{{$personNameColumnClass}}">
+        <div style="width:15%; min-width:100px;">
             <div class="form-group form-group-sm">
                 @if($shift->getPerson->isNamePrivate() == 0)
                     {{-- Shift USERNAME--}}
@@ -75,20 +64,21 @@ if($commentsInSeparateLine){
             </div>
         </div>
         {{-- SHIFT CLUB --}}
-        <div class="{{$clubColumnClass}}">
+        <div style="width:10%; min-width:70px;">
             <div id="{!! 'club' . $shift->id !!}" class="form-group form-group-sm ">
                 <div class="form-control form-control-sm">
                     {!! "(" . $shift->getPerson->getClub->clb_title . ")" !!}
                 </div>
             </div>
         </div>
-        <div class="col-1">
-            <button class="showhide btn btn-sm btn-outline-secondary">@if($shift->comment === "") <i
+        <div style="width:32px;">
+            <button class="showhide btn btn-sm btn-outline-secondary">
+                @if($shift->comment === "") <i
                     class="far fa-comment"></i> @else <i class="fa-solid fa-comment"></i> @endif</button>
         </div>
         {{-- COMMENT SECTION --}}
         <div class="{{$commentColumnClass}}">
-            <div class="form-group from-group-sm hidden-print word-break">
+            <div class="form-group from-group-sm hidden-print text-break">
                         <span class="w-auto @if(isset($hideComments) && $hideComments) hide @endif"
                               id="{{'comment'.$shift->id}}"
                               name="{{'comment' . $shift->id}}">{!! !empty($shift->comment) ? $shift->comment : "-" !!}</span>
@@ -97,7 +87,7 @@ if($commentsInSeparateLine){
     @else
         {{-- show everything for members --}}
         {{-- SHIFT STATUS, USERNAME, DROPDOWN USERNAME and LDAP ID --}}
-        <div class="{{$shiftTitleColumnClass}} p-0">
+        <div style="width:15%; min-width:100px;">
             @include('partials.shifts.updateShiftFormOpener',['shift'=>$shift, 'autocomplete'=>$autocomplete])
             <div class="form-group form-group-sm">
                 @include('partials.shifts.shiftName',['shift'=>$shift])
@@ -106,7 +96,7 @@ if($commentsInSeparateLine){
             {!! Form::close() !!}
         </div>
         {{-- SHIFT CLUB and DROPDOWN CLUB --}}
-        <div class="{{$clubColumnClass}}">
+        <div style="width:10%; min-width:70px;">
             @include('partials.shifts.updateShiftFormOpener',['shift'=>$shift, 'autocomplete'=>$autocomplete])
             <div class="form-group form-group-sm ">
                 @include('partials.shifts.shiftClub',['shift'=>$shift])
@@ -117,13 +107,13 @@ if($commentsInSeparateLine){
         {{-- COMMENT SECTION --}}
         {{-- Hidden comment field to be opened after the click on the icon
              see filter-scripts "Show/hide comments" function --}}
-        <div class="col-1">
+        <div style="width:33px;">
             <button class="showhide btn btn-sm btn-outline-secondary">@if($shift->comment === "") <i
                     class="far fa-comment"></i> @else <i class="fa-solid  fa-comment"></i> @endif</button>
         </div>
-        <div class="{{$commentColumnClass}}">
+        <div class="flex-fill">
             @include('partials.shifts.updateShiftFormOpener',['shift'=>$shift, 'autocomplete'=>$autocomplete])
-            <div class="form-group from-group-sm hidden-print word-break w-100">
+            <div class="form-group from-group-sm hidden-print text-break">
 
                 {!! Form::text('comment' . $shift->id,
                                            $shift->comment,

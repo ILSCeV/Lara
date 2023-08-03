@@ -9,7 +9,7 @@ import { isDayView, isMonthView, isWeekView } from "../Utilities";
 /** request param
  * filter="mi-di"
  */
-declare var extraFilter: any;
+declare var extraFilter: string;
 
 const allSectionsCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('#offcanvas input[type=checkbox]');
 declare var sectionCountString: string;
@@ -185,7 +185,10 @@ export const initFilters = () => {
       //() => isotope.layout()
     ]);
 
-    switch (extraFilter) {
+    weekStart.setToggleStatus(safeGetLocalStorage("weekStart") == "monday");
+
+    // TODO: this does not seem to be working
+    /*switch (extraFilter) {
       case 'di-mo':
         weekStart.setToggleStatus(true);
         break;
@@ -194,7 +197,7 @@ export const initFilters = () => {
         break;
       default:
         weekStart.setToggleStatus(safeGetLocalStorage("weekStart") == "monday");
-    }
+    }*/
 
     // button to remove events from week view - mostly for printing
     $('.hide-event').on({

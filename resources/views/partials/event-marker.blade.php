@@ -20,7 +20,7 @@
     @elseif( $clubEvent->evnt_type == 7)
         <i class="fa-solid  fa-building text"></i>
     @elseif( $clubEvent->evnt_type == 8)
-        <i class="fa-solid  fa-ticket-alt text"></i>
+        <i class="fa-solid  fa-ticket text"></i>
     @elseif( $clubEvent->evnt_type == 9)
         <i class="fa-solid  fa-list-alt text"></i>
     @elseif( $clubEvent->evnt_type == 10)
