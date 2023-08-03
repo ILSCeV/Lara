@@ -8,14 +8,12 @@ export function createMessage(header: String, message: String, bgClass: String) 
 
   $('body').append(
     `
- <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="${uidString}" data-autohide="false" style="position: fixed; top: 50%; right: 50%;">
- <div class="toast-header text-primary ${bgClass}">
+ <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="${uidString}" data-bs-autohide="false" style="position: fixed; top: 50%; right: 50%;">
+ <div class="toast-header ${bgClass}">
     <strong class="me-auto"> ${header} </strong>
-    <button type="button" class="ms-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-     </button>
+    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
  </div>
- <div class="toast-body text-primary">${message}</div>
+ <div class="toast-body">${message}</div>
  </div>
  `);
   $('#' + uidString).toast('show');
