@@ -3,7 +3,7 @@ export default {
     "onlyEmpty": "Nur FREIe Dienste",
     "mondayToSunday": "Manendach - Sonnendach",
     "wednesdayToTuesday": "Woensdach - Dinxendach",
-    "tuesdayToMonday" : "Dinxendach - Monedach",
+    "tuesdayToMonday": "Dinxendach - Monedach",
     "endBeforeStart": "Die Endzeit liegt vor der Startzeit!",
     "forgotFilter": "Den Filter vergessen! Bitte setze mindestens eine Sektion, der diese Veranstaltung/Aufgabe gezeigt werden soll.",
     "forgotPreparation": "Die Dienstvorbereitungszeit vergessen!",
@@ -33,16 +33,16 @@ export default {
     "legend": "Legende",
     'confirmPublishingEvent': 'Möchtest du dieses Event wirklich zum Kalenderfeed hinzufügen?',
     'confirmUnpublishingEvent': 'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
-    'deleteTemplate' : 'Vorlage über bort werfen',
-    'deleteTemplateMessage' : 'Bist du dir sicher, dass du diese Vorlage löschen möchtest?',
-    'dontDeleteLastShift' : "You can't remove the last shift, just leave the last shift empty if you don't want any shift for this event.",
-    
+    'deleteTemplate': 'Vorlage über bort werfen',
+    'deleteTemplateMessage': 'Bist du dir sicher, dass du diese Vorlage löschen möchtest?',
+    'dontDeleteLastShift': "You can't remove the last shift, just leave the last shift empty if you don't want any shift for this event.",
+
     'changeUserStatus': 'Bist du dir sicher, dass du den Status dieses Nutzers ändern möchtest?',
-    'changeUserStatusHeader' : 'Benutzerstatus bearbeiten',
+    'changeUserStatusHeader': 'Benutzerstatus bearbeiten',
     'deleteUserHeader': 'Über Bord werfen',
-    'deleteUser':'Sollen wir das Crewmitglied wirklich über Bord werfen?',
-    'replaceShiftTypeConfirmation' : 'Möchtest du alle Dienste die den folgenden Diensttyp verwenden wirklich ersetzen?:',
-    'replaceAll' : 'Alle ersetzen',
+    'deleteUser': 'Sollen wir das Crewmitglied wirklich über Bord werfen?',
+    'replaceShiftTypeConfirmation': 'Möchtest du alle Dienste die den folgenden Diensttyp verwenden wirklich ersetzen?:',
+    'replaceAll': 'Alle ersetzen',
 
 
     'CGW VVK': "Holzbein VVK",
@@ -78,9 +78,12 @@ export default {
     'CGW Spieleabend': 'CGW "Fünf Finger Fillet"-Abend',
     'Wochentliche ClubBildungsMaßnahme (CBM)': 'Wöchentliche Auspeitschung mit der Neunschwänzigen Katze',
 
-    'conflictDetected' : 'Arg, da ist ein Konflikt!',
-    'conflictAlertLine1' : 'Du hast wohl dem Kapitän nicht zugehört, du Landratte! Ein anderer Matrose ist schon dran!',
-    'conflictAlertLine2' : 'Schau\'s dir doch genauer an - wolltest du etwa einen Messer in seinen Rücken stecken?!',
+    'conflictDetected': 'Arg, da ist ein Konflikt!',
+    'conflictAlertLine1': 'Du hast wohl dem Kapitän nicht zugehört, du Landratte! Ein anderer Matrose ist schon dran!',
+    'conflictAlertLine2': 'Schau\'s dir doch genauer an - wolltest du etwa einen Messer in seinen Rücken stecken?!',
+
+    'offlineTitle': 'Arg, du bist offline!',
+    'offlineMessage': 'Bitte überprüfe deine Internetverbindung und versuche es erneut.',
 
     'sessionExpired': 'Fehler: die Session ist abgelaufen. Bitte aktualisiere die Seite und logge dich ggf. erneut ein.',
     'error': 'Fehler',

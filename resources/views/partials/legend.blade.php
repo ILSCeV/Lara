@@ -40,7 +40,7 @@
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br class="d-block d-sm-none">
 
-      <i class="fa-solid  fa-ticket-alt"></i>
+      <i class="fa-solid  fa-ticket"></i>
        - {{ __('mainLang.preSale') }}
 
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
