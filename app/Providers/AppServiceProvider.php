@@ -111,6 +111,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultSimpleView('pagination::bootstrap-4');
 
         ClubEvent::observe(ClubEventObserver::class);
+        Shift::observe(ShiftObserver::class);
         Schedule::observe(ScheduleObserver::class);
         Survey::observe(SurveyObserver::class);
     }
