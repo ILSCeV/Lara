@@ -6,7 +6,9 @@
         </div>
     @else
         {{-- Set card color --}}
-        <div class="card-header {{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}">
+        <div class="card-header {{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}"
+        @include('partials.shiftsProgressBar', $clubEvent)
+        >
             <h4 class="card-title">
                 @include("partials.event-marker")&nbsp;<a class="{{\Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent)}}" href="{{ URL::route('event.show', $clubEvent->id) }}">{{ $clubEvent->evnt_title }}</a>
             </h4>
