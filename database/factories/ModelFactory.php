@@ -156,7 +156,8 @@ $factory->define(Lara\Shift::class, function (Faker\Generator $faker) {
         'start' => $start,
         'end' => $end,
         'statistical_weight' => 1,
-        'position' => 0
+        'position' => 0,
+        'optional' => $faker->boolean(10)
     ];
 });
 
