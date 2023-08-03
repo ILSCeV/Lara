@@ -193,7 +193,7 @@ jQuery(() => {
     // Add one more job with every click on "+"
     $('.btnAdd').on('click', (e) => {
         e.preventDefault();
-        const elementToCopy = $(this).closest('.box');
+        const elementToCopy = $(e.target).closest('.box');
         elementToCopy.find(".dropdown-menu").hide();
         const clone = elementToCopy.clone(true);
         clone.insertAfter(elementToCopy);
@@ -204,8 +204,12 @@ jQuery(() => {
     // Remove selected job
     $('.btnRemove').on('click', (e) => {
         e.preventDefault();
-        $(this).closest('.box').remove();
-        updateIsOptionalCheckboxes();
+        if($('div#shiftContainer').children('.box').length > 1){
+            $(e.target).closest('.box').remove();
+            updateIsOptionalCheckboxes();
+        }else{
+            bootbox.alert(translate("dontDeleteLastShift"));
+        }
     });
 
     // populate from dropdown select

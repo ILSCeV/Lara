@@ -35,6 +35,7 @@ export default {
     'confirmUnpublishingEvent': 'Are you sure you want to remove this event from the calendar feed?',
     'deleteTemplate' : 'delete Template',
     'deleteTemplateMessage' : 'Are you sure that you want to delete this Template?',
+    'dontDeleteLastShift' : "You can't remove the last shift, just leave the last shift empty if you don't want any shift for this event.",
 
     'changeUserStatus': 'Are you sure that you want to change the status of this user?',
     'changeUserStatusHeader' : 'Change user status',
