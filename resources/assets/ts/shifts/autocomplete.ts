@@ -468,13 +468,19 @@ $(() => {
 
         contentType: 'application/json',
 
-        beforeSend: function () {
+        beforeSend: function (xhr, opts) {
           // console.log("beforesend");
 
           // hide dropdowns because they aren't no longer needed
           $('.dropdown-username').hide();
           $('.dropdown-club').hide();
           $('div#alert' + currentId).remove();
+
+          if(!window.navigator.onLine){
+            xhr.abort();
+            createMessage("You are currently offline", "Please check your internet connection and retry",'bg-info')
+            return;
+          }
 
           // Remove save icon and show a spinner in the username status while we are waiting for a server response
           $('#btn-submit-changes' + currentId).addClass('hide')
