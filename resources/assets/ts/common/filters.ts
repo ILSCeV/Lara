@@ -3,6 +3,8 @@ import { safeGetLocalStorage, safeSetLocalStorage } from "../Utilities";
 import { ToggleButton } from "../ToggleButton";
 import { makeClassToggleAction, makeLocalStorageAction } from "../ToggleAction";
 import { translate } from "../Translate";
+import { isDayView, isMonthView, isWeekView } from "../Utilities";
+
 
 /** request param
  * filter="mi-di"
@@ -36,11 +38,6 @@ export const initFilters = () => {
   //////////////////////////////////////////////////////
   // Month view without Isotope, section filters only //
   //////////////////////////////////////////////////////
-  const isMonthView: boolean = $('#month-view-marker').length > 0;
-  const isWeekView: boolean = $('#week-view-marker').length > 0;
-  const isDayView: boolean = $('#day-view-marker').length > 0;
-
-
   const initializeSectionFilters = (isotope: typeof Isotope = null) => {
 
     const enableAllButton: HTMLButtonElement = document.querySelector("#sections-filter-enable-all");

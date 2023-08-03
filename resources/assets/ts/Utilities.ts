@@ -18,3 +18,8 @@ export const safeGetLocalStorage = (key: string) => {
     }
     return undefined;
 };
+
+
+export const isMonthView: boolean = $('#month-view-marker').length > 0;
+export const isWeekView: boolean = $('#week-view-marker').length > 0;
+export const isDayView: boolean = $('#day-view-marker').length > 0;

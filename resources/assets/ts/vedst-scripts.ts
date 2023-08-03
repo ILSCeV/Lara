@@ -1,20 +1,28 @@
-import {translate} from "./Translate"
+import { translate } from "./Translate"
 import "isotope-layout"
 
 import * as bootbox from "bootbox"
-
-import {initFilters} from "./common/filters"
+import * as bootstrap from "bootstrap"
+import { initFilters } from "./common/filters"
+import { addProgressBars } from "./common/shiftprogressbar";
+import { isDayView, isMonthView, isWeekView } from "./Utilities";
 
 const jQuery = $;
 
 
+//////////////////////////
+// Shifts related stuff //
+//////////////////////////
 
-/////////////
-// Filters //
-/////////////
-
-
-$(initFilters);
+if (isMonthView) {
+    initFilters();
+    // addProgressBars(); As the data is fetched dinamically in the month view, this is not needed here.
+} else if (isWeekView) {
+    initFilters();
+} else if (isDayView) {
+    initFilters();
+    addProgressBars();
+}
 
 
 
@@ -25,18 +33,21 @@ $(initFilters);
 
 
 // Default language is german
-$(function() {
+$(function () {
     localStorage["language"] = localStorage["language"] || "de";
 });
 
 
 
 // Enable Tooltips
-$(function () { $("[data-bs-toggle='tooltip']").tooltip({trigger: "hover"}).tooltip("hide"); });
+// Adding them this way, dynamic elements also automatically get the toolbox working immediately
+new bootstrap.Tooltip(document.body, {
+    selector: '[data-bs-toggle="tooltip"]'
+});
 
 // Automatically close notifications after 4 seconds (4000 milliseconds)
-window.setTimeout(function() {
-    $(".message").fadeTo(1000, 0).slideUp(500, function(){
+window.setTimeout(function () {
+    $(".message").fadeTo(1000, 0).slideUp(500, function () {
         $(this).alert('close');
     });
 }, 4000);
@@ -44,14 +55,14 @@ window.setTimeout(function() {
 
 
 // Own shift highlighting
-$('[name^=btn-submit-change]').on('click',function() {
+$('[name^=btn-submit-change]').on('click', function () {
     $(this).parents('.row').removeClass('my-shift');
 });
 
 
 
 // Dropdown hiding fix
-$('input').on('focusout', function() {
+$('input').on('focusout', function () {
     if ($(this).prop('placeholder') === '=FREI=') {
         // hack to allow for click to register before focusout is called
         setTimeout(function () {
@@ -63,16 +74,10 @@ $('input').on('focusout', function() {
 
 
 // Language switcher
-$('.languageSwitcher').find('a').on('click', function() {
+$('.languageSwitcher').find('a').on('click', function () {
     var language = $(this).data('language');
     localStorage.setItem('language', language);
 });
-
-
-
-////////////////
-// Month view //
-////////////////
 
 ////////////////
 // Event view //
@@ -81,26 +86,26 @@ $('.languageSwitcher').find('a').on('click', function() {
 
 
 // Show/hide more button for infos
-$(function(){
-	$('.moreless-more-info').on('click', function(e) {
-		$(this).parent().children('.more-info').toggleClass('moreshow-info');
-        $(this).parent().children('.more-info').css('height','auto');
+$(function () {
+    $('.moreless-more-info').on('click', function (e) {
+        $(this).parent().children('.more-info').toggleClass('moreshow-info');
+        $(this).parent().children('.more-info').css('height', 'auto');
         $(this).parent().children('.moreless-less-info').show();
         $(this).parent().children('.moreless-more-info').hide();
-	});
+    });
 });
 
-$(function(){
-    $('.moreless-less-info').on('click', function(e) {
+$(function () {
+    $('.moreless-less-info').on('click', function (e) {
         $(this).parent().children('.more-info').toggleClass('moreshow-info');
-        $(this).parent().children('.more-info').css('height','100');
+        $(this).parent().children('.more-info').css('height', '100');
         $(this).parent().children('.more-info').height(100);
         $(this).parent().children('.moreless-less-info').hide();
         $(this).parent().children('.moreless-more-info').show();
     });
 });
 
-$(function(){
+$(function () {
     $('.moreless-more-info').hide();
     $('.moreless-less-info').hide();
     if ($('.more-info').height() > 100) {
@@ -109,26 +114,26 @@ $(function(){
     };
 });
 
-$(function(){
-    $('.moreless-more-details').on('click', function(e) {
+$(function () {
+    $('.moreless-more-details').on('click', function (e) {
         $(this).parent().children('.more-details').toggleClass('moreshow-details');
-        $(this).parent().children('.more-details').css('height','auto');
+        $(this).parent().children('.more-details').css('height', 'auto');
         $(this).parent().children('.moreless-less-details').show();
         $(this).parent().children('.moreless-more-details').hide();
     });
 });
 
-$(function(){
-    $('.moreless-less-details').on('click', function(e) {
+$(function () {
+    $('.moreless-less-details').on('click', function (e) {
         $(this).parent().children('.more-details').toggleClass('moreshow-details');
-        $(this).parent().children('.more-details').css('height','100');
+        $(this).parent().children('.more-details').css('height', '100');
         $(this).parent().children('.more-details').height(100);
         $(this).parent().children('.moreless-less-details').hide();
         $(this).parent().children('.moreless-more-details').show();
     });
 });
 
-$(function(){
+$(function () {
     $('.moreless-more-details').hide();
     $('.moreless-less-details').hide();
     if ($('.more-details').height() > 100) {
@@ -141,18 +146,16 @@ $(function(){
 
 
 // Show/hide change history
-$(function(){
-    $('#show-hide-history').on('click', function(e) {
+$(function () {
+    $('#show-hide-history').on('click', function (e) {
         e.preventDefault();
-        if ($('#change-history').hasClass("hide"))
-        {
+        if ($('#change-history').hasClass("hide")) {
             // change state, change button
             $('#change-history').removeClass('hide');
             $('#arrow-icon').removeClass('fa-caret-right');
             $('#arrow-icon').addClass('fa-sort-desc');
         }
-        else
-        {
+        else {
             // change state, change button
             $('#change-history').addClass('hide');
             $('#arrow-icon').addClass('fa-caret-right');
@@ -160,15 +163,6 @@ $(function(){
         };
     });
 });
-
-
-
-///////////////
-// Week view //
-///////////////
-
-
-
 
 
 
@@ -185,9 +179,9 @@ jQuery(() => {
         $(".btnRemove").hide();
     }
 
-    const updateIsOptionalCheckboxes = () =>{
-        $('.isOptional').attr('name',(index)=>{return "shifts[optional]["+index+"]";});
-        $('.isOptionalHidden').attr('name',(index)=>{return "shifts[optional]["+index+"]";});
+    const updateIsOptionalCheckboxes = () => {
+        $('.isOptional').attr('name', (index) => { return "shifts[optional][" + index + "]"; });
+        $('.isOptionalHidden').attr('name', (index) => { return "shifts[optional][" + index + "]"; });
     };
 
     // Add one more job with every click on "+"
@@ -204,16 +198,16 @@ jQuery(() => {
     // Remove selected job
     $('.btnRemove').on('click', (e) => {
         e.preventDefault();
-        if($('div#shiftContainer').children('.box').length > 1){
+        if ($('div#shiftContainer').children('.box').length > 1) {
             $(e.target).closest('.box').remove();
             updateIsOptionalCheckboxes();
-        }else{
+        } else {
             bootbox.alert(translate("dontDeleteLastShift"));
         }
     });
 
     // populate from dropdown select
-    (<any>$.fn).dropdownSelect = function(shiftType, timeStart, timeEnd, weight) {
+    (<any>$.fn).dropdownSelect = function (shiftType, timeStart, timeEnd, weight) {
 
         $(this).closest('.box').find("[name^=jbtyp_title]").val(shiftType);
         $(this).closest('.box').find("[name^=jbtyp_time_start]").val(timeStart);
@@ -379,50 +373,43 @@ Disabling iCal until fully functional. */
 
 
 // Update shifts
-jQuery( function( $ ) {
+jQuery(function ($) {
+    ////////////////////////////////
+    // MANAGEMENT: UPDATE SHIFTTYPE //
+    ////////////////////////////////
 
-
-
-
-
-////////////////////////////////
-// MANAGEMENT: UPDATE SHIFTTYPE //
-////////////////////////////////
-
-
-
-    $( '.updateShiftType' ).on( 'submit', function() {
+    $('.updateShiftType').on('submit', function () {
 
         $.ajax({
-            type: $( this ).prop( 'method' ),
+            type: $(this).prop('method'),
 
-            url: $( this ).prop( 'action' ),
+            url: $(this).prop('action'),
 
             data: JSON.stringify({
-                    // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-                    "_token":       $(this).find( 'input[name=_token]' ).val(),
+                // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+                "_token": $(this).find('input[name=_token]').val(),
 
-                    // Actual data being sent below
-                    "entryId":      $(this).closest("form").attr("id"),
-                    "shiftTypeId":    $(this).find("[name^=shiftType]").val(),
+                // Actual data being sent below
+                "entryId": $(this).closest("form").attr("id"),
+                "shiftTypeId": $(this).find("[name^=shiftType]").val(),
 
-                    // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
-                    "_method": "put"
-                }),
+                // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+                "_method": "put"
+            }),
 
             dataType: 'json',
 
             contentType: 'application/json',
 
-            beforeSend: function() {
+            beforeSend: function () {
                 // console.log("beforesend");
             },
 
-            complete: function() {
+            complete: function () {
                 // console.log('complete');
             },
 
-            success: function(data) {
+            success: function (data) {
                 //console.log("success");
                 // remove row to indicate successful renaming of the shiftType
                 $(".shiftType-event-row" + data["entryId"]).hide();
@@ -448,9 +435,9 @@ jQuery( function( $ ) {
     });
 
     // Detect shift name change and remove LDAP id from the previous shift
-    $('.shift').find("[name^=userName]").on('input propertychange paste', function() {
-      let self = $(this).closest('.shiftRow');
-      $(self).find("[name^=ldapId]").val("");
+    $('.shift').find("[name^=userName]").on('input propertychange paste', function () {
+        let self = $(this).closest('.shiftRow');
+        $(self).find("[name^=ldapId]").val("");
     });
 
 });
@@ -473,20 +460,20 @@ Examples :
 <a href="posts/2" data-method="delete" data-token="{{csrf_token()}}" data-confirm="Are you sure?">
 */
 
-(function(window, $, undefined) {
+(function (window, $, undefined) {
 
     var Laravel = {
-        initialize: function() {
+        initialize: function () {
             this.methodLinks = $('a[data-method]');
             this.token = $('a[data-token]');
             this.registerEvents();
         },
 
-        registerEvents: function() {
+        registerEvents: function () {
             this.methodLinks.on('click', this.handleMethod);
         },
 
-        handleMethod: function(e) {
+        handleMethod: function (e) {
             e.preventDefault();
 
             var link = $(this);
@@ -507,9 +494,9 @@ Examples :
                 })
         },
 
-        verifyConfirm: function(link) {
+        verifyConfirm: function (link) {
             var confirm = $.Deferred();
-            bootbox.confirm(link.data('confirm'), function(result){
+            bootbox.confirm(link.data('confirm'), function (result) {
                 if (result) {
                     confirm.resolve(link);
                 } else {
@@ -520,7 +507,7 @@ Examples :
             return confirm.promise();
         },
 
-        createForm: function(link) {
+        createForm: function (link) {
             var form =
                 $('<form>', {
                     'method': 'POST',
@@ -556,33 +543,33 @@ Examples :
 ////////////////////////
 
 $(() => {
-  $(document).on({
-    ready: function () {
-      $(window).on({
-        scroll: function () {
-          if ($(this).scrollTop() > 50) {
-            $('#back-to-top').fadeIn();
-          } else {
-            $('#back-to-top').fadeOut();
-          }
+    $(document).on({
+        ready: function () {
+            $(window).on({
+                scroll: function () {
+                    if ($(this).scrollTop() > 50) {
+                        $('#back-to-top').fadeIn();
+                    } else {
+                        $('#back-to-top').fadeOut();
+                    }
+                }
+            });
+            // scroll body to 0px on click
+            $('#back-to-top').on({
+                click: function () {
+                    $('#back-to-top').tooltip('hide');
+                    $('body,html').animate({
+                        scrollTop: 0
+                    }, 800);
+                    return false;
+                }
+            });
         }
-      });
-      // scroll body to 0px on click
-      $('#back-to-top').on({
-        click: function () {
-          $('#back-to-top').tooltip('hide');
-          $('body,html').animate({
-            scrollTop: 0
-          }, 800);
-          return false;
-        }
-      });
-    }
-  });
+    });
 });
 
-$( ()=> {
-  $(window).on('scroll', ()=>{
-    $('.alert-fixed').css('top',window.scrollY + 'px')
-  });
-} );
+$(() => {
+    $(window).on('scroll', () => {
+        $('.alert-fixed').css('top', window.scrollY + 'px')
+    });
+});
