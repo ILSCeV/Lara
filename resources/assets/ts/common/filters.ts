@@ -15,7 +15,6 @@ declare var sectionCountString: string;
 export const showAllActiveSections = () => {
   let enabledSections = Array.from(allSectionsCheckboxes, (c, i) => { return c.checked ? c.dataset : null })
     .filter(e => e !== null);
-  console.dir(enabledSections);
 
   $(".section-filter").addClass('d-none');
   enabledSections.forEach(s => {
