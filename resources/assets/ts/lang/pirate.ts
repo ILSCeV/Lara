@@ -35,6 +35,8 @@ export default {
     'confirmUnpublishingEvent': 'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
     'deleteTemplate' : 'Vorlage über bort werfen',
     'deleteTemplateMessage' : 'Bist du dir sicher, dass du diese Vorlage löschen möchtest?',
+    'dontDeleteLastShift' : "You can't remove the last shift, just leave the last shift empty if you don't want any shift for this event.",
+    
     'changeUserStatus': 'Bist du dir sicher, dass du den Status dieses Nutzers ändern möchtest?',
     'changeUserStatusHeader' : 'Benutzerstatus bearbeiten',
     'deleteUserHeader': 'Über Bord werfen',

@@ -36,6 +36,7 @@ export default {
     'confirmUnpublishingEvent': 'Möchtest du dieses Event aus dem Kalenderfeed wirklich entfernen?',
     'deleteTemplate' : 'Vorlage löschen',
     'deleteTemplateMessage' : 'Bist du dir sicher, dass du diese Vorlage löschen möchtest?',
+    'dontDeleteLastShift' : "Du kannst den letzten Dienst nicht entfernen. Lass ihn einfach leer, wenn du keine Dienste für diese Veranstaltung brauchst.",
 
     'changeUserStatus': 'Bist du dir sicher, dass du den Status dieses Nutzers ändern möchtest?',
     'changeUserStatusHeader' : 'Benutzerstatus bearbeiten',
