@@ -83,7 +83,9 @@
                 {{-- show everything for public events --}}
             @else
                 <div
-                    class="cal-event {{ $classString }} {{ \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent) }}">
+                    class="cal-event {{ $classString }} {{ \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent) }}"
+                    @include('partials.shiftsProgressBar', $clubEvent)
+                    >
                     @include('partials.event-marker', $clubEvent)
                     <span class="event-time">&nbsp;{{ date('H:i', strtotime($clubEvent->evnt_time_start)) }}</span>
                     <a @class(['event-cancelled' => $clubEvent->canceled == 1, 'event-name']) 
@@ -99,6 +101,14 @@
             {{-- show everything for members, but switch the color theme according to event type --}}
         @else
             <div id="cal-event-{{ $clubEvent->id }}"
+                @include('partials.shiftsProgressBar', $clubEvent)
+                data-total-shifts="{{$clubEvent->shifts->count()}}"
+                data-empty-shifts="{{$clubEvent->shifts->filter(function ($shift) {
+                    return is_null($shift->person_id) && $shift->optional == 0;
+                 })->count()}}"
+                data-opt-empty-shifts="{{$clubEvent->shifts->filter(function ($shift) {
+                    return is_null($shift->person_id) && $shift->optional == 1;
+                 })->count()}}"
                 class="cal-event {{ $classString }} {{ \Lara\utilities\ViewUtility::getEventPaletteClass($clubEvent) }}">
 
                 @include('partials.event-marker', $clubEvent)
@@ -119,12 +129,6 @@
                 data-bs-toggle="tooltip"
                     data-bs-placement="right" title="{{ __('mainLang.showDetails') }}">
                     {{$clubEvent->evnt_title }}
-                        <del>
-                    @endif
-                    {{ $clubEvent->evnt_title }}
-                    @if ($clubEvent->canceled == 1)
-                        </del>
-                    @endif
                 </a>
 
             </div>
