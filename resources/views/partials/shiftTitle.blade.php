@@ -1,19 +1,8 @@
-@php
-    if($shift->optional) {
-        if( is_null($shift->getPerson)) {
-            $shiftClass="shift_free shift_optional";
-        } else {
-            $shiftClass="shift_taken shift_optional";
-        }
-    } else
-        if( is_null($shift->getPerson)) {
-            $shiftClass="shift_free";
-        } else {
-            $shiftClass="shift_taken";
-        }
-@endphp
-
-<div class="{{$shiftClass}} shift_title">
+<div @class(['shift_title',
+'shift_optional'=> $shift->optional,
+'shift_free' => is_null($shift->getPerson),
+'shift_taken' => !is_null($shift->getPerson)
+])>
         <span class="word-break"
               data-bs-toggle="tooltip"
               data-bs-placement="top"
