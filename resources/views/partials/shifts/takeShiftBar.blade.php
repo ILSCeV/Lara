@@ -77,7 +77,7 @@ if($hideComments){
                     class="far fa-comment"></i> @else <i class="fa-solid fa-comment"></i> @endif</button>
         </div>
         {{-- COMMENT SECTION --}}
-        <div class="{{$commentColumnClass}}">
+        <div class="flex-fill">
             <div class="form-group from-group-sm hidden-print text-break">
                         <span class="w-auto @if(isset($hideComments) && $hideComments) hide @endif"
                               id="{{'comment'.$shift->id}}"
