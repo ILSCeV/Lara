@@ -21,7 +21,7 @@ $filterSection = $sections->sortByDesc('title');
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas"  data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasLabel">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasLabel">Enable to Display</h5>
+      <h5 class="offcanvas-title" id="offcanvasLabel">{{__('mainLang.enableToDisplay')}}</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">

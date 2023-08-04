@@ -271,6 +271,7 @@ return [
     'noSectionSelected'     => 'No section selected!',
     'enableAll'             => 'Enable all',
     'disableAll'            => 'Disable all',
+    'enableToDisplay'       => 'Switch on to display',
     //-----------------------------------------------------------------------------------------------------------
 
     // /resources/views/partials/legend.blade.php

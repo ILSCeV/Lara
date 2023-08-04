@@ -273,6 +273,7 @@ return [
     'noSectionSelected'     => 'Keine Sektion ausgewählt!',
     'enableAll'             => 'Alle an',
     'disableAll'            => 'Alle aus',
+    'enableToDisplay'       => 'Anzeige aktivieren',
 
     //-----------------------------------------------------------------------------------------------------------
 
