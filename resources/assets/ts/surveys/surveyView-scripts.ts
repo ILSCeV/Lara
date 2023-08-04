@@ -11,8 +11,8 @@ function getPasswordField() {
 }
 
 function promptForPassword() {
-    return new Promise<string>(function(resolve, reject) {
-        bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
+    return new Promise<string>(function (resolve, reject) {
+        bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function (password) {
             if (password) {
                 resolve(password);
             }
@@ -23,7 +23,7 @@ function promptForPassword() {
         });
     });
 }
-$(document).ready(function() {
+$(document).ready(function () {
 
     $('.store').on('submit', function () {
         // For passworded surveys: check if a password field exists and is not empty
@@ -32,10 +32,10 @@ $(document).ready(function() {
         var that = this;
         var passwordField = getPasswordField();
         if (passwordField.length && !passwordField.val()) {
-            promptForPassword().then(function(password) {
+            promptForPassword().then(function (password) {
                 passwordField.val(password);
                 $(that).submit();
-            }, function() {
+            }, function () {
                 bootbox.alert("Ohne Passwort wird das nichts!");
             });
             return false;
@@ -57,10 +57,10 @@ function confirmDeletion() {
     });
 }
 $(".deleteRow").click(function (e) {
-  e.preventDefault();
+    e.preventDefault();
     var link = $(this);
     var passwordField = getPasswordField();
-    var doDeletion = function() {
+    var doDeletion = function () {
         var form =
             $('<form>', {
                 'method': 'POST',
@@ -92,10 +92,10 @@ $(".deleteRow").click(function (e) {
         form.submit();
     };
     if (passwordField.length && !passwordField.val()) {
-        promptForPassword().then(function(password) {
+        promptForPassword().then(function (password) {
             passwordField.val(password);
             return confirmDeletion();
-        }, function() {
+        }, function () {
             bootbox.alert("Ohne Passwort wird das nichts!");
             return new Promise(function (resolve, reject) {
                 reject();
@@ -109,71 +109,69 @@ $(".deleteRow").click(function (e) {
 });
 
 //Replace edit icon with save icon
-$('.editButton').click(function() {
+$('.editButton').click(function () {
     $('#display_advance').toggle('1000');
     $(this).addClass("editButton btn btn-success fa-floppy-o");
     $(this).removeClass("btn-primary fa-pencil");
     $(this).val('');
 });
 
-function change_to_submit(number) {
+function change_to_submit(number: number) {
 
-    if ($('#editButton' + number).attr('type') == 'button') {
-        setTimeout(function(){
+    if ($('#editButton' + number).attr('type') === 'button') {
+        setTimeout(function () {
             $('#editButton' + number).attr('type', 'submit');
-        },100);
+        }, 100);
     }
     else {
-        setTimeout(function(){
+        setTimeout(function () {
             $('#editButton' + number).attr('type', 'button');
-        },100);
+        }, 100);
     }
 }
 
-$(window).on({
-  load: () => {
-    $('.editSurveyAnswerBtn').on({
-      click: (e) => {
-        let id : Number = $(e.target).data('id');
+$(() => {
+    $('.editSurveyAnswerBtn').on('click', (e) => {
+        let id: number = $(e.target).data('id');
         change_to_submit(id);
-        get_answer_row(id);
-      }
-    });
-  }
-});
+        setAnswerRow(id);
+    }
+    );
+}
+);
 
 ////////////////////////////////////////
 // AUTOCOMPLETE USERNAMES EDIT ANSWER //
 ////////////////////////////////////////
 
-jQuery( document ).ready( function( $ ) {
+jQuery(document).ready(function ($) {
 
-   // var row_number = $('#get_row').val();
+    // var row_number = $('#get_row').val();
 
-// open username dropdown on input selection and show only "I'll do it!" button at the beginning
-        $("[class^=row]").on('focus', 'input', function () {
-           $('.edit_drop').attr('style', 'display: block');
-           $(document).find('.dropdown-username').hide();
+    // open username dropdown on input selection and show only "I'll do it!" button at the beginning
+    $("[class^=row]").on('focus', 'input', function () {
+        $('.edit_drop').attr('style', 'display: block');
+        $(document).find('.dropdown-username').hide();
     });
 
-// hide all dropdowns on ESC keypress
+    // hide all dropdowns on ESC keypress
     $(document).keyup(function (e) {
         if (e.keyCode === 27) {
             $(document).find('.edit_drop').hide();
         }
     });
 
-// hide dropdown if users clicks on dropdown
+    // hide dropdown if users clicks on dropdown
     $("[class^=row]").on('click', 'ul', function () {
         $('.edit_drop').attr('style', 'display: none');
     });
 
 });
 
-$('input').focusout(function() {
+$('input').on('focusout', function () {
     // hack to allow for click to register before focusout is called
     if ($(this).prop('id') === 'newName') {
-        setTimeout(function() {
+        setTimeout(function () {
             $('#dropdown-menu_name').hide();
         }, 200);
     }
@@ -183,8 +181,8 @@ $('input').focusout(function() {
 // AUTOCOMPLETE USERNAMES SURVEY //
 ///////////////////////////////////
 
-jQuery( document ).ready( function( $ ) {
-// open username dropdown on input selection and show only "I'll do it!" button at the beginning
+jQuery(document).ready(function ($) {
+    // open username dropdown on input selection and show only "I'll do it!" button at the beginning
     $('.nameToQuestion').find('input').on('focus', function () {
         // remove all other dropdowns
         $('.edit_drop').attr('style', 'display: none');
@@ -192,105 +190,104 @@ jQuery( document ).ready( function( $ ) {
         if ($(document.activeElement).parent().children('.dropdown-username').show()) {
         }
     });
-// hide all dropdowns on ESC keypress
+    // hide all dropdowns on ESC keypress
     $(document).keyup(function (e) {
         if (e.keyCode === 27) {
             $(document).find('.dropdown-username').hide();
         }
     });
 
-// hide dropdown if users clicks on dropdown
+    // hide dropdown if users clicks on dropdown
     $(document).find('.dropdown-username').click(function () {
         $(document).find('.dropdown-username').hide();
     });
 
 
-/////////////////////////
-// AUTOCOMPELETE CLUBS //
-/////////////////////////
-//
-// // open club dropdown on input selection
-// $( '.clubToQuestion' ).find('input').on( 'focus', function() {
-//     // remove all other dropdowns
-//     $(document).find('.dropdown-club').hide();
-//     // open dropdown for current input
-//     $(document.activeElement).parent().parent().children('.dropdown-club').show();
-// } );
-//
-// // hide all dropdowns on ESC keypress
-// $(document).keyup(function(e) {
-//     if (e.keyCode === 27) {
-//         $(document).find('.dropdown-club').hide();
-//     }
-// });
-//
-// $( '.clubToQuestion' ).find('input').on( 'input', function() {
-//
-//     // do all the work here after AJAX response is received
-//     function ajaxCallBackClubs(response) {
-//
-//         // clear array from previous results, but leave first element with current user's data
-//         $(document.activeElement).parent().parent().children('.dropdown-club').contents().remove();
-//
-//         // format data received
-//         response.forEach(function(data) {
-//
-//             // add found clubs to the array$(document.activeElement).parent().children('.dropdown-club')
-//             $(document.activeElement).parent().parent().children('.dropdown-club').append(
-//                 '<li><a href="javascript:void(0);">'
-//                 + '<span id="clubTitle">' + data.clb_title + '</span>'
-//                 + '</a></li>');
-//         });
-//
-//         // process clicks inside the dropdown
-//         $(document.activeElement).parent().parent().children('.dropdown-club').children('li').click(function(e){
-//
-//             var clubTitle = $(this).find('#clubTitle').html();
-//             //var currentEntryId = $(this).closest(".scheduleEntry").attr("id");
-//
-//             // update fields
-//             $("input[id=club" + "]").val(clubTitle);
-//
-//         });
-//
-//         // reveal newly created dropdown
-//         $(document.activeElement).parent().parent().children('.dropdown-club').show();
-//
-//     }
-//
-//     // short delay to prevents double sending
-//     $(this).delay('250');
-//
-//     // Request autocompleted names
-//     $.ajax({
-//         type: $( this ).prop( 'method' ),
-//
-//         url: "/club/" + $(this).val(),
-//
-//         data: {
-//             // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
-//             "_token": $(this).find( 'input[name=_token]' ).val(),
-//
-//             // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
-//             "_method": "get"
-//         },
-//
-//         dataType: 'json',
-//
-//         success: function(response){
-//             // external function handles the response
-//             ajaxCallBackClubs(response);
-//         },
-//     });
-// } );
+    /////////////////////////
+    // AUTOCOMPELETE CLUBS //
+    /////////////////////////
+    //
+    // // open club dropdown on input selection
+    // $( '.clubToQuestion' ).find('input').on( 'focus', function() {
+    //     // remove all other dropdowns
+    //     $(document).find('.dropdown-club').hide();
+    //     // open dropdown for current input
+    //     $(document.activeElement).parent().parent().children('.dropdown-club').show();
+    // } );
+    //
+    // // hide all dropdowns on ESC keypress
+    // $(document).keyup(function(e) {
+    //     if (e.keyCode === 27) {
+    //         $(document).find('.dropdown-club').hide();
+    //     }
+    // });
+    //
+    // $( '.clubToQuestion' ).find('input').on( 'input', function() {
+    //
+    //     // do all the work here after AJAX response is received
+    //     function ajaxCallBackClubs(response) {
+    //
+    //         // clear array from previous results, but leave first element with current user's data
+    //         $(document.activeElement).parent().parent().children('.dropdown-club').contents().remove();
+    //
+    //         // format data received
+    //         response.forEach(function(data) {
+    //
+    //             // add found clubs to the array$(document.activeElement).parent().children('.dropdown-club')
+    //             $(document.activeElement).parent().parent().children('.dropdown-club').append(
+    //                 '<li><a href="javascript:void(0);">'
+    //                 + '<span id="clubTitle">' + data.clb_title + '</span>'
+    //                 + '</a></li>');
+    //         });
+    //
+    //         // process clicks inside the dropdown
+    //         $(document.activeElement).parent().parent().children('.dropdown-club').children('li').click(function(e){
+    //
+    //             var clubTitle = $(this).find('#clubTitle').html();
+    //             //var currentEntryId = $(this).closest(".scheduleEntry").attr("id");
+    //
+    //             // update fields
+    //             $("input[id=club" + "]").val(clubTitle);
+    //
+    //         });
+    //
+    //         // reveal newly created dropdown
+    //         $(document.activeElement).parent().parent().children('.dropdown-club').show();
+    //
+    //     }
+    //
+    //     // short delay to prevents double sending
+    //     $(this).delay('250');
+    //
+    //     // Request autocompleted names
+    //     $.ajax({
+    //         type: $( this ).prop( 'method' ),
+    //
+    //         url: "/club/" + $(this).val(),
+    //
+    //         data: {
+    //             // We use Laravel tokens to prevent CSRF attacks - need to pass the token with each requst
+    //             "_token": $(this).find( 'input[name=_token]' ).val(),
+    //
+    //             // Most browsers are restricted to only "get" and "post" methods, so we spoof the method in the data
+    //             "_method": "get"
+    //         },
+    //
+    //         dataType: 'json',
+    //
+    //         success: function(response){
+    //             // external function handles the response
+    //             ajaxCallBackClubs(response);
+    //         },
+    //     });
+    // } );
 
 });
 
-$(document).ready(function() {
-
+$(function () {
     window.onresize = () => {
         var height_evaluation = $('#evaluation').height();
-        $(document).find('.evaluation_heading').attr('style', 'height:'+height_evaluation+'px;');
+        $(document).find('.evaluation_heading').attr('style', 'height:' + height_evaluation + 'px;');
     }
 });
 
@@ -298,11 +295,11 @@ $(document).ready(function() {
 // EDITING ANSWERS //
 /////////////////////
 
-function get_answer_row(number) {
+function setAnswerRow(number: number) {
     $('#get_row').attr('value', number);
 }
 
-jQuery( document ).ready( function( $ ) {
+$(function ($) {
     function submitChanges() {
         var password = getPasswordField().val();
         var counter_ajax = $('#get_row').val();
@@ -310,20 +307,20 @@ jQuery( document ).ready( function( $ ) {
         var checked_answers = [];
         var req_error = [];
 
-        $(".row"+counter_ajax).find(".singleAnswer").not(".cellEditing-1").not(".cellEditing-2").each(function () {
+        $(".row" + counter_ajax).find(".singleAnswer").not(".cellEditing-1").not(".cellEditing-2").each(function () {
 
-            if ($(this).attr('id') == 'text' && $(this).attr('data-id') == 'required' && $("#"+ count_answers).val() == "") {
+            if ($(this).attr('id') == 'text' && $(this).attr('data-id') == 'required' && $("#" + count_answers).val() == "") {
                 var error = "required_missing";
                 req_error.push(error);
             }
 
-            if ($(this).attr('id') == 'radio' +count_answers + '-' + counter_ajax) {
+            if ($(this).attr('id') == 'radio' + count_answers + '-' + counter_ajax) {
                 var answers = $(this).find('input:checked').val();
                 checked_answers.push(answers);
 
             }
             if ($(this).attr('id') == 'text' || $(this).attr('id') == 'dropdown') {
-                var answers = $("#"+ count_answers).val();
+                var answers = $("#" + count_answers).val();
                 checked_answers.push(answers);
             }
 
@@ -517,7 +514,7 @@ jQuery( document ).ready( function( $ ) {
         var that = this;
         var $passwordField = getPasswordField();
         if ($passwordField.length && !$passwordField.val()) {
-            bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function(password) {
+            bootbox.prompt('Bitte noch das Passwort für diese Umfrage eingeben:', function (password) {
                 if (password) {
                     $passwordField.val(password);
                     submitChanges.call(that);
@@ -551,11 +548,11 @@ jQuery( document ).ready( function( $ ) {
         // Adding answerid to the update form and checking if url is correct
         if (check_url.match('3/') || check_url.match('3#')) {
             var window_loc = window.location.href;
-            var window_loc_cut = window_loc.substr(0, window_loc.length-1);
-            $(document).find('.update').attr('action', window_loc_cut+'/answer/'+answer_number);
+            var window_loc_cut = window_loc.substr(0, window_loc.length - 1);
+            $(document).find('.update').attr('action', window_loc_cut + '/answer/' + answer_number);
         }
         else {
-            $(document).find('.update').attr('action', window.location.href+'/answer/'+answer_number);
+            $(document).find('.update').attr('action', window.location.href + '/answer/' + answer_number);
         }
 
         count_clicks++;
@@ -589,16 +586,16 @@ jQuery( document ).ready( function( $ ) {
                 var is_required = $('#question_required' + question_counter).val();
 
                 if (i == -2) {
-                    $(this).addClass("cellEditing" + i +" dropdown").attr('id', 'cellEditing' + i);
+                    $(this).addClass("cellEditing" + i + " dropdown").attr('id', 'cellEditing' + i);
                     $(this).html("<input id='newName2' name='name' type='text' value='" + OriginalContent.trim() + "' />" +
-                                    "<ul id='dropdown-menu_name2' class='dropdown-menu edit_drop'>" +
-                                        "<li class='dropdown-item' id='yourself'>" +
-                                            "<a href='"+'javascript:void(0);'+"' onClick='"+ 'document.getElementById("newName2").value=$("#hdnSession_userName").val(); document.getElementById("newClub").value=$("#hdnSession_userClub").val(); document.getElementById("ldapID_edit").value=$("#hdnSession_userID").val();' +"'</a>" +
-                                                "<b>Mich eintragen!</b>" +
-                                            "</a>" +
-                                        "</li>" +
-                                    "</ul>" +
-                    "<input type='hidden' name='ldapID_edit' id='ldapID_edit' value='' >");
+                        "<ul id='dropdown-menu_name2' class='dropdown-menu edit_drop'>" +
+                        "<li class='dropdown-item' id='yourself'>" +
+                        "<a href='" + 'javascript:void(0);' + "' onClick='" + 'document.getElementById("newName2").value=$("#hdnSession_userName").val(); document.getElementById("newClub").value=$("#hdnSession_userClub").val(); document.getElementById("ldapID_edit").value=$("#hdnSession_userID").val();' + "'</a>" +
+                        "<b>Mich eintragen!</b>" +
+                        "</a>" +
+                        "</li>" +
+                        "</ul>" +
+                        "<input type='hidden' name='ldapID_edit' id='ldapID_edit' value='' >");
                 }
 
                 if (i == -1) {
@@ -610,21 +607,21 @@ jQuery( document ).ready( function( $ ) {
                     var selected_answer_dropdown = $(this).text().trim();
 
                     $(this).addClass("cellEditing" + i).attr('id', 'dropdown');
-                    $(this).html("<select class='form-control' id='" + i + "' name='answers[" + question_counter +"]' style='font-size: 13px;' >");
+                    $(this).html("<select class='form-control' id='" + i + "' name='answers[" + question_counter + "]' style='font-size: 13px;' >");
 
                     $('#options' + i).find('option').each(function () {
 
                         var new_option = document.createElement("option");
                         var options = document.createTextNode((document.getElementById('options' + i) as any).options[x].innerHTML);
                         new_option.appendChild(options);
-                        var dropdown = document.getElementById(""+i);
+                        var dropdown = document.getElementById("" + i);
                         dropdown.appendChild(new_option);
                         x++;
                         $("#" + i).attr('style', 'font-size: 13px;height: 22px;padding: 0px');
                     });
 
                     //Get select object
-                    var objSelect = document.getElementById(""+i) as any;
+                    var objSelect = document.getElementById("" + i) as any;
 
                     //Set selected
                     for (var i = 0; i < objSelect.options.length; i++) {
@@ -638,7 +635,7 @@ jQuery( document ).ready( function( $ ) {
                 if (i > -1 && field_type == 1) {
 
                     $(this).addClass("cellEditing" + i).attr('id', 'text');
-                    $(this).html("<input id='"+i+"' name='answers[" + question_counter +"]' type='text' value='" + OriginalContent.trim() + "' />");
+                    $(this).html("<input id='" + i + "' name='answers[" + question_counter + "]' type='text' value='" + OriginalContent.trim() + "' />");
 
                     if (is_required == 1) {
                         $(this).attr('data-id', 'required');
@@ -648,7 +645,7 @@ jQuery( document ).ready( function( $ ) {
                 if (i > -1 && field_type == 2) {
                     var selected_answer_radio = $(this).text().trim();
 
-                    $(this).addClass("cellEditing" + i).attr('id', 'radio'+i+ '-' + answer_number);
+                    $(this).addClass("cellEditing" + i).attr('id', 'radio' + i + '-' + answer_number);
                     $(this).html("");
                     var y = 0;
                     $('.question' + i).find('input:radio').each(function () {
@@ -662,7 +659,7 @@ jQuery( document ).ready( function( $ ) {
 
                         new_radio.setAttribute('value', (document.getElementById('radio' + i + '-' + y) as any).value);
                         new_radio.appendChild(radio_text);
-                        var radio = document.getElementById('radio'+i+ '-' + answer_number);
+                        var radio = document.getElementById('radio' + i + '-' + answer_number);
                         radio.appendChild(new_radio);
 
                         y++;
@@ -712,7 +709,7 @@ jQuery( document ).ready( function( $ ) {
                 }
 
                 if ($(this).attr('id') == 'text' || $(this).attr('id') == 'dropdown') {
-                    var answers = $("#"+ question_counter).val();
+                    var answers = $("#" + question_counter).val();
                     oldContent.push(answers);
                 }
 
@@ -732,8 +729,8 @@ jQuery( document ).ready( function( $ ) {
 // handles expandable table-rows (for exampled in surveyView change-history)
 function toggle(row, rowCount) {
     // change arrow icon
-    var arrowIcon = document.getElementById("arrow-icon"+row);
-    if(arrowIcon.className == "fa fa-caret-right"){
+    var arrowIcon = document.getElementById("arrow-icon" + row);
+    if (arrowIcon.className == "fa fa-caret-right") {
         // if table is fold
         arrowIcon.className = "fa fa-sort-desc";
     } else {
@@ -741,9 +738,9 @@ function toggle(row, rowCount) {
         arrowIcon.className = "fa fa-caret-right";
     }
     // display columns
-    for (var i=0;i<rowCount;i++) {
-        var currentTr = document.getElementById("tr-data-"+row+i);
-        if(currentTr.style.display == "") {
+    for (var i = 0; i < rowCount; i++) {
+        var currentTr = document.getElementById("tr-data-" + row + i);
+        if (currentTr.style.display == "") {
             // fold
             currentTr.style.display = "none";
         } else {

@@ -45,12 +45,12 @@
 
 .table-responsive-custom {
     margin: 0;
-    background-color: #f6f5f3;
+    //background-color: #f6f5f3;
 }
 
 .table-responsive-custom > thead > tr > th {
-    background-color: white;
-    color: #333;
+    //background-color: white;
+    //color: #333;
 }
 
 @media screen and (max-width: 978px) {
@@ -63,7 +63,7 @@
 .table-responsive-custom > thead:first-child > tr:first-child > th:first-child {
     position: absolute;
     display: inline-block;
-    background-color: white;
+    //background-color: white;
 }
 
 .table-responsive-custom > thead > tr > th:first-child {
@@ -89,11 +89,11 @@
 }
 
 .table-responsive-custom > tbody > tr:nth-child(odd) > td {
-    background-color: #f9f9f9;
+    //background-color: #f9f9f9;
 }
 
 .table-responsive-custom > tbody > tr:nth-child(even) > td {
-    background-color: white;
+    //background-color: white;
 }
 
 .table-responsive-custom > tbody > tr:nth-child(odd) > td:first-child {
@@ -137,7 +137,7 @@ Generic Styling, for Desktops/Laptops
 /* Zebra striping*/
 @media screen and (max-width: 978px) {
     #survey-answer tr:nth-of-type(odd) {
-        background: #f9f9f9;
+        //background: #f9f9f9;
     }
 }
 
@@ -162,7 +162,7 @@ and also iPads specifically.
 */
 @media screen and (max-width: 978px) {
     #survey-answer tr:nth-of-type(even) {
-        background-color: white;
+        //background-color: white;
     }
 
     .table-responsive-custom {
@@ -309,31 +309,16 @@ tr .card {
 
     #evaluation {
         margin-top: 40px;
-        background-color: #F6F5F3;
-    }
-
-    #whiteBackgroundTrasparent {
-        background-color: #f6f5f3 !important;
-        border-color: #f6f5f3 !important;
-        border-width: 0;
+        //background-color: #F6F5F3;
     }
 }
 
 .background {
-    background-color: #f6f5f3 !important;
+    //background-color: #f6f5f3 !important;
 }
 
 #EvaluationColor {
     background-color: lemonchiffon;
-}
-
-#whiteBackground {
-    background-color: white;
-}
-
-#whiteBackgroundTrasparent {
-    background-color: white;
-    border-color: white !important;
 }
 
 @media screen and (max-width: 978px) {

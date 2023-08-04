@@ -110,18 +110,19 @@ $ldapid
     <br>
 
 
-    {!! Form::open(['action' => ['SurveyAnswerController@store', $survey->id], 'class' => 'store', 'name' => 'store']) !!}
+    {!! Form::open(['method'=>'POST', 'action' => ['SurveyAnswerController@store', $survey->id], 'class' => 'store', 'name' => 'store']) !!}
 
+    @if( $survey->password != '')
     <div class="card bg-warning">
-        @if( $survey->password != '')
+
             <div class="hidden-print card-header">
                 {!! Form::password('password', ['class'=>'col-md-4 col-12',
                                                 'id'=>'password' . $survey->id,
                                                 'placeholder'=>Lang::get('mainLang.enterPasswordHere')]) !!}
                 <br>
             </div>
-        @endif
     </div>
+    @endif
 
     <div class="clubToQuestion">
         <div class="nameToQuestion">
@@ -189,7 +190,7 @@ $ldapid
                                 {!! Form::close() !!}
                             </td>
                         </tr>
-                        {!! Form::open(['action' => ['SurveyAnswerController@update', $survey->id, '' ], 'class' => 'update']) !!}
+                        {!! Form::open(['method'=>'POST', 'action' => ['SurveyAnswerController@update', $survey->id, '' ], 'class' => 'update']) !!}
                         @if(!$survey->is_anonymous || $userId == $survey->creator_id)
                             @if(!$survey->show_results_after_voting || $userParticipatedAlready)
                                 @foreach($answers as $key => $answer)
@@ -245,7 +246,7 @@ $ldapid
                                                                    data-token="{{csrf_token()}}"
                                                                    data-id="{{$answer->id}}"
                                                                    >
-                                                                <span class="fa-solid  fa-pencil-alt"></span>
+                                                                <i class="fa-solid  fa-pencil-alt"></i>
                                                             </button>
                                                             <i id="spinner{{$answer->id}}"
                                                                class="fa-solid  fa-spinner fa-spin fa-2x d-none"></i>
