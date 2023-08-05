@@ -27,7 +27,7 @@ use Lara\Utilities;
 use Lara\utilities\RoleUtility;
 use Log;
 use Redirect;
-use Session;
+
 use URL;
 
 /** Controller for generating iCal feeds */
@@ -500,11 +500,11 @@ class IcalController extends Controller
         $user = Auth::user();
 
         if (!$user || !$user->isAn(RoleUtility::PRIVILEGE_MARKETING, RoleUtility::PRIVILEGE_ADMINISTRATOR, RoleUtility::PRIVILEGE_CL)) {
-            Session::put(
+            session()->put(
                 'message',
                 'Du darfst dieses Event nicht veröffentlichen! Frage die Clubleitung oder Markleting ;)'
             );
-            Session::put('msgType', 'danger');
+            session()->put('msgType', 'danger');
 
             return back();
         }
@@ -521,8 +521,8 @@ class IcalController extends Controller
                 . ') unpublished event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
 
             // Inform the user
-            Session::put('message', "Dieses Event wurde erfolgreich aus dem Kalenderfeed entfernt.");
-            Session::put('msgType', 'danger');
+            session()->put('message', "Dieses Event wurde erfolgreich aus dem Kalenderfeed entfernt.");
+            session()->put('msgType', 'danger');
 
             return back();
 
@@ -538,8 +538,8 @@ class IcalController extends Controller
                 . $user->roles()->get(['name']) . ') published event "' . $event->evnt_title . '" (eventID: ' . $event->id . ') on ' . $event->evnt_date_start . '.');
 
             // Inform the user
-            Session::put('message', "Dieses Event wurde erfolgreich zum Kalenderfeed hinzugefügt.");
-            Session::put('msgType', 'success');
+            session()->put('message', "Dieses Event wurde erfolgreich zum Kalenderfeed hinzugefügt.");
+            session()->put('msgType', 'success');
 
             return back();
         }

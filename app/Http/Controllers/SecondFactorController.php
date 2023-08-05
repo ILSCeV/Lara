@@ -34,7 +34,7 @@ class SecondFactorController extends Controller
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator->errors());
         }
-        $targeturl = \Session::get('targeturl', "/");
+        $targeturl = session('targeturl', "/");
         if (is_array($targeturl)) {
             $targeturl = $targeturl[0];
         }
@@ -43,8 +43,8 @@ class SecondFactorController extends Controller
         $secret = \Auth::user()->google2fa_secret;
         try {
             if ($google2fa->verify($request->input("code"), $secret)) {
-                \Session::forget('targeturl');
-                \Session::put('2faVeryfied', true);
+                session()->forget('targeturl');
+                session()->put('2faVeryfied', true);
                 return Redirect::to($targeturl);
             } else {
                 return Redirect::back()->withErrors(['code' => 'invalid code']);

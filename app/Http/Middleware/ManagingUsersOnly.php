@@ -6,7 +6,7 @@ use Closure;
 use Auth;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
-use Session;
+
 
 class ManagingUsersOnly
 {

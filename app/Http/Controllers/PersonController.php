@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use Cache;
 use DateTime;
 use DateInterval;
-use Session;
-use Config;
+
 use Auth;
 use Redirect;
 
@@ -29,8 +28,8 @@ class PersonController extends Controller
         $user = Auth::user();
         if(!$user)
         {
-            Session::put('message', Config::get('messages_de.access-denied'));
-            Session::put('msgType', 'danger');
+            session()->put('message', config('messages_de.access-denied'));
+            session()->put('msgType', 'danger');
             return Redirect::action('MonthController@showMonth', ['year' => date("Y"), 'month' => date('m')]);
         }
 

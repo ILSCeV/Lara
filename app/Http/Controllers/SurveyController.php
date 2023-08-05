@@ -3,7 +3,6 @@
 namespace Lara\Http\Controllers;
 
 use Auth;
-use Config;
 use Illuminate\Http\Request;
 use Hash;
 use Lara\Library\Revision;
@@ -12,7 +11,7 @@ use Lara\RevisionEntry;
 use Lara\SurveyAnswerCell;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
-use Session;
+
 use Redirect;
 use DateTime;
 
@@ -128,8 +127,8 @@ class SurveyController extends Controller
 
         Revision::deleteWithRevision($survey);
 
-        Session::put('message', 'Umfrage gelöscht!');
-        Session::put('msgType', 'success');
+        session()->put('message', 'Umfrage gelöscht!');
+        session()->put('msgType', 'success');
 
         return Redirect::action('MonthController@currentMonth');
     }
@@ -148,8 +147,8 @@ class SurveyController extends Controller
         $user = Auth::user();
         if (!$user && $survey->is_private == 1)
         {
-            Session::put('message', Config::get('messages_de.access-denied'));
-            Session::put('msgType', 'danger');
+            session()->put('message', config('messages_de.access-denied'));
+            session()->put('msgType', 'danger');
             return Redirect::action('MonthController@showMonth', array('year' => date('Y'),
                                                                        'month' => date('m')));
         }

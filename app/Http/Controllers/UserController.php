@@ -19,7 +19,7 @@ use Lara\Utilities;
 use Lara\utilities\RoleUtility;
 use Log;
 use Redirect;
-use Session;
+
 use View;
 
 class UserController extends Controller
@@ -213,13 +213,13 @@ class UserController extends Controller
         $user->privacy_accepted = new \DateTime();
         if ($user->save()) {
             Log::info('User: '.$user->name.' ('.$user->person->prsn_ldap_id.') accepted the privacy policy.');
-            Session::put('message', trans('mainLang.privacyAccepted'));
-            Session::put('msgType', 'success');
+            session()->put('message', trans('mainLang.privacyAccepted'));
+            session()->put('msgType', 'success');
 
             return redirect('/');
         }
-        Session::put('message', 'mainLang.fatalErrorUponSaving');
-        Session::put('msgType', 'danger');
+        session()->put('message', 'mainLang.fatalErrorUponSaving');
+        session()->put('msgType', 'danger');
         redirect();
     }
 
