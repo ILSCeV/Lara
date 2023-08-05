@@ -7,7 +7,6 @@ use Illuminate\Http\RedirectResponse;
 use Lara\Http\Middleware\RejectGuests;
 
 use PragmaRX\Google2FA\Google2FA;
-use Redirect;
 
 class SecondFactorController extends Controller
 {
@@ -32,7 +31,7 @@ class SecondFactorController extends Controller
             'code' => 'required|digits:6'
         ]);
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator->errors());
+            return back()->withErrors($validator->errors());
         }
         $targeturl = session('targeturl', "/");
         if (is_array($targeturl)) {
@@ -45,12 +44,12 @@ class SecondFactorController extends Controller
             if ($google2fa->verify($request->input("code"), $secret)) {
                 session()->forget('targeturl');
                 session()->put('2faVeryfied', true);
-                return Redirect::to($targeturl);
+                return redirect($targeturl);
             } else {
-                return Redirect::back()->withErrors(['code' => 'invalid code']);
+                return back()->withErrors(['code' => 'invalid code']);
             }
         } catch (\Exception $e) {
-            return Redirect::back()->withErrors(['code' => $e->getMessage()]);
+            return back()->withErrors(['code' => $e->getMessage()]);
         }
     }
 

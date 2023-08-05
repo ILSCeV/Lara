@@ -12,7 +12,6 @@ use Lara\Status;
 use Lara\Survey;
 use Lara\SurveyAnswer;
 use Lara\SurveyAnswerCell;
-use Redirect;
 
 
 
@@ -52,7 +51,7 @@ class SurveyAnswerController extends Controller
             && !Hash::check($input->password, $survey->password)) {
             session()->put('message', 'Fehler: das angegebene Passwort ist falsch, keine Änderungen wurden gespeichert. Bitte versuche es erneut oder frage ein anderes Mitglied oder CL.');
             session()->put('msgType', 'danger');
-            return Redirect::action('SurveyController@show', [$survey->id]);
+            return redirect()->action([SurveyController::class, 'show'], [$survey->id]);
         }
 
         $survey_answer = new SurveyAnswer();
@@ -106,7 +105,7 @@ class SurveyAnswerController extends Controller
         session()->put('message', 'Erfolgreich abgestimmt!');
         session()->put('msgType', 'success');
 
-        return Redirect::action('SurveyController@show', [$survey->id]);
+        return redirect()->action([SurveyController::class, 'show'], [$survey->id]);
     }
 
     /**
@@ -203,7 +202,7 @@ class SurveyAnswerController extends Controller
             && !Hash::check($input->password, $survey->password)) {
             session()->put('message', 'Fehler: das eingegebene Passwort war leider falsch.');
             session()->put('msgType', 'error');
-            return Redirect::action('SurveyController@show', [$surveyid]);
+            return redirect()->action([SurveyController::class, 'show'], [$surveyid]);
         }
         $answer = SurveyAnswer::findOrFail($id);
         $revision_answer = new Revision($answer);
@@ -222,7 +221,7 @@ class SurveyAnswerController extends Controller
         session()->put('message', 'Erfolgreich gelöscht!');
         session()->put('msgType', 'success');
 
-        return Redirect::action('SurveyController@show', [ $surveyid ]);
+        return redirect()->action([SurveyController::class, 'show'], [ $surveyid ]);
     }
 
     /*

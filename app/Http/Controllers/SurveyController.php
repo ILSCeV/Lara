@@ -11,10 +11,7 @@ use Lara\RevisionEntry;
 use Lara\SurveyAnswerCell;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
-
-use Redirect;
 use DateTime;
-
 use Lara\Survey;
 use Lara\QuestionType;
 use Lara\SurveyQuestion;
@@ -95,7 +92,7 @@ class SurveyController extends Controller
             SurveyQuestion::make($survey, $order, $question, $type, $isRequired, $options);
         }
 
-        return Redirect::action('SurveyController@show', [$survey->id]);
+        return redirect()->action([SurveyController::class, 'show'], [$survey->id]);
     }
 
 
@@ -130,7 +127,7 @@ class SurveyController extends Controller
         session()->put('message', 'Umfrage gelöscht!');
         session()->put('msgType', 'success');
 
-        return Redirect::action('MonthController@currentMonth');
+        return redirect()->action([MonthController::class, 'currentMonth']);
     }
 
     /**
@@ -149,7 +146,7 @@ class SurveyController extends Controller
         {
             session()->put('message', config('messages_de.access-denied'));
             session()->put('msgType', 'danger');
-            return Redirect::action('MonthController@showMonth', array('year' => date('Y'),
+            return redirect()->action([MonthController::class, 'showMonth'], array('year' => date('Y'),
                                                                        'month' => date('m')));
         }
 
@@ -522,7 +519,7 @@ class SurveyController extends Controller
             $questionRevision->save($questionToModify);
         }
 
-        return Redirect::action('SurveyController@show', [ $survey->id ]);
+        return redirect()->action([SurveyController::class, 'show'], [ $survey->id ]);
     }
 
 

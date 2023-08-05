@@ -26,7 +26,6 @@ use Lara\Shift;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
 use Log;
-use Redirect;
 
 use URL;
 
