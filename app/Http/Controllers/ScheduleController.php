@@ -128,7 +128,7 @@ class ScheduleController extends Controller
         if ( is_null($schedule) ) {
             session()->put('message', 'Fehler: Löschvorgang abgebrochen - der Dienstplaneintrag existiert nicht.');
             session()->put('msgType', 'danger');
-            return Redirect::back();
+            return back();
         }
         // Delete all corresponding shifts first because of dependencies in database
         foreach ( $schedule->shifts as $shift ) {

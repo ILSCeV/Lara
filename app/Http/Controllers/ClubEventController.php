@@ -23,7 +23,6 @@ use Lara\Section;
 use Lara\Template;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
-use Redirect;
 
 use View;
 
@@ -90,7 +89,7 @@ class ClubEventController extends Controller
         if (!$isDateFormatValid) {
             session()->put('message', trans("messages.invalidDate", compact('day', 'month', 'year')));
             session()->put('msgType', 'danger');
-            return Redirect::to('/');
+            return redirect('/');
         }
 
         // prepare correct date format to be used in the forms
@@ -222,7 +221,7 @@ class ClubEventController extends Controller
         if ($request->input('password') != $request->input('passwordDouble')) {
             session()->put('message', config('messages_de.password-mismatch'));
             session()->put('msgType', 'danger');
-            return Redirect::back()->withInput();
+            return back()->withInput();
         }
 
         $newEvent = $this->editClubEvent(null);
@@ -244,7 +243,7 @@ class ClubEventController extends Controller
         }
 
         // show new event
-        return Redirect::action('ClubEventController@show', [$newEvent->id]);
+        return redirect()->action([ClubEventController::class, 'show'], [$newEvent->id]);
     }
 
     /**
@@ -266,12 +265,12 @@ class ClubEventController extends Controller
         if (!$user && $clubEvent->evnt_is_private == 1) {
             session()->put('message', config('messages_de.access-denied'));
             session()->put('msgType', 'danger');
-            return Redirect::action(
-                'MonthController@showMonth',
-                array(
+            return redirect()->action(
+                [MonthController::class, 'showMonth'],
+                [
                     'year' => date('Y'),
                     'month' => date('m')
-                )
+                ]
             );
         }
 
@@ -452,7 +451,7 @@ class ClubEventController extends Controller
         if ($request->input('password') != $request->input('passwordDouble')) {
             session()->put('message', config('messages_de.password-mismatch'));
             session()->put('msgType', 'danger');
-            return Redirect::back()->withInput();
+            return back()->withInput();
         }
 
         $event = $this->editClubEvent($event);
@@ -472,7 +471,7 @@ class ClubEventController extends Controller
         }
 
         // show event
-        return Redirect::action('ClubEventController@show', [$event->id]);
+        return redirect()->action([ClubEventController::class, 'show'], [$event->id]);
     }
 
     /**
@@ -485,6 +484,14 @@ class ClubEventController extends Controller
     {
         $date = new DateTime($event->evnt_date_start);
 
+
+        // Check if event exists
+        if (is_null($event)) {
+            session()->put('message', config('messages_de.event-doesnt-exist'));
+            session()->put('msgType', 'danger');
+            return Redirect::back();
+        }
+
         // Check credentials: you can only delete, if you have rights for marketing or management.
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
         $created_by = $revisions[0]["user id"];
@@ -493,12 +500,12 @@ class ClubEventController extends Controller
         if (!$user || !$user->isAn(RoleUtility::PRIVILEGE_MARKETING, RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
             session()->put('message', 'Du darfst diese Veranstaltung/Aufgabe nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
             session()->put('msgType', 'danger');
-            return Redirect::action(
-                'MonthController@showMonth',
-                array(
+            return redirect()->action(
+                [MonthController::class, 'showMonth'],
+                [
                     'year' => date('Y'),
                     'month' => date('m')
-                )
+                ]
             );
         }
 
@@ -513,7 +520,7 @@ class ClubEventController extends Controller
         // show current month afterwards
         session()->put('message', config('messages_de.event-delete-ok'));
         session()->put('msgType', 'success');
-        return Redirect::action('MonthController@showMonth', [
+        return redirect()->action([MonthController::class, 'showMonth'], [
             'year' => $date->format('Y'),
             'month' => $date->format('m')
         ]);

@@ -52,7 +52,7 @@ class UserPersonalPageController extends Controller
         session()->put('message', trans('mainLang.changesSaved'));
         session()->put('msgType', 'success');
 
-        return \Redirect::back();
+        return \back();
     }
 
     public function registerGoogleAuth()
@@ -63,7 +63,7 @@ class UserPersonalPageController extends Controller
         $secret = $request->input("secret");
         $currentCode = $request->input('currentCode');
         if (!$this->validateGoogle2fa($google2fa, $currentCode, $secret)) {
-            return Redirect::back()->withInput($request->all())->withErrors(['code'=>'invalid code']);
+            return back()->withInput($request->all())->withErrors(['code'=>'invalid code']);
         }
         /** @var User $user */
         $user = \Auth::user();
@@ -79,7 +79,7 @@ class UserPersonalPageController extends Controller
         $user = \Auth::user();
         $user->google2fa_secret = '';
         $user->save();
-        return Redirect::back();
+        return back();
     }
 
     private function validateGoogle2fa(Google2FA $google2fa, $key, $secret)

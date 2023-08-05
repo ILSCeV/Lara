@@ -14,7 +14,6 @@ use Lara\Template;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
 use Log;
-use Redirect;
 
 use View;
 
@@ -118,11 +117,11 @@ class ShiftTypeController extends Controller
         // Check credentials: you can only edit, if you have rights for marketing, section management or admin
         $user = Auth::user();
 
-        if(!$user || !$user->isAn(['marketing', 'clubleitung', 'admin']))
+        if(!$user || !$user->isAn(RoleUtility::PRIVILEGE_MARKETING, RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_ADMINISTRATOR))
         {
             session()->put('message', trans('mainLang.cantTouchThis'));
             session()->put('msgType', 'danger');
-            return Redirect::back();
+            return back();
         }
 
         // Get all the data (throws a 404 error if shiftType doesn't exist)
@@ -138,21 +137,21 @@ class ShiftTypeController extends Controller
         if (empty($newTitle) || empty($newTimeStart) || empty($newTimeEnd)) {
             session()->put('message', trans('mainLang.cantBeBlank'));
             session()->put('msgType', 'danger');
-            return Redirect::back();
+            return back();
         }
 
         // Statistical weight must be numerical
         if (!is_numeric($newWeight)) {
             session()->put('message', trans('mainLang.nonNumericStats'));
             session()->put('msgType', 'danger');
-            return Redirect::back();
+            return back();
         }
 
         // Statistical weight must be non-negative
         if ($newWeight < 0.0) {
             session()->put('message', trans('mainLang.negativeStats'));
             session()->put('msgType', 'danger');
-            return Redirect::back();
+            return back();
         }
 
         // Log the action while we still have the data
@@ -170,7 +169,7 @@ class ShiftTypeController extends Controller
         // Return to the shiftType page
         session()->put('message', trans('mainLang.changesSaved'));
         session()->put('msgType', 'success');
-        return Redirect::back();
+        return back();
     }
 
     /**
@@ -185,7 +184,7 @@ class ShiftTypeController extends Controller
         $shiftTypeNewId = $request->input('shiftType');
 
         $this->replaceShiftType($shiftId, $shiftTypeNewId);
-        return Redirect::back();
+        return back();
 
     }
 
@@ -235,7 +234,7 @@ class ShiftTypeController extends Controller
         $shifts->each(function ($shift) use ($shiftTypeNewId) {
             $this->replaceShiftType($shift->id, $shiftTypeNewId);
         });
-        return Redirect::back();
+        return back();
     }
 
     /**
@@ -249,11 +248,11 @@ class ShiftTypeController extends Controller
         // Check credentials: you can only delete, if you have rights for marketing, section management or admin
         $user = Auth::user();
 
-        if(!$user || !$user->is(['marketing', 'clubleitung', 'admin']))
+        if(!$user || !$user->isAn(RoleUtility::PRIVILEGE_MARKETING, RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_ADMINISTRATOR))
         {
             session()->put('message', trans('mainLang.cantTouchThis'));
             session()->put('msgType', 'danger');
-            return Redirect::back();
+            return back();
         }
 
         // Get all the data
@@ -267,7 +266,7 @@ class ShiftTypeController extends Controller
             // Inform the user about the redirect and go to detailed info about the job type selected
             session()->put('message', trans('mainLang.deleteFailedShiftTypeInUse'));
             session()->put('msgType', 'danger');
-            return Redirect::action( 'ShiftTypeController@show', [ $shiftType->id] );
+            return redirect()->action([ShiftTypeController::class, 'show'], [ $shiftType->id] );
         }
         else
         {
@@ -284,7 +283,7 @@ class ShiftTypeController extends Controller
             // Return to the management page
             session()->put('message', trans('mainLang.changesSaved'));
             session()->put('msgType', 'success');
-            return Redirect::action( 'ShiftTypeController@index' );
+            return redirect()->action([ShiftTypeController::class, 'show']);
         }
     }
 

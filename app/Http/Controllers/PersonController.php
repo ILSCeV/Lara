@@ -8,7 +8,6 @@ use DateTime;
 use DateInterval;
 
 use Auth;
-use Redirect;
 
 use Lara\Person;
 
@@ -30,7 +29,7 @@ class PersonController extends Controller
         {
             session()->put('message', config('messages_de.access-denied'));
             session()->put('msgType', 'danger');
-            return Redirect::action('MonthController@showMonth', ['year' => date("Y"), 'month' => date('m')]);
+            return redirect()->action([MonthController::class, 'showMonth'], ['year' => date("Y"), 'month' => date('m')]);
         }
 
         // if no parameter specified - empty means "show all"

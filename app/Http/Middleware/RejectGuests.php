@@ -3,7 +3,6 @@
 namespace Lara\Http\Middleware;
 
 use Closure;
-use Redirect;
 use Auth;
 
 
@@ -23,7 +22,7 @@ class RejectGuests
         } else {
             session()->put('message', 'Bitte einloggen');
             session()->put('msgType', 'danger');
-            return Redirect('/');
+            return redirect('/');
         }
     }
 }

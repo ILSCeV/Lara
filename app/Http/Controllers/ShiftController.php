@@ -293,7 +293,7 @@ class ShiftController extends Controller
         if (is_null($shift)) {
             session()->put('message', 'Fehler: Löschvorgang abgebrochen - der Dienstplaneintrag existiert nicht.');
             session()->put('msgType', 'danger');
-            return Redirect::back();
+            return back();
         }
         Utilities::clearIcalCache();
 
