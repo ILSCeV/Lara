@@ -15,7 +15,7 @@ use Lara\ShiftType;
 use Lara\Status;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
-use Session;
+
 
 class ShiftController extends Controller
 {
@@ -67,7 +67,7 @@ class ShiftController extends Controller
     public function update(Request $request, $id)
     {
         // Check if it's our form (CSRF protection)
-        if (Session::token() !== $request->input('_token')) {
+        if (session()->token() !== $request->input('_token')) {
             return response()->json(["errorCode" => 'sessionExpired'], 401);
         }
 
@@ -291,8 +291,8 @@ class ShiftController extends Controller
 
         // Check if shift exists
         if (is_null($shift)) {
-            Session::put('message', 'Fehler: Löschvorgang abgebrochen - der Dienstplaneintrag existiert nicht.');
-            Session::put('msgType', 'danger');
+            session()->put('message', 'Fehler: Löschvorgang abgebrochen - der Dienstplaneintrag existiert nicht.');
+            session()->put('msgType', 'danger');
             return Redirect::back();
         }
         Utilities::clearIcalCache();

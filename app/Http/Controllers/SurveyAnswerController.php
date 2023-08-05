@@ -13,7 +13,7 @@ use Lara\Survey;
 use Lara\SurveyAnswer;
 use Lara\SurveyAnswerCell;
 use Redirect;
-use Session;
+
 
 
 /**
@@ -50,8 +50,8 @@ class SurveyAnswerController extends Controller
         //check if survey needs a password and validate hashes
         if ($survey->password !== ''
             && !Hash::check($input->password, $survey->password)) {
-            Session::put('message', 'Fehler: das angegebene Passwort ist falsch, keine Änderungen wurden gespeichert. Bitte versuche es erneut oder frage ein anderes Mitglied oder CL.');
-            Session::put('msgType', 'danger');
+            session()->put('message', 'Fehler: das angegebene Passwort ist falsch, keine Änderungen wurden gespeichert. Bitte versuche es erneut oder frage ein anderes Mitglied oder CL.');
+            session()->put('msgType', 'danger');
             return Redirect::action('SurveyController@show', [$survey->id]);
         }
 
@@ -103,8 +103,8 @@ class SurveyAnswerController extends Controller
             $survey_answer_cell->save();
             $revision_cell->save($survey_answer_cell);
         }
-        Session::put('message', 'Erfolgreich abgestimmt!');
-        Session::put('msgType', 'success');
+        session()->put('message', 'Erfolgreich abgestimmt!');
+        session()->put('msgType', 'success');
 
         return Redirect::action('SurveyController@show', [$survey->id]);
     }
@@ -120,7 +120,7 @@ class SurveyAnswerController extends Controller
         /** @var Request $input */
         $input = request();
         //validate session token
-        if (Session::token() !== $input->get('_token')) {
+        if (session()->token() !== $input->get('_token')) {
             return response()->json('Fehler: die Session ist abgelaufen. Bitte aktualisiere die Seite und logge dich ggf. erneut ein.', 401);
         }
 
@@ -201,8 +201,8 @@ class SurveyAnswerController extends Controller
         $survey = Survey::findOrFail($surveyid);
         if ($survey->password !== ''
             && !Hash::check($input->password, $survey->password)) {
-            Session::put('message', 'Fehler: das eingegebene Passwort war leider falsch.');
-            Session::put('msgType', 'error');
+            session()->put('message', 'Fehler: das eingegebene Passwort war leider falsch.');
+            session()->put('msgType', 'error');
             return Redirect::action('SurveyController@show', [$surveyid]);
         }
         $answer = SurveyAnswer::findOrFail($id);
@@ -219,8 +219,8 @@ class SurveyAnswerController extends Controller
         $answer->delete();
         $revision_answer->save($answer, "Antwort gelöscht");
 
-        Session::put('message', 'Erfolgreich gelöscht!');
-        Session::put('msgType', 'success');
+        session()->put('message', 'Erfolgreich gelöscht!');
+        session()->put('msgType', 'success');
 
         return Redirect::action('SurveyController@show', [ $surveyid ]);
     }

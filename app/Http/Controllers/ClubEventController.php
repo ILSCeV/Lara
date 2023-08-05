@@ -5,7 +5,6 @@ namespace Lara\Http\Controllers;
 use Auth;
 use Cache;
 use Carbon\Carbon;
-use Config;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
@@ -25,7 +24,7 @@ use Lara\Template;
 use Lara\Utilities;
 use Lara\utilities\RoleUtility;
 use Redirect;
-use Session;
+
 use View;
 
 class ClubEventController extends Controller
@@ -88,8 +87,8 @@ class ClubEventController extends Controller
         $isDateFormatValid = $d && $d->format('Y-m-d') === $dateString;
 
         if (!$isDateFormatValid) {
-            Session::put('message', trans("messages.invalidDate", compact('day', 'month', 'year')));
-            Session::put('msgType', 'danger');
+            session()->put('message', trans("messages.invalidDate", compact('day', 'month', 'year')));
+            session()->put('msgType', 'danger');
             return Redirect::to('/');
         }
 
@@ -221,8 +220,8 @@ class ClubEventController extends Controller
     {
         //validate passwords
         if ($request->input('password') != $request->input('passwordDouble')) {
-            Session::put('message', Config::get('messages_de.password-mismatch'));
-            Session::put('msgType', 'danger');
+            session()->put('message', config('messages_de.password-mismatch'));
+            session()->put('msgType', 'danger');
             return Redirect::back()->withInput();
         }
 
@@ -265,8 +264,8 @@ class ClubEventController extends Controller
 
         $user = Auth::user();
         if (!$user && $clubEvent->evnt_is_private == 1) {
-            Session::put('message', Config::get('messages_de.access-denied'));
-            Session::put('msgType', 'danger');
+            session()->put('message', config('messages_de.access-denied'));
+            session()->put('msgType', 'danger');
             return Redirect::action(
                 'MonthController@showMonth',
                 array(
@@ -464,8 +463,8 @@ class ClubEventController extends Controller
     {
         //validate passwords
         if ($request->input('password') != $request->input('passwordDouble')) {
-            Session::put('message', Config::get('messages_de.password-mismatch'));
-            Session::put('msgType', 'danger');
+            session()->put('message', config('messages_de.password-mismatch'));
+            session()->put('msgType', 'danger');
             return Redirect::back()->withInput();
         }
 
@@ -510,8 +509,8 @@ class ClubEventController extends Controller
 
         // Check if event exists
         if (is_null($event)) {
-            Session::put('message', Config::get('messages_de.event-doesnt-exist'));
-            Session::put('msgType', 'danger');
+            session()->put('message', config('messages_de.event-doesnt-exist'));
+            session()->put('msgType', 'danger');
             return Redirect::back();
         }
 
@@ -521,8 +520,8 @@ class ClubEventController extends Controller
 
         $user = Auth::user();
         if (!$user || !$user->isAn(RoleUtility::PRIVILEGE_MARKETING, RoleUtility::PRIVILEGE_CL, RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
-            Session::put('message', 'Du darfst diese Veranstaltung/Aufgabe nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
-            Session::put('msgType', 'danger');
+            session()->put('message', 'Du darfst diese Veranstaltung/Aufgabe nicht einfach löschen! Frage die Clubleitung oder Markleting ;)');
+            session()->put('msgType', 'danger');
             return Redirect::action(
                 'MonthController@showMonth',
                 array(
@@ -541,8 +540,8 @@ class ClubEventController extends Controller
         ClubEvent::destroy($id);
 
         // show current month afterwards
-        Session::put('message', Config::get('messages_de.event-delete-ok'));
-        Session::put('msgType', 'success');
+        session()->put('message', config('messages_de.event-delete-ok'));
+        session()->put('msgType', 'success');
         return Redirect::action('MonthController@showMonth', [
             'year' => $date->format('Y'),
             'month' => $date->format('m')
@@ -605,7 +604,7 @@ class ClubEventController extends Controller
 
         // format: date; validate on filled value
         if (!empty(request('beginDate'))) {
-            $newBeginDate = new DateTime(request('beginDate'), new DateTimeZone(Config::get('app.timezone')));
+            $newBeginDate = new DateTime(request('beginDate'), new DateTimeZone(config('app.timezone')));
             $event->evnt_date_start = $newBeginDate->format('Y-m-d');
         } else {
             $event->evnt_date_start = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));
@@ -613,7 +612,7 @@ class ClubEventController extends Controller
         }
 
         if (!empty(request('endDate'))) {
-            $newEndDate = new DateTime(request('endDate'), new DateTimeZone(Config::get('app.timezone')));
+            $newEndDate = new DateTime(request('endDate'), new DateTimeZone(config('app.timezone')));
             $event->evnt_date_end = $newEndDate->format('Y-m-d');
         } else {
             $event->evnt_date_end = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));

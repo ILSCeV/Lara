@@ -16,7 +16,7 @@ use Lara\User;
 use Lara\Utilities;
 use Lara\ClubEvent;
 use Lara\utilities\RoleUtility;
-use Session;
+
 use View;
 use Redirect;
 use Log;
@@ -95,8 +95,8 @@ class SectionController extends Controller
             $existingSection = (new Section)->where('title', '=', $title)->first();
             if (!is_null($existingSection)) {
                 // Return to the section management page
-                Session::put('message', trans('mainLang.sectionExists'));
-                Session::put('msgType', 'danger');
+                session()->put('message', trans('mainLang.sectionExists'));
+                session()->put('msgType', 'danger');
                 return Redirect::back();
             }
             $section = new Section();
@@ -107,8 +107,8 @@ class SectionController extends Controller
             $existingSection = Section::where('title', '=', $title)->where('id', '!=', $id)->first();
             if (!is_null($existingSection)) {
                 // Return to the section management page
-                Session::put('message', trans('mainLang.sectionExists'));
-                Session::put('msgType', 'danger');
+                session()->put('message', trans('mainLang.sectionExists'));
+                session()->put('msgType', 'danger');
                 return Redirect::back();
             }
             $club = Club::where('clb_title','=',$section->title)->first();
@@ -132,8 +132,8 @@ class SectionController extends Controller
         $club->save();
 
         // Return to the the section management page
-        Session::put('message', trans('mainLang.changesSaved'));
-        Session::put('msgType', 'success');
+        session()->put('message', trans('mainLang.changesSaved'));
+        session()->put('msgType', 'success');
         return Redirect::action( 'SectionController@index' );
     }
 
@@ -227,8 +227,8 @@ class SectionController extends Controller
         Section::destroy($section->id);
 
         // Return to the management page
-        Session::put('message', trans('mainLang.changesSaved'));
-        Session::put('msgType', 'success');
+        session()->put('message', trans('mainLang.changesSaved'));
+        session()->put('msgType', 'success');
         return Redirect::action( 'SectionController@index' );
     }
 }

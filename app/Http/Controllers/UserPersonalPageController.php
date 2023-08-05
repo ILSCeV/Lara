@@ -49,8 +49,8 @@ class UserPersonalPageController extends Controller
         $user->is_name_private = $isNamePrivate;
         $user->save();
         // Return to the the section management page
-        Session::put('message', trans('mainLang.changesSaved'));
-        Session::put('msgType', 'success');
+        session()->put('message', trans('mainLang.changesSaved'));
+        session()->put('msgType', 'success');
 
         return \Redirect::back();
     }
@@ -69,7 +69,7 @@ class UserPersonalPageController extends Controller
         $user = \Auth::user();
         $user->setGoogle2faSecretAttribute($secret);
         $user->save();
-        \Session::put('2faVeryfied', true);
+        session()->put('2faVeryfied', true);
         return Redirect::route('user.personalpage');
     }
 

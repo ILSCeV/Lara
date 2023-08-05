@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -118,7 +120,7 @@ Route::post('survey/{survey}/storeAnswer', 'SurveyController@storeAnswer');
 Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');
 
 Route::get('lang', function() {
-    return response()->json(['language' => Session::get('applocale')]);
+    return response()->json(['language' => session('applocale')]);
 });
 // ViewMode
 Route::get('viewmode/{mode}', 'ViewModeController@switchMode')->name('viewMode.switch');

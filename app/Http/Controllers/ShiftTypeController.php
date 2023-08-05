@@ -15,7 +15,7 @@ use Lara\Utilities;
 use Lara\utilities\RoleUtility;
 use Log;
 use Redirect;
-use Session;
+
 use View;
 
 
@@ -120,8 +120,8 @@ class ShiftTypeController extends Controller
 
         if(!$user || !$user->isAn(['marketing', 'clubleitung', 'admin']))
         {
-            Session::put('message', trans('mainLang.cantTouchThis'));
-            Session::put('msgType', 'danger');
+            session()->put('message', trans('mainLang.cantTouchThis'));
+            session()->put('msgType', 'danger');
             return Redirect::back();
         }
 
@@ -136,22 +136,22 @@ class ShiftTypeController extends Controller
 
         // Check for empty values
         if (empty($newTitle) || empty($newTimeStart) || empty($newTimeEnd)) {
-            Session::put('message', trans('mainLang.cantBeBlank'));
-            Session::put('msgType', 'danger');
+            session()->put('message', trans('mainLang.cantBeBlank'));
+            session()->put('msgType', 'danger');
             return Redirect::back();
         }
 
         // Statistical weight must be numerical
         if (!is_numeric($newWeight)) {
-            Session::put('message', trans('mainLang.nonNumericStats'));
-            Session::put('msgType', 'danger');
+            session()->put('message', trans('mainLang.nonNumericStats'));
+            session()->put('msgType', 'danger');
             return Redirect::back();
         }
 
         // Statistical weight must be non-negative
         if ($newWeight < 0.0) {
-            Session::put('message', trans('mainLang.negativeStats'));
-            Session::put('msgType', 'danger');
+            session()->put('message', trans('mainLang.negativeStats'));
+            session()->put('msgType', 'danger');
             return Redirect::back();
         }
 
@@ -168,8 +168,8 @@ class ShiftTypeController extends Controller
         $shiftType->save();
 
         // Return to the shiftType page
-        Session::put('message', trans('mainLang.changesSaved'));
-        Session::put('msgType', 'success');
+        session()->put('message', trans('mainLang.changesSaved'));
+        session()->put('msgType', 'success');
         return Redirect::back();
     }
 
@@ -251,8 +251,8 @@ class ShiftTypeController extends Controller
 
         if(!$user || !$user->is(['marketing', 'clubleitung', 'admin']))
         {
-            Session::put('message', trans('mainLang.cantTouchThis'));
-            Session::put('msgType', 'danger');
+            session()->put('message', trans('mainLang.cantTouchThis'));
+            session()->put('msgType', 'danger');
             return Redirect::back();
         }
 
@@ -265,8 +265,8 @@ class ShiftTypeController extends Controller
             // CASE 1: job type still in use - let the user decide what to do in each case
 
             // Inform the user about the redirect and go to detailed info about the job type selected
-            Session::put('message', trans('mainLang.deleteFailedShiftTypeInUse'));
-            Session::put('msgType', 'danger');
+            session()->put('message', trans('mainLang.deleteFailedShiftTypeInUse'));
+            session()->put('msgType', 'danger');
             return Redirect::action( 'ShiftTypeController@show', [ $shiftType->id] );
         }
         else
@@ -282,8 +282,8 @@ class ShiftTypeController extends Controller
             ShiftType::destroy($id);
 
             // Return to the management page
-            Session::put('message', trans('mainLang.changesSaved'));
-            Session::put('msgType', 'success');
+            session()->put('message', trans('mainLang.changesSaved'));
+            session()->put('msgType', 'success');
             return Redirect::action( 'ShiftTypeController@index' );
         }
     }
@@ -304,12 +304,12 @@ class ShiftTypeController extends Controller
             $shift->statistical_weight = $shiftType->statistical_weight;
             $shift->save();
 
-            Session::put('message', trans('mainLang.changesSaved'));
-            Session::put('msgType', 'success');
+            session()->put('message', trans('mainLang.changesSaved'));
+            session()->put('msgType', 'success');
         } catch (\Exception $e) {
             Log::error('error', [$e]);
-            Session::put('message', trans('mainLang.error'));
-            Session::put('msgType', 'danger');
+            session()->put('message', trans('mainLang.error'));
+            session()->put('msgType', 'danger');
         }
     }
 }
