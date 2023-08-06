@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Lara\Http\Controllers\AdminController;
-use Lara\Http\Controllers\Auth\LoginController;
 use Lara\Http\Controllers\ClubController;
 use Lara\Http\Controllers\ClubEventController;
 use Lara\Http\Controllers\DateController;
@@ -10,6 +9,7 @@ use Lara\Http\Controllers\EventApiController;
 use Lara\Http\Controllers\IcalController;
 use Lara\Http\Controllers\LanguageController;
 use Lara\Http\Controllers\LegalController;
+use Lara\Http\Controllers\LoginController;
 use Lara\Http\Controllers\LogViewerController;
 use Lara\Http\Controllers\MonthController;
 use Lara\Http\Controllers\PersonController;
