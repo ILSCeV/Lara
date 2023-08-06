@@ -90,16 +90,14 @@ class Utilities
     static function error($message)
     {
         if (!session()->has('message')) {
-            session(['message' => $message]);
-            session(['msgType' => 'danger']);
+            session(['message' => $message, 'msgType' => 'danger']);
         }
     }
 
     static function success($message)
     {
         if (!session()->has('message')) {
-            session(['message', $message]);
-            session(['msgType', 'success']);
+            session(['message'=> $message, 'msgType' => 'success']);
         }
     }
 }
