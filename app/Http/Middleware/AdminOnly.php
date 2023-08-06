@@ -19,12 +19,12 @@ class AdminOnly
     public function handle($request, Closure $next)
     {
         if (!Auth::check()) {
-            Utilities::error(trans('auth.notAuthenticated'));
+            Utilities::error(__('auth.notAuthenticated'));
             return redirect('/');
         }
 
         if (!Auth::user()->isAn(RoleUtility::PRIVILEGE_ADMINISTRATOR)) {
-            Utilities::error(trans('auth.missingPermissions'));
+            Utilities::error(__('auth.missingPermissions'));
             return redirect('/');
         }
 
