@@ -128,10 +128,10 @@ class ShiftTypeController extends Controller
         $shiftType = ShiftType::findOrFail($id);
 
         // Extract request data
-        $newTitle       = $request->get('title'.$id);
-        $newTimeStart   = $request->get('start'.$id);
-        $newTimeEnd     = $request->get('end'.$id);
-        $newWeight      = $request->get('statistical_weight'.$id);
+        $newTitle       = $request->input('title'.$id);
+        $newTimeStart   = $request->input('start'.$id);
+        $newTimeEnd     = $request->input('end'.$id);
+        $newWeight      = $request->input('statistical_weight'.$id);
 
         // Check for empty values
         if (empty($newTitle) || empty($newTimeStart) || empty($newTimeEnd)) {
