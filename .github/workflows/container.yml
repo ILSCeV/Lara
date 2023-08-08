@@ -33,7 +33,7 @@ jobs:
         id: versioning
         uses: PaulHatch/semantic-version@v4.0.2
         with:
-          branch: master
+          branch: develop
           tag_prefix: "v"
           major_pattern: "BREAKING CHANGE:"
           minor_pattern: "feat:"
@@ -44,9 +44,11 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          labels: |
+            org.opencontainers.version=${{ steps.versioning.outputs.version }}
           tags: |
             type=ref,event=branch
-            org.opencontainers.version=${{ steps.versioning.outputs.version }}
+
 
 
       - name: Build and push Docker image
