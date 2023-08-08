@@ -45,7 +45,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           labels: |
-            org.opencontainers.version=${{ steps.versioning.outputs.version }}
+            org.opencontainers.image.version=${{ steps.versioning.outputs.version }}
           tags: |
             type=ref,event=branch
 
