@@ -18,7 +18,9 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-      - uses: nelonoel/branch-name@v1
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v7
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
@@ -35,7 +37,7 @@ jobs:
           tag_prefix: "v"
           major_pattern: "BREAKING CHANGE:"
           minor_pattern: "feat:"
-          format: "v${major}.${minor}.${patch}-${BRANCH_NAME}+${increment}"
+          format: "v${major}.${minor}.${patch}-${{ steps.branch-name.outputs.current_branch }}+${increment}"
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
