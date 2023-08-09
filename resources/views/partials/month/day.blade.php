@@ -1,6 +1,6 @@
 @if ($weekDay->format('Y-m-d') === date('Y-m-d'))
     {{-- The actual date of today marked in dark gray--}}
-    <div class="bg-primary-subtle scroll-marker custom-md-85">
+    <div class="text-bg-secondary scroll-marker custom-md-85">
 @elseif ($weekDay->format('W/o') === date('W/o'))
     {{-- Other day in this week --}}
     <div class="bg-dark-subtle custom-md-85">

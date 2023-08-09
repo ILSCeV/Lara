@@ -85,9 +85,9 @@ $ldapid
                 @if($userId == $survey->creator_id || $userCanEditDueToRole)
                     <a href="{{$survey->id}}/edit"
                        style="float: right"
-                       class="btn btn-secondary btn-sm"
+                       class="btn btn-primary btn-sm"
                        data-bs-placement="bottom">
-                        <i class="fa-solid  fa-pen-square" style="color: black"></i>
+                        <i class="fa-solid  fa-pen-square"></i>
                     </a>
                 @endif
             </h4>
@@ -113,7 +113,7 @@ $ldapid
     {!! Form::open(['method'=>'POST', 'action' => ['SurveyAnswerController@store', $survey->id], 'class' => 'store', 'name' => 'store']) !!}
 
     @if( $survey->password != '')
-    <div class="card bg-warning">
+    <div class="card text-bg-warning">
 
             <div class="hidden-print card-header">
                 {!! Form::password('password', ['class'=>'col-md-4 col-12',

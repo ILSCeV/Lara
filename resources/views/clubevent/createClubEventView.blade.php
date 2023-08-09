@@ -427,7 +427,7 @@
 
         <div class="col-md-5 p-0-xs">
             <div class="card col-12 border-warning mb-3">
-                <div class="card-header bg-warning">
+                <div class="card-header text-bg-warning">
                     <h4 class="card-title">{{ __('mainLang.moreInfos') }}:</h4>({{ __('mainLang.public') }})
                 </div>
                 <div class="card-body">
