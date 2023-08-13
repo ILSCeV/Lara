@@ -50,9 +50,10 @@ jobs:
             org.opencontainers.image.version=${{ steps.versioning.outputs.version }}
           tags: |
             type=ref,event=branch
+            type=ref,event=tag
             type=semver,pattern={{version}}
-
-
+            type=semver,pattern={{raw}}
+            type=raw,value=${{ steps.versioning.outputs.version }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@4b0752a2b1b87033d946e4e0106643f20d69d613
