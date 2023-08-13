@@ -37,7 +37,7 @@ jobs:
           tag_prefix: "v"
           major_pattern: "BREAKING CHANGE:"
           minor_pattern: "feat:"
-          format: "v${major}.${minor}.${patch}-${{ steps.branch-name.outputs.current_branch }}+${increment}"
+          version_format: "v${major}.${minor}.${patch}-${{ steps.branch-name.outputs.current_branch }}+${increment}"
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -48,6 +48,7 @@ jobs:
             org.opencontainers.image.version=${{ steps.versioning.outputs.version }}
           tags: |
             type=ref,event=branch
+            type=semver,pattern={{version}}
 
 
 
