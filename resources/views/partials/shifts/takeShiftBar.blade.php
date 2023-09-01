@@ -67,7 +67,7 @@ if($hideComments){
         <div style="width:10%; min-width:70px;">
             <div id="{!! 'club' . $shift->id !!}" class="form-group form-group-sm ">
                 <div class="form-control form-control-sm">
-                    {!! "(" . $shift->getPerson->getClub->clb_title . ")" !!}
+                    {!!  $shift->getPerson->getClub ? "(" . $shift->getPerson->getClub->clb_title . ")" : "" !!}
                 </div>
             </div>
         </div>
