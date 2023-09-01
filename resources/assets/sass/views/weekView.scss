@@ -23,6 +23,10 @@
   text-decoration: none;
 }
 
+.card-columns .card{
+  break-inside: avoid-column;
+}
+
 .card {
   margin-bottom: 0px !important;
 }
