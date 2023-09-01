@@ -77,6 +77,7 @@ return [
 
     'additionalInfo'        => 'Flaschenpost',
     'moreDetails'           => 'Ansagen vom Kapitän',
+    'noShifts'              => 'Diese Veranstaltung hat keine Sklaven.',
 
     //Button
     'showMore'              => 'Mehr!',
