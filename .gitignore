@@ -24,6 +24,7 @@ package-lock.json
 .env
 .env-prod
 .env-local
+.env.testing
 
 # Composer specific files
 composer.phar

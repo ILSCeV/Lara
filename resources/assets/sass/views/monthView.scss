@@ -139,6 +139,16 @@ span.event-time{
     font-size:x-small;
 }
 
+.day-cell a{
+    font-weight: 500;
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.day-cell a:hover{
+    text-decoration: underline;
+}
+
 .day-cell-events{
     padding-right: 6px;
     padding-left:2px;
@@ -147,21 +157,6 @@ span.event-time{
 .day-cell-events{
     word-break: initial;
     word-wrap: break-word;
-}
-
-.day-cell a:link,
-.calendarWeek a:link {
-    color: #666666;
-}
-
-.day-cell a:hover,
-.calendarWeek a:hover {
-    color: #040303;
-}
-
-.day-cell a:visited,
-.calendarWeek a:visited {
-    color: #666666;
 }
 
 
