@@ -204,6 +204,7 @@
             </div>
         </div>
 
+        @if(!$shifts->isEmpty())
         <div class="row my-3 hidden-print justify-content-start">
             <div class="col-md-5">
                 <div class="btn-group" role="group" aria-label="Filters">
@@ -224,8 +225,14 @@
                 </div>
             </div>
         </div>
+        @endif
 
         <div class="row mb-3 justify-content-center">
+            @if($shifts->isEmpty())
+            <div class="alert alert-info col-md-9 mt-4" role="alert">
+                {{__('mainLang.noShifts')}}
+              </div>
+            @else
             <div class="col-12 mx-sm-1 m-auto">
                 <div class="card">
                     @if ($clubEvent->getSchedule->schdl_password != '')
@@ -255,6 +262,7 @@
                     @endif
                 </div>
             </div>
+            @endif
         </div>
     </div>
 

@@ -76,6 +76,7 @@ return [
 
     'additionalInfo'        => 'Additional details',
     'moreDetails'           => 'Internal information',
+    'noShifts'              => 'This event has no shifts.',
 
     //Button
     'showMore'              => 'show more',

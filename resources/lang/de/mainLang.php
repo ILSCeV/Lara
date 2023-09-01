@@ -77,6 +77,7 @@ return [
 
     'additionalInfo'        => 'Weitere Details',
     'moreDetails'           => 'Interne Information',
+    'noShifts'              => 'Diese Veranstaltung hat keine Dienste.',
 
     //Button
     'showMore'              => 'mehr anzeigen',
