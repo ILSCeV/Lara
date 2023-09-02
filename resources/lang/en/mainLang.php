@@ -430,6 +430,8 @@ return [
     */
 
     //ClubEvent
+    'cantDeleteEvent'               => 'Only administrators, CLs and Marketing members belonging to the event\'s section can delete an event.',
+    'cantUpdateEvent'               => 'Only administrators, CLs and Marketing members belonging to the event\'s section, and the creator of the event can delete an event.',
     'addCommentHere'                => 'Add comment here',
     'enterPasswordHere'             => 'Enter password here',
     'placeholderTitleWineEvening'   => 'e.g. Wine evening', //'placeholderTitleWineEvening'

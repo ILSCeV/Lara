@@ -33,6 +33,7 @@ class ClubEventController extends Controller
     public function __construct()
     {
         $this->middleware('rejectGuests', ['only' => ['create', 'edit']]);
+        $this->authorizeResource(ClubEvent::class, 'event');
     }
 
     /**
@@ -150,7 +151,6 @@ class ClubEventController extends Controller
             $priceExternal = $template->price_external;
             $priceTicketsExternal = $template->price_tickets_external;
             $canceled = 0;
-
         } else {
             // fill variables with no data if no template was chosen
             $activeTemplate = "";
@@ -257,11 +257,11 @@ class ClubEventController extends Controller
      * @return Shifts[] $shifts
      * @return RedirectResponse
      */
-    public function show($id)
+    public function show(ClubEvent $event)
     {
         /* @var $clubEvent ClubEvent */
         $clubEvent = ClubEvent::with('section')
-            ->findOrFail($id);
+            ->findOrFail($event->id);
 
         $user = Auth::user();
         if (!$user && $clubEvent->evnt_is_private == 1) {
@@ -342,14 +342,8 @@ class ClubEventController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ClubEvent $event)
     {
-        // find event
-        /* @var $event ClubEvent */
-        $event = ClubEvent::findOrFail($id);
-
-        $this->authorize('update', $event);
-
         // find schedule
         $schedule = $event->getSchedule;
 
@@ -414,43 +408,36 @@ class ClubEventController extends Controller
 
         $createClubEvent = false;
 
-
-        $userId = Auth::user()->person->prsn_ldap_id;
-
-        if (Auth::user()->hasPermissionsInSection($event->section, RoleUtility::PRIVILEGE_MARKETING) || $userId == $created_by) {
-            return View::make(
-                'clubevent.createClubEventView',
-                compact(
-                    'sections',
-                    'shiftTypes',
-                    'shifts',
-                    'title',
-                    'subtitle',
-                    'type',
-                    'section',
-                    'filter',
-                    'timeStart',
-                    'timeEnd',
-                    'info',
-                    'details',
-                    'private',
-                    'dv',
-                    'date',
-                    'facebookNeeded',
-                    'createClubEvent',
-                    'event',
-                    'baseTemplate',
-                    'priceExternal',
-                    'priceNormal',
-                    'priceTicketsExternal',
-                    'priceTicketsNormal',
-                    'eventUrl',
-                    'canceled'
-                )
-            );
-        } else {
-            return response()->view('clubevent.notAllowedToEdit', compact('created_by', 'creator_name'), 403);
-        }
+        return View::make(
+            'clubevent.createClubEventView',
+            compact(
+                'sections',
+                'shiftTypes',
+                'shifts',
+                'title',
+                'subtitle',
+                'type',
+                'section',
+                'filter',
+                'timeStart',
+                'timeEnd',
+                'info',
+                'details',
+                'private',
+                'dv',
+                'date',
+                'facebookNeeded',
+                'createClubEvent',
+                'event',
+                'baseTemplate',
+                'priceExternal',
+                'priceNormal',
+                'priceTicketsExternal',
+                'priceTicketsNormal',
+                'eventUrl',
+                'canceled'
+            )
+        );
     }
 
     /**
@@ -460,7 +447,7 @@ class ClubEventController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ClubEvent $event)
     {
         //validate passwords
         if ($request->input('password') != $request->input('passwordDouble')) {
@@ -469,12 +456,7 @@ class ClubEventController extends Controller
             return Redirect::back()->withInput();
         }
 
-        // first we fill objects with data
-        // if there is an error, we have not saved yet, so we need no rollback
-        //
-        $this->authorize('update', ClubEvent::find($id));
-        $event = $this->editClubEvent($id);
-
+        $event = $this->editClubEvent($event);
         $schedule = (new ScheduleController)->update($event->getSchedule->id);
 
         ScheduleController::editShifts($schedule);
@@ -484,14 +466,14 @@ class ClubEventController extends Controller
         $schedule->save();
 
         Utilities::clearIcalCache();
-        if ($request->input('saveAsTemplate') == true) {
+        if ($request->boolean('saveAsTemplate') == true) {
             $template = $schedule->toTemplate();
             $event->template_id = $template->id;
             $event->save();
         }
 
         // show event
-        return Redirect::action('ClubEventController@show', [$id]);
+        return Redirect::action('ClubEventController@show', [$event->id]);
     }
 
     /**
@@ -500,20 +482,9 @@ class ClubEventController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(ClubEvent $event)
     {
-        // Get all the data
-        $event = ClubEvent::find($id);
-
         $date = new DateTime($event->evnt_date_start);
-
-
-        // Check if event exists
-        if (is_null($event)) {
-            Session::put('message', Config::get('messages_de.event-doesnt-exist'));
-            Session::put('msgType', 'danger');
-            return Redirect::back();
-        }
 
         // Check credentials: you can only delete, if you have rights for marketing or management.
         $revisions = json_decode($event->getSchedule->entry_revisions, true);
@@ -538,7 +509,7 @@ class ClubEventController extends Controller
         $result = (new ScheduleController)->destroy($event->getSchedule()->first()->id);
 
         // Now delete the event itself
-        ClubEvent::destroy($id);
+        $event->delete();
 
         // show current month afterwards
         Session::put('message', Config::get('messages_de.event-delete-ok'));
@@ -560,16 +531,14 @@ class ClubEventController extends Controller
      * Edit or create a clubevent with its entered information.
      * If $id is null create a new clubEvent, otherwise the clubEvent specified by $id will be edit.
      *
-     * @param int $id
+     * @param ClubEvent|null $event
      * @return ClubEvent clubEvent
      */
-    private function editClubEvent($id)
+    private function editClubEvent(ClubEvent $event)
     {
-        $event = new ClubEvent();
-        $event->creator_id = Auth::user()->id;
-
-        if (!is_null($id)) {
-            $event = ClubEvent::findOrFail($id);
+        if (is_null($event)) {
+            $event = new ClubEvent();
+            $event->creator_id = Auth::user()->id;
         }
 
         // format: strings; no validation needed
@@ -608,16 +577,14 @@ class ClubEventController extends Controller
             $newBeginDate = new DateTime(request('beginDate'), new DateTimeZone(Config::get('app.timezone')));
             $event->evnt_date_start = $newBeginDate->format('Y-m-d');
         } else {
-            $event->evnt_date_start = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));
-            ;
+            $event->evnt_date_start = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));;
         }
 
         if (!empty(request('endDate'))) {
             $newEndDate = new DateTime(request('endDate'), new DateTimeZone(Config::get('app.timezone')));
             $event->evnt_date_end = $newEndDate->format('Y-m-d');
         } else {
-            $event->evnt_date_end = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));
-            ;
+            $event->evnt_date_end = date('Y-m-d', mktime(0, 0, 0, 0, 0, 0));;
         }
         if (!empty(request('unlockDate'))) {
             $event->unlock_date = Carbon::createFromFormat('Y-m-d\TH:i', request('unlockDate'));

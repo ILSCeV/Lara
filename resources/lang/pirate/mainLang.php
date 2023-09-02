@@ -430,6 +430,8 @@ return [
     */
 
     //ClubEvent
+    'cantDeleteEvent'               => 'Nur Administratoren, CLs und Marketing-Mitglieder, die der Sektion der Veranstaltung angehören, können die Veranstaltung löschen.',
+    'cantUpdateEvent'               => 'Nur Administratoren, CLs und Marketing-Mitglieder, die der Sektion der Veranstaltung angehören, und der Ersteller der Veranstaltung können die Veranstaltung ändern.',
     'addCommentHere'                => 'Blödsinn ausrufen',
     'enterPasswordHere'             => 'Passwort hier eingeben',
     'placeholderTitleWineEvening'   => 'z.B. Weinabend',

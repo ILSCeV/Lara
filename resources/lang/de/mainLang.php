@@ -430,6 +430,8 @@ return [
     */
 
     //ClubEvent
+    'cantDeleteEvent'               => 'Nur Administratoren, CLs und Marketing-Mitglieder, die der Sektion der Veranstaltung angehören, können die Veranstaltung löschen.',
+    'cantUpdateEvent'               => 'Nur Administratoren, CLs und Marketing-Mitglieder, die der Sektion der Veranstaltung angehören, und der Ersteller der Veranstaltung können die Veranstaltung ändern.',
     'addCommentHere'                => 'Kommentar hier hinzufügen',
     'enterPasswordHere'             => 'Passwort hier eingeben',
     'placeholderTitleWineEvening'   => 'z.B. Weinabend',
@@ -455,7 +457,7 @@ return [
     'dark'                          => 'Dunkel',
     //ShiftName
     '=FREI='                        => '=FREI=', //not used yet
-
+ 
     //ShiftTitle
     'optional'                      => 'Optional',
     'optionalShort'                 => 'Opt.',
