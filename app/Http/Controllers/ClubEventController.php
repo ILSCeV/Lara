@@ -534,7 +534,7 @@ class ClubEventController extends Controller
      * @param ClubEvent|null $event
      * @return ClubEvent clubEvent
      */
-    private function editClubEvent(ClubEvent $event)
+    private function editClubEvent(ClubEvent $event = null)
     {
         if (is_null($event)) {
             $event = new ClubEvent();
