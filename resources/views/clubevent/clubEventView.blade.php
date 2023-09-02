@@ -164,11 +164,7 @@
                     </div>
 
                     {{-- CRUD --}}
-                    @isInSection(['marketing', 'clubleitung', 'admin'], $clubEvent->section)
-                        @include('partials/events/editOptions', ['event' => $clubEvent])
-                    @elseif(Lara\Person::isCurrent($created_by))
-                        @include('partials/events/editOptions', ['event' => $clubEvent])
-                    @endisInSection
+                    @include('partials/events/editOptions', ['event' => $clubEvent])
                 </div>
             </div>
 

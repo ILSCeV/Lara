@@ -30,7 +30,7 @@
         @endis
 
         --}}
-
+        @can('update', $clubEvent)
         <a href="{{ URL::route('event.edit', $event->id) }}"
            class="btn btn-primary"
            data-bs-toggle="tooltip"
@@ -38,9 +38,10 @@
            title="{{ __('mainLang.changeEvent') }}">
            <i class="fa-solid  fa-pencil-alt"></i>
         </a>
-        &nbsp;&nbsp;
+        @endcan
+        @can('delete', $clubEvent)
         <a href="{{ $event->id }}"
-           class="btn btn-danger"
+           class="btn btn-danger ms-2"
            data-bs-toggle="tooltip"
            data-bs-placement="top"
            title="{{ __('mainLang.deleteEvent') }}"
@@ -50,5 +51,6 @@
            data-confirm="{{ __('mainLang.confirmDeleteEvent') }}">
            <i class="fa-solid  fa-trash"></i>
         </a>
+        @endcan
     </span>
 </div>
