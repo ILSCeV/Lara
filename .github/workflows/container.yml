@@ -56,7 +56,7 @@ jobs:
             type=raw,value=${{ steps.versioning.outputs.version }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@9311bf5263ae5b36f3ec67aff768790c6e2344ad
+        uses: docker/build-push-action@4e4ee680f69700760d5620a94c020aef883043aa
         with:
           context: .
           push: true
