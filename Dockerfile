@@ -6,7 +6,7 @@ FROM docker.io/bitnami/git:latest as gitstage
 COPY --from=node /Lara /Lara
 RUN cd /Lara && sh git-create-revisioninfo-hook.sh
 
-FROM php:8.1.19-fpm
+FROM php:8.2.11-fpm
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN docker-php-ext-install -j$(nproc) mysqli
 RUN docker-php-ext-install -j$(nproc) pdo
