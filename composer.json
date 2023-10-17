@@ -57,7 +57,7 @@
     "laravelcollective/html": "^6",
     "pragmarx/google2fa-laravel": "^2.0",
     "rap2hpoutre/laravel-log-viewer": "^2.0",
-    "wol-soft/php-json-schema-model-generator-production": "^0.18.1"
+    "wol-soft/php-json-schema-model-generator-production": "^0.19.0"
   },
   "require-dev": {
     "nunomaduro/collision": "^5.0",
