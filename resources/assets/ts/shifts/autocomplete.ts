@@ -5,13 +5,56 @@ import { createMessage } from "../common/messages";
 
 // conversion of html entities to text (e.g. "&" as "&amp;")
 // ref: https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery
-let decodeEntities = (encodedString) => {
+let decodeEntities = (encodedString : string) => {
   let textArea = document.createElement('textarea');
   textArea.innerHTML = encodedString;
   return textArea.value;
 };
 
+export function closeAllDropdowns(){
+  // hide all elements that have a class of dropdown-
+  closeAllDropdownsByClass('[class^="dropdown-"]');
+}
+
+export function closeAllDropdownsByClass(className : string){
+  // remove all other dropdowns
+  $(className).hide();
+}
+
+export function handleShiftNameChanged(e) {
+  const newValue = (e.target as HTMLInputElement).value;
+  let dividingParenthesisIndex = newValue.lastIndexOf('(');7
+  let dividingAt = newValue.lastIndexOf('@');
+  if(dividingParenthesisIndex < 1 || dividingAt < 13) {
+    return;
+  }
+  const name = newValue.substring(0, dividingParenthesisIndex - 1);
+  const timeRange = newValue.substring(dividingParenthesisIndex, dividingAt-1);
+  const start = timeRange.substring(1,6);
+  const end = timeRange.substring(7,12);
+  const statistical_weight = newValue.substring(dividingAt + 2);
+
+  // update fields
+  const parentBox = $(this).parents(".box");
+  parentBox.find("[name^='shifts[title]']").val(name);
+  parentBox.find("[name^='shifts[start]']").val(start);
+  parentBox.find("[name^='shifts[end]']").val(end);
+  parentBox.find("[name^='shifts[end]']").val(end);
+  parentBox.find("[name^='shifts[weight]']").val(statistical_weight);
+};
+
 $(() => {
+    /////////////////////////////
+    // GLOBAL //
+    /////////////////////////////
+
+    // hide all dropdowns on ESC keypress
+    $(document).on("keyup", function (e) {
+      if (e.key === "Escape") {
+        closeAllDropdowns()
+      }
+    });
+
   /////////////////////////////
   // AUTOCOMPLETE USERNAMES //
   /////////////////////////////
@@ -21,13 +64,6 @@ $(() => {
     $('.dropdown-username').hide();
     // open dropdown for current input
     $(document.activeElement).parent().children('.dropdown-username').show();
-  });
-
-  // hide all dropdowns on ESC keypress
-  $(document).on("keyup", function (e) {
-    if (e.key === "Escape") {
-      $('.dropdown-username').hide();
-    }
   });
 
   $('.shift.autocomplete').closest('.shiftRow').find("input[id^='userName'], input[id^=comment]").on('input', function () {
@@ -153,12 +189,6 @@ $(() => {
   // AUTOCOMPLETE CLUBS //
   /////////////////////////
 
-  // hide all dropdowns on ESC keypress
-  $(document).on("keyup", function (e) {
-    if (e.key === "Escape") {
-      $(document).find('.dropdown-club').hide();
-    }
-  });
   // open club dropdown on input selection
   $('.shift').find('input').on('focus', function () {
     // remove all other dropdowns
@@ -240,6 +270,9 @@ $(() => {
   /////////////////////////////
   // AUTOCOMPLETE SHIFTTYPES //
   /////////////////////////////
+
+  $('input[name="shifts[title][]"]').on('change', handleShiftNameChanged);
+
   function updateShiftEntry(data: any, isConflict: boolean) {
     const $spinner = $("#spinner");
     const entryId = data.entryId;
@@ -318,22 +351,6 @@ $(() => {
     $userNameInput.closest('.shiftRow').toggleClass('my-shift', data.is_current_user);
   }
 
-
-  // open shiftType dropdown on input selection
-  $('.box').find('input[type=text]').on('focus', function () {
-    // remove all other dropdowns
-    $('.dropdown-shiftTypes').hide();
-    // open dropdown for current input
-    $(document.activeElement).next('.dropdown-shiftTypes').show();
-  });
-
-  // hide all dropdowns on ESC keypress
-  $(document).on("keyup", function (e) {
-    if (e.key === "Escape") {
-      $(document).find('.dropdown-shiftTypes').hide();
-    }
-  });
-
   $('.yourself').on(
     {
       click: (e) => {
@@ -348,53 +365,19 @@ $(() => {
     // do all the work here after AJAX response is received
     function ajaxCallBackClubs(response) {
 
-      // clear array from previous results
-      $(document.activeElement).next('.dropdown-shiftTypes').contents().remove();
+      const dataList = document.getElementById('shiftTypesDataList') as HTMLDataListElement;
+
+      // clear the list
+      dataList.innerHTML = '';
 
       // format data received
-      response.forEach(function (data) {
-
-        // add found shiftTypes and metadata to the dropdown
-        $(document.activeElement).next('.dropdown-shiftTypes').append(
-          '<li class="dropdown-item"><a href="javascript:void(0);">'
-          + '<span id="shiftTypeTitle">'
-          + data.title
-          + '</span>'
-          + ' (<i class="fa fa-clock-o"></i> '
-          + '<span id="shiftTypeTimeStart">'
-          + data.start
-          + '</span>'
-          + '-'
-          + '<span id="shiftTypeTimeEnd">'
-          + data.end
-          + '</span>'
-          + '<span id="shiftTypeWeight" class="hidden">'
-          + data.statistical_weight
-          + '</span>'
-          + ')'
-          + '</a></li>');
+      response.forEach(function (data: { title: string; start: string; end: string; statistical_weight: number}) {
+        // add found shiftTypes and metadata to the datalist
+        let option = document.createElement('option');
+        // If you change this format, also change handleShiftNameChanged
+        option.value = `${data.title} (${data.start.substring(0,5)}-${data.end.substring(0,5)}) @ ${data.statistical_weight}`;
+        dataList.append(option);
       });
-
-      // process clicks inside the dropdown
-      $(document.activeElement).next('.dropdown-shiftTypes').children('li').click(function (e) {
-        let selectedShiftTypeTitle = decodeEntities($(this).find('#shiftTypeTitle').html());     // decoding html entities in the process
-        let selectedShiftTypeTimeStart = $(this).find('#shiftTypeTimeStart').html();
-        let selectedShiftTypeTimeEnd = $(this).find('#shiftTypeTimeEnd').html();
-        let selectedShiftTypeWeight = $(this).find('#shiftTypeWeight').html();
-
-        // update fields
-        $(this).parents(".box").find("[name^='shifts[title]']").val(selectedShiftTypeTitle);
-        $(this).parents(".box").find("[name^='shifts[start]']").val(selectedShiftTypeTimeStart);
-        $(this).parents(".box").find("[name^='shifts[end]']").val(selectedShiftTypeTimeEnd);
-        $(this).parents(".box").find("[name^='shifts[weight]']").val(selectedShiftTypeWeight);
-
-        // close dropdown afterwards
-        $(document).find('.dropdown-shiftTypes').hide();
-      });
-
-      // reveal newly created dropdown
-      $(document.activeElement).next('.dropdown-shiftTypes').show();
-
     }
 
     // short delay to prevents double sending

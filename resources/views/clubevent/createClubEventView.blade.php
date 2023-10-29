@@ -397,7 +397,7 @@
                         <label for="password"
                             class="col-form-label {{ $labelClass }}">{{ __('mainLang.passwordEntry') }}:</label>
                         <div class="col-8">
-                            {!! Form::password('password', ['class' => 'form-control', 'aria-describedby' => 'passwordHelpBlock']) !!}
+                            {!! Form::password('password', ['autocomplete'=>'new-password','class' => 'form-control', 'aria-describedby' => 'passwordHelpBlock']) !!}
                         </div>
                     </div>
                     <small id="passwordHelpBlock" class="form-text text-info">
@@ -408,7 +408,7 @@
                         <label for="passwordDouble"
                             class="{{ $labelClass }}">{{ __('mainLang.passwordRepeat') }}:</label>
                         <div class="col-8">
-                            {!! Form::password('passwordDouble', ['class' => 'form-control']) !!}
+                            {!! Form::password('passwordDouble', ['autocomplete'=>'new-password', 'class' => 'form-control']) !!}
                         </div>
                     </div>
 

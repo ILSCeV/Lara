@@ -6,6 +6,7 @@ import * as bootstrap from "bootstrap"
 import { initFilters } from "./common/filters"
 import { addProgressBars } from "./common/shiftprogressbar";
 import { isDayView, isMonthView, isWeekView } from "./Utilities";
+import { handleShiftNameChanged } from "./shifts/autocomplete"
 
 const jQuery = $;
 
@@ -192,6 +193,7 @@ jQuery(() => {
         const clone = elementToCopy.clone(true);
         clone.insertAfter(elementToCopy);
         clone.find('.shiftId').val("");
+        clone.find('input[type=text]').on('change', handleShiftNameChanged);
         updateIsOptionalCheckboxes();
     });
 
