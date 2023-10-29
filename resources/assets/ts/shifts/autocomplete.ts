@@ -5,11 +5,18 @@ import { createMessage } from "../common/messages";
 
 // conversion of html entities to text (e.g. "&" as "&amp;")
 // ref: https://stackoverflow.com/questions/1147359/how-to-decode-html-entities-using-jquery
-let decodeEntities = (encodedString) => {
+let decodeEntities = (encodedString : string) => {
   let textArea = document.createElement('textarea');
   textArea.innerHTML = encodedString;
   return textArea.value;
 };
+
+export function openShiftTypeDropdown(){
+  // remove all other dropdowns
+  $('.dropdown-shiftTypes').hide();
+  // open dropdown for current input
+  $(document.activeElement).next('.dropdown-shiftTypes').show();
+}
 
 $(() => {
   /////////////////////////////
@@ -318,14 +325,8 @@ $(() => {
     $userNameInput.closest('.shiftRow').toggleClass('my-shift', data.is_current_user);
   }
 
-
   // open shiftType dropdown on input selection
-  $('.box').find('input[type=text]').on('focus', function () {
-    // remove all other dropdowns
-    $('.dropdown-shiftTypes').hide();
-    // open dropdown for current input
-    $(document.activeElement).next('.dropdown-shiftTypes').show();
-  });
+  $('.box').find('input[type=text]').on('focus', openShiftTypeDropdown);
 
   // hide all dropdowns on ESC keypress
   $(document).on("keyup", function (e) {
