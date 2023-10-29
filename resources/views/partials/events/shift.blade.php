@@ -4,9 +4,8 @@
     </div>
 
     <div class="col-12">
-        <input type="text" name="shifts[title][]" class="form-control" value="{{ $title }}"
+        <input type="text" name="shifts[title][]" class="form-control" list="shiftTypesDataList" value="{{ $title }}"
             placeholder="{{ __('mainLang.serviceTypeEnter') }}" autocomplete="off" />
-        <ul class="dropdown-menu dropdown-shiftTypes" style="position: absolute;"></ul>
     </div>
 
     <div class="col-12">
@@ -33,7 +32,7 @@
     <div class="col-12">
         <label class="visually-hidden" for="shifts[weight][]">{{ __('mainLang.weight') }}</label>
         <input type="number" step="0.1" min="0" class="form-control col-5" name="shifts[weight][]"
-            id="shifts[weight][]" value="{{ $weight }}" min="0" required data-bs-toggle="tooltip" data-bs-placement="left" title="{{ __('mainLang.weight') }}" />
+        value="{{ $weight }}" min="0" required data-bs-toggle="tooltip" data-bs-placement="left" title="{{ __('mainLang.weight') }}" />
     </div>
 
 

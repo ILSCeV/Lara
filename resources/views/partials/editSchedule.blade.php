@@ -4,6 +4,7 @@
 	</div>
 
 	<div class="card-body" id="main">
+		<datalist id="shiftTypesDataList"></datalist>
 		{{-- shiftType fields --}}
 	    <div id="shiftContainer">
             <?php $counter=0;?>
