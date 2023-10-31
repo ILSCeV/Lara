@@ -105,6 +105,10 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('ldapSection', function($section) {
             return strpos(env('LDAP_SECTIONS', ''), $section->title) !== false;
         });
+        
+        if(!App::environment('local')) {
+            \URL::forceScheme('https');
+        }    
 
         Paginator::defaultView('pagination::bootstrap-4');
 
