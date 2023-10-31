@@ -16,7 +16,7 @@ RUN docker-php-ext-install -j$(nproc) zip
 RUN docker-php-ext-install ldap
 RUN printf "\n" | pecl install imagick
 RUN docker-php-ext-enable imagick
-RUN useradd -U serve
+RUN useradd -u 1001 -U serve
 COPY --from=gitstage /Lara /Lara
 RUN chown -R serve:serve /Lara
 USER serve
