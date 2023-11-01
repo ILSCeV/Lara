@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
       - name: Get branch name
         id: branch-name
-        uses: tj-actions/branch-names@v7
+        uses: tj-actions/branch-names@033f2358d95522973eee35810e35a86fae4a71d8 # v7
 
       - name: Log in to the Container registry
         uses: docker/login-action@1f401f745bf57e30b3a2800ad308a87d2ebdf14b
@@ -33,7 +33,7 @@ jobs:
 
       - name: Semantic versioning
         id: versioning
-        uses: PaulHatch/semantic-version@v5.3.0
+        uses: PaulHatch/semantic-version@8d3552d38408b608e90e76237a2a5ac9fe524d04 # v5.3.0
         with:
           branch: develop
           tag_prefix: "v"
@@ -43,7 +43,7 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934 # v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           labels: |
