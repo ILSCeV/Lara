@@ -20,7 +20,7 @@ jobs:
       with:
         php-version: '8.0'
     - name: setup database
-      uses: shogo82148/actions-setup-mysql@v1.26.0
+      uses: shogo82148/actions-setup-mysql@3226d3e8a0600be87669e55a818e9ab7bf6f7476 # v1.26.0
       with:
        distribution: 'mariadb'
        mysql-version: '10.9'
@@ -32,11 +32,11 @@ jobs:
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Setup Node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4
       with:
         node-version: ${{env.NODE_VERSION}}
     - name: Cache dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
