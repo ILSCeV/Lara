@@ -471,7 +471,7 @@ class ClubEventController extends Controller
         }
 
         // show event
-        return redirect()->action([ClubEventController::class, 'show'], [$event->id]);
+        return redirect()->action([ClubEventController::class, 'show'], [$id]);
     }
 
     /**
@@ -489,7 +489,7 @@ class ClubEventController extends Controller
         if (is_null($event)) {
             session()->put('message', config('messages_de.event-doesnt-exist'));
             session()->put('msgType', 'danger');
-            return Redirect::back();
+            return back();
         }
 
         // Check credentials: you can only delete, if you have rights for marketing or management.
