@@ -30,7 +30,7 @@
     "sort-packages": true,
     "optimize-autoloader": true
   },
-  "description": "A calender with personnel scheduling for club management, built on top of Laravel 8.",
+  "description": "A calender with personnel scheduling for club management, built on top of Laravel 9.",
   "keywords": [
     "calendar",
     "scheduling",
