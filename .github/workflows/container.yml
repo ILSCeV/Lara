@@ -49,6 +49,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           labels: |
             org.opencontainers.image.version=${{ steps.versioning.outputs.version }}
+            org.opencontainers.image.source="https://github.com/ILSCeV/Lara"
           tags: |
             type=ref,event=branch
             type=ref,event=tag
