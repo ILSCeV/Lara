@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
       - name: Get branch name
         id: branch-name
-        uses: tj-actions/branch-names@ab304d8562e2f137165e1d930e6d22d431189074 # v7
+        uses: tj-actions/branch-names@6c999acf206f5561e19f46301bb310e9e70d8815 # v7
 
       - name: Log in to the Container registry
         uses: docker/login-action@3d58c274f17dffee475a5520cbe67f0a882c4dbb
