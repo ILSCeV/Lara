@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: shivammathur/setup-php@7ba520ae30e3a01263df4a016e7714d3d30d5b59
+    - uses: shivammathur/setup-php@97e0a9729aaea439548b7c85c7cd3ef503aa5365
       with:
         php-version: '8.0'
     - name: setup database
