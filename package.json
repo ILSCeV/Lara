@@ -32,7 +32,7 @@
     "es6-promise": "4.2.8",
     "file-loader": "6.2.0",
     "html5shiv": "3.7.3",
-    "imports-loader": "4.0.1",
+    "imports-loader": "5.0.0",
     "isotope-layout": "3.0.6",
     "jquery": "3.7.1",
     "lodash": "4.17.21",
