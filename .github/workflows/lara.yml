@@ -20,7 +20,7 @@ jobs:
       with:
         php-version: '8.0'
     - name: setup database
-      uses: shogo82148/actions-setup-mysql@0696d879cbc0472318c9bc61e6f57d83bc1d610a # v1.28.1
+      uses: shogo82148/actions-setup-mysql@37ce50a0bd540e1bd6d85806f9bdffad2d812d5c # v1.29.0
       with:
        distribution: 'mariadb'
        mysql-version: '10.9'
