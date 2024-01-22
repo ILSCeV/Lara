@@ -14,8 +14,8 @@ RUN docker-php-ext-install -j$(nproc) pdo_mysql
 RUN apt-get update && apt-get install -y libmagickwand-dev libzip-dev libldap2-dev openssh-client telnet wget imagemagick libmagickcore-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install -j$(nproc) zip
 RUN docker-php-ext-install ldap
-RUN printf "\n" | pecl install imagick
-RUN docker-php-ext-enable imagick
+#RUN printf "\n" | pecl install imagick
+#RUN docker-php-ext-enable imagick
 RUN useradd -u 1001 -U serve && mkdir -p /home/serve && chown -R serve:serve /home/serve
 COPY --from=gitstage /Lara /Lara
 RUN chown -R serve:serve /Lara
