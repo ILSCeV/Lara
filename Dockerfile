@@ -2,7 +2,7 @@ FROM node:20-alpine@sha256:2f46fd49c767554c089a5eb219115313b72748d8f62f5eccb58ef
 COPY ./ /Lara
 RUN cd /Lara && npm install && npm run prod
 
-FROM docker.io/bitnami/git:latest@sha256:988c8b0ce56a41c4b2513966ecd69c2df5f349adc679a53a06e27092dda414f8 as gitstage
+FROM docker.io/bitnami/git:latest@sha256:3932583adf73c9e7e75232c0a3637fb0ff7833d7a81c858e74468df0dbd89cf1 as gitstage
 COPY --from=node /Lara /Lara
 RUN cd /Lara && sh git-create-revisioninfo-hook.sh
 
