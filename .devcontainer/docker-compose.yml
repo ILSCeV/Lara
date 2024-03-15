@@ -19,7 +19,7 @@ services:
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
   db:
-    image: mariadb:11.2@sha256:3afe1ef0c8f80b7bcb7647363b44986b1dd1f240d33cd0b2e8b703a96d50ff7d
+    image: mariadb:11.2@sha256:b9db3ae5335fa4413abfa6f2275ff26cb40506f910ca9ccbd0e0855001cc6510
     restart: unless-stopped
     volumes:
       - mariadb-data:/var/lib/mysql
