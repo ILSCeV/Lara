@@ -6,7 +6,7 @@ FROM docker.io/bitnami/git:latest@sha256:7c3741d267fe466614d1e7be2d3989d51ea4127
 COPY --from=node /Lara /Lara
 RUN cd /Lara && sh git-create-revisioninfo-hook.sh
 
-FROM php:8.3.2-fpm@sha256:ff388291509ffc0a2d5209e5fe583a8d54ab66c1693167dcb61195a402b82cea
+FROM php:8.3.3-fpm@sha256:6b64bb4d9921b567028438565cce4db1385927c6301915072cd686aefff2d349
 COPY --from=composer@sha256:aaef282d5e66c6624812d68fed10a01601383697596b73060f73c749eff30291 /usr/bin/composer /usr/bin/composer
 RUN docker-php-ext-install -j$(nproc) mysqli
 RUN docker-php-ext-install -j$(nproc) pdo
