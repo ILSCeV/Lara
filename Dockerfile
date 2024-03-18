@@ -7,7 +7,7 @@ COPY --from=node /Lara /Lara
 RUN cd /Lara && sh git-create-revisioninfo-hook.sh
 
 FROM php:8.3.3-fpm@sha256:6b64bb4d9921b567028438565cce4db1385927c6301915072cd686aefff2d349
-COPY --from=composer@sha256:aaef282d5e66c6624812d68fed10a01601383697596b73060f73c749eff30291 /usr/bin/composer /usr/bin/composer
+COPY --from=composer@sha256:63c0f08ca413700adcec721aa425e1247304c98314ed0bc2e5fc3699424e2364 /usr/bin/composer /usr/bin/composer
 RUN docker-php-ext-install -j$(nproc) mysqli
 RUN docker-php-ext-install -j$(nproc) pdo
 RUN docker-php-ext-install -j$(nproc) pdo_mysql
