@@ -16,11 +16,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: shivammathur/setup-php@a36e1e52ff4a1c9e9c9be31551ee4712a6cb6bd0
+    - uses: shivammathur/setup-php@48e0de2ea6fe020804fef2c54f7730e83c24e30d
       with:
         php-version: '8.0'
     - name: setup database
-      uses: shogo82148/actions-setup-mysql@9105b320c371a3e6dc91a0ea949790e096a72e5d # v1.27.1
+      uses: shogo82148/actions-setup-mysql@e67c00aa3a23825c685b5d978336f29a78d7a532 # v1.31.0
       with:
        distribution: 'mariadb'
        mysql-version: '10.9'
@@ -32,11 +32,11 @@ jobs:
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Setup Node
-      uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4
+      uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
       with:
         node-version: ${{env.NODE_VERSION}}
     - name: Cache dependencies
-      uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
+      uses: actions/cache@ab5e6d0c87105b4c9c2047343972218f562e4319 # v4
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}

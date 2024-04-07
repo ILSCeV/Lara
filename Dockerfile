@@ -1,25 +1,36 @@
-FROM node:20-alpine@sha256:32427bc0620132b2d9e79e405a1b27944d992501a20417a7f407427cc4c2b672 as node
+FROM node:20-alpine@sha256:bf77dc26e48ea95fca9d1aceb5acfa69d2e546b765ec2abfb502975f1a2d4def as node
 COPY ./ /Lara
 RUN cd /Lara && npm install && npm run prod
 
-FROM docker.io/bitnami/git:latest@sha256:1963a626c532c6af0988cb854edacece84a6ad53c1a8c957c022ada8ab9580f6 as gitstage
+FROM docker.io/bitnami/git:latest@sha256:7c3741d267fe466614d1e7be2d3989d51ea4127ba7385402c5fc18d43d0ba329 as gitstage
 COPY --from=node /Lara /Lara
 RUN cd /Lara && sh git-create-revisioninfo-hook.sh
 
-FROM php:8.2.12-fpm@sha256:62fba478afcfb1a31c402ef29b0ae504fe52c1c6b65371e647c4672fa7299951
-COPY --from=composer@sha256:67f1bec07666f688791bff2c13b34b9c35042cc4c1e42fbb5bd4dbe4ae70f0fb /usr/bin/composer /usr/bin/composer
+FROM php:8.3.4-fpm@sha256:2dff47f7764b7b47d908552c63aac9fc1da52e49bf1b3f88125e60a96d60c86b
+COPY --from=composer@sha256:63c0f08ca413700adcec721aa425e1247304c98314ed0bc2e5fc3699424e2364 /usr/bin/composer /usr/bin/composer
 RUN docker-php-ext-install -j$(nproc) mysqli
 RUN docker-php-ext-install -j$(nproc) pdo
 RUN docker-php-ext-install -j$(nproc) pdo_mysql
-RUN apt-get update && apt-get install -y libmagickwand-dev libzip-dev libldap2-dev openssh-client --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y libmagickwand-dev libzip-dev libldap2-dev openssh-client telnet wget imagemagick libmagickcore-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install -j$(nproc) zip
 RUN docker-php-ext-install ldap
-RUN printf "\n" | pecl install imagick
+
+# renovate: datasource=github-tags depName=Imagick/imagick versioning=semver-coerced extractVersion=(?<version>.*)$
+ARG IMAGICK_PECL_VERSION=3.7.0
+
+RUN curl -L -o /tmp/imagick.tar.gz https://github.com/Imagick/imagick/archive/refs/tags/${IMAGICK_PECL_VERSION}.tar.gz \
+    && tar --strip-components=1 -xf /tmp/imagick.tar.gz \
+    && phpize \
+    && ./configure \
+    && make \
+    && make install \
+    && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini \
+    && rm -rf /tmp/* \
 RUN docker-php-ext-enable imagick
 RUN useradd -u 1001 -U serve && mkdir -p /home/serve && chown -R serve:serve /home/serve
 COPY --from=gitstage /Lara /Lara
 RUN chown -R serve:serve /Lara
 USER serve
-RUN cd /Lara && composer install
+RUN cd /Lara && composer update
 WORKDIR /Lara
 CMD ["/bin/bash", "-c", "set -e;sleep 5;php artisan migrate --force ; php artisan serve --host 0.0.0.0"]
