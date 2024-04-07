@@ -167,64 +167,6 @@ $(function () {
 
 
 
-//////////////////////
-// Create/edit view //
-//////////////////////
-
-// Shows dynamic form fields for new job types
-jQuery(() => {
-    // initialise counter
-    let iCnt = parseInt(<string>$('#counter').val());
-
-    if (iCnt < 2) {
-        $(".btnRemove").hide();
-    }
-
-    const updateIsOptionalCheckboxes = () => {
-        $('.isOptional').attr('name', (index) => { return "shifts[optional][" + index + "]"; });
-        $('.isOptionalHidden').attr('name', (index) => { return "shifts[optional][" + index + "]"; });
-    };
-
-    // Add one more job with every click on "+"
-    $('.btnAdd').on('click', (e) => {
-        e.preventDefault();
-        const elementToCopy = $(e.target).closest('.box');
-        elementToCopy.find(".dropdown-menu").hide();
-        const clone = elementToCopy.clone(true);
-        clone.insertAfter(elementToCopy);
-        clone.find('.shiftId').val("");
-        clone.find('input[type=text]').on('change', handleShiftNameChanged);
-        updateIsOptionalCheckboxes();
-    });
-
-    // Remove selected job
-    $('.btnRemove').on('click', (e) => {
-        e.preventDefault();
-        if ($('div#shiftContainer').children('.box').length > 1) {
-            $(e.target).closest('.box').remove();
-            updateIsOptionalCheckboxes();
-        } else {
-            bootbox.alert(translate("dontDeleteLastShift"));
-        }
-    });
-
-    // populate from dropdown select
-    (<any>$.fn).dropdownSelect = function (shiftType, timeStart, timeEnd, weight) {
-
-        $(this).closest('.box').find("[name^=jbtyp_title]").val(shiftType);
-        $(this).closest('.box').find("[name^=jbtyp_time_start]").val(timeStart);
-        $(this).closest('.box').find("[name^=jbtyp_time_end]").val(timeEnd);
-        $(this).closest('.box').find("[name^=jbtyp_statistical_weight]").val(weight);
-    };
-});
-
-
-
-
-
-
-
-
 //////////
 // ICal //
 //////////
