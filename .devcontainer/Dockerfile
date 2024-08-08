@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/php:1-8-bookworm@sha256:0eb67dc5999377ab6bf64f821138b7671cdc6dbf580b326808fb5bba9f924a1b
+FROM mcr.microsoft.com/devcontainers/php:1-8-bookworm@sha256:f29924ca08f0d51e86d93880c3cc93d34461bc1a42ff2c6f95eafbf12b958eb3
 COPY --from=composer@sha256:2088445f2bcaea6fe72cefcdd9ef0cb75139ee103459cc0d1dad496e19847d2c /usr/bin/composer /usr/bin/composer
 RUN docker-php-ext-install -j$(nproc) mysqli
 RUN docker-php-ext-install -j$(nproc) pdo
