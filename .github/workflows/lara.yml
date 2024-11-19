@@ -26,7 +26,7 @@ jobs:
        mysql-version: '10.9'
        root-password: ${{env.MARIADB_PASSWORD}}
     - run: mysql -uroot -p${{env.MARIADB_PASSWORD}} -h127.0.0.1 -e 'create database lara'
-    - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies
