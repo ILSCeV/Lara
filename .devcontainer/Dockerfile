@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/devcontainers/php:1-8-bookworm@sha256:1975f795315d5ae45f01da5bcd6c867e58e04aeb8424e152ab42f3c010fac9ef
-COPY --from=composer@sha256:57000529b4609b66beeba3ebdd0ebb68b28be262c30669dfccb31003febb245a /usr/bin/composer /usr/bin/composer
+COPY --from=composer@sha256:3e409c6df20d7d8b644f72467d54f203efd6b2695c6345d363abd1ca9a80c4c2 /usr/bin/composer /usr/bin/composer
 RUN docker-php-ext-install -j$(nproc) mysqli
 RUN docker-php-ext-install -j$(nproc) pdo
 RUN docker-php-ext-install -j$(nproc) pdo_mysql
