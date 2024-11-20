@@ -15,7 +15,7 @@
     "@types/bootbox": "5.2.8",
     "@types/bootstrap": "5.2.10",
     "@types/isotope-layout": "3.0.14",
-    "@types/jquery": "3.5.30",
+    "@types/jquery": "3.5.32",
     "@types/lodash": "4.17.7",
     "@types/sortablejs": "1.15.8",
     "autoprefixer": "10.4.20",
