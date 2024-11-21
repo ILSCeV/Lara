@@ -36,7 +36,7 @@
     "isotope-layout": "3.0.6",
     "jquery": "3.7.1",
     "lodash": "4.17.21",
-    "mini-css-extract-plugin": "2.9.1",
+    "mini-css-extract-plugin": "2.9.2",
     "moment-locales-webpack-plugin": "1.2.0",
     "node-sass": "9.0.0",
     "postcss-loader": "8.1.1",
