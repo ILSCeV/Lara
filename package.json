@@ -18,7 +18,7 @@
     "@types/jquery": "3.5.32",
     "@types/lodash": "4.17.16",
     "@types/sortablejs": "1.15.8",
-    "autoprefixer": "10.4.20",
+    "autoprefixer": "10.4.21",
     "axios": "1.7.7",
     "bootstrap": "5.3.3",
     "bootstrap-table": "1.23.5",
