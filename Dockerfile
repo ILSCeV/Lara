@@ -1,4 +1,4 @@
-FROM node:20-alpine@sha256:b5b9467fe7b33aad47f1ec3f6e0646a658f85f05c18d4243024212a91f3b7554 as node
+FROM node:20-alpine@sha256:053c1d99e608fe9fa0db6821edd84276277c0a663cd181f4a3e59ee20f5f07ea as node
 COPY ./ /Lara
 RUN cd /Lara && npm install && npm run prod
 
