@@ -25,7 +25,7 @@ jobs:
         uses: tj-actions/branch-names@6871f53176ad61624f978536bbf089c574dc19a2 # v8
 
       - name: Log in to the Container registry
-        uses: docker/login-action@327cd5a69de6c009b9ce71bce8395f28e651bf99
+        uses: docker/login-action@6d4b68b490aef8836e8fb5e50ee7b3bdfa5894f0
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
