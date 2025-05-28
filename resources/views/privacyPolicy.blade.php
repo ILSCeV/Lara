@@ -740,7 +740,7 @@
                     </p>
                     <p>
                         - If you have any questions or are unsure about this decision, please contact us at <a
-                            href="mailto:lara@il-sc.de">lara@il-sc.de</a> and we will do our best to clarify everything.
+                            href="mailto:lara@ilmenauer-studentenclub.de">lara@ilmenauer-studentenclub.de</a> and we will do our best to clarify everything.
                         We are here to help.
                     </p>
                 </div>
