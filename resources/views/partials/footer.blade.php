@@ -8,7 +8,7 @@
 
         <span class="col-12 col-sm-12 col-md-3">
             <small>
-                <a href="mailto:lara@il-sc.de">
+                <a href="mailto:lara@ilmenauer-studentenclub.de">
                     {{ __('mainLang.notWorkingMail',['Name' => 'Lara']) }}
                 </a>
             </small>
