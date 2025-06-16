@@ -56,7 +56,7 @@
                     <p><strong>Verantwortlicher</strong></p>
                     <p>
                         <span class="tsmcontroller">
-                            E-Mailadresse: <a href="mailto:lara@il-sc.de">lara@il-sc.de</a><br>
+                            E-Mailadresse: <a href="mailto:lara@ilmenauer-studentenclub.de">lara@ilmenauer-studentenclub.de</a><br>
                             Link zum Impressum (inkl. Verantwortlicher und Adresse): <a href="http://www.il-sc.de/impressum">http://www.il-sc.de/impressum</a>
                         </span>
                     </p>
@@ -509,7 +509,7 @@
 
                     <p><strong>Wenn Du sehen möchtest, welche persönlichen Daten wir über Dich haben:</strong></p>
                     <p>
-                        Bitte schreibe uns eine E-Mail an <a href="mailto:lara@il-sc.de">lara@il-sc.de</a> mit der
+                        Bitte schreibe uns eine E-Mail an <a href="mailto:lara@ilmenauer-studentenclub.de">lara@ilmenauer-studentenclub.de</a> mit der
                         Bitte um Deine Informationen.<br>
                         Die Anfrage wird innerhalb von 10 Werktagen oder weniger bearbeitet (normalerweise 1-2
                         Tage).<br>
@@ -520,7 +520,7 @@
 
                     <p><strong>Wenn Du einen Fehler in Deinen Daten gefunden hast:</strong></p>
                     <p>
-                        Bitte schreibe uns eine E-Mail an <a href="mailto:lara@il-sc.de">lara@il-sc.de</a> mit den
+                        Bitte schreibe uns eine E-Mail an <a href="mailto:lara@ilmenauer-studentenclub.de">lara@ilmenauer-studentenclub.de</a> mit den
                         Informationen, die Du geändert haben möchtest.<br>
                         Die Anfrage wird innerhalb von 10 Werktagen oder weniger bearbeitet (normalerweise 1-2
                         Tage).<br>
@@ -530,7 +530,7 @@
 
                     <p><strong> Wenn Du möchtest, dass wir Deine Daten löschen:</strong></p>
                     <p>
-                        Bitte schreibe uns eine E-Mail an <a href="mailto:lara@il-sc.de">lara@il-sc.de</a> mit
+                        Bitte schreibe uns eine E-Mail an <a href="mailto:lara@ilmenauer-studentenclub.de">lara@ilmenauer-studentenclub.de</a> mit
                         einer Bitte um Löschung Deiner Daten. <br>
                         Die Anfrage wird innerhalb von 10 Werktagen oder weniger bearbeitet.<br>
                         Wir senden Dir eine Bestätigung, nachdem Deine Daten vollständig entfernt wurden.<br>
@@ -550,7 +550,7 @@
                     </p>
                     <p>
                         - Wenn Du Fragen hast oder unsicher bist, kontaktiere uns bitte unter
-                        <a href="mailto:lara@il-sc.de">lara@il-sc.de</a> und wir werden unser Bestes tun, um alles zu
+                        <a href="mailto:lara@ilmenauer-studentenclub.de">lara@ilmenauer-studentenclub.de</a> und wir werden unser Bestes tun, um alles zu
                         klären. Wir sind hier um zu helfen!
                     </p>
                 </div>
@@ -704,7 +704,7 @@
 
                     <p><strong>If you want to see what personal data about you we have:</strong></p>
                     <p>
-                        Please write us an e-mail at <a href="mailto:lara@il-sc.de">lara@il-sc.de</a> with the request
+                        Please write us an e-mail at <a href="mailto:lara@ilmenauer-studentenclub.de">lara@ilmenauer-studentenclub.de</a> with the request
                         for your information.<br>
                         The request will be processed in 10 business days or less (usually 1-2 days).<br>
                         We will provide you all the data we have on you via e-mail.<br>
@@ -713,7 +713,7 @@
 
                     <p><strong>If you found a mistake in your data:</strong></p>
                     <p>
-                        Please write us an e-mail at <a href="mailto:lara@il-sc.de">lara@il-sc.de</a> with the
+                        Please write us an e-mail at <a href="mailto:lara@ilmenauer-studentenclub.de">lara@ilmenauer-studentenclub.de</a> with the
                         information you want changed.<br>
                         The request will be processed in 10 business days or less (usually 1-2 days). <br>
                         We will send you a confirmation after your data has been updated.<br>
@@ -722,7 +722,7 @@
 
                     <p><strong> If you want us to remove your data:</strong></p>
                     <p>
-                        Please write us an e-mail at <a href="mailto:lara@il-sc.de">lara@il-sc.de</a> with a request for
+                        Please write us an e-mail at <a href="mailto:lara@ilmenauer-studentenclub.de">lara@ilmenauer-studentenclub.de</a> with a request for
                         your data to be deleted.<br>
                         The request will be processed in 10 business days or less. <br>
                         We will send you a confirmation after your data has been fully removed.<br>
@@ -740,7 +740,7 @@
                     </p>
                     <p>
                         - If you have any questions or are unsure about this decision, please contact us at <a
-                            href="mailto:lara@il-sc.de">lara@il-sc.de</a> and we will do our best to clarify everything.
+                            href="mailto:lara@ilmenauer-studentenclub.de">lara@ilmenauer-studentenclub.de</a> and we will do our best to clarify everything.
                         We are here to help.
                     </p>
                 </div>
