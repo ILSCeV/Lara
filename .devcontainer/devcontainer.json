@@ -15,7 +15,7 @@
 		3306
 	],
 	"features": {
-		"ghcr.io/devcontainers/features/node:1@sha256:36c03732c3421f11de7a3eefc7e9a7fb3df123cb2e48b115d61fdfe8994911d9": {}
+		"ghcr.io/devcontainers/features/node:1@sha256:3c35dff2aedeaeb86f03e10c265c29b56a1b3609324d83d6e901dbb6032543a4": {}
 	}
 
 	// Use 'postCreateCommand' to run commands after the container is created.
