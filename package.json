@@ -17,7 +17,7 @@
     "@types/isotope-layout": "3.0.15",
     "@types/jquery": "3.5.33",
     "@types/lodash": "4.17.21",
-    "@types/sortablejs": "1.15.8",
+    "@types/sortablejs": "1.15.9",
     "autoprefixer": "10.4.21",
     "axios": "1.9.0",
     "bootstrap": "5.3.6",
