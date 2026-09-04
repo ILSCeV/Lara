@@ -13,7 +13,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "6.7.2",
     "@types/bootbox": "5.2.9",
-    "@types/bootstrap": "5.2.10",
+    "@types/bootstrap": "5.2.11",
     "@types/isotope-layout": "3.0.15",
     "@types/jquery": "3.5.34",
     "@types/lodash": "4.17.24",
