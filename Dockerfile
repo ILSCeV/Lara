@@ -6,7 +6,7 @@ FROM docker.io/bitnami/git:latest@sha256:5c6c58dbd4cc5d4973293557cea50b5a7beba83
 COPY --from=node /Lara /Lara
 RUN cd /Lara && sh git-create-revisioninfo-hook.sh
 
-FROM php:8.6.0-fpm@sha256:cf1219d285d49cc07f37b94babecd02db21947dbd14c1d60d13860e051209790
+FROM php:8.5.0-fpm@sha256:baa4dd163e5c9e95c4ba31773173b408c69c824f6a21da56af274a47e7ddbee6
 COPY --from=composer@sha256:d8f6343d3fae98107426bc49163ccad46ef85aabd4a27d80a74401fab4aba332 /usr/bin/composer /usr/bin/composer
 RUN docker-php-ext-install -j$(nproc) mysqli
 RUN docker-php-ext-install -j$(nproc) pdo
@@ -16,7 +16,7 @@ RUN docker-php-ext-install -j$(nproc) zip
 RUN docker-php-ext-install ldap
 
 # renovate: datasource=github-tags depName=Imagick/imagick versioning=semver-coerced extractVersion=(?<version>.*)$
-ARG IMAGICK_PECL_VERSION=3.7.0
+ARG IMAGICK_PECL_VERSION=3.8.1
 
 RUN curl -L -o /tmp/imagick.tar.gz https://github.com/Imagick/imagick/archive/refs/tags/${IMAGICK_PECL_VERSION}.tar.gz \
     && tar --strip-components=1 -xf /tmp/imagick.tar.gz \

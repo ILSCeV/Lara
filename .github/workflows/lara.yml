@@ -20,10 +20,10 @@ jobs:
       with:
         php-version: '8.0'
     - name: setup database
-      uses: shogo82148/actions-setup-mysql@7bb56b6ec54579fca90e6ff5c35f8816d0ceedb5 # v1.42.0
+      uses: shogo82148/actions-setup-mysql@13a38f2af408e58a0c80168fc620a63a15357339 # v1.56.2
       with:
        distribution: 'mariadb'
-       mysql-version: '10.9'
+       mysql-version: '11.4'
        root-password: ${{env.MARIADB_PASSWORD}}
     - run: mysql -uroot -p${{env.MARIADB_PASSWORD}} -h127.0.0.1 -e 'create database lara'
     - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
