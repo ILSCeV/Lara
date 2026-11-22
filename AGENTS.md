@@ -15,6 +15,7 @@ Laravel 8 app ("Lara") for club calendars and personnel scheduling. Domain/secti
 - Focused runs: `php artisan test --filter=ApplicationTest`, or `vendor/bin/phpunit --testsuite "Unit Tests"`.
 - Most tests are not self-contained: `ApplicationTest` expects an already migrated/seeded DB; only `EventApiControllerTest` uses `RefreshDatabase`.
 - CI runs PHP 8.0 while the Dockerfile builds PHP 8.5 — keep PHP syntax compatible with 8.0. Don't bump the Docker image to PHP 8.6 until imagick supports it (build fails on `XtOffsetOf`); `renovate.json` holds it back.
+- `composer.lock` is gitignored, so CI resolves dependencies on every run. Laravel 8 is EOL, and Composer 2.11+ blocks packages with security advisories by default; `composer.json` sets `config.policy.advisories.block` to `false` so resolution still works. Remove that setting only after upgrading off Laravel 8.
 
 ## Seeding gotcha
 - `db:seed` prefers `Database\Seeders\DatabaseSeeder` from `database/seeders/`, but Laravel falls back to the legacy global `DatabaseSeeder` in `database/seeds/` when that class is missing (the case on fresh checkouts, since `database/seeders/` is untracked). Seed order matters, and `--seed` wipes existing data.
