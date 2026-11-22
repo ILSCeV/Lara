@@ -19,7 +19,7 @@
     "@types/lodash": "4.17.27",
     "@types/sortablejs": "1.15.9",
     "autoprefixer": "10.6.2",
-    "axios": "1.20.0",
+    "axios": "1.21.1",
     "bootstrap": "5.3.9",
     "bootstrap-table": "1.28.0",
     "bootswatch": "5.3.8",
