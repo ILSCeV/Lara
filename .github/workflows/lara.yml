@@ -16,17 +16,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: shivammathur/setup-php@9c22be2b2050e35f362ca12b9b5ee6e0831e5235
+    - uses: shivammathur/setup-php@44724c9282fa1cf27681d428413c5d235bada07f
       with:
         php-version: '8.0'
     - name: setup database
-      uses: shogo82148/actions-setup-mysql@7bb56b6ec54579fca90e6ff5c35f8816d0ceedb5 # v1.42.0
+      uses: shogo82148/actions-setup-mysql@13a38f2af408e58a0c80168fc620a63a15357339 # v1.56.2
       with:
        distribution: 'mariadb'
-       mysql-version: '10.9'
+       mysql-version: '11.4'
        root-password: ${{env.MARIADB_PASSWORD}}
     - run: mysql -uroot -p${{env.MARIADB_PASSWORD}} -h127.0.0.1 -e 'create database lara'
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies
@@ -36,7 +36,7 @@ jobs:
       with:
         node-version: ${{env.NODE_VERSION}}
     - name: Cache dependencies
-      uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}

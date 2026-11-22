@@ -28,7 +28,12 @@
   "config": {
     "preferred-install": "dist",
     "sort-packages": true,
-    "optimize-autoloader": true
+    "optimize-autoloader": true,
+    "policy": {
+      "advisories": {
+        "block": false
+      }
+    }
   },
   "description": "A calender with personnel scheduling for club management, built on top of Laravel 8.",
   "keywords": [

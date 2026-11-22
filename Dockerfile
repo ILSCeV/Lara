@@ -1,13 +1,13 @@
-FROM node:20-alpine@sha256:d3507a213936fe4ef54760a186e113db5188472d9efdf491686bd94580a1c1e8 as node
+FROM node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 as node
 COPY ./ /Lara
 RUN cd /Lara && npm install && npm run prod
 
-FROM docker.io/bitnami/git:latest@sha256:f5e35c89ff902afdb9cdd522a003b784b41812d09a76c39cc4abe3656808dd78 as gitstage
+FROM docker.io/bitnami/git:latest@sha256:5c6c58dbd4cc5d4973293557cea50b5a7beba8301f722bcc08d96fa0ef1c9d60 as gitstage
 COPY --from=node /Lara /Lara
 RUN cd /Lara && sh git-create-revisioninfo-hook.sh
 
-FROM php:8.3.21-fpm@sha256:6c4391a739ec0a07c57f4f3af374c3262797f281207363bcf44c289bb4d7caa0
-COPY --from=composer@sha256:623d15a4aae78c868a35c3942add4bb9b2f98e4a3ec26e1928c84df14695d4b0 /usr/bin/composer /usr/bin/composer
+FROM php:8.5.0-fpm@sha256:baa4dd163e5c9e95c4ba31773173b408c69c824f6a21da56af274a47e7ddbee6
+COPY --from=composer@sha256:d8f6343d3fae98107426bc49163ccad46ef85aabd4a27d80a74401fab4aba332 /usr/bin/composer /usr/bin/composer
 RUN docker-php-ext-install -j$(nproc) mysqli
 RUN docker-php-ext-install -j$(nproc) pdo
 RUN docker-php-ext-install -j$(nproc) pdo_mysql
@@ -16,7 +16,7 @@ RUN docker-php-ext-install -j$(nproc) zip
 RUN docker-php-ext-install ldap
 
 # renovate: datasource=github-tags depName=Imagick/imagick versioning=semver-coerced extractVersion=(?<version>.*)$
-ARG IMAGICK_PECL_VERSION=3.7.0
+ARG IMAGICK_PECL_VERSION=3.8.1
 
 RUN curl -L -o /tmp/imagick.tar.gz https://github.com/Imagick/imagick/archive/refs/tags/${IMAGICK_PECL_VERSION}.tar.gz \
     && tar --strip-components=1 -xf /tmp/imagick.tar.gz \
