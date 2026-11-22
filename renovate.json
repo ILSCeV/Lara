@@ -8,7 +8,6 @@
       "description": "imagick does not compile against PHP 8.6 (XtOffsetOf was removed); remove once imagick supports PHP 8.6.",
       "matchDatasources": ["docker"],
       "matchPackageNames": ["php"],
-      "matchUpdateTypes": ["major", "minor", "patch"],
       "allowedVersions": "<8.6"
     }
   ]
