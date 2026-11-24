@@ -11,7 +11,7 @@ COPY --from=composer@sha256:50ea4d33fdcde1adb0f045547295faa1548b33872e5f789dae5b
 RUN docker-php-ext-install -j$(nproc) mysqli
 RUN docker-php-ext-install -j$(nproc) pdo
 RUN docker-php-ext-install -j$(nproc) pdo_mysql
-RUN apt-get update && apt-get install -y libmagickwand-dev libzip-dev libldap2-dev openssh-client telnet wget imagemagick libmagickcore-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y libmagickwand-dev libzip-dev libldap2-dev openssh-client telnet wget imagemagick libmagickcore-dev nginx-light gettext-base --no-install-recommends && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install -j$(nproc) zip
 RUN docker-php-ext-install ldap
 
@@ -27,10 +27,20 @@ RUN curl -L -o /tmp/imagick.tar.gz https://github.com/Imagick/imagick/archive/re
     && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini \
     && rm -rf /tmp/* \
 RUN docker-php-ext-enable imagick
-RUN useradd -u 1001 -U serve && mkdir -p /home/serve && chown -R serve:serve /home/serve
+
+# php-fpm logs to stderr and inherits Docker env vars. The master runs as the
+# non-root serve user, so the www-data user/group directives are dropped.
+RUN sed -i '/^user = /d; /^group = /d; s/^;clear_env = no/clear_env = no/' /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i 's|^;error_log = log/php-fpm.log|error_log = /proc/self/fd/2|' /usr/local/etc/php-fpm.conf
+
+RUN useradd -u 1001 -U serve && mkdir -p /home/serve/etc /home/serve/log/nginx /home/serve/run /home/serve/tmp/nginx && chown -R serve:serve /home/serve
 COPY --from=gitstage /Lara /Lara
 RUN chown -R serve:serve /Lara
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY docker/nginx.conf.template /usr/local/etc/nginx/lara.conf.template
+RUN chmod 0755 /usr/local/bin/entrypoint.sh && chown serve:serve /usr/local/etc/nginx/lara.conf.template
 USER serve
 RUN cd /Lara && composer update
 WORKDIR /Lara
-CMD ["/bin/bash", "-c", "set -e;sleep 5;php artisan migrate --force ; php artisan serve --host 0.0.0.0"]
+EXPOSE 8000
+CMD ["/usr/local/bin/entrypoint.sh"]
